@@ -15,7 +15,9 @@ class m240802_083016_create_table_ngan extends Migration
       $this->createTable('ngan',
       [
         'id'=>$this->primaryKey(),
+        'id_ke'=>$this->integer()->notNull(),
         'ten_ngan'=>$this-> string()->notNull(),
+       
       ]);
     }
 

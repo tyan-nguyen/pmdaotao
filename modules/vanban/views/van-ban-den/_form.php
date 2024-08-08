@@ -10,44 +10,45 @@ $this->title = $model->isNewRecord ? 'Thêm Văn Bản Đến' : 'Sửa Văn B�
 $this->params['breadcrumbs'][] = ['label' => 'Danh sách văn bản đến', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
 <div class="van-ban-form">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+   
 
     <?php $form = ActiveForm::begin(); ?>
 
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-6">
             <?= $form->field($model, 'so_vb')->textInput(['maxlength' => true]) ?>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-6">
             <?= $form->field($model, 'ngay_ky')->input('date') ?>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-6">
             <?= $form->field($model, 'trich_yeu')->textarea(['rows' => 6]) ?>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-6">
             <?= $form->field($model, 'nguoi_ky')->textInput(['maxlength' => true]) ?>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-6">
             <?= $form->field($model, 'vbden_ngay_den')->input('date') ?>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-6">
             <?= $form->field($model, 'vbden_so_den')->textInput() ?>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-6">
             <?= $form->field($model, 'vbden_nguoi_nhan')->textInput() ?>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-6">
             <?= $form->field($model, 'vbden_ngay_chuyen')->input('date') ?>
         </div>
     </div>
@@ -59,9 +60,13 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Thêm' : 'Sửa', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Lưu' : 'Sửa', [
+            'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary',
+            'style'=>'text-align:center',
+        ]) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
 
 </div>
+

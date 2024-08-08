@@ -20,7 +20,7 @@ class m240802_033557_create_table_nhan_vien extends Migration
         'so_cccd'=>$this->string(),
         'dia_chi'=>$this->string(),
         'dien_thoai'=>$this->string(),
-        'tai_khoan'=>$this->string(),
+        'tai_khoan'=>$this->integer(11),
         'email'=>$this->string(),
         'trinh_do'=>$this->string(),
         'chuyen_nganh'=>$this->string(),

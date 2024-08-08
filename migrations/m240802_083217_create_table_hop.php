@@ -15,7 +15,9 @@ class m240802_083217_create_table_hop extends Migration
       $this->createTable('hop',
       [
         'id'=>$this->primaryKey(),
+        'id_ngan'=>$this->integer()->notNUll(),
         'ten_hop'=>$this->string()->notNull(),
+  
       ]);
     }
 

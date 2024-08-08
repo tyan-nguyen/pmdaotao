@@ -7,6 +7,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
 use app\modules\vanban\models\VanBan;
+use yii\web\Response;
 /**
  * Default controller for the `vanban` module
  */
@@ -40,20 +41,31 @@ class VanBanDenController extends Controller
         ]);
     }
     
-
-    // Thêm văn bản đến
     public function actionCreate()
     {
         $model = new VanBan(['scenario' => VanBan::SCENARIO_VANBAN_DEN]);
-
+    
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            if (Yii::$app->request->isAjax) {
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return ['status' => 'success', 'message' => 'Thành công!'];
+            } else {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
-
+    
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('_form', [
+                'model' => $model,
+            ]);
+        }
+    
         return $this->render('create', [
             'model' => $model,
         ]);
     }
+    
+    
 
     // Sửa văn bản đến
     public function actionUpdate($id)

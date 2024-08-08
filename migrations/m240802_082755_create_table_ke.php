@@ -15,7 +15,9 @@ class m240802_082755_create_table_ke extends Migration
     $this->createTable('ke',
     [
         'id'=>$this->primaryKey(),
+        'id_kho'=>$this->integer()->notNUll(),
         'ten_ke'=>$this->string()->notNull(),
+    
     ]);
     }
 

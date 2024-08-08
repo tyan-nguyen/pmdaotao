@@ -71,20 +71,20 @@ class VanBanBase extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'id_loai_van_ban' => 'Id Loai Van Ban',
-            'so_vb' => 'So Vb',
-            'ngay_ky' => 'Ngay Ky',
-            'trich_yeu' => 'Trich Yeu',
-            'nguoi_ky' => 'Nguoi Ky',
-            'vbden_ngay_den' => 'Vbden Ngay Den',
-            'vbden_so_den' => 'Vbden So Den',
-            'vbden_nguoi_nhan' => 'Vbden Nguoi Nhan',
-            'vbden_ngay_chuyen' => 'Vbden Ngay Chuyen',
-            'vbdi_noi_nhan' => 'Vbdi Noi Nhan',
-            'vbdi_so_luong_ban' => 'Vbdi So Luong Ban',
-            'vbdi_ngay_chuyen' => 'Vbdi Ngay Chuyen',
-            'ghi_chu' => 'Ghi Chu',
-            'nguoi_tao' => 'Nguoi Tao',
-            'thoi_gian_tao' => 'Thoi Gian Tao',
+            'so_vb' => 'Số văn bản',
+            'ngay_ky' => 'Ngày ký',
+            'trich_yeu' => 'Trích yếu',
+            'nguoi_ky' => 'Người ký',
+            'vbden_ngay_den' => 'Ngày đến',
+            'vbden_so_den' => 'Số đến',
+            'vbden_nguoi_nhan' => 'Người nhận',
+            'vbden_ngay_chuyen' => 'Ngày chuyển',
+            'vbdi_noi_nhan' => 'Nơi nhận',
+            'vbdi_so_luong_ban' => 'Số lượng bản',
+            'vbdi_ngay_chuyen' => 'Ngày chuyển',
+            'ghi_chu' => 'Ghi chú',
+            'nguoi_tao' => 'Người tạo',
+            'thoi_gian_tao' => 'Thời gian tạo',
         ];
     }
 
@@ -124,6 +124,8 @@ class VanBanBase extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
+   
+
     public function getVbdenNguoiNhan()
     {
         return $this->hasOne(NhanVien::class, ['id' => 'vbden_nguoi_nhan']);
