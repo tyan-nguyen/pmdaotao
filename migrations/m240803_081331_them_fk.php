@@ -22,7 +22,7 @@ class m240803_081331_them_fk extends Migration
             'CASCADE'
         );
         $this->addForeignKey(
-            'fk-id_vbden_nguoi_nhan_nhan_vien',
+            'fk-vbden_nguoi_nhan_nhan_vien',
             'van_ban',
             'vbden_nguoi_nhan',
             'nhan_vien',
