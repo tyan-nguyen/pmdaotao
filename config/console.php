@@ -18,30 +18,11 @@ $config = [
             'class' => 'webvimark\modules\UserManagement\UserManagementModule',
             'controllerNamespace'=>'vendor\webvimark\modules\UserManagement\controllers', // To prevent yii help from crashing
         ],
-        'bophan' => [
-            'class' => 'app\modules\bophan\Module',
-        ],
-        'taisan' => [
-            'class' => 'app\modules\taisan\Module',
-        ],
-        'kholuutru' => [
-            'class' => 'app\modules\kholuutru\Module',
-        ],
-        'baotri' => [
-            'class' => 'app\modules\baotri\Module',
-        ],
+       
         'user' => [
             'class' => 'app\modules\user\UserModule',
         ],
-        'dungchung' => [
-            'class' => 'app\modules\dungchung\Module',
-        ],
-        'suachua' => [
-            'class' => 'app\modules\suachua\Module',
-        ],
-        'muasam' => [
-            'class' => 'app\modules\muasam\Module',
-        ],
+       
     ],
     'components' => [
         'cache' => [
