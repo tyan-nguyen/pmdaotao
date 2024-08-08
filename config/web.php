@@ -20,30 +20,16 @@ $config = [
         'nhanvien' => [
             'class' => 'app\modules\nhanvien\Nhanvien',
         ],
-        'bophan' => [
-            'class' => 'app\modules\bophan\Module',
-        ],
-        'taisan' => [
-            'class' => 'app\modules\taisan\Module',
-        ],
+        
         'kholuutru' => [
             'class' => 'app\modules\kholuutru\Module',
         ],
-        'baotri' => [
-            'class' => 'app\modules\baotri\Module',
-        ],
+        
         'user' => [
             'class' => 'app\modules\user\UserModule',
         ],
-        'dungchung' => [
-            'class' => 'app\modules\dungchung\Module',
-        ],
-        'suachua' => [
-            'class' => 'app\modules\suachua\Module',
-        ],
-        'muasam' => [
-            'class' => 'app\modules\muasam\Module',
-        ],
+        
+       
         'user-management' => [
             'class' => 'webvimark\modules\UserManagement\UserManagementModule',
             
@@ -111,10 +97,6 @@ $config = [
             'showScriptName' => false,
             'rules' => [
                 '/'=>'/user',
-                'taisan/theo-doi-van-hanh/list-calendar' => 'taisan/theo-doi-van-hanh/list-calendar',
-                'taisan/xuat-yeu-cau-van-hanh/print' => 'taisan/xuat-yeu-cau-van-hanh/print',
-                'taisan/xuat-yeu-cau-van-hanh/print-view' => 'taisan/xuat-yeu-cau-van-hanh/print-view'
-
             ],
         ],
         
