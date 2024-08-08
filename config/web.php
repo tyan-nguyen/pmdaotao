@@ -14,6 +14,12 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
     'modules'=>[
+        'vanban' => [
+            'class' => 'app\modules\vanban\Vanban',
+        ],
+        'nhanvien' => [
+            'class' => 'app\modules\nhanvien\Nhanvien',
+        ],
         'bophan' => [
             'class' => 'app\modules\bophan\Module',
         ],
