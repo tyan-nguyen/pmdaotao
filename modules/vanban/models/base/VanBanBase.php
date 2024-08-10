@@ -32,11 +32,7 @@ use app\modules\nhanvien\models\NhanVien;
  */
 class VanBanBase extends \yii\db\ActiveRecord
 {
-    /**
-     * {@inheritdoc}
-     */
-    const SCENARIO_VANBAN_DEN = 'vanban_den';
-    const SCENARIO_VANBAN_DI = 'vanban_di';
+    
     public static function tableName()
     {
         return 'van_ban';
@@ -48,7 +44,7 @@ class VanBanBase extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-          
+            [['so_vb','trich_yeu','nguoi_ky','ngay_ky'], 'required'],
             [['id_loai_van_ban', 'vbden_so_den', 'vbden_nguoi_nhan', 'vbdi_so_luong_ban', 'nguoi_tao'], 'integer'],
             [['ngay_ky', 'vbden_ngay_den', 'vbden_ngay_chuyen', 'vbdi_ngay_chuyen', 'thoi_gian_tao'], 'safe'],
             [['so_vb', 'trich_yeu', 'nguoi_ky', 'vbdi_noi_nhan', 'ghi_chu'], 'string', 'max' => 255],
@@ -56,16 +52,7 @@ class VanBanBase extends \yii\db\ActiveRecord
             [['vbden_nguoi_nhan'], 'exist', 'skipOnError' => true, 'targetClass' => NhanVien::class, 'targetAttribute' => ['vbden_nguoi_nhan' => 'id']],
         ];
     }
-    public function scenarios()
-    {
-        $scenarios = parent::scenarios();
-        $scenarios[self::SCENARIO_VANBAN_DEN] = ['id_loai_van_ban', 'so_vb', 'ngay_ky', 'trich_yeu', 'nguoi_ky', 'vbden_ngay_den', 'vbden_so_den', 'vbden_nguoi_nhan', 'vbden_ngay_chuyen', 'ghi_chu', 'nguoi_tao', 'thoi_gian_tao'];
-        $scenarios[self::SCENARIO_VANBAN_DI] = ['id_loai_van_ban', 'so_vb', 'ngay_ky', 'trich_yeu', 'nguoi_ky', 'vbdi_noi_nhan', 'vbdi_so_luong_ban', 'vbdi_ngay_chuyen', 'ghi_chu', 'nguoi_tao', 'thoi_gian_tao'];
-        return $scenarios;
-    }
-    /**
-     * {@inheritdoc}
-     */
+ 
     public function attributeLabels()
     {
         return [

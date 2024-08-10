@@ -1,7 +1,10 @@
 <?php
+
 use yii\widgets\DetailView;
 
+
 /* @var $this yii\web\View */
+/* @var $model app\models\VanBan */
 
 ?>
 <div class="van-ban-view">
@@ -17,6 +20,7 @@ use yii\widgets\DetailView;
                 'value' => function($model) {
                     return Yii::$app->formatter->asDate($model->ngay_ky, 'php:d-m-Y');
                 },
+                'label' => 'Ngày Ký',
             ],
             'trich_yeu',
             'nguoi_ky',
@@ -25,35 +29,37 @@ use yii\widgets\DetailView;
                 'value' => function($model) {
                     return Yii::$app->formatter->asDate($model->vbden_ngay_den, 'php:d-m-Y');
                 },
+                'label' => 'Ngày Đến',
             ],
             'vbden_so_den',
             [
                 'attribute' => 'vbden_nguoi_nhan',
                 'value' => function($model) {
-                    return $model->vbdenNguoiNhan->ho_ten; // Trả về tên người nhận từ quan hệ
+                    return $model->vbdenNguoiNhan ? $model->vbdenNguoiNhan->name : 'N/A'; // Hoặc thuộc tính tên khác
                 },
-                'label' => 'Người Nhận', // Tùy chọn: Đặt nhãn cho cột
+                'label' => 'Người Nhận',
             ],
             [
                 'attribute' => 'vbden_ngay_chuyen',
                 'value' => function($model) {
                     return Yii::$app->formatter->asDate($model->vbden_ngay_chuyen, 'php:d-m-Y');
                 },
+                'label' => 'Ngày Chuyển',
             ],
             'ghi_chu',
             [
                 'attribute' => 'nguoi_tao',
-                'value' => function() {
-                    return Yii::$app->user->identity->username;
+                'value' => function($model) {
+                    return $model->nguoiTao ? $model->nguoiTao->username : 'N/A'; // Hoặc thuộc tính tên khác
                 },
                 'label' => 'Người Tạo',
             ],
-            
             [
                 'attribute' => 'thoi_gian_tao',
                 'value' => function($model) {
-                    return Yii::$app->formatter->asDatetime($model->thoi_gian_tao, 'php: H:i:s d-m-Y');
+                    return Yii::$app->formatter->asDatetime($model->thoi_gian_tao, 'php:d-m-Y H:i:s');
                 },
+                'label' => 'Thời Gian Tạo',
             ],
         ],
     ]) ?>

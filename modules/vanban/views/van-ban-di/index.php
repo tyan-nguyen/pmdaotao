@@ -10,7 +10,7 @@ use cangak\ajaxcrud\BulkButtonWidget;
 /* @var $searchModel app\models\VanBanSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Danh sách văn bản đến';
+$this->title = 'Danh sách văn bản đi';
 $this->params['breadcrumbs'][] = $this->title;
 
 CrudAsset::register($this);
@@ -24,38 +24,36 @@ CrudAsset::register($this);
             'filterModel' => $searchModel,
             'pjax'=>true,
             'columns' => require(__DIR__.'/_columns.php'),
-       'toolbar' => [
-    ['content' => 
-        Html::a(
-            '<i class="fas fa-plus" aria-hidden="true"></i> Thêm mới',
-            ['create'],
-            [
-                'role' => 'modal-remote',
-                'title' => 'Tambah Van Bans',
-                'class' => 'btn btn-custom'
-            ]
-        ) .
-        Html::a(
-            '<i class="fas fa-sync" aria-hidden="true"></i> Tải lại',
-            [''],
-            [
-                'data-pjax' => 1,
-                'class' => 'btn btn-custom',
-                'title' => 'Reset Grid'
-            ]
-        ) .
-        '{toggleData}' .
-        '{export}'
-    ],
-],
-       
+            'toolbar' => [
+                ['content' => 
+                    Html::a(
+                        '<i class="fas fa-plus" aria-hidden="true"></i> Thêm mới',
+                        ['create'],
+                        [
+                            'role' => 'modal-remote',
+                            'title' => 'Tambah Van Bans',
+                            'class' => 'btn btn-custom'
+                        ]
+                    ) .
+                    Html::a(
+                        '<i class="fas fa-sync" aria-hidden="true"></i> Tải lại',
+                        [''],
+                        [
+                            'data-pjax' => 1,
+                            'class' => 'btn btn-custom',
+                            'title' => 'Reset Grid'
+                        ]
+                    ) .
+                    '{toggleData}' .
+                    '{export}'
+                ],
+            ],         
             'striped' => true,
             'condensed' => true,
             'responsive' => true,          
             'panel' => [
                 'type' => 'primary', 
-            
-           
+              
                 'after'=>BulkButtonWidget::widget([
                             'buttons'=>Html::a('<i class="fas fa fa-trash" aria-hidden="true"></i>&nbsp; Xóa đã chọn',
                                 ["bulkdelete"] ,
@@ -76,20 +74,20 @@ CrudAsset::register($this);
 <?php Modal::begin([
    "options" => [
     "id"=>"ajaxCrudModal",
-    "tabindex" => false 
+    "tabindex" => false // important for Select2 to work properly
 ],
    "id"=>"ajaxCrudModal",
-    "footer"=>"",// 
+    "footer"=>"",// always need it for jquery plugin
 ])?>
 <?php Modal::end(); ?>
 
 <style>
     #ajaxCrudModal .modal-dialog {
-    max-width: 80%; 
+    max-width: 80%; /* Thay đổi kích thước tối đa của modal */
 }
 
 #ajaxCrudModal .modal-content {
-    height: 700px; 
+    height: 700px; /* Thay đổi chiều cao của modal */
 }
 .btn-custom {
     color: #dc3545; 
@@ -113,5 +111,4 @@ CrudAsset::register($this);
     background-color: #dc3545; 
     border-color: #dc3545;
 }
-
 </style>

@@ -12,13 +12,8 @@ $listNhanVien = ArrayHelper::map($nhanViens, 'id', 'ho_ten');
 
 <div class="van-ban-form">
 
-<?php $form = ActiveForm::begin([
-    'id' => 'your-form-id',
-    'enableClientValidation' => true, 
-    'enableAjaxValidation' => true,  
-]); ?>
+    <?php $form = ActiveForm::begin(); ?>
 
-  
     <div class="row">
         <div class="col-md-4">
             <?= $form->field($model, 'so_vb')->textInput(['maxlength' => true]) ?>
@@ -34,7 +29,7 @@ $listNhanVien = ArrayHelper::map($nhanViens, 'id', 'ho_ten');
         </div>
         <div class="col-md-4">
       
-<?= $form->field($model, 'vbden_ngay_chuyen')->widget(DatePicker::classname(), [
+<?= $form->field($model, 'vbdi_ngay_chuyen')->widget(DatePicker::classname(), [
         'options' => ['placeholder' => 'Chọn ngày chuyển ...'],
         'pluginOptions' => [
             'autoclose' => true,
@@ -52,28 +47,16 @@ $listNhanVien = ArrayHelper::map($nhanViens, 'id', 'ho_ten');
             <?= $form->field($model, 'nguoi_ky')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-4">
-            <?= $form->field($model, 'vbden_so_den')->textInput() ?>
+            <?= $form->field($model, 'vbdi_noi_nhan')->textInput() ?>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-4">
-        <?= $form->field($model, 'vbden_ngay_den')->widget(DatePicker::classname(), [
-                 'options' => ['placeholder' => 'Chọn ngày đến ...'],
-                 'pluginOptions' => [
-                     'autoclose' => true,
-                     'format' => 'yyyy-mm-dd',
-                    ]
-        ]); ?>
+        <?= $form->field($model, 'vbdi_so_luong_ban')->textInput(['maxlength' => true]) ?>
         </div>
         
-        <div class="col-md-4">
-        <?= $form->field($model, 'vbden_nguoi_nhan')->dropDownList(
-    $listNhanVien, // Dữ liệu cho dropdown
-    ['prompt' => 'Chọn người nhận...'] // Tùy chọn hiển thị để chọn một người nhận
-) ?>
-
-        </div>
+       
         <div class="col-md-4">
         <?= $form->field($model, 'ghi_chu')->textarea(['rows' => 6]) ?>
     </div>
