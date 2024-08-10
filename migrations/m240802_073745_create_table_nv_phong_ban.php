@@ -2,17 +2,14 @@
 
 use yii\db\Migration;
 
-/**
- * Class m240802_073745_create_table_phong_ban
- */
-class m240802_073745_create_table_phong_ban extends Migration
+class m240802_073745_create_table_nv_phong_ban extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-        $this->createTable('phong_ban',[
+        $this->createTable('nv_phong_ban',[
             'id'=>$this->primaryKey(),
             'ten_phong_ban'=>$this->string()->notNull(),
         ]);
@@ -23,7 +20,7 @@ class m240802_073745_create_table_phong_ban extends Migration
      */
     public function safeDown()
     {
-       $this->dropTable('phong_ban');
+       $this->dropTable('nv_phong_ban');
     }
 
     /*

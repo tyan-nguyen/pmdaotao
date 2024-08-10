@@ -2,17 +2,14 @@
 
 use yii\db\Migration;
 
-/**
- * Class m240802_083745_create_table_luu_kho
- */
-class m240802_083745_create_table_luu_kho extends Migration
+class m240802_083745_create_table_kho_luu_kho extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-      $this->createTable('luu_kho',[
+      $this->createTable('kho_luu_kho',[
         'id'=>$this->primaryKey(),
         'loai_ho_so'=>$this->string(),
         'id_ho_so'=>$this->integer()->notNull(),
@@ -28,7 +25,7 @@ class m240802_083745_create_table_luu_kho extends Migration
      */
     public function safeDown()
     {
-       $this->dropTable('luu_kho');
+       $this->dropTable('kho_luu_kho');
     }
 
     /*

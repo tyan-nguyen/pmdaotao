@@ -2,17 +2,15 @@
 
 use yii\db\Migration;
 
-/**
- * Class m240802_014513_create_table_dm_loai_vb
- */
-class m240802_014513_create_table_dm_loai_vb extends Migration
+
+class m240802_014513_create_table_vb_dm_loai_vb extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-        $this->createTable('dm_loai_van_ban',[
+        $this->createTable('vb_dm_loai_van_ban',[
             'id'=>$this->primaryKey(),
             'ten_loai'=>$this->string()->notNull(),
             'ghi_chu'=>$this->text(),
@@ -24,7 +22,7 @@ class m240802_014513_create_table_dm_loai_vb extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('dm_loai_van_ban');
+        $this->dropTable('vb_dm_loai_van_ban');
     }
 
     /*

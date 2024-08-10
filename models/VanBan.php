@@ -36,7 +36,7 @@ class VanBan extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'van_ban';
+        return 'vb_van_ban';
     }
 
     /**

@@ -36,7 +36,7 @@ class VanBanDenBase extends VanBanBase
     
     public static function tableName()
     {
-        return 'van_ban';
+        return 'vb_van_ban';
     }
 
     /**
@@ -56,16 +56,12 @@ class VanBanDenBase extends VanBanBase
     }
     public function validateUniqueVbdenSoDen($attribute)
     {
-        // Kiểm tra nếu giá trị của thuộc tính lớn hơn 10
-        if ($this->$attribute > 10) {
-            $this->addError($attribute, 'Số đến phải nhỏ hơn hoặc bằng 10.');
-            return; // Dừng kiểm tra tiếp nếu điều kiện này không thỏa mãn
-        }
+        
     
-        // Kiểm tra tính duy nhất trong cơ sở dữ liệu
+      
         $existingRecord = self::find()
             ->where([$attribute => $this->$attribute])
-           
+          
             ->exists();
     
         if ($existingRecord) {

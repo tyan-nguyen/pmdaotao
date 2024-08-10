@@ -2,17 +2,15 @@
 
 use yii\db\Migration;
 
-/**
- * Class m240802_013852_create_table_van_ban
- */
-class m240802_013852_create_table_van_ban extends Migration
+
+class m240802_013852_create_table_vb_van_ban extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-        $this -> createTable('van_ban',[
+        $this -> createTable('vb_van_ban',[
             'id'=> $this->primaryKey(),
             'id_loai_van_ban'=>$this->integer()->notNull(),
             'so_vb'=>$this->string()->notNull(),
@@ -35,7 +33,7 @@ class m240802_013852_create_table_van_ban extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('van_ban');
+        $this->dropTable('vb_van_ban');
     }
 
     /*

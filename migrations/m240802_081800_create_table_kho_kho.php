@@ -2,21 +2,19 @@
 
 use yii\db\Migration;
 
-
-class m240802_083217_create_table_kho_hop extends Migration
+class m240802_081800_create_table_kho_kho extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-      $this->createTable('kho_hop',
-      [
+       $this->createTable('kho_kho',
+       [
         'id'=>$this->primaryKey(),
-        'id_ngan'=>$this->integer()->notNUll(),
-        'ten_hop'=>$this->string()->notNull(),
-  
-      ]);
+        'ten_kho'=>$this->string()->notNull(),
+        'so_do_kho'=>$this->string(),
+       ]);
     }
 
     /**
@@ -24,7 +22,7 @@ class m240802_083217_create_table_kho_hop extends Migration
      */
     public function safeDown()
     {
-    $this->dropTable('kho_hop');
+        $this->dropTable('kho_kho');
     }
 
     /*
@@ -36,7 +34,7 @@ class m240802_083217_create_table_kho_hop extends Migration
 
     public function down()
     {
-        echo "m240802_083217_create_table_hop cannot be reverted.\n";
+        echo "m240802_081800_create_table_kho cannot be reverted.\n";
 
         return false;
     }

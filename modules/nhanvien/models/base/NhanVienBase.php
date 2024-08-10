@@ -37,7 +37,7 @@ class NhanVienBase extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'nhan_vien';
+        return 'nv_nhan_vien';
     }
 
     /**

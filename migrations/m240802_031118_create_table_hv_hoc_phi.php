@@ -2,20 +2,20 @@
 
 use yii\db\Migration;
 
-/**
- * Class m240802_030706_create_table_hang_dao_tao
- */
-class m240802_030706_create_table_hang_dao_tao extends Migration
+
+class m240802_031118_create_table_hv_hoc_phi extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-       $this->createTable('hang_dao_tao',[
+       $this->createTable('hv_hoc_phi',[
         'id'=>$this->primaryKey(),
-        'ten_hang'=>$this->string()->notNull(),
-        'ghi_chu'=>$this->text(),
+        'id_hang'=>$this->integer()->notNull(),
+        'hoc_phi'=>$this->double()->notNull(),
+        'ngay_ap_dung'=>$this->date()->notNull(),
+        'ngay_ket_thuc'=>$this->date()->notNull(),
        ]);
     }
 
@@ -24,7 +24,7 @@ class m240802_030706_create_table_hang_dao_tao extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('hang_dao_tao');
+       $this->dropTable('hv_hoc_phi');
     }
 
     /*
@@ -36,7 +36,7 @@ class m240802_030706_create_table_hang_dao_tao extends Migration
 
     public function down()
     {
-        echo "m240802_030706_create_table_hang_dao_tao cannot be reverted.\n";
+        echo "m240802_031118_create_table_hoc_phi cannot be reverted.\n";
 
         return false;
     }

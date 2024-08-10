@@ -2,25 +2,22 @@
 
 use yii\db\Migration;
 
-/**
- * Class m240802_023155_create_table_ho_so_hoc_vien
- */
-class m240802_023155_create_table_ho_so_hoc_vien extends Migration
+
+class m240802_024906_create_table_hv_tai_lieu_khoa_hoc extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-    $this->createTable('ho_so_hoc_vien',[
+       $this->createTable('hv_tai_lieu_khoa_hoc',[
         'id'=>$this->primaryKey(),
-        'id_hoc_vien'=>$this->integer()->notNull(),
-        'id_loai_ho_so'=>$this->integer()->notNull(),
+        'id_khoa_hoc'=>$this->integer()->notNull(),
         'file_name'=>$this->string()->notNull(),
         'file_type'=>$this->string()->notNull(),
         'file_size'=>$this->string()->notNull(),
         'file_display_name'=>$this->string()->notNull(),
-    ]);
+       ]);
     }
 
     /**
@@ -28,7 +25,7 @@ class m240802_023155_create_table_ho_so_hoc_vien extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('ho_so_hoc_vien');
+        $this->dropTable('hv_tai_lieu_khoa_hoc');
     }
 
     /*
@@ -40,7 +37,7 @@ class m240802_023155_create_table_ho_so_hoc_vien extends Migration
 
     public function down()
     {
-        echo "m240802_023155_create_table_ho_so_hoc_vien cannot be reverted.\n";
+        echo "m240802_024906_create_table_tai_lieu_khoa_hoc cannot be reverted.\n";
 
         return false;
     }

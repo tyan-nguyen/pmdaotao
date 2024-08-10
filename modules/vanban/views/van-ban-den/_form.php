@@ -13,9 +13,8 @@ $listNhanVien = ArrayHelper::map($nhanViens, 'id', 'ho_ten');
 <div class="van-ban-form">
 
 <?php $form = ActiveForm::begin([
-    'id' => 'your-form-id',
-    'enableClientValidation' => true, 
-    'enableAjaxValidation' => true,  
+  
+     
 ]); ?>
 
   

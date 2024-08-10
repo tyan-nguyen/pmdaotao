@@ -2,24 +2,22 @@
 
 use yii\db\Migration;
 
-/**
- * Class m240802_024906_create_table_tai_lieu_khoa_hoc
- */
-class m240802_024906_create_table_tai_lieu_khoa_hoc extends Migration
+
+class m240802_014950_create_table_vb_file_van_ban extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-       $this->createTable('tai_lieu_khoa_hoc',[
+      $this->createTable('vb_file_van_ban',[
         'id'=>$this->primaryKey(),
-        'id_khoa_hoc'=>$this->integer()->notNull(),
+        'id_van_ban'=>$this->integer()->notNull(),
         'file_name'=>$this->string()->notNull(),
         'file_type'=>$this->string()->notNull(),
         'file_size'=>$this->string()->notNull(),
         'file_display_name'=>$this->string()->notNull(),
-       ]);
+      ]);
     }
 
     /**
@@ -27,7 +25,7 @@ class m240802_024906_create_table_tai_lieu_khoa_hoc extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('tai_lieu_khoa_hoc');
+       $this->dropTable('vb_file_van_ban');
     }
 
     /*
@@ -39,7 +37,7 @@ class m240802_024906_create_table_tai_lieu_khoa_hoc extends Migration
 
     public function down()
     {
-        echo "m240802_024906_create_table_tai_lieu_khoa_hoc cannot be reverted.\n";
+        echo "m240802_014950_create_table_file_van_ban cannot be reverted.\n";
 
         return false;
     }

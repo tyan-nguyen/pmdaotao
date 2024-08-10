@@ -2,17 +2,15 @@
 
 use yii\db\Migration;
 
-/**
- * Class m240802_080029_create_table_hang_xe
- */
-class m240802_080029_create_table_hang_xe extends Migration
+
+class m240802_080029_create_table_nv_hang_xe extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-       $this->createTable('hang_xe',[
+       $this->createTable('nv_hang_xe',[
         'id'=>$this->primaryKey(),
         'ten_hang_xe'=>$this->string()->notNull(),
        ]);
@@ -23,7 +21,7 @@ class m240802_080029_create_table_hang_xe extends Migration
      */
     public function safeDown()
     {
-       $this-> dropTable('hang_xe');
+       $this-> dropTable('nv_hang_xe');
     }
 
     /*

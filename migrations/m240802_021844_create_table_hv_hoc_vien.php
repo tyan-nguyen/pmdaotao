@@ -2,17 +2,15 @@
 
 use yii\db\Migration;
 
-/**
- * Class m240802_021844_create_table_hoc_vien
- */
-class m240802_021844_create_table_hoc_vien extends Migration
+
+class m240802_021844_create_table_hv_hoc_vien extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-        $this->createTable('hoc_vien',[
+        $this->createTable('hv_hoc_vien',[
             'id'=>$this->primaryKey(),
             'id_khoa_hoc'=>$this->integer()->notNull(),
             'ho_ten'=>$this->string()->notNull(),
@@ -29,7 +27,7 @@ class m240802_021844_create_table_hoc_vien extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('hoc_vien');
+        $this->dropTable('hv_hoc_vien');
     }
 
     /*

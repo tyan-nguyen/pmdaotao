@@ -2,17 +2,15 @@
 
 use yii\db\Migration;
 
-/**
- * Class m240802_075440_create_table_day
- */
-class m240802_075440_create_table_day extends Migration
+
+class m240802_075440_create_table_nv_day extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-       $this->createTable('day',
+       $this->createTable('nv_day',
        [
         'id'=>$this->primaryKey(),
         'id_nhan_vien'=>$this->integer()->notNull(),
@@ -27,7 +25,7 @@ class m240802_075440_create_table_day extends Migration
      */
     public function safeDown()
     {
-       $this->dropTable('day');
+       $this->dropTable('nv_day');
     }
 
     /*

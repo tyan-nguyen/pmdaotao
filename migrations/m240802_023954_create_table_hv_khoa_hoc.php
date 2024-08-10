@@ -2,22 +2,21 @@
 
 use yii\db\Migration;
 
-/**
- * Class m240802_031118_create_table_hoc_phi
- */
-class m240802_031118_create_table_hoc_phi extends Migration
+class m240802_023954_create_table_hv_khoa_hoc extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-       $this->createTable('hoc_phi',[
+       $this->createTable('hv_khoa_hoc',[
         'id'=>$this->primaryKey(),
         'id_hang'=>$this->integer()->notNull(),
-        'hoc_phi'=>$this->double()->notNull(),
-        'ngay_ap_dung'=>$this->date()->notNull(),
-        'ngay_ket_thuc'=>$this->date()->notNull(),
+        'ten_khoa_hoc'=>$this->string()->notNull(),
+        'ngay_bat_dau'=>$this->date()->notNull(),
+        'ngay_ket_thuc'=>$this->date()->notNUll(),
+        'ghi_chu'=>$this->text(),
+        'trang_thai'=>$this->string()->notNull(),
        ]);
     }
 
@@ -26,7 +25,7 @@ class m240802_031118_create_table_hoc_phi extends Migration
      */
     public function safeDown()
     {
-       $this->dropTable('hoc_phi');
+       $this->dropTable('hv_khoa_hoc');
     }
 
     /*
@@ -38,7 +37,7 @@ class m240802_031118_create_table_hoc_phi extends Migration
 
     public function down()
     {
-        echo "m240802_031118_create_table_hoc_phi cannot be reverted.\n";
+        echo "m240802_023954_create_table_khoa_hoc cannot be reverted.\n";
 
         return false;
     }

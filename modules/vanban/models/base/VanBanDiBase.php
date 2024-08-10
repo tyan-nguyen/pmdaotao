@@ -35,7 +35,7 @@ class VanBanDiBase extends VanBanBase
     
     public static function tableName()
     {
-        return 'van_ban';
+        return 'vb_van_ban';
     }
 
     /**

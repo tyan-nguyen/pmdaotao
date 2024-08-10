@@ -22,7 +22,7 @@ class DmLoaiVanBan extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'dm_loai_van_ban';
+        return 'vb_dm_loai_van_ban';
     }
 
     /**
