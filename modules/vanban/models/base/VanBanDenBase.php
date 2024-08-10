@@ -56,18 +56,17 @@ class VanBanDenBase extends VanBanBase
     }
     public function validateUniqueVbdenSoDen($attribute)
     {
-        
-    
-      
-        $existingRecord = self::find()
-            ->where([$attribute => $this->$attribute])
-          
-            ->exists();
+        $query = self::find()->where([$attribute => $this->$attribute]);
+        if (!$this->isNewRecord) {
+            $query->andWhere(['<>', 'id', $this->id]);
+        }
+        $existingRecord = $query->exists();
     
         if ($existingRecord) {
             $this->addError($attribute, 'Số đến đã tồn tại trong cơ sở dữ liệu.');
         }
     }
+    
     
     
     public function attributeLabels()
