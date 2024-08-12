@@ -38,21 +38,26 @@ class VanBanDiController extends Controller
     }
     
     public function actionView($id)
-    {   
+    {
+        $model = $this->findModel($id);
+        $files = FileVanBan::find()->where(['id_van_ban' => $id])->all();
         $request = Yii::$app->request;
-        if($request->isAjax){
+        
+        if ($request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "VanBan #".$id,
-                    'content'=>$this->renderAjax('view', [
-                        'model' => $this->findModel($id),
-                    ]),
-                    'footer'=> Html::button('Đóng',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::a('Sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
-                ];    
-        }else{
+                'title' => "VanBan #".$id,
+                'content' => $this->renderAjax('view', [
+                    'model' => $model,
+                    'files' => $files, // Truyền biến files vào renderAjax
+                ]),
+                'footer' => Html::button('Đóng', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                           Html::a('Sửa', ['update', 'id' => $id], ['class' => 'btn btn-primary', 'role' => 'modal-remote']),
+            ];
+        } else {
             return $this->render('view', [
-                'model' => $this->findModel($id),
+                'model' => $model,
+                'files' => $files,
             ]);
         }
     }

@@ -1,7 +1,7 @@
 <?php
 
 use yii\widgets\DetailView;
-
+use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\VanBan */
@@ -63,5 +63,15 @@ use yii\widgets\DetailView;
             ],
         ],
     ]) ?>
-
+   <?php if (!empty($files)): ?>
+        <h4>Danh sách các file văn bản</h4>
+        <ul>
+            <?php foreach ($files as $file): ?>
+                <li>
+                    <?= Html::a(Html::encode($file->file_display_name), ['view-file', 'id' => $file->id]) ?>
+                    (<?= Html::encode($file->file_name) ?>,<?= Html::encode($file->file_size) ?>, <?= Html::encode($file->file_type) ?>)
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    <?php endif; ?>
 </div>

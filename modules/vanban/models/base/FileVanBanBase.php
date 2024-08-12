@@ -75,7 +75,7 @@ class FileVanBanBase extends \yii\db\ActiveRecord
             if ($insert) {
               
 
-                $this->nguoi_tao = Yii::$app->user->identity->id; // hoặc một cách khác để lấy thông tin người dùng
+                $this->nguoi_tao = Yii::$app->user->identity->id; 
                 $this->thoi_gian_tao = date('Y-m-d H:i:s');
             }
             return true;
