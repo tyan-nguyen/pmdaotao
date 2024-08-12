@@ -11,7 +11,7 @@ use app\modules\vanban\models\VanBanDi;
 
 use app\modules\vanban\models\search\VanBanDiSearch;
 use yii\web\Response;
-
+use app\modules\vanban\models\FileVanBan;
 /**
  * Default controller for the `vanban` module
  */
@@ -84,6 +84,17 @@ class VanBanDiController extends Controller
         
                 ];         
             }else if($model->load($request->post()) && $model->save()){
+                    // Xử lý lưu thông tin file_van_ban
+                    $files = $request->post('FileVanBan', []);
+                    foreach ($files as $fileData) {
+                        $fileVanBan = new FileVanBan();
+                        $fileVanBan->id_van_ban = $model->id; 
+                        $fileVanBan->file_name = $fileData['file_name'];
+                        $fileVanBan->file_size = $fileData['file_size'];
+                        $fileVanBan->file_type = $fileData['file_type'];
+                        $fileVanBan->file_display_name = $fileData['file_display_name'];
+                        $fileVanBan->save();
+                    }
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Thêm văn bản",

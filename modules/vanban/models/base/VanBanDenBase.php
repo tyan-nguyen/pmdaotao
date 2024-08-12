@@ -6,6 +6,7 @@ use Yii;
 use app\modules\vanban\models\DmLoaiVanBan;
 use app\modules\nhanvien\models\NhanVien;
 use app\modules\user\models\User;
+use app\modules\vanban\models\FileVanBan;
 /**
  * This is the model class for table "van_ban".
  *
@@ -117,7 +118,10 @@ class VanBanDenBase extends VanBanBase
     {
         return $this->hasOne(User::class, ['id' => 'nguoi_tao']);
     }
-
+    public function getFiles()
+    {
+        return $this->hasMany(FileVanBan::class, ['id_van_ban' => 'id']);
+    }
     public function getVbdenNguoiNhan()
     {
         return $this->hasOne(NhanVien::class, ['id' => 'vbden_nguoi_nhan']);

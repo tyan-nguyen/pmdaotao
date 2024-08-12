@@ -11,6 +11,7 @@ use app\modules\vanban\models\VanBanDen;
 
 use app\modules\vanban\models\search\VanBanDenSearch;
 use yii\web\Response;
+use app\modules\vanban\models\FileVanBan;
 
 /**
  * Default controller for the `vanban` module
@@ -39,6 +40,7 @@ class VanBanDenController extends Controller
     
     public function actionView($id)
     {   
+       
         $request = Yii::$app->request;
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
@@ -66,51 +68,67 @@ class VanBanDenController extends Controller
     public function actionCreate()
     {
         $request = Yii::$app->request;
-        $model = new VanBanDen();  
-
-    // Gợi ý giá trị tự động cho vbden_so_den
+        $model = new VanBanDen();
+    
+   
         $maxSoDen = VanBanDen::find()->max('vbden_so_den');
         $model->vbden_so_den = $maxSoDen ? $maxSoDen + 1 : 1;
-        if($request->isAjax){
-            /*
-            *   Process for ajax request
-            */
+    
+        if ($request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
-            if($request->isGet){
+            if ($request->isGet) {
                 return [
-                    'title'=> "Thêm văn bản",
-                    'content'=>$this->renderAjax('create', [
+                    'title' => "Thêm văn bản",
+                    'content' => $this->renderAjax('create', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Đóng',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Lưu',['class'=>'btn btn-primary','type'=>"submit"])
-        
-                ];         
-            }else if($model->load($request->post()) && $model->save()){
+                    'footer' => Html::button('Đóng', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                                Html::button('Lưu', ['class' => 'btn btn-primary', 'type' => "submit"])
+                ];
+            } else if ($model->load($request->post()) && $model->save()) {
+                // Xử lý lưu thông tin file_van_ban
+                $files = $request->post('FileVanBan', []);
+                foreach ($files as $fileData) {
+                    $fileVanBan = new FileVanBan();
+                    $fileVanBan->id_van_ban = $model->id; 
+                    $fileVanBan->file_name = $fileData['file_name'];
+                    $fileVanBan->file_size = $fileData['file_size'];
+                    $fileVanBan->file_type = $fileData['file_type'];
+                    $fileVanBan->file_display_name = $fileData['file_display_name'];
+                    $fileVanBan->save();
+                }
+    
                 return [
-                    'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Thêm văn bản đến",
-                    'content'=>'<span class="text-success">Create VanBan success</span>',
-                    'footer'=> Html::button('Đóng',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::a('Tạo mới',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
-        
-                ];         
-            }else{           
+                    'forceReload' => '#crud-datatable-pjax',
+                    'title' => "Thêm văn bản đến",
+                    'content' => '<span class="text-success">Create VanBan success</span>',
+                    'footer' => Html::button('Đóng', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                                Html::a('Tạo mới', ['create'], ['class' => 'btn btn-primary', 'role' => 'modal-remote'])
+                ];
+            } else {
                 return [
-                    'title'=> "Thêm văn bản đến",
-                    'content'=>$this->renderAjax('create', [
+                    'title' => "Thêm văn bản đến",
+                    'content' => $this->renderAjax('create', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Đóng',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Lưu',['class'=>'btn btn-primary','type'=>"submit"])
-        
-                ];         
+                    'footer' => Html::button('Đóng', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                                Html::button('Lưu', ['class' => 'btn btn-primary', 'type' => "submit"])
+                ];
             }
-        }else{
-            /*
-            *   Process for non-ajax request
-            */
+        } else {
             if ($model->load($request->post()) && $model->save()) {
+                // Xử lý lưu thông tin file_van_ban
+                $files = $request->post('FileVanBan', []);
+                foreach ($files as $fileData) {
+                    $fileVanBan = new FileVanBan();
+                    $fileVanBan->id_van_ban = $model->id; // Gán id_van_ban là id của văn bản vừa lưu
+                    $fileVanBan->file_name = $fileData['file_name'];
+                    $fileVanBan->file_size = $fileData['file_size'];
+                    $fileVanBan->file_type = $fileData['file_type'];
+                    $fileVanBan->file_display_name = $fileData['file_display_name'];
+                    $fileVanBan->save();
+                }
+    
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
                 return $this->render('create', [
@@ -118,8 +136,8 @@ class VanBanDenController extends Controller
                 ]);
             }
         }
-       
     }
+    
     public function actionDelete($id)
     {
         $request = Yii::$app->request;

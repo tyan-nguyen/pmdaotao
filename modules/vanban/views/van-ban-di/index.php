@@ -83,12 +83,13 @@ CrudAsset::register($this);
 
 <style>
     #ajaxCrudModal .modal-dialog {
-    max-width: 80%; /* Thay đổi kích thước tối đa của modal */
-}
+        max-width: 80%; 
+    }
 
-#ajaxCrudModal .modal-content {
-    height: 700px; /* Thay đổi chiều cao của modal */
-}
+    #ajaxCrudModal .modal-content {
+        max-height: 80vh; 
+        overflow-y: auto;
+    }
 .btn-custom {
     color: #dc3545; 
     background-color: #fff; 

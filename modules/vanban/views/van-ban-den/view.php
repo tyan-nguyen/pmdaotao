@@ -2,7 +2,7 @@
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-
+/* @var $files app\models\FileVanBan[]*/
 ?>
 <div class="van-ban-view">
  
