@@ -6,69 +6,103 @@ use yii\widgets\DetailView;
 /* @var $model app\models\VanBan */
 /* @var $files app\models\FileVanBan[] */
 ?>
+
 <div class="van-ban-view">
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'id_loai_van_ban',
-            'so_vb',
-            [
-                'attribute' => 'ngay_ky',
-                'value' => function($model) {
-                    return Yii::$app->formatter->asDate($model->ngay_ky, 'php:d-m-Y');
-                },
-            ],
-            'trich_yeu',
-            'nguoi_ky',
-            [
-                'attribute' => 'vbden_ngay_den',
-                'value' => function($model) {
-                    return Yii::$app->formatter->asDate($model->vbden_ngay_den, 'php:d-m-Y');
-                },
-            ],
-            'vbden_so_den',
-            [
-                'attribute' => 'vbden_nguoi_nhan',
-                'value' => function($model) {
-                    return $model->vbdenNguoiNhan ? $model->vbdenNguoiNhan->ho_ten : 'N/A';
-                },
-                'label' => 'Người Nhận',
-            ],
-            [
-                'attribute' => 'vbden_ngay_chuyen',
-                'value' => function($model) {
-                    return Yii::$app->formatter->asDate($model->vbden_ngay_chuyen, 'php:d-m-Y');
-                },
-            ],
-            'ghi_chu',
-            [
-                'attribute' => 'nguoi_tao',
-                'value' => function() {
-                    return Yii::$app->user->identity->username;
-                },
-                'label' => 'Người Tạo',
-            ],
-            [
-                'attribute' => 'thoi_gian_tao',
-                'value' => function($model) {
-                    return Yii::$app->formatter->asDatetime($model->thoi_gian_tao, 'php:H:i:s d-m-Y');
-                },
-            ],
-        ],
-    ]) ?>
+    <div class="row">
+        <div class="col-md-3">
+            <p><b>ID:</b></p>
+            <p><?= Html::encode($model->id) ?></p>
+        </div>
+        <div class="col-md-3">
+            <p><b>Loại Văn Bản:</b></p>
+            <p><?= Html::encode($model->id_loai_van_ban) ?></p>
+        </div>
+        <div class="col-md-3">
+            <p><b>Số VB:</b></p>
+            <p><?= Html::encode($model->so_vb) ?></p>
+        </div>
+        <div class="col-md-3">
+            <p><b>Ngày Ký:</b></p>
+            <p><?= Yii::$app->formatter->asDate($model->ngay_ky, 'php:d-m-Y') ?></p>
+        </div>
+    </div>
+    
+    <div class="row">
+       
+        <div class="col-md-3">
+            <p><b>Trích Yếu:</b></p>
+            <p><?= Html::encode($model->trich_yeu) ?></p>
+        </div>
+        <div class="col-md-3">
+            <p><b>Người Ký:</b></p>
+            <p><?= Html::encode($model->nguoi_ky) ?></p>
+        </div>
+        <div class="col-md-3">
+            <p><b>Ngày Đến:</b></p>
+            <p><?= Yii::$app->formatter->asDate($model->vbden_ngay_den, 'php:d-m-Y') ?></p>
+        </div>
+        <div class="col-md-3">
+            <p><b>Số Đến:</b></p>
+            <p><?= Html::encode($model->vbden_so_den) ?></p>
+        </div>
+    </div>
 
-   <?php if (!empty($files)): ?>
-        <h4>Danh sách các file văn bản</h4>
-        <ul>
+    <div class="row">
+       
+       
+        <div class="col-md-3">
+            <p><b>Người Nhận:</b></p>
+            <p><?= $model->vbdenNguoiNhan ? Html::encode($model->vbdenNguoiNhan->ho_ten) : 'N/A' ?></p>
+        </div>
+        <div class="col-md-3">
+            <p><b>Ngày Chuyển:</b></p>
+            <p><?= Yii::$app->formatter->asDate($model->vbden_ngay_chuyen, 'php:d-m-Y') ?></p>
+        </div>
+       
+
+        <div class="col-md-3">
+            <p><b>Người Tạo:</b></p>
+            <p><?= Html::encode(Yii::$app->user->identity->username) ?></p>
+        </div>
+        <div class="col-md-3">
+            <p><b>Thời Gian Tạo:</b></p>
+            <p><?= Yii::$app->formatter->asDatetime($model->thoi_gian_tao, 'php:H:i:s d-m-Y') ?></p>
+        </div>
+    </div>
+
+    
+
+    <div class="row">
+    <div class="col-md-3">
+            <p><b>Ghi Chú:</b></p>
+            <p><?= Html::encode($model->ghi_chu) ?></p>
+        </div>
+    </div>
+    <?php if (!empty($files)): ?>
+    <h4 style="color: red;">Danh sách các file văn bản</h4>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Tên File</th>
+                <th>Tên Hiển Thị</th>
+                <th>Kích Thước</th>
+                <th>Loại</th>
+                <th>Hành Động</th>
+            </tr>
+        </thead>
+        <tbody>
             <?php foreach ($files as $file): ?>
-                <li>
-                    <?= Html::a(Html::encode($file->file_display_name), ['view-file', 'id' => $file->id]) ?>
-                    (<?= Html::encode($file->file_name) ?>,<?= Html::encode($file->file_size) ?>, <?= Html::encode($file->file_type) ?>)
-                </li>
+                <tr>
+                    <td><?= Html::encode($file->file_name) ?></td>
+                    <td><?= Html::encode($file->file_display_name) ?></td>
+                    <td><?= Html::encode($file->file_size) ?></td>
+                    <td><?= Html::encode($file->file_type) ?></td>
+                    <td><?= Html::a('Xem', ['view-file', 'id' => $file->id], ['class' => 'btn btn-info btn-sm']) ?></td>
+                </tr>
             <?php endforeach; ?>
-        </ul>
-    <?php endif; ?>
+        </tbody>
+    </table>
+<?php endif; ?>
 
 </div>

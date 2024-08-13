@@ -12,7 +12,8 @@ $listNhanVien = ArrayHelper::map($nhanViens, 'id', 'ho_ten');
 
 <div class="van-ban-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+<?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
+
 
     <div class="row">
         <div class="col-md-4">

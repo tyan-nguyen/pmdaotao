@@ -43,6 +43,7 @@ class VanBanDenBase extends VanBanBase
     /**
      * {@inheritdoc}
      */
+  
     public function rules()
     {
         return [
@@ -53,6 +54,7 @@ class VanBanDenBase extends VanBanBase
             [['id_loai_van_ban'], 'exist', 'skipOnError' => true, 'targetClass' => DmLoaiVanBan::class, 'targetAttribute' => ['id_loai_van_ban' => 'id']],
             [['vbden_nguoi_nhan'], 'exist', 'skipOnError' => true, 'targetClass' => NhanVien::class, 'targetAttribute' => ['vbden_nguoi_nhan' => 'id']],
             [['vbden_so_den'], 'validateUniqueVbdenSoDen'],
+        
         ];
     }
     public function validateUniqueVbdenSoDen($attribute)

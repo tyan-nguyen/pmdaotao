@@ -28,10 +28,11 @@ class FileVanBanBase extends \yii\db\ActiveRecord
     {
         return 'vb_file_van_ban';
     }
-
+ 
     /**
      * {@inheritdoc}
      */
+  
     public function rules()
     {
         return [
@@ -40,6 +41,7 @@ class FileVanBanBase extends \yii\db\ActiveRecord
             [['thoi_gian_tao'], 'safe'],
             [['file_name', 'file_type', 'file_size', 'file_display_name'], 'string', 'max' => 255],
             [['id_van_ban'], 'exist', 'skipOnError' => true, 'targetClass' => VanBan::class, 'targetAttribute' => ['id_van_ban' => 'id']],
+          
         ];
     }
 
