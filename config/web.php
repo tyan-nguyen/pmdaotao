@@ -22,7 +22,7 @@ $config = [
         ],
         
         'kholuutru' => [
-            'class' => 'app\modules\kholuutru\Module',
+            'class' => 'app\modules\kholuutru\Kholuutru',
         ],
         
         'user' => [
