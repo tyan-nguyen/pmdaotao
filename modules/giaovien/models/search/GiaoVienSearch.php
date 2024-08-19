@@ -1,16 +1,16 @@
 <?php
 
-namespace app\modules\nhanvien\models\search;
+namespace app\modules\giaovien\models\search;
 
-use Yii;
+
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\modules\nhanvien\models\NhanVien;
-
+use app\modules\nhanvien\models\search\NhanVienSearch;
 /**
  * NhanVienSearch represents the model behind the search form about `app\modules\nhanvien\models\NhanVien`.
  */
-class NhanVienSearch extends NhanVien
+class GiaoVienSearch extends NhanVienSearch
 {
     /**
      * @inheritdoc
@@ -18,7 +18,7 @@ class NhanVienSearch extends NhanVien
     public function rules()
     {
         return [
-            [['id', 'id_phong_ban', 'tai_khoan', 'nguoi_tao','gioi_tinh'], 'integer'],
+            [['id', 'id_phong_ban', 'tai_khoan', 'nguoi_tao'], 'integer'],
             [['ho_ten', 'chuc_vu', 'so_cccd', 'dia_chi', 'dien_thoai', 'email', 'trinh_do', 'chuyen_nganh', 'vi_tri_cong_viec', 'kinh_nghiem_lam_viec', 'ma_so_thue', 'trang_thai', 'thoi_gian_tao'], 'safe'],
         ];
     }
@@ -61,7 +61,6 @@ class NhanVienSearch extends NhanVien
             'tai_khoan' => $this->tai_khoan,
             'nguoi_tao' => $this->nguoi_tao,
             'thoi_gian_tao' => $this->thoi_gian_tao,
-            
         ]);
 
         $query->andFilterWhere(['like', 'ho_ten', $this->ho_ten])
@@ -76,8 +75,7 @@ class NhanVienSearch extends NhanVien
             ->andFilterWhere(['like', 'kinh_nghiem_lam_viec', $this->kinh_nghiem_lam_viec])
             ->andFilterWhere(['like', 'ma_so_thue', $this->ma_so_thue])
             ->andFilterWhere(['like', 'trang_thai', $this->trang_thai])
-            ->andFilterWhere(['like', 'gioi_tinh', $this->gioi_tinh]);
-
+            ->andFilterWhere(['like', 'check_giao_vien', $this->check_giao_vien]);
         return $dataProvider;
     }
 }

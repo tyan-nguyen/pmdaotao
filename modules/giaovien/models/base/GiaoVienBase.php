@@ -1,9 +1,10 @@
 <?php
 
-namespace app\modules\nhanvien\models\base;
+namespace app\modules\giaovien\models\base;
 use yii;
 use app\modules\user\models\User;
 use app\modules\nhanvien\models\PhongBan;
+use app\modules\nhanvien\models\base\NhanVienBase;
 /**
  * This is the model class for table "nhan_vien".
  *
@@ -30,7 +31,7 @@ use app\modules\nhanvien\models\PhongBan;
  * @property User $taiKhoan
  * @property VanBan[] $vanBans
  */
-class NhanVienBase extends \yii\db\ActiveRecord
+class GiaoVienBase extends NhanVienBase
 {
     /**
      * {@inheritdoc}
@@ -46,13 +47,13 @@ class NhanVienBase extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_phong_ban', 'tai_khoan', 'nguoi_tao','check_giao_vien','id_to','gioi_tinh'], 'integer'],
+            [['id_phong_ban', 'tai_khoan', 'nguoi_tao','check_giao_vien'], 'integer'],
             [['ho_ten'], 'required'],
             [['kinh_nghiem_lam_viec'], 'string'],
             [['thoi_gian_tao'], 'safe'],
             [['ho_ten', 'chuc_vu', 'so_cccd', 'dia_chi', 'dien_thoai', 'email', 'trinh_do', 'chuyen_nganh', 'vi_tri_cong_viec', 'ma_so_thue', 'trang_thai'], 'string', 'max' => 255],
             [['tai_khoan'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['tai_khoan' => 'id']],
-          
+         
         ];
     }
 
@@ -64,9 +65,7 @@ class NhanVienBase extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'id_phong_ban' => 'Phòng ban',
-            'id_to'=>'Tổ',
             'ho_ten' => 'Họ tên',
-            'gioi_tinh'=>'Giới tính',
             'chuc_vu' => 'Chức vụ',
             'so_cccd' => 'Số cccd',
             'dia_chi' => 'Địa chỉ',
@@ -94,7 +93,7 @@ class NhanVienBase extends \yii\db\ActiveRecord
         if (parent::beforeSave($insert)) {
             if ($insert) {
               
-
+                $this->check_giao_vien=1;
                 $this->nguoi_tao = Yii::$app->user->identity->id; 
                 $this->thoi_gian_tao = date('Y-m-d H:i:s');
             }

@@ -28,6 +28,13 @@ $config = [
         'user' => [
             'class' => 'app\modules\user\UserModule',
         ],
+        'giaovien' => [
+            'class' => 'app\modules\giaovien\Giaovien',
+        ],
+        'hocvien' => [
+            'class' => 'app\modules\hocvien\Hocvien',
+        ],
+
         
        
         'user-management' => [
@@ -97,6 +104,7 @@ $config = [
             'showScriptName' => false,
             'rules' => [
                 '/'=>'/user',
+                'nhan_vien/options' => 'nhan_vien/get-options',
             ],
         ],
         

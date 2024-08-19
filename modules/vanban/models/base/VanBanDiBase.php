@@ -105,7 +105,7 @@ class VanBanDiBase extends VanBanBase
     {
         if (parent::beforeSave($insert)) {
             if ($insert) {
-                $this->id_loai_van_ban = 2;
+                $this->loai_so_van_ban = VanBanBase::VBDI_LABEL;
                 $this->nguoi_tao = Yii::$app->user->identity->id;
                 $this->thoi_gian_tao = date('Y-m-d H:i:s');
     

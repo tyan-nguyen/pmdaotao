@@ -1,23 +1,22 @@
 <?php
 
-namespace app\modules\nhanvien\controllers;
+namespace app\modules\giaovien\controllers;
 
 use Yii;
 use app\modules\nhanvien\models\NhanVien;
-use app\modules\nhanvien\models\search\NhanVienSearch;
+use app\modules\giaovien\models\search\GiaoVienSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use app\modules\nhanvien\models\To;
-use yii\filters\AccessControl;
-use yii\helpers\Html;
-use yii\helpers\ArrayHelper;
-use app\modules\hocvien\models\LoaiHoSo;
-use yii\filters\VerbFilter;
+//use yii\filters\VerbFilter;
 use \yii\web\Response;
+use yii\helpers\Html;
+//use yii\filters\AccessControl;
+use app\modules\giaovien\models\GiaoVien;
+
 /**
  * NhanVienController implements the CRUD actions for NhanVien model.
  */
-class NhanVienController extends Controller
+class GiaoVienController extends Controller
 {
    
 
@@ -25,23 +24,20 @@ class NhanVienController extends Controller
      * Lists all NhanVien models.
      * @return mixed
      */
-    public function beforeAction($action)
-	{
-	    Yii::$app->params['moduleID'] = 'Module Quản lý Nhân viên';
-	    Yii::$app->params['modelID'] = 'Quản lý Nhân viên';
-	    return true;
-	}
-    
     public function actionIndex()
     {    
-        $searchModel = new NhanVienSearch();
+        $searchModel = new GiaoVienSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+    
+        // Thêm điều kiện lọc theo check_giao_vien = 1
+        $dataProvider->query->andWhere(['check_giao_vien' => 1]);
+    
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
+    
 
 
     /**
@@ -78,47 +74,44 @@ class NhanVienController extends Controller
     public function actionCreate()
     {
         $request = Yii::$app->request;
-        $model = new NhanVien();
-    
-        // Lấy danh sách loại hồ sơ từ cơ sở dữ liệu
-        $listLoaiHoSo = ArrayHelper::map(LoaiHoSo::find()->where(['doi_tuong' => 1])->all(), 'id', 'ten_ho_so');
-
-    
-        if ($request->isAjax) {
+        $model = new GiaoVien ();  
+ 
+        if($request->isAjax){
             /*
             *   Process for ajax request
             */
             Yii::$app->response->format = Response::FORMAT_JSON;
-            if ($request->isGet) {
+            if($request->isGet){
                 return [
-                    'title' => "Thêm Nhân viên",
-                    'content' => $this->renderAjax('create', [
+                    'title'=> "Thêm Nhân viên",
+                    'content'=>$this->renderAjax('create', [
                         'model' => $model,
-                        'listLoaiHoSo' => $listLoaiHoSo, // Truyền biến vào view
                     ]),
-                    'footer' => Html::button('Đóng', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
-                                Html::button('Lưu', ['class' => 'btn btn-primary', 'type' => "submit"])
-                ];
-            } else if ($model->load($request->post()) && $model->save()) {
+                    'footer'=> Html::button('Đóng',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('Lưu',['class'=>'btn btn-primary','type'=>"submit"])
+        
+                ];         
+            }else if($model->load($request->post()) && $model->save()){
                 return [
-                    'forceReload' => '#crud-datatable-pjax',
-                    'title' => "Thêm Nhân Viên",
-                    'content' => '<span class="text-success">Thêm Nhân viên thành công</span>',
-                    'footer' => Html::button('Đóng', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
-                                Html::a('Create More', ['create'], ['class' => 'btn btn-primary', 'role' => 'modal-remote'])
-                ];
-            } else {
+                    'forceReload'=>'#crud-datatable-pjax',
+                    'title'=> "Thêm Nhân Viên",
+                    'content'=>'<span class="text-success">Thêm Nhân viên thành công</span>',
+                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                            Html::a('Create More',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
+        
+                ];         
+            }else{           
                 return [
-                    'title' => "Thêm Nhân viên",
-                    'content' => $this->renderAjax('create', [
+                    'title'=> "Thêm Nhân viên",
+                    'content'=>$this->renderAjax('create', [
                         'model' => $model,
-                        'listLoaiHoSo' => $listLoaiHoSo, // Truyền biến vào view
                     ]),
-                    'footer' => Html::button('Đóng', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
-                                Html::button('Lưu', ['class' => 'btn btn-primary', 'type' => "submit"])
-                ];
+                    'footer'=> Html::button('Đóng',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('Lưu',['class'=>'btn btn-primary','type'=>"submit"])
+        
+                ];         
             }
-        } else {
+        }else{
             /*
             *   Process for non-ajax request
             */
@@ -127,12 +120,11 @@ class NhanVienController extends Controller
             } else {
                 return $this->render('create', [
                     'model' => $model,
-                    'listLoaiHoSo' => $listLoaiHoSo, // Truyền biến vào view
                 ]);
             }
         }
+       
     }
-    
 
     /**
      * Updates an existing NhanVien model.
@@ -232,7 +224,7 @@ class NhanVienController extends Controller
     public function actionBulkdelete()
     {        
         $request = Yii::$app->request;
-        $pks = explode(',', $request->post( 'pks' )); 
+        $pks = explode(',', $request->post( 'pks' )); // Array or selected records primary keys
         foreach ( $pks as $pk ) {
             $model = $this->findModel($pk);
             $model->delete();
@@ -262,23 +254,11 @@ class NhanVienController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = NhanVien::findOne($id)) !== null) {
+        if (($model = GiaoVien::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-    public function actionGetToList($id_phong_ban)
-    {
-       
-        $tos = To::find()->where(['id_phong_ban' => $id_phong_ban])->all();
-        
-        if (empty($tos)) {
-            return json_encode(['no_to' => 'Trống']);
-        }
-        $listTo = ArrayHelper::map($tos, 'id', 'ten_to');
-        return json_encode($listTo);
-    }
-
-
 }
+

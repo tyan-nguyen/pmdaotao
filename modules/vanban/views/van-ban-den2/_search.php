@@ -1,10 +1,14 @@
 <?php
 use yii\bootstrap5\Html;
 use yii\widgets\ActiveForm;
-
+use yii\helpers\ArrayHelper;
 /* @var $this yii\web\View */
 /* @var $model app\modules\vanban\models\VanBanDen */
 /* @var $form yii\widgets\ActiveForm */
+use app\modules\vanban\models\DmLoaiVanBan;
+// Lấy danh sách loại văn bản 
+$dmloaivanBans = DmLOaiVanBan::find()->all();
+$listDmLoaiVanBan = ArrayHelper::map($dmloaivanBans, 'id', 'ten_loai');
 ?>
 
 <div class="van-ban-den-search">
@@ -17,7 +21,10 @@ use yii\widgets\ActiveForm;
             ]
       	]); ?>
 
-    <?= $form->field($model, 'id_loai_van_ban')->dropDownList($items, ['prompt'=>'Chọn loại văn bản']) ?>
+<?= $form->field($model, 'id_loai_van_ban')->dropDownList(
+                $listDmLoaiVanBan, 
+                ['prompt' => 'Chọn loại văn bản...'] 
+            ) ?>
 
     <?= $form->field($model, 'so_vb')->textInput(['maxlength' => true]) ?>
 

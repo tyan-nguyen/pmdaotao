@@ -24,7 +24,7 @@
 						<ul class="sidemenu-list">
 							<li class="side-menu__label1"><a href="javascript:void(0)">Danh mục chức năng</a>
 							</li>
-							<li><a href="<?= Yii::getAlias('@web/giao-vien/quan-ly-giao-vien?menu=qlgv') ?>" class="slide-item" data-menu="qlgv">Quản lý giáo viên</a>
+							<li><a href="<?= Yii::getAlias('@web/giaovien/giao-vien?menu=qlgv') ?>" class="slide-item" data-menu="qlgv">Quản lý giáo viên</a>
 							</li>
 							
 						</ul>

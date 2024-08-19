@@ -24,8 +24,10 @@
 						<ul class="sidemenu-list">
 							<li class="side-menu__label1"><a href="javascript:void(0)">Danh mục chức năng</a>
 							</li>
-							<li class=""><a href="<?= Yii::getAlias('@web/nhanvien/quan-ly-nhan-vien?menu=qlnv') ?>" class="slide-item" data-menu="qlnv">Phiếu mua sắm</a>
+							<li class=""><a href="<?= Yii::getAlias('@web/nhanvien/nhan-vien?menu=qlnv') ?>" class="slide-item" data-menu="qlnv">Danh sách nhân viên</a>
 							</li>
+
+						
 							
 							</li>
 							

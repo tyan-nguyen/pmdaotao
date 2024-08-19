@@ -1,40 +1,53 @@
 <?php
 
-namespace app\modules\nhanvien\controllers;
+namespace app\modules\hocvien\controllers;
 
 use Yii;
-use app\modules\nhanvien\models\NhanVien;
-use app\modules\nhanvien\models\search\NhanVienSearch;
+use app\modules\hocvien\models\KhoaHoc;
+use app\modules\hocvien\models\search\KhoaHocSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use app\modules\nhanvien\models\To;
-use yii\filters\AccessControl;
-use yii\helpers\Html;
-use yii\helpers\ArrayHelper;
-use app\modules\hocvien\models\LoaiHoSo;
 use yii\filters\VerbFilter;
 use \yii\web\Response;
+use yii\helpers\Html;
+use yii\filters\AccessControl;
+
 /**
- * NhanVienController implements the CRUD actions for NhanVien model.
+ * KhoaHocController implements the CRUD actions for KhoaHoc model.
  */
-class NhanVienController extends Controller
+class KhoaHocController extends Controller
 {
-   
+    /**
+     * @inheritdoc
+     */
+    public function behaviors() {
+		return [
+			'access' => [
+				'class' => AccessControl::className(),
+				'rules' => [
+					[
+						'actions' => ['index', 'view', 'update','create','delete','bulkdelete'],
+						'allow' => true,
+						'roles' => ['admin'],
+					],
+				],
+			],
+			'verbs' => [
+				'class' => VerbFilter::className(),
+				'actions' => [
+					'delete' => ['POST'],
+				],
+			],
+		];
+	}
 
     /**
-     * Lists all NhanVien models.
+     * Lists all KhoaHoc models.
      * @return mixed
      */
-    public function beforeAction($action)
-	{
-	    Yii::$app->params['moduleID'] = 'Module Quản lý Nhân viên';
-	    Yii::$app->params['modelID'] = 'Quản lý Nhân viên';
-	    return true;
-	}
-    
     public function actionIndex()
     {    
-        $searchModel = new NhanVienSearch();
+        $searchModel = new KhoaHocSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -45,7 +58,7 @@ class NhanVienController extends Controller
 
 
     /**
-     * Displays a single NhanVien model.
+     * Displays a single KhoaHoc model.
      * @param integer $id
      * @return mixed
      */
@@ -55,12 +68,12 @@ class NhanVienController extends Controller
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "NhanVien #".$id,
+                    'title'=> "KhoaHoc #".$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
                     ]),
-                    'footer'=> Html::button('Đóng',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::a('Sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                            Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
                 ];    
         }else{
             return $this->render('view', [
@@ -70,7 +83,7 @@ class NhanVienController extends Controller
     }
 
     /**
-     * Creates a new NhanVien model.
+     * Creates a new KhoaHoc model.
      * For ajax request will return json object
      * and for non-ajax request if creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
@@ -78,47 +91,44 @@ class NhanVienController extends Controller
     public function actionCreate()
     {
         $request = Yii::$app->request;
-        $model = new NhanVien();
-    
-        // Lấy danh sách loại hồ sơ từ cơ sở dữ liệu
-        $listLoaiHoSo = ArrayHelper::map(LoaiHoSo::find()->where(['doi_tuong' => 1])->all(), 'id', 'ten_ho_so');
+        $model = new KhoaHoc();  
 
-    
-        if ($request->isAjax) {
+        if($request->isAjax){
             /*
             *   Process for ajax request
             */
             Yii::$app->response->format = Response::FORMAT_JSON;
-            if ($request->isGet) {
+            if($request->isGet){
                 return [
-                    'title' => "Thêm Nhân viên",
-                    'content' => $this->renderAjax('create', [
+                    'title'=> "Create new KhoaHoc",
+                    'content'=>$this->renderAjax('create', [
                         'model' => $model,
-                        'listLoaiHoSo' => $listLoaiHoSo, // Truyền biến vào view
                     ]),
-                    'footer' => Html::button('Đóng', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
-                                Html::button('Lưu', ['class' => 'btn btn-primary', 'type' => "submit"])
-                ];
-            } else if ($model->load($request->post()) && $model->save()) {
+                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
+        
+                ];         
+            }else if($model->load($request->post()) && $model->save()){
                 return [
-                    'forceReload' => '#crud-datatable-pjax',
-                    'title' => "Thêm Nhân Viên",
-                    'content' => '<span class="text-success">Thêm Nhân viên thành công</span>',
-                    'footer' => Html::button('Đóng', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
-                                Html::a('Create More', ['create'], ['class' => 'btn btn-primary', 'role' => 'modal-remote'])
-                ];
-            } else {
+                    'forceReload'=>'#crud-datatable-pjax',
+                    'title'=> "Create new KhoaHoc",
+                    'content'=>'<span class="text-success">Create KhoaHoc success</span>',
+                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                            Html::a('Create More',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
+        
+                ];         
+            }else{           
                 return [
-                    'title' => "Thêm Nhân viên",
-                    'content' => $this->renderAjax('create', [
+                    'title'=> "Create new KhoaHoc",
+                    'content'=>$this->renderAjax('create', [
                         'model' => $model,
-                        'listLoaiHoSo' => $listLoaiHoSo, // Truyền biến vào view
                     ]),
-                    'footer' => Html::button('Đóng', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
-                                Html::button('Lưu', ['class' => 'btn btn-primary', 'type' => "submit"])
-                ];
+                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
+        
+                ];         
             }
-        } else {
+        }else{
             /*
             *   Process for non-ajax request
             */
@@ -127,15 +137,14 @@ class NhanVienController extends Controller
             } else {
                 return $this->render('create', [
                     'model' => $model,
-                    'listLoaiHoSo' => $listLoaiHoSo, // Truyền biến vào view
                 ]);
             }
         }
+       
     }
-    
 
     /**
-     * Updates an existing NhanVien model.
+     * Updates an existing KhoaHoc model.
      * For ajax request will return json object
      * and for non-ajax request if update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
@@ -153,31 +162,31 @@ class NhanVienController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Cập nhật Nhân viên #".$id,
+                    'title'=> "Update KhoaHoc #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Đóng',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Sửa',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
             }else if($model->load($request->post()) && $model->save()){
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Nhân viên #".$id,
+                    'title'=> "KhoaHoc #".$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Đóng',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::a('Sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                            Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
                 ];    
             }else{
                  return [
-                    'title'=> "Cập nhật Nhân viên #".$id,
+                    'title'=> "Update KhoaHoc #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Đóng',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Lưu',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
                 ];        
             }
         }else{
@@ -195,7 +204,7 @@ class NhanVienController extends Controller
     }
 
     /**
-     * Delete an existing NhanVien model.
+     * Delete an existing KhoaHoc model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -223,7 +232,7 @@ class NhanVienController extends Controller
     }
 
      /**
-     * Delete multiple existing NhanVien model.
+     * Delete multiple existing KhoaHoc model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -232,7 +241,7 @@ class NhanVienController extends Controller
     public function actionBulkdelete()
     {        
         $request = Yii::$app->request;
-        $pks = explode(',', $request->post( 'pks' )); 
+        $pks = explode(',', $request->post( 'pks' )); // Array or selected records primary keys
         foreach ( $pks as $pk ) {
             $model = $this->findModel($pk);
             $model->delete();
@@ -254,31 +263,18 @@ class NhanVienController extends Controller
     }
 
     /**
-     * Finds the NhanVien model based on its primary key value.
+     * Finds the KhoaHoc model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return NhanVien the loaded model
+     * @return KhoaHoc the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = NhanVien::findOne($id)) !== null) {
+        if (($model = KhoaHoc::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-    public function actionGetToList($id_phong_ban)
-    {
-       
-        $tos = To::find()->where(['id_phong_ban' => $id_phong_ban])->all();
-        
-        if (empty($tos)) {
-            return json_encode(['no_to' => 'Trống']);
-        }
-        $listTo = ArrayHelper::map($tos, 'id', 'ten_to');
-        return json_encode($listTo);
-    }
-
-
 }

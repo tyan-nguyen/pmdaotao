@@ -5,7 +5,7 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "van_ban".
+ * This is the model class for table "vb_van_ban".
  *
  * @property int $id
  * @property int $id_loai_van_ban
@@ -24,10 +24,10 @@ use Yii;
  * @property int|null $nguoi_tao
  * @property string|null $thoi_gian_tao
  *
- * @property FileVanBan[] $fileVanBans
- * @property DmLoaiVanBan $loaiVanBan
- * @property VbDinhKem[] $vbDinhKems
- * @property NhanVien $vbdenNguoiNhan
+ * @property VbDmLoaiVanBan $loaiVanBan
+ * @property VbFileVanBan[] $vbFileVanBans
+ * @property VbVbDinhKem[] $vbVbDinhKems
+ * @property NvNhanVien $vbdenNguoiNhan
  */
 class VanBan extends \yii\db\ActiveRecord
 {
@@ -49,8 +49,8 @@ class VanBan extends \yii\db\ActiveRecord
             [['id_loai_van_ban', 'vbden_so_den', 'vbden_nguoi_nhan', 'vbdi_so_luong_ban', 'nguoi_tao'], 'integer'],
             [['ngay_ky', 'vbden_ngay_den', 'vbden_ngay_chuyen', 'vbdi_ngay_chuyen', 'thoi_gian_tao'], 'safe'],
             [['so_vb', 'trich_yeu', 'nguoi_ky', 'vbdi_noi_nhan', 'ghi_chu'], 'string', 'max' => 255],
-            [['id_loai_van_ban'], 'exist', 'skipOnError' => true, 'targetClass' => DmLoaiVanBan::class, 'targetAttribute' => ['id_loai_van_ban' => 'id']],
-            [['vbden_nguoi_nhan'], 'exist', 'skipOnError' => true, 'targetClass' => NhanVien::class, 'targetAttribute' => ['vbden_nguoi_nhan' => 'id']],
+            [['id_loai_van_ban'], 'exist', 'skipOnError' => true, 'targetClass' => VbDmLoaiVanBan::class, 'targetAttribute' => ['id_loai_van_ban' => 'id']],
+            [['vbden_nguoi_nhan'], 'exist', 'skipOnError' => true, 'targetClass' => NvNhanVien::class, 'targetAttribute' => ['vbden_nguoi_nhan' => 'id']],
         ];
     }
 
@@ -80,34 +80,33 @@ class VanBan extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[FileVanBans]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    /*
-    public function getFileVanBans()
-    {
-     return $this->hasMany(FileVanBan::class, ['id_van_ban' => 'id']);
-    }
-
-    /**
      * Gets query for [[LoaiVanBan]].
      *
      * @return \yii\db\ActiveQuery
      */
     public function getLoaiVanBan()
     {
-        return $this->hasOne(DmLoaiVanBan::class, ['id' => 'id_loai_van_ban']);
+        return $this->hasOne(VbDmLoaiVanBan::class, ['id' => 'id_loai_van_ban']);
     }
 
     /**
-     * Gets query for [[VbDinhKems]].
+     * Gets query for [[VbFileVanBans]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getVbDinhKems()
+    public function getVbFileVanBans()
     {
-        return $this->hasMany(VbDinhKem::class, ['id_van_ban' => 'id']);
+        return $this->hasMany(VbFileVanBan::class, ['id_van_ban' => 'id']);
+    }
+
+    /**
+     * Gets query for [[VbVbDinhKems]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getVbVbDinhKems()
+    {
+        return $this->hasMany(VbVbDinhKem::class, ['id_van_ban' => 'id']);
     }
 
     /**
@@ -117,7 +116,6 @@ class VanBan extends \yii\db\ActiveRecord
      */
     public function getVbdenNguoiNhan()
     {
-        return $this->hasOne(NhanVien::class, ['id' => 'vbden_nguoi_nhan']);
+        return $this->hasOne(NvNhanVien::class, ['id' => 'vbden_nguoi_nhan']);
     }
-    
 }
