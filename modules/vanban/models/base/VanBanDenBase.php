@@ -34,12 +34,6 @@ use app\modules\vanban\models\FileVanBan;
  */
 class VanBanDenBase extends VanBanBase
 {
-    
-    public static function tableName()
-    {
-        return 'vb_van_ban';
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -105,39 +99,15 @@ class VanBanDenBase extends VanBanBase
 
   
      */
-    public function getLoaiVanBan()
-    {
-        return $this->hasOne(DmLoaiVanBan::class, ['id' => 'id_loai_van_ban']);
-    }
 
- 
-    public function getVbDinhKems()
-    {
-        return $this->hasMany(VbDinhKem::class, ['id_van_ban' => 'id']);
-    }
-
-    public function getNguoiTao()
-    {
-        return $this->hasOne(User::class, ['id' => 'nguoi_tao']);
-    }
-    public function getFiles()
-    {
-        return $this->hasMany(FileVanBan::class, ['id_van_ban' => 'id']);
-    }
-    public function getVbdenNguoiNhan()
-    {
-        return $this->hasOne(NhanVien::class, ['id' => 'vbden_nguoi_nhan']);
-    }
     public function beforeSave($insert)
     {
         if (parent::beforeSave($insert)) {
             if ($insert) {
-                $this->id_loai_van_ban = 1;
+                $this->loai_so_van_ban = VanBanBase::VBDEN_LABEL;
                 $this->nguoi_tao = Yii::$app->user->identity->id;
-                $this->thoi_gian_tao = date('Y-m-d H:i:s');
-    
-            }
-        
+                $this->thoi_gian_tao = date('Y-m-d H:i:s');    
+            }        
             return true;
         }
         return false;

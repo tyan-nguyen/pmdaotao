@@ -86,6 +86,7 @@ CrudAsset::register($this);
 </div>
 
 <?php Modal::begin([
+    'size' => 'modal-xl',
     "options" => [
         "id" => "ajaxCrudModal",
         "tabindex" => false 

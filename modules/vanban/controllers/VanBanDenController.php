@@ -19,8 +19,13 @@ use app\modules\vanban\models\FileVanBan;
  */
 class VanBanDenController extends Controller
 {
-  
-
+    public function beforeAction($action)
+    {
+        Yii::$app->params['moduleID'] = 'Module Quản lý Văn bản';
+        Yii::$app->params['modelID'] = 'Quản lý Văn bản đến';
+        return parent::beforeAction($action);
+    }
+    
     /**
      * Lists all VanBan models.
      * @return mixed
@@ -32,6 +37,7 @@ class VanBanDenController extends Controller
     
         // Thêm điều kiện để chỉ hiển thị các văn bản có id_loai_van_ban = 2
         $dataProvider->query->andWhere(['id_loai_van_ban' => 1]);
+        Yii::$app->view->title = 'Quản lý văn bản đến';
     
         return $this->render('index', [
             'searchModel' => $searchModel,

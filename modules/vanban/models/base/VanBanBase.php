@@ -30,14 +30,10 @@ use app\modules\nhanvien\models\NhanVien;
  * @property VbDinhKem[] $vbDinhKems
  * @property NhanVien $vbdenNguoiNhan
  */
-class VanBanBase extends \yii\db\ActiveRecord
+class VanBanBase extends \app\models\VanBan
 {
-    
-    public static function tableName()
-    {
-        return 'vb_van_ban';
-    }
-
+    CONST VBDEN_LABEL = 'Văn bản đến';
+    CONST VBDI_LABEL = 'Văn bản đi';
     /**
      * {@inheritdoc}
      */
