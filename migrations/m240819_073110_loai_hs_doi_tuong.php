@@ -3,9 +3,9 @@
 use yii\db\Migration;
 
 /**
- * Class m240816_023357_field_doi_tuong
+ * Class m240819_073110_loai_hs_doi_tuong
  */
-class m240816_023357_field_doi_tuong extends Migration
+class m240819_073110_loai_hs_doi_tuong extends Migration
 {
     /**
      * {@inheritdoc}
@@ -32,7 +32,7 @@ class m240816_023357_field_doi_tuong extends Migration
 
     public function down()
     {
-        echo "m240816_023357_field_doi_tuong cannot be reverted.\n";
+        echo "m240819_073110_loai_hs_doi_tuong cannot be reverted.\n";
 
         return false;
     }

@@ -3,16 +3,15 @@
 use yii\db\Migration;
 
 /**
- * Class m240815_014128_add_field_id_to
+ * Class m240819_072847_fk_nv_to
  */
-class m240815_014128_add_field_idd_to extends Migration
+class m240819_072847_fk_nv_to extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-      
         $this->addForeignKey(
             'fk-id_to_nv',
             'nv_nhan_vien',
@@ -44,7 +43,7 @@ class m240815_014128_add_field_idd_to extends Migration
 
     public function down()
     {
-        echo "m240815_014128_add_field_to cannot be reverted.\n";
+        echo "m240819_072847_fk_nv_to cannot be reverted.\n";
 
         return false;
     }

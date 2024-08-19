@@ -3,16 +3,16 @@
 use yii\db\Migration;
 
 /**
- * Class m240819_062349_insert_loai_so_vb
+ * Class m240819_073000_field_male
  */
-class m240819_062349_insert_loai_so_vb extends Migration
+class m240819_073000_field_male extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-        $this->addColumn('vb_van_ban','so_loai_van_ban','string');
+        $this->addColumn('nv_nhan_vien','gioi_tinh','integer');
     }
 
     /**
@@ -20,7 +20,7 @@ class m240819_062349_insert_loai_so_vb extends Migration
      */
     public function safeDown()
     {
-      $this->dropColumn('vb_van_ban','so_loai_van_ban');
+        $this->dropColumn('nv_nhan_vien','gioi_tinh');
     }
 
     /*
@@ -32,7 +32,7 @@ class m240819_062349_insert_loai_so_vb extends Migration
 
     public function down()
     {
-        echo "m240819_062349_insert_loai_so_vb cannot be reverted.\n";
+        echo "m240819_073000_field_male cannot be reverted.\n";
 
         return false;
     }

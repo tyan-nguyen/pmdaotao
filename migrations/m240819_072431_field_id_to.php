@@ -3,16 +3,16 @@
 use yii\db\Migration;
 
 /**
- * Class m240815_072143_insert_field_male
+ * Class m240819_072431_field_id_to
  */
-class m240815_072143_insert_field_male extends Migration
+class m240819_072431_field_id_to extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-        $this->addColumn('nv_nhan_vien','gioi_tinh','integer');
+        $this->addColumn('nv_nhan_vien','id_to','integer');
     }
 
     /**
@@ -20,7 +20,7 @@ class m240815_072143_insert_field_male extends Migration
      */
     public function safeDown()
     {
-       $this->dropColumn('nv_nhan_vien','gioi_tinh');
+       $this-> dropColumn('nv_nhan_vien','id_to','integer');
     }
 
     /*
@@ -32,7 +32,7 @@ class m240815_072143_insert_field_male extends Migration
 
     public function down()
     {
-        echo "m240815_072143_insert_field_male cannot be reverted.\n";
+        echo "m240819_072431_field_id_to cannot be reverted.\n";
 
         return false;
     }
