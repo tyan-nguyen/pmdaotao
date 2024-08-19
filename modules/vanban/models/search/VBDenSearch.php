@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\vanban\models;
+namespace app\modules\vanban\models\search;
 
 use Yii;
 use yii\base\Model;
@@ -8,9 +8,9 @@ use yii\data\ActiveDataProvider;
 use app\modules\vanban\models\VanBanDen;
 
 /**
- * VanBanDen2Search represents the model behind the search form about `app\modules\vanban\models\VanBanDen`.
+ * VBDenSearch represents the model behind the search form about `app\modules\vanban\models\VanBanDen`.
  */
-class VanBanDen2Search extends VanBanDen
+class VBDenSearch extends VanBanDen
 {
     /**
      * @inheritdoc
@@ -19,7 +19,7 @@ class VanBanDen2Search extends VanBanDen
     {
         return [
             [['id', 'id_loai_van_ban', 'vbden_so_den', 'vbden_nguoi_nhan', 'vbdi_so_luong_ban', 'nguoi_tao'], 'integer'],
-            [['so_vb', 'ngay_ky', 'trich_yeu', 'nguoi_ky', 'vbden_ngay_den', 'vbden_ngay_chuyen', 'vbdi_noi_nhan', 'vbdi_ngay_chuyen', 'ghi_chu', 'thoi_gian_tao'], 'safe'],
+            [['so_vb', 'ngay_ky', 'trich_yeu', 'nguoi_ky', 'vbden_ngay_den', 'vbden_ngay_chuyen', 'vbdi_noi_nhan', 'vbdi_ngay_chuyen', 'ghi_chu', 'thoi_gian_tao', 'so_loai_van_ban'], 'safe'],
         ];
     }
 
@@ -59,7 +59,8 @@ class VanBanDen2Search extends VanBanDen
             ['like', 'trich_yeu', $cusomSearch],
             ['like', 'nguoi_ky', $cusomSearch],
             ['like', 'vbdi_noi_nhan', $cusomSearch],
-            ['like', 'ghi_chu', $cusomSearch]] );
+            ['like', 'ghi_chu', $cusomSearch],
+            ['like', 'so_loai_van_ban', $cusomSearch]] );
  
 		} else {
         	$query->andFilterWhere([
@@ -80,7 +81,8 @@ class VanBanDen2Search extends VanBanDen
             ->andFilterWhere(['like', 'trich_yeu', $this->trich_yeu])
             ->andFilterWhere(['like', 'nguoi_ky', $this->nguoi_ky])
             ->andFilterWhere(['like', 'vbdi_noi_nhan', $this->vbdi_noi_nhan])
-            ->andFilterWhere(['like', 'ghi_chu', $this->ghi_chu]);
+            ->andFilterWhere(['like', 'ghi_chu', $this->ghi_chu])
+            ->andFilterWhere(['like', 'so_loai_van_ban', $this->so_loai_van_ban]);
 		}
         return $dataProvider;
     }

@@ -1,11 +1,11 @@
 <?php
 
-namespace app\modules\vanban\models\base;
+namespace app\models;
 
 use Yii;
 
 /**
- * This is the model class for table "dm_loai_van_ban".
+ * This is the model class for table "vb_dm_loai_van_ban".
  *
  * @property int $id
  * @property string $ten_loai
@@ -13,10 +13,18 @@ use Yii;
  * @property int|null $nguoi_tao
  * @property string|null $thoi_gian_tao
  *
- * @property VanBan[] $vanBans
+ * @property VbVanBan[] $vbVanBans
  */
-class DmLoaiVanBanBase extends \app\models\VbDmLoaiVanBan
+class VbDmLoaiVanBan extends \yii\db\ActiveRecord
 {
+    /**
+     * {@inheritdoc}
+     */
+    public static function tableName()
+    {
+        return 'vb_dm_loai_van_ban';
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -46,12 +54,12 @@ class DmLoaiVanBanBase extends \app\models\VbDmLoaiVanBan
     }
 
     /**
-     * Gets query for [[VanBans]].
+     * Gets query for [[VbVanBans]].
      *
      * @return \yii\db\ActiveQuery
      */
-   // public function getVanBans()
-   // {
-  //      return $this->hasMany(VanBan::class, ['id_loai_van_ban' => 'id']);
-  //  }
+    public function getVbVanBans()
+    {
+        return $this->hasMany(VbVanBan::class, ['id_loai_van_ban' => 'id']);
+    }
 }

@@ -9,10 +9,10 @@ use yii\widgets\Pjax;
 use app\widgets\FilterFormWidget;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\modules\vanban\models\VanBanDen2Search */
+/* @var $searchModel app\modules\vanban\models\search\VBDenSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Van Ban Dens';
+$this->title = 'Văn bản đến';
 $this->params['breadcrumbs'][] = $this->title;
 
 CrudAsset::register($this);
@@ -55,7 +55,7 @@ Yii::$app->params['showExport'] = true;
             'panel' => [
                 //'type' => 'primary', 
                 'heading' => '<i class="fas fa fa-list" aria-hidden="true"></i> Danh sách',
-                'before'=>'<em>* Danh sách Van Ban Dens</em>',
+                'before'=>'<em>* Danh sách Văn bản đến</em>',
                 'after'=>BulkButtonWidget::widget([
                             'buttons'=>Html::a('<i class="fas fa fa-trash" aria-hidden="true"></i>&nbsp; Xóa đã chọn',
                                 ["bulkdelete"] ,
@@ -77,7 +77,6 @@ Yii::$app->params['showExport'] = true;
 <?php Pjax::end(); ?>
 
 <?php Modal::begin([
-   'size'=>'modal-sm',
    'options' => [
         'id'=>'ajaxCrudModal',
         'tabindex' => false // important for Select2 to work properly

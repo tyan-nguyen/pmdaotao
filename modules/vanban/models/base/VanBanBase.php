@@ -5,6 +5,7 @@ namespace app\modules\vanban\models\base;
 use Yii;
 use app\modules\vanban\models\DmLoaiVanBan;
 use app\modules\nhanvien\models\NhanVien;
+use app\custom\CustomFunc;
 /**
  * This is the model class for table "van_ban".
  *
@@ -24,26 +25,43 @@ use app\modules\nhanvien\models\NhanVien;
  * @property string|null $ghi_chu
  * @property int|null $nguoi_tao
  * @property string|null $thoi_gian_tao
+ * @property string|null $so_loai_van_ban
  *
  * @property FileVanBan[] $fileVanBans
  * @property DmLoaiVanBan $loaiVanBan
  * @property VbDinhKem[] $vbDinhKems
  * @property NhanVien $vbdenNguoiNhan
  */
-class VanBanBase extends \app\models\VanBan
+class VanBanBase extends \app\models\VbVanBan
 {
+    CONST VBDEN_VALUE = 'VB_DEN';
+    CONST VBDI_VALUE = 'VB_DI';
     CONST VBDEN_LABEL = 'Văn bản đến';
     CONST VBDI_LABEL = 'Văn bản đi';
+    
+    /**
+     * lấy label cho loại sổ văn bản (đến/đi)
+     */
+    public function getLoaiSoVBLabel(){
+        if($this->so_loai_van_ban == $this::VBDEN_VALUE)
+            return $this::VBDEN_LABEL;
+        else if($this->so_loai_van_ban == $this::VBDI_VALUE)
+            return $this::VBDVBDI_LABELEN_LABEL;
+        else 
+            return null;
+    }
+    
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['so_vb','trich_yeu','nguoi_ky','ngay_ky'], 'required'],
+            [['so_vb', 'nguoi_ky','ngay_ky'], 'required'],
             [['id_loai_van_ban', 'vbden_so_den', 'vbden_nguoi_nhan', 'vbdi_so_luong_ban', 'nguoi_tao'], 'integer'],
             [['ngay_ky', 'vbden_ngay_den', 'vbden_ngay_chuyen', 'vbdi_ngay_chuyen', 'thoi_gian_tao'], 'safe'],
             [['so_vb', 'trich_yeu', 'nguoi_ky', 'vbdi_noi_nhan', 'ghi_chu','loai_so_van_ban'], 'string', 'max' => 255],
+            [['so_loai_van_ban'], 'string', 'max'=>20],
             [['id_loai_van_ban'], 'exist', 'skipOnError' => true, 'targetClass' => DmLoaiVanBan::class, 'targetAttribute' => ['id_loai_van_ban' => 'id']],
             [['vbden_nguoi_nhan'], 'exist', 'skipOnError' => true, 'targetClass' => NhanVien::class, 'targetAttribute' => ['vbden_nguoi_nhan' => 'id']],
         ];
@@ -53,7 +71,7 @@ class VanBanBase extends \app\models\VanBan
     {
         return [
             'id' => 'ID',
-            'id_loai_van_ban' => 'Id Loai Van Ban',
+            'id_loai_van_ban' => 'Loại văn bản',
             'so_vb' => 'Số văn bản',
             'ngay_ky' => 'Ngày ký',
             'trich_yeu' => 'Trích yếu',
@@ -68,63 +86,23 @@ class VanBanBase extends \app\models\VanBan
             'ghi_chu' => 'Ghi chú',
             'nguoi_tao' => 'Người tạo',
             'thoi_gian_tao' => 'Thời gian tạo',
+            'so_loai_van_ban' => 'Loại sổ văn bản',//phân biệt văn bản đến hoặc đi
         ];
     }
-
+    
     /**
-     * Gets query for [[FileVanBans]].
-     *
-     * @return \yii\db\ActiveQuery
+     * {@inheritdoc}
      */
-    /*
-    public function getFileVanBans()
-    {
-     return $this->hasMany(FileVanBan::class, ['id_van_ban' => 'id']);
-    }
-
-    /**
-     * Gets query for [[LoaiVanBan]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getLoaiVanBan()
-    {
-        return $this->hasOne(DmLoaiVanBan::class, ['id' => 'id_loai_van_ban']);
-    }
-
-    /**
-     * Gets query for [[VbDinhKems]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getVbDinhKems()
-    {
-        return $this->hasMany(VbDinhKem::class, ['id_van_ban' => 'id']);
-    }
-
-    /**
-     * Gets query for [[VbdenNguoiNhan]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-   
-
-    public function getVbdenNguoiNhan()
-    {
-        return $this->hasOne(NhanVien::class, ['id' => 'vbden_nguoi_nhan']);
-    }
-    public function beforeSave($insert)
-    {
-        if (parent::beforeSave($insert)) {
-            if ($insert) {
-                $this->id_loai_van_ban = 1;
-
-                $this->nguoi_tao = Yii::$app->user->identity->id; 
-                $this->thoi_gian_tao = date('Y-m-d H:i:s');
-            }
-            return true;
+    public function beforeSave($insert) {
+        if ($this->isNewRecord) {
+            $this->nguoi_tao = Yii::$app->user->identity->id;
+            $this->thoi_gian_tao = date('Y-m-d H:i:s');
         }
-        return false;
+        
+        $this->ngay_ky = CustomFunc::convertDMYToYMD($this->ngay_ky);
+        
+        return parent::beforeSave($insert);
     }
+
     
 }

@@ -2,30 +2,44 @@
 
 namespace app\modules\vanban\models;
 
-use app\modules\vanban\models\base\VanBanDenBase;
+use app\modules\nhanvien\models\NhanVien;
 
-class VanBanDen extends VanBanDenBase
+class VanBanDen extends VanBan
 {
-    public function getLoaiVanBan()
-    {
-        return $this->hasOne(DmLoaiVanBan::class, ['id' => 'id_loai_van_ban']);
+    
+    public function beforeSave($insert) {
+        if ($this->isNewRecord) {
+            $this->so_loai_van_ban = $this::VBDEN_VALUE;
+        }
+        return parent::beforeSave($insert);
     }
     
-    public function getVbDinhKems()
+    /**
+     * {@inheritdoc}
+     */
+    public function rules()
     {
-        return $this->hasMany(VbDinhKem::class, ['id_van_ban' => 'id']);
+        return [
+            [['so_vb', 'nguoi_ky', 'ngay_ky', 'vbden_so_den'], 'required'],
+            [['id_loai_van_ban', 'vbden_so_den', 'vbden_nguoi_nhan', 'nguoi_tao'], 'integer'],
+            [['ngay_ky', 'vbden_ngay_den', 'vbden_ngay_chuyen', 'thoi_gian_tao'], 'safe'],
+            [['so_vb', 'trich_yeu', 'nguoi_ky', 'ghi_chu', 'so_loai_van_ban'], 'string', 'max' => 255],
+            [['id_loai_van_ban'], 'exist', 'skipOnError' => true, 'targetClass' => DmLoaiVanBan::class, 'targetAttribute' => ['id_loai_van_ban' => 'id']],
+            [['vbden_nguoi_nhan'], 'exist', 'skipOnError' => true, 'targetClass' => NhanVien::class, 'targetAttribute' => ['vbden_nguoi_nhan' => 'id']],
+            [['vbden_so_den'], 'validateUniqueVbdenSoDen'],
+        ];
     }
     
-    public function getNguoiTao()
+    public function validateUniqueVbdenSoDen($attribute)
     {
-        return $this->hasOne(User::class, ['id' => 'nguoi_tao']);
-    }
-    public function getFiles()
-    {
-        return $this->hasMany(FileVanBan::class, ['id_van_ban' => 'id']);
-    }
-    public function getVbdenNguoiNhan()
-    {
-        return $this->hasOne(NhanVien::class, ['id' => 'vbden_nguoi_nhan']);
+        $query = self::find()->where([$attribute => $this->$attribute]);
+        if (!$this->isNewRecord) {
+            $query->andWhere(['<>', 'id', $this->id]);
+        }
+        $existingRecord = $query->exists();
+        
+        if ($existingRecord) {
+            $this->addError($attribute, 'Số đến đã tồn tại trong cơ sở dữ liệu.');
+        }
     }
 }

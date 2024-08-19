@@ -1,14 +1,11 @@
 <?php
 use yii\bootstrap5\Html;
 use yii\widgets\ActiveForm;
-use yii\helpers\ArrayHelper;
+use app\modules\vanban\models\LoaiVanBan;
+
 /* @var $this yii\web\View */
 /* @var $model app\modules\vanban\models\VanBanDen */
 /* @var $form yii\widgets\ActiveForm */
-use app\modules\vanban\models\DmLoaiVanBan;
-// Lấy danh sách loại văn bản 
-$dmloaivanBans = DmLOaiVanBan::find()->all();
-$listDmLoaiVanBan = ArrayHelper::map($dmloaivanBans, 'id', 'ten_loai');
 ?>
 
 <div class="van-ban-den-search">
@@ -21,10 +18,7 @@ $listDmLoaiVanBan = ArrayHelper::map($dmloaivanBans, 'id', 'ten_loai');
             ]
       	]); ?>
 
-<?= $form->field($model, 'id_loai_van_ban')->dropDownList(
-                $listDmLoaiVanBan, 
-                ['prompt' => 'Chọn loại văn bản...'] 
-            ) ?>
+    <?= $form->field($model, 'id_loai_van_ban')->dropDownList(LoaiVanBan::getList(), ['prompt'=>'Chọn loại văn bản']) ?>
 
     <?= $form->field($model, 'so_vb')->textInput(['maxlength' => true]) ?>
 
@@ -47,6 +41,8 @@ $listDmLoaiVanBan = ArrayHelper::map($dmloaivanBans, 'id', 'ten_loai');
     <?= $form->field($model, 'nguoi_tao')->textInput() ?>
 
     <?= $form->field($model, 'thoi_gian_tao')->textInput() ?>
+
+    <?= $form->field($model, 'so_loai_van_ban')->textInput(['maxlength' => true]) ?>
 
   
 	<?php if (!Yii::$app->request->isAjax){ ?>

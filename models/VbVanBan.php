@@ -23,13 +23,14 @@ use Yii;
  * @property string|null $ghi_chu
  * @property int|null $nguoi_tao
  * @property string|null $thoi_gian_tao
+ * @property string|null $so_loai_van_ban
  *
  * @property VbDmLoaiVanBan $loaiVanBan
  * @property VbFileVanBan[] $vbFileVanBans
  * @property VbVbDinhKem[] $vbVbDinhKems
  * @property NvNhanVien $vbdenNguoiNhan
  */
-class VanBan extends \yii\db\ActiveRecord
+class VbVanBan extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -48,7 +49,7 @@ class VanBan extends \yii\db\ActiveRecord
             [['id_loai_van_ban', 'so_vb', 'ngay_ky', 'trich_yeu', 'nguoi_ky'], 'required'],
             [['id_loai_van_ban', 'vbden_so_den', 'vbden_nguoi_nhan', 'vbdi_so_luong_ban', 'nguoi_tao'], 'integer'],
             [['ngay_ky', 'vbden_ngay_den', 'vbden_ngay_chuyen', 'vbdi_ngay_chuyen', 'thoi_gian_tao'], 'safe'],
-            [['so_vb', 'trich_yeu', 'nguoi_ky', 'vbdi_noi_nhan', 'ghi_chu'], 'string', 'max' => 255],
+            [['so_vb', 'trich_yeu', 'nguoi_ky', 'vbdi_noi_nhan', 'ghi_chu', 'so_loai_van_ban'], 'string', 'max' => 255],
             [['id_loai_van_ban'], 'exist', 'skipOnError' => true, 'targetClass' => VbDmLoaiVanBan::class, 'targetAttribute' => ['id_loai_van_ban' => 'id']],
             [['vbden_nguoi_nhan'], 'exist', 'skipOnError' => true, 'targetClass' => NvNhanVien::class, 'targetAttribute' => ['vbden_nguoi_nhan' => 'id']],
         ];
@@ -76,6 +77,7 @@ class VanBan extends \yii\db\ActiveRecord
             'ghi_chu' => 'Ghi Chu',
             'nguoi_tao' => 'Nguoi Tao',
             'thoi_gian_tao' => 'Thoi Gian Tao',
+            'so_loai_van_ban' => 'So Loai Van Ban',
         ];
     }
 

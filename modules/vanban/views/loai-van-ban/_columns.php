@@ -16,67 +16,20 @@ return [
     // ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'id_loai_van_ban',
-        'value'=>function($model){
-            return $model->loaiVanBan->ten_loai;
-        }
+        'attribute'=>'ten_loai',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'so_vb',
+        'attribute'=>'ghi_chu',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'ngay_ky',
+        'attribute'=>'nguoi_tao',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'trich_yeu',
+        'attribute'=>'thoi_gian_tao',
     ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'nguoi_ky',
-    ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'vbden_ngay_den',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'vbden_so_den',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'vbden_nguoi_nhan',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'vbden_ngay_chuyen',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'vbdi_noi_nhan',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'vbdi_so_luong_ban',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'vbdi_ngay_chuyen',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'ghi_chu',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'nguoi_tao',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'thoi_gian_tao',
-    // ],
     [
         'class' => 'kartik\grid\ActionColumn',
         'dropdown' => false,

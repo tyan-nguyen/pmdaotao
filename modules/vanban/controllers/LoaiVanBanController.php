@@ -3,8 +3,8 @@
 namespace app\modules\vanban\controllers;
 
 use Yii;
-use app\modules\vanban\models\VanBanDen;
-use app\modules\vanban\models\VanBanDen2Search;
+use app\modules\vanban\models\LoaiVanBan;
+use app\modules\vanban\models\search\LoaiVanBanSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -13,9 +13,9 @@ use yii\helpers\Html;
 use yii\filters\AccessControl;
 
 /**
- * VanBanDen2Controller implements the CRUD actions for VanBanDen model.
+ * LoaiVanBanController implements the CRUD actions for LoaiVanBan model.
  */
-class VanBanDen2Controller extends Controller
+class LoaiVanBanController extends Controller
 {
     /**
      * @inheritdoc
@@ -33,25 +33,18 @@ class VanBanDen2Controller extends Controller
     			],
 		];
 	}
-	
-	public function beforeAction($action)
-	{
-	    Yii::$app->params['moduleID'] = 'Module Quản lý Văn bản';
-	    Yii::$app->params['modelID'] = 'Quản lý Văn bản đến';
-	    return parent::beforeAction($action);
-	}
 
     /**
-     * Lists all VanBanDen models.
+     * Lists all LoaiVanBan models.
      * @return mixed
      */
     public function actionIndex()
     {    
-        $searchModel = new VanBanDen2Search();
+        $searchModel = new LoaiVanBanSearch();
   		if(isset($_POST['search']) && $_POST['search'] != null){
             $dataProvider = $searchModel->search(Yii::$app->request->post(), $_POST['search']);
         } else if ($searchModel->load(Yii::$app->request->post())) {
-            $searchModel = new VanBanDen2Search(); // "reset"
+            $searchModel = new LoaiVanBanSearch(); // "reset"
             $dataProvider = $searchModel->search(Yii::$app->request->post());
         } else {
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -64,7 +57,7 @@ class VanBanDen2Controller extends Controller
 
 
     /**
-     * Displays a single VanBanDen model.
+     * Displays a single LoaiVanBan model.
      * @param integer $id
      * @return mixed
      */
@@ -74,7 +67,7 @@ class VanBanDen2Controller extends Controller
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "VanBanDen",
+                    'title'=> "LoaiVanBan",
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
                     ]),
@@ -89,7 +82,7 @@ class VanBanDen2Controller extends Controller
     }
 
     /**
-     * Creates a new VanBanDen model.
+     * Creates a new LoaiVanBan model.
      * For ajax request will return json object
      * and for non-ajax request if creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
@@ -97,7 +90,7 @@ class VanBanDen2Controller extends Controller
     public function actionCreate()
     {
         $request = Yii::$app->request;
-        $model = new VanBanDen();  
+        $model = new LoaiVanBan();  
 
         if($request->isAjax){
             /*
@@ -106,7 +99,7 @@ class VanBanDen2Controller extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Thêm mới VanBanDen",
+                    'title'=> "Thêm mới LoaiVanBan",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -117,7 +110,7 @@ class VanBanDen2Controller extends Controller
             }else if($model->load($request->post()) && $model->save()){
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Thêm mới VanBanDen",
+                    'title'=> "Thêm mới LoaiVanBan",
                     'content'=>'<span class="text-success">Thêm mới thành công</span>',
                     'tcontent'=>'Thêm mới thành công!',
                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
@@ -126,7 +119,7 @@ class VanBanDen2Controller extends Controller
                 ];         
             }else{           
                 return [
-                    'title'=> "Thêm mới VanBanDen",
+                    'title'=> "Thêm mới LoaiVanBan",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -151,7 +144,7 @@ class VanBanDen2Controller extends Controller
     }
 
     /**
-     * Updates an existing VanBanDen model.
+     * Updates an existing LoaiVanBan model.
      * For ajax request will return json object
      * and for non-ajax request if update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
@@ -169,7 +162,7 @@ class VanBanDen2Controller extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Cập nhật VanBanDen",
+                    'title'=> "Cập nhật LoaiVanBan",
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
@@ -179,7 +172,7 @@ class VanBanDen2Controller extends Controller
             }else if($model->load($request->post()) && $model->save()){
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "VanBanDen",
+                    'title'=> "LoaiVanBan",
                     'content'=>$this->renderAjax('view', [
                         'model' => $model,
                     ]),
@@ -189,7 +182,7 @@ class VanBanDen2Controller extends Controller
                 ];    
             }else{
                  return [
-                    'title'=> "Cập nhật VanBanDen",
+                    'title'=> "Cập nhật LoaiVanBan",
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
@@ -212,7 +205,7 @@ class VanBanDen2Controller extends Controller
     }
 
     /**
-     * Delete an existing VanBanDen model.
+     * Delete an existing LoaiVanBan model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -240,7 +233,7 @@ class VanBanDen2Controller extends Controller
     }
 
      /**
-     * Delete multiple existing VanBanDen model.
+     * Delete multiple existing LoaiVanBan model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -280,15 +273,15 @@ class VanBanDen2Controller extends Controller
     }
 
     /**
-     * Finds the VanBanDen model based on its primary key value.
+     * Finds the LoaiVanBan model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return VanBanDen the loaded model
+     * @return LoaiVanBan the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = VanBanDen::findOne($id)) !== null) {
+        if (($model = LoaiVanBan::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

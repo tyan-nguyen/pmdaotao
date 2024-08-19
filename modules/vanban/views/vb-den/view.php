@@ -13,7 +13,10 @@ use yii\widgets\DetailView;
             'id',
             'id_loai_van_ban',
             'so_vb',
-            'ngay_ky',
+            'ngay_ky'=>[
+                'attribute' => 'ngay_ky',
+                'value'=>$model->ngayKy
+            ],
             'trich_yeu',
             'nguoi_ky',
             'vbden_ngay_den',
@@ -26,6 +29,7 @@ use yii\widgets\DetailView;
             'ghi_chu',
             'nguoi_tao',
             'thoi_gian_tao',
+            'so_loai_van_ban',
         ],
     ]) ?>
 

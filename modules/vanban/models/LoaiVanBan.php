@@ -1,8 +1,9 @@
 <?php
 
-namespace app\modules\vanban\models\base;
+namespace app\modules\vanban\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "dm_loai_van_ban".
@@ -15,7 +16,7 @@ use Yii;
  *
  * @property VanBan[] $vanBans
  */
-class DmLoaiVanBanBase extends \app\models\VbDmLoaiVanBan
+class LoaiVanBan extends \app\models\VbDmLoaiVanBan
 {
     /**
      * {@inheritdoc}
@@ -30,7 +31,7 @@ class DmLoaiVanBanBase extends \app\models\VbDmLoaiVanBan
             [['ten_loai'], 'string', 'max' => 255],
         ];
     }
-
+    
     /**
      * {@inheritdoc}
      */
@@ -44,14 +45,34 @@ class DmLoaiVanBanBase extends \app\models\VbDmLoaiVanBan
             'thoi_gian_tao' => 'Thoi Gian Tao',
         ];
     }
-
+    
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            if ($insert) {
+                $this->nguoi_tao = Yii::$app->user->identity->id;
+                $this->thoi_gian_tao = date('Y-m-d H:i:s');
+            }
+        }
+        return true;
+    }
+    
+    /**
+     * lấy danh sách loại văn bản để fill dropdownlist
+     * @return array
+     */
+    public static function getList(){
+        $dsLoaiVanBan = LoaiVanBan::find()->all();
+        return ArrayHelper::map($dsLoaiVanBan, 'id', 'ten_loai');
+    }
+    
     /**
      * Gets query for [[VanBans]].
      *
      * @return \yii\db\ActiveQuery
      */
-   // public function getVanBans()
-   // {
-  //      return $this->hasMany(VanBan::class, ['id_loai_van_ban' => 'id']);
-  //  }
+    // public function getVanBans()
+    // {
+    //      return $this->hasMany(VanBan::class, ['id_loai_van_ban' => 'id']);
+    //  }
 }
