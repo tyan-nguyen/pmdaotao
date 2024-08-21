@@ -19,13 +19,25 @@ use yii\widgets\DetailView;
             ],
             'trich_yeu',
             'nguoi_ky',
-            'vbden_ngay_den',
+        'vbden_ngay_den' => [
+             'attribute' => 'vbden_ngay_den',
+             'value' => function($model) {
+             return Yii::$app->formatter->asDate($model->vbden_ngay_den, 'php:d/m/Y');
+                },
+            ],
+
+            
             'vbden_so_den',
             'vbden_nguoi_nhan',
-            'vbden_ngay_chuyen',
-            'vbdi_noi_nhan',
-            'vbdi_so_luong_ban',
-            'vbdi_ngay_chuyen',
+            'vbden_ngay_chuyen' => [
+                'attribute' => 'vbden_ngay_chuyen',
+                'value' => function($model) {
+                return Yii::$app->formatter->asDate($model->vbden_ngay_chuyen, 'php:d/m/Y');
+                   },
+               ],
+         
+          
+         
             'ghi_chu',
             'nguoi_tao',
             'thoi_gian_tao',

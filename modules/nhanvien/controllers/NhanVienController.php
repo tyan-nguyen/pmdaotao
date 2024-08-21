@@ -8,11 +8,11 @@ use app\modules\nhanvien\models\search\NhanVienSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use app\modules\nhanvien\models\To;
-use yii\filters\AccessControl;
+//use yii\filters\AccessControl;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
-use app\modules\hocvien\models\LoaiHoSo;
-use yii\filters\VerbFilter;
+use app\modules\kholuutru\models\HoSo;
+//use yii\filters\VerbFilter;
 use \yii\web\Response;
 /**
  * NhanVienController implements the CRUD actions for NhanVien model.
@@ -81,7 +81,7 @@ class NhanVienController extends Controller
         $model = new NhanVien();
     
         // Lấy danh sách loại hồ sơ từ cơ sở dữ liệu
-        $listLoaiHoSo = ArrayHelper::map(LoaiHoSo::find()->where(['doi_tuong' => 1])->all(), 'id', 'ten_ho_so');
+        $listLoaiHoSo = ArrayHelper::map(HoSo::find()->where(['doi_tuong' => 1])->all(), 'id', 'ten_ho_so');
 
     
         if ($request->isAjax) {

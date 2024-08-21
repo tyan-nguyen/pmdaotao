@@ -25,8 +25,8 @@
 							<li class="side-menu__label1"><a href="javascript:void(0)">Danh mục chức năng</a>
 							</li>
 							<!--<li><a href="/vanban/truy-van-vb?menu=tvvb" class="slide-item" data-menu="vbden">Truy vấn văn bản</a></li>-->
-							<li><a href="/vanban/van-ban-den2?menu=vbden" class="slide-item" data-menu="vbden">Danh sách văn bản đến</a></li>
-							<li><a href="/vanban/van-ban-di?menu=vbdi" class="slide-item" data-menu="vbdi">Danh sách văn bản đi</a></li>
+							<li><a href="/vanban/vb-den?menu=vbden" class="slide-item" data-menu="vbden">Danh sách văn bản đến</a></li>
+							<li><a href="/vanban/vb-di?menu=vbdi" class="slide-item" data-menu="vbdi">Danh sách văn bản đi</a></li>
 							</li>
 						</ul>
 						<div class="menutabs-content px-0">

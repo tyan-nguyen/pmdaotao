@@ -23,12 +23,13 @@
         "kartik-v/yii2-bootstrap5-dropdown": "@dev",
         "kartik-v/yii2-widget-switchinput": "dev-master",
         "kartik-v/yii2-widget-datepicker": "dev-master",
-        "kartik-v/yii2-widget-select2": "dev-master",
+        "kartik-v/yii2-widget-select2": "^2.2",
         "kartik-v/dependent-dropdown": "dev-master",
         "kartik-v/yii2-widget-depdrop": "dev-master",
         "phpoffice/phpspreadsheet": "^1.29",
         "2amigos/qrcode-library": "~1.1",
-        "wbraganca/yii2-dynamicform": "^2.0"
+        "wbraganca/yii2-dynamicform": "^2.0",
+        "dastanaron/yii2-dropzone-widget": "@dev"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

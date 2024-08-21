@@ -15,9 +15,14 @@ return [
         // 'attribute'=>'id',
     // ],
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'id_loai_van_ban',
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'id_loai_van_ban',
+        'value' => function ($model) {
+            return $model->loaiVanBan->ten_loai; 
+        },
+        
     ],
+    
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'so_vb',
@@ -29,10 +34,10 @@ return [
             return $model->ngayKy;
         }
     ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'trich_yeu',
-    ],
+   // [
+     //   'class'=>'\kartik\grid\DataColumn',
+       // 'attribute'=>'trich_yeu',
+    //],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'nguoi_ky',

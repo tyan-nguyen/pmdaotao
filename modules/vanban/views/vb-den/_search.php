@@ -2,7 +2,9 @@
 use yii\bootstrap5\Html;
 use yii\widgets\ActiveForm;
 use app\modules\vanban\models\LoaiVanBan;
-
+use kartik\date\DatePicker;
+use app\custom\CustomFunc;
+use app\modules\nhanvien\models\NhanVien;
 /* @var $this yii\web\View */
 /* @var $model app\modules\vanban\models\VanBanDen */
 /* @var $form yii\widgets\ActiveForm */
@@ -19,30 +21,30 @@ use app\modules\vanban\models\LoaiVanBan;
       	]); ?>
 
     <?= $form->field($model, 'id_loai_van_ban')->dropDownList(LoaiVanBan::getList(), ['prompt'=>'Chọn loại văn bản']) ?>
-
-    <?= $form->field($model, 'so_vb')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'ngay_ky')->textInput() ?>
-
-    <?= $form->field($model, 'trich_yeu')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'nguoi_ky')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'vbden_ngay_den')->textInput() ?>
+    
+    <?= $form->field($model, 'vbden_ngay_den')->widget(DatePicker::classname(), [
+        'options' => ['placeholder' => 'Chọn ngày đến ...'],
+        'pluginOptions' => [
+            'autoclose' => true,
+            'format' => 'dd/mm/yyyy',
+        ]
+    ]); ?>
 
     <?= $form->field($model, 'vbden_so_den')->textInput() ?>
-
-    <?= $form->field($model, 'vbden_nguoi_nhan')->textInput() ?>
-
-    <?= $form->field($model, 'vbden_ngay_chuyen')->textInput() ?>
-
-    <?= $form->field($model, 'ghi_chu')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'nguoi_tao')->textInput() ?>
-
-    <?= $form->field($model, 'thoi_gian_tao')->textInput() ?>
-
-    <?= $form->field($model, 'so_loai_van_ban')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'vbden_nguoi_nhan')->dropDownList(
+        NhanVien::getList(), 
+            [
+                'prompt' => 'Chọn người nhận',
+                'class' => 'form-control dropdown-with-arrow',
+            ]
+    ) ?>
+        <?= $form->field($model, 'vbden_ngay_chuyen')->widget(DatePicker::classname(), [
+        'options' => ['placeholder' => 'Chọn ngày chuyển  ...'],
+        'pluginOptions' => [
+            'autoclose' => true,
+            'format' => 'dd/mm/yyyy',
+        ]
+        ]); ?>
 
   
 	<?php if (!Yii::$app->request->isAjax){ ?>
@@ -55,3 +57,8 @@ use app\modules\vanban\models\LoaiVanBan;
     <?php ActiveForm::end(); ?>
     
 </div>
+<style>
+    .van-ban-den-search label {
+    font-weight: bold;
+}
+</style>

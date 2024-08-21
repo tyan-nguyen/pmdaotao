@@ -46,7 +46,7 @@ class VanBanBase extends \app\models\VbVanBan
         if($this->so_loai_van_ban == $this::VBDEN_VALUE)
             return $this::VBDEN_LABEL;
         else if($this->so_loai_van_ban == $this::VBDI_VALUE)
-            return $this::VBDVBDI_LABELEN_LABEL;
+            return $this::VBDI_LABEL;
         else 
             return null;
     }
@@ -100,7 +100,7 @@ class VanBanBase extends \app\models\VbVanBan
         }
         
         $this->ngay_ky = CustomFunc::convertDMYToYMD($this->ngay_ky);
-        
+  
         return parent::beforeSave($insert);
     }
 

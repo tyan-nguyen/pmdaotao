@@ -35,7 +35,9 @@ $config = [
             'class' => 'app\modules\hocvien\Hocvien',
         ],
 
-        
+        'dynamikjs' => [
+            'class' => 'dastanaron\dropzone\DynamicJSModule'
+        ],
        
         'user-management' => [
             'class' => 'webvimark\modules\UserManagement\UserManagementModule',

@@ -1,11 +1,14 @@
 <?php
 
 namespace app\modules\nhanvien\models\base;
-use yii;
-use app\modules\user\models\User;
+
+use Yii;
 use app\modules\nhanvien\models\PhongBan;
+use app\modules\user\models\User;
+use app\modules\nhanvien\models\To;
+use app\modules\vanban\models\VanBan;
 /**
- * This is the model class for table "nhan_vien".
+ * This is the model class for table "nv_nhan_vien".
  *
  * @property int $id
  * @property int|null $id_phong_ban
@@ -24,13 +27,16 @@ use app\modules\nhanvien\models\PhongBan;
  * @property string|null $trang_thai
  * @property int|null $nguoi_tao
  * @property string|null $thoi_gian_tao
+ * @property int|null $id_to
+ * @property int|null $gioi_tinh
  *
- * @property Day[] $days
- * @property HoSoNhanVien[] $hoSoNhanViens
+ * @property Day[] $nvDays
+ * @property PhongBan $phongBan
  * @property User $taiKhoan
- * @property VanBan[] $vanBans
+ * @property To $to
+ * @property VanBan[] $vbVanBans
  */
-class NhanVienBase extends \yii\db\ActiveRecord
+class NhanVienBase extends \app\models\NvNhanVien
 {
     /**
      * {@inheritdoc}
@@ -46,13 +52,14 @@ class NhanVienBase extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_phong_ban', 'tai_khoan', 'nguoi_tao','check_giao_vien','id_to','gioi_tinh'], 'integer'],
+            [['id_phong_ban', 'tai_khoan', 'nguoi_tao', 'id_to', 'gioi_tinh'], 'integer'],
             [['ho_ten'], 'required'],
             [['kinh_nghiem_lam_viec'], 'string'],
             [['thoi_gian_tao'], 'safe'],
             [['ho_ten', 'chuc_vu', 'so_cccd', 'dia_chi', 'dien_thoai', 'email', 'trinh_do', 'chuyen_nganh', 'vi_tri_cong_viec', 'ma_so_thue', 'trang_thai'], 'string', 'max' => 255],
+            [['id_phong_ban'], 'exist', 'skipOnError' => true, 'targetClass' => PhongBan::class, 'targetAttribute' => ['id_phong_ban' => 'id']],
+            [['id_to'], 'exist', 'skipOnError' => true, 'targetClass' => To::class, 'targetAttribute' => ['id_to' => 'id']],
             [['tai_khoan'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['tai_khoan' => 'id']],
-          
         ];
     }
 
@@ -63,44 +70,71 @@ class NhanVienBase extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'id_phong_ban' => 'Phòng ban',
-            'id_to'=>'Tổ',
-            'ho_ten' => 'Họ tên',
-            'gioi_tinh'=>'Giới tính',
-            'chuc_vu' => 'Chức vụ',
-            'so_cccd' => 'Số cccd',
-            'dia_chi' => 'Địa chỉ',
-            'dien_thoai' => 'Điện thoại',
-            'tai_khoan' => 'Tài khoản',
+            'id_phong_ban' => 'Id Phong Ban',
+            'ho_ten' => 'Ho Ten',
+            'chuc_vu' => 'Chuc Vu',
+            'so_cccd' => 'So Cccd',
+            'dia_chi' => 'Dia Chi',
+            'dien_thoai' => 'Dien Thoai',
+            'tai_khoan' => 'Tai Khoan',
             'email' => 'Email',
-            'trinh_do' => 'Trình độ',
-            'chuyen_nganh' => 'Chuyên ngành',
-            'vi_tri_cong_viec' => 'Vị trí công việc',
-            'kinh_nghiem_lam_viec' => 'Kinh nghiệm làm việc',
-            'ma_so_thue' => 'Mã số thuế',
-            'trang_thai' => 'Trạng thái',
-            'nguoi_tao' => 'Người tạo',
-            'thoi_gian_tao' => 'Thời gian tạo',
-            'check_giao_vien'=>'Là giáo viên ?',
+            'trinh_do' => 'Trinh Do',
+            'chuyen_nganh' => 'Chuyen Nganh',
+            'vi_tri_cong_viec' => 'Vi Tri Cong Viec',
+            'kinh_nghiem_lam_viec' => 'Kinh Nghiem Lam Viec',
+            'ma_so_thue' => 'Ma So Thue',
+            'trang_thai' => 'Trang Thai',
+            'nguoi_tao' => 'Nguoi Tao',
+            'thoi_gian_tao' => 'Thoi Gian Tao',
+            'id_to' => 'Id To',
+            'gioi_tinh' => 'Gioi Tinh',
         ];
     }
 
+    /**
+     * Gets query for [[NvDays]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+  
+
+    /**
+     * Gets query for [[PhongBan]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
     public function getPhongBan()
     {
         return $this->hasOne(PhongBan::class, ['id' => 'id_phong_ban']);
     }
-    public function beforeSave($insert)
-    {
-        if (parent::beforeSave($insert)) {
-            if ($insert) {
-              
 
-                $this->nguoi_tao = Yii::$app->user->identity->id; 
-                $this->thoi_gian_tao = date('Y-m-d H:i:s');
-            }
-            return true;
-        }
-        return false;
+    /**
+     * Gets query for [[TaiKhoan]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTaiKhoan()
+    {
+        return $this->hasOne(User::class, ['id' => 'tai_khoan']);
     }
 
+    /**
+     * Gets query for [[To]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTo()
+    {
+        return $this->hasOne(To::class, ['id' => 'id_to']);
+    }
+
+    /**
+     * Gets query for [[VbVanBans]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getVbVanBans()
+    {
+        return $this->hasMany(VanBan::class, ['vbden_nguoi_nhan' => 'id']);
+    }
 }

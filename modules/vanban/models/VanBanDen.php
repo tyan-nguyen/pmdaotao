@@ -41,5 +41,10 @@ class VanBanDen extends VanBan
         if ($existingRecord) {
             $this->addError($attribute, 'Số đến đã tồn tại trong cơ sở dữ liệu.');
         }
+       
+        
+    }
+    public function getLoaiVanBan() {
+        return $this->hasOne(LoaiVanBan::class, ['id' => 'id_loai_van_ban']);
     }
 }

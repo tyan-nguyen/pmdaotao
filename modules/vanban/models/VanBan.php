@@ -4,6 +4,7 @@ namespace app\modules\vanban\models;
 
 use Yii;
 use app\modules\vanban\models\base\VanBanBase;
+use app\modules\nhanvien\models\NhanVien;
 use app\custom\CustomFunc;
 
 class VanBan extends VanBanBase
@@ -26,10 +27,10 @@ class VanBan extends VanBanBase
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getVbDinhKems()
-    {
-        return $this->hasMany(VbDinhKem::class, ['id_van_ban' => 'id']);
-    }
+    //public function getVbDinhKems()
+    //{
+   //     return $this->hasMany(VbDinhKem::class, ['id_van_ban' => 'id']);
+   // }
     
     
     /**

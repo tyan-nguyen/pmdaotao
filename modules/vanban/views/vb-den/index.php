@@ -72,6 +72,7 @@ Yii::$app->params['showExport'] = true;
             ]
         ])?>
     </div>
+    
 </div>
 
 <?php Pjax::end(); ?>

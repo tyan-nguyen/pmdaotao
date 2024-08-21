@@ -9,7 +9,7 @@ use yii\bootstrap5\ActiveForm;
 use yii\widgets\Pjax;
 use yii\helpers\ArrayHelper;
 use app\modules\nhanvien\models\PhongBan;
-
+use app\widgets\FilterFormWidget;
 /* @var $this yii\web\View */
 /* @var $searchModel app\modules\nhanvien\models\search\NhanVienSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -20,73 +20,13 @@ $this->params['breadcrumbs'][] = $this->title;
 CrudAsset::register($this);
 $totalCount = $dataProvider->getCount(); 
 
-$this->registerJs(<<<JS
-    $('#toggle-search-icon').click(function() {
-        $('#search-fields').toggle(); // Toggle hiển thị các trường tìm kiếm
-    });
-JS
-);
+
+Yii::$app->params['showSearch'] = true;
+Yii::$app->params['showExport'] = true;
 ?>
 
-<!-- Khung chứa biểu tượng tìm kiếm và các trường tìm kiếm -->
-<div id="search-box" class="search-box">
-    <!-- Biểu tượng tìm kiếm luôn hiển thị -->
-    <div id="toggle-search-icon" class="search-icon">
-        <i class="fas fa-search"></i> <span>Tìm kiếm</span>
-    </div>
 
-    <!-- Các trường tìm kiếm, ẩn ban đầu -->
-    <div id="search-fields" class="search-fields">
-    <?php $form = ActiveForm::begin([
-        'method' => 'get',
-        'action' => ['index'],
-    ]); ?>
-
-    <div class="row">
-        <div class="col-md-3">
-            <?= $form->field($searchModel, 'id_phong_ban')->widget(\kartik\select2\Select2::classname(), [
-                'data' => ArrayHelper::map(PhongBan::find()->orderBy('ten_phong_ban')->asArray()->all(), 'id', 'ten_phong_ban'),
-                'options' => ['placeholder' => 'Chọn phòng ban'],
-                'pluginOptions' => [
-                    'allowClear' => true
-                ],
-                'pluginEvents' => [
-                    "select2:select" => "function() { $(this).closest('form').submit(); }",
-                ],
-            ]) ?>
-        </div>
-        <div class="col-md-3">
-            <?= $form->field($searchModel, 'ho_ten')->textInput([
-                'placeholder' => 'Họ tên',
-                'onchange' => 'this.form.submit()' 
-            ]) ?>
-        </div>
-        <div class="col-md-3">
-            <?= $form->field($searchModel, 'kinh_nghiem_lam_viec')->textInput([
-                'placeholder' => 'Kinh nghiệm',
-                'onchange' => 'this.form.submit()' 
-            ]) ?>
-        </div>
-        <div class="col-md-3">
-            <?= $form->field($searchModel, 'gioi_tinh')->widget(\kartik\select2\Select2::classname(), [
-                'data' => [
-                    '1' => 'Nam',
-                    '0' => 'Nữ',
-                ],
-                'options' => ['placeholder' => 'Chọn giới tính'],
-                'pluginOptions' => [
-                    'allowClear' => true
-                ],
-                'pluginEvents' => [
-                    "select2:select" => "function() { $(this).closest('form').submit(); }",
-                ],
-            ]) ?>
-        </div>
-    </div>
-
-    <?php ActiveForm::end(); ?>
-</div>
-            </div>
+            
 <!-- Khung chứa GridView -->
 <div id="grid-view-container">
     <?php Pjax::begin(['id' => 'grid-pjax']); ?>
@@ -162,6 +102,10 @@ JS
 ]) ?>
 <?php Modal::end(); ?>
 
+<?php
+    $searchContent = $this->render("_search", ["model" => $searchModel]);
+    echo FilterFormWidget::widget(["content"=>$searchContent, "description"=>"Nhập thông tin tìm kiếm."]) 
+?>
 <style>
     /* Customize the modal appearance */
     #ajaxCrudModal .modal-dialog {

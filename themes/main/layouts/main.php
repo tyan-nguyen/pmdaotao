@@ -12,12 +12,17 @@ $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, 
 $this->registerMetaTag(['name' => 'description', 'content' => $this->params['meta_description'] ?? '']);
 $this->registerMetaTag(['name' => 'keywords', 'content' => $this->params['meta_keywords'] ?? '']);
 $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii::getAlias('@web/assets/images/brand/favicon.ico')]);
+
 ?>
 <?php $this->beginPage() ?>
 <!doctype html>
 <html lang="vi" dir="ltr">
 	<head>
 		<link rel="shortcut icon" type="image/x-icon" href="<?= Yii::getAlias('@web')  ?>/assets/images/brand/favicon.ico" >
+		<link rel="stylesheet" href="../assets/css/theme.min.css">
+		<script src="../node_modules/dropzone/dist/min/dropzone.min.js"></script>
+		<script src="../assets/js/dropzone.js"></script>
+
 		<!-- Title -->
 		<title><?= Html::encode($this->title) ?></title>
 		<?php $this->head() ?>

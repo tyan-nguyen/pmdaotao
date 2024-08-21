@@ -61,10 +61,18 @@ class LoaiVanBan extends \app\models\VbDmLoaiVanBan
      * lấy danh sách loại văn bản để fill dropdownlist
      * @return array
      */
-    public static function getList(){
-        $dsLoaiVanBan = LoaiVanBan::find()->all();
-        return ArrayHelper::map($dsLoaiVanBan, 'id', 'ten_loai');
+    public static function getList()
+    {
+        // Sắp xếp danh sách theo thứ tự bảng chữ cái dựa trên 'ten_loai'
+        $dsLoaiVanBan = LoaiVanBan::find()->orderBy(['ten_loai' => SORT_ASC])->all();
+    
+        // Thêm dấu + vào trước mỗi tên loại văn bản
+        return ArrayHelper::map($dsLoaiVanBan, 'id', function($model) {
+            return '+ ' . $model->ten_loai; // Thêm dấu + trước tên loại
+        });
     }
+    
+
     
     /**
      * Gets query for [[VanBans]].

@@ -36,7 +36,7 @@ class VbDenController extends Controller
 	
 	public function beforeAction($action)
 	{
-	    Yii::$app->params['moduleID'] = 'Module Văn bản đến';
+	    Yii::$app->params['moduleID'] = 'Module Văn bản ';
 	    Yii::$app->params['modelID'] = 'Quản lý Văn bản đến';
 	    return true;
 	}
@@ -46,22 +46,34 @@ class VbDenController extends Controller
      * @return mixed
      */
     public function actionIndex()
-    {    
+    {
         $searchModel = new VBDenSearch();
-  		if(isset($_POST['search']) && $_POST['search'] != null){
+    
+        // Giá trị 'so_loai_van_ban' cần lọc
+        $soLoaiVanBanFilter = 'VB_DEN'; // Giá trị cụ thể cần lọc
+    
+        if (isset($_POST['search']) && $_POST['search'] != null) {
             $dataProvider = $searchModel->search(Yii::$app->request->post(), $_POST['search']);
         } else if ($searchModel->load(Yii::$app->request->post())) {
+            // Nếu có dữ liệu POST nhưng không có từ khóa tìm kiếm, nạp dữ liệu vào mô hình tìm kiếm
             $searchModel = new VBDenSearch(); // "reset"
             $dataProvider = $searchModel->search(Yii::$app->request->post());
         } else {
+            // Nếu không có dữ liệu POST, chỉ gọi phương thức search với tham số queryParams
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        } 
-
+        }
+    
+        // Lọc dữ liệu dựa trên giá trị 'so_loai_van_ban'
+        $query = $dataProvider->query;
+        $query->andFilterWhere(['so_loai_van_ban' => $soLoaiVanBanFilter]);
+    
+        // Render view 'index' và truyền đối tượng tìm kiếm và data provider vào view
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
+    
 
 
     /**
@@ -99,7 +111,14 @@ class VbDenController extends Controller
     {
         $request = Yii::$app->request;
         $model = new VanBanDen();  
-
+        $maxSoDen = VanBanDen::find()->max('vbden_so_den');
+        $model->vbden_so_den = $maxSoDen ? $maxSoDen + 1 : 1;
+        $currentYear = date('Y');
+     
+        
+        // Thiết lập giá trị mặc định cho 'so_vb'
+        $model->so_vb = "/$currentYear";
+    
         if($request->isAjax){
             /*
             *   Process for ajax request
@@ -113,7 +132,7 @@ class VbDenController extends Controller
                     ]),
                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                                 Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
-        
+    
                 ];         
             }else if($model->load($request->post()) && $model->save()){
                 return [
@@ -123,7 +142,7 @@ class VbDenController extends Controller
                     'tcontent'=>'Thêm mới thành công!',
                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                             Html::a('Tiếp tục thêm',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
-        
+    
                 ];         
             }else{           
                 return [
@@ -133,7 +152,7 @@ class VbDenController extends Controller
                     ]),
                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                                 Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
-        
+    
                 ];         
             }
         }else{
@@ -145,11 +164,12 @@ class VbDenController extends Controller
             } else {
                 return $this->render('create', [
                     'model' => $model,
+                   
                 ]);
             }
         }
-       
     }
+    
 
     /**
      * Updates an existing VanBanDen model.

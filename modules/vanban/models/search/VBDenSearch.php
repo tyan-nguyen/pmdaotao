@@ -59,7 +59,7 @@ class VBDenSearch extends VanBanDen
             ['like', 'trich_yeu', $cusomSearch],
             ['like', 'nguoi_ky', $cusomSearch],
             ['like', 'vbdi_noi_nhan', $cusomSearch],
-            ['like', 'ghi_chu', $cusomSearch],
+            ['like', 'vbden_ngay_chuyen', $cusomSearch],
             ['like', 'so_loai_van_ban', $cusomSearch]] );
  
 		} else {
@@ -83,6 +83,7 @@ class VBDenSearch extends VanBanDen
             ->andFilterWhere(['like', 'vbdi_noi_nhan', $this->vbdi_noi_nhan])
             ->andFilterWhere(['like', 'ghi_chu', $this->ghi_chu])
             ->andFilterWhere(['like', 'so_loai_van_ban', $this->so_loai_van_ban]);
+          
 		}
         return $dataProvider;
     }
