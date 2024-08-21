@@ -97,6 +97,7 @@ class VanBanBase extends \app\models\VbVanBan
         if ($this->isNewRecord) {
             $this->nguoi_tao = Yii::$app->user->identity->id;
             $this->thoi_gian_tao = date('Y-m-d H:i:s');
+            $this->nam = date('Y'); 
         }
         
         $this->ngay_ky = CustomFunc::convertDMYToYMD($this->ngay_ky);
