@@ -20,8 +20,9 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 	<head>
 		<link rel="shortcut icon" type="image/x-icon" href="<?= Yii::getAlias('@web')  ?>/assets/images/brand/favicon.ico" >
 		<link rel="stylesheet" href="../assets/css/theme.min.css">
-		<script src="../node_modules/dropzone/dist/min/dropzone.min.js"></script>
-		<script src="../assets/js/dropzone.js"></script>
+		<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+		<link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+		
 
 		<!-- Title -->
 		<title><?= Html::encode($this->title) ?></title>

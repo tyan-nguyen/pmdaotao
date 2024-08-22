@@ -9,6 +9,8 @@ use app\modules\nhanvien\models\NhanVien;
 /* @var $this yii\web\View */
 /* @var $model app\modules\vanban\models\VanBanDen */
 /* @var $form yii\widgets\ActiveForm */
+$this->registerCssFile('@web/node_modules/dropzone/dist/dropzone.css');
+$this->registerJsFile('@web/node_modules/dropzone/dist/dropzone-min.js', ['depends' => [\yii\web\JqueryAsset::class]]);
 ?>
 
 <?php 
@@ -69,8 +71,11 @@ $currentYear = date('Y');
     ]); ?>
 
     <?= $form->field($model, 'ghi_chu')->textarea(['rows' => 5]) ?>
-
-  
+    <div class="form-group">
+        <label for="dropzone">Tải file lên:</label>
+        <div id="dropzone" class="dropzone"></div>
+    </div>
+   
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">
 	        <?= Html::submitButton($model->isNewRecord ? 'Thêm mới' : 'Cập nhật', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
@@ -108,3 +113,22 @@ $currentYear = date('Y');
 }
 
 </style>
+<script>
+Dropzone.autoDiscover = false;
+
+var myDropzone = new Dropzone("#dropzone", {
+    url: "/file-upload", // Đường dẫn đến API xử lý upload file
+    maxFilesize: 2, // Giới hạn kích thước file (MB)
+    addRemoveLinks: true,
+    dictRemoveFile: "Xóa file",
+    dictDefaultMessage: "Kéo và thả file vào đây hoặc nhấn để chọn file",
+    acceptedFiles: ".png,.jpg,.jpeg,.pdf,.docx", // Giới hạn loại file
+    success: function (file, response) {
+        console.log("File uploaded successfully");
+    },
+    error: function (file, response) {
+        console.log("File upload failed");
+    }
+});
+</script>
+
