@@ -21,9 +21,9 @@ $currentYear = date('Y');
 ?>
 
 <div class="van-ban-den-form">
-
-    <?php $form = ActiveForm::begin(); ?>
-
+     <?php $form = ActiveForm::begin([
+         'options' => ['enctype' => 'multipart/form-data']
+     ]); ?>
     <?= $form->field($model, 'id_loai_van_ban')->dropDownList(
     LoaiVanBan::getList(), 
     [

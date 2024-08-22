@@ -17,5 +17,15 @@ class NhanVien extends NhanVienBase
          return '+ ' . $model->ho_ten; // Thêm dấu + trước tên nhân viên
         });
     }
+    public static function getListTD()
+    {
+        $trinhDoList = [
+            'Đại học' => 'Đại học',
+            'Cao đẳng' => 'Cao đẳng',
+            'Trung cấp' => 'Trung cấp',
+            'Khác' => 'Khác',
+        ];
+        return $trinhDoList;
+    }
 
 }

@@ -4,6 +4,7 @@ use yii\widgets\ActiveForm;
 use app\modules\nhanvien\models\PhongBan;
 use app\modules\user\models\User;
 use yii\helpers\ArrayHelper;
+use app\modules\nhanvien\models\NhanVien;
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\nhanvien\models\NhanVien */
@@ -100,8 +101,15 @@ $listTaiKhoan = ArrayHelper::map($taiKhoans, 'id', 'username');
             <?= $form->field($model, 'chuc_vu')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-4">
-            <?= $form->field($model, 'trinh_do')->textInput(['maxlength' => true]) ?>
-        </div>
+    <?= $form->field($model, 'trinh_do')->dropDownList(
+      NhanVien::getListTD(), // Gọi phương thức để lấy danh sách trình độ
+        [
+            'prompt' => 'Chọn trình độ', // Placeholder hiển thị khi chưa chọn giá trị
+            'class' => 'form-control', // Thay đổi lớp CSS nếu cần
+        ]
+    ) ?>
+</div>
+
         <div class="col-md-4">
             <?= $form->field($model, 'chuyen_nganh')->textInput(['maxlength' => true]) ?>
         </div>

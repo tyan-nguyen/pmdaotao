@@ -58,10 +58,12 @@ $currentYear = date('Y');
     ]); ?>
 
     <?= $form->field($model, 'ghi_chu')->textarea(['rows' => 5]) ?>
+
     <div class="form-group">
         <label for="dropzone">Tải file lên:</label>
         <div id="dropzone" class="dropzone"></div>
     </div>
+    
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">
 	        <?= Html::submitButton($model->isNewRecord ? 'Thêm mới' : 'Cập nhật', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
