@@ -29,8 +29,7 @@ class GiaoVienController extends Controller
         $searchModel = new GiaoVienSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
     
-        // Thêm điều kiện lọc theo check_giao_vien = 1
-        $dataProvider->query->andWhere(['check_giao_vien' => 1]);
+        
     
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -38,7 +37,12 @@ class GiaoVienController extends Controller
         ]);
     }
     
-
+    public function beforeAction($action)
+	{
+	    Yii::$app->params['moduleID'] = 'Module Quản lý Giáo viên';
+	    Yii::$app->params['modelID'] = 'Quản lý Giáo viên';
+	    return true;
+	}
 
     /**
      * Displays a single NhanVien model.
@@ -83,7 +87,7 @@ class GiaoVienController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Thêm Nhân viên",
+                    'title'=> "Thêm Giáo viên",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -94,15 +98,15 @@ class GiaoVienController extends Controller
             }else if($model->load($request->post()) && $model->save()){
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Thêm Nhân Viên",
-                    'content'=>'<span class="text-success">Thêm Nhân viên thành công</span>',
+                    'title'=> "Thêm Giáo Viên",
+                    'content'=>'<span class="text-success">Thêm Giáo viên thành công</span>',
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                             Html::a('Create More',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
         
                 ];         
             }else{           
                 return [
-                    'title'=> "Thêm Nhân viên",
+                    'title'=> "Thêm Giáo viên",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -145,7 +149,7 @@ class GiaoVienController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Cập nhật Nhân viên #".$id,
+                    'title'=> "Cập nhật Giáo viên #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
@@ -155,7 +159,7 @@ class GiaoVienController extends Controller
             }else if($model->load($request->post()) && $model->save()){
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Nhân viên #".$id,
+                    'title'=> "Giáo viên #".$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $model,
                     ]),
@@ -164,7 +168,7 @@ class GiaoVienController extends Controller
                 ];    
             }else{
                  return [
-                    'title'=> "Cập nhật Nhân viên #".$id,
+                    'title'=> "Cập nhật Giáo viên #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),

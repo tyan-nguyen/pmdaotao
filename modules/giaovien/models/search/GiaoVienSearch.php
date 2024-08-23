@@ -75,7 +75,7 @@ class GiaoVienSearch extends NhanVienSearch
             ->andFilterWhere(['like', 'kinh_nghiem_lam_viec', $this->kinh_nghiem_lam_viec])
             ->andFilterWhere(['like', 'ma_so_thue', $this->ma_so_thue])
             ->andFilterWhere(['like', 'trang_thai', $this->trang_thai])
-            ->andFilterWhere(['like', 'check_giao_vien', $this->check_giao_vien]);
+            ->andFilterWhere(['like', 'doi_tuong', $this->doi_tuong]);
         return $dataProvider;
     }
 }

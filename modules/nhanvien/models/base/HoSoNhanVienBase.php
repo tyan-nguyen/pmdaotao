@@ -3,7 +3,7 @@
 namespace app\modules\nhanvien\models\base;
 
 use Yii;
-
+use app\modules\kholuutru\models\LoaiHoSo;
 /**
  * This is the model class for table "nv_ho_so_nhan_vien".
  *
@@ -40,8 +40,8 @@ class HoSoNhanVienBase extends \yii\db\ActiveRecord
             [['id_nhan_vien', 'id_loai_ho_so', 'nguoi_tao'], 'integer'],
             [['thoi_gian_tao'], 'safe'],
             [['file_name', 'file_type', 'file_size', 'file_display_name'], 'string', 'max' => 255],
-            [['id_loai_ho_so'], 'exist', 'skipOnError' => true, 'targetClass' => HvLoaiHoSo::class, 'targetAttribute' => ['id_loai_ho_so' => 'id']],
-            [['id_nhan_vien'], 'exist', 'skipOnError' => true, 'targetClass' => NvNhanVien::class, 'targetAttribute' => ['id_nhan_vien' => 'id']],
+            [['id_loai_ho_so'], 'exist', 'skipOnError' => true, 'targetClass' => LoaiHoSo::class, 'targetAttribute' => ['id_loai_ho_so' => 'id']],
+            [['id_nhan_vien'], 'exist', 'skipOnError' => true, 'targetClass' => NhanVien::class, 'targetAttribute' => ['id_nhan_vien' => 'id']],
         ];
     }
 
@@ -70,7 +70,7 @@ class HoSoNhanVienBase extends \yii\db\ActiveRecord
      */
     public function getLoaiHoSo()
     {
-        return $this->hasOne(HvLoaiHoSo::class, ['id' => 'id_loai_ho_so']);
+        return $this->hasOne(LoaiHoSo::class, ['id' => 'id_loai_ho_so']);
     }
 
     /**
@@ -80,6 +80,6 @@ class HoSoNhanVienBase extends \yii\db\ActiveRecord
      */
     public function getNhanVien()
     {
-        return $this->hasOne(NvNhanVien::class, ['id' => 'id_nhan_vien']);
+        return $this->hasOne(NhanVien::class, ['id' => 'id_nhan_vien']);
     }
 }

@@ -114,8 +114,6 @@ class VbDenController extends Controller
         $maxSoDen = VanBanDen::find()->max('vbden_so_den');
         $model->vbden_so_den = $maxSoDen ? $maxSoDen + 1 : 1;
         $currentYear = date('Y');
-     
-        
         // Thiết lập giá trị mặc định cho 'so_vb'
         $model->so_vb = "/$currentYear";
     
@@ -315,4 +313,6 @@ class VbDenController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+    
 }
