@@ -16,7 +16,7 @@ return [
     // ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'id_loai_ho_so',
+        'attribute'=>'ten_loai',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',

@@ -18,7 +18,7 @@ class FileSearch extends File
     public function rules()
     {
         return [
-            [['id', 'id_loai_ho_so', 'nguoi_tao', 'id_doi_tuong'], 'integer'],
+            [['id', 'ten_loai', 'nguoi_tao', 'id_doi_tuong'], 'integer'],
             [['file_name', 'file_type', 'file_size', 'file_display_name', 'thoi_gian_tao', 'doi_tuong'], 'safe'],
         ];
     }
@@ -64,7 +64,7 @@ class FileSearch extends File
 		} else {
         	$query->andFilterWhere([
             'id' => $this->id,
-            'id_loai_ho_so' => $this->id_loai_ho_so,
+            'ten_loai' => $this->ten_loai,
             'nguoi_tao' => $this->nguoi_tao,
             'thoi_gian_tao' => $this->thoi_gian_tao,
             'id_doi_tuong' => $this->id_doi_tuong,

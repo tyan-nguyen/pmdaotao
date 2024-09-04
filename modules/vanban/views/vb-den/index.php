@@ -3,7 +3,7 @@ use yii\helpers\Url;
 use yii\bootstrap5\Html;
 use yii\bootstrap5\Modal;
 use kartik\grid\GridView;
-use cangak\ajaxcrud\CrudAsset; 
+//use cangak\ajaxcrud\CrudAsset; 
 use cangak\ajaxcrud\BulkButtonWidget;
 use yii\widgets\Pjax;
 use app\widgets\FilterFormWidget;
@@ -15,7 +15,7 @@ use app\widgets\FilterFormWidget;
 $this->title = 'Văn bản đến';
 $this->params['breadcrumbs'][] = $this->title;
 
-CrudAsset::register($this);
+//CrudAsset::register($this);
 
 Yii::$app->params['showSearch'] = true;
 Yii::$app->params['showExport'] = true;
@@ -92,12 +92,12 @@ Yii::$app->params['showExport'] = true;
 
 <?php Modal::begin([
    'options' => [
-        'id'=>'ajaxCrudModal-2',
+        'id'=>'ajaxCrudModal2',
         'tabindex' => false // important for Select2 to work properly
    ],
    'dialogOptions'=>['class'=>'modal-lg'],
    'closeButton'=>['label'=>'<span aria-hidden=\'true\'>×</span>'],
-   'id'=>'ajaxCrudModal',
+   'id'=>'ajaxCrudModal2',
     'footer'=>'',// always need it for jquery plugin
 ])?>
 

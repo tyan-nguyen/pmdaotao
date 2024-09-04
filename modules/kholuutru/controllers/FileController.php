@@ -54,6 +54,46 @@ class FileController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+    
+    /**
+     * upload single file
+     */
+    public function actionUploadSingle($loaiDoiTuong, $doiTuong, $idDoiTuong){
+        $request = Yii::$app->request;
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $model = new File();
+        if($request->isGet){
+            return [
+                'title'=> "Tải file",
+                'content'=>$this->renderAjax('upload-single', [
+                    'model' => $model,
+                ]),
+                'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                
+            ];
+        }
+    }
+    
+    /**
+     * upload multi file
+     */
+    public function actionUploadMulti($loaiDoiTuong, $doiTuong, $idDoiTuong){
+        $request = Yii::$app->request;
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $model = new File();
+        if($request->isGet){
+            return [
+                'title'=> "Tải file",
+                'content'=>$this->renderAjax('upload-multi', [
+                    'model' => $model,
+                ]),
+                'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                
+            ];
+        }
+    }
 
 
     /**
@@ -171,6 +211,12 @@ class FileController extends Controller
                 ];         
             }else if($model->load($request->post()) && $model->save()){
                 return [
+                    'forceClose'=>true,   
+                    'excuteFunction'=>'reloadFileName()',
+                    'functionResponse'=>$this->renderAjax('view_single_file', ['model'=>$model]),
+                    'tcontent'=>'Cập nhật thành công!',
+                ];
+                /* return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "File",
                     'content'=>$this->renderAjax('view', [
@@ -179,7 +225,7 @@ class FileController extends Controller
                     'tcontent'=>'Cập nhật thành công!',
                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                             Html::a('Sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
-                ];    
+                ];    */ 
             }else{
                  return [
                     'title'=> "Cập nhật File",

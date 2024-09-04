@@ -4,6 +4,7 @@ namespace app\modules\vanban\models;
 
 use app\modules\nhanvien\models\NhanVien;
 use app\custom\CustomFunc;
+use app\modules\kholuutru\models\File;
 
 class VanBanDen extends VanBan
 {
@@ -61,12 +62,12 @@ class VanBanDen extends VanBan
      * get file van ban
      */
     public function getFileVB(){
-        
+        return File::getOneByLoaiFile(1, $this::MODEL_ID, $this->id);//1 is file vb
     }
     /**
      * get file dinh kem
      */
     public function getFileDinhKem(){
-        
+        return File::getAllByLoaiFile(2, $this::MODEL_ID, $this->id);//2 is vb dinh kem
     }
 }

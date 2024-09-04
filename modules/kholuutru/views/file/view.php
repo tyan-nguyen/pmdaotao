@@ -11,7 +11,7 @@ use yii\widgets\DetailView;
         'model' => $model,
         'attributes' => [
             'id',
-            'id_loai_ho_so',
+            'ten_loai',
             'file_name',
             'file_type',
             'file_size',
