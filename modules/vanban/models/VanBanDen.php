@@ -3,14 +3,23 @@
 namespace app\modules\vanban\models;
 
 use app\modules\nhanvien\models\NhanVien;
+use app\custom\CustomFunc;
 
 class VanBanDen extends VanBan
 {
+    CONST MODEL_ID = 'VBDEN';
     
     public function beforeSave($insert) {
         if ($this->isNewRecord) {
             $this->so_loai_van_ban = $this::VBDEN_VALUE;
         }
+        if($this->vbden_ngay_den != null){
+            $this->vbden_ngay_den = CustomFunc::convertDMYToYMD($this->vbden_ngay_den);
+        }
+        if($this->vbden_ngay_chuyen != null){
+            $this->vbden_ngay_chuyen = CustomFunc::convertDMYToYMD($this->vbden_ngay_chuyen);
+        }
+        
         return parent::beforeSave($insert);
     }
     
@@ -46,5 +55,18 @@ class VanBanDen extends VanBan
     }
     public function getLoaiVanBan() {
         return $this->hasOne(LoaiVanBan::class, ['id' => 'id_loai_van_ban']);
+    }
+    
+    /**
+     * get file van ban
+     */
+    public function getFileVB(){
+        
+    }
+    /**
+     * get file dinh kem
+     */
+    public function getFileDinhKem(){
+        
     }
 }

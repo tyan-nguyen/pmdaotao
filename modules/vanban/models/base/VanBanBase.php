@@ -99,8 +99,9 @@ class VanBanBase extends \app\models\VbVanBan
             $this->thoi_gian_tao = date('Y-m-d H:i:s');
             $this->nam = date('Y'); 
         }
-        
-        $this->ngay_ky = CustomFunc::convertDMYToYMD($this->ngay_ky);
+        if($this->ngay_ky != null){
+            $this->ngay_ky = CustomFunc::convertDMYToYMD($this->ngay_ky);
+        }
   
         return parent::beforeSave($insert);
     }

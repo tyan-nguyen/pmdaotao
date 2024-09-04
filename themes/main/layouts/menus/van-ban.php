@@ -3,7 +3,7 @@
 		<span class="side-menu__icon"><i class="fe fe-file-text side_menu_img"></i></span>
 		<span class="side-menu__label">Văn bản</span><i class="angle fe fe-chevron-right"></i>
 	</a>
-	<ul class="slide-menu" data-menu="btbd">
+	<ul class="slide-menu" data-menu="vb">
 		<li class="panel sidetab-menu">
 			<div class="tab-menu-heading p-0 pb-2 border-0">
 				<div class="tabs-menu ">
@@ -25,8 +25,8 @@
 							<li class="side-menu__label1"><a href="javascript:void(0)">Danh mục chức năng</a>
 							</li>
 							<!--<li><a href="/vanban/truy-van-vb?menu=tvvb" class="slide-item" data-menu="vbden">Truy vấn văn bản</a></li>-->
-							<li><a href="/vanban/vb-den?menu=vbden" class="slide-item" data-menu="vbden">Danh sách văn bản đến</a></li>
-							<li><a href="/vanban/vb-di?menu=vbdi" class="slide-item" data-menu="vbdi">Danh sách văn bản đi</a></li>
+							<li><a href="/vanban/vb-den?menu=vb1" class="slide-item" data-menu="vb1">Danh sách văn bản đến</a></li>
+							<li><a href="/vanban/vb-di?menu=vb2" class="slide-item" data-menu="vb2">Danh sách văn bản đi</a></li>
 							</li>
 						</ul>
 						<div class="menutabs-content px-0">

@@ -9,10 +9,10 @@ use yii\widgets\Pjax;
 use app\widgets\FilterFormWidget;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\modules\vanban\models\search\VBDenSearch */
+/* @var $searchModel app\modules\kholuutru\models\search\FileSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Văn bản đến';
+$this->title = 'Files';
 $this->params['breadcrumbs'][] = $this->title;
 
 CrudAsset::register($this);
@@ -28,7 +28,7 @@ Yii::$app->params['showExport'] = true;
     'formSelector' => '.myFilterForm'
 ]); ?>
 
-<div class="van-ban-den-index">
+<div class="file-index">
     <div id="ajaxCrudDatatable">
         <?=GridView::widget([
             'id'=>'crud-datatable',
@@ -39,7 +39,7 @@ Yii::$app->params['showExport'] = true;
             'toolbar'=> [
                 ['content'=>
                     Html::a('<i class="fas fa fa-plus" aria-hidden="true"></i> Thêm mới', ['create'],
-                    ['role'=>'modal-remote','title'=> 'Thêm mới Van Ban Dens','class'=>'btn btn-outline-primary']).
+                    ['role'=>'modal-remote','title'=> 'Thêm mới Files','class'=>'btn btn-outline-primary']).
                     Html::a('<i class="fas fa fa-sync" aria-hidden="true"></i> Tải lại', [''],
                     ['data-pjax'=>1, 'class'=>'btn btn-outline-primary', 'title'=>'Tải lại']).
                     //'{toggleData}'.
@@ -55,7 +55,7 @@ Yii::$app->params['showExport'] = true;
             'panel' => [
                 //'type' => 'primary', 
                 'heading' => '<i class="fas fa fa-list" aria-hidden="true"></i> Danh sách',
-                'before'=>'<em>* Danh sách Văn bản đến</em>',
+                'before'=>'<em>* Danh sách Files</em>',
                 'after'=>BulkButtonWidget::widget([
                             'buttons'=>Html::a('<i class="fas fa fa-trash" aria-hidden="true"></i>&nbsp; Xóa đã chọn',
                                 ["bulkdelete"] ,
@@ -72,7 +72,6 @@ Yii::$app->params['showExport'] = true;
             ]
         ])?>
     </div>
-    
 </div>
 
 <?php Pjax::end(); ?>
@@ -80,19 +79,6 @@ Yii::$app->params['showExport'] = true;
 <?php Modal::begin([
    'options' => [
         'id'=>'ajaxCrudModal',
-        'tabindex' => false // important for Select2 to work properly
-   ],
-   'dialogOptions'=>['class'=>'modal-xl'],
-   'closeButton'=>['label'=>'<span aria-hidden=\'true\'>×</span>'],
-   'id'=>'ajaxCrudModal',
-    'footer'=>'',// always need it for jquery plugin
-])?>
-
-<?php Modal::end(); ?>
-
-<?php Modal::begin([
-   'options' => [
-        'id'=>'ajaxCrudModal-2',
         'tabindex' => false // important for Select2 to work properly
    ],
    'dialogOptions'=>['class'=>'modal-lg'],
