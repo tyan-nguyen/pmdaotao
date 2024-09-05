@@ -11,6 +11,7 @@ use yii\filters\VerbFilter;
 use \yii\web\Response;
 use yii\helpers\Html;
 use yii\filters\AccessControl;
+use app\modules\kholuutru\models\LoaiFile;
 
 /**
  * FileController implements the CRUD actions for File model.
@@ -56,9 +57,12 @@ class FileController extends Controller
     }
     
     /**
+     * @param int $loaiFile : id của loại đối tượng nếu null thì hiển thị list chọn loại đối tượng trong form
+     * @param string $doiTuong: mã đối tượng <hocvien/vbden..>
+     * @param int $idDoiTuong: id của đối tượng thuộc bảng của mã đối tượng
      * upload single file
      */
-    public function actionUploadSingle($loaiDoiTuong, $doiTuong, $idDoiTuong){
+    public function actionUploadSingle($loaiFile=NULL, $doiTuong, $idDoiTuong){
         $request = Yii::$app->request;
         Yii::$app->response->format = Response::FORMAT_JSON;
         $model = new File();
@@ -67,6 +71,9 @@ class FileController extends Controller
                 'title'=> "Tải file",
                 'content'=>$this->renderAjax('upload-single', [
                     'model' => $model,
+                    'loaiFile' => $loaiFile,
+                    'doiTuong' => $doiTuong,
+                    'idDoiTuong' => $idDoiTuong
                 ]),
                 'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                 Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])

@@ -107,7 +107,7 @@ use app\modules\vanban\models\VanBanDen;
     		<div class="col-md-8">File văn bản</div>
         	<div class="col-md-4">
         		<?= Html::a('<i class="ti-files" data-bs-toggle="tooltip" aria-label="ti-files" data-bs-original-title="ti-files"></i>', 
-                            ['/kholuutru/file/upload-single', 
+                            ['/kholuutru/file/upload-multi', 
                                 'loaiDoiTuong'=>1,
                                 'doiTuong'=>VanBanDen::MODEL_ID,
                                 'idDoiTuong'=>$model->id
@@ -119,8 +119,7 @@ use app\modules\vanban\models\VanBanDen;
                )?>
                
                <?= Html::a('<i class="ti-file" data-bs-toggle="tooltip" aria-label="ti-file" data-bs-original-title="ti-file"></i>', 
-                   ['/kholuutru/file/upload-multi',  
-                       'loaiDoiTuong'=>1,
+                   ['/kholuutru/file/upload-single',
                        'doiTuong'=>VanBanDen::MODEL_ID,
                        'idDoiTuong'=>$model->id],
                             [
