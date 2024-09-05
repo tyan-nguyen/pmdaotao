@@ -1,9 +1,10 @@
 <?php
 
-namespace app\modules\hocvien\models\base;
+namespace app\modules\hocvien\models;
 
 use Yii;
 use app\modules\hocvien\models\HocVien;
+use app\custom\CustomFunc;
 /**
  * This is the model class for table "hv_nop_hoc_phi".
  *
@@ -16,9 +17,9 @@ use app\modules\hocvien\models\HocVien;
  * @property int|null $nguoi_tao
  * @property string|null $thoi_gian_tao
  *
- * @property HvHocVien $hocVien
+ * @property HocVien $hocVien
  */
-class NopHocPhi extends \app\models\HvNopHocPhi
+class NopHocPhi extends \app\models\HvHocPhi
 {
     /**
      * {@inheritdoc}
@@ -38,7 +39,7 @@ class NopHocPhi extends \app\models\HvNopHocPhi
             [['id_hoc_vien', 'nguoi_thu', 'nguoi_tao'], 'integer'],
             [['so_tien_nop'], 'number'],
             [['ngay_nop', 'thoi_gian_tao'], 'safe'],
-            [['bien_lai'], 'string', 'max' => 255],
+            [['bien_lai'], 'string'],
             [['id_hoc_vien'], 'exist', 'skipOnError' => true, 'targetClass' => HocVien::class, 'targetAttribute' => ['id_hoc_vien' => 'id']],
         ];
     }
@@ -50,13 +51,13 @@ class NopHocPhi extends \app\models\HvNopHocPhi
     {
         return [
             'id' => 'ID',
-            'id_hoc_vien' => 'Id Hoc Vien',
-            'so_tien_nop' => 'So Tien Nop',
-            'ngay_nop' => 'Ngay Nop',
-            'nguoi_thu' => 'Nguoi Thu',
-            'bien_lai' => 'Bien Lai',
-            'nguoi_tao' => 'Nguoi Tao',
-            'thoi_gian_tao' => 'Thoi Gian Tao',
+            'id_hoc_vien' => 'Học viên',
+            'so_tien_nop' => 'Số tiền nộp',
+            'ngay_nop' => 'Ngày nộp',
+            'nguoi_thu' => 'Người thu',
+            'bien_lai' => 'Biên lai',
+            'nguoi_tao' => 'Người tạo',
+            'thoi_gian_tao' => 'Thời gian tạo',
         ];
     }
 
@@ -68,5 +69,19 @@ class NopHocPhi extends \app\models\HvNopHocPhi
     public function getHocVien()
     {
         return $this->hasOne(HocVien::class, ['id' => 'id_hoc_vien']);
+    }
+    public function getNgayNop(){
+        return CustomFunc::convertYMDToDMY($this->ngay_nop);
+    }
+    public function beforeSave($insert) {
+        if ($this->isNewRecord) {
+            $this->nguoi_tao = Yii::$app->user->identity->id;
+            $this->thoi_gian_tao = date('Y-m-d H:i:s');
+            $this->ngay_nop = CustomFunc::convertDMYToYMD($this->ngay_nop);
+           
+           
+        }
+  
+        return parent::beforeSave($insert);
     }
 }

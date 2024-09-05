@@ -22,7 +22,8 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 		<link rel="stylesheet" href="../assets/css/theme.min.css">
 		<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
 		<link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
-		
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.min.js"></script>
+
 
 		<!-- Title -->
 		<title><?= Html::encode($this->title) ?></title>

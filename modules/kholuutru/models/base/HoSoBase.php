@@ -25,7 +25,7 @@ class HoSoBase extends \app\models\KhoHoSo
      */
     public static function tableName()
     {
-        return 'kho_ho_so';
+        return 'kho_file';
     }
 
     /**
@@ -34,10 +34,11 @@ class HoSoBase extends \app\models\KhoHoSo
     public function rules()
     {
         return [
-            [['id_loai_ho_so', 'file_display_name', 'doi_tuong', 'id_doi_tuong'], 'required'],
-            [['id_loai_ho_so', 'nguoi_tao', 'id_doi_tuong'], 'integer'],
+            [['ten_loai', 'file_display_name', 'doi_tuong', 'id_doi_tuong'], 'required'],
+            [['ten_loai', 'nguoi_tao', 'id_doi_tuong'], 'integer'],
             [['thoi_gian_tao'], 'safe'],
-            [['file_name', 'file_type', 'file_size', 'file_display_name', 'doi_tuong'], 'string', 'max' => 255],
+            [['file_name', 'file_type', 'file_size', 'file_display_name'], 'string', 'max' => 255],
+            [['doi_tuong'],'string','max'=>20],
         ];
     }
 

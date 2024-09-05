@@ -19,12 +19,10 @@ use yii\widgets\DetailView;
             ],
             'trich_yeu',
             'nguoi_ky',
-        'vbden_ngay_den' => [
-             'attribute' => 'vbden_ngay_den',
-             'value' => function($model) {
-             return Yii::$app->formatter->asDate($model->vbden_ngay_den, 'php:d/m/Y');
-                },
-            ],
+        'vbden_ngay_den'=>[
+            'attribute'=>'vbden_ngay_den',
+            'value'=>$model->vbdenND
+        ],
 
             
             'vbden_so_den',

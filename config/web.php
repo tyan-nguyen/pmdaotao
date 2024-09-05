@@ -70,6 +70,13 @@ $config = [
          ],
     ],
     'components' => [
+      
+        'pdf' => [
+            'class' => '\kartik\mpdf\Pdf',
+            'format' => \kartik\mpdf\Pdf::FORMAT_A4,
+            'orientation' => \kartik\mpdf\Pdf::ORIENT_PORTRAIT,
+            'destination' => \kartik\mpdf\Pdf::DEST_BROWSER,
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'mFLrLzLWpDqbmj4h6wheaBbx_QfNl17j',

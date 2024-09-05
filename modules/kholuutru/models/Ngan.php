@@ -84,4 +84,5 @@ class Ngan extends \yii\db\ActiveRecord
     {
         return $this->hasMany(LuuKho::class, ['id_ngan' => 'id']);
     }
+    
 }

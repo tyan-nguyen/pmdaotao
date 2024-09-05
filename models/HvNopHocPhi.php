@@ -38,7 +38,7 @@ class HvNopHocPhi extends \yii\db\ActiveRecord
             [['id_hoc_vien', 'nguoi_thu', 'nguoi_tao'], 'integer'],
             [['so_tien_nop'], 'number'],
             [['ngay_nop', 'thoi_gian_tao'], 'safe'],
-            [['bien_lai'], 'string', 'max' => 255],
+            [['bien_lai'], 'string'],
             [['id_hoc_vien'], 'exist', 'skipOnError' => true, 'targetClass' => HvHocVien::class, 'targetAttribute' => ['id_hoc_vien' => 'id']],
         ];
     }
@@ -51,12 +51,12 @@ class HvNopHocPhi extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'id_hoc_vien' => 'Id Hoc Vien',
-            'so_tien_nop' => 'So Tien Nop',
-            'ngay_nop' => 'Ngay Nop',
-            'nguoi_thu' => 'Nguoi Thu',
-            'bien_lai' => 'Bien Lai',
-            'nguoi_tao' => 'Nguoi Tao',
-            'thoi_gian_tao' => 'Thoi Gian Tao',
+            'so_tien_nop' => 'Số tiền nộp',
+            'ngay_nop' => 'Ngày nộp',
+            'nguoi_thu' => 'Nguười thu',
+            'bien_lai' => 'Biên lai',
+            'nguoi_tao' => 'Người tạo',
+            'thoi_gian_tao' => 'Thời gian tạo',
         ];
     }
 

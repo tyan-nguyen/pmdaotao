@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\HvHocVien;
+use app\models\HvKhoaHoc;
 
 /**
- * HocVienSearch represents the model behind the search form about `app\models\HvHocVien`.
+ * HVKhoaHocSearch represents the model behind the search form about `app\models\HvKhoaHoc`.
  */
-class HocVienSearch extends HvHocVien
+class HVKhoaHocSearch extends HvKhoaHoc
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class HocVienSearch extends HvHocVien
     public function rules()
     {
         return [
-            [['id', 'id_khoa_hoc', 'nguoi_tao'], 'integer'],
-            [['ho_ten', 'so_dien_thoai', 'so_cccd', 'ngay_cap_cccd', 'noi_cap_cccd', 'trang_thai', 'thoi_gian_tao'], 'safe'],
+            [['id', 'id_hang', 'nguoi_tao'], 'integer'],
+            [['ten_khoa_hoc', 'ngay_bat_dau', 'ngay_ket_thuc', 'ghi_chu', 'trang_thai', 'thoi_gian_tao'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class HocVienSearch extends HvHocVien
      */
     public function search($params)
     {
-        $query = HvHocVien::find();
+        $query = HvKhoaHoc::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -57,16 +57,15 @@ class HocVienSearch extends HvHocVien
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'id_khoa_hoc' => $this->id_khoa_hoc,
-            'ngay_cap_cccd' => $this->ngay_cap_cccd,
+            'id_hang' => $this->id_hang,
+            'ngay_bat_dau' => $this->ngay_bat_dau,
+            'ngay_ket_thuc' => $this->ngay_ket_thuc,
             'nguoi_tao' => $this->nguoi_tao,
             'thoi_gian_tao' => $this->thoi_gian_tao,
         ]);
 
-        $query->andFilterWhere(['like', 'ho_ten', $this->ho_ten])
-            ->andFilterWhere(['like', 'so_dien_thoai', $this->so_dien_thoai])
-            ->andFilterWhere(['like', 'so_cccd', $this->so_cccd])
-            ->andFilterWhere(['like', 'noi_cap_cccd', $this->noi_cap_cccd])
+        $query->andFilterWhere(['like', 'ten_khoa_hoc', $this->ten_khoa_hoc])
+            ->andFilterWhere(['like', 'ghi_chu', $this->ghi_chu])
             ->andFilterWhere(['like', 'trang_thai', $this->trang_thai]);
 
         return $dataProvider;

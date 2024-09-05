@@ -25,17 +25,20 @@ class GiaoVienController extends Controller
      * @return mixed
      */
     public function actionIndex()
-    {    
+    {
         $searchModel = new GiaoVienSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
     
-        
+        // Lấy dữ liệu từ phương thức search và thêm điều kiện 'doi_tuong = NHAN_VIEN'
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->andWhere(['doi_tuong' => ['NV_GV', 'GIAO_VIEN']]);
+
     
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
+    
     
     public function beforeAction($action)
 	{
@@ -55,7 +58,7 @@ class GiaoVienController extends Controller
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "NhanVien #".$id,
+                    'title'=> "Giáo viên #".$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
                     ]),

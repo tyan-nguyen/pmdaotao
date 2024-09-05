@@ -26,6 +26,7 @@ use Yii;
  * @property string|null $thoi_gian_tao
  * @property int|null $id_to
  * @property int|null $gioi_tinh
+ * @property string $ngay_sinh
  *
  * @property NvDay[] $nvDays
  * @property NvPhongBan $phongBan

@@ -19,15 +19,10 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'so_cccd')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'ngay_cap_cccd')->textInput() ?>
-
-    <?= $form->field($model, 'noi_cap_cccd')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'trang_thai')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'nguoi_tao')->textInput() ?>
-
-    <?= $form->field($model, 'thoi_gian_tao')->textInput() ?>
+   
 
   
 	<?php if (!Yii::$app->request->isAjax){ ?>

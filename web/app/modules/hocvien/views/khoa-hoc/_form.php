@@ -3,11 +3,11 @@ use yii\bootstrap5\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\modules\hocvien\models\KhoaHoc */
+/* @var $model app\models\HvKhoaHoc */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="khoa-hoc-form">
+<div class="hv-khoa-hoc-form">
 
     <?php $form = ActiveForm::begin(); ?>
 

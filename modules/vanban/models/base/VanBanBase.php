@@ -101,7 +101,8 @@ class VanBanBase extends \app\models\VbVanBan
         }
         
         $this->ngay_ky = CustomFunc::convertDMYToYMD($this->ngay_ky);
-  
+        $this->vbden_ngay_den = CustomFunc::convertDMYToYMD($this->vbden_ngay_den);
+        $this->vbden_ngay_chuyen = CustomFunc::convertDMYToYMD($this->vbden_ngay_chuyen);
         return parent::beforeSave($insert);
     }
 
