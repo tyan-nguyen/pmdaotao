@@ -22,6 +22,7 @@ use Yii;
  */
 class FileBase extends \app\models\KhoFile
 {
+    public $file; //sử dụng trong form
     /**
      * {@inheritdoc}
      */
@@ -33,6 +34,7 @@ class FileBase extends \app\models\KhoFile
             [['thoi_gian_tao'], 'safe'],
             [['file_name', 'file_type', 'file_size', 'file_display_name'], 'string', 'max' => 255],
             [['doi_tuong'], 'string', 'max' => 20],
+            [['file'], 'file'],
             [['ten_loai'], 'exist', 'skipOnError' => true, 'targetClass' => LoaiFileBase::class, 'targetAttribute' => ['ten_loai' => 'id']],
         ];
     }
@@ -53,6 +55,7 @@ class FileBase extends \app\models\KhoFile
             'thoi_gian_tao' => 'Thời gian tạo',
             'doi_tuong' => 'Đối tượng', //<vanban/hocvien..>
             'id_doi_tuong' => 'ID đối tượng tham chiếu', //id từ table van_ban, hoc_vien...
+            'file' => 'Tệp tin'
         ];
     }
     

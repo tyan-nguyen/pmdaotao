@@ -12,12 +12,15 @@ class VanBan extends VanBanBase
     public function getNgayKy(){
         return CustomFunc::convertYMDToDMY($this->ngay_ky);
     }
+<<<<<<< HEAD
     public function getVbdenND(){
         return CustomFunc::convertYMDToDMY($this->vbden_ngay_den);
     }
     public function getVbdenNC(){
         return CustomFunc::convertYMDToDMY($this->vbden_ngay_chuyen);
     }
+=======
+>>>>>>> f2a9a068afd729919e5e31bb4a53cd5f865d480c
     /**
      * Gets query for [[LoaiVanBan]].
      *

@@ -100,6 +100,7 @@ use app\modules\vanban\models\VanBanDen;
                 'so_loai_van_ban',
             ],
 <<<<<<< HEAD
+<<<<<<< HEAD
             'trich_yeu',
             'nguoi_ky',
         'vbden_ngay_den'=>[
@@ -126,6 +127,8 @@ use app\modules\vanban\models\VanBanDen;
         ],
     ]) ?>
 =======
+=======
+>>>>>>> f2a9a068afd729919e5e31bb4a53cd5f865d480c
         ]) */ ?>
     </div>
     
@@ -166,7 +169,10 @@ use app\modules\vanban\models\VanBanDen;
     		</div>
     </div>
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> f2a9a068afd729919e5e31bb4a53cd5f865d480c
 </div>
 
 
