@@ -153,3 +153,30 @@ Yii::$app->params['showExport'] = true;
         margin-top: 20px;
     }
 </style>
+<?php foreach ($dataProvider->models as $model): ?>
+    <div class="modal fade" id="options-modal-<?= $model->id ?>" tabindex="-1" aria-labelledby="optionsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="optionsModalLabel">Chọn hành động cho <?= Html::encode($model->ho_ten) ?></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <strong>Dạy</strong>
+                            <ul>
+                                <li><a href="<?= Url::to(['view-schedule', 'id' => $model->id]) ?>">Xem lịch dạy</a></li>
+                                <li><a href="<?= Url::to(['add-schedule', 'id' => $model->id]) ?>">Thêm lịch dạy</a></li>
+                            </ul>
+                        </li>
+                       
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endforeach; ?>

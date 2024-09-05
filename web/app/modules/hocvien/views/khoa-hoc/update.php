@@ -3,9 +3,9 @@
 use yii\bootstrap5\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\modules\hocvien\models\KhoaHoc */
+/* @var $model app\models\HvKhoaHoc */
 ?>
-<div class="khoa-hoc-update">
+<div class="hv-khoa-hoc-update">
 
     <?= $this->render('_form', [
         'model' => $model,

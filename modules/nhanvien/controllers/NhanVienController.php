@@ -36,7 +36,7 @@ class NhanVienController extends Controller
     {    
         $searchModel = new NhanVienSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        $dataProvider->query->andWhere(['doi_tuong' => ['NV_GV', 'NHAN_VIEN']]);
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -81,7 +81,7 @@ class NhanVienController extends Controller
         $model = new NhanVien();
     
         // Lấy danh sách loại hồ sơ từ cơ sở dữ liệu
-        $listLoaiHoSo = ArrayHelper::map(HoSo::find()->where(['doi_tuong' => 1])->all(), 'id', 'ten_ho_so');
+        $listLoaiHoSo = ArrayHelper::map(HoSo::find()->where(['doi_tuong' => 'NHAN_VIEN'])->all(), 'id', 'ten_ho_so');
 
     
         if ($request->isAjax) {

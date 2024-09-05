@@ -1,7 +1,7 @@
 <?php
 
 namespace app\modules\hocvien\models;
-
+use yii\helpers\ArrayHelper;
 use Yii;
 use app\modules\hocvien\models\KhoaHoc;
 /**
@@ -72,5 +72,15 @@ class HangDaoTao extends \app\models\HvHangDaoTao
     public function getHvKhoaHocs()
     {
         return $this->hasMany(KhoaHoc::class, ['id_hang' => 'id']);
+    }
+    public static function getList()
+    {
+        // Sắp xếp danh sách theo thứ tự bảng chữ cái dựa trên 'ten_loai'
+        $dsHang = HangDaoTao::find()->orderBy(['ten_hang' => SORT_ASC])->all();
+    
+        // Thêm dấu + vào trước mỗi tên loại văn bản
+        return ArrayHelper::map($dsHang, 'id', function($model) {
+            return '+ ' . $model->ten_hang; // Thêm dấu + trước tên loại
+        });
     }
 }

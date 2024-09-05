@@ -29,7 +29,9 @@
         "phpoffice/phpspreadsheet": "^1.29",
         "2amigos/qrcode-library": "~1.1",
         "wbraganca/yii2-dynamicform": "^2.0",
-        "dastanaron/yii2-dropzone-widget": "@dev"
+        "dastanaron/yii2-dropzone-widget": "@dev",
+        "kartik-v/yii2-mpdf": "^1.0",
+        "kartik-v/yii2-money": "^1.2"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

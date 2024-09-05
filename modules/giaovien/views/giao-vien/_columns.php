@@ -1,6 +1,8 @@
 <?php
 use yii\helpers\Url;
-
+use yii\helpers\Html;
+$this->registerCssFile('https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css', ['depends' => [\yii\web\YiiAsset::class]]);
+$this->registerJsFile('https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js', ['depends' => [\yii\web\YiiAsset::class]]);
 return [
     [
         'class' => 'kartik\grid\CheckboxColumn',
@@ -16,9 +18,22 @@ return [
     // ],
    
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'ho_ten',
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'ho_ten',
+        'format' => 'raw',
+        'value' => function($model) {
+            return Html::a(
+                Html::encode($model->ho_ten),
+                '#',
+                [
+                    'class' => 'btn btn-link',
+                    'data-bs-toggle' => 'modal',
+                    'data-bs-target' => '#options-modal-' . $model->id,
+                ]
+            );
+        },
     ],
+    
    
     [
         'class'=>'\kartik\grid\DataColumn',
@@ -94,3 +109,5 @@ return [
     ],
 
 ];   
+?>
+

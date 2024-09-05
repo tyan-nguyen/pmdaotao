@@ -8,15 +8,19 @@ use yii\helpers\ArrayHelper;
 class NhanVien extends NhanVienBase
 {
     public static function getList()
-    {
-        // Lấy danh sách người nhận (Nhân viên) và sắp xếp theo thứ tự bảng chữ cái
-        $dsNguoiNhan = NhanVien::find()->orderBy(['ho_ten' => SORT_ASC])->all();
+{
+    // Lấy danh sách nhân viên có id_phong_ban là 1 và sắp xếp theo thứ tự bảng chữ cái
+    $dsNguoiNhan = NhanVien::find()
+        ->where(['id_phong_ban' => 1])
+        ->orderBy(['ho_ten' => SORT_ASC])
+        ->all();
 
-        // Thêm dấu + vào trước tên nhân viên
-         return ArrayHelper::map($dsNguoiNhan, 'id', function($model) {
-         return '+ ' . $model->ho_ten; // Thêm dấu + trước tên nhân viên
-        });
-    }
+    // Thêm dấu + vào trước tên nhân viên
+    return ArrayHelper::map($dsNguoiNhan, 'id', function($model) {
+        return '+ ' . $model->ho_ten; // Thêm dấu + trước tên nhân viên
+    });
+}
+
     public static function getListTD()
     {
         $trinhDoList = [
@@ -26,6 +30,17 @@ class NhanVien extends NhanVienBase
             'Khác' => 'Khác',
         ];
         return $trinhDoList;
+    }
+    public function beforeSave($insert) {
+        if ($this->isNewRecord) {
+              // Xác định giá trị của doi_tuong dựa trên giá trị của chuc_vu
+              if ($this->chuc_vu === 'Nhân viên') {
+                $this->doi_tuong = 'NHAN_VIEN';
+            } elseif ($this->chuc_vu === 'Nhân viên / Giáo viên') {
+                $this->doi_tuong = 'NV_GV';
+            }
+        }
+        return parent::beforeSave($insert);
     }
 
 }

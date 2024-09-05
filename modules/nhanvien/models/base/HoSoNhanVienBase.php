@@ -4,6 +4,7 @@ namespace app\modules\nhanvien\models\base;
 
 use Yii;
 use app\modules\kholuutru\models\LoaiHoSo;
+use app\modules\nhanvien\models\NhanVien;
 /**
  * This is the model class for table "nv_ho_so_nhan_vien".
  *
@@ -27,7 +28,7 @@ class HoSoNhanVienBase extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'nv_ho_so_nhan_vien';
+        return 'kho_file';
     }
 
     /**

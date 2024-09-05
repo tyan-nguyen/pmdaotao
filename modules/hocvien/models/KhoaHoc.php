@@ -3,7 +3,7 @@
 namespace app\modules\hocvien\models;
 
 use Yii;
-
+use yii\helpers\ArrayHelper;
 /**
  * This is the model class for table "hv_khoa_hoc".
  *
@@ -92,5 +92,15 @@ class KhoaHoc extends \app\models\HvKhoaHoc
     public function getHvTaiLieuKhoaHocs()
     {
         return $this->hasMany(TaiLieuKhoaHoc::class, ['id_khoa_hoc' => 'id']);
+    }
+    public static function getList()
+    {
+        // Sắp xếp danh sách theo thứ tự bảng chữ cái dựa trên 'ten_loai'
+        $dsKhoaHoc = KhoaHoc::find()->orderBy(['ten_khoa_hoc' => SORT_ASC])->all();
+    
+        // Thêm dấu + vào trước mỗi tên loại văn bản
+        return ArrayHelper::map($dsKhoaHoc, 'id', function($model) {
+            return '+ ' . $model->ten_khoa_hoc; // Thêm dấu + trước tên loại
+        });
     }
 }

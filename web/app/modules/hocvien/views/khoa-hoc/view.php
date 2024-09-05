@@ -3,9 +3,9 @@
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\modules\hocvien\models\KhoaHoc */
+/* @var $model app\models\HvKhoaHoc */
 ?>
-<div class="khoa-hoc-view">
+<div class="hv-khoa-hoc-view">
  
     <?= DetailView::widget([
         'model' => $model,

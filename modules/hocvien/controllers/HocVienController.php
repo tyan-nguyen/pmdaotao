@@ -4,14 +4,15 @@ namespace app\modules\hocvien\controllers;
 
 use Yii;
 use app\models\HvHocVien;
-use app\models\HocVienSearch;
+
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use \yii\web\Response;
 use yii\helpers\Html;
 use yii\filters\AccessControl;
-
+use app\modules\hocvien\models\search\HocVienSearch;
+use app\modules\hocvien\models\HocPhi;
 /**
  * HocVienController implements the CRUD actions for HvHocVien model.
  */
@@ -28,7 +29,7 @@ class HocVienController extends Controller
 					[
 						'actions' => ['index', 'view', 'update','create','delete','bulkdelete'],
 						'allow' => true,
-						'roles' => ['admin'],
+						'roles' => ['@'],
 					],
 				],
 			],
@@ -40,7 +41,12 @@ class HocVienController extends Controller
 			],
 		];
 	}
-
+    public function beforeAction($action)
+	{
+	    Yii::$app->params['moduleID'] = 'Module Quản lý Học viên';
+	    Yii::$app->params['modelID'] = 'Danh sách học viên';
+	    return true;
+	}
     /**
      * Lists all HvHocVien models.
      * @return mixed
@@ -49,7 +55,7 @@ class HocVienController extends Controller
     {    
         $searchModel = new HocVienSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        $dataProvider->query->andWhere(['trang_thai' => ['NHAP_HOC']]);
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -276,5 +282,60 @@ class HocVienController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function actionCreateHp()
+    {
+        $request = Yii::$app->request;
+        $model = new HocPhi();  
+
+        if($request->isAjax){
+            /*
+            *   Process for ajax request
+            */
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            if($request->isGet){
+                return [
+                    'title'=> "Create new HvHocVien",
+                    'content'=>$this->renderAjax('create', [
+                        'model' => $model,
+                    ]),
+                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
+        
+                ];         
+            }else if($model->load($request->post()) && $model->save()){
+                return [
+                    'forceReload'=>'#crud-datatable-pjax',
+                    'title'=> "Create new HvHocVien",
+                    'content'=>'<span class="text-success">Create HvHocVien success</span>',
+                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                            Html::a('Create More',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
+        
+                ];         
+            }else{           
+                return [
+                    'title'=> "Create new HvHocVien",
+                    'content'=>$this->renderAjax('create', [
+                        'model' => $model,
+                    ]),
+                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
+        
+                ];         
+            }
+        }else{
+            /*
+            *   Process for non-ajax request
+            */
+            if ($model->load($request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
+        }
+       
     }
 }

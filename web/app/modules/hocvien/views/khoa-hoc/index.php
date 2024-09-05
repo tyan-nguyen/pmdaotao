@@ -7,16 +7,16 @@ use cangak\ajaxcrud\CrudAsset;
 use cangak\ajaxcrud\BulkButtonWidget;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\modules\hocvien\models\search\KhoaHocSearch */
+/* @var $searchModel app\models\HVKhoaHocSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Khoa Hocs';
+$this->title = 'Hv Khoa Hocs';
 $this->params['breadcrumbs'][] = $this->title;
 
 CrudAsset::register($this);
 
 ?>
-<div class="khoa-hoc-index">
+<div class="hv-khoa-hoc-index">
     <div id="ajaxCrudDatatable">
         <?=GridView::widget([
             'id'=>'crud-datatable',
@@ -27,7 +27,7 @@ CrudAsset::register($this);
             'toolbar'=> [
                 ['content'=>
                     Html::a('<i class="fas fa fa-plus" aria-hidden="true"></i>', ['create'],
-                    ['role'=>'modal-remote','title'=> 'Tambah Khoa Hocs','class'=>'btn btn-default']).
+                    ['role'=>'modal-remote','title'=> 'Tambah Hv Khoa Hocs','class'=>'btn btn-default']).
                     Html::a('<i class="fas fa fa-sync" aria-hidden="true"></i>', [''],
                     ['data-pjax'=>1, 'class'=>'btn btn-default', 'title'=>'Reset Grid']).
                     '{toggleData}'.
@@ -39,7 +39,7 @@ CrudAsset::register($this);
             'responsive' => true,          
             'panel' => [
                 'type' => 'primary', 
-                'heading' => '<i class="fas fa fa-list" aria-hidden="true"></i> Khoa Hocs listing',
+                'heading' => '<i class="fas fa fa-list" aria-hidden="true"></i> Hv Khoa Hocs listing',
                 'before'=>'<em>* Resize kolom table  serte kolom kanan dan kiri.</em>',
                 'after'=>BulkButtonWidget::widget([
                             'buttons'=>Html::a('<i class="fas fa fa-trash" aria-hidden="true"></i>&nbsp; Hapus semua',

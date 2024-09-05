@@ -8,12 +8,12 @@ use Yii;
  * This is the model class for table "hv_hoc_vien".
  *
  * @property int $id
+  * @property int $id_hang
  * @property int $id_khoa_hoc
  * @property string $ho_ten
  * @property string $so_dien_thoai
  * @property string $so_cccd
- * @property string $ngay_cap_cccd
- * @property string $noi_cap_cccd
+ * @property string $ngay_sinh
  * @property string $trang_thai
  * @property int|null $nguoi_tao
  * @property string|null $thoi_gian_tao
@@ -38,10 +38,10 @@ class HvHocVien extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_khoa_hoc', 'ho_ten', 'so_dien_thoai', 'so_cccd', 'ngay_cap_cccd', 'noi_cap_cccd', 'trang_thai'], 'required'],
+            [['ho_ten', 'so_dien_thoai', 'so_cccd', 'trang_thai','id_hang'], 'required'],
             [['id_khoa_hoc', 'nguoi_tao'], 'integer'],
-            [['ngay_cap_cccd', 'thoi_gian_tao'], 'safe'],
-            [['ho_ten', 'so_dien_thoai', 'so_cccd', 'noi_cap_cccd', 'trang_thai'], 'string', 'max' => 255],
+            [['ngay_cap_cccd', 'thoi_gian_tao','ngay_sinh'], 'safe'],
+            [['ho_ten', 'so_dien_thoai', 'so_cccd', 'trang_thai'], 'string', 'max' => 255],
             [['id_khoa_hoc'], 'exist', 'skipOnError' => true, 'targetClass' => HvKhoaHoc::class, 'targetAttribute' => ['id_khoa_hoc' => 'id']],
         ];
     }
@@ -57,11 +57,11 @@ class HvHocVien extends \yii\db\ActiveRecord
             'ho_ten' => 'Ho Ten',
             'so_dien_thoai' => 'So Dien Thoai',
             'so_cccd' => 'So Cccd',
-            'ngay_cap_cccd' => 'Ngay Cap Cccd',
-            'noi_cap_cccd' => 'Noi Cap Cccd',
+             'ngay_sinh'=>'Ngày sinh',
             'trang_thai' => 'Trang Thai',
             'nguoi_tao' => 'Nguoi Tao',
             'thoi_gian_tao' => 'Thoi Gian Tao',
+            'id_hang'=>'Id Hang',
         ];
     }
 

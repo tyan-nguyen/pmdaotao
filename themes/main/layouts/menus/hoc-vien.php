@@ -23,9 +23,9 @@
 					<div class="tab-pane active" id="side3">
 						<ul class="sidemenu-list">
 							<li class="side-menu__label1"><a href="javascript:void(0)">Danh mục chức năng</a></li>
+							<li><a href="/hocvien/dang-ky-hv?menu=qlhv" class="slide-item" data-menu="qlhv">Học viên đăng ký</a></li>
+							<li><a href="/hocvien/hoc-vien?menu=qlhv" class="slide-item" data-menu="qlhv">Danh sách học viên</a></li>
 							
-							<li><a href="/hoc-vien/quan-ly-hoc-vien?menu=qlhv" class="slide-item" data-menu="qlhv">Danh sách học viên</a></li>
-							<li><a href="/hocvien/khoa-hoc?menu=qlhv" class="slide-item" data-menu="qlhv">Danh sách khóa học</a></li>
 						</ul>
 						<div class="menutabs-content px-0">
 							<!-- menu tab here -->
