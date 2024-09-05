@@ -78,10 +78,37 @@ class NopHocPhi extends \app\models\HvHocPhi
             $this->nguoi_tao = Yii::$app->user->identity->id;
             $this->thoi_gian_tao = date('Y-m-d H:i:s');
             $this->ngay_nop = CustomFunc::convertDMYToYMD($this->ngay_nop);
-           
-           
         }
-  
+
+        // Xử lý trường 'bien_lai'
+        if (!empty($this->bien_lai)) {
+            // Loại bỏ tiền tố Base64
+            $data = $this->bien_lai;
+            if (strpos($data, 'data:image') === 0) {
+                $data = preg_replace('#^data:image/\w+;base64,#i', '', $data);
+            }
+
+            $data = base64_decode($data);
+            if ($data === false) {
+                $this->addError('bien_lai', 'Dữ liệu hình ảnh không hợp lệ.');
+                return false;
+            }
+
+            $filename = uniqid('bien_lai_') . '.jpg';
+            $path = Yii::getAlias('@webroot/uploads/bien_lai/') . $filename;
+
+            if (!is_dir(dirname($path))) {
+                mkdir(dirname($path), 0755, true);
+            }
+
+            if (file_put_contents($path, $data) === false) {
+                $this->addError('bien_lai', 'Không thể lưu hình ảnh.');
+                return false;
+            }
+
+            $this->bien_lai = '/uploads/bien_lai/' . $filename;
+        }
+
         return parent::beforeSave($insert);
     }
 }

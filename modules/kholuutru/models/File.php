@@ -48,7 +48,7 @@ class File extends FileBase{
      */
     public static function getAllByLoaiFile($loaiFile, $doiTuong, $idDoiTuong){
         return File::find()->where([
-            'ten_loai' => $loaiFile,
+            'loai_file' => $loaiFile,
             'doi_tuong' => $doiTuong,
             'id_doi_tuong' => $idDoiTuong
         ])->all();
@@ -61,7 +61,7 @@ class File extends FileBase{
      */
     public static function getOneByLoaiFile($loaiFile, $doiTuong, $idDoiTuong){
         return File::find()->where([
-            'ten_loai' => $loaiFile,
+            'loai_file' => $loaiFile,
             'doi_tuong' => $doiTuong,
             'id_doi_tuong' => $idDoiTuong
         ])->one();
