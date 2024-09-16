@@ -99,6 +99,36 @@ use app\widgets\FileDisplayWidget;
                 'thoi_gian_tao',
                 'so_loai_van_ban',
             ],
+<<<<<<< HEAD
+<<<<<<< HEAD
+            'trich_yeu',
+            'nguoi_ky',
+        'vbden_ngay_den'=>[
+            'attribute'=>'vbden_ngay_den',
+            'value'=>$model->vbdenND
+        ],
+
+            
+            'vbden_so_den',
+            'vbden_nguoi_nhan',
+            'vbden_ngay_chuyen' => [
+                'attribute' => 'vbden_ngay_chuyen',
+                'value' => function($model) {
+                return Yii::$app->formatter->asDate($model->vbden_ngay_chuyen, 'php:d/m/Y');
+                   },
+               ],
+         
+          
+         
+            'ghi_chu',
+            'nguoi_tao',
+            'thoi_gian_tao',
+            'so_loai_van_ban',
+        ],
+    ]) ?>
+=======
+=======
+>>>>>>> f2a9a068afd729919e5e31bb4a53cd5f865d480c
         ]) */ ?>
     </div>
     
@@ -110,4 +140,8 @@ use app\widgets\FileDisplayWidget;
         ])?>
     </div>
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> f2a9a068afd729919e5e31bb4a53cd5f865d480c
 </div>
