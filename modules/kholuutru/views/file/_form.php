@@ -1,6 +1,7 @@
 <?php
 use yii\bootstrap5\Html;
 use yii\widgets\ActiveForm;
+use app\modules\kholuutru\models\LoaiFile;
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\kholuutru\models\File */
@@ -11,23 +12,25 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'ten_loai')->textInput() ?>
+    <?= $form->field($model, 'loai_file')->dropDownList(LoaiFile::getAllByDoiTuongArr($model->doi_tuong), [
+   	        'prompt' => '-Chọn loại file-'
+   	    ])?>
 
     <?= $form->field($model, 'file_name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'file_type')->textInput(['maxlength' => true]) ?>
+    <?php // $form->field($model, 'file_type')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'file_size')->textInput(['maxlength' => true]) ?>
+    <?php // $form->field($model, 'file_size')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'file_display_name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'nguoi_tao')->textInput() ?>
+    <?php // $form->field($model, 'nguoi_tao')->textInput() ?>
 
-    <?= $form->field($model, 'thoi_gian_tao')->textInput() ?>
+    <?php // $form->field($model, 'thoi_gian_tao')->textInput() ?>
 
-    <?= $form->field($model, 'doi_tuong')->textInput(['maxlength' => true]) ?>
+    <?php // $form->field($model, 'doi_tuong')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'id_doi_tuong')->textInput() ?>
+    <?php // $form->field($model, 'id_doi_tuong')->textInput() ?>
 
   
 	<?php if (!Yii::$app->request->isAjax){ ?>

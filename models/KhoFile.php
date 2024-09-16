@@ -8,7 +8,7 @@ use Yii;
  * This is the model class for table "kho_file".
  *
  * @property int $id
- * @property int $ten_loai
+ * @property int $loai_file
  * @property string|null $file_name
  * @property string|null $file_type
  * @property string|null $file_size
@@ -17,8 +17,9 @@ use Yii;
  * @property string|null $thoi_gian_tao
  * @property string|null $doi_tuong
  * @property int $id_doi_tuong
+ * @property string|null $ghi_chu
  *
- * @property KhoLoaiFile $tenLoai
+ * @property KhoLoaiFile $loaiFile
  */
 class KhoFile extends \yii\db\ActiveRecord
 {
@@ -36,12 +37,13 @@ class KhoFile extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ten_loai', 'file_display_name', 'id_doi_tuong'], 'required'],
-            [['ten_loai', 'nguoi_tao', 'id_doi_tuong'], 'integer'],
+            [['loai_file', 'file_display_name', 'id_doi_tuong'], 'required'],
+            [['loai_file', 'nguoi_tao', 'id_doi_tuong'], 'integer'],
             [['thoi_gian_tao'], 'safe'],
+            [['ghi_chu'], 'string'],
             [['file_name', 'file_type', 'file_size', 'file_display_name'], 'string', 'max' => 255],
             [['doi_tuong'], 'string', 'max' => 20],
-            [['ten_loai'], 'exist', 'skipOnError' => true, 'targetClass' => KhoLoaiFile::class, 'targetAttribute' => ['ten_loai' => 'id']],
+            [['loai_file'], 'exist', 'skipOnError' => true, 'targetClass' => KhoLoaiFile::class, 'targetAttribute' => ['loai_file' => 'id']],
         ];
     }
 
@@ -52,7 +54,7 @@ class KhoFile extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'ten_loai' => 'Ten Loai',
+            'loai_file' => 'Loai File',
             'file_name' => 'File Name',
             'file_type' => 'File Type',
             'file_size' => 'File Size',
@@ -61,16 +63,17 @@ class KhoFile extends \yii\db\ActiveRecord
             'thoi_gian_tao' => 'Thoi Gian Tao',
             'doi_tuong' => 'Doi Tuong',
             'id_doi_tuong' => 'Id Doi Tuong',
+            'ghi_chu' => 'Ghi Chu',
         ];
     }
 
     /**
-     * Gets query for [[TenLoai]].
+     * Gets query for [[LoaiFile]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getTenLoai()
+    public function getLoaiFile()
     {
-        return $this->hasOne(KhoLoaiFile::class, ['id' => 'ten_loai']);
+        return $this->hasOne(KhoLoaiFile::class, ['id' => 'loai_file']);
     }
 }

@@ -115,12 +115,8 @@ class VbDenController extends Controller
         $model->vbden_so_den = $maxSoDen ? $maxSoDen + 1 : 1;
         $currentYear = date('Y');
         // Thiết lập giá trị mặc định cho 'so_vb'
-        $model->so_vb = "/$currentYear";
-    
+        $model->so_vb = "/$currentYear";    
         if($request->isAjax){
-            /*
-            *   Process for ajax request
-            */
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
@@ -128,8 +124,8 @@ class VbDenController extends Controller
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=>Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                    Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
     
                 ];         
             }else if($model->load($request->post()) && $model->save()){
@@ -154,15 +150,11 @@ class VbDenController extends Controller
                 ];         
             }
         }else{
-            /*
-            *   Process for non-ajax request
-            */
             if ($model->load($request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
                 return $this->render('create', [
                     'model' => $model,
-                   
                 ]);
             }
         }

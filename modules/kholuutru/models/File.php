@@ -2,9 +2,50 @@
 namespace app\modules\kholuutru\models;
 
 use app\modules\kholuutru\models\base\FileBase;
+use app\modules\vanban\models\VanBanDen;
+use app\modules\user\models\User;
 
 class File extends FileBase{
-    CONST FOLDER_ICONS = '/libs/images/icons/';
+    /**
+     * Gets query for [[LoaiFile]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getLoaiFile()
+    {
+        return $this->hasOne(LoaiFile::class, ['id' => 'loai_file']);
+    }
+    /**
+     * Gets query for [[TaiKhoan]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTaiKhoan()
+    {
+        return $this->hasOne(User::class, ['id' => 'nguoi_tao']);
+    }
+    /**
+     * get model theo loại đối tượng
+     * @param string $doituong
+     * @param int $idDoiTuong
+     */
+    public static function getModelByDoiTuong($doiTuong, $idDoiTuong){
+        $model = null;
+        if($doiTuong == VanBanDen::MODEL_ID){
+            $model = VanBanDen::findOne($idDoiTuong);
+        }
+        //.............
+        return $model;        
+    }
+    public static function getFileSizeInString($size){
+        if($size/1024 < 0){
+            return round($size/1024,2) . ' KB';
+        } if($size/1024 > 0 && $size/1024 <=102.4 ){
+            return round($size/1024,1) . ' KB';
+        }else {
+            return round($size/1024/1024,2) . ' MB';
+        }
+    }
     /**
      * get icon for file
      * @param string file type: pdf/docx...
@@ -17,7 +58,7 @@ class File extends FileBase{
         else 
             return File::FOLDER_ICONS . 'none.png';
     }
-    
+     
     /**
      * lấy tất cả file của đối tượng
      * @param string $doiTuong
@@ -48,7 +89,7 @@ class File extends FileBase{
      */
     public static function getAllByLoaiFile($loaiFile, $doiTuong, $idDoiTuong){
         return File::find()->where([
-            'ten_loai' => $loaiFile,
+            'loai_file' => $loaiFile,
             'doi_tuong' => $doiTuong,
             'id_doi_tuong' => $idDoiTuong
         ])->all();
@@ -61,7 +102,7 @@ class File extends FileBase{
      */
     public static function getOneByLoaiFile($loaiFile, $doiTuong, $idDoiTuong){
         return File::find()->where([
-            'ten_loai' => $loaiFile,
+            'loai_file' => $loaiFile,
             'doi_tuong' => $doiTuong,
             'id_doi_tuong' => $idDoiTuong
         ])->one();

@@ -12,6 +12,9 @@ use \yii\web\Response;
 use yii\helpers\Html;
 use yii\filters\AccessControl;
 use app\modules\kholuutru\models\LoaiFile;
+use yii\web\UploadedFile;
+use app\modules\vanban\models\VanBanDen;
+use app\widgets\FileDisplayTypeWidget;
 
 /**
  * FileController implements the CRUD actions for File model.
@@ -22,17 +25,28 @@ class FileController extends Controller
      * @inheritdoc
      */
     public function behaviors() {
-    		return [
-    			'ghost-access'=> [
-    			'class' => 'webvimark\modules\UserManagement\components\GhostAccessControl',
-        		],
-    			'verbs' => [
-    				'class' => VerbFilter::className(),
-    				'actions' => [
-    					'delete' => ['POST'],
-    				],
-    			],
+		return [
+			'ghost-access'=> [
+			     'class' => 'webvimark\modules\UserManagement\components\GhostAccessControl',
+    		],
+			'verbs' => [
+				'class' => VerbFilter::className(),
+				'actions' => [
+					'delete' => ['POST'],
+				],
+			],
 		];
+	}
+	
+	/**
+	 * @inheritdoc
+	 */
+	public function beforeAction($action)
+	{
+	    if ($action->id == 'upload-multi-process') {
+	        $this->enableCsrfValidation = false;
+	    }	    
+	    return parent::beforeAction($action);
 	}
 
     /**
@@ -79,13 +93,76 @@ class FileController extends Controller
                 Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
                 
             ];
+        }else if($model->load($request->post())){
+            $file = UploadedFile::getInstance($model, 'file');
+            if($loaiFile){
+                $model->loai_file = $loaiFile;
+            }
+            $model->doi_tuong = $doiTuong;
+            $model->id_doi_tuong = $idDoiTuong;
+            if (!empty($file)){
+                $model->file_name = $file->name;
+                $model->file_type = $file->extension;
+                $model->file_size = File::getFileSizeInString($file->size);
+            }
+            if($model->save()){
+                $model->refresh();
+                if (!empty($file))
+                    $file->saveAs( Yii::getAlias('@webroot') . File::FOLDER_DOCUMENTS .  $model->fileSaveName);
+                return [
+                    'reloadType'=>'hinhAnh',
+                    'reloadBlock'=>'#blockVanBan'.$model->id_doi_tuong,
+                    'reloadContent'=>FileDisplayTypeWidget::widget([
+                        'doiTuong'=>$model->doi_tuong,
+                        'idDoiTuong'=>$model->id_doi_tuong
+                    ]),
+                    'tcontent'=>'Tải file thành công!',
+                    'title'=> "Thêm mới File",
+                    'content'=>'<span class="text-success">Tải file thành công</span>',
+                    'tcontent'=>'Tải file '.$model->file_name.' thành công!',
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal2"]).
+                    Html::a('Tiếp tục thêm',[
+                        'upload-single', 
+                        'doiTuong'=>VanBanDen::MODEL_ID,
+                        'idDoiTuong'=>$model->id
+                    ],['class'=>'btn btn-primary','role'=>'modal-remote-2'])
+                    
+                ];
+            }else{
+                return [
+                    'test' => $model->errors,
+                    'title'=> "Tải file",
+                    'content'=>$this->renderAjax('upload-single', [
+                        'model' => $model,
+                        'loaiFile' => $loaiFile,
+                        'doiTuong' => $doiTuong,
+                        'idDoiTuong' => $idDoiTuong
+                    ]),
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                    Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                    
+                ];
+            }
+        }else{
+            return [
+                'title'=> "Tải file",
+                'content'=>$this->renderAjax('upload-single', [
+                    'model' => $model,
+                    'loaiFile' => $loaiFile,
+                    'doiTuong' => $doiTuong,
+                    'idDoiTuong' => $idDoiTuong
+                ]),
+                'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                
+            ];
         }
     }
     
     /**
      * upload multi file
      */
-    public function actionUploadMulti($loaiDoiTuong, $doiTuong, $idDoiTuong){
+    public function actionUploadMulti($loaiFile=NULL, $doiTuong, $idDoiTuong){
         $request = Yii::$app->request;
         Yii::$app->response->format = Response::FORMAT_JSON;
         $model = new File();
@@ -94,12 +171,103 @@ class FileController extends Controller
                 'title'=> "Tải file",
                 'content'=>$this->renderAjax('upload-multi', [
                     'model' => $model,
+                    'loaiFile' => $loaiFile,
+                    'doiTuong' => $doiTuong,
+                    'idDoiTuong' => $idDoiTuong
                 ]),
                 'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                Html::a('Lưu lại',['reload', 'loaiFile'=>$loaiFile, 'doiTuong'=>$doiTuong, 'idDoiTuong'=>$idDoiTuong],['class'=>'btn btn-primary','role'=>'modal-remote-2'])
                 
             ];
         }
+    }
+    /**
+     * reload block file
+     */
+    public function actionReload($loaiFile=NULL, $doiTuong, $idDoiTuong){
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        return [
+            'forceClose'=>true,
+            'reloadType'=>'hinhAnh',
+            'reloadBlock'=>'#blockVanBan'.$idDoiTuong,
+            'reloadContent'=>FileDisplayTypeWidget::widget([
+                'doiTuong'=>$doiTuong,
+                'idDoiTuong'=>$idDoiTuong
+            ]),
+            'tcontent'=>'Đã upload thành công!',
+        ];
+    }
+    
+    /**
+     * upload multi file process
+     */
+    public function actionUploadMultiProcess($loaiFile=NULL, $doiTuong, $idDoiTuong){
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        if(!empty($_FILES)){
+            $file = $_FILES['file']['tmp_name'];
+            $fileName = $_FILES['file']['name'];
+            $fileType = pathinfo($fileName, PATHINFO_EXTENSION);
+            $fileSize = $_FILES['file']['size'];
+           // $fileLocation = $folderName . $_FILES['file']['name'];
+           // move_uploaded_file($file,$fileLocation);
+            $model = new File();
+            if($loaiFile){
+                $model->loai_file = $loaiFile;
+            }else{
+                $loaiFileModel = LoaiFile::find()->where([
+                    'doi_tuong' => $doiTuong,
+                ])->orderBy(['id'=>SORT_DESC])->one();
+                $model->loai_file = $loaiFileModel->id;
+            }
+            $model->doi_tuong = $doiTuong;
+            $model->id_doi_tuong = $idDoiTuong;
+            $model->file_display_name = $fileName;//chưa có
+            if (!empty($file)){
+                $model->file_name = $fileName;
+                $model->file_type = $fileType;
+                $model->file_size = File::getFileSizeInString($fileSize);
+            }
+            if($model->save()){
+                $model->refresh();
+                move_uploaded_file($file, Yii::getAlias('@webroot') . File::FOLDER_DOCUMENTS .  $model->fileSaveName);
+                //if (!empty($file))
+                //$file->saveAs( Yii::getAlias('@webroot') . File::FOLDER_DOCUMENTS .  $model->fileSaveName);
+                
+                return [
+                    'message' => 'success',
+                    /* 'data' => $this->renderAjax('_block_van_ban', [
+                        'model' => File::getModelByDoiTuong($doiTuong, $idDoiTuong)
+                    ]), */
+                ];
+            } else {
+                return [
+                    'data' => $model->errors
+                ];
+            }
+        } 
+        
+    }
+    
+    /**
+     * Download file
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionDownload($id)
+    {
+        //find path of file
+        $file = File::findOne($id);
+        if($file != NULL){
+            $path = File::getFolderRootDocument() . $file->fileSaveName;
+            //echo $path;
+            if(file_exists($path)){
+                return Yii::$app->response->sendFile($path, $file->file_name);
+            } else {
+                echo 'File không tồn tại!';
+            }
+        }
+        
+        //return Yii::app()->getRequest()->sendFile($name, @file_get_contents($fileName));
     }
 
 
@@ -119,75 +287,13 @@ class FileController extends Controller
                         'model' => $this->findModel($id),
                     ]),
                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::a('Sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                            Html::a('Sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote-2'])
                 ];    
         }else{
             return $this->render('view', [
                 'model' => $this->findModel($id),
             ]);
         }
-    }
-
-    /**
-     * Creates a new File model.
-     * For ajax request will return json object
-     * and for non-ajax request if creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        $request = Yii::$app->request;
-        $model = new File();  
-
-        if($request->isAjax){
-            /*
-            *   Process for ajax request
-            */
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            if($request->isGet){
-                return [
-                    'title'=> "Thêm mới File",
-                    'content'=>$this->renderAjax('create', [
-                        'model' => $model,
-                    ]),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
-        
-                ];         
-            }else if($model->load($request->post()) && $model->save()){
-                return [
-                    'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Thêm mới File",
-                    'content'=>'<span class="text-success">Thêm mới thành công</span>',
-                    'tcontent'=>'Thêm mới thành công!',
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::a('Tiếp tục thêm',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
-        
-                ];         
-            }else{           
-                return [
-                    'title'=> "Thêm mới File",
-                    'content'=>$this->renderAjax('create', [
-                        'model' => $model,
-                    ]),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
-        
-                ];         
-            }
-        }else{
-            /*
-            *   Process for non-ajax request
-            */
-            if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            } else {
-                return $this->render('create', [
-                    'model' => $model,
-                ]);
-            }
-        }
-       
     }
 
     /**
@@ -219,9 +325,13 @@ class FileController extends Controller
             }else if($model->load($request->post()) && $model->save()){
                 return [
                     'forceClose'=>true,   
-                    'excuteFunction'=>'reloadFileName()',
-                    'functionResponse'=>$this->renderAjax('view_single_file', ['model'=>$model]),
-                    'tcontent'=>'Cập nhật thành công!',
+                    'reloadType'=>'hinhAnh',
+                    'reloadBlock'=>'#blockVanBan'.$model->id_doi_tuong,
+                    'reloadContent'=>FileDisplayTypeWidget::widget([
+                        'doiTuong'=>$model->doi_tuong,
+                        'idDoiTuong'=>$model->id_doi_tuong
+                    ]),
+                    'tcontent'=>'Cập nhật file thành công!',
                 ];
                 /* return [
                     'forceReload'=>'#crud-datatable-pjax',
@@ -267,22 +377,30 @@ class FileController extends Controller
     public function actionDelete($id)
     {
         $request = Yii::$app->request;
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        $model->delete();
 
         if($request->isAjax){
             /*
             *   Process for ajax request
             */
             Yii::$app->response->format = Response::FORMAT_JSON;
-            return ['forceClose'=>true,'forceReload'=>'#crud-datatable-pjax'];
+            return [
+                'forceClose'=>true,
+                'reloadType'=>'hinhAnh',
+                'reloadBlock'=>'#blockVanBan'.$model->id_doi_tuong,
+                'reloadContent'=>FileDisplayTypeWidget::widget([
+                    'doiTuong'=>$model->doi_tuong,
+                    'idDoiTuong'=>$model->id_doi_tuong
+                ]),
+                'tcontent'=>'Đã xóa file!',                
+            ];
         }else{
             /*
             *   Process for non-ajax request
             */
             return $this->redirect(['index']);
         }
-
-
     }
 
      /**

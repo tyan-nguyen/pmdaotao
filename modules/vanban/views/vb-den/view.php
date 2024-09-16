@@ -1,12 +1,12 @@
 <?php
-
 use yii\widgets\DetailView;
-use yii\helpers\Html;
 use app\modules\vanban\models\VanBanDen;
+use app\widgets\FileDisplayWidget;
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\vanban\models\VanBanDen */
 ?>
+
 <div class="van-ban-den-view row">
  	<div class="col-md-4">
  	
@@ -103,47 +103,11 @@ use app\modules\vanban\models\VanBanDen;
     </div>
     
     <div class="col-md-8">
-    	<div class="text-dark mb-2 ms-1 fs-20 tx-medium row">
-    		<div class="col-md-8">File văn bản</div>
-        	<div class="col-md-4">
-        		<?= Html::a('<i class="ti-files" data-bs-toggle="tooltip" aria-label="ti-files" data-bs-original-title="ti-files"></i>', 
-                            ['/kholuutru/file/upload-single', 
-                                'loaiDoiTuong'=>1,
-                                'doiTuong'=>VanBanDen::MODEL_ID,
-                                'idDoiTuong'=>$model->id
-                            ],
-                            [
-                                'class'=>'btn ripple btn-primary btn-sm',
-                                'role'=>'modal-remote-2'
-                            ],
-               )?>
-               
-               <?= Html::a('<i class="ti-file" data-bs-toggle="tooltip" aria-label="ti-file" data-bs-original-title="ti-file"></i>', 
-                   ['/kholuutru/file/upload-multi',  
-                       'loaiDoiTuong'=>1,
-                       'doiTuong'=>VanBanDen::MODEL_ID,
-                       'idDoiTuong'=>$model->id],
-                            [
-                                'class'=>'btn ripple btn-primary btn-sm',
-                                'role'=>'modal-remote-2'
-                            ],
-               )?>
-        	</div>
-    	</div>
-        	
-    	<?= $model->fileVB ? $this->render('view_single_file', ['fileVB'=>$model->fileVB]) : '' ?>
-    	
-    	<div class="text-dark mb-2 ms-1 fs-20 tx-medium">File đính kèm</div>
-    		<div class="row">        		
-        		<?= $this->render('view_multi_file', ['fileDinhKem'=>$model->fileDinhKem]) ?>        		
-    		</div>
+        <?= FileDisplayWidget::widget([
+            'type'=>'ALL',
+            'doiTuong'=>VanBanDen::MODEL_ID,
+            'idDoiTuong'=>$model->id,
+        ])?>
     </div>
 
 </div>
-
-
-<script>
-function funcOne($data){
-	$('#fileContent').html($data);
-}
-</script>

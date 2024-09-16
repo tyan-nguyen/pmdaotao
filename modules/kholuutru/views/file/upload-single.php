@@ -13,7 +13,7 @@ use app\modules\kholuutru\models\LoaiFile;
     <?php $form = ActiveForm::begin(['layout' => 'horizontal',
         'id' => 'docs-form', 
         'options' => [
-            'class' => 'form-horizontal',
+            'class' => 'form-horizontal dropzone',
             'enctype' => 'multipart/form-data',
             //'data-pjax' => 1
         ],
@@ -24,7 +24,7 @@ use app\modules\kholuutru\models\LoaiFile;
     ]); ?>
     
     <?php if(!$loaiFile){
-   	    echo $form->field($model, 'ten_loai')->dropDownList(LoaiFile::getAllByDoiTuongArr($doiTuong), [
+   	    echo $form->field($model, 'loai_file')->dropDownList(LoaiFile::getAllByDoiTuongArr($doiTuong), [
    	        'prompt' => '-Chọn loại file-'
    	    ]);
      } ?>

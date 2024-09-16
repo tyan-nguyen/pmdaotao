@@ -291,19 +291,12 @@ function ModalRemote(modalId) {
 			if(typeof response.tcontent !== 'undefined'){
 				showNotif(response.tcontent);
 			}
-        
-        //***dung chung hinh anh, tai lieu update html
-		if(typeof response.dungChungType !== 'undefined'){
-			//cập nhật lại lỗi 1 page mà có >2 dùng chung hình và tài liệu
-            $(response.dungChungReload).html(response.dungChungContent);
-            
-			// if(response.dungChungType=='hinhAnh'){
-			// 	$('#imgBlock').html(response.dungChungContent);
-			// } else if(response.dungChungType=='taiLieu'){
-			// 	$('#docsBlock').html(response.dungChungContent);
-			// }
+			
+		 //***reload block reloadType !== 'undefined'){
+         if(typeof response.reloadType !== 'undefined'){
+            $(response.reloadBlock).html(response.reloadContent);
 		}
-		
+        
 		/** process excute function after forceReload */
 		// Close modal if response contains forceClose field
         if (response.excuteFunction !== undefined && response.excuteFunction) {
