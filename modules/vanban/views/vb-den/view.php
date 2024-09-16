@@ -99,8 +99,7 @@ use app\widgets\FileDisplayWidget;
                 'thoi_gian_tao',
                 'so_loai_van_ban',
             ],
-<<<<<<< HEAD
-<<<<<<< HEAD
+
             'trich_yeu',
             'nguoi_ky',
         'vbden_ngay_den'=>[
@@ -125,11 +124,8 @@ use app\widgets\FileDisplayWidget;
             'thoi_gian_tao',
             'so_loai_van_ban',
         ],
-    ]) ?>
-=======
-=======
->>>>>>> f2a9a068afd729919e5e31bb4a53cd5f865d480c
-        ]) */ ?>
+    ]) */ ?>
+
     </div>
     
     <div class="col-md-8">
@@ -140,8 +136,5 @@ use app\widgets\FileDisplayWidget;
         ])?>
     </div>
 
-<<<<<<< HEAD
 
-=======
->>>>>>> f2a9a068afd729919e5e31bb4a53cd5f865d480c
 </div>

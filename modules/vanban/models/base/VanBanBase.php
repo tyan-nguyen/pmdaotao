@@ -107,8 +107,4 @@ class VanBanBase extends \app\models\VbVanBan
     }
 
     
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> f2a9a068afd729919e5e31bb4a53cd5f865d480c
