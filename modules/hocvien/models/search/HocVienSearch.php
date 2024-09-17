@@ -5,12 +5,12 @@ namespace app\modules\hocvien\models\search;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\modules\hocvien\models\base\HocVienBase;
-
+use app\modules\hocvien\models\HocVien;
+use app\modules\hocvien\models\HangDaoTao;
 /**
  * HocVienSearch represents the model behind the search form about `app\models\HvHocVien`.
  */
-class HocVienSearch extends HocVienBase
+class HocVienSearch extends HocVien
 {
     /**
      * @inheritdoc
@@ -71,4 +71,6 @@ class HocVienSearch extends HocVienBase
 
         return $dataProvider;
     }
+  
+
 }

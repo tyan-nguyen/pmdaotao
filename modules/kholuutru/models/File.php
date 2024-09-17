@@ -5,6 +5,7 @@ use app\modules\kholuutru\models\base\FileBase;
 
 class File extends FileBase{
     CONST FOLDER_ICONS = '/libs/images/icons/';
+    CONST MODEL_ID = 'GIAOVIEN';
     /**
      * get icon for file
      * @param string file type: pdf/docx...
@@ -65,5 +66,8 @@ class File extends FileBase{
             'doi_tuong' => $doiTuong,
             'id_doi_tuong' => $idDoiTuong
         ])->one();
+    }
+    public function getFileGiaoVien(){
+        return File::getAllByLoaiFile(3, $this::MODEL_ID, $this->id);//3 is file gv
     }
 }

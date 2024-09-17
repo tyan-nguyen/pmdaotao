@@ -45,8 +45,12 @@ return [
         // 'attribute'=>'thoi_gian_tao',
     // ],
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'id_hang',
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'id_hang',
+        'value' => function($model) {
+            return $model->hangDaoTao ? $model->hangDaoTao->ten_hang : 'N/A';
+        },
+        'label' => 'Hạng đào tạo',
     ],
     [
         'class' => 'kartik\grid\ActionColumn',

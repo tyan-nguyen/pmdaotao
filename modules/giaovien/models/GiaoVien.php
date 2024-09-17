@@ -3,11 +3,14 @@
 namespace app\modules\giaovien\models;
 
 use app\modules\giaovien\models\base\GiaoVienBase;
-
+use app\modules\kholuutru\models\File;
 
 class GiaoVien extends GiaoVienBase
 {
-    public function beforeSave($insert) {
+   
+    CONST MODEL_ID = 'GIAOVIEN';
+
+     public function beforeSave($insert) {
         if ($this->isNewRecord) {
             // Xác định giá trị của doi_tuong dựa trên giá trị của chuc_vu
             if ($this->chuc_vu === 'Giáo viên') {
@@ -22,6 +25,14 @@ class GiaoVien extends GiaoVienBase
             $this->vi_tri_cong_viec = 'GIANG DAY';
         }
         return parent::beforeSave($insert);
+    }
+
+    public function getFileGiaoVien(){
+        return File::getAllByLoaiFile(3, $this::MODEL_ID, $this->id);//3 is file gv
+    }
+    public function getFileGV()
+    {
+        return File::getOneByLoaiFile(3, $this::MODEL_ID, $this->id);
     }
     
 }

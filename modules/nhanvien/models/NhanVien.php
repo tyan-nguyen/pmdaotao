@@ -4,9 +4,10 @@ namespace app\modules\nhanvien\models;
 
 use app\modules\nhanvien\models\base\NhanVienBase;
 use yii\helpers\ArrayHelper;
-
+use app\modules\kholuutru\models\File;
 class NhanVien extends NhanVienBase
 {
+    CONST MODEL_ID = 'NHANVIEN';
     public static function getList()
 {
     // Lấy danh sách nhân viên có id_phong_ban là 1 và sắp xếp theo thứ tự bảng chữ cái
@@ -41,6 +42,13 @@ class NhanVien extends NhanVienBase
             }
         }
         return parent::beforeSave($insert);
+    }
+    public function getFileNhanVien(){
+        return File::getAllByLoaiFile(4, $this::MODEL_ID, $this->id);//3 is file gv
+    }
+    public function getFileNV()
+    {
+        return File::getOneByLoaiFile(4, $this::MODEL_ID, $this->id);
     }
 
 }

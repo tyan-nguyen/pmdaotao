@@ -11,7 +11,7 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'ten_loai')->textInput() ?>
+    <?= $form->field($model, 'loai_file')->textInput() ?>
 
     <?= $form->field($model, 'file_name')->textInput(['maxlength' => true]) ?>
 

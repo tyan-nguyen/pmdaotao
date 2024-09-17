@@ -100,7 +100,7 @@ class HocVienBase extends \app\models\HvHocVien
     {
         return $this->hasOne(KhoaHoc::class, ['id' => 'id_khoa_hoc']);
     }
-    public function getHang()
+    public function getHangDaoTao()
     {
         return $this->hasOne(HangDaoTao::class, ['id' => 'id_hang']);
     }

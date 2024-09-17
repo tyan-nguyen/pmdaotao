@@ -96,15 +96,15 @@ class NhanVienController extends Controller
                         'model' => $model,
                         'listLoaiHoSo' => $listLoaiHoSo, // Truyền biến vào view
                     ]),
-                    'footer' => Html::button('Đóng', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
-                                Html::button('Lưu', ['class' => 'btn btn-primary', 'type' => "submit"])
+                    'footer' => Html::button('<i class="fa fa-close"> Đóng', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                                Html::button('<i class="fa fa-save"> Lưu', ['class' => 'btn btn-primary', 'type' => "submit"])
                 ];
             } else if ($model->load($request->post()) && $model->save()) {
                 return [
                     'forceReload' => '#crud-datatable-pjax',
                     'title' => "Thêm Nhân Viên",
                     'content' => '<span class="text-success">Thêm Nhân viên thành công</span>',
-                    'footer' => Html::button('Đóng', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                    'footer' => Html::button(' <i class ="fa fa-close">Đóng', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
                                 Html::a('Create More', ['create'], ['class' => 'btn btn-primary', 'role' => 'modal-remote'])
                 ];
             } else {
@@ -114,8 +114,8 @@ class NhanVienController extends Controller
                         'model' => $model,
                         'listLoaiHoSo' => $listLoaiHoSo, // Truyền biến vào view
                     ]),
-                    'footer' => Html::button('Đóng', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
-                                Html::button('Lưu', ['class' => 'btn btn-primary', 'type' => "submit"])
+                    'footer' => Html::button('<i class="fa-fa-close"> Đóng', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                                Html::button('<i class="fa fa-save"> Lưu', ['class' => 'btn btn-primary', 'type' => "submit"])
                 ];
             }
         } else {
@@ -157,7 +157,7 @@ class NhanVienController extends Controller
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Đóng',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                    'footer'=> Html::button('<i class="fa fa-close"> Đóng',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                                 Html::button('Sửa',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
             }else if($model->load($request->post()) && $model->save()){
@@ -167,7 +167,7 @@ class NhanVienController extends Controller
                     'content'=>$this->renderAjax('view', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Đóng',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                    'footer'=> Html::button('<i class="fa fa-close"> Đóng',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                             Html::a('Sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
                 ];    
             }else{
@@ -176,8 +176,8 @@ class NhanVienController extends Controller
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Đóng',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Lưu',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('<i class="fa fa-close"> Đóng',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('<i class="fa fa-save"> Lưu',['class'=>'btn btn-primary','type'=>"submit"])
                 ];        
             }
         }else{

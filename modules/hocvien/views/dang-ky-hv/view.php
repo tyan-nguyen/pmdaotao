@@ -35,7 +35,7 @@
     <p style="margin-top: 30px; color: red;">
         <strong>Thông tin đào tạo</strong>
     </p>
-    <p style="padding-left: 10px; "><strong style="font-weight: bold;">Hạng đào tạo:</strong> <?= $model->hang ? $model->hang->ten_hang : 'Chưa có hạng' ?></p>
+    <p style="padding-left: 10px; "><strong style="font-weight: bold;">Hạng đào tạo:</strong> <?= $model->hangDaoTao ? $model->hangDaoTao->ten_hang : 'Chưa có hạng' ?></p>
     <?php 
 $hocPhi = $model->getHocPhi();
 if ($hocPhi): ?>

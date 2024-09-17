@@ -13,6 +13,7 @@ use yii\helpers\Html;
 use yii\filters\AccessControl;
 use app\modules\hocvien\models\search\HocVienSearch;
 use app\modules\hocvien\models\HocPhi;
+use app\modules\hocvien\models\HocVien;
 /**
  * HocVienController implements the CRUD actions for HvHocVien model.
  */
@@ -78,8 +79,8 @@ class HocVienController extends Controller
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                    'footer'=> Html::button(' <i class="fa fa-close"></i> Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                            Html::a('<i class="fa fa-pencil"></i> Edit',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
                 ];    
         }else{
             return $this->render('view', [
@@ -97,7 +98,7 @@ class HocVienController extends Controller
     public function actionCreate()
     {
         $request = Yii::$app->request;
-        $model = new HvHocVien();  
+        $model = new HocVien();  
 
         if($request->isAjax){
             /*
@@ -110,8 +111,8 @@ class HocVienController extends Controller
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('<i class ="fa fa-close"></i> Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('<i class="fa fa-save"></i> Save',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
             }else if($model->load($request->post()) && $model->save()){
@@ -119,7 +120,7 @@ class HocVienController extends Controller
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Create new HvHocVien",
                     'content'=>'<span class="text-success">Create HvHocVien success</span>',
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                    'footer'=> Html::button(' <i class ="fa fa-close"> Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                             Html::a('Create More',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
         
                 ];         
@@ -129,8 +130,8 @@ class HocVienController extends Controller
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('<i class="fa fa-close"></i> Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('<i class="fa fa-save"></i> Save',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
             }
@@ -182,8 +183,8 @@ class HocVienController extends Controller
                     'content'=>$this->renderAjax('view', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                    'footer'=> Html::button('<i class="fa fa-close"></i> Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                            Html::a('<i class="fa fa-pencil"> </i> Edit',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
                 ];    
             }else{
                  return [
@@ -277,7 +278,7 @@ class HocVienController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = HvHocVien::findOne($id)) !== null) {
+        if (($model = HocVien::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

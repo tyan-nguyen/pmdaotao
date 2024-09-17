@@ -65,7 +65,7 @@ class NvDay extends \yii\db\ActiveRecord
      */
     public function getHangXe()
     {
-        return $this->hasOne(NvHangXe::class, ['id' => 'id_hang_xe']);
+        return $this->hasOne(HvHangDaoTao::class, ['id' => 'id_hang_xe']);
     }
 
     /**

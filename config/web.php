@@ -14,6 +14,9 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
     'modules'=>[
+        'khoahoc' => [
+            'class' => 'app\modules\khoahoc\Khoahoc',
+        ],
         'vanban' => [
             'class' => 'app\modules\vanban\Vanban',
         ],

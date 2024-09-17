@@ -94,4 +94,9 @@ class HvHocVien extends \yii\db\ActiveRecord
     {
         return $this->hasOne(HvKhoaHoc::class, ['id' => 'id_khoa_hoc']);
     }
+    public function getHangDaoTao()
+    {
+        return $this->hasOne(HvHangDaoTao::class, ['id' => 'id_hang']);
+    }
+   
 }

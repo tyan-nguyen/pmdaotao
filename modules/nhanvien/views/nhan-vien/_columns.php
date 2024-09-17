@@ -14,14 +14,29 @@ return [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'id',
     // ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'id_phong_ban',
-    ],
+   
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ho_ten',
     ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'gioi_tinh',
+         'value'=> function ($model)
+         {
+            return $model->gioi_tinh == 1 ? 'Nam' : 'Nữ' ;
+         },
+        'filter'=> [1 => 'Nam', 0 => 'Nữ'],
+    ],
+    [
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'id_phong_ban',
+        'value' => function ($model) {
+            // Kiểm tra xem phongBan có tồn tại hay không
+            return $model->phongBan ? $model->phongBan->ten_phong_ban : 'N/A';
+        },
+    ],
+    
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'chuc_vu',
@@ -30,10 +45,7 @@ return [
     //    'class'=>'\kartik\grid\DataColumn',
      //   'attribute'=>'so_cccd',
    // ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'gioi_tinh',
-    ],
+
    // [
     //    'class'=>'\kartik\grid\DataColumn',
     //    'attribute'=>'dia_chi',
@@ -86,17 +98,27 @@ return [
         'class' => 'kartik\grid\ActionColumn',
         'dropdown' => false,
         'vAlign'=>'middle',
+        'width' => '200px',
         'urlCreator' => function($action, $model, $key, $index) { 
                 return Url::to([$action,'id'=>$key]);
         },
-        'viewOptions'=>['role'=>'modal-remote','title'=>'Xem','data-toggle'=>'tooltip', 'class' => 'btn btn-info btn-sm'],
-        'updateOptions'=>['role'=>'modal-remote','title'=>'Cập nhật', 'data-toggle'=>'tooltip','class' => 'btn btn-warning btn-sm'],
-        'deleteOptions'=>['role'=>'modal-remote','title'=>'Xóa',  'class' => 'btn btn-danger btn-sm',
-                          'data-confirm'=>false, 'data-method'=>false,
+        'viewOptions'=>['role'=>'modal-remote','title'=>'View','title'=>'Xem thông tin',
+            'class'=>'btn ripple btn-primary btn-sm',
+            'data-bs-placement'=>'top',
+            'data-bs-toggle'=>'tooltip-primary'],
+        'updateOptions'=>['role'=>'modal-remote','title'=>'Cập nhật dữ liệu', 
+            'class'=>'btn ripple btn-info btn-sm',
+            'data-bs-placement'=>'top',
+            'data-bs-toggle'=>'tooltip-info'],
+        'deleteOptions'=>['role'=>'modal-remote','title'=>'Xóa dữ liệu này', 
+                          'data-confirm'=>false, 'data-method'=>false,// for overide yii data api
                           'data-request-method'=>'post',
                           'data-toggle'=>'tooltip',
-                          'data-confirm-title'=>'Xác nhận',
-                          'data-confirm-message'=>'Bạn chắc chắn muốn xóa mục này?'], 
+                          'data-confirm-title'=>'Xác nhận xóa dữ liệu?',
+                          'data-confirm-message'=>'Bạn có chắc chắn thực hiện hành động này?',
+                           'class'=>'btn ripple btn-secondary btn-sm',
+                           'data-bs-placement'=>'top',
+                           'data-bs-toggle'=>'tooltip-secondary'], 
     ],
 
 ];   

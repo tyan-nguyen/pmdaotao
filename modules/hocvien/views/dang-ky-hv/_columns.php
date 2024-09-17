@@ -38,7 +38,7 @@ return [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'id_hang',
         'value' => function($model) {
-            return $model->hang ? $model->hang->ten_hang : 'N/A';
+            return $model->hangDaoTao ? $model->hangDaoTao->ten_hang : 'N/A';
         },
         'label' => 'Hạng đào tạo',
     ],

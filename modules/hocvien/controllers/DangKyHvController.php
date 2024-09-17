@@ -123,7 +123,7 @@ class DangKyHvController extends Controller
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Thêm học viên",
                     'content'=>'<span class="text-success">Create HvHocVien success</span>',
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                    'footer'=> Html::button('<i class="fa fa-close"> Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                             Html::a('Create More',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
         
                 ];         
@@ -176,8 +176,8 @@ class DangKyHvController extends Controller
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('<i class="fa fa-close"> Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('<i class="fa fa-save"> Save',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
             }else if($model->load($request->post()) && $model->save()){
                 return [
@@ -186,7 +186,7 @@ class DangKyHvController extends Controller
                     'content'=>$this->renderAjax('view', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                    'footer'=> Html::button('<i class="fa fa-close"> Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                             Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
                 ];    
             }else{
@@ -195,8 +195,8 @@ class DangKyHvController extends Controller
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('<i class="fa fa-close"> Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('<i class="fa fa-save"> Save',['class'=>'btn btn-primary','type'=>"submit"])
                 ];        
             }
         }else{
@@ -344,8 +344,8 @@ public function actionCreate2($id)
                     'model' => $model,
                     'hoTenHocVien' => $hoTenHocVien,
                 ]),
-                'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
+                'footer'=> Html::button(' <i class="fa fa-close"></i> Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                            Html::button('<i class="fa fa-save"></i> Save',['class'=>'btn btn-primary','type'=>"submit"])
     
             ];         
         }else if($model->load($request->post()) && $model->save()){
@@ -357,7 +357,7 @@ public function actionCreate2($id)
                 'forceReload'=>'#crud-datatable-pjax',
                 'title'=> "Thông tin học phí",
                 'content'=>'<span class="text-success">Create HocPhi success</span>',
-                'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                'footer'=> Html::button('<i class="fa fa-close"></i> Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                         Html::a('Create More',['create2'],['class'=>'btn btn-primary','role'=>'modal-remote'])
     
             ];         
@@ -368,8 +368,8 @@ public function actionCreate2($id)
                     'model' => $model,
                     'hoTenHocVien' => $hoTenHocVien,
                 ]),
-                'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
+                'footer'=> Html::button('<i class="fa fa-close"></i> Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                            Html::button('<i class="fa fa-save"></i> Save',['class'=>'btn btn-primary','type'=>"submit"])
     
             ];         
         }

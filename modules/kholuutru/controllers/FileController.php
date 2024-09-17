@@ -201,7 +201,7 @@ class FileController extends Controller
     {
         $request = Yii::$app->request;
         $model = $this->findModel($id);       
-
+     
         if($request->isAjax){
             /*
             *   Process for ajax request
@@ -219,8 +219,13 @@ class FileController extends Controller
             }else if($model->load($request->post()) && $model->save()){
                 return [
                     'forceClose'=>true,   
-                    'excuteFunction'=>'reloadFileName()',
+                  //  'excuteFunction'=>'reloadFileName()',
+                    'excuteFunction2'=>'reloadFileGV()',
                     'functionResponse'=>$this->renderAjax('view_single_file', ['model'=>$model]),
+                    'functionResponse2' => $this->renderAjax('view_gv_file', [
+                    'model' => $model,
+                    'currentFileId' => $id // Truyền ID file hiện tại
+                 ]),
                     'tcontent'=>'Cập nhật thành công!',
                 ];
                 /* return [

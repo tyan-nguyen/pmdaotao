@@ -29,13 +29,13 @@ class FileBase extends \app\models\KhoFile
     public function rules()
     {
         return [
-            [['ten_loai', 'file_display_name', 'id_doi_tuong'], 'required'],
-            [['ten_loai', 'nguoi_tao', 'id_doi_tuong'], 'integer'],
+            [['loai_file', 'file_display_name', 'id_doi_tuong'], 'required'],
+            [['loai_file', 'nguoi_tao', 'id_doi_tuong'], 'integer'],
             [['thoi_gian_tao'], 'safe'],
             [['file_name', 'file_type', 'file_size', 'file_display_name'], 'string', 'max' => 255],
             [['doi_tuong'], 'string', 'max' => 20],
             [['file'], 'file'],
-            [['ten_loai'], 'exist', 'skipOnError' => true, 'targetClass' => LoaiFileBase::class, 'targetAttribute' => ['ten_loai' => 'id']],
+            [['loai_file'], 'exist', 'skipOnError' => true, 'targetClass' => LoaiFileBase::class, 'targetAttribute' => ['loai_file' => 'id']],
         ];
     }
     
@@ -46,7 +46,7 @@ class FileBase extends \app\models\KhoFile
     {
         return [
             'id' => 'ID',
-            'ten_loai' => 'Tên loại file',
+            'loai_file' => 'Tên loại file',
             'file_name' => 'Tên loại',
             'file_type' => 'Loại tệp',
             'file_size' => 'Dung lượng',
