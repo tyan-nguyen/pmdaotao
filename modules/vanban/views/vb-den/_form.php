@@ -9,8 +9,8 @@ use app\modules\nhanvien\models\NhanVien;
 /* @var $this yii\web\View */
 /* @var $model app\modules\vanban\models\VanBanDen */
 /* @var $form yii\widgets\ActiveForm */
-$this->registerCssFile('@web/node_modules/dropzone/dist/dropzone.css');
-$this->registerJsFile('@web/node_modules/dropzone/dist/dropzone-min.js', ['depends' => [\yii\web\JqueryAsset::class]]);
+//$this->registerCssFile('@web/node_modules/dropzone/dist/dropzone.css');
+//$this->registerJsFile('@web/node_modules/dropzone/dist/dropzone-min.js', ['depends' => [\yii\web\JqueryAsset::class]]);
 ?>
 
 <?php 

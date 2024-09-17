@@ -5,6 +5,7 @@ namespace app\modules\vanban\models;
 use app\modules\nhanvien\models\NhanVien;
 use app\custom\CustomFunc;
 use app\modules\kholuutru\models\File;
+use app\modules\kholuutru\models\LoaiFile;
 
 class VanBanDen extends VanBan
 {
@@ -19,9 +20,18 @@ class VanBanDen extends VanBan
         }
         if($this->vbden_ngay_chuyen != null){
             $this->vbden_ngay_chuyen = CustomFunc::convertDMYToYMD($this->vbden_ngay_chuyen);
-        }
-        
+        }        
         return parent::beforeSave($insert);
+    }
+    
+    /**
+     * {@inheritdoc}
+     * xoa file anh, tai lieu, lich su sau khi xoa du lieu
+     */
+    public function afterDelete()
+    {
+        File::deleteFileThamChieu($this::MODEL_ID, $this->id);        
+        return parent::afterDelete();
     }
     
     /**
@@ -61,13 +71,21 @@ class VanBanDen extends VanBan
     /**
      * get file van ban
      */
-    public function getFileVB(){
+    /* public function getFileVB(){
         return File::getOneByLoaiFile(1, $this::MODEL_ID, $this->id);//1 is file vb
+    } */
+    /**
+     * get file dinh kem
+     */
+    public function getFiles(){
+        //return File::getAllByLoaiFile(2, $this::MODEL_ID, $this->id);//2 is vb dinh kem
+        return File::getAllByDoiTuong($this::MODEL_ID, $this->id);
     }
     /**
      * get file dinh kem
      */
-    public function getFileDinhKem(){
-        return File::getAllByLoaiFile(2, $this::MODEL_ID, $this->id);//2 is vb dinh kem
+    public function getFileTypes(){
+        //return File::getAllByLoaiFile(2, $this::MODEL_ID, $this->id);//2 is vb dinh kem
+        return LoaiFile::getAllByDoiTuong($this::MODEL_ID);
     }
 }

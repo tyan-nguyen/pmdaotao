@@ -1,6 +1,7 @@
 <?php
 
 use yii\widgets\DetailView;
+use app\custom\CustomFunc;
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\kholuutru\models\File */
@@ -10,17 +11,25 @@ use yii\widgets\DetailView;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'ten_loai',
+            //'id',
+            [
+                'attribute'=>'Loại file',
+                'value'=>($model->loaiFile?$model->loaiFile->ten_loai:''),
+            ],
             'file_name',
             'file_type',
             'file_size',
             'file_display_name',
-            'nguoi_tao',
-            'thoi_gian_tao',
-            'doi_tuong',
-            'id_doi_tuong',
+            [
+                'attribute'=>'nguoi_tao',
+                'value'=>($model->taiKhoan?$model->taiKhoan->username:''),
+            ],
+            [
+                'attribute'=>'thoi_gian_tao',
+                'value'=>CustomFunc::convertYMDHISToDMYHIS($model->thoi_gian_tao),
+            ],
         ],
+        'template' => "<tr><th style='width: 30%;'>{label}</th><td>{value}</td></tr>"
     ]) ?>
 
 </div>
