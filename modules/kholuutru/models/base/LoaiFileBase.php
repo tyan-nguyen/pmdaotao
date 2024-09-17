@@ -55,7 +55,9 @@ class LoaiFileBase extends \app\models\KhoLoaiFile
      */
     public function beforeSave($insert) {
         if ($this->isNewRecord) {
-            $this->nguoi_tao = Yii::$app->user->identity->id;
+            if($this->nguoi_tao == null){
+                $this->nguoi_tao = Yii::$app->user->id;
+            }
             $this->thoi_gian_tao = date('Y-m-d H:i:s');
         }        
         return parent::beforeSave($insert);
