@@ -1,7 +1,7 @@
 <?php
-
-use yii\widgets\DetailView;
-
+use app\widgets\FileDisplayWidget;
+use app\modules\nhanvien\models\NhanVien;
+use app\modules\giaovien\models\GiaoVien;
 /* @var $this yii\web\View */
 /* @var $model app\modules\nhanvien\models\NhanVien */
 ?>
@@ -62,26 +62,11 @@ use yii\widgets\DetailView;
 
 
         <div class="col-xl-9 col-md-12">
-        
-        <div class="card custom-card">
-            <div class="card-header custom-card-header rounded-bottom-0">
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="add-document-tab" data-bs-toggle="tab" href="#add-document" role="tab" aria-controls="add-student" aria-selected="false"style="color: blue;"><i class="fa fa-file"></i> Hồ sơ</a>
-                    </li>
-                </ul>
-			</div>
-                   <div class="card-body">
-                      <div class="skill-tags">
-                        <div class="tab-content" id="myTabContent">
-                              <!-- Nội dung File hồ sơ nhân viên -->
-                              <div class="tab-pane fade" id="add-document" role="tabpanel" aria-labelledby="add-document-tab">
-                        <!-- Nội dung hiển thị khi click vào "Hồ sơ nhân viên " -->
-                                <?= $this->render('ho_so_nv',['model'=>$model])?>
-                            </div>
-                        </div>
-                      </div>
-                  </div>
+                        <?= FileDisplayWidget::widget([
+                            'type'=>'ALL',
+                            'doiTuong'=>NhanVien::MODEL_ID,
+                            'idDoiTuong'=>$model->id,
+                         ])?>         
         </div>
     </div>
 

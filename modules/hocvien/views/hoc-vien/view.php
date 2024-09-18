@@ -1,7 +1,8 @@
 <?php
 
 use yii\widgets\DetailView;
-
+use app\widgets\FileDisplayWidget;
+use app\modules\hocvien\models\HocVien;
 /* @var $this yii\web\View */
 /* @var $model app\models\HvHocVien */
 ?>
@@ -91,9 +92,11 @@ use yii\widgets\DetailView;
                               <!-- Nội dung Tài liệu khóa học -->
                               <div class="tab-pane fade" id="add-document" role="tabpanel" aria-labelledby="add-document-tab">
                         <!-- Nội dung hiển thị khi click vào "Thêm học viên" -->
-                                <h3>Hồ sơ học viên</h3>
-                                <p>Hiển thị hồ sơ tại đây.</p>
-                                <?= $this->render('ho_so_hv',['model'=>$model])?>
+                        <?= FileDisplayWidget::widget([
+                             'type'=>'ALL',
+                             'doiTuong'=>HocVien::MODEL_ID,
+                             'idDoiTuong'=>$model->id,
+                        ])?>
                             </div>
                         </div>
                       </div>

@@ -30,18 +30,11 @@ $listTaiKhoan = ArrayHelper::map($taiKhoans, 'id', 'username');
             <?= $form->field($model, 'ho_ten')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-4">
-    <?= $form->field($model, 'gioi_tinh')->radioList([
-        1 => 'Nam',
-        0 => 'Nữ',
-    ], [
-        'item' => function($index, $label, $name, $checked, $value) {
-            return "<div class='form-check form-check-inline'>"
-                . "<input class='form-check-input' type='radio' name='{$name}' value='{$value}'" . ($checked ? ' checked' : '') . " id='gioi-tinh-{$index}'>"
-                . "<label class='form-check-label' for='gioi-tinh-{$index}' style='font-weight: normal;'>{$label}</label>"
-                . "</div>";
-        }
-    ]) ?>
-</div>
+        <?= $form->field($model, 'gioi_tinh')->dropDownList([
+             1 => 'Nam',
+             0 => 'Nữ',
+             ], ['prompt' => 'Chọn giới tính', 'class' => 'form-control']) ?>
+        </div>
         <div class="col-md-4">
             <?= $form->field($model, 'so_cccd')->textInput(['maxlength' => true]) ?>
         </div>
@@ -146,29 +139,6 @@ $listTaiKhoan = ArrayHelper::map($taiKhoans, 'id', 'username');
 </div>
 
 
-<div class="row">
-    <div class="col-md-12">
-        <!-- Ẩn tiêu đề và bảng bằng CSS -->
-        <h4 id="file-title" style="display: none; color: #ffffff; background-color: #007bff; padding: 10px; text-align: center; border-radius: 5px;">
-    Thêm hồ sơ
-</h4>
-
-        <table id="file-table" class="table table-bordered" style="display: none;">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Loại hồ sơ</th>
-                    <th>Hồ sơ</th>
-                    <th>Hành động</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Dòng dữ liệu động sẽ được thêm vào đây -->
-            </tbody>
-        </table>
-        <button type="button" class="btn btn-secondary" onclick="addFileRow()">Thêm hồ sơ</button>
-    </div>
-</div>
 
 
     <?php if (!Yii::$app->request->isAjax) { ?>
@@ -248,54 +218,6 @@ select:focus {
 
     </style>
 
-<script>
-    let fileCount = 0;
-
-    function addFileRow() {
-        fileCount++;
-
-        // Hiển thị tiêu đề và bảng nếu đây là lần nhấn đầu tiên
-        document.getElementById('file-title').style.display = 'block';
-        document.getElementById('file-table').style.display = 'table'; // Sử dụng 'table' thay vì 'block' cho thẻ <table>
-
-        let table = document.getElementById('file-table').getElementsByTagName('tbody')[0];
-        let newRow = table.insertRow();
-
-        let cell1 = newRow.insertCell(0);
-        let cell2 = newRow.insertCell(1);
-        let cell3 = newRow.insertCell(2);
-        let cell4 = newRow.insertCell(3);
-
-        cell1.innerHTML = fileCount;
- // Tạo dropdown select từ danh sách loại hồ sơ
-let selectHtml = '<select name="HsNhanVien[' + fileCount + '][id_loai_ho_so]" class="form-control">';
-selectHtml += '<option value="">Chọn loại hồ sơ</option>'; // Tùy chọn mặc định
-
-for (let id in listLoaiHoSo) {
-    selectHtml += '<option value="' + id + '"> + ' + listLoaiHoSo[id] + '</option>';
-}
-
-selectHtml += '</select>';
-
-cell2.innerHTML = selectHtml;
-
-
-        cell3.innerHTML = '<input type="file" name="HSNhanVien[' + fileCount + '][file_display_name]" class="form-control" />';
-        cell4.innerHTML = '<button type="button" class="btn btn-danger" onclick="removeFileRow(this)">Xóa</button>';
-    }
-
-    function removeFileRow(button) {
-        let row = button.parentNode.parentNode;
-        row.parentNode.removeChild(row);
-
-        // Kiểm tra nếu không còn dòng nào thì ẩn tiêu đề và bảng đi
-        let table = document.getElementById('file-table').getElementsByTagName('tbody')[0];
-        if (table.rows.length === 0) {
-            document.getElementById('file-title').style.display = 'none';
-            document.getElementById('file-table').style.display = 'none';
-        }
-    }
-</script>
 
 
 

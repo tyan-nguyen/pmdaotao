@@ -41,7 +41,7 @@ class GiaoVienBase extends \app\models\NvNhanVien
     /**
      * {@inheritdoc}
      */
-    CONST GV_VALUE = 'GIAO_VIEN';
+    
     public static function tableName()
     {
         return 'nv_nhan_vien';
@@ -71,24 +71,24 @@ class GiaoVienBase extends \app\models\NvNhanVien
     {
         return [
             'id' => 'ID',
-            'id_phong_ban' => 'Id Phong Ban',
-            'ho_ten' => 'Ho Ten',
-            'chuc_vu' => 'Chuc Vu',
-            'so_cccd' => 'So Cccd',
-            'dia_chi' => 'Dia Chi',
-            'dien_thoai' => 'Dien Thoai',
-            'tai_khoan' => 'Tai Khoan',
+            'id_phong_ban' => 'Phòng ban',
+            'ho_ten' => 'Họ tên',
+            'chuc_vu' => 'Chức vụ',
+            'so_cccd' => 'Số CCCD',
+            'dia_chi' => 'Địa chỉ',
+            'dien_thoai' => 'Điện thoại',
+            'tai_khoan' => 'Taif khoản',
             'email' => 'Email',
-            'trinh_do' => 'Trinh Do',
-            'chuyen_nganh' => 'Chuyen Nganh',
-            'vi_tri_cong_viec' => 'Vi Tri Cong Viec',
-            'kinh_nghiem_lam_viec' => 'Kinh Nghiem Lam Viec',
-            'ma_so_thue' => 'Ma So Thue',
-            'trang_thai' => 'Trang Thai',
-            'nguoi_tao' => 'Nguoi Tao',
-            'thoi_gian_tao' => 'Thoi Gian Tao',
-            'id_to' => 'Id To',
-            'gioi_tinh' => 'Gioi Tinh',
+            'trinh_do' => 'Trình độ',
+            'chuyen_nganh' => 'Chuyên ngành',
+            'vi_tri_cong_viec' => 'Vị trí công việc',
+            'kinh_nghiem_lam_viec' => 'Kinh Nghiệm Làm Việc',
+            'ma_so_thue' => 'Mã Số Thuế',
+            'trang_thai' => 'Trangj Thái',
+            'nguoi_tao' => 'Nguười Tạo',
+            'thoi_gian_tao' => 'Thời gian tạo',
+            'id_to' => 'Tổ',
+            'gioi_tinh' => 'Giới tính',
             'doi_tuong'=>'Đối tượng' // Dùng để phân biệt Nhân viên và Giáo viên
         ];
     }
@@ -138,12 +138,5 @@ class GiaoVienBase extends \app\models\NvNhanVien
      *
      * @return \yii\db\ActiveQuery
      */
-    public function beforeSave($insert) {
-        if ($this->isNewRecord) {
-            $this->nguoi_tao = Yii::$app->user->identity->id;
-            $this->thoi_gian_tao = date('Y-m-d H:i:s');
-          
-        }
-        return parent::beforeSave($insert);
-    }
+   
 }

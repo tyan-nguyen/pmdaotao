@@ -120,7 +120,7 @@ class HocVienController extends Controller
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Create new HvHocVien",
                     'content'=>'<span class="text-success">Create HvHocVien success</span>',
-                    'footer'=> Html::button(' <i class ="fa fa-close"> Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                    'footer'=> Html::button(' <i class ="fa fa-close"></i> Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                             Html::a('Create More',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
         
                 ];         

@@ -96,8 +96,8 @@ class NhanVienController extends Controller
                         'model' => $model,
                         'listLoaiHoSo' => $listLoaiHoSo, // Truyền biến vào view
                     ]),
-                    'footer' => Html::button('<i class="fa fa-close"> Đóng', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
-                                Html::button('<i class="fa fa-save"> Lưu', ['class' => 'btn btn-primary', 'type' => "submit"])
+                    'footer' => Html::button('<i class="fa fa-close"></i> Đóng', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                                Html::button('<i class="fa fa-save"></i> Lưu', ['class' => 'btn btn-primary', 'type' => "submit"])
                 ];
             } else if ($model->load($request->post()) && $model->save()) {
                 return [

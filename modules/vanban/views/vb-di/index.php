@@ -3,19 +3,19 @@ use yii\helpers\Url;
 use yii\bootstrap5\Html;
 use yii\bootstrap5\Modal;
 use kartik\grid\GridView;
-use cangak\ajaxcrud\CrudAsset; 
+//use cangak\ajaxcrud\CrudAsset; 
 use cangak\ajaxcrud\BulkButtonWidget;
 use yii\widgets\Pjax;
 use app\widgets\FilterFormWidget;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\modules\vanban\models\search\VBDenSearch */
+/* @var $searchModel app\modules\vanban\models\search\VBDiSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Văn bản đi';
 $this->params['breadcrumbs'][] = $this->title;
 
-CrudAsset::register($this);
+//CrudAsset::register($this);
 
 Yii::$app->params['showSearch'] = true;
 Yii::$app->params['showExport'] = true;
@@ -28,7 +28,7 @@ Yii::$app->params['showExport'] = true;
     'formSelector' => '.myFilterForm'
 ]); ?>
 
-<div class="van-ban-den-index">
+<div class="van-ban-di-index">
     <div id="ajaxCrudDatatable">
         <?=GridView::widget([
             'id'=>'crud-datatable',
@@ -38,8 +38,8 @@ Yii::$app->params['showExport'] = true;
             'columns' => require(__DIR__.'/_columns.php'),
             'toolbar'=> [
                 ['content'=>
-                    Html::a('<i class="fas fa fa-plus" aria-hidden="true"></i> Thêm mới', ['create'],
-                    ['role'=>'modal-remote','title'=> 'Thêm mới Vaưn bản đi','class'=>'btn btn-outline-primary']).
+                    Html::a('<i class="fas fa fa-plus" aria-hiddi="true"></i> Thêm mới', ['create'],
+                    ['role'=>'modal-remote-2','title'=> 'Thêm mới Van Ban Dis','class'=>'btn btn-outline-primary']).
                     Html::a('<i class="fas fa fa-sync" aria-hidden="true"></i> Tải lại', [''],
                     ['data-pjax'=>1, 'class'=>'btn btn-outline-primary', 'title'=>'Tải lại']).
                     //'{toggleData}'.
@@ -72,6 +72,7 @@ Yii::$app->params['showExport'] = true;
             ]
         ])?>
     </div>
+    
 </div>
 
 <?php Pjax::end(); ?>
@@ -81,9 +82,24 @@ Yii::$app->params['showExport'] = true;
         'id'=>'ajaxCrudModal',
         'tabindex' => false // important for Select2 to work properly
    ],
-   'dialogOptions'=>['class'=>'modal-lg'],
+   'dialogOptions'=>[ 'class' => 'modal-xl',],
    'closeButton'=>['label'=>'<span aria-hidden=\'true\'>×</span>'],
    'id'=>'ajaxCrudModal',
+   'class'=>'modal-dialog',
+    'footer'=>'',// always need it for jquery plugin
+])?>
+
+<?php Modal::end(); ?>
+
+<?php Modal::begin([
+   'options' => [
+        'id'=>'ajaxCrudModal2',
+        'tabindex' => false // important for Select2 to work properly
+   ],
+   'dialogOptions'=>['class'=>'modal-lg'],
+   'closeButton'=>['label'=>'<span aria-hidden=\'true\'>×</span>'],
+   'id'=>'ajaxCrudModal2',
+  
     'footer'=>'',// always need it for jquery plugin
 ])?>
 

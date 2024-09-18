@@ -3,13 +3,25 @@
 namespace app\modules\vanban\models;
 
 
+use app\modules\kholuutru\models\File;
+
 class VanBanDi extends VanBan
 {
+    CONST MODEL_ID = 'VBDI';
     public function beforeSave($insert) {
         if ($this->isNewRecord) {
             $this->so_loai_van_ban = $this::VBDI_VALUE;
         }
         return parent::beforeSave($insert);
+    }
+    /**
+     * {@inheritdoc}
+     * xoa file anh, tai lieu, lich su sau khi xoa du lieu
+     */
+    public function afterDelete()
+    {
+        File::deleteFileThamChieu($this::MODEL_ID, $this->id);
+        return parent::afterDelete();
     }
     /**
      * {@inheritdoc}

@@ -59,30 +59,24 @@ class VbDiController extends Controller
 	    return true;
 	}
     public function actionView($id)
-    {
-        $model = $this->findModel($id);
-        $files = FileVanBan::find()->where(['id_van_ban' => $id])->all();
+    {   
         $request = Yii::$app->request;
-        
-        if ($request->isAjax) {
+        if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                'title' => "VanBan #".$id,
-                'content' => $this->renderAjax('view', [
-                    'model' => $model,
-                    'files' => $files, // Truyền biến files vào renderAjax
-                ]),
-                'footer' => Html::button('Đóng', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
-                           Html::a('Sửa', ['update', 'id' => $id], ['class' => 'btn btn-primary', 'role' => 'modal-remote']),
-            ];
-        } else {
+                    'title'=> "Văn bản đi",
+                    'content'=>$this->renderAjax('view', [
+                        'model' => $this->findModel($id),
+                    ]),
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                            Html::a('Sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                ];    
+        }else{
             return $this->render('view', [
-                'model' => $model,
-                'files' => $files,
+                'model' => $this->findModel($id),
             ]);
         }
     }
-
     /**
      * Creates a new VanBan model.
      * For ajax request will return json object
@@ -95,57 +89,41 @@ class VbDiController extends Controller
         $model = new VanBanDi();  
         $currentYear = date('Y');
         // Thiết lập giá trị mặc định cho 'so_vb'
-        $model->so_vb = "/$currentYear";
+        $model->so_vb = "/$currentYear";    
         if($request->isAjax){
-            /*
-            *   Process for ajax request
-            */
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Thêm văn bản",
+                    'title'=> "Thêm mới Văn bản đi",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Đóng',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Lưu',['class'=>'btn btn-primary','type'=>"submit"])
-        
+                    'footer'=>Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                    Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+    
                 ];         
             }else if($model->load($request->post()) && $model->save()){
-                    // Xử lý lưu thông tin file_van_ban
-                    $files = $request->post('FileVanBan', []);
-                    foreach ($files as $fileData) {
-                        $fileVanBan = new FileVanBan();
-                        $fileVanBan->id_van_ban = $model->id; 
-                        $fileVanBan->file_name = $fileData['file_name'];
-                        $fileVanBan->file_size = $fileData['file_size'];
-                        $fileVanBan->file_type = $fileData['file_type'];
-                        $fileVanBan->file_display_name = $fileData['file_display_name'];
-                        $fileVanBan->save();
-                    }
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Thêm văn bản",
-                    'content'=>'<span class="text-success">Create VanBan success</span>',
-                    'footer'=> Html::button('Đóng',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::a('Tạo',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
-        
+                    'title'=> "Thêm mới Văn bản đi",
+                    'content'=>'<span class="text-success">Thêm mới thành công</span>',
+                    'tcontent'=>'Thêm mới thành công!',
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                            Html::a('Tiếp tục thêm',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
+    
                 ];         
             }else{           
                 return [
-                    'title'=> "Thêm văn bản",
+                    'title'=> "Thêm mới Văn bản đi",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Đóng',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Lưu',['class'=>'btn btn-primary','type'=>"submit"])
-        
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+    
                 ];         
             }
         }else{
-            /*
-            *   Process for non-ajax request
-            */
             if ($model->load($request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
@@ -154,8 +132,8 @@ class VbDiController extends Controller
                 ]);
             }
         }
-       
     }
+    
     protected function findModel($id)
     {
         if (($model = VanBanDi::findOne($id)) !== null) {

@@ -1,6 +1,6 @@
 <?php
-
-
+use app\widgets\FileDisplayWidget;
+use app\modules\khoahoc\models\KhoaHoc;
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\khoahoc\models\KhoaHoc */
@@ -77,7 +77,11 @@
                         <!-- Nội dung hiển thị khi click vào "Thêm học viên" -->
                                 <h3>Tài liệu khóa học</h3>
                                 <p>Hiển thị tài liệu khóa học tại đây.</p>
-                                <?= $this->render('tai_lieu_kh',['model'=>$model])?>
+                                <?= FileDisplayWidget::widget([
+                                    'type'=>'ALL',
+                                     'doiTuong'=>KhoaHoc::MODEL_ID,
+                                     'idDoiTuong'=>$model->id,
+                         ])?>
                             </div>
                         </div>
                       </div>

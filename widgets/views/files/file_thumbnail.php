@@ -79,8 +79,8 @@ use app\modules\kholuutru\models\File;
         <div class="card-footer border-top-0">
             <div class="d-flex">
                 <div>
-                    <h5 class="text-primary">Videos</h5>
-                    <p class="text-muted fs-13 mb-0">25 Files</p>
+                <h5 class="fs-11 text-muted"><?= $fileVB->file_name ?></h5>
+                    <p class="text-muted fs-13 mb-0"><?= $fileVB->file_display_name ?></p>
                 </div>
                 <div class="ms-auto">
                     <h6 class="fs-11 text-muted"><?= $fileVB->file_size ?></h6>

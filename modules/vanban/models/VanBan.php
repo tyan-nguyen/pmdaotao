@@ -19,7 +19,9 @@ class VanBan extends VanBanBase
     public function getVbdenNC(){
         return CustomFunc::convertYMDToDMY($this->vbden_ngay_chuyen);
     }
-
+    public function getVbdiNC(){
+        return CustomFunc::convertYMDToDMY($this->vbdi_ngay_chuyen);
+    }
     /**
      * Gets query for [[LoaiVanBan]].
      *
