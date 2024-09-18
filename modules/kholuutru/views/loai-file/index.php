@@ -12,14 +12,13 @@ use app\widgets\FilterFormWidget;
 /* @var $searchModel app\modules\kholuutru\models\search\LoaiFileSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Loai Files';
+$this->title = 'Loại hồ sơ ' . $doiTuongLabel;
 $this->params['breadcrumbs'][] = $this->title;
 
 CrudAsset::register($this);
 
 Yii::$app->params['showSearch'] = true;
 Yii::$app->params['showExport'] = true;
-
 ?>
 
 <?php Pjax::begin([
@@ -38,9 +37,9 @@ Yii::$app->params['showExport'] = true;
             'columns' => require(__DIR__.'/_columns.php'),
             'toolbar'=> [
                 ['content'=>
-                    Html::a('<i class="fas fa fa-plus" aria-hidden="true"></i> Thêm mới', ['create'],
-                    ['role'=>'modal-remote','title'=> 'Thêm mới Loai Files','class'=>'btn btn-outline-primary']).
-                    Html::a('<i class="fas fa fa-sync" aria-hidden="true"></i> Tải lại', [''],
+                    Html::a('<i class="fas fa fa-plus" aria-hidden="true"></i> Thêm mới', ['create', 'doiTuong'=>$doiTuong],
+                    ['role'=>'modal-remote','title'=> 'Thêm mới loại hồ sơ','class'=>'btn btn-outline-primary']).
+                    Html::a('<i class="fas fa fa-sync" aria-hidden="true"></i> Tải lại', ['', 'doiTuong'=>$doiTuong],
                     ['data-pjax'=>1, 'class'=>'btn btn-outline-primary', 'title'=>'Tải lại']).
                     //'{toggleData}'.
                     '{export}'
@@ -55,7 +54,7 @@ Yii::$app->params['showExport'] = true;
             'panel' => [
                 //'type' => 'primary', 
                 'heading' => '<i class="fas fa fa-list" aria-hidden="true"></i> Danh sách',
-                'before'=>'<em>* Danh sách Loai Files</em>',
+                'before'=>'<em>* Danh sách Loại hồ sơ '.$doiTuongLabel.'</em>',
                 'after'=>BulkButtonWidget::widget([
                             'buttons'=>Html::a('<i class="fas fa fa-trash" aria-hidden="true"></i>&nbsp; Xóa đã chọn',
                                 ["bulkdelete"] ,

@@ -19,7 +19,7 @@ class LoaiFileSearch extends LoaiFile
     {
         return [
             [['id', 'nguoi_tao'], 'integer'],
-            [['loai', 'ho_so_bat_buoc', 'ghi_chu', 'thoi_gian_tao', 'doi_tuong'], 'safe'],
+            [['ten_loai', 'ho_so_bat_buoc', 'ghi_chu', 'thoi_gian_tao', 'doi_tuong'], 'safe'],
         ];
     }
 
@@ -55,19 +55,19 @@ class LoaiFileSearch extends LoaiFile
             return $dataProvider;
         }
 		if($cusomSearch != NULL){
-			$query->andFilterWhere ( [ 'OR' ,['like', 'loai', $cusomSearch],
+			$query->andFilterWhere ( [ 'OR' ,['like', 'ten_loai', $cusomSearch],
             ['like', 'ho_so_bat_buoc', $cusomSearch],
-            ['like', 'ghi_chu', $cusomSearch],
-            ['like', 'doi_tuong', $cusomSearch]] );
+            ['like', 'ghi_chu', $cusomSearch]] );
  
 		} else {
         	$query->andFilterWhere([
             'id' => $this->id,
             'nguoi_tao' => $this->nguoi_tao,
             'thoi_gian_tao' => $this->thoi_gian_tao,
+        	    'doi_tuong' => $this->doi_tuong,
         ]);
 
-        $query->andFilterWhere(['like', 'loai', $this->loai])
+        $query->andFilterWhere(['like', 'ten_loai', $this->ten_loai])
             ->andFilterWhere(['like', 'ho_so_bat_buoc', $this->ho_so_bat_buoc])
             ->andFilterWhere(['like', 'ghi_chu', $this->ghi_chu])
             ->andFilterWhere(['like', 'doi_tuong', $this->doi_tuong]);

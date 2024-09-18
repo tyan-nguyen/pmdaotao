@@ -1,5 +1,6 @@
 <?php
 use yii\helpers\Url;
+use app\widgets\BoolViewWidget;
 
 return [
     [
@@ -16,24 +17,28 @@ return [
     // ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'loai',
+        'attribute'=>'ten_loai',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'ho_so_bat_buoc',
+        'attribute' => 'ho_so_bat_buoc',
+        'format'=>'html',
+        'value'=>function($model){
+            return BoolViewWidget::widget(['value'=>$model->ho_so_bat_buoc]);
+        }
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ghi_chu',
     ],
-    [
+    /* [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'nguoi_tao',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'thoi_gian_tao',
-    ],
+    ], */
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'doi_tuong',

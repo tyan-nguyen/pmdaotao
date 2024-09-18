@@ -13,8 +13,8 @@ class BoolViewWidget extends Widget{
     public function run(){
         if($this->value==0 || $this->value==1){
             return $this->value==1
-                ?'<h5><span class="badge bg-primary"><i class="ti-check"></i></span></h5>'
-                :'<h5><span class="badge bg-gray"><i class="ti-close"></i></span></h5>';
+                ?'<i class="fe fe-check text-primary"></i>'
+                :'<i class="fe fe-x text-gray"></i>';
         } else {
             return 'Giá trị không thuộc kiểu Boolean!';
         }

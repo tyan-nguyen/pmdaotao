@@ -17,7 +17,7 @@ use yii\widgets\ActiveForm;
             ]
       	]); ?>
 
-    <?= $form->field($model, 'loai')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'ten_loai')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'ho_so_bat_buoc')->textInput() ?>
 
