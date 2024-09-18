@@ -33,26 +33,40 @@ class LoaiFileController extends Controller
     			],
 		];
 	}
+	
+	public function beforeAction($action)
+	{
+	    Yii::$app->params['moduleID'] = 'Module Kho lưu trữ';
+	    Yii::$app->params['modelID'] = 'Quản lý Loại hồ sơ';
+	    return true;
+	}
 
     /**
      * Lists all LoaiFile models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($doiTuong)
     {    
-        $searchModel = new LoaiFileSearch();
-  		if(isset($_POST['search']) && $_POST['search'] != null){
-            $dataProvider = $searchModel->search(Yii::$app->request->post(), $_POST['search']);
-        } else if ($searchModel->load(Yii::$app->request->post())) {
-            $searchModel = new LoaiFileSearch(); // "reset"
-            $dataProvider = $searchModel->search(Yii::$app->request->post());
+        if($doiTuong==null || !in_array($doiTuong, LoaiFile::listDoiTuong())) {
+            throw new NotFoundHttpException('The requested page does not exist.');
         } else {
-            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        }    
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+            $searchModel = new LoaiFileSearch();
+            $searchModel->doi_tuong = $doiTuong;
+      		if(isset($_POST['search']) && $_POST['search'] != null){
+                $dataProvider = $searchModel->search(Yii::$app->request->post(), $_POST['search']);
+            } else if ($searchModel->load(Yii::$app->request->post())) {
+                $searchModel = new LoaiFileSearch(); // "reset"
+                $dataProvider = $searchModel->search(Yii::$app->request->post());
+            } else {
+                $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+            }    
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+                'doiTuong' => $doiTuong,
+                'doiTuongLabel' => LoaiFile::listDoiTuongLabel($doiTuong)
+            ]);
+        }
     }
 
 
@@ -67,7 +81,7 @@ class LoaiFileController extends Controller
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "LoaiFile",
+                    'title'=> "Loại hồ sơ",
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
                     ]),
@@ -87,7 +101,7 @@ class LoaiFileController extends Controller
      * and for non-ajax request if creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($doiTuong)
     {
         $request = Yii::$app->request;
         $model = new LoaiFile();  
@@ -99,9 +113,10 @@ class LoaiFileController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Thêm mới LoaiFile",
+                    'title'=> "Thêm mới Loại hồ sơ",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
+                        'doiTuong' => $doiTuong,
                     ]),
                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                                 Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
@@ -110,18 +125,19 @@ class LoaiFileController extends Controller
             }else if($model->load($request->post()) && $model->save()){
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Thêm mới LoaiFile",
+                    'title'=> "Thêm mới Loại hồ sơ",
                     'content'=>'<span class="text-success">Thêm mới thành công</span>',
                     'tcontent'=>'Thêm mới thành công!',
                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::a('Tiếp tục thêm',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                            Html::a('Tiếp tục thêm',['create', 'doiTuong'=>$doiTuong],['class'=>'btn btn-primary','role'=>'modal-remote'])
         
                 ];         
             }else{           
                 return [
-                    'title'=> "Thêm mới LoaiFile",
+                    'title'=> "Thêm mới Loại hồ sơ",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
+                        'doiTuong' => $doiTuong,
                     ]),
                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                                 Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
@@ -137,6 +153,7 @@ class LoaiFileController extends Controller
             } else {
                 return $this->render('create', [
                     'model' => $model,
+                    'doiTuong' => $doiTuong,
                 ]);
             }
         }
@@ -162,7 +179,7 @@ class LoaiFileController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Cập nhật LoaiFile",
+                    'title'=> "Cập nhật Loại hồ sơ",
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
@@ -172,7 +189,7 @@ class LoaiFileController extends Controller
             }else if($model->load($request->post()) && $model->save()){
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "LoaiFile",
+                    'title'=> "Loại hồ sơ",
                     'content'=>$this->renderAjax('view', [
                         'model' => $model,
                     ]),
@@ -182,7 +199,7 @@ class LoaiFileController extends Controller
                 ];    
             }else{
                  return [
-                    'title'=> "Cập nhật LoaiFile",
+                    'title'=> "Cập nhật Loại hồ sơ",
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),

@@ -11,17 +11,13 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'loai')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'ten_loai')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'ho_so_bat_buoc')->textInput() ?>
+    <?= $form->field($model, 'ho_so_bat_buoc')->checkbox() ?>
 
     <?= $form->field($model, 'ghi_chu')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'nguoi_tao')->textInput() ?>
-
-    <?= $form->field($model, 'thoi_gian_tao')->textInput() ?>
-
-    <?= $form->field($model, 'doi_tuong')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'doi_tuong')->textInput(['readonly' => true, 'value'=>($model->isNewRecord?$doiTuong:$model->doi_tuong)]) ?>
 
   
 	<?php if (!Yii::$app->request->isAjax){ ?>

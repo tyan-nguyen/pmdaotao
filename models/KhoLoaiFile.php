@@ -65,6 +65,6 @@ class KhoLoaiFile extends \yii\db\ActiveRecord
      */
     public function getKhoFiles()
     {
-        return $this->hasMany(KhoFile::class, ['ten_loai' => 'id']);
+        return $this->hasMany(KhoFile::class, ['loai_file' => 'id']);
     }
 }

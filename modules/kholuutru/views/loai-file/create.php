@@ -10,5 +10,6 @@ use yii\bootstrap5\Html;
 <div class="loai-file-create">
     <?= $this->render('_form', [
         'model' => $model,
+        'doiTuong' => $doiTuong,
     ]) ?>
 </div>
