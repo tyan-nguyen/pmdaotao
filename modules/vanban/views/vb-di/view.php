@@ -1,7 +1,7 @@
 <?php
 
 use yii\widgets\DetailView;
-use app\modules\vanban\models\VanBanDen;
+use app\modules\vanban\models\VanBanDi;
 use app\widgets\FileDisplayWidget;
 /* @var $this yii\web\View */
 /* @var $model app\modules\vanban\models\VanBanDi */
@@ -64,7 +64,7 @@ use app\widgets\FileDisplayWidget;
     <div class="col-md-8">
         <?= FileDisplayWidget::widget([
             'type'=>'ALL',
-            'doiTuong'=>VanBanDen::MODEL_ID,
+            'doiTuong'=>VanBanDi::MODEL_ID,
             'idDoiTuong'=>$model->id,
         ])?>
     </div>

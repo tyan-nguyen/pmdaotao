@@ -19,6 +19,7 @@ use app\modules\giaovien\models\GiaoVien;
 									<div class="skill-tags">
                                         <p><strong>Họ Tên:</strong> <?= $model->ho_ten ?></p>
                                         <p><strong>Giới tính:</strong> <?= $model->gioi_tinh == 1 ? 'Nam' : 'Nữ' ?></p>
+                                        <p><strong>Ngày sinh:</strong> <?= $model->getNgaySinh() ?></p>
                                         <p><strong>Số CCCD:</strong> <?= $model->so_cccd ?></p>
                                         <p><strong>Địa Chỉ:</strong> <?= $model->dia_chi ?></p>
                                         <p><strong>Điện Thoại:</strong> <?= $model->dien_thoai ?></p>
@@ -73,7 +74,7 @@ use app\modules\giaovien\models\GiaoVien;
                         <a class="nav-link" id="add-phancong-tab" data-bs-toggle="tab" href="#add-phancong" role="tab" aria-controls="add-student" aria-selected="false"style="color: blue;"><i class="fa fa-gavel"></i> Phân công </a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="add-document-tab" data-bs-toggle="tab" href="#add-document" role="tab" aria-controls="add-student" aria-selected="false"style="color: blue;"><i class="fa fa-calendar"></i> Lịch dạy</a>
+                        <a class="nav-link" id="add-lichday-tab" data-bs-toggle="tab" href="#add-lichday" role="tab" aria-controls="add-student" aria-selected="false"style="color: blue;"><i class="fa fa-calendar"></i> Lịch dạy</a>
                     </li>
                 </ul>
 			</div>
@@ -81,9 +82,9 @@ use app\modules\giaovien\models\GiaoVien;
                       <div class="skill-tags">
                       
                         <div class="tab-content" id="myTabContent">
-                              <!-- Nội dung File hồ sơ nhân viên -->
-                              <div class="tab-pane fade" id="add-document" role="tabpanel" aria-labelledby="add-document-tab">
-                                    <!-- Nội dung hiển thị khi click vào "Hồ sơ nhân viên " -->
+                              <!-- Nội dung File hồ sơ giáo viên -->
+                              <div class="tab-pane fade  show active " id="add-document" role="tabpanel" aria-labelledby="add-document-tab">
+                                    <!-- Nội dung hiển thị khi click vào "Hồ sơ giáo viên " -->
                                     <?= FileDisplayWidget::widget([
                                          'type'=>'ALL',
                                          'doiTuong'=>GiaoVien::MODEL_ID,
@@ -95,6 +96,13 @@ use app\modules\giaovien\models\GiaoVien;
                              <div class="tab-pane fade" id="add-phancong" role="tabpanel" aria-labelledby="add-phancong-tab">
                                     <!-- Nội dung hiển thị khi click vào "Hồ sơ nhân viên " -->
                                    <p> Phân công </p>
+                                   <?= $this->render('phan_cong_day', ['model' => $model]) ?>
+                             </div>
+
+                             <div class="tab-pane fade" id="add-lichday" role="tabpanel" aria-labelledby="add-lichday-tab">
+                                    <!-- Nội dung hiển thị khi click vào "Hồ sơ nhân viên " -->
+                                   <p> Lịch dạy sẽ hiển thị tại đây </p>
+                                
                              </div>
                         </div>
                       </div>

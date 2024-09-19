@@ -1,10 +1,10 @@
 <?php
 
 namespace app\modules\giaovien\models;
-
+use Yii;
 use app\modules\giaovien\models\base\GiaoVienBase;
 use app\modules\kholuutru\models\File;
-
+use app\custom\CustomFunc;
 class GiaoVien extends GiaoVienBase
 {
     CONST MODEL_ID = 'GIAOVIEN';
@@ -17,11 +17,13 @@ class GiaoVien extends GiaoVienBase
             } elseif ($this->chuc_vu === 'Nhân viên / Giáo viên') {
                 $this->doi_tuong = 'NV_GV';
             }
-    
+            $this->nguoi_tao = Yii::$app->user->identity->id;
+            $this->thoi_gian_tao = date('Y-m-d H:i:s');
             // Các giá trị mặc định khác
             $this->id_phong_ban = '2';
-            $this->id_to = '8';
+            $this->id_to = '1';
             $this->vi_tri_cong_viec = 'GIANG DAY';
+            $this->ngay_sinh = CustomFunc::convertDMYToYMD($this->ngay_sinh);
         }
         return parent::beforeSave($insert);
     }

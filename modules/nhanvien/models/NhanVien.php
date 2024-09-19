@@ -1,17 +1,17 @@
 <?php
 
 namespace app\modules\nhanvien\models;
-
+use Yii;
 use app\modules\nhanvien\models\base\NhanVienBase;
 use yii\helpers\ArrayHelper;
+use app\custom\CustomFunc;
 class NhanVien extends NhanVienBase
 {
     CONST MODEL_ID = 'NHANVIEN';
     public static function getList()
 {
-    // Lấy danh sách nhân viên có id_phong_ban là 1 và sắp xếp theo thứ tự bảng chữ cái
+    // Lấy danh sách nhân viên  và sắp xếp theo thứ tự bảng chữ cái
     $dsNguoiNhan = NhanVien::find()
-        ->where(['id_phong_ban' => 1])
         ->orderBy(['ho_ten' => SORT_ASC])
         ->all();
 
@@ -33,6 +33,9 @@ class NhanVien extends NhanVienBase
     }
     public function beforeSave($insert) {
         if ($this->isNewRecord) {
+            $this->nguoi_tao = Yii::$app->user->identity->id;
+            $this->thoi_gian_tao = date('Y-m-d H:i:s');
+            $this->ngay_sinh = CustomFunc::convertDMYToYMD($this->ngay_sinh);
               // Xác định giá trị của doi_tuong dựa trên giá trị của chuc_vu
               if ($this->chuc_vu === 'Nhân viên') {
                 $this->doi_tuong = 'NHAN_VIEN';

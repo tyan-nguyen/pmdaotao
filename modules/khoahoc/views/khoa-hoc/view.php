@@ -75,8 +75,6 @@ use app\modules\khoahoc\models\KhoaHoc;
                               <!-- Nội dung Tài liệu khóa học -->
                               <div class="tab-pane fade" id="add-document" role="tabpanel" aria-labelledby="add-document-tab">
                         <!-- Nội dung hiển thị khi click vào "Thêm học viên" -->
-                                <h3>Tài liệu khóa học</h3>
-                                <p>Hiển thị tài liệu khóa học tại đây.</p>
                                 <?= FileDisplayWidget::widget([
                                     'type'=>'ALL',
                                      'doiTuong'=>KhoaHoc::MODEL_ID,

@@ -4,7 +4,7 @@ namespace app\modules\vanban\models;
 
 
 use app\modules\kholuutru\models\File;
-
+use app\custom\CustomFunc;
 class VanBanDi extends VanBan
 {
     CONST MODEL_ID = 'VBDI';
@@ -12,6 +12,9 @@ class VanBanDi extends VanBan
         if ($this->isNewRecord) {
             $this->so_loai_van_ban = $this::VBDI_VALUE;
         }
+	    if($this->vbdi_ngay_chuyen != null){
+            $this->vbdi_ngay_chuyen = CustomFunc::convertDMYToYMD($this->vbdi_ngay_chuyen);
+        }   
         return parent::beforeSave($insert);
     }
     /**

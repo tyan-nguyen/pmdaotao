@@ -7,6 +7,7 @@ use app\modules\nhanvien\models\To;
 use app\modules\nhanvien\models\PhongBan;
 use app\modules\user\models\User;
 use app\modules\giaovien\models\Day;
+use app\custom\CustomFunc;
 /**
  * This is the model class for table "nv_nhan_vien".
  *
@@ -29,7 +30,7 @@ use app\modules\giaovien\models\Day;
  * @property string|null $thoi_gian_tao
  * @property int|null $id_to
  * @property int|null $gioi_tinh
- *
+* @property string|null $ngay_sinh
  * @property Day[] $nvDays
  * @property PhongBan $phongBan
  * @property User $taiKhoan
@@ -56,7 +57,7 @@ class GiaoVienBase extends \app\models\NvNhanVien
             [['id_phong_ban', 'tai_khoan', 'nguoi_tao', 'id_to', 'gioi_tinh'], 'integer'],
             [['ho_ten'], 'required'],
             [['kinh_nghiem_lam_viec','doi_tuong'], 'string'],
-            [['thoi_gian_tao'], 'safe'],
+            [['thoi_gian_tao','ngay_sinh'], 'safe'],
             [['ho_ten', 'chuc_vu', 'so_cccd', 'dia_chi', 'dien_thoai', 'email', 'trinh_do', 'chuyen_nganh', 'vi_tri_cong_viec', 'ma_so_thue', 'trang_thai'], 'string', 'max' => 255],
             [['id_phong_ban'], 'exist', 'skipOnError' => true, 'targetClass' => PhongBan::class, 'targetAttribute' => ['id_phong_ban' => 'id']],
             [['id_to'], 'exist', 'skipOnError' => true, 'targetClass' => To::class, 'targetAttribute' => ['id_to' => 'id']],
@@ -77,19 +78,20 @@ class GiaoVienBase extends \app\models\NvNhanVien
             'so_cccd' => 'Số CCCD',
             'dia_chi' => 'Địa chỉ',
             'dien_thoai' => 'Điện thoại',
-            'tai_khoan' => 'Taif khoản',
+            'tai_khoan' => 'Tài khoản',
             'email' => 'Email',
             'trinh_do' => 'Trình độ',
             'chuyen_nganh' => 'Chuyên ngành',
             'vi_tri_cong_viec' => 'Vị trí công việc',
             'kinh_nghiem_lam_viec' => 'Kinh Nghiệm Làm Việc',
             'ma_so_thue' => 'Mã Số Thuế',
-            'trang_thai' => 'Trangj Thái',
-            'nguoi_tao' => 'Nguười Tạo',
+            'trang_thai' => 'Trạng Thái',
+            'nguoi_tao' => 'Người Tạo',
             'thoi_gian_tao' => 'Thời gian tạo',
             'id_to' => 'Tổ',
             'gioi_tinh' => 'Giới tính',
-            'doi_tuong'=>'Đối tượng' // Dùng để phân biệt Nhân viên và Giáo viên
+            'doi_tuong'=>'Đối tượng' ,// Dùng để phân biệt Nhân viên và Giáo viên
+            'ngay_sinh'=>'Ngày sinh'
         ];
     }
 
@@ -132,7 +134,9 @@ class GiaoVienBase extends \app\models\NvNhanVien
     {
         return $this->hasOne(To::class, ['id' => 'id_to']);
     }
-
+    public function getNgaySinh(){
+        return CustomFunc::convertYMDToDMY($this->ngay_sinh);
+    }
     /**
      * Gets query for [[VbVanBans]].
      *

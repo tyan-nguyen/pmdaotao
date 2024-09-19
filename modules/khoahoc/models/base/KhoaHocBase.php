@@ -60,10 +60,10 @@ class KhoaHocBase extends \app\models\HvKhoaHoc
     {
         return [
             'id' => 'ID',
-            'id_hang' => 'Hạng',
+            'id_hang' => 'Hạng khóa học',
             'ten_khoa_hoc' => 'Tên khóa học',
             'ngay_bat_dau' => 'Ngày bắt đầu',
-            'ngay_ket_thuc' => 'Ngaỳ kết thúc',
+            'ngay_ket_thuc' => 'Ngày kết thúc',
             'ghi_chu' => 'Ghi chú',
             'trang_thai' => 'Trạng thái',
             'nguoi_tao' => 'Người tạo',

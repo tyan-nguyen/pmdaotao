@@ -5,7 +5,7 @@ use app\modules\nhanvien\models\PhongBan;
 use app\modules\user\models\User;
 use yii\helpers\ArrayHelper;
 use app\modules\nhanvien\models\NhanVien;
-
+use kartik\date\DatePicker;
 /* @var $this yii\web\View */
 /* @var $model app\modules\nhanvien\models\NhanVien */
 /* @var $form yii\widgets\ActiveForm */
@@ -36,14 +36,24 @@ $listTaiKhoan = ArrayHelper::map($taiKhoans, 'id', 'username');
              ], ['prompt' => 'Chọn giới tính', 'class' => 'form-control']) ?>
         </div>
         <div class="col-md-4">
-            <?= $form->field($model, 'so_cccd')->textInput(['maxlength' => true]) ?>
-        </div>
+            <?= $form->field($model, 'ngay_sinh')->widget(DatePicker::classname(), [
+            'options' => ['placeholder' => 'Chọn ngày sinh  ...'],
+            'pluginOptions' => [
+                'autoclose' => true,
+                'format' => 'dd/mm/yyyy',
+            ]
+               ]); ?>
+            </div>
+      
     </div>
     
      
   
 
     <div class="row">
+        <div class="col-md-4">
+            <?= $form->field($model, 'so_cccd')->textInput(['maxlength' => true]) ?>
+        </div>
       
         <div class="col-md-4">
             <?= $form->field($model, 'dia_chi')->textInput(['maxlength' => true]) ?>
@@ -51,24 +61,20 @@ $listTaiKhoan = ArrayHelper::map($taiKhoans, 'id', 'username');
         <div class="col-md-4">
             <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
         </div>
-        <div class="col-md-4">
-            <?= $form->field($model, 'dien_thoai')->textInput(['maxlength' => true]) ?>
-        </div>
-      
     </div>
 
     <div class="row">
-      
-    <div class="col-md-4">
+        <div class="col-md-4">
+            <?= $form->field($model, 'dien_thoai')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-md-4">
 
         <?= $form->field($model, 'tai_khoan')->dropDownList(
             $listTaiKhoan,
             ['prompt' => 'Chọn tài khoản...']
         ) ?>
       
-</div>
-
-
+        </div>
 
         <div class="col-md-4">
             <?= $form->field($model, 'id_phong_ban')->dropDownList(
@@ -79,17 +85,15 @@ $listTaiKhoan = ArrayHelper::map($taiKhoans, 'id', 'username');
                 ]
             ) ?>
         </div>
-        <div class="col-md-4">
+    </div>
+
+    <div class="row">
+       <div class="col-md-4">
             <?= $form->field($model, 'id_to')->dropDownList(
                 [],  
                 ['prompt' => 'Chọn tổ...', 'id' => 'to-dropdown']
             ) ?>
         </div>
-      
-    </div>
-
-    <div class="row">
-       
         <div class="col-md-4">
         <?= $form->field($model, 'chuc_vu')->dropDownList(
         [
@@ -97,7 +101,7 @@ $listTaiKhoan = ArrayHelper::map($taiKhoans, 'id', 'username');
             'Nhân viên / Giáo viên' => 'Nhân viên / Giáo viên',
         ],
         ['prompt' => 'Chọn chức vụ']
-    ) ?>
+            ) ?>
         </div>
         <div class="col-md-4">
     <?= $form->field($model, 'trinh_do')->dropDownList(
@@ -107,30 +111,26 @@ $listTaiKhoan = ArrayHelper::map($taiKhoans, 'id', 'username');
             'class' => 'form-control', // Thay đổi lớp CSS nếu cần
         ]
     ) ?>
-</div>
-
-        <div class="col-md-4">
-            <?= $form->field($model, 'chuyen_nganh')->textInput(['maxlength' => true]) ?>
-        </div>
-      
+</div> 
     </div>
 
     <div class="row">
-      
+        <div class="col-md-4">
+            <?= $form->field($model, 'chuyen_nganh')->textInput(['maxlength' => true]) ?>
+        </div>
         <div class="col-md-4">
             <?= $form->field($model, 'vi_tri_cong_viec')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-4">
             <?= $form->field($model, 'ma_so_thue')->textInput(['maxlength' => true]) ?>
         </div>
-        <div class="col-md-4">
-            <?= $form->field($model, 'kinh_nghiem_lam_viec')->textInput(['rows' => 3]) ?>
-        </div>
-      
     </div>
 
     <div class="row">
-    <div class="col-md-4">
+       <div class="col-md-4">
+            <?= $form->field($model, 'kinh_nghiem_lam_viec')->textarea(['rows' => 6]) ?>
+        </div>
+       <div class="col-md-4">
             <?= $form->field($model, 'trang_thai')->dropDownList([
                 'Đang làm việc' => 'Đang làm việc',
                 'Đã nghỉ việc' => 'Đã nghỉ việc',
@@ -177,19 +177,7 @@ $this->registerJs("
 ");
 ?>
 <style>
-    input[type="text"], input[type="email"], select, textarea {
-    border: none;
-    border-bottom: 1px solid #000; /* Màu của đường gạch dưới */
-    border-radius: 0;
-    box-shadow: none;
-    outline: none;
-}
-
-input[type="text"]:focus, input[type="email"]:focus, select:focus, textarea:focus {
-    border-bottom: 2px solid #007bff; /* Đổi màu khi focus */
-    box-shadow: none;
-    outline: none;
-}
+ 
 .nhan-vien-form label {
     font-weight: bold;
 }
@@ -215,7 +203,10 @@ select:focus {
 .form-check-label {
         font-weight: normal; 
     }
-
+.nhan-vien-form .form-control {
+    border-color: #0000FF; 
+    border-width: 1px; 
+}
     </style>
 
 

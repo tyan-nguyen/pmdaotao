@@ -80,8 +80,8 @@ class DangKyHvController extends Controller
                 'content'=>$this->renderAjax('view', [
                     'model' => $this->findModel($id),
                 ]),
-                'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                          Html::a('Xuất PDF',['export-pdf','id'=>$id],['class'=>'btn btn-primary', 'target' => '_blank']) // Mở trong tab mới hoặc tải xuống trực tiếp
+                'footer'=> Html::button('<i class="fa fa-close"></i> Đóng lại ',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                          Html::a(' <i class ="fa fa-download"></i> Xuất PDF',['export-pdf','id'=>$id],['class'=>'btn btn-primary', 'target' => '_blank']) // Mở trong tab mới hoặc tải xuống trực tiếp
             ];    
         } else {
             return $this->render('view', [
@@ -114,17 +114,17 @@ class DangKyHvController extends Controller
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('<i class="fa fa-close"></i> Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('<i class="fa fa-save"></i> Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
             }else if($model->load($request->post()) && $model->save()){
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Thêm học viên",
-                    'content'=>'<span class="text-success">Create HvHocVien success</span>',
-                    'footer'=> Html::button('<i class="fa fa-close"> Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::a('Create More',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                    'content'=>'<span class="text-success">Đăng ký học viên thành công !</span>',
+                    'footer'=> Html::button('<i class="fa fa-close"></i> Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                            Html::a('Tiếp tục tạo',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
         
                 ];         
             }else{           
@@ -133,8 +133,8 @@ class DangKyHvController extends Controller
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
             }
@@ -176,8 +176,8 @@ class DangKyHvController extends Controller
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('<i class="fa fa-close"> Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('<i class="fa fa-save"> Save',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('<i class="fa fa-close"> </i> Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('<i class="fa fa-save"> </i> Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
             }else if($model->load($request->post()) && $model->save()){
                 return [
@@ -186,8 +186,8 @@ class DangKyHvController extends Controller
                     'content'=>$this->renderAjax('view', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('<i class="fa fa-close"> Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                    'footer'=> Html::button('<i class="fa fa-close"></i> Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                            Html::a('Chỉnh sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
                 ];    
             }else{
                  return [
@@ -195,8 +195,8 @@ class DangKyHvController extends Controller
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('<i class="fa fa-close"> Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('<i class="fa fa-save"> Save',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('<i class="fa fa-close"></i> Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('<i class="fa fa-save"> </i> Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
                 ];        
             }
         }else{
@@ -344,8 +344,8 @@ public function actionCreate2($id)
                     'model' => $model,
                     'hoTenHocVien' => $hoTenHocVien,
                 ]),
-                'footer'=> Html::button(' <i class="fa fa-close"></i> Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::button('<i class="fa fa-save"></i> Save',['class'=>'btn btn-primary','type'=>"submit"])
+                'footer'=> Html::button(' <i class="fa fa-close"></i> Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                            Html::button('<i class="fa fa-save"></i> Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
     
             ];         
         }else if($model->load($request->post()) && $model->save()){
@@ -356,8 +356,8 @@ public function actionCreate2($id)
             return [
                 'forceReload'=>'#crud-datatable-pjax',
                 'title'=> "Thông tin học phí",
-                'content'=>'<span class="text-success">Create HocPhi success</span>',
-                'footer'=> Html::button('<i class="fa fa-close"></i> Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                'content'=>'<span class="text-success">Thêm học phí thành công !</span>',
+                'footer'=> Html::button('<i class="fa fa-close"></i> Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                         Html::a('Create More',['create2'],['class'=>'btn btn-primary','role'=>'modal-remote'])
     
             ];         
@@ -368,8 +368,8 @@ public function actionCreate2($id)
                     'model' => $model,
                     'hoTenHocVien' => $hoTenHocVien,
                 ]),
-                'footer'=> Html::button('<i class="fa fa-close"></i> Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::button('<i class="fa fa-save"></i> Save',['class'=>'btn btn-primary','type'=>"submit"])
+                'footer'=> Html::button('<i class="fa fa-close"></i> Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                            Html::button('<i class="fa fa-save"></i> Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
     
             ];         
         }

@@ -48,17 +48,5 @@ class PhongBan extends \app\models\NvPhongBan
         ];
     }
     
-    public function beforeSave($insert)
-    {
-        if (parent::beforeSave($insert)) {
-            if ($insert) {
-               
-
-                $this->nguoi_tao = Yii::$app->user->identity->id; 
-                $this->thoi_gian_tao = date('Y-m-d H:i:s');
-            }
-            return true;
-        }
-        return false;
-    }
+    
 }

@@ -7,6 +7,7 @@ use app\modules\nhanvien\models\PhongBan;
 use app\modules\user\models\User;
 use app\modules\nhanvien\models\To;
 use app\modules\vanban\models\VanBan;
+use app\custom\CustomFunc;
 /**
  * This is the model class for table "nv_nhan_vien".
  *
@@ -29,7 +30,7 @@ use app\modules\vanban\models\VanBan;
  * @property string|null $thoi_gian_tao
  * @property int|null $id_to
  * @property int|null $gioi_tinh
- *
+ * @property string|null $ngay_sinh
  * @property Day[] $nvDays
  * @property PhongBan $phongBan
  * @property User $taiKhoan
@@ -58,7 +59,7 @@ class NhanVienBase extends \app\models\NvNhanVien
             [['id_phong_ban', 'tai_khoan', 'nguoi_tao', 'id_to', 'gioi_tinh'], 'integer'],
             [['ho_ten'], 'required'],
             [['kinh_nghiem_lam_viec'], 'string'],
-            [['thoi_gian_tao'], 'safe'],
+            [['thoi_gian_tao','ngay_sinh'], 'safe'],
             [['ho_ten', 'chuc_vu', 'so_cccd', 'dia_chi', 'dien_thoai', 'email', 'trinh_do', 'chuyen_nganh', 'vi_tri_cong_viec', 'ma_so_thue', 'trang_thai'], 'string', 'max' => 255],
             [['id_phong_ban'], 'exist', 'skipOnError' => true, 'targetClass' => PhongBan::class, 'targetAttribute' => ['id_phong_ban' => 'id']],
             [['id_to'], 'exist', 'skipOnError' => true, 'targetClass' => To::class, 'targetAttribute' => ['id_to' => 'id']],
@@ -85,12 +86,13 @@ class NhanVienBase extends \app\models\NvNhanVien
             'chuyen_nganh' => 'Chuyên ngành',
             'vi_tri_cong_viec' => 'Vị trí công việc',
             'kinh_nghiem_lam_viec' => 'Kinh nghiệm làm việc',
-            'ma_so_thue' => 'Max số thuế',
+            'ma_so_thue' => 'Mã số thuế',
             'trang_thai' => 'Trạng thái',
             'nguoi_tao' => 'Người tạo',
             'thoi_gian_tao' => 'Thời gian tạo',
             'id_to' => 'Tổ',
             'gioi_tinh' => 'Giới tính',
+            'ngay_sinh'=>'Ngày sinh',
         ];
     }
 
@@ -139,5 +141,8 @@ class NhanVienBase extends \app\models\NvNhanVien
     public function getVbVanBans()
     {
         return $this->hasMany(VanBan::class, ['vbden_nguoi_nhan' => 'id']);
+    }
+    public function getNgaySinh(){
+        return CustomFunc::convertYMDToDMY($this->ngay_sinh);
     }
 }

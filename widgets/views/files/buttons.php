@@ -10,7 +10,7 @@ use yii\helpers\Html;
                         'idDoiTuong'=>$idDoiTuong
                     ],
                     [
-                        'class'=>'btn ripple btn-primary btn-sm',
+                        'class'=>'btn ripple btn-secondary btn-sm',
                         'role'=>'modal-remote-2'
                     ],
        )?>
@@ -20,7 +20,7 @@ use yii\helpers\Html;
                'doiTuong'=>$doiTuong,
                'idDoiTuong'=>$idDoiTuong],
                     [
-                        'class'=>'btn ripple btn-primary btn-sm',
+                        'class'=>'btn ripple btn-secondary btn-sm',
                         'role'=>'modal-remote-2'
                     ],
        )?>

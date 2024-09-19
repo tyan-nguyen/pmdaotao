@@ -5,11 +5,11 @@ use app\modules\nhanvien\models\PhongBan;
 use app\modules\user\models\User;
 use yii\helpers\ArrayHelper;
 use app\modules\nhanvien\models\NhanVien;
-
+use kartik\date\DatePicker;
 /* @var $this yii\web\View */
 /* @var $model app\modules\nhanvien\models\NhanVien */
 /* @var $form yii\widgets\ActiveForm */
-
+use app\custom\CustomFunc;
 
 $phongBans = PhongBan::find()->all();
 $listPhongBan = ArrayHelper::map($phongBans, 'id', 'ten_phong_ban');
@@ -19,8 +19,10 @@ $taiKhoans = User::find()->all();
 $listTaiKhoan = ArrayHelper::map($taiKhoans, 'id', 'username');
 
 ?>
-
-<div class="nhan-vien-form">
+<?php
+$model->ngay_sinh = CustomFunc::convertYMDToDMY($model->ngay_sinh);
+?>
+<div class="giao-vien-form">
 
     <?php $form = ActiveForm::begin([
         'options' => [
@@ -40,12 +42,21 @@ $listTaiKhoan = ArrayHelper::map($taiKhoans, 'id', 'username');
              ], ['prompt' => 'Chọn giới tính', 'class' => 'form-control']) ?>
         </div>
         <div class="col-md-4">
-            <?= $form->field($model, 'so_cccd')->textInput(['maxlength' => true]) ?>
-        </div>
+            <?= $form->field($model, 'ngay_sinh')->widget(DatePicker::classname(), [
+            'options' => ['placeholder' => 'Chọn ngày sinh  ...'],
+            'pluginOptions' => [
+                'autoclose' => true,
+                'format' => 'dd/mm/yyyy',
+            ]
+               ]); ?>
+            </div>
     </div>
     
      
     <div class="row">
+        <div class="col-md-4">
+            <?= $form->field($model, 'so_cccd')->textInput(['maxlength' => true]) ?>
+        </div>
         <div class="col-md-4">
             <?= $form->field($model, 'dia_chi')->textInput(['maxlength' => true]) ?>
         </div>
@@ -53,12 +64,13 @@ $listTaiKhoan = ArrayHelper::map($taiKhoans, 'id', 'username');
         <div class="col-md-4">
             <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
         </div>
-        <div class="col-md-4">
-            <?= $form->field($model, 'dien_thoai')->textInput(['maxlength' => true]) ?>
-        </div>
+       
     </div>
 
     <div class="row">
+        <div class="col-md-4">
+            <?= $form->field($model, 'dien_thoai')->textInput(['maxlength' => true]) ?>
+        </div>
       <div class="col-md-4">
         <?= $form->field($model, 'chuc_vu')->dropDownList(
         [
@@ -75,6 +87,11 @@ $listTaiKhoan = ArrayHelper::map($taiKhoans, 'id', 'username');
             ['prompt' => 'Chọn tài khoản...']
         ) ?>
     </div>
+  
+</div>
+
+
+    <div class="row">
     <div class="col-md-4">
         <?= $form->field($model, 'trinh_do')->dropDownList(
             NhanVien::getListTD(), // Gọi phương thức để lấy danh sách trình độ
@@ -84,10 +101,6 @@ $listTaiKhoan = ArrayHelper::map($taiKhoans, 'id', 'username');
             ]
         ) ?>
     </div>
-</div>
-
-
-    <div class="row">
         <div class="col-md-4">
             <?= $form->field($model, 'ma_so_thue')->textInput(['maxlength' => true]) ?>
         </div>
@@ -97,8 +110,11 @@ $listTaiKhoan = ArrayHelper::map($taiKhoans, 'id', 'username');
                 'Đã nghỉ việc' => 'Đã nghỉ việc',
             ], ['prompt' => 'Chọn trạng thái']) ?>
         </div>
-        <div class="col-md-4">
-            <?= $form->field($model, 'kinh_nghiem_lam_viec')->textInput(['rows' => 3]) ?>
+      
+   </div>
+   <div class ="row">
+       <div class="col-md-4">
+            <?= $form->field($model, 'kinh_nghiem_lam_viec')->textarea(['rows' => 6]) ?>
         </div>
    </div>
 
@@ -139,7 +155,7 @@ $this->registerJs("
 ?>
 <style>
 
-.nhan-vien-form label {
+.giao-vien-form label {
     font-weight: bold;
 }
 
@@ -157,7 +173,10 @@ select {
     background-size: 10px;
 }
 
-
+.giao-vien-form .form-control {
+    border-color: #0000FF; 
+    border-width: 1px; 
+}
     </style>
 
        

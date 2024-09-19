@@ -80,8 +80,8 @@ $model->ngay_sinh = CustomFunc::convertYMDToDMY($model->ngay_sinh);
     font-weight: bold;
 }
 .hv-hoc-vien-form .form-control {
-    border-color: #0000FF;  /* Thay đổi màu viền */
-    border-width: 1px; /* Độ dày viền */
+    border-color: #0000FF; 
+    border-width: 1px; 
 }
 .dropdown-with-arrow {
     position: relative;

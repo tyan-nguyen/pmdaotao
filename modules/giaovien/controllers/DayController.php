@@ -53,7 +53,7 @@ class DayController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-        ]);
+        ]); 
     }
 
 
@@ -72,8 +72,8 @@ class DayController extends Controller
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
                     ]),
-                    'footer'=> Html::button('<i class="fa fa-close"></i>Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::a('<i class="fa fa-pencil"></i> Edit',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                    'footer'=> Html::button('<i class="fa fa-close"></i>Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                            Html::a('<i class="fa fa-pencil"></i> Chỉnh sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
                 ];    
         }else{
             return $this->render('view', [
@@ -108,27 +108,37 @@ class DayController extends Controller
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('<i class ="fa fa-close"></i> Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button(' <i class ="fa fa-save"></i> Save',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('<i class ="fa fa-close"></i> Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button(' <i class ="fa fa-save"></i> Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
             }else if($model->load($request->post()) && $model->save()){
                 return [
+                    'forceClose'=>true,   
+                    'excuteFunctionDay'=>'reloadDay()',
+                   'functionResponseDay' => $this->renderAjax('phan_cong_day', [
+                    'model' => $model,
+                    'phanCongDay' => Day::find()->where(['id_nhan_vien' => $model->id_nhan_vien])->one(), 
+                    ]),
+
+                    'tcontent'=>'Phân công giảng dạy thành công!',
+                ];
+              /*  return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Create new Day",
-                    'content'=>'<span class="text-success">Create Day success</span>',
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::a('Create More',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                    'content'=>'<span class="text-success">Đã phân công cho giáo viên !</span>',
+                    'footer'=> Html::button('<i class="fa fa-close"></i> Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                            Html::a('Tiếp tục tạo',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
         
-                ];         
+                ];  */       
             }else{           
                 return [
-                    'title'=> "Create new Day",
+                    'title'=> "Phân công giảng dạy",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('<i class ="fa fa-close"> </i> Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('<i class="fa fa-save"> </i>Save',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('<i class ="fa fa-close"> </i> Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('<i class="fa fa-save"> </i>Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
             }
@@ -170,8 +180,8 @@ class DayController extends Controller
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('<i class="fa fa-close"></i> Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('<i class="fa fa-save"></i> Save',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('<i class="fa fa-close"></i> Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('<i class="fa fa-save"></i> Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
             }else if($model->load($request->post()) && $model->save()){
                 return [
@@ -179,7 +189,7 @@ class DayController extends Controller
                     'excuteFunctionDay'=>'reloadDay()',
                    'functionResponseDay' => $this->renderAjax('phan_cong_day', [
                     'model' => $model,
-                    'phanCongDay' => Day::find()->where(['id_nhan_vien' => $model->id_nhan_vien])->one(), // Truyền thêm $phanCongDay
+                    'phanCongDay' => Day::find()->where(['id_nhan_vien' => $model->id_nhan_vien])->one(), 
                     ]),
 
                     'tcontent'=>'Cập nhật thành công!',
@@ -198,8 +208,8 @@ class DayController extends Controller
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('<i class="fa fa-close"></i> Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('<i class="fa fa-save"></i> Save',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('<i class="fa fa-close"></i> Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('<i class="fa fa-save"></i> Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
                 ];        
             }
         }else{

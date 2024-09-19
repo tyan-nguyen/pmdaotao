@@ -27,5 +27,14 @@ use yii\widgets\ActiveForm;
 	<?php } ?>
 
     <?php ActiveForm::end(); ?>
-    
+         
 </div>
+<style>
+    .loai-file-form .form-control {
+    border-color: #0000FF; 
+    border-width: 1px; 
+}
+.loai-file-form label {
+    font-weight: bold;
+}
+</style>

@@ -33,7 +33,7 @@ class HocVienBase extends \app\models\HvHocVien
     {
         return 'hv_hoc_vien';
     }
-
+  
     /**
      * {@inheritdoc}
      */
