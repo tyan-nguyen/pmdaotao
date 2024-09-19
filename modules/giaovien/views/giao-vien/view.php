@@ -83,7 +83,7 @@ use app\modules\giaovien\models\GiaoVien;
                       
                         <div class="tab-content" id="myTabContent">
                               <!-- Nội dung File hồ sơ giáo viên -->
-                              <div class="tab-pane fade  show active " id="add-document" role="tabpanel" aria-labelledby="add-document-tab">
+                              <div class="tab-pane fade  " id="add-document" role="tabpanel" aria-labelledby="add-document-tab">
                                     <!-- Nội dung hiển thị khi click vào "Hồ sơ giáo viên " -->
                                     <?= FileDisplayWidget::widget([
                                          'type'=>'ALL',
