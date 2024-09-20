@@ -48,10 +48,10 @@ class Ke extends \app\models\KhoKe
     {
         return [
             'id' => 'ID',
-            'id_kho' => 'Id Kho',
-            'ten_ke' => 'Ten Ke',
-            'nguoi_tao' => 'Nguoi Tao',
-            'thoi_gian_tao' => 'Thoi Gian Tao',
+            'id_kho' => 'Kho',
+            'ten_ke' => 'Tên Kệ',
+            'nguoi_tao' => 'Người tạo',
+            'thoi_gian_tao' => 'Thời gian tạo',
         ];
     }
 

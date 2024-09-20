@@ -48,10 +48,10 @@ class Hop extends \app\models\KhoHop
     {
         return [
             'id' => 'ID',
-            'id_ngan' => 'Id Ngan',
-            'ten_hop' => 'Ten Hop',
-            'nguoi_tao' => 'Nguoi Tao',
-            'thoi_gian_tao' => 'Thoi Gian Tao',
+            'id_ngan' => 'Ngăn',
+            'ten_hop' => 'Tên Hộp',
+            'nguoi_tao' => 'Nguười tạo',
+            'thoi_gian_tao' => 'Thời gian tạo',
         ];
     }
 

@@ -3,8 +3,8 @@
 namespace app\modules\kholuutru\controllers;
 
 use Yii;
-use app\modules\kholuutru\models\LuuKho;
-use app\modules\kholuutru\models\search\LuuKhoSearch;
+use app\modules\kholuutru\models\Ke;
+use app\modules\kholuutru\models\search\Ke as KeSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -13,9 +13,9 @@ use yii\helpers\Html;
 use yii\filters\AccessControl;
 
 /**
- * LuuKhoController implements the CRUD actions for LuuKho model.
+ * KeController implements the CRUD actions for Ke model.
  */
-class LuuKhoController extends Controller
+class KeController extends Controller
 {
     /**
      * @inheritdoc
@@ -40,19 +40,21 @@ class LuuKhoController extends Controller
 			],
 		];
 	}
-    public function beforeAction($action)
-	{
-	    Yii::$app->params['moduleID'] = 'Module Danh mục kho';
-	    Yii::$app->params['modelID'] = 'Kho lưu trữ';
-	    return true;
-	}
+
     /**
-     * Lists all LuuKho models.
+     * Lists all Ke models.
      * @return mixed
      */
+
+     public function beforeAction($action)
+     {
+         Yii::$app->params['moduleID'] = 'Module Danh mục kho';
+         Yii::$app->params['modelID'] = 'Danh sách Kệ';
+         return true;
+     }
     public function actionIndex()
     {    
-        $searchModel = new LuuKhoSearch();
+        $searchModel = new KeSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -63,7 +65,7 @@ class LuuKhoController extends Controller
 
 
     /**
-     * Displays a single LuuKho model.
+     * Displays a single Ke model.
      * @param integer $id
      * @return mixed
      */
@@ -73,7 +75,7 @@ class LuuKhoController extends Controller
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "LuuKho #".$id,
+                    'title'=> "Kệ #".$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
                     ]),
@@ -88,7 +90,7 @@ class LuuKhoController extends Controller
     }
 
     /**
-     * Creates a new LuuKho model.
+     * Creates a new Ke model.
      * For ajax request will return json object
      * and for non-ajax request if creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
@@ -96,7 +98,7 @@ class LuuKhoController extends Controller
     public function actionCreate()
     {
         $request = Yii::$app->request;
-        $model = new LuuKho();  
+        $model = new Ke();  
 
         if($request->isAjax){
             /*
@@ -105,7 +107,7 @@ class LuuKhoController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Create new LuuKho",
+                    'title'=> "Thêm Kệ",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -116,15 +118,15 @@ class LuuKhoController extends Controller
             }else if($model->load($request->post()) && $model->save()){
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Create new LuuKho",
-                    'content'=>'<span class="text-success">Create LuuKho success</span>',
+                    'title'=> "Create new Ke",
+                    'content'=>'<span class="text-success">Create Ke success</span>',
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                             Html::a('Create More',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
         
                 ];         
             }else{           
                 return [
-                    'title'=> "Create new LuuKho",
+                    'title'=> "Thêm Kệ",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -149,7 +151,7 @@ class LuuKhoController extends Controller
     }
 
     /**
-     * Updates an existing LuuKho model.
+     * Updates an existing Ke model.
      * For ajax request will return json object
      * and for non-ajax request if update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
@@ -167,7 +169,7 @@ class LuuKhoController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Update LuuKho #".$id,
+                    'title'=> "Cập nhật Kệ #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
@@ -177,7 +179,7 @@ class LuuKhoController extends Controller
             }else if($model->load($request->post()) && $model->save()){
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "LuuKho #".$id,
+                    'title'=> "Kệ #".$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $model,
                     ]),
@@ -186,7 +188,7 @@ class LuuKhoController extends Controller
                 ];    
             }else{
                  return [
-                    'title'=> "Update LuuKho #".$id,
+                    'title'=> "Cập nhật Kệ #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
@@ -209,7 +211,7 @@ class LuuKhoController extends Controller
     }
 
     /**
-     * Delete an existing LuuKho model.
+     * Delete an existing Ke model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -237,7 +239,7 @@ class LuuKhoController extends Controller
     }
 
      /**
-     * Delete multiple existing LuuKho model.
+     * Delete multiple existing Ke model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -268,15 +270,15 @@ class LuuKhoController extends Controller
     }
 
     /**
-     * Finds the LuuKho model based on its primary key value.
+     * Finds the Ke model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return LuuKho the loaded model
+     * @return Ke the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = LuuKho::findOne($id)) !== null) {
+        if (($model = Ke::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

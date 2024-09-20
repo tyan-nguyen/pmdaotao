@@ -12,12 +12,12 @@ use app\widgets\FilterFormWidget;
 /* @var $searchModel app\modules\kholuutru\models\search\LoaiFileSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Kho lưu trữ ';
+$this->title = 'Danh sách Kệ ' ;
 $this->params['breadcrumbs'][] = $this->title;
 
 CrudAsset::register($this);
 
-Yii::$app->params['showSearch'] = true;
+
 Yii::$app->params['showExport'] = true;
 ?>
 
@@ -54,7 +54,7 @@ Yii::$app->params['showExport'] = true;
             'panel' => [
                 //'type' => 'primary', 
                 'heading' => '<i class="fas fa fa-list" aria-hidden="true"></i> Danh sách',
-                'before'=>'<em>* Danh sách Kho </em>',
+                'before'=>'<em>* Danh sách Kệ </em>',
                 'after'=>BulkButtonWidget::widget([
                             'buttons'=>Html::a('<i class="fas fa fa-trash" aria-hidden="true"></i>&nbsp; Xóa đã chọn',
                                 ["bulkdelete"] ,
@@ -88,7 +88,3 @@ Yii::$app->params['showExport'] = true;
 
 <?php Modal::end(); ?>
 
-<?php
-    $searchContent = $this->render("_search", ["model" => $searchModel]);
-    echo FilterFormWidget::widget(["content"=>$searchContent, "description"=>"Nhập thông tin tìm kiếm."]) 
-?>

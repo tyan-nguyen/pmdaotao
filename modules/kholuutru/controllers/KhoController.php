@@ -3,8 +3,8 @@
 namespace app\modules\kholuutru\controllers;
 
 use Yii;
-use app\modules\kholuutru\models\LuuKho;
-use app\modules\kholuutru\models\search\LuuKhoSearch;
+use app\modules\kholuutru\models\Kho;
+use app\modules\kholuutru\models\search\Kho as KhoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -13,9 +13,9 @@ use yii\helpers\Html;
 use yii\filters\AccessControl;
 
 /**
- * LuuKhoController implements the CRUD actions for LuuKho model.
+ * KhoController implements the CRUD actions for Kho model.
  */
-class LuuKhoController extends Controller
+class KhoController extends Controller
 {
     /**
      * @inheritdoc
@@ -40,19 +40,20 @@ class LuuKhoController extends Controller
 			],
 		];
 	}
+
+    /**
+     * Lists all Kho models.
+     * @return mixed
+     */
     public function beforeAction($action)
 	{
 	    Yii::$app->params['moduleID'] = 'Module Danh mục kho';
-	    Yii::$app->params['modelID'] = 'Kho lưu trữ';
+	    Yii::$app->params['modelID'] = 'Danh sách Kho';
 	    return true;
 	}
-    /**
-     * Lists all LuuKho models.
-     * @return mixed
-     */
     public function actionIndex()
     {    
-        $searchModel = new LuuKhoSearch();
+        $searchModel = new KhoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -63,7 +64,7 @@ class LuuKhoController extends Controller
 
 
     /**
-     * Displays a single LuuKho model.
+     * Displays a single Kho model.
      * @param integer $id
      * @return mixed
      */
@@ -73,12 +74,12 @@ class LuuKhoController extends Controller
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "LuuKho #".$id,
+                    'title'=> "Kho #".$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                    'footer'=> Html::button('<i class="fa fa-close"> </i> Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                            Html::a('<i class="fa fa-pencil"> </i> Chỉnh sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
                 ];    
         }else{
             return $this->render('view', [
@@ -88,7 +89,7 @@ class LuuKhoController extends Controller
     }
 
     /**
-     * Creates a new LuuKho model.
+     * Creates a new Kho model.
      * For ajax request will return json object
      * and for non-ajax request if creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
@@ -96,7 +97,7 @@ class LuuKhoController extends Controller
     public function actionCreate()
     {
         $request = Yii::$app->request;
-        $model = new LuuKho();  
+        $model = new Kho();  
 
         if($request->isAjax){
             /*
@@ -105,31 +106,31 @@ class LuuKhoController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Create new LuuKho",
+                    'title'=> "Thêm Kho",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('<i class="fa fa-close"> </i> Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('<i class="fa fa-save"> </i>  Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
             }else if($model->load($request->post()) && $model->save()){
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Create new LuuKho",
-                    'content'=>'<span class="text-success">Create LuuKho success</span>',
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::a('Create More',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                    'title'=> "Thêm Kho",
+                    'content'=>'<span class="text-success">Create Kho success</span>',
+                    'footer'=> Html::button('<i class="fa fa-close"> </i> Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                            Html::a('<i class ="fa fa-plus"> </i> Tiếp tục tạo',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
         
                 ];         
             }else{           
                 return [
-                    'title'=> "Create new LuuKho",
+                    'title'=> "Thêm Kho",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('<i class="fa fa-close"> </i> Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('<i class="fa fa-save"> </i> Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
             }
@@ -149,7 +150,7 @@ class LuuKhoController extends Controller
     }
 
     /**
-     * Updates an existing LuuKho model.
+     * Updates an existing Kho model.
      * For ajax request will return json object
      * and for non-ajax request if update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
@@ -167,31 +168,31 @@ class LuuKhoController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Update LuuKho #".$id,
+                    'title'=> "Cập nhật Kho #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('<i class="fa fa-close"> </i> Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('<i class="fa fa-save"> </i> Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
             }else if($model->load($request->post()) && $model->save()){
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "LuuKho #".$id,
+                    'title'=> "Kho #".$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                    'footer'=> Html::button('<i class="fa fa-close"> </i> Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                            Html::a('<i class="fa fa-pencil"> </i> Chỉnh sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
                 ];    
             }else{
                  return [
-                    'title'=> "Update LuuKho #".$id,
+                    'title'=> "Cập nhật Kho #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('<i class="fa fa-close"> </i>  Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('<i class="fa fa-save"> </i>  Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
                 ];        
             }
         }else{
@@ -209,7 +210,7 @@ class LuuKhoController extends Controller
     }
 
     /**
-     * Delete an existing LuuKho model.
+     * Delete an existing Kho model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -237,7 +238,7 @@ class LuuKhoController extends Controller
     }
 
      /**
-     * Delete multiple existing LuuKho model.
+     * Delete multiple existing Kho model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -268,15 +269,15 @@ class LuuKhoController extends Controller
     }
 
     /**
-     * Finds the LuuKho model based on its primary key value.
+     * Finds the Kho model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return LuuKho the loaded model
+     * @return Kho the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = LuuKho::findOne($id)) !== null) {
+        if (($model = Kho::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

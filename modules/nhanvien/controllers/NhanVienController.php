@@ -142,25 +142,33 @@ class NhanVienController extends Controller
      * @return mixed
      */
     public function actionUpdate($id)
-    {
-        $request = Yii::$app->request;
-        $model = $this->findModel($id);       
+{
+    $request = Yii::$app->request;
+    $model = $this->findModel($id);       
 
-        if($request->isAjax){
-            /*
-            *   Process for ajax request
-            */
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            if($request->isGet){
-                return [
-                    'title'=> "Cập nhật Nhân viên #".$id,
-                    'content'=>$this->renderAjax('update', [
-                        'model' => $model,
-                    ]),
-                    'footer'=> Html::button('<i class="fa fa-close"></i> Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('<i class="fa fa-pencil"></i> Sửa lại',['class'=>'btn btn-primary','type'=>"submit"])
-                ];         
-            }else if($model->load($request->post()) && $model->save()){
+    if($request->isAjax){
+        /*
+        *   Process for ajax request
+        */
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        if($request->isGet){
+            return [
+                'title'=> "Cập nhật Nhân viên #".$id,
+                'content'=>$this->renderAjax('update', [
+                    'model' => $model,
+                ]),
+                'footer'=> Html::button('<i class="fa fa-close"></i> Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                            Html::button('<i class="fa fa-pencil"></i> Sửa lại',['class'=>'btn btn-primary','type'=>"submit"])
+            ];         
+        }else if($model->load($request->post())) {
+            // Gán giá trị cho doi_tuong dựa trên chuc_vu
+            if ($model->chuc_vu === 'Nhân viên') {
+                $model->doi_tuong = 'NHAN_VIEN';
+            } elseif ($model->chuc_vu === 'Nhân viên / Giáo viên') {
+                $model->doi_tuong = 'NV_GV';
+            }
+
+            if ($model->save()) {
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Nhân viên #".$id,
@@ -170,29 +178,40 @@ class NhanVienController extends Controller
                     'footer'=> Html::button('<i class="fa fa-close"></i> Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                             Html::a('<i class="fa fa-pencil"> </i> Sửa lại',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
                 ];    
-            }else{
-                 return [
-                    'title'=> "Cập nhật Nhân viên #".$id,
-                    'content'=>$this->renderAjax('update', [
-                        'model' => $model,
-                    ]),
-                    'footer'=> Html::button('<i class="fa fa-close"></i> Đóng lại ',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('<i class="fa fa-save"></i> Lưu lại ',['class'=>'btn btn-primary','type'=>"submit"])
-                ];        
             }
         }else{
-            /*
-            *   Process for non-ajax request
-            */
-            if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            } else {
-                return $this->render('update', [
+             return [
+                'title'=> "Cập nhật Nhân viên #".$id,
+                'content'=>$this->renderAjax('update', [
                     'model' => $model,
-                ]);
+                ]),
+                'footer'=> Html::button('<i class="fa fa-close"></i> Đóng lại ',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                            Html::button('<i class="fa fa-save"></i> Lưu lại ',['class'=>'btn btn-primary','type'=>"submit"])
+            ];        
+        }
+    }else{
+        /*
+        *   Process for non-ajax request
+        */
+        if ($model->load($request->post())) {
+            // Gán giá trị cho doi_tuong dựa trên chuc_vu
+            if ($model->chuc_vu === 'Nhân viên') {
+                $model->doi_tuong = 'NHAN_VIEN';
+            } elseif ($model->chuc_vu === 'Nhân viên / Giáo viên') {
+                $model->doi_tuong = 'NV_GV';
+            }
+
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
             }
         }
+        
+        return $this->render('update', [
+            'model' => $model,
+        ]);
     }
+}
+
 
     /**
      * Delete an existing NhanVien model.

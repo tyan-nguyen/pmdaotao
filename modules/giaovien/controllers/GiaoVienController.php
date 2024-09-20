@@ -144,7 +144,7 @@ class GiaoVienController extends Controller
     {
         $request = Yii::$app->request;
         $model = $this->findModel($id);       
-
+    
         if($request->isAjax){
             /*
             *   Process for ajax request
@@ -159,16 +159,25 @@ class GiaoVienController extends Controller
                     'footer'=> Html::button('Đóng',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                                 Html::button('Sửa',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
-            }else if($model->load($request->post()) && $model->save()){
-                return [
-                    'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Giáo viên #".$id,
-                    'content'=>$this->renderAjax('view', [
-                        'model' => $model,
-                    ]),
-                    'footer'=> Html::button('Đóng',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+            }else if($model->load($request->post())) {
+                // Gán giá trị cho doi_tuong dựa trên chuc_vu
+                if ($model->chuc_vu === 'Giáo viên') {
+                    $model->doi_tuong = 'GIAO_VIEN';
+                } elseif ($model->chuc_vu === 'Nhân viên / Giáo viên') {
+                    $model->doi_tuong = 'NV_GV';
+                }
+    
+                if($model->save()){
+                    return [
+                        'forceReload'=>'#crud-datatable-pjax',
+                        'title'=> "Giáo viên #".$id,
+                        'content'=>$this->renderAjax('view', [
+                            'model' => $model,
+                        ]),
+                        'footer'=> Html::button('Đóng',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                             Html::a('Sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
-                ];    
+                    ];    
+                }
             }else{
                  return [
                     'title'=> "Cập nhật Giáo viên #".$id,
@@ -183,15 +192,25 @@ class GiaoVienController extends Controller
             /*
             *   Process for non-ajax request
             */
-            if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            } else {
-                return $this->render('update', [
-                    'model' => $model,
-                ]);
+            if ($model->load($request->post())) {
+                // Gán giá trị cho doi_tuong dựa trên chuc_vu
+                if ($model->chuc_vu === 'Giáo viên') {
+                    $model->doi_tuong = 'GIAO_VIEN';
+                } elseif ($model->chuc_vu === 'Nhân viên / Giáo viên') {
+                    $model->doi_tuong = 'NV_GV';
+                }
+    
+                if ($model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
             }
+            
+            return $this->render('update', [
+                'model' => $model,
+            ]);
         }
     }
+    
 
     /**
      * Delete an existing NhanVien model.

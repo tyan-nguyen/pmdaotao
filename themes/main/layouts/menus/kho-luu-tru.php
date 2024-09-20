@@ -24,7 +24,15 @@
 						<ul class="sidemenu-list">
 							<li class="side-menu__label1"><a href="javascript:void(0)">Danh mục chức năng</a>
 							</li>
-							<li class=""><a href="<?= Yii::getAlias('@web/kholuutru/kho?menu=kho') ?>" class="slide-item" data-menu="kho">Danh sách kho</a>
+							<li class=""><a href="<?= Yii::getAlias('@web/kholuutru/luu-kho?menu=kho') ?>" class="slide-item" data-menu="kho">Kho lưu trữ</a>
+							</li>
+							<li class=""><a href="<?= Yii::getAlias('@web/kholuutru/kho?menu=kho') ?>" class="slide-item" data-menu="kho">Danh sách Kho</a>
+							</li>
+							<li class=""><a href="<?= Yii::getAlias('@web/kholuutru/ke?menu=kho') ?>" class="slide-item" data-menu="kho">Danh sách Kệ</a>
+							</li>
+							<li class=""><a href="<?= Yii::getAlias('@web/kholuutru/ngan?menu=kho') ?>" class="slide-item" data-menu="kho">Danh sách Ngăn</a>
+							</li>
+							<li class=""><a href="<?= Yii::getAlias('@web/kholuutru/hop?menu=kho') ?>" class="slide-item" data-menu="kho"> Danh sách Hộp</a>
 							</li>
 
 						</ul>

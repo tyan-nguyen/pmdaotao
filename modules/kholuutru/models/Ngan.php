@@ -48,10 +48,10 @@ class Ngan extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'id_ke' => 'Id Ke',
-            'ten_ngan' => 'Ten Ngan',
-            'nguoi_tao' => 'Nguoi Tao',
-            'thoi_gian_tao' => 'Thoi Gian Tao',
+            'id_ke' => 'Kệ',
+            'ten_ngan' => 'Tên Ngăn',
+            'nguoi_tao' => 'Nguười tạo',
+            'thoi_gian_tao' => 'Thời gian tạo',
         ];
     }
 

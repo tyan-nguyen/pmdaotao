@@ -46,10 +46,10 @@ class Kho extends \app\models\KhoKho
     {
         return [
             'id' => 'ID',
-            'ten_kho' => 'Ten Kho',
-            'so_do_kho' => 'So Do Kho',
-            'nguoi_tao' => 'Nguoi Tao',
-            'thoi_gian_tao' => 'Thoi Gian Tao',
+            'ten_kho' => 'Tên Kho',
+            'so_do_kho' => 'Sơ đồ Kho',
+            'nguoi_tao' => 'Người tạo',
+            'thoi_gian_tao' => 'Thời gian tạo',
         ];
     }
 

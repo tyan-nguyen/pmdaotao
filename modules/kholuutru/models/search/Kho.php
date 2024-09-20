@@ -5,12 +5,12 @@ namespace app\modules\kholuutru\models\search;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\modules\kholuutru\models\Ngan;
+use app\modules\kholuutru\models\Kho as KhoModel;
 
 /**
- * NganSearch represents the model behind the search form about `app\modules\kholuutru\models\Ngan`.
+ * Kho represents the model behind the search form about `app\modules\kholuutru\models\Kho`.
  */
-class NganSearch extends Ngan
+class Kho extends KhoModel
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class NganSearch extends Ngan
     public function rules()
     {
         return [
-            [['id', 'id_ke', 'nguoi_tao'], 'integer'],
-            [['ten_ngan', 'thoi_gian_tao'], 'safe'],
+            [['id', 'nguoi_tao'], 'integer'],
+            [['ten_kho', 'so_do_kho', 'thoi_gian_tao'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class NganSearch extends Ngan
      */
     public function search($params)
     {
-        $query = Ngan::find();
+        $query = KhoModel::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -57,12 +57,12 @@ class NganSearch extends Ngan
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'id_ke' => $this->id_ke,
             'nguoi_tao' => $this->nguoi_tao,
             'thoi_gian_tao' => $this->thoi_gian_tao,
         ]);
 
-        $query->andFilterWhere(['like', 'ten_ngan', $this->ten_ngan]);
+        $query->andFilterWhere(['like', 'ten_kho', $this->ten_kho])
+            ->andFilterWhere(['like', 'so_do_kho', $this->so_do_kho]);
 
         return $dataProvider;
     }
