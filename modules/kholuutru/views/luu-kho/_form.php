@@ -20,6 +20,7 @@ use app\modules\kholuutru\models\Kho;
                      'GIAOVIEN' => '+ Giáo viên',
                      'NHANVIEN' =>'+ Nhân viên',
                      'HOCVIEN' =>'+ Học viên',
+                     'KHOAHOC' =>'+ Khóa học',
                    ],
                  [
                     'prompt' => 'Chọn đối tượng',
