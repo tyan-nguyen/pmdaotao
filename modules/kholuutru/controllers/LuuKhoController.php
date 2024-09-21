@@ -11,7 +11,12 @@ use yii\filters\VerbFilter;
 use \yii\web\Response;
 use yii\helpers\Html;
 use yii\filters\AccessControl;
-
+use yii\helpers\ArrayHelper;
+use app\modules\kholuutru\models\Ke;
+use app\modules\kholuutru\models\Ngan;
+use app\modules\kholuutru\models\Hop;
+use app\modules\kholuutru\models\LoaiFile;
+use app\modules\kholuutru\models\File;
 /**
  * LuuKhoController implements the CRUD actions for LuuKho model.
  */
@@ -117,7 +122,7 @@ class LuuKhoController extends Controller
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Tạo mới Lưu kho",
-                    'content'=>'<span class="text-success">Create LuuKho success</span>',
+                    'content'=>'<span class="text-success">Tạo mới Lưu kho thành công !</span>',
                     'footer'=> Html::button('<i class ="fa fa-close"> </i> Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                             Html::a('<i class ="fa fa-plus"> </i> Tiếp tục tạo',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
         
@@ -282,4 +287,68 @@ class LuuKhoController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+    
+    //Hiển thị danh sách các kệ theo id_kho
+    public function actionGetToList($id_kho)
+    {
+        $ke = Ke::find()->where(['id_kho' => $id_kho])->all();
+        
+        if (empty($ke)) {
+            return json_encode(['no_to' => 'Trống']);
+        }
+        $listKho = ArrayHelper::map($ke, 'id', 'ten_ke');
+        return json_encode($listKho);
+    }
+
+   //Hiển thị danh sách các ngăn theo id_ke
+    public function actionGetToListKe($id_ke)
+    {
+        $ngan = Ngan::find()->where(['id_ke' => $id_ke])->all();
+        
+        if (empty($ngan)) {
+            return json_encode(['no_ngan' => 'Trống']);
+        }
+        $listKe = ArrayHelper::map($ngan, 'id', 'ten_ngan');
+        return json_encode($listKe);
+    }
+
+    //Hiển thị danh sách các hộp theo id_ngan
+    public function actionGetToListNgan($id_ngan)
+    {
+        $hop = Hop::find()->where(['id_ngan' => $id_ngan])->all();
+        
+        if (empty($hop)) {
+            return json_encode(['no_hop' => 'Trống']);
+        }
+        $listNgan = ArrayHelper::map($hop, 'id', 'ten_hop');
+        return json_encode($listNgan);
+    }
+
+    //Lấy danh sách loại file dựa trên đối tương
+    public function actionGetLoaiFile()
+      {
+         if (Yii::$app->request->isAjax) {
+            $doiTuong = Yii::$app->request->get('doi_tuong');
+            $loaiFiles = LoaiFile::find()->where(['doi_tuong' => $doiTuong])->all();
+            $data = [];
+              foreach ($loaiFiles as $loaiFile) {
+                $data[$loaiFile->id] = $loaiFile->ten_loai;
+             }
+         return json_encode($data); // Trả về dạng JSON
+         }
+      }
+
+// Lấy danh sách các file dựa trên loại file  
+    public function actionGetFile()
+      {
+          if (Yii::$app->request->isAjax) {
+            $loaiFile = Yii::$app->request->get('loai_file');
+            $files =File::find()->where(['loai_file' => $loaiFile])->all();
+            $data = [];
+             foreach ($files as $file) {
+                $data[$file->id] = $file->file_display_name;
+            }
+          return json_encode($data); // Trả về dạng JSON
+        }
+      }
 }

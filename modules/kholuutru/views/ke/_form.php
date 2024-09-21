@@ -56,4 +56,8 @@ use app\modules\kholuutru\models\Kho;
 .ke-form label {
     font-weight: bold;
 }
+.ke-form .form-control {
+    border-color: #0000FF; 
+    border-width: 1px; 
+}
 </style>

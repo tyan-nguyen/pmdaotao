@@ -56,4 +56,8 @@ use app\modules\kholuutru\models\Ngan;
 .hop-form label {
     font-weight: bold;
 }
+.hop-form .form-control {
+    border-color: #0000FF; 
+    border-width: 1px; 
+}
 </style>

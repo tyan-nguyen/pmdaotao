@@ -80,7 +80,7 @@ class Kho extends \app\models\KhoKho
             ->all();
         // Thêm dấu + vào trước tên nhân viên
         return ArrayHelper::map($dsKho, 'id', function($model) {
-            return '+ ' . $model->ten_kho; // Thêm dấu + trước tên nhân viên
+            return ' ' . $model->ten_kho; // Thêm dấu + trước tên nhân viên
         });
     }
     public function beforeSave($insert) {

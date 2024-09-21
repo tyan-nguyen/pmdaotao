@@ -11,7 +11,7 @@ use app\modules\nhanvien\models\To;
 //use yii\filters\AccessControl;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
-use app\modules\kholuutru\models\HoSo;
+
 //use yii\filters\VerbFilter;
 use \yii\web\Response;
 /**

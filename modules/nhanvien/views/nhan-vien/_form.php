@@ -105,10 +105,10 @@ $listTaiKhoan = ArrayHelper::map($taiKhoans, 'id', 'username');
         </div>
         <div class="col-md-4">
     <?= $form->field($model, 'trinh_do')->dropDownList(
-      NhanVien::getListTD(), // Gọi phương thức để lấy danh sách trình độ
+      NhanVien::getListTD(), 
         [
-            'prompt' => 'Chọn trình độ', // Placeholder hiển thị khi chưa chọn giá trị
-            'class' => 'form-control', // Thay đổi lớp CSS nếu cần
+            'prompt' => 'Chọn trình độ', 
+            'class' => 'form-control', 
         ]
     ) ?>
 </div> 

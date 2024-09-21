@@ -56,4 +56,8 @@ use app\modules\kholuutru\models\Ke;
 .ngan-form label {
     font-weight: bold;
 }
+.ngan-form .form-control {
+    border-color: #0000FF; 
+    border-width: 1px; 
+}
 </style>

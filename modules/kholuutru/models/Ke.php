@@ -86,13 +86,11 @@ class Ke extends \app\models\KhoKe
     }
     public static function getList()
     {
-        // Lấy danh sách nhân viên  và sắp xếp theo thứ tự bảng chữ cái
         $dsKe = Ke::find()
             ->orderBy(['ten_ke' => SORT_ASC])
             ->all();
-        // Thêm dấu + vào trước tên nhân viên
         return ArrayHelper::map($dsKe, 'id', function($model) {
-            return '+ ' . $model->ten_ke; // Thêm dấu + trước tên nhân viên
+            return '+ ' . $model->ten_ke; 
         });
     }
     public function beforeSave($insert) {

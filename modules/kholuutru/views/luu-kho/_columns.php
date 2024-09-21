@@ -17,23 +17,38 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'loai_file',
+        'value' => function($model) {
+            return $model->getLoaiFileName(); 
+        },
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'id_file',
+        'value' => function($model) {
+            return $model->getFileName(); 
+        },
     ],
+    
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'doi_tuong',
     ],
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'id_kho',
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'id_kho',
+        'value' => function ($model) {
+            // Kiểm tra xem phongBan có tồn tại hay không
+            return $model->kho ? $model->kho->ten_kho : 'N/A';
+        },
     ],
-      [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'id_ke',
-   ],
+    [
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'id_ke',
+        'value' => function ($model) {
+            // Kiểm tra xem phongBan có tồn tại hay không
+            return $model->ke ? $model->ke->ten_ke : 'N/A';
+        },
+    ],
   
     //[
       //  'class'=>'\kartik\grid\DataColumn',

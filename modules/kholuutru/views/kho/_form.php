@@ -28,4 +28,8 @@ use yii\widgets\ActiveForm;
  .kho-form label {
     font-weight: bold;
 }
+.kho-form .form-control {
+    border-color: #0000FF; 
+    border-width: 1px; 
+}
 </style>
