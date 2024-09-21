@@ -1,7 +1,7 @@
 <?php
 use yii\bootstrap5\Html;
 use yii\widgets\ActiveForm;
-
+use app\modules\kholuutru\models\Ngan;
 /* @var $this yii\web\View */
 /* @var $model app\modules\kholuutru\models\Hop */
 /* @var $form yii\widgets\ActiveForm */
@@ -11,14 +11,15 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'id_ngan')->textInput() ?>
-
     <?= $form->field($model, 'ten_hop')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'nguoi_tao')->textInput() ?>
-
-    <?= $form->field($model, 'thoi_gian_tao')->textInput() ?>
-
+    <?= $form->field($model, 'id_ngan')->dropDownList(
+                    Ngan::getList(), 
+                     [
+                         'prompt' => 'Chọn Ngăn',
+                         'class' => 'form-control dropdown-with-arrow',
+                     ]
+                ) ?>
   
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">
@@ -29,3 +30,30 @@ use yii\widgets\ActiveForm;
     <?php ActiveForm::end(); ?>
     
 </div>
+<style>
+    .dropdown-with-arrow {
+    position: relative;
+    padding-right: 30px; /* Đảm bảo có khoảng trống cho mũi tên */
+}
+
+.dropdown-with-arrow:after {
+    content: "\f078"; /* Font Awesome chevron-down */
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+.dropdown-with-arrow {
+    position: relative;
+    padding-right: 30px;
+    appearance: none; /* Loại bỏ mũi tên mặc định */
+    background: url('data:image/svg+xml;charset=UTF-8,%3Csvg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24"%3E%3Cpath d="M7 10l5 5 5-5z"%3E%3C/path%3E%3C/svg%3E') no-repeat right 10px center;
+    background-size: 12px;
+}
+.hop-form label {
+    font-weight: bold;
+}
+</style>

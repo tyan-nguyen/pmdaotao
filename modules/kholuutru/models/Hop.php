@@ -74,4 +74,11 @@ class Hop extends \app\models\KhoHop
     {
         return $this->hasOne(Ngan::class, ['id' => 'id_ngan']);
     }
+    public function beforeSave($insert) {
+        if ($this->isNewRecord) {
+            $this->nguoi_tao = Yii::$app->user->identity->id;
+            $this->thoi_gian_tao = date('Y-m-d H:i:s');
+        }
+        return parent::beforeSave($insert);
+    }
 }

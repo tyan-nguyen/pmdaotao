@@ -52,7 +52,7 @@ Yii::$app->params['showExport'] = true;
             'panelFooterTemplate'=>'{summary}',
             'summary'=>'Hiển thị dữ liệu {count}/{totalCount}, Trang {page}/{pageCount}',          
             'panel' => [
-                //'type' => 'primary', 
+                'type' => 'white', 
                 'heading' => '<i class="fas fa fa-list" aria-hidden="true"></i> Danh sách',
                 'before'=>'<em>* Danh sách Kho </em>',
                 'after'=>BulkButtonWidget::widget([

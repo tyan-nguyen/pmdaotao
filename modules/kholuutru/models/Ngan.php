@@ -3,7 +3,7 @@
 namespace app\modules\kholuutru\models;
 
 use Yii;
-
+use yii\helpers\ArrayHelper;
 /**
  * This is the model class for table "kho_ngan".
  *
@@ -83,6 +83,24 @@ class Ngan extends \yii\db\ActiveRecord
     public function getKhoLuuKhos()
     {
         return $this->hasMany(LuuKho::class, ['id_ngan' => 'id']);
+    }
+    public static function getList()
+    {
+        // Lấy danh sách nhân viên  và sắp xếp theo thứ tự bảng chữ cái
+        $dsKe = Ngan::find()
+            ->orderBy(['ten_ngan' => SORT_ASC])
+            ->all();
+        // Thêm dấu + vào trước tên nhân viên
+        return ArrayHelper::map($dsKe, 'id', function($model) {
+            return '+ ' . $model->ten_ngan; // Thêm dấu + trước tên nhân viên
+        });
+    }
+    public function beforeSave($insert) {
+        if ($this->isNewRecord) {
+            $this->nguoi_tao = Yii::$app->user->identity->id;
+            $this->thoi_gian_tao = date('Y-m-d H:i:s');
+        }
+        return parent::beforeSave($insert);
     }
     
 }

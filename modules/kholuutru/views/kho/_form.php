@@ -15,11 +15,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'so_do_kho')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'nguoi_tao')->textInput() ?>
-
-    <?= $form->field($model, 'thoi_gian_tao')->textInput() ?>
-
-  
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">
 	        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
@@ -29,3 +24,8 @@ use yii\widgets\ActiveForm;
     <?php ActiveForm::end(); ?>
     
 </div>
+<style>
+ .kho-form label {
+    font-weight: bold;
+}
+</style>

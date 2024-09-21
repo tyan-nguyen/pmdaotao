@@ -79,11 +79,7 @@ class NhanVienController extends Controller
     {
         $request = Yii::$app->request;
         $model = new NhanVien();
-    
-        // Lấy danh sách loại hồ sơ từ cơ sở dữ liệu
-        $listLoaiHoSo = ArrayHelper::map(HoSo::find()->where(['doi_tuong' => 'NHAN_VIEN'])->all(), 'id', 'ten_ho_so');
 
-    
         if ($request->isAjax) {
             /*
             *   Process for ajax request
@@ -94,7 +90,7 @@ class NhanVienController extends Controller
                     'title' => "Thêm Nhân viên",
                     'content' => $this->renderAjax('create', [
                         'model' => $model,
-                        'listLoaiHoSo' => $listLoaiHoSo, // Truyền biến vào view
+                       
                     ]),
                     'footer' => Html::button('<i class="fa fa-close"></i> Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
                                 Html::button('<i class="fa fa-save"></i> Lưu lại', ['class' => 'btn btn-primary', 'type' => "submit"])
@@ -112,7 +108,7 @@ class NhanVienController extends Controller
                     'title' => "Thêm Nhân viên",
                     'content' => $this->renderAjax('create', [
                         'model' => $model,
-                        'listLoaiHoSo' => $listLoaiHoSo, // Truyền biến vào view
+                        
                     ]),
                     'footer' => Html::button('<i class="fa-fa-close"></i> Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
                                 Html::button('<i class="fa fa-save"></i> Lưu lại', ['class' => 'btn btn-primary', 'type' => "submit"])
@@ -127,7 +123,7 @@ class NhanVienController extends Controller
             } else {
                 return $this->render('create', [
                     'model' => $model,
-                    'listLoaiHoSo' => $listLoaiHoSo, // Truyền biến vào view
+                   
                 ]);
             }
         }

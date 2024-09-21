@@ -1,7 +1,7 @@
 <?php
 
 namespace app\modules\kholuutru\models;
-
+use yii\helpers\ArrayHelper;
 use Yii;
 
 /**
@@ -71,5 +71,23 @@ class Kho extends \app\models\KhoKho
     public function getKhoLuuKhos()
     {
         return $this->hasMany(LuuKho::class, ['id_kho' => 'id']);
+    }
+    public static function getList()
+    {
+        // Lấy danh sách nhân viên  và sắp xếp theo thứ tự bảng chữ cái
+        $dsKho = Kho::find()
+            ->orderBy(['ten_kho' => SORT_ASC])
+            ->all();
+        // Thêm dấu + vào trước tên nhân viên
+        return ArrayHelper::map($dsKho, 'id', function($model) {
+            return '+ ' . $model->ten_kho; // Thêm dấu + trước tên nhân viên
+        });
+    }
+    public function beforeSave($insert) {
+        if ($this->isNewRecord) {
+            $this->nguoi_tao = Yii::$app->user->identity->id;
+            $this->thoi_gian_tao = date('Y-m-d H:i:s');
+        }
+        return parent::beforeSave($insert);
     }
 }

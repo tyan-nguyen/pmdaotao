@@ -52,7 +52,7 @@ Yii::$app->params['showExport'] = true;
             'panelFooterTemplate'=>'{summary}',
             'summary'=>'Hiển thị dữ liệu {count}/{totalCount}, Trang {page}/{pageCount}',          
             'panel' => [
-                //'type' => 'primary', 
+                'type' => 'white', 
                 'heading' => '<i class="fas fa fa-list" aria-hidden="true"></i> Danh sách',
                 'before'=>'<em>* Danh sách Kho </em>',
                 'after'=>BulkButtonWidget::widget([
@@ -80,7 +80,7 @@ Yii::$app->params['showExport'] = true;
         'id'=>'ajaxCrudModal',
         'tabindex' => false // important for Select2 to work properly
    ],
-   'dialogOptions'=>['class'=>'modal-lg'],
+   'dialogOptions'=>['class'=>'modal-md'],
    'closeButton'=>['label'=>'<span aria-hidden=\'true\'>×</span>'],
    'id'=>'ajaxCrudModal',
     'footer'=>'',// always need it for jquery plugin
