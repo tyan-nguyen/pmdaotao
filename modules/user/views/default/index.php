@@ -37,7 +37,7 @@ $dash = new Dashboard();
 							<a href="/khoahoc/khoa-hoc?menu=khoahoc">Quản lý khóa học</a>
 						</h5>						
 						<p class="text-muted mb-0">Quản lý thông tin khóa học, 
-							hạng đào tạo, lịch học</p>
+							<br/>hạng đào tạo, lịch học</p>
 					</div>
 				</div>
 			</div>
@@ -54,7 +54,7 @@ $dash = new Dashboard();
 							<a href="/hocvien/hoc-vien?menu=hv2">Quản lý học viên</a>
 						</h5>
 						<p class="text-muted mb-0">Quản lý thông tin học viên, 
-							học phí, sắp xếp lịch học</p>
+							học phí, <br/>sắp xếp lịch học</p>
 					</div>
 				</div>
 			</div>
