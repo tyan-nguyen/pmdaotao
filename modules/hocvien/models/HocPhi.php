@@ -48,12 +48,12 @@ class HocPhi extends \app\models\HvHocPhi
     {
         return [
             'id' => 'ID',
-            'id_hang' => 'Id Hang',
-            'hoc_phi' => 'Hoc Phi',
-            'ngay_ap_dung' => 'Ngay Ap Dung',
-            'ngay_ket_thuc' => 'Ngay Ket Thuc',
-            'nguoi_tao' => 'Nguoi Tao',
-            'thoi_gian_tao' => 'Thoi Gian Tao',
+            'id_hang' => 'Hạng',
+            'hoc_phi' => 'Học Phí',
+            'ngay_ap_dung' => 'Ngày áp dụng',
+            'ngay_ket_thuc' => 'Ngày kết thúc',
+            'nguoi_tao' => 'Nguười tạo',
+            'thoi_gian_tao' => 'Thời gian tạo',
         ];
     }
 

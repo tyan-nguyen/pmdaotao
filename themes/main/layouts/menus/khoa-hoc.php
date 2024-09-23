@@ -26,6 +26,8 @@
 							</li>
 							<li class=""><a href="<?= Yii::getAlias('@web/khoahoc/khoa-hoc?menu=khoahoc') ?>" class="slide-item" data-menu="khoahoc">Danh sách khóa học</a>
 							</li>
+							<li class=""><a href="<?= Yii::getAlias('@web/khoahoc/hang-dao-tao?menu=hangdaotao') ?>" class="slide-item" data-menu="khoahoc">Danh sách hạng đào tạo</a>
+							</li>
 						</ul>
 						<div class="menutabs-content px-0">
 							<!-- menu tab here -->

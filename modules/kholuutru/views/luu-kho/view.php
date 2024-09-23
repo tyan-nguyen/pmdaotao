@@ -7,20 +7,6 @@ use yii\widgets\DetailView;
 ?>
 <div class="luu-kho-view">
  
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'loai_file',
-            'id_file',
-            'id_kho',
-            'id_ke',
-            'id_ngan',
-            'id_hop',
-            'nguoi_tao',
-            'thoi_gian_tao',
-            'doi_tuong',
-        ],
-    ]) ?>
+ <p> Thông tin tài liệu </p>
 
 </div>
