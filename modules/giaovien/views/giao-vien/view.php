@@ -41,6 +41,7 @@ use app\modules\giaovien\models\GiaoVien;
                                     <p><strong>Phòng:</strong> <?= $model->phongBan ? $model->phongBan->ten_phong_ban : 'Chưa có phòng ban' ?></p>
                                     <p><strong>Tổ:</strong> <?= $model->to ? $model->to->ten_to : 'Chưa có tổ'?></p>
                                         <p><strong>Chức vụ:</strong> <?= $model->chuc_vu?></p>
+                                        <p><strong>Vị trí công việc:</strong> <?= $model->vi_tri_cong_viec?></p>
                                         <p><strong>Trạng thái:</strong> <?= $model->trang_thai ?></p>
                                       
 								    </div>

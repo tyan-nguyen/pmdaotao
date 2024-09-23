@@ -65,7 +65,8 @@ class KhoLuuKho extends \yii\db\ActiveRecord
             'id_hop' => 'Id Hop',
             'nguoi_tao' => 'Nguoi Tao',
             'thoi_gian_tao' => 'Thoi Gian Tao',
-            'doi_tuong'=>'Đối tượng'
+            'doi_tuong'=>'Đối tượng',
+            'id_doi_tuong'=>'ID đối tượng',
         ];
     }
 

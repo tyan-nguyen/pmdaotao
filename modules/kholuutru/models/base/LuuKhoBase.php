@@ -42,7 +42,7 @@ class LuuKhoBase extends \app\models\KhoLuuKho
     {
         return [
             [['id_file', 'id_kho', 'id_ke', 'id_ngan', 'id_hop'], 'required'],
-            [['id_file', 'id_kho', 'id_ke', 'id_ngan', 'id_hop', 'nguoi_tao'], 'integer'],
+            [['id_file', 'id_kho', 'id_ke', 'id_ngan', 'id_hop', 'id_doi_tuong','nguoi_tao'], 'integer'],
             [['thoi_gian_tao'], 'safe'],
             [['loai_file'], 'string', 'max' => 255],
             [['doi_tuong'], 'string', 'max' => 20],
@@ -69,6 +69,7 @@ class LuuKhoBase extends \app\models\KhoLuuKho
             'nguoi_tao' => 'Người tạo',
             'thoi_gian_tao' => 'Thời gian tạo',
             'doi_tuong'=>'Đối tượng',
+            'id_doi_tuong'=>'ID đối tượng',
         ];
     }
 

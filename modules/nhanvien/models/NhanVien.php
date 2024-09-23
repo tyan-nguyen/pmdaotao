@@ -36,12 +36,7 @@ class NhanVien extends NhanVienBase
             $this->nguoi_tao = Yii::$app->user->identity->id;
             $this->thoi_gian_tao = date('Y-m-d H:i:s');
             $this->ngay_sinh = CustomFunc::convertDMYToYMD($this->ngay_sinh);
-              // Xác định giá trị của doi_tuong dựa trên giá trị của chuc_vu
-              if ($this->chuc_vu === 'Nhân viên') {
-                $this->doi_tuong = 'NHAN_VIEN';
-            } elseif ($this->chuc_vu === 'Nhân viên / Giáo viên') {
-                $this->doi_tuong = 'NV_GV';
-            }
+            $this->doi_tuong = 0;
         }
         return parent::beforeSave($insert);
     }

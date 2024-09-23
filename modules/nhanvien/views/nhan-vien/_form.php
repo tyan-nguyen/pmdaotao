@@ -95,23 +95,11 @@ $listTaiKhoan = ArrayHelper::map($taiKhoans, 'id', 'username');
             ) ?>
         </div>
         <div class="col-md-4">
-        <?= $form->field($model, 'chuc_vu')->dropDownList(
-        [
-            'Nhân viên' => 'Nhân viên ',
-            'Nhân viên / Giáo viên' => 'Nhân viên / Giáo viên',
-        ],
-        ['prompt' => 'Chọn chức vụ']
-            ) ?>
+             <?= $form->field($model, 'chuc_vu')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-4">
-    <?= $form->field($model, 'trinh_do')->dropDownList(
-      NhanVien::getListTD(), 
-        [
-            'prompt' => 'Chọn trình độ', 
-            'class' => 'form-control', 
-        ]
-    ) ?>
-</div> 
+             <?= $form->field($model, 'trinh_do')->textInput(['maxlength' => true]) ?>
+       </div> 
     </div>
 
     <div class="row">

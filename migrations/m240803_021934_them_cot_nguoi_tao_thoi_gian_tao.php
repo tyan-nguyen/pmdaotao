@@ -49,7 +49,7 @@ class m240803_021934_them_cot_nguoi_tao_thoi_gian_tao extends Migration
         $this->addColumn('nv_day','thoi_gian_tao','datetime');
         $this->addColumn('nv_hang_xe','thoi_gian_tao','datetime');
         $this->addColumn('nv_ho_so_nhan_vien','thoi_gian_tao','datetime');
-        $this->addColumn('hv_loai_ho_so','thoI_gian_tao','datetime');
+        $this->addColumn('hv_loai_ho_so','thoi_gian_tao','datetime');
         $this->addColumn('hv_hoc_vien','thoi_gian_tao','datetime');
         $this->addColumn('hv_khoa_hoc','thoi_gian_tao','datetime');
         $this->addColumn('hv_tai_lieu_khoa_hoc','thoi_gian_tao','datetime');
