@@ -53,8 +53,8 @@ $dash = new Dashboard();
 						<h5 class="mb-2">
 							<a href="/hocvien/hoc-vien?menu=hv2">Quản lý học viên</a>
 						</h5>
-						<p class="text-muted mb-0">Quản lý thông tin học viên, 
-							học phí, <br/>sắp xếp lịch học</p>
+						<p class="text-muted mb-0">Quản lý thông tin học viên, <br/>
+							học phí, sắp xếp lịch học</p>
 					</div>
 				</div>
 			</div>
