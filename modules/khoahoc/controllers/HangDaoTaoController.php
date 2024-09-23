@@ -167,7 +167,7 @@ class HangDaoTaoController extends Controller
                         'model' => $model,
                     ]),
                     'footer'=> Html::button('<i class ="fa fa-close"> </i> Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('<i class ="fa fa-close"> </i> Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                                Html::button('<i class ="fa fa-save"> </i> Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
             }else if($model->load($request->post()) && $model->save()){
                 return [

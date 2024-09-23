@@ -29,4 +29,7 @@ use yii\widgets\ActiveForm;
     border-color: #0000FF; 
     border-width: 1px; 
 }
+.hang-dao-tao-form label {
+    font-weight: bold;
+}
 </style>
