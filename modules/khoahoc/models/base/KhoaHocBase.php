@@ -92,15 +92,19 @@ class KhoaHocBase extends \app\models\HvKhoaHoc
     }
 
     public function beforeSave($insert) {
+        // Chuyển đổi định dạng ngày tháng trước khi lưu, bất kể là tạo mới hay cập nhật
+        $this->ngay_bat_dau = CustomFunc::convertDMYToYMD($this->ngay_bat_dau);
+        $this->ngay_ket_thuc = CustomFunc::convertDMYToYMD($this->ngay_ket_thuc);
+        
         if ($this->isNewRecord) {
+            // Chỉ áp dụng cho bản ghi mới
             $this->nguoi_tao = Yii::$app->user->identity->id;
             $this->thoi_gian_tao = date('Y-m-d H:i:s');
-            $this->trang_thai='CHUA_HOAN_THANH';
-            $this->ngay_bat_dau = CustomFunc::convertDMYToYMD($this->ngay_bat_dau);
-            $this->ngay_ket_thuc = CustomFunc::convertDMYToYMD($this->ngay_ket_thuc);
+            $this->trang_thai = 'CHUA_HOAN_THANH';
         }
-  
+    
         return parent::beforeSave($insert);
     }
+    
    
 }

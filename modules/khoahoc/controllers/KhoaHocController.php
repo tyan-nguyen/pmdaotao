@@ -119,7 +119,7 @@ class KhoaHocController extends Controller
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Thêm Khóa học",
-                    'content'=>'<span class="text-success">Create KhoaHoc success</span>',
+                    'content'=>'<span class="text-success">Thêm Khóa học thành công !</span>',
                     'footer'=> Html::button('<i class="fa fa-close"></i> Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                             Html::a('Create More',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
         
@@ -184,7 +184,7 @@ class KhoaHocController extends Controller
                         'model' => $model,
                     ]),
                     'footer'=> Html::button('<i class="fa fa-close"></i> Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::a('<i class="fa fa-update"></i> Chỉnh sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                            Html::a('<i class="fa fa-pencil"></i> Chỉnh sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
                 ];    
             }else{
                  return [
@@ -221,7 +221,6 @@ class KhoaHocController extends Controller
     {
         $request = Yii::$app->request;
         $this->findModel($id)->delete();
-
         if($request->isAjax){
             /*
             *   Process for ajax request
