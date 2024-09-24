@@ -1,22 +1,21 @@
 <?php
 
-namespace app\modules\khoahoc\controllers;
+namespace app\controllers;
 
 use Yii;
-use app\modules\khoahoc\models\KhoaHoc;
-use app\modules\khoahoc\models\search\KhoaHocSearch;
+use app\models\HvKhoaHoc;
+use app\models\HvKhoaHocSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use \yii\web\Response;
 use yii\helpers\Html;
 use yii\filters\AccessControl;
-use yii\data\ActiveDataProvider;
-use app\modules\hocvien\models\HocVien;
+
 /**
- * KhoaHocController implements the CRUD actions for KhoaHoc model.
+ * HvKhoaHocController implements the CRUD actions for HvKhoaHoc model.
  */
-class KhoaHocController extends Controller
+class HvKhoaHocController extends Controller
 {
     /**
      * @inheritdoc
@@ -29,7 +28,7 @@ class KhoaHocController extends Controller
 					[
 						'actions' => ['index', 'view', 'update','create','delete','bulkdelete'],
 						'allow' => true,
-						'roles' => ['@'],
+						'roles' => ['admin'],
 					],
 				],
 			],
@@ -43,12 +42,12 @@ class KhoaHocController extends Controller
 	}
 
     /**
-     * Lists all KhoaHoc models.
+     * Lists all HvKhoaHoc models.
      * @return mixed
      */
     public function actionIndex()
     {    
-        $searchModel = new KhoaHocSearch();
+        $searchModel = new HvKhoaHocSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -56,15 +55,10 @@ class KhoaHocController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
-  
-    public function beforeAction($action)
-	{
-	    Yii::$app->params['moduleID'] = 'Module Quản lý Khóa học';
-	    Yii::$app->params['modelID'] = 'Quản lý Khóa học';
-	    return true;
-	}
+
+
     /**
-     * Displays a single KhoaHoc model.
+     * Displays a single HvKhoaHoc model.
      * @param integer $id
      * @return mixed
      */
@@ -74,12 +68,12 @@ class KhoaHocController extends Controller
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "KhoaHoc #".$id,
+                    'title'=> "HvKhoaHoc #".$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
                     ]),
-                    'footer'=> Html::button('<i class="fa fa-close"></i> Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::a('<i class="fa fa-pencil"></i>  Chỉnh sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                            Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
                 ];    
         }else{
             return $this->render('view', [
@@ -89,7 +83,7 @@ class KhoaHocController extends Controller
     }
 
     /**
-     * Creates a new KhoaHoc model.
+     * Creates a new HvKhoaHoc model.
      * For ajax request will return json object
      * and for non-ajax request if creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
@@ -97,7 +91,7 @@ class KhoaHocController extends Controller
     public function actionCreate()
     {
         $request = Yii::$app->request;
-        $model = new KhoaHoc();  
+        $model = new HvKhoaHoc();  
 
         if($request->isAjax){
             /*
@@ -106,32 +100,31 @@ class KhoaHocController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Thêm Khóa học",
+                    'title'=> "Create new HvKhoaHoc",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('<i class="fa fa-close"></i> Đóng lại ', ['class'=>'btn btn-default pull-left', 'data-bs-dismiss'=>"modal"]).
-
-                                Html::button(' <i class="fa fa-save"></i> Lưu lại ',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
             }else if($model->load($request->post()) && $model->save()){
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Thêm Khóa học",
-                    'content'=>'<span class="text-success">Create KhoaHoc success</span>',
-                    'footer'=> Html::button('<i class="fa fa-close"></i> Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                    'title'=> "Create new HvKhoaHoc",
+                    'content'=>'<span class="text-success">Create HvKhoaHoc success</span>',
+                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                             Html::a('Create More',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
         
                 ];         
             }else{           
                 return [
-                    'title'=> "Thêm Khóa học",
+                    'title'=> "Create new HvKhoaHoc",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('<i class="fa fa-close"></i> Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('<i class="fa fa-save"></i>Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
             }
@@ -151,7 +144,7 @@ class KhoaHocController extends Controller
     }
 
     /**
-     * Updates an existing KhoaHoc model.
+     * Updates an existing HvKhoaHoc model.
      * For ajax request will return json object
      * and for non-ajax request if update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
@@ -169,31 +162,31 @@ class KhoaHocController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Cập nhật Khóa học #".$id,
+                    'title'=> "Update HvKhoaHoc #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('<i class="fa fa-close"></i> Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('<i class="fa fa-save"></i> Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
             }else if($model->load($request->post()) && $model->save()){
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "KhoaHoc #".$id,
+                    'title'=> "HvKhoaHoc #".$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('<i class="fa fa-close"></i> Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::a('<i class="fa fa-update"></i> Chỉnh sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                            Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
                 ];    
             }else{
                  return [
-                    'title'=> "Cập nhật Khóa học #".$id,
+                    'title'=> "Update HvKhoaHoc #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('<i class="fa fa-close"></i> Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('<i class="fa fa-save"></i> Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
                 ];        
             }
         }else{
@@ -211,7 +204,7 @@ class KhoaHocController extends Controller
     }
 
     /**
-     * Delete an existing KhoaHoc model.
+     * Delete an existing HvKhoaHoc model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -239,7 +232,7 @@ class KhoaHocController extends Controller
     }
 
      /**
-     * Delete multiple existing KhoaHoc model.
+     * Delete multiple existing HvKhoaHoc model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -270,15 +263,15 @@ class KhoaHocController extends Controller
     }
 
     /**
-     * Finds the KhoaHoc model based on its primary key value.
+     * Finds the HvKhoaHoc model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return KhoaHoc the loaded model
+     * @return HvKhoaHoc the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = KhoaHoc::findOne($id)) !== null) {
+        if (($model = HvKhoaHoc::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

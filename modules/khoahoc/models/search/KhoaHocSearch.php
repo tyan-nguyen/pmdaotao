@@ -2,10 +2,9 @@
 
 namespace app\modules\khoahoc\models\search;
 
-use Yii;
+
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\modules\khoahoc\models\base\KhoaHocBase;
 use app\modules\khoahoc\models\KhoaHoc;
 /**
  * HVKhoaHocSearch represents the model behind the search form about `app\models\HvKhoaHoc`.
