@@ -3,9 +3,9 @@
 use yii\db\Migration;
 
 /**
- * Class m240923_072019_table_chuc_vu
+ * Class m240924_024947_create_table_chuc_vu
  */
-class m240923_072019_table_chuc_vu extends Migration
+class m240924_024947_create_table_chuc_vu extends Migration
 {
     /**
      * {@inheritdoc}
@@ -16,8 +16,9 @@ class m240923_072019_table_chuc_vu extends Migration
             'id' => $this->primaryKey(),
             'ten_chuc_vu' => $this->string(55)->notNull(),
             'ghi_chu' => $this->text(),
+            'nguoi_tao'=>$this->integer(),
+            'thoi_gian_tao'=>$this->datetime(),
         ]);
-
     }
 
     /**
@@ -37,7 +38,7 @@ class m240923_072019_table_chuc_vu extends Migration
 
     public function down()
     {
-        echo "m240923_072019_table_chuc_vu cannot be reverted.\n";
+        echo "m240924_024947_create_table_chuc_vu cannot be reverted.\n";
 
         return false;
     }

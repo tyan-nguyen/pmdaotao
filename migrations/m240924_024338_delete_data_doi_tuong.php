@@ -3,16 +3,16 @@
 use yii\db\Migration;
 
 /**
- * Class m240923_071745_insert_luukho_id_doi_tuong
+ * Class m240924_024338_delete_data_doi_tuong
  */
-class m240923_071745_insert_luukho_id_doi_tuong extends Migration
+class m240924_024338_delete_data_doi_tuong extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-       $this ->addColumn('kho_luu_kho','id_doi_tuong','int');
+        $this->update('nv_nhan_vien', ['doi_tuong' => null]);
     }
 
     /**
@@ -20,7 +20,9 @@ class m240923_071745_insert_luukho_id_doi_tuong extends Migration
      */
     public function safeDown()
     {
-       $this->dropColumn('kho_luu_kho','id_doi_tuong');
+        echo "m240924_024338_delete_data_doi_tuong cannot be reverted.\n";
+
+        return false;
     }
 
     /*
@@ -32,7 +34,7 @@ class m240923_071745_insert_luukho_id_doi_tuong extends Migration
 
     public function down()
     {
-        echo "m240923_071745_insert_luukho_id_doi_tuong cannot be reverted.\n";
+        echo "m240924_024338_delete_data_doi_tuong cannot be reverted.\n";
 
         return false;
     }

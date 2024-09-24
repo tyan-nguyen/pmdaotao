@@ -22,14 +22,14 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'so_do_kho',
     ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'nguoi_tao',
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'thoi_gian_tao',
-    ],
+  //  [
+    //    'class'=>'\kartik\grid\DataColumn',
+     //   'attribute'=>'nguoi_tao',
+    //],
+   // [
+    //    'class'=>'\kartik\grid\DataColumn',
+    //    'attribute'=>'thoi_gian_tao',
+   // ],
     [
         'class' => 'kartik\grid\ActionColumn',
         'dropdown' => false,

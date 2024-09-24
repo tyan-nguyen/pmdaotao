@@ -20,17 +20,20 @@ return [
         'attribute'=>'ten_ngan',
     ],
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'id_ke',
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'id_phong_ban',
+        'value' => function ($model) {
+            return $model->ke ? $model->ke->ten_ke : 'N/A';
+        },
     ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'nguoi_tao',
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'thoi_gian_tao',
-    ],
+   // [
+     //   'class'=>'\kartik\grid\DataColumn',
+      //  'attribute'=>'nguoi_tao',
+   // ],
+   // [
+  //      'class'=>'\kartik\grid\DataColumn',
+  //      'attribute'=>'thoi_gian_tao',
+ //   ],
     [
         'class' => 'kartik\grid\ActionColumn',
         'dropdown' => false,

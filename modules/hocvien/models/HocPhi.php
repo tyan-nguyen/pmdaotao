@@ -52,7 +52,7 @@ class HocPhi extends \app\models\HvHocPhi
             'hoc_phi' => 'Học Phí',
             'ngay_ap_dung' => 'Ngày áp dụng',
             'ngay_ket_thuc' => 'Ngày kết thúc',
-            'nguoi_tao' => 'Nguười tạo',
+            'nguoi_tao' => 'Người tạo',
             'thoi_gian_tao' => 'Thời gian tạo',
         ];
     }

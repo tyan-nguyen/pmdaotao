@@ -4,7 +4,7 @@ namespace app\modules\kholuutru\controllers;
 
 use Yii;
 use app\modules\kholuutru\models\Hop;
-use app\modules\kholuutru\models\base\HopSearch;
+use app\modules\kholuutru\models\search\HopSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

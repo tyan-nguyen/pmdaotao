@@ -3,17 +3,17 @@
 use yii\db\Migration;
 
 /**
- * Class m240923_033607_update_nv_nhan_vien
+ * Class m240924_024707_update_nv_nhan_vien
  */
-class m240923_033607_update_nv_nhan_vien extends Migration
+class m240924_024707_update_nv_nhan_vien extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-       $this->alterColumn('nv_nhan_vien','chuc_vu',$this->text());
-       $this->alterColumn('nv_nhan_vien','trinh_do',$this->text());
+        $this->alterColumn('nv_nhan_vien','chuc_vu',$this->text());
+        $this->alterColumn('nv_nhan_vien','trinh_do',$this->text());
     }
 
     /**
@@ -34,7 +34,7 @@ class m240923_033607_update_nv_nhan_vien extends Migration
 
     public function down()
     {
-        echo "m240923_033607_update_nv_nhan_vien cannot be reverted.\n";
+        echo "m240924_024707_update_nv_nhan_vien cannot be reverted.\n";
 
         return false;
     }

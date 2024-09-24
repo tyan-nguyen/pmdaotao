@@ -50,7 +50,7 @@ class Hop extends \app\models\KhoHop
             'id' => 'ID',
             'id_ngan' => 'Ngăn',
             'ten_hop' => 'Tên Hộp',
-            'nguoi_tao' => 'Nguười tạo',
+            'nguoi_tao' => 'Người tạo',
             'thoi_gian_tao' => 'Thời gian tạo',
         ];
     }

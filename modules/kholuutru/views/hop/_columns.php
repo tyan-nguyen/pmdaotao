@@ -20,17 +20,20 @@ return [
         'attribute'=>'ten_hop',
     ],
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'id_ngan',
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'id_ngan',
+        'value' => function ($model) {
+            return $model->ngan ? $model->ngan->ten_ngan : 'N/A';
+        },
     ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'nguoi_tao',
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'thoi_gian_tao',
-    ],
+    //[
+      //  'class'=>'\kartik\grid\DataColumn',
+       // 'attribute'=>'nguoi_tao',
+   // ],
+   // [
+     //   'class'=>'\kartik\grid\DataColumn',
+      //  'attribute'=>'thoi_gian_tao',
+    //],
     [
         'class' => 'kartik\grid\ActionColumn',
         'dropdown' => false,

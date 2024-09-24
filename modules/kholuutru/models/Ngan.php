@@ -50,7 +50,7 @@ class Ngan extends \yii\db\ActiveRecord
             'id' => 'ID',
             'id_ke' => 'Kệ',
             'ten_ngan' => 'Tên Ngăn',
-            'nguoi_tao' => 'Nguười tạo',
+            'nguoi_tao' => 'Người tạo',
             'thoi_gian_tao' => 'Thời gian tạo',
         ];
     }
