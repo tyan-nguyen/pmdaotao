@@ -25,7 +25,7 @@ use app\modules\giaovien\models\GiaoVien;
                                         <p><strong>Điện Thoại:</strong> <?= $model->dien_thoai ?></p>
                                         <p><strong>Email:</strong> <?= $model->email ?></p>
                                         <p><strong>Mã số thuế:</strong> <?= $model->ma_so_thue ?></p>
-                                        <p><strong>Tài khoản:</strong> <?= $model->taiKhoan->username ?></p>
+                                        <p><strong>Tài khoản:</strong> <?= $model->taiKhoan ? $model->taiKhoan->username :'Trống'?></p>
 
 								    </div>
 						    </div>
