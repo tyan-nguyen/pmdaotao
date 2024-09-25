@@ -4,10 +4,10 @@ use yii\bootstrap5\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model app\modules\khoahoc\models\KhoaHoc */
+/* @var $model app\models\HvKhoaHoc */
 
 ?>
-<div class="khoa-hoc-create">
+<div class="hv-khoa-hoc-create">
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>

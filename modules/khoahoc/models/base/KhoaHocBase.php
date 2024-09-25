@@ -44,7 +44,7 @@ class KhoaHocBase extends \app\models\HvKhoaHoc
     public function rules()
     {
         return [
-            [['id_hang', 'ten_khoa_hoc', 'ngay_bat_dau', 'ngay_ket_thuc', 'trang_thai'], 'required'],
+            [['id_hang', 'ten_khoa_hoc'], 'required'],
             [['id_hang', 'nguoi_tao'], 'integer'],
             [['ngay_bat_dau', 'ngay_ket_thuc', 'thoi_gian_tao'], 'safe'],
             [['ghi_chu'], 'string'],
@@ -92,16 +92,19 @@ class KhoaHocBase extends \app\models\HvKhoaHoc
     }
 
     public function beforeSave($insert) {
+        // Chuyển đổi định dạng ngày tháng trước khi lưu, bất kể là tạo mới hay cập nhật
+        $this->ngay_bat_dau = CustomFunc::convertDMYToYMD($this->ngay_bat_dau);
+        $this->ngay_ket_thuc = CustomFunc::convertDMYToYMD($this->ngay_ket_thuc);
+        
         if ($this->isNewRecord) {
+            // Chỉ áp dụng cho bản ghi mới
             $this->nguoi_tao = Yii::$app->user->identity->id;
             $this->thoi_gian_tao = date('Y-m-d H:i:s');
-            $this->trang_thai='CHUA_HOAN_THANH';
-            $this->nguoi_lap_phieu = Yii::$app->user->identity->fullname;
-            $this->ngay_sinh = CustomFunc::convertDMYToYMD($this->ngay_bat_dau);
-            $this->ngay_sinh = CustomFunc::convertDMYToYMD($this->ngay_ket_thuc);
+            $this->trang_thai = 'CHUA_HOAN_THANH';
         }
-  
+    
         return parent::beforeSave($insert);
     }
+    
    
 }

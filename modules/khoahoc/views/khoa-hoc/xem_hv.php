@@ -103,4 +103,3 @@ $dataProvider = new ActiveDataProvider([
     color: #aaa;
 }
 </style>
-

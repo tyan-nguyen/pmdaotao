@@ -29,6 +29,7 @@ class Kho extends \app\models\KhoKho
     /**
      * {@inheritdoc}
      */
+    public $file;
     public function rules()
     {
         return [
@@ -36,6 +37,7 @@ class Kho extends \app\models\KhoKho
             [['nguoi_tao'], 'integer'],
             [['thoi_gian_tao'], 'safe'],
             [['ten_kho', 'so_do_kho'], 'string', 'max' => 255],
+            [['file'], 'file','extensions' => 'png, jpg, jfif'],
         ];
     }
 

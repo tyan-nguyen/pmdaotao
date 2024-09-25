@@ -1,10 +1,10 @@
 <?php
 
-namespace app\modules\khoahoc\controllers;
+namespace app\controllers;
 
 use Yii;
-use app\modules\khoahoc\models\HangDaoTao;
-use app\modules\khoahoc\models\search\HangDaoTaoSearch;
+use app\models\HvKhoaHoc;
+use app\models\HvKhoaHocSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -13,9 +13,9 @@ use yii\helpers\Html;
 use yii\filters\AccessControl;
 
 /**
- * HangDaoTaoController implements the CRUD actions for HangDaoTao model.
+ * HvKhoaHocController implements the CRUD actions for HvKhoaHoc model.
  */
-class HangDaoTaoController extends Controller
+class HvKhoaHocController extends Controller
 {
     /**
      * @inheritdoc
@@ -28,7 +28,7 @@ class HangDaoTaoController extends Controller
 					[
 						'actions' => ['index', 'view', 'update','create','delete','bulkdelete'],
 						'allow' => true,
-						'roles' => ['@'],
+						'roles' => ['admin'],
 					],
 				],
 			],
@@ -42,12 +42,12 @@ class HangDaoTaoController extends Controller
 	}
 
     /**
-     * Lists all HangDaoTao models.
+     * Lists all HvKhoaHoc models.
      * @return mixed
      */
     public function actionIndex()
     {    
-        $searchModel = new HangDaoTaoSearch();
+        $searchModel = new HvKhoaHocSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -58,7 +58,7 @@ class HangDaoTaoController extends Controller
 
 
     /**
-     * Displays a single HangDaoTao model.
+     * Displays a single HvKhoaHoc model.
      * @param integer $id
      * @return mixed
      */
@@ -68,12 +68,12 @@ class HangDaoTaoController extends Controller
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "Hangj đào tạo #".$id,
+                    'title'=> "HvKhoaHoc #".$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
                     ]),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::a('Sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                            Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
                 ];    
         }else{
             return $this->render('view', [
@@ -83,7 +83,7 @@ class HangDaoTaoController extends Controller
     }
 
     /**
-     * Creates a new HangDaoTao model.
+     * Creates a new HvKhoaHoc model.
      * For ajax request will return json object
      * and for non-ajax request if creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
@@ -91,7 +91,7 @@ class HangDaoTaoController extends Controller
     public function actionCreate()
     {
         $request = Yii::$app->request;
-        $model = new HangDaoTao();  
+        $model = new HvKhoaHoc();  
 
         if($request->isAjax){
             /*
@@ -100,31 +100,31 @@ class HangDaoTaoController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Thêm mới hạng đào tạo",
+                    'title'=> "Create new HvKhoaHoc",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
             }else if($model->load($request->post()) && $model->save()){
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Thêm mới hạng đào tạo",
-                    'content'=>'<span class="text-success">Thêm mới hạng đào tạo thành công !</span>',
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::a('Tiếp tục thêm',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                    'title'=> "Create new HvKhoaHoc",
+                    'content'=>'<span class="text-success">Create HvKhoaHoc success</span>',
+                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                            Html::a('Create More',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
         
                 ];         
             }else{           
                 return [
-                    'title'=> "Thêm mới hạng đào tạo",
+                    'title'=> "Create new HvKhoaHoc",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
             }
@@ -144,7 +144,7 @@ class HangDaoTaoController extends Controller
     }
 
     /**
-     * Updates an existing HangDaoTao model.
+     * Updates an existing HvKhoaHoc model.
      * For ajax request will return json object
      * and for non-ajax request if update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
@@ -162,31 +162,31 @@ class HangDaoTaoController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Cập nhật hạng đào tạo #".$id,
+                    'title'=> "Update HvKhoaHoc #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
             }else if($model->load($request->post()) && $model->save()){
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Hạng đào tạo #".$id,
+                    'title'=> "HvKhoaHoc #".$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::a('Sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                            Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
                 ];    
             }else{
                  return [
-                    'title'=> "Cập nhật Hạng đào tạo #".$id,
+                    'title'=> "Update HvKhoaHoc #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
                 ];        
             }
         }else{
@@ -204,7 +204,7 @@ class HangDaoTaoController extends Controller
     }
 
     /**
-     * Delete an existing HangDaoTao model.
+     * Delete an existing HvKhoaHoc model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -232,7 +232,7 @@ class HangDaoTaoController extends Controller
     }
 
      /**
-     * Delete multiple existing HangDaoTao model.
+     * Delete multiple existing HvKhoaHoc model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -263,15 +263,15 @@ class HangDaoTaoController extends Controller
     }
 
     /**
-     * Finds the HangDaoTao model based on its primary key value.
+     * Finds the HvKhoaHoc model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return HangDaoTao the loaded model
+     * @return HvKhoaHoc the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = HangDaoTao::findOne($id)) !== null) {
+        if (($model = HvKhoaHoc::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

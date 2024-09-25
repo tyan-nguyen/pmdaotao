@@ -1,6 +1,6 @@
 <?php
 use yii\helpers\Url;
-
+use yii\helpers\html;
 return [
     [
         'class' => 'kartik\grid\CheckboxColumn',
@@ -19,9 +19,18 @@ return [
         'attribute'=>'ten_kho',
     ],
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'so_do_kho',
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'so_do_kho',
+        'label' => 'Sơ đồ kho',
+        'format' => 'html',
+        'value' => function ($model) {
+            $imageUrl = Yii::$app->urlManager->createUrl($model->so_do_kho);
+            return Html::img($imageUrl, ['class' => 'zoomable-img img-thumbnail', 'style' => 'width:100px;height:100px;']);
+        },
     ],
+    
+    
+    
   //  [
     //    'class'=>'\kartik\grid\DataColumn',
      //   'attribute'=>'nguoi_tao',
@@ -58,3 +67,5 @@ return [
     ],
 
 ];   
+?>
+

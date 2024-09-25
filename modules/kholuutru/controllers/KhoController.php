@@ -11,7 +11,7 @@ use yii\filters\VerbFilter;
 use \yii\web\Response;
 use yii\helpers\Html;
 use yii\filters\AccessControl;
-
+use yii\web\UploadedFile;
 /**
  * KhoController implements the CRUD actions for Kho model.
  */
@@ -78,8 +78,8 @@ class KhoController extends Controller
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
                     ]),
-                    'footer'=> Html::button('<i class="fa fa-close"> </i> Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::a('<i class="fa fa-pencil"> </i> Chỉnh sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                            Html::a('Sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
                 ];    
         }else{
             return $this->render('view', [
@@ -95,59 +95,85 @@ class KhoController extends Controller
      * @return mixed
      */
     public function actionCreate()
-    {
-        $request = Yii::$app->request;
-        $model = new Kho();  
+{
+    $request = Yii::$app->request;
+    $model = new Kho();  
 
-        if($request->isAjax){
-            /*
-            *   Process for ajax request
-            */
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            if($request->isGet){
-                return [
-                    'title'=> "Thêm Kho",
-                    'content'=>$this->renderAjax('create', [
-                        'model' => $model,
-                    ]),
-                    'footer'=> Html::button('<i class="fa fa-close"> </i> Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('<i class="fa fa-save"> </i>  Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
-        
-                ];         
-            }else if($model->load($request->post()) && $model->save()){
+    if($request->isAjax){
+        /*
+        *   Process for ajax request
+        */
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        if($request->isGet){
+            return [
+                'title'=> "Thêm Kho",
+                'content'=>$this->renderAjax('create', [
+                    'model' => $model,
+                ]),
+                'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                            Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+            ];         
+        } elseif ($model->load($request->post()) && $model->save()) {
+            // Xử lý file upload
+            $model->file = UploadedFile::getInstance($model, 'file');
+            if($model->file) {
+                $uploadPath = Yii::getAlias('@webroot/images/');
+                if (!file_exists($uploadPath)) {
+                    mkdir($uploadPath, 0777, true);
+                }
+                $fileName = time() . '_' . $model->file->baseName . '.' . $model->file->extension;
+                $filePath = $uploadPath . $fileName;
+                if($model->file->saveAs($filePath)) {
+                    $model->so_do_kho = 'images/' . $fileName;
+                    $model->save(false); 
+                    return [
+                        'forceReload'=>'#crud-datatable-pjax',
+                        'title'=> "Thêm Kho",
+                        'content'=>'<span class="text-success">Thêm Kho thành công!</span>',
+                        'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                   Html::a('Tiếp tục thêm',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                    ];   
+                } else {
+                    return [
+                        'title'=> "Thêm Kho",
+                        'content'=>'<span class="text-danger">Lỗi khi lưu file. Vui lòng thử lại.</span>',
+                        'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                   Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                    ]; 
+                }
+            } else {
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Thêm Kho",
-                    'content'=>'<span class="text-success">Create Kho success</span>',
-                    'footer'=> Html::button('<i class="fa fa-close"> </i> Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::a('<i class ="fa fa-plus"> </i> Tiếp tục tạo',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
-        
-                ];         
-            }else{           
-                return [
-                    'title'=> "Thêm Kho",
-                    'content'=>$this->renderAjax('create', [
-                        'model' => $model,
-                    ]),
-                    'footer'=> Html::button('<i class="fa fa-close"> </i> Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('<i class="fa fa-save"> </i> Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
-        
-                ];         
+                    'content'=>'<span class="text-success">Thêm Kho thành công!</span>',
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                               Html::a('Tiếp tục thêm',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                ]; 
             }
-        }else{
-            /*
-            *   Process for non-ajax request
-            */
-            if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            } else {
-                return $this->render('create', [
+        } else {
+            return [
+                'title'=> "Thêm Kho",
+                'content'=>$this->renderAjax('create', [
                     'model' => $model,
-                ]);
-            }
+                ]),
+                'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                           Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+            ];  
         }
-       
+    } else {
+        /*
+        *   Process for non-ajax request
+        */
+        if ($model->load($request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+            ]);
+        }
     }
+}
+
 
     /**
      * Updates an existing Kho model.
@@ -159,8 +185,8 @@ class KhoController extends Controller
     public function actionUpdate($id)
     {
         $request = Yii::$app->request;
-        $model = $this->findModel($id);       
-
+        $model = $this->findModel($id);
+    
         if($request->isAjax){
             /*
             *   Process for ajax request
@@ -172,34 +198,80 @@ class KhoController extends Controller
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('<i class="fa fa-close"> </i> Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('<i class="fa fa-save"> </i> Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
-            }else if($model->load($request->post()) && $model->save()){
+            } elseif ($model->load($request->post()) && $model->save()) {
+    
+                // Xử lý cập nhật hình ảnh
+                $model->file = UploadedFile::getInstance($model, 'file');
+                if($model->file) {
+                    $uploadPath = Yii::getAlias('@webroot/images/');
+                    if (!file_exists($uploadPath)) {
+                        mkdir($uploadPath, 0777, true);
+                    }
+                    $fileName = time() . '_' . $model->file->baseName . '.' . $model->file->extension;
+                    $filePath = $uploadPath . $fileName;
+                    
+                    // Xóa file cũ nếu có
+                    if (!empty($model->so_do_kho) && file_exists(Yii::getAlias('@webroot/') . $model->so_do_kho)) {
+                        unlink(Yii::getAlias('@webroot/') . $model->so_do_kho);
+                    }
+    
+                    // Lưu file mới
+                    if($model->file->saveAs($filePath)) {
+                        $model->so_do_kho = 'images/' . $fileName;
+                        $model->save(false); // Lưu thay đổi đường dẫn ảnh mới
+                    }
+                }
+    
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Kho #".$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('<i class="fa fa-close"> </i> Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::a('<i class="fa fa-pencil"> </i> Chỉnh sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                               Html::a('Sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
                 ];    
-            }else{
-                 return [
+            } else {
+                return [
                     'title'=> "Cập nhật Kho #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('<i class="fa fa-close"> </i>  Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('<i class="fa fa-save"> </i>  Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
                 ];        
             }
-        }else{
+        } else {
             /*
             *   Process for non-ajax request
             */
             if ($model->load($request->post()) && $model->save()) {
+    
+                // Xử lý cập nhật hình ảnh
+                $model->file = UploadedFile::getInstance($model, 'file');
+                if($model->file) {
+                    $uploadPath = Yii::getAlias('@webroot/images/');
+                    if (!file_exists($uploadPath)) {
+                        mkdir($uploadPath, 0777, true);
+                    }
+                    $fileName = time() . '_' . $model->file->baseName . '.' . $model->file->extension;
+                    $filePath = $uploadPath . $fileName;
+    
+                    // Xóa file cũ nếu có
+                    if (!empty($model->so_do_kho) && file_exists(Yii::getAlias('@webroot/') . $model->so_do_kho)) {
+                        unlink(Yii::getAlias('@webroot/') . $model->so_do_kho);
+                    }
+    
+                    // Lưu file mới
+                    if($model->file->saveAs($filePath)) {
+                        $model->so_do_kho = 'images/' . $fileName;
+                        $model->save(false); // Lưu thay đổi đường dẫn ảnh mới
+                    }
+                }
+    
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
                 return $this->render('update', [
@@ -208,6 +280,7 @@ class KhoController extends Controller
             }
         }
     }
+    
 
     /**
      * Delete an existing Kho model.
