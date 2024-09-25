@@ -87,4 +87,16 @@ Yii::$app->params['showExport'] = true;
 ])?>
 
 <?php Modal::end(); ?>
-
+<?php
+// CSS phóng to ảnh trong gridview 
+$this->registerCss("
+    .zoomable-img {
+        transition: transform 0.3s ease;  /* Hiệu ứng khi phóng to */
+    }
+    .zoomable-img:hover {
+        transform: scale(2);  /* Phóng to ảnh lên 2 lần khi hover */
+        z-index: 10;  /* Đảm bảo ảnh phóng to nằm phía trên các phần tử khác */
+        position: relative;
+    }
+");
+?>

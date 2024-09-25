@@ -13,7 +13,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'ten_kho')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'so_do_kho')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'file')->fileInput()->label('Sơ đồ kho') ?>
 
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">
