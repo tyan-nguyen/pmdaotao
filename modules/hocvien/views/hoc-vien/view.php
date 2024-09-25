@@ -3,6 +3,7 @@
 use yii\widgets\DetailView;
 use app\widgets\FileDisplayWidget;
 use app\modules\hocvien\models\HocVien;
+use app\widgets\KhoDisplayWidget;
 /* @var $this yii\web\View */
 /* @var $model app\models\HvHocVien */
 ?>
@@ -97,6 +98,11 @@ use app\modules\hocvien\models\HocVien;
                              'doiTuong'=>HocVien::MODEL_ID,
                              'idDoiTuong'=>$model->id,
                         ])?>
+                        
+                        <?= KhoDisplayWidget::widget([
+                            'doiTuong' => HocVien::MODEL_ID,
+                            'idDoiTuong' => $model->id
+                        ]) ?>
                             </div>
                         </div>
                       </div>

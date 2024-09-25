@@ -4,6 +4,7 @@ namespace app\modules\kholuutru\models;
 
 use app\modules\kholuutru\models\base\LuuKhoBase;
 use Yii;
+use app\custom\DoiTuong;
 
 class LuuKho extends LuuKhoBase
 {
@@ -23,5 +24,20 @@ class LuuKho extends LuuKhoBase
             $this->thoi_gian_tao = date('Y-m-d H:i:s');
         }
         return parent::beforeSave($insert);
+    }
+    
+    //hiển thị đối tượng khi thao tác trong form lưu kho
+    public static function getListDoiTuong($doiTuong, $idDoiTuong){
+        $arr = [];
+        $model = DoiTuong::getModel($doiTuong, $idDoiTuong);
+        if($model != null){
+            $arr[$model->id] = $model->pubName;
+        }
+        return $arr;
+    }
+    //luu kho model
+    public static function getLuuKho($doiTuong, $idDoiTuong){
+        $model = LuuKho::find()->where(['doi_tuong'=>$doiTuong, 'id_doi_tuong'=>$idDoiTuong])->one();
+        return $model;
     }
 }

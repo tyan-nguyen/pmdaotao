@@ -6,6 +6,11 @@ use app\modules\hocvien\models\base\HocVienBase;
 class HocVien extends HocVienBase
 {
     CONST MODEL_ID = 'HOCVIEN';
+    
+    public function getPubName(){
+        return $this->ho_ten;
+    }
+    
     public function getHocPhi()
     {
         // Truy vấn học phí từ bảng hoc_phi dựa trên id_hang

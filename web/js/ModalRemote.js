@@ -11,7 +11,6 @@
     };
 }(jQuery));
 
-
 function ModalRemote(modalId) {
 
     this.defaults = {
@@ -283,14 +282,13 @@ function ModalRemote(modalId) {
                 $.pjax.reload({ container: '#crud-datatable-pjax' });
             } else {
                 $.pjax.reload({ container: response.forceReload });
-            }
-            
+            }            
         }
         
         /* send notify */
-			if(typeof response.tcontent !== 'undefined'){
-				showNotif(response.tcontent);
-			}
+		if(typeof response.tcontent !== 'undefined'){
+			showNotif(response.tcontent);
+		}
 			
 		 //***reload block reloadType !== 'undefined'){
          if(typeof response.reloadType !== 'undefined'){
@@ -299,7 +297,7 @@ function ModalRemote(modalId) {
         
 		/** process excute function after forceReload */
 		// Close modal if response contains forceClose field
-        if (response.excuteFunction !== undefined && response.excuteFunction) {
+       /* if (response.excuteFunction !== undefined && response.excuteFunction) {
             funcOne(response.functionResponse);
         }
         if (response.excuteFunction2 !== undefined && response.excuteFunction2) {
@@ -307,7 +305,7 @@ function ModalRemote(modalId) {
         }
         if (response.excuteFunctionDay !== undefined && response.excuteFunctionDay) {
             funcUploadDay(response.functionResponseDay);
-        }
+        }*/
         // Close modal if response contains forceClose field
         if (response.forceClose !== undefined && response.forceClose) {
             this.hide();
@@ -342,7 +340,6 @@ function ModalRemote(modalId) {
      * @param {object} modalFormSubmitBtn
      */
     this.setupFormSubmit = function (modalForm, modalFormSubmitBtn) {
-
         if (modalFormSubmitBtn === undefined) {
             // If submit button not found throw warning message
             console.warn('Modal has form but does not have a submit button');

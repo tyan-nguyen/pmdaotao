@@ -6,10 +6,14 @@ use app\modules\nhanvien\models\NhanVien;
 use app\custom\CustomFunc;
 use app\modules\kholuutru\models\File;
 use app\modules\kholuutru\models\LoaiFile;
+use app\modules\kholuutru\models\LuuKho;
 
 class VanBanDen extends VanBan
 {
     CONST MODEL_ID = 'VBDEN';
+    public function getPubName(){
+        return $this->vbden_so_den;
+    }
     
     public function beforeSave($insert) {
         if ($this->isNewRecord) {
@@ -30,7 +34,8 @@ class VanBanDen extends VanBan
      */
     public function afterDelete()
     {
-        File::deleteFileThamChieu($this::MODEL_ID, $this->id);        
+        File::deleteFileThamChieu($this::MODEL_ID, $this->id); 
+        LuuKho::deleteKhoThamChieu($this::MODEL_ID, $this->id); 
         return parent::afterDelete();
     }
     

@@ -17,6 +17,7 @@ use Yii;
  * @property int|null $nguoi_tao
  * @property string|null $thoi_gian_tao
  * @property string|null $doi_tuong 
+ * @property int $id_doi_tuong
  * @property KhoHop $hop
  * @property KhoKe $ke
  * @property KhoKho $kho

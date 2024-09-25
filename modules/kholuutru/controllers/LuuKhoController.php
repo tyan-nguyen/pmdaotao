@@ -17,6 +17,7 @@ use app\modules\kholuutru\models\Ngan;
 use app\modules\kholuutru\models\Hop;
 use app\modules\kholuutru\models\LoaiFile;
 use app\modules\kholuutru\models\File;
+use app\modules\kholuutru\models\Kho;
 /**
  * LuuKhoController implements the CRUD actions for LuuKho model.
  */
@@ -51,6 +52,82 @@ class LuuKhoController extends Controller
 	    Yii::$app->params['modelID'] = 'Kho lưu trữ';
 	    return true;
 	}
+	
+	/**
+	 * use in form luu kho
+	 * @return string[]|NULL[][]|string[]
+	 */
+	public function actionGetKeByKho(){
+	    Yii::$app->response->format = Response::FORMAT_JSON;
+	    $out = [];
+	    if (isset($_POST['depdrop_parents'])) {
+	        $parents = $_POST['depdrop_parents'];
+	        if ($parents != null) {
+	            $cat_id = $parents[0];
+	            $out = array();
+	            if($cat_id != null){
+	                $parent = Kho::findOne($cat_id);
+	                $list = Ke::find()->where(['id_kho'=>$cat_id])->all();
+	                foreach ($list as $item){
+	                    $out[$parent->ten_kho][] = ['id'=>$item->id, 'name'=>$item->ten_ke];
+	                }
+	            }
+	            return ['output'=>$out, 'selected'=>''];//or 'selected'=>'2'
+	        }
+	    }
+	    return ['output'=>'', 'selected'=>''];
+	}
+	
+	/**
+	 * use in form luu kho
+	 * @return string[]|NULL[][]|string[]
+	 */
+	public function actionGetNganByKe(){
+	    Yii::$app->response->format = Response::FORMAT_JSON;
+	    $out = [];
+	    if (isset($_POST['depdrop_parents'])) {
+	        $parents = $_POST['depdrop_parents'];
+	        if ($parents != null) {
+	            $cat_id = $parents[0];
+	            $out = array();
+	            if($cat_id != null){
+	                $parent = Ke::findOne($cat_id);
+	                $list = Ngan::find()->where(['id_ke'=>$cat_id])->all();
+	                foreach ($list as $item){
+	                    $out[$parent->ten_ke][] = ['id'=>$item->id, 'name'=>$item->ten_ngan];
+	                }
+	            }
+	            return ['output'=>$out, 'selected'=>''];//or 'selected'=>'2'
+	        }
+	    }
+	    return ['output'=>'', 'selected'=>''];
+	}
+	
+	/**
+	 * use in form luu kho
+	 * @return string[]|NULL[][]|string[]
+	 */
+	public function actionGetHopByNgan(){
+	    Yii::$app->response->format = Response::FORMAT_JSON;
+	    $out = [];
+	    if (isset($_POST['depdrop_parents'])) {
+	        $parents = $_POST['depdrop_parents'];
+	        if ($parents != null) {
+	            $cat_id = $parents[0];
+	            $out = array();
+	            if($cat_id != null){
+	                $parent = Ngan::findOne($cat_id);
+	                $list = Hop::find()->where(['id_ngan'=>$cat_id])->all();
+	                foreach ($list as $item){
+	                    $out[$parent->ten_ngan][] = ['id'=>$item->id, 'name'=>$item->ten_hop];
+	                }
+	            }
+	            return ['output'=>$out, 'selected'=>''];//or 'selected'=>'2'
+	        }
+	    }
+	    return ['output'=>'', 'selected'=>''];
+	}
+	
     /**
      * Lists all LuuKho models.
      * @return mixed

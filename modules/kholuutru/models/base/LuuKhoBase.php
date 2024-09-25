@@ -20,6 +20,7 @@ use app\modules\kholuutru\models\Hop;
  * @property int|null $nguoi_tao
  * @property string|null $thoi_gian_tao
  * @property string|null $doi_tuong 
+ * @property int $id_doi_tuong
  * @property Hop $hop
  * @property Ke $ke
  * @property Kho $kho
@@ -28,11 +29,15 @@ use app\modules\kholuutru\models\Hop;
 class LuuKhoBase extends \app\models\KhoLuuKho
 {
     /**
-     * {@inheritdoc}
+     * xoa tat ca file tham chieu
      */
-    public static function tableName()
-    {
-        return 'kho_luu_kho';
+    public static function deleteKhoThamChieu($doiTuong, $idDoiTuong){
+        $khos = LuuKhoBase::findAll(['doi_tuong'=>$doiTuong, 'id_doi_tuong'=>$idDoiTuong]);
+        if($khos){
+            foreach ($khos as $kho){
+                $kho->delete();
+            }
+        }
     }
 
     /**
@@ -41,7 +46,7 @@ class LuuKhoBase extends \app\models\KhoLuuKho
     public function rules()
     {
         return [
-            [['id_file', 'id_kho', 'id_ke', 'id_ngan', 'id_hop'], 'required'],
+            [['doi_tuong', 'id_doi_tuong'], 'required'],
             [['id_file', 'id_kho', 'id_ke', 'id_ngan', 'id_hop', 'id_doi_tuong','nguoi_tao'], 'integer'],
             [['thoi_gian_tao'], 'safe'],
             [['loai_file'], 'string', 'max' => 255],

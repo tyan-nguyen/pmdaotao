@@ -5,6 +5,7 @@ namespace app\modules\kholuutru\models;
 use Yii;
 use app\modules\kholuutru\models\Ngan;
 use app\modules\kholuutru\models\LuuKho;
+use yii\helpers\ArrayHelper;
 /**
  * This is the model class for table "kho_hop".
  *
@@ -74,6 +75,19 @@ class Hop extends \app\models\KhoHop
     {
         return $this->hasOne(Ngan::class, ['id' => 'id_ngan']);
     }
+    
+    public static function getList()
+    {
+        // Lấy danh sách hộp và sắp xếp theo thứ tự bảng chữ cái
+        $dsKho = Hop::find()
+        ->orderBy(['ten_hop' => SORT_ASC])
+        ->all();
+        // Thêm dấu + vào trước tên nhân viên
+        return ArrayHelper::map($dsKho, 'id', function($model) {
+            return ' ' . $model->ten_hop; // Thêm dấu + trước tên hộp
+        });
+    }
+    
     public function beforeSave($insert) {
         if ($this->isNewRecord) {
             $this->nguoi_tao = Yii::$app->user->identity->id;
