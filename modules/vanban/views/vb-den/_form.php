@@ -32,14 +32,16 @@ $currentYear = date('Y');
      	
      		
 
-         <div class="col-lg-3 col-md-6">
-                <?= $form->field($model, 'id_loai_van_ban')->dropDownList(
-                    LoaiVanBan::getList(), 
-                     [
-                         'prompt' => 'Chọn loại văn bản',
-                         'class' => 'form-control dropdown-with-arrow',
-                     ]
-                ) ?>
+         <div class="col-lg-3 col-md-6">         
+            <?= $form->field($model, 'id_loai_van_ban')->widget(Select2::classname(), [
+                'data' => LoaiVanBan::getList(),
+                'language' => 'vi',
+                'options' => ['placeholder' => 'Chọn loại VB...'],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                    'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
+                ],
+            ]);?>
          </div>
          <div class="col-lg-3 col-md-6">
                 <?= $form->field($model, 'so_vb')->textInput(['maxlength' => true,'oninput' => "if (!this.value.includes('/')) { this.value = '/' + '$currentYear'; }",]) ?>
@@ -81,23 +83,16 @@ $currentYear = date('Y');
         </div>        
 
     	<div class="col-lg-3 col-md-6">
-            <?php /* $form->field($model, 'vbden_nguoi_nhan')->dropDownList(
-             NhanVien::getList(), 
-                 [
-                    'prompt' => 'Chọn người nhận',
-                    'class' => 'form-control dropdown-with-arrow',
-                 ]
-            ) */ ?>
             
              <?= $form->field($model, 'vbden_nguoi_nhan')->widget(Select2::classname(), [
                  'data' => NhanVien::getList(),
-                        'language' => 'vi',
-                        'options' => ['placeholder' => 'Chọn người nhận...'],
-                        'pluginOptions' => [
-                            'allowClear' => true,
-                            'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
-                        ],
-                    ]);?>
+                    'language' => 'vi',
+                    'options' => ['placeholder' => 'Chọn người nhận...'],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                        'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
+                    ],
+             ]);?>
         </div>
         <div class="col-lg-3 col-md-6">
              <?= $form->field($model, 'vbden_ngay_chuyen')->widget(DatePicker::classname(), [

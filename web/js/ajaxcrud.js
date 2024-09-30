@@ -76,7 +76,7 @@ $(document).ready(function () {
     
     //************************************************ */
     //for modal remote-2
-   
+   /*
     if ($('#ajaxCrubModal2').length > 0 && $('#ajaxCrudModal2').length == 0) {
         modal2 = new ModalRemote('#ajaxCrubModal2');
     } else {
@@ -88,6 +88,6 @@ $(document).ready(function () {
 
         // Open modal
         modal2.open(this, null);
-    });
+    });*/
     
 });

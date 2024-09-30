@@ -87,7 +87,20 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             					<?php }*/ ?>
             					
             					
-            					
+            					<?php if(Yii::$app->params['showTopSearch'] != false):?>
+                            		<div class="">
+                            			<form class="myFilterForm input-icon" method="post">
+                            				<div class="input-icon-addon">
+                            					<span class="header-serach-btn">
+                            						<i class="fe fe-search"></i>
+                            					</span>
+                            				</div>
+                            				<input name="search" type="search" class="form-control header-search" placeholder="Tìm kiếm&hellip;"
+                            					tabindex="1">
+                            			</form>
+                            		</div>
+                        		<?php endif; ?>
+                        		
             					<?php if(Yii::$app->params['showImport'] == true):?>
             					<div class="me-2">
             						<a class="btn ripple btn-primary dropdown-toggle mb-0" href="javascript:void(0);"
@@ -104,13 +117,14 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             					<?php endif; ?>
             					
             					<?php if(Yii::$app->params['showSearch'] == true) {?>
-            					<div>            						
+            					&nbsp;<div>            						
             						<a id="btnFilter" href="javascript:void(0);"
             							class="btn ripple btn-secondary navresponsive-toggler mb-0 off-canvas"
             							data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
             							aria-expanded="false"
-            							aria-label="Toggle navigation">
-            							<i class="fe fe-filter me-1"></i> <?= (Yii::$app->params['searchLabel'] !=null ? Yii::$app->params['searchLabel'] : 'Tìm kiếm nâng cao') ?>
+            							aria-label="Toggle navigation"
+            							>
+            							<i class="fe fe-filter me-1"></i> <?= (Yii::$app->params['searchLabel'] !=null ? Yii::$app->params['searchLabel'] : 'Tìm chi tiết') ?>
             						</a>
             					</div>
             					<?php } ?>

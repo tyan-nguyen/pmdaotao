@@ -53,7 +53,7 @@ class ViboonAsset extends AssetBundle
         'assets/js/carousel.js',
         'js/print-this/printThis.js',
         'js/ModalRemote.js?v=2',
-        'js/ajaxcrud.js?v=1',        
+        'js/ajaxcrud.js?v=2',        
         'js/custom.js',
         //'assets/plugins/tabs/jquery.multipurpose_tabcontent.js',
         //'assets/plugins/tabs/tab-content.js'

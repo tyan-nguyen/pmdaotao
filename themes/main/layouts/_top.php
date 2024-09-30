@@ -17,7 +17,7 @@ use app\modules\user\models\User;
 			</a>
 		</div>
 		
-		<?php if(Yii::$app->params['showTopSearch'] != false):?>
+		<?php /*if(Yii::$app->params['showTopSearch'] != false):?>
 		<div class="">
 			<form class="myFilterForm input-icon" method="post">
 				<div class="input-icon-addon">
@@ -29,7 +29,7 @@ use app\modules\user\models\User;
 					tabindex="1">
 			</form>
 		</div>
-		<?php endif; ?>
+		<?php endif; */ ?>
 		<div class="main-header-right ms-auto">
 			<button class="navbar-toggler navresponsive-toggler d-lg-none ms-auto collapsed" type="button"
 				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent-4"

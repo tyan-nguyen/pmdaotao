@@ -39,7 +39,7 @@ Yii::$app->params['showExport'] = true;
             'toolbar'=> [
                 ['content'=>
                     Html::a('<i class="fas fa fa-plus" aria-hidden="true"></i> Thêm mới', ['create'],
-                    ['role'=>'modal-remote-2','title'=> 'Thêm mới Van Ban Dens','class'=>'btn btn-outline-primary']).
+                    ['role'=>'modal-remote','title'=> 'Thêm mới Van Ban Dens','class'=>'btn btn-outline-primary']).
                     Html::a('<i class="fas fa fa-sync" aria-hidden="true"></i> Tải lại', [''],
                     ['data-pjax'=>1, 'class'=>'btn btn-outline-primary', 'title'=>'Tải lại']).
                     //'{toggleData}'.
@@ -86,7 +86,7 @@ Yii::$app->params['showExport'] = true;
    'closeButton'=>['label'=>'<span aria-hidden=\'true\'>×</span>'],
    'id'=>'ajaxCrudModal',
     'footer'=>'',// always need it for jquery plugin
-    'size'=>Modal::SIZE_EXTRA_LARGE
+    'size'=>Modal::SIZE_LARGE
 ])?>
 
 <?php Modal::end(); ?>
@@ -100,7 +100,7 @@ Yii::$app->params['showExport'] = true;
    'closeButton'=>['label'=>'<span aria-hidden=\'true\'>×</span>'],
    'id'=>'ajaxCrudModal2',
     'footer'=>'',// always need it for jquery plugin
-    'size'=>Modal::SIZE_EXTRA_LARGE
+    'size'=>Modal::SIZE_LARGE
 ])?>
 
 <?php Modal::end(); ?>
