@@ -10,28 +10,23 @@ use yii\base\Widget;
  */
 class CardWidget extends Widget{
     public $title = 'Title';
-    public $summary = '';
-    public $content = '';
     
     public function init(){
         parent::init();
+        ob_start();
     }
     
     public function run(){
         
-        //$content = ob_get_clean();
+        $content = ob_get_clean();
         $html = $this->render('@app/widgets/views/card/begin', [
-            'title' => $this->title,
-            'summary' => $this->summary,
-            'content' => $this->content
+            'title' => $this->title
         ]);
         
-        //$html .= $content;
+        $html .= $content;
         
         $html .= $this->render('@app/widgets/views/card/end', [
-            'title' => $this->title,
-            'summary' => $this->summary,
-            'content' => $this->content
+            'title' => $this->title
         ]);
         
         return $html;

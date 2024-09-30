@@ -1,3 +1,11 @@
+/** add red * after required field **/
+form div.required label.control-label:after {
+
+  content:" * ";
+
+  color:red;
+
+}
 /*span*/
 .data{
 	color: #17b794 !important;
@@ -56,14 +64,15 @@ body .select2-container {
     color: white;
 }
 .form-group .help-block{
-    color: #f6866a;
+    color: red;
     font-style: italic;
+    font-size: 13px;
 }
 .has-error input{
-    border: 1px solid #f6866a;
+    border: 1px solid red;
 }
 .has-error label{
-    color: #f6866a;
+    color: red;
 }
 #liveToast .toast-body{
     color: #0D6EFD;

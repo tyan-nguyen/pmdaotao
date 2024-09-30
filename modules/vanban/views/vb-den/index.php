@@ -22,18 +22,6 @@ Yii::$app->params['showExport'] = true;
 
 ?>
 
-<style>
-/** custom modal **/
-.modal-xl, .modal-lg {
-    width: 90%!important;
-}
-@media (max-width: 800px) {
-   .modal-xl, .modal-lg {
-      width: 99%!important; 
-   }
-}
-</style>
-
 <?php Pjax::begin([
     'id'=>'myGrid',
     'timeout' => 10000,
@@ -94,10 +82,11 @@ Yii::$app->params['showExport'] = true;
         'id'=>'ajaxCrudModal',
         'tabindex' => false // important for Select2 to work properly
    ],
-   'dialogOptions'=>['class'=>'modal-xl'],
+   //'dialogOptions'=>['class'=>'modal-lg'],
    'closeButton'=>['label'=>'<span aria-hidden=\'true\'>×</span>'],
    'id'=>'ajaxCrudModal',
     'footer'=>'',// always need it for jquery plugin
+    'size'=>Modal::SIZE_EXTRA_LARGE
 ])?>
 
 <?php Modal::end(); ?>
@@ -107,10 +96,11 @@ Yii::$app->params['showExport'] = true;
         'id'=>'ajaxCrudModal2',
         'tabindex' => false // important for Select2 to work properly
    ],
-   'dialogOptions'=>['class'=>'modal-lg'],
+  // 'dialogOptions'=>['class'=>'modal-lg'],
    'closeButton'=>['label'=>'<span aria-hidden=\'true\'>×</span>'],
    'id'=>'ajaxCrudModal2',
     'footer'=>'',// always need it for jquery plugin
+    'size'=>Modal::SIZE_EXTRA_LARGE
 ])?>
 
 <?php Modal::end(); ?>
