@@ -5,6 +5,7 @@ use app\modules\vanban\models\LoaiVanBan;
 use kartik\date\DatePicker;
 use app\custom\CustomFunc;
 use app\modules\nhanvien\models\NhanVien;
+use app\widgets\CardWidget;
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\vanban\models\VanBanDen */
@@ -25,7 +26,16 @@ $currentYear = date('Y');
          'options' => ['enctype' => 'multipart/form-data']
      ]); ?>
      <div class="row">
-         <div class="col-md-6">
+     	
+     		<?= CardWidget::begin([
+     		    'title'=>'Thông tin Văn bản',
+     		    'summary'=>'',
+     		    'content'=>'',
+     		]) ?>
+     	
+     	
+     	
+         <div class="col-lg-4 col-md-6">
                 <?= $form->field($model, 'id_loai_van_ban')->dropDownList(
                     LoaiVanBan::getList(), 
                      [
@@ -34,12 +44,10 @@ $currentYear = date('Y');
                      ]
                 ) ?>
          </div>
-         <div class="col-md-6">
+         <div class="col-lg-4 col-md-6">
                 <?= $form->field($model, 'so_vb')->textInput(['maxlength' => true,'oninput' => "if (!this.value.includes('/')) { this.value = '/' + '$currentYear'; }",]) ?>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
+        <div class="col-lg-4 col-md-6">
             <?= $form->field($model, 'ngay_ky')->widget(DatePicker::classname(), [
                 'options' => ['placeholder' => 'Chọn ngày ký ...'],
                 'pluginOptions' => [
@@ -48,14 +56,20 @@ $currentYear = date('Y');
             ]
             ]); ?>
         </div>
-        <div class="col-md-6">
-            <?= $form->field($model, 'trich_yeu')->textarea(['rows' => 5]) ?>
+         <div class="col-lg-4 col-md-6">
+            <?= $form->field($model, 'nguoi_ky')->textInput(['maxlength' => true]) ?>
+        </div>
+        
+        <?= CardWidget::end() ?>
+        
+    </div>
+    <div class="row">        
+        <div class="col-md-12">
+            <?= $form->field($model, 'trich_yeu')->textarea(['rows' => 4, 'style'=>'width:100%']) ?>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6">
-            <?= $form->field($model, 'nguoi_ky')->textInput(['maxlength' => true]) ?>
-        </div>
+       
         <div class="col-md-6">
             <?= $form->field($model, 'vbden_ngay_den')->widget(DatePicker::classname(), [
                 'options' => ['placeholder' => 'Chọn ngày đến ...'],
@@ -90,10 +104,13 @@ $currentYear = date('Y');
             ]
              ]); ?>
         </div>
-        <div class="col-md-6">
-            <?= $form->field($model, 'ghi_chu')->textarea(['rows' => 5]) ?>
-        </div>
+        
     </div>
+     <div class="row">
+     	<div class="col-md-12">
+            <?= $form->field($model, 'ghi_chu')->textarea(['rows' => 4, 'style'=>'width:100%']) ?>
+        </div>
+     </div>
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">
 	        <?= Html::submitButton($model->isNewRecord ? 'Thêm mới' : 'Cập nhật', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

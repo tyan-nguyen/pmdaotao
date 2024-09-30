@@ -3,18 +3,18 @@
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\modules\vanban\models\LoaiVanBan */
+/* @var $model app\modules\vanban\models\DmLoaiVanBan */
 ?>
-<div class="loai-van-ban-view">
+<div class="dm-loai-van-ban-view">
  
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
+            //'id',
             'ten_loai',
             'ghi_chu:ntext',
-            'nguoi_tao',
-            'thoi_gian_tao',
+           // 'nguoi_tao',
+            //'thoi_gian_tao',
         ],
     ]) ?>
 

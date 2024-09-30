@@ -3,21 +3,17 @@ use yii\bootstrap5\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\modules\vanban\models\LoaiVanBan */
+/* @var $model app\modules\vanban\models\DmLoaiVanBan */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="loai-van-ban-form">
+<div class="dm-loai-van-ban-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'ten_loai')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'ghi_chu')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'nguoi_tao')->textInput() ?>
-
-    <?= $form->field($model, 'thoi_gian_tao')->textInput() ?>
 
   
 	<?php if (!Yii::$app->request->isAjax){ ?>

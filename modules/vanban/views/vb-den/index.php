@@ -22,6 +22,18 @@ Yii::$app->params['showExport'] = true;
 
 ?>
 
+<style>
+/** custom modal **/
+.modal-xl, .modal-lg {
+    width: 90%!important;
+}
+@media (max-width: 800px) {
+   .modal-xl, .modal-lg {
+      width: 99%!important; 
+   }
+}
+</style>
+
 <?php Pjax::begin([
     'id'=>'myGrid',
     'timeout' => 10000,

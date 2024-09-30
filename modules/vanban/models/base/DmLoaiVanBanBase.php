@@ -38,11 +38,22 @@ class DmLoaiVanBanBase extends \app\models\VbDmLoaiVanBan
     {
         return [
             'id' => 'ID',
-            'ten_loai' => 'Ten Loai',
-            'ghi_chu' => 'Ghi Chu',
-            'nguoi_tao' => 'Nguoi Tao',
-            'thoi_gian_tao' => 'Thoi Gian Tao',
+            'ten_loai' => 'Tên loại văn bản',
+            'ghi_chu' => 'Ghi chú',
+            'nguoi_tao' => 'Người tạo',
+            'thoi_gian_tao' => 'Thời gian tạo',
         ];
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function beforeSave($insert) {
+        if ($this->isNewRecord) {
+            $this->nguoi_tao = Yii::$app->user->identity->id;
+            $this->thoi_gian_tao = date('Y-m-d H:i:s');
+        }       
+        return parent::beforeSave($insert);
     }
 
     /**
@@ -50,8 +61,8 @@ class DmLoaiVanBanBase extends \app\models\VbDmLoaiVanBan
      *
      * @return \yii\db\ActiveQuery
      */
-   // public function getVanBans()
-   // {
-  //      return $this->hasMany(VanBan::class, ['id_loai_van_ban' => 'id']);
-  //  }
+    public function getVanBans()
+    {
+        return $this->hasMany(VanBanBase::class, ['id_loai_van_ban' => 'id']);
+    }
 }

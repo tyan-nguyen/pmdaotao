@@ -25,7 +25,7 @@ class ViboonAsset extends AssetBundle
         'assets/css/icons.css',
         'assets/switcher/css/switcher.css',
         'assets/switcher/demo.css',
-        'css/site.css?v=1.1',
+        'css/site.css?v=1.2',
         'assets/fontawesome-free-6.4.0-web/css/all.min.css',
     ];
     public $js = [
