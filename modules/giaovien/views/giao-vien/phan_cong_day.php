@@ -2,6 +2,7 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use app\modules\giaovien\models\Day;
+use app\widgets\BoolViewWidget;
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\giaovien\models\GiaoVien */
@@ -52,8 +53,12 @@ $phanCongDay = Day::find()->where(['id_nhan_vien' => $model->id])->all();
                 <?php foreach ($phanCongDay as $phanCong): ?>
                     <tr>
                         <td><?= Html::encode($phanCong->hangXe->ten_hang) ?></td>
-                        <td><?= $phanCong->ly_thuyet ? '✔' : '✘' ?></td>
-                        <td><?= $phanCong->thuc_hanh ? '✔' : '✘' ?></td>
+                        <td><?php /* $phanCong->ly_thuyet ? '✔' : '✘' */ ?>
+                        <?= BoolViewWidget::widget(['value'=>$phanCong->ly_thuyet]) ?>
+                        </td>
+                        <td>
+                       <?php /* $phanCong->thuc_hanh ? '✔' : '✘'*/ ?>
+                        <?= BoolViewWidget::widget(['value'=>$phanCong->thuc_hanh]) ?>
                         <td>
                             <?= Html::a( '<i class="fa fa-pencil"> </i> ',
                                 ['/giaovien/day/update', 

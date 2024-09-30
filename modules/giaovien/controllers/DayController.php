@@ -115,12 +115,18 @@ class DayController extends Controller
             }else if($model->load($request->post()) && $model->save()){
                 return [
                    'forceClose'=>true,   
-                   'excuteFunctionDay'=>'reloadDay()',
-                   'functionResponseDay' => $this->renderAjax('phan_cong_day', [
+                   //'excuteFunctionDay'=>'reloadDay()',
+                   /* 'functionResponseDay' => $this->renderAjax('phan_cong_day', [
                    'model' => $model,
                     'phanCongDay' => Day::find()->where(['id_nhan_vien' => $model->id_nhan_vien])->all(), 
+                    ]), */
+                    'reloadType'=>'giaoVien',
+                    'reloadBlock'=>'#dayContent',
+                    'reloadContent'=>$this->renderAjax('phan_cong_day', [
+                        'model' => $model,
+                        'phanCongDay' => Day::find()->where(['id_nhan_vien' => $model->id_nhan_vien])->all(),
                     ]),
-
+                    
                     'tcontent'=>'Phân công giảng dạy thành công!',
                 ];
               /*  return [
