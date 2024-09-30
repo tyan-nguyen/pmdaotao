@@ -5,6 +5,9 @@ namespace app\modules\hocvien\models;
 use app\modules\hocvien\models\base\HocVienBase;
 use app\modules\kholuutru\models\File;
 use app\modules\kholuutru\models\LuuKho;
+use app\custom\CustomFunc;
+use Yii;
+
 class HocVien extends HocVienBase
 {
     CONST MODEL_ID = 'HOCVIEN';
@@ -30,5 +33,20 @@ class HocVien extends HocVienBase
         return HocPhi::find()
             ->where(['id_hang' => $this->id_hang])
             ->one();
+    }
+    public function getHang()
+    {
+        return $this->hasOne(HangDaoTao::class, ['id' => 'id_hang']);
+    }
+    public function beforeSave($insert) {
+        if ($this->isNewRecord) {
+            $this->nguoi_tao = Yii::$app->user->identity->id;
+            $this->thoi_gian_tao = date('Y-m-d H:i:s');
+            $this->trang_thai='NHAPTRUCTIEP';
+       
+            $this->ngay_sinh = CustomFunc::convertDMYToYMD($this->ngay_sinh);
+        }
+  
+        return parent::beforeSave($insert);
     }
 }

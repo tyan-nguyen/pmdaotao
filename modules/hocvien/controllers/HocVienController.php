@@ -57,7 +57,7 @@ class HocVienController extends Controller
     {    
         $searchModel = new HocVienSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->query->andWhere(['trang_thai' => ['NHAP_HOC','NHAPLIEU']]);
+        $dataProvider->query->andWhere(['trang_thai' => ['NHAP_HOC','NHAPTRUCTIEP']]);
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
