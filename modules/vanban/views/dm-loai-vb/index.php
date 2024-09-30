@@ -9,10 +9,10 @@ use yii\widgets\Pjax;
 use app\widgets\FilterFormWidget;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\modules\vanban\models\search\LoaiVanBanSearch */
+/* @var $searchModel app\modules\vanban\models\search\DmLoaiVanBanSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Loai Van Bans';
+$this->title = 'Danh mục Loại văn bản';
 $this->params['breadcrumbs'][] = $this->title;
 
 CrudAsset::register($this);
@@ -28,7 +28,7 @@ Yii::$app->params['showExport'] = true;
     'formSelector' => '.myFilterForm'
 ]); ?>
 
-<div class="loai-van-ban-index">
+<div class="dm-loai-van-ban-index">
     <div id="ajaxCrudDatatable">
         <?=GridView::widget([
             'id'=>'crud-datatable',
@@ -39,7 +39,7 @@ Yii::$app->params['showExport'] = true;
             'toolbar'=> [
                 ['content'=>
                     Html::a('<i class="fas fa fa-plus" aria-hidden="true"></i> Thêm mới', ['create'],
-                    ['role'=>'modal-remote','title'=> 'Thêm mới Loai Van Bans','class'=>'btn btn-outline-primary']).
+                    ['role'=>'modal-remote','title'=> 'Thêm mới Loại văn bản','class'=>'btn btn-outline-primary']).
                     Html::a('<i class="fas fa fa-sync" aria-hidden="true"></i> Tải lại', [''],
                     ['data-pjax'=>1, 'class'=>'btn btn-outline-primary', 'title'=>'Tải lại']).
                     //'{toggleData}'.
@@ -55,7 +55,7 @@ Yii::$app->params['showExport'] = true;
             'panel' => [
                 //'type' => 'primary', 
                 'heading' => '<i class="fas fa fa-list" aria-hidden="true"></i> Danh sách',
-                'before'=>'<em>* Danh sách Loai Van Bans</em>',
+                'before'=>'<em>* Danh sách Loại văn bản</em>',
                 'after'=>BulkButtonWidget::widget([
                             'buttons'=>Html::a('<i class="fas fa fa-trash" aria-hidden="true"></i>&nbsp; Xóa đã chọn',
                                 ["bulkdelete"] ,
