@@ -114,11 +114,11 @@ class DayController extends Controller
                 ];         
             }else if($model->load($request->post()) && $model->save()){
                 return [
-                    'forceClose'=>true,   
-                    'excuteFunctionDay'=>'reloadDay()',
+                   'forceClose'=>true,   
+                   'excuteFunctionDay'=>'reloadDay()',
                    'functionResponseDay' => $this->renderAjax('phan_cong_day', [
-                    'model' => $model,
-                    'phanCongDay' => Day::find()->where(['id_nhan_vien' => $model->id_nhan_vien])->one(), 
+                   'model' => $model,
+                    'phanCongDay' => Day::find()->where(['id_nhan_vien' => $model->id_nhan_vien])->all(), 
                     ]),
 
                     'tcontent'=>'Phân công giảng dạy thành công!',
@@ -134,6 +134,8 @@ class DayController extends Controller
             }else{           
                 return [
                     'title'=> "Phân công giảng dạy",
+                    
+                    'tcontent'=>'Thất bại!',
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -189,7 +191,7 @@ class DayController extends Controller
                     'excuteFunctionDay'=>'reloadDay()',
                    'functionResponseDay' => $this->renderAjax('phan_cong_day', [
                     'model' => $model,
-                    'phanCongDay' => Day::find()->where(['id_nhan_vien' => $model->id_nhan_vien])->one(), 
+                    'phanCongDay' => Day::find()->where(['id_nhan_vien' => $model->id_nhan_vien])->all(), 
                     ]),
 
                     'tcontent'=>'Cập nhật thành công!',
@@ -233,26 +235,6 @@ class DayController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
-        $request = Yii::$app->request;
-        $this->findModel($id)->delete();
-
-        if($request->isAjax){
-            /*
-            *   Process for ajax request
-            */
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return ['forceClose'=>true,'forceReload'=>'#crud-datatable-pjax'];
-        }else{
-            /*
-            *   Process for non-ajax request
-            */
-            return $this->redirect(['index']);
-        }
-
-
-    }
 
      /**
      * Delete multiple existing Day model.
@@ -300,8 +282,5 @@ class DayController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
- 
-    
- 
-    
+  
 }

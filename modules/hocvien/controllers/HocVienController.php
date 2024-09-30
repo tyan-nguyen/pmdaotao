@@ -1,10 +1,10 @@
 <?php
 
 namespace app\modules\hocvien\controllers;
-
+use yii\helpers\Url;
 use Yii;
 use app\models\HvHocVien;
-
+use app\modules\hocvien\models\NopHocPhi;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -14,6 +14,7 @@ use yii\filters\AccessControl;
 use app\modules\hocvien\models\search\HocVienSearch;
 use app\modules\hocvien\models\HocPhi;
 use app\modules\hocvien\models\HocVien;
+use yii\web\UploadedFile;
 /**
  * HocVienController implements the CRUD actions for HvHocVien model.
  */
@@ -56,7 +57,7 @@ class HocVienController extends Controller
     {    
         $searchModel = new HocVienSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->query->andWhere(['trang_thai' => ['NHAP_HOC']]);
+        $dataProvider->query->andWhere(['trang_thai' => ['NHAP_HOC','NHAPLIEU']]);
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -112,21 +113,21 @@ class HocVienController extends Controller
                         'model' => $model,
                     ]),
                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Sửa',['class'=>'btn btn-primary','type'=>"submit"])
-        
+                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+
                 ];         
             }else if($model->load($request->post()) && $model->save()){
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Create new HvHocVien",
-                    'content'=>'<span class="text-success">Create HvHocVien success</span>',
+                    'title'=> "Thêm Học viên",
+                    'content'=>'<span class="text-success">Thêm Học viên thành công !</span>',
                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                             Html::a('Tiếp tục thêm',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
         
                 ];         
             }else{           
                 return [
-                    'title'=> "Create new HvHocVien",
+                    'title'=> "Thêm Học viên",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -339,4 +340,106 @@ class HocVienController extends Controller
         }
        
     }
+
+
+    public function actionCreate2($id)
+{
+    $request = Yii::$app->request;
+    $model = new NopHocPhi();  
+    $model->id_hoc_vien = $id;
+     // Tìm học viên theo id_hoc_vien
+     $hocVien = HocVien::findOne($id);
+     $hoTenHocVien = $hocVien ? $hocVien->ho_ten : '';
+    if($request->isAjax){
+        /*
+        *   Process for ajax request
+        */
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        if($request->isGet){
+            return [
+                'title'=> "Thông tin học phí",
+                'content'=>$this->renderAjax('create2', [
+                    'model' => $model,
+                    'hoTenHocVien' => $hoTenHocVien,
+                ]),
+                'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                            Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+    
+            ];         
+        }else if($model->load($request->post()) && $model->save()){
+             // Xử lý file upload
+             $model->file = UploadedFile::getInstance($model, 'file');
+             if($model->file) {
+                 $uploadPath = Yii::getAlias('@webroot/uploads/bien_lai/');
+                 if (!file_exists($uploadPath)) {
+                     mkdir($uploadPath, 0777, true);
+                 }
+                 $fileName = time() . '_' . $model->file->baseName . '.' . $model->file->extension;
+                 $filePath = $uploadPath . $fileName;
+                 if($model->file->saveAs($filePath)) {
+                     $model->bien_lai = 'uploads/bien_lai/' . $fileName;
+                     $model->save(false); 
+                 }
+                }
+            if ($hocVien) {
+                $hocVien->trang_thai = 'NHAP_HOC'; // Cập nhật trạng thái
+                $hocVien->save(); // Lưu thay đổi
+            }
+            return [
+                'forceReload'=>'#crud-datatable-pjax',
+                'title'=> "Thông tin học phí",
+                'content'=>'<span class="text-success">Thêm học phí thành công !</span>',
+                'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"])         
+    
+            ];         
+        }else{           
+            return [
+                'title'=> "Thông tin học phí",
+                'content'=>$this->renderAjax('create2', [
+                    'model' => $model,
+                    'hoTenHocVien' => $hoTenHocVien,
+                ]),
+                'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                            Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+    
+            ];         
+        }
+    }else{
+        /*
+        *   Process for non-ajax request
+        */
+        if ($model->load($request->post()) && $model->save()) {
+            if ($hocVien) {
+                $hocVien->trang_thai = 'NHAP_HOC'; // Cập nhật trạng thái
+                $hocVien->save(); // Lưu thay đổi
+            }
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('create2', [
+                'model' => $model,
+                'hoTenHocVien' => $hoTenHocVien,
+            ]);
+        }
+    }
+   
 }
+
+
+public function actionMess($id)
+{   
+    return $this->asJson([
+        'title'=>'Thông báo !',
+        'content'=>$this->renderAjax('mess', [
+          
+        ]),
+        'footer' => Html::button('Đóng lại', [
+            'class' => 'btn btn-default pull-left',
+            'data-bs-dismiss' => "modal"
+        ])
+    ]);
+    
+}
+}
+
+
+

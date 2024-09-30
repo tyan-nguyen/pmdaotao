@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Url;
-
+use yii\bootstrap5\Html;
+use app\modules\hocvien\models\NopHocPhi;
 return [
     [
         'class' => 'kartik\grid\CheckboxColumn',
@@ -54,29 +55,63 @@ return [
     ],
     [
         'class' => 'kartik\grid\ActionColumn',
+        'template' => '{payment} {view} {update} {delete} ',
         'dropdown' => false,
-        'vAlign'=>'middle',
+        'vAlign' => 'middle',
         'width' => '200px',
-        'urlCreator' => function($action, $model, $key, $index) { 
-                return Url::to([$action,'id'=>$key]);
+     'urlCreator' => function($action, $model, $key, $index) {
+    if ($action === 'payment') {
+        $nopHP = NopHocPhi::find()->where(['id_hoc_vien' => $model->id])->all();
+        if (empty($nopHP)) { 
+            return Url::to(['create2', 'id' => $key]); 
+        } else {
+            return Url::to(['mess', 'id' => $key]); 
+        }
+           }
+            return Url::to([$action, 'id' => $key]); // URL mặc định cho các action khác
         },
-        'viewOptions'=>['role'=>'modal-remote','title'=>'View','title'=>'Xem thông tin',
-            'class'=>'btn ripple btn-primary btn-sm',
-            'data-bs-placement'=>'top',
-            'data-bs-toggle'=>'tooltip-primary'],
-        'updateOptions'=>['role'=>'modal-remote-2','title'=>'Cập nhật dữ liệu', 
-            'class'=>'btn ripple btn-info btn-sm',
-            'data-bs-placement'=>'top',
-            'data-bs-toggle'=>'tooltip-info'],
-        'deleteOptions'=>['role'=>'modal-remote','title'=>'Xóa dữ liệu này', 
-                          'data-confirm'=>false, 'data-method'=>false,// for overide yii data api
-                          'data-request-method'=>'post',
-                          'data-toggle'=>'tooltip',
-                          'data-confirm-title'=>'Xác nhận xóa dữ liệu?',
-                          'data-confirm-message'=>'Bạn có chắc chắn thực hiện hành động này?',
-                           'class'=>'btn ripple btn-secondary btn-sm',
-                           'data-bs-placement'=>'top',
-                           'data-bs-toggle'=>'tooltip-secondary'], 
+          // Đặt buttons bên trong cấu hình của ActionColumn
+          'buttons' => [
+            'payment' => function($url, $model, $key) {
+                return Html::a('<i class="fas fa-dollar-sign"></i>', $url, [
+                    'title' => 'Đóng học phí',
+                    'role' => 'modal-remote-2',
+                    'class' => 'btn ripple btn-warning btn-sm',
+                    'style' => 'width: 30px; text-align: center;',
+                    'data-bs-placement' => 'top',
+                    'data-bs-toggle' => 'tooltip-warning',
+                ]);
+            }
+        ],
+        'viewOptions' => [
+            'role' => 'modal-remote',
+            'title' => 'Xem thông tin',
+            'class' => 'btn ripple btn-primary btn-sm',
+            'data-bs-placement' => 'top',
+            'data-bs-toggle' => 'tooltip-primary'
+        ],
+        'updateOptions' => [
+            'role' => 'modal-remote-2',
+            'title' => 'Cập nhật dữ liệu',
+            'class' => 'btn ripple btn-info btn-sm',
+            'data-bs-placement' => 'top',
+            'data-bs-toggle' => 'tooltip-info'
+        ],
+        'deleteOptions' => [
+            'role' => 'modal-remote',
+            'title' => 'Xóa dữ liệu này',
+            'data-confirm' => false,
+            'data-method' => false, // Override yii data API
+            'data-request-method' => 'post',
+            'data-toggle' => 'tooltip',
+            'data-confirm-title' => 'Xác nhận xóa dữ liệu?',
+            'data-confirm-message' => 'Bạn có chắc chắn thực hiện hành động này?',
+            'class' => 'btn ripple btn-secondary btn-sm',
+            'data-bs-placement' => 'top',
+            'data-bs-toggle' => 'tooltip-secondary'
+        ],
+      
     ],
+    
 
 ];   

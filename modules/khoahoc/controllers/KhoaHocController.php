@@ -29,7 +29,7 @@ class KhoaHocController extends Controller
 					[
 						'actions' => ['index', 'view', 'update','create','delete','bulkdelete'],
 						'allow' => true,
-						'roles' => ['@'],
+						'roles' => ['admin'],
 					],
 				],
 			],
@@ -78,8 +78,8 @@ class KhoaHocController extends Controller
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
                     ]),
-                    'footer'=> Html::button('<i class="fa fa-close"></i> Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::a('<i class="fa fa-pencil"></i>  Chỉnh sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                            Html::a('Sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote-2'])
                 ];    
         }else{
             return $this->render('view', [
@@ -132,7 +132,6 @@ class KhoaHocController extends Controller
                     ]),
                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                                 Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
-        
                 ];         
             }
         }else{
@@ -182,9 +181,10 @@ class KhoaHocController extends Controller
                     'title'=> "KhoaHoc #".$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $model,
+        
                     ]),
                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::a('Sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                            Html::a('Sửa',['update','id'=>$id],['class'=>'btn btn-primary'])
                 ];    
             }else{
                  return [

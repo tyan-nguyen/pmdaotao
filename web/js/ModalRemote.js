@@ -303,9 +303,10 @@ function ModalRemote(modalId) {
         if (response.excuteFunction2 !== undefined && response.excuteFunction2) {
             funcGv(response.functionResponse2);
         }
+      */
         if (response.excuteFunctionDay !== undefined && response.excuteFunctionDay) {
             funcUploadDay(response.functionResponseDay);
-        }*/
+        }
         // Close modal if response contains forceClose field
         if (response.forceClose !== undefined && response.forceClose) {
             this.hide();

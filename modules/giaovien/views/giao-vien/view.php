@@ -1,6 +1,6 @@
 <?php
 use app\widgets\FileDisplayWidget;
-use app\modules\nhanvien\models\NhanVien;
+use app\widgets\KhoDisplayWidget;
 use app\modules\giaovien\models\GiaoVien;
 /* @var $this yii\web\View */
 /* @var $model app\modules\nhanvien\models\NhanVien */
@@ -56,7 +56,7 @@ use app\modules\giaovien\models\GiaoVien;
 							<div class="card-body">
 									<div class="skill-tags">
                                         <p><strong>Trình độ:</strong> <?= $model->trinh_do ?></p>
-                                        <p><strong>Kinh nghiệm làm việc:</strong> <?= $model->kinh_nghiem_lam_viec ?></p> 
+                                        <p><strong>Kinh nghiệm làm việc:</strong> <br> <?= $model->kinh_nghiem_lam_viec ?></p> 
 								    </div>
 						    </div>
 	</div>
@@ -91,12 +91,15 @@ use app\modules\giaovien\models\GiaoVien;
                                          'doiTuong'=>GiaoVien::MODEL_ID,
                                          'idDoiTuong'=>$model->id,
                                     ])?>
+                                     <?= KhoDisplayWidget::widget([
+                                          'doiTuong' => GIAOVIEN::MODEL_ID,
+                                          'idDoiTuong' => $model->id
+                                     ]) ?>
                              </div>
 
 
                              <div class="tab-pane fade" id="add-phancong" role="tabpanel" aria-labelledby="add-phancong-tab">
                                     <!-- Nội dung hiển thị khi click vào "Hồ sơ nhân viên " -->
-                                   <p> Phân công </p>
                                    <?= $this->render('phan_cong_day', ['model' => $model]) ?>
                              </div>
 

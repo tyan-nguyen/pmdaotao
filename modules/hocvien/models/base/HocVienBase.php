@@ -33,7 +33,7 @@ class HocVienBase extends \app\models\HvHocVien
     {
         return 'hv_hoc_vien';
     }
-  
+
     /**
      * {@inheritdoc}
      */
@@ -76,10 +76,7 @@ class HocVienBase extends \app\models\HvHocVien
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getHvHoSoHocViens()
-    {
-        return $this->hasMany(HoSo::class, ['id_hoc_vien' => 'id']);
-    }
+ 
 
     /**
      * Gets query for [[HvNopHocPhis]].

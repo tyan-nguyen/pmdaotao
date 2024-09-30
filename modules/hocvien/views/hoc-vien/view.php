@@ -79,8 +79,7 @@ use app\widgets\KhoDisplayWidget;
                         <!-- Nội dung Thêm học viên -->
                             <div class="tab-pane fade" id="add-student" role="tabpanel" aria-labelledby="add-student-tab">
                         <!-- Nội dung hiển thị khi click vào "Thêm học viên" -->
-                                <h3>Học phí</h3>
-                                <p>Hiển thị học phí tại đây.</p>
+                             <?= $this->render('hoc_phi', ['model' => $model]) ?>
                              
                             </div>
                              <!-- Nội dung Lịch học -->
@@ -102,7 +101,7 @@ use app\widgets\KhoDisplayWidget;
                         <?= KhoDisplayWidget::widget([
                             'doiTuong' => HocVien::MODEL_ID,
                             'idDoiTuong' => $model->id
-                        ]) ?>
+                        ]) ?> 
                             </div>
                         </div>
                       </div>

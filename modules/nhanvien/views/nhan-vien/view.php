@@ -1,7 +1,7 @@
 <?php
 use app\widgets\FileDisplayWidget;
 use app\modules\nhanvien\models\NhanVien;
-use app\modules\giaovien\models\GiaoVien;
+use app\widgets\KhoDisplayWidget;
 /* @var $this yii\web\View */
 /* @var $model app\modules\nhanvien\models\NhanVien */
 ?>
@@ -57,7 +57,7 @@ use app\modules\giaovien\models\GiaoVien;
 							<div class="card-body">
 									<div class="skill-tags">
                                         <p><strong>Trình độ:</strong> <?= $model->trinh_do ?></p>
-                                        <p><strong>Kinh nghiệm làm việc:</strong> <?= $model->kinh_nghiem_lam_viec ?></p> 
+                                        <p><strong>Kinh nghiệm làm việc:</strong> <br> <?= $model->kinh_nghiem_lam_viec ?></p> 
 								    </div>
 						    </div>
 	</div>
@@ -69,7 +69,11 @@ use app\modules\giaovien\models\GiaoVien;
                             'type'=>'ALL',
                             'doiTuong'=>NhanVien::MODEL_ID,
                             'idDoiTuong'=>$model->id,
-                         ])?>         
+                         ])?>     
+						<?= KhoDisplayWidget::widget([
+                             'doiTuong' => NhanVien::MODEL_ID,
+                             'idDoiTuong' => $model->id
+                         ]) ?>    
         </div>
     </div>
 

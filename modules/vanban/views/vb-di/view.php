@@ -3,6 +3,8 @@
 use yii\widgets\DetailView;
 use app\modules\vanban\models\VanBanDi;
 use app\widgets\FileDisplayWidget;
+use app\widgets\KhoDisplayWidget;
+
 /* @var $this yii\web\View */
 /* @var $model app\modules\vanban\models\VanBanDi */
 ?>
@@ -67,7 +69,13 @@ use app\widgets\FileDisplayWidget;
             'doiTuong'=>VanBanDi::MODEL_ID,
             'idDoiTuong'=>$model->id,
         ])?>
+
+       <?= KhoDisplayWidget::widget([
+            'doiTuong' => VanBanDi::MODEL_ID,
+            'idDoiTuong' => $model->id
+        ]) ?>
     </div>
+
 
 
 </div>

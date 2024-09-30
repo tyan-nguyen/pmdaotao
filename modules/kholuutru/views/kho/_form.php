@@ -10,11 +10,14 @@ use yii\widgets\ActiveForm;
 <div class="kho-form">
 
     <?php $form = ActiveForm::begin(); ?>
-
+  
     <?= $form->field($model, 'ten_kho')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'file')->fileInput()->label('Sơ đồ kho') ?>
-
+      
+    <?= $form->field($model, 'file')->fileInput(['class' => 'form-control'])->label('Chọn Sơ đồ kho') ?>
+        <div class="form-group">
+          <label>&nbsp;</label> <!-- Tạo một nhãn rỗng để tạo không gian -->
+        </div>
+        
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">
 	        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

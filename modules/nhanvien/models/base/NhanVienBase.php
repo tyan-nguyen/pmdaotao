@@ -19,6 +19,7 @@ use app\custom\CustomFunc;
  * @property string|null $dia_chi
  * @property string|null $dien_thoai
  * @property int|null $tai_khoan
+ * @property int|null $doi_tuong
  * @property string|null $email
  * @property string|null $trinh_do
  * @property string|null $chuyen_nganh
@@ -56,7 +57,7 @@ class NhanVienBase extends \app\models\NvNhanVien
     public function rules()
     {
         return [
-            [['id_phong_ban', 'tai_khoan', 'nguoi_tao', 'id_to', 'gioi_tinh'], 'integer'],
+            [['id_phong_ban', 'tai_khoan', 'nguoi_tao', 'id_to', 'gioi_tinh','doi_tuong'], 'integer'],
             [['ho_ten'], 'required'],
             [['kinh_nghiem_lam_viec'], 'string'],
             [['thoi_gian_tao','ngay_sinh'], 'safe'],
@@ -93,6 +94,7 @@ class NhanVienBase extends \app\models\NvNhanVien
             'id_to' => 'Tổ',
             'gioi_tinh' => 'Giới tính',
             'ngay_sinh'=>'Ngày sinh',
+            'doi_tuong'=> 'Tham gia giảng dạy ?',
         ];
     }
 

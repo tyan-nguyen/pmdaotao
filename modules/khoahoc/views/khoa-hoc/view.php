@@ -1,7 +1,7 @@
 <?php
 use app\widgets\FileDisplayWidget;
 use app\modules\khoahoc\models\KhoaHoc;
-
+use app\widgets\KhoDisplayWidget;
 /* @var $this yii\web\View */
 /* @var $model app\modules\khoahoc\models\KhoaHoc */
 ?>
@@ -79,7 +79,11 @@ use app\modules\khoahoc\models\KhoaHoc;
                                     'type'=>'ALL',
                                      'doiTuong'=>KhoaHoc::MODEL_ID,
                                      'idDoiTuong'=>$model->id,
-                         ])?>
+                                ])?>
+                                <?= KhoDisplayWidget::widget([
+                                     'doiTuong' => KhoaHoc::MODEL_ID,
+                                     'idDoiTuong' => $model->id
+                               ]) ?> 
                             </div>
                         </div>
                       </div>

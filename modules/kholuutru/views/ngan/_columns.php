@@ -21,7 +21,7 @@ return [
     ],
     [
         'class' => '\kartik\grid\DataColumn',
-        'attribute' => 'id_phong_ban',
+        'attribute' => 'id_ke',
         'value' => function ($model) {
             return $model->ke ? $model->ke->ten_ke : 'N/A';
         },

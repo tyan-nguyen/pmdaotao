@@ -124,11 +124,12 @@ $listTaiKhoan = ArrayHelper::map($taiKhoans, 'id', 'username');
                 'Đã nghỉ việc' => 'Đã nghỉ việc',
             ], ['prompt' => 'Chọn trạng thái']) ?>
         </div>
-</div>
-
-
-
-
+        <div class="col-md-4">
+            <?= $form->field($model, 'doi_tuong', [
+               'template' => "{label}<br>{input}\n{error}",
+            ])->checkbox(['class' => 'form-check-input ','id'=>'gray-checkbox'], false) ?>
+        </div>
+    </div>
     <?php if (!Yii::$app->request->isAjax) { ?>
         <div class="form-group">
             <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
@@ -169,6 +170,10 @@ $this->registerJs("
 .nhan-vien-form label {
     font-weight: bold;
 }
+#gray-checkbox {
+    border-color: #0000FF; 
+}
+
 
 select {
     appearance: none;

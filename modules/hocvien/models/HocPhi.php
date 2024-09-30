@@ -26,7 +26,7 @@ class HocPhi extends \app\models\HvHocPhi
     {
         return 'hv_hoc_phi';
     }
-
+   
     /**
      * {@inheritdoc}
      */
