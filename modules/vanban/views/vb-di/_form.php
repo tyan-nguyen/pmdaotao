@@ -4,8 +4,8 @@ use yii\widgets\ActiveForm;
 use app\modules\vanban\models\LoaiVanBan;
 use kartik\date\DatePicker;
 use app\custom\CustomFunc;
-use app\modules\nhanvien\models\NhanVien;
-
+use app\widgets\CardWidget;
+use kartik\select2\Select2;
 /* @var $this yii\web\View */
 /* @var $model app\modules\vanban\models\VanBanDi */
 /* @var $form yii\widgets\ActiveForm */
@@ -27,23 +27,25 @@ $currentYear = date('Y');
         'novalidate' => true, // Bỏ qua xác thực của trình duyệt (nếu cần)
     ],
 ]); ?>
-
+ <?php CardWidget::begin(['title'=>'Thông tin Văn bản']) ?>
       <div class="row">
-        <div class="col-md-6">
-            <?= $form->field($model, 'id_loai_van_ban')->dropDownList(
-                 LoaiVanBan::getList(), 
-                     [
-                         'prompt' => 'Chọn loại văn bản',
-                         'class' => 'form-control dropdown-with-arrow',
-                     ]
-             ) ?>
-        </div>
-        <div class="col-md-6">
+      <div class="col-lg-3 col-md-6">         
+            <?= $form->field($model, 'id_loai_van_ban')->widget(Select2::classname(), [
+                'data' => LoaiVanBan::getList(),
+                'language' => 'vi',
+                'options' => ['placeholder' => 'Chọn loại VB...'],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                    'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
+                ],
+            ]);?>
+         </div>
+        <div class="col-lg-3 col-md-6">
             <?= $form->field($model, 'so_vb')->textInput(['maxlength' => true,'oninput' => "if (!this.value.includes('/')) { this.value = '/' + '$currentYear'; }",]) ?>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6">
+     
+      
+        <div class="col-lg-3 col-md-6">
             <?= $form->field($model, 'ngay_ky')->widget(DatePicker::classname(), [
                 'options' => ['placeholder' => 'Chọn ngày ký ...'],
                 'pluginOptions' => [
@@ -52,23 +54,26 @@ $currentYear = date('Y');
                 ]
             ]); ?>
         </div>
-        <div class="col-md-6"> 
+        <div class="col-lg-3 col-md-6">
+                 <?= $form->field($model, 'nguoi_ky')->textInput(['maxlength' => true, 'class' => 'form-control']) ?>
+        </div>
+        <div class="col-md-12"> 
             <?= $form->field($model, 'trich_yeu')->textarea(['rows' => 5]) ?>
         </div>
       </div>
+      <?php CardWidget::end() ?>
+
+      <?php CardWidget::begin(['title'=>'Thông tin Lưu sổ văn bản']) ?>
         <div class="row">
-            <div class="col-md-6">
-                 <?= $form->field($model, 'nguoi_ky')->textInput(['maxlength' => true, 'class' => 'form-control']) ?>
-            </div>
-            <div class="col-md-6">
+            <div class="col-lg-3 col-md-6">
                 <?= $form->field($model, 'vbdi_noi_nhan')->textInput() ?>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
+       
+     
+            <div class="col-lg-3 col-md-6">
                 <?= $form->field($model, 'vbdi_so_luong_ban')->textInput() ?>
             </div>
-            <div class="col-md-6">
+            <div class="col-lg-3 col-md-6">
                 <?= $form->field($model, 'vbdi_ngay_chuyen')->widget(DatePicker::classname(), [
                     'options' => ['placeholder' => 'Chọn ngày chuyển  ...'],
                     'pluginOptions' => [
@@ -77,13 +82,13 @@ $currentYear = date('Y');
                      ]
                  ]); ?>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
+      
+    
+            <div class="col-md-12">
                 <?= $form->field($model, 'ghi_chu')->textarea(['rows' => 5]) ?>
             </div>
-        </div>
-    
+                </div>
+        <?php CardWidget::end() ?>
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">
 	        <?= Html::submitButton($model->isNewRecord ? 'Thêm mới' : 'Cập nhật', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
@@ -97,8 +102,5 @@ $currentYear = date('Y');
     .van-ban-di-form label {
     font-weight: bold;
 }
-.van-ban-di-form .form-control {
-    border-color: #0000FF; /* Thay đổi màu viền */
-    border-width: 1px; /* Độ dày viền */
-}
+
 </style>
