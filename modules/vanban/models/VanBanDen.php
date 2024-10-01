@@ -45,7 +45,7 @@ class VanBanDen extends VanBan
     public function rules()
     {
         return [
-            [['so_vb', 'nguoi_ky', 'ngay_ky', 'vbden_so_den'], 'required'],
+            [['so_vb', 'nguoi_ky', 'ngay_ky', 'vbden_so_den', 'id_loai_van_ban'], 'required'],
             [['id_loai_van_ban', 'vbden_so_den', 'vbden_nguoi_nhan', 'nguoi_tao'], 'integer'],
             [['ngay_ky', 'vbden_ngay_den', 'vbden_ngay_chuyen', 'thoi_gian_tao'], 'safe'],
             [['so_vb', 'trich_yeu', 'nguoi_ky', 'ghi_chu', 'so_loai_van_ban'], 'string', 'max' => 255],

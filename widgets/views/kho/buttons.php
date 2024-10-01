@@ -6,7 +6,7 @@ use yii\helpers\Html;
 		<div style="position:absolute; right:20px; top:0px;">
 		<?php 
 		  if($model == NULL){
-        		echo Html::a('<i class="ti-files" data-bs-toggle="tooltip" aria-label="ti-files" data-bs-original-title="ti-files"></i>',
+        		echo Html::a('<i class="fas fa fa-plus"></i>',
         		    ['/kholuutru/ho-so-kho/create',
         		        'doiTuong'=>$doiTuong,
         		        'idDoiTuong'=>$idDoiTuong
@@ -17,7 +17,7 @@ use yii\helpers\Html;
         		    ],
         		    );
 		  } else {
-		      echo Html::a('<i class="ti-files" data-bs-toggle="tooltip" aria-label="ti-files" data-bs-original-title="ti-files"></i>',
+		      echo Html::a('<i class="fas fa-pencil-alt"></i>',
 		          ['/kholuutru/ho-so-kho/update',
 		              'id'=>$model->id,
 		          ],
