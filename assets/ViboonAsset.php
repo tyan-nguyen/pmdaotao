@@ -4,7 +4,6 @@
  * @copyright Copyright (c) 2008 Yii Software LLC
  * @license https://www.yiiframework.com/license/
  */
-
 namespace app\assets;
 
 use yii\web\AssetBundle;
@@ -20,7 +19,7 @@ class ViboonAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'assets/css/style.css',
+        'assets/css/style.css?v=6',
         'assets/css/plugins.css',
         'assets/css/icons.css',
         'assets/switcher/css/switcher.css',
