@@ -31,7 +31,7 @@ use app\modules\user\models\User;
 			
 
 			<ul class="side-menu">
-				<li class="side-item side-item-category" style="background-color:var(--primary-bg-color);padding:10px 20px;color:white;margin-top:-15px"><img alt="avatar" src="<?= Yii::getAlias('@web') ?>/uploads/icons/user.png" width="25">&nbsp;Xin chào, <?= User::getCurrentUser()->username ?></li>
+				<li class="side-item side-item-category" style="background-color:var(--primary-bg-color);padding:15px 20px;color:white;margin-top:-15px"><i class="fa fa-unlock-alt"></i>&nbsp;Xin chào, <?= User::getCurrentUser()->username ?></li>
 				<!-- <li class="side-item side-item-category">Dashboard</li> 
 				<li>
 					<a class="side-menu__item" data-bs-toggle="slide" href="<?= Yii::getAlias('@web/') ?>">
