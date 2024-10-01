@@ -6,13 +6,12 @@ use app\modules\user\models\User;
 <div class="main-header side-header sticky">
 	<div class="container-fluid main-container">
 		<div class="main-header-left sidemenu">
-			<a class="main-header-menu-icon" href="javascript:void(0);" data-bs-toggle="sidebar"
-				id="mainSidebarToggle"><span></span></a>
+			<a class="main-header-menu-icon1" href="javascript:void(0);" data-bs-toggle="sidebar"
+				id="mainSidebarToggle"><span class="fa fa-list-ul"></span></a>
 		</div>
 		<div class="main-header-left horizontal">
 			<a class="main-logo" href="<?= Yii::getAlias('@web/') ?>">
-				<img src="<?= Yii::getAlias('@web') ?>/assets/images/brand/logo.png" class="desktop-logo desktop-logo-dark"
-					alt="viboonlogo">
+				<img src="<?= Yii::getAlias('@web') ?>/assets/images/brand/logo.png" class="desktop-logo desktop-logo-dark" alt="viboonlogo">
 				<img src="<?= Yii::getAlias('@web') ?>/assets/images/brand/logo1.png" class="desktop-logo theme-logo" alt="viboonlogo">
 			</a>
 		</div>
@@ -108,77 +107,7 @@ use app\modules\user\models\User;
 								<i class="bi bi-fullscreen-exit fullscreen-button floating" id="fullscreen-button"></i>
 							</a>
 						</li>
-						<!-- NOTIFICATIONS -->
-						<li class="dropdown main-header-notification d-flex">
-							<a class="nav-link icon" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside">
-								<i class="bi bi-bell"></i>
-								<span class="pulse bg-secondary"></span>
-							</a>
-							<div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-								<div class="header-navheading d-flex border-bottom mb-0">
-									<h6 class="fw-semibold mb-0 mt-1">Thông báo(0)</h6>
-									<a class="btn ripple btn-primary btn-sm ms-auto"
-										href="javascript:void(0);">Đánh dấu đã đọc</a>
-								</div>
-								<div class="header-dropdown-list notification-list">
-									<!-- 
-									<a href="view-mail.html" class="dropdown-item d-flex border-bottom pb-1">
-										<div class="main-img-user online"><img alt="avatar"
-												src="<?= Yii::getAlias('@web') ?>/assets/images/users/female/5.jpg">
-										</div>
-										<div class="media-body ms-2">
-											<p class="mb-1">Congratulate <strong>Olivia James</strong> For
-												new<br> Template start</p>
-											<span>feb 15 12:32pm</span>
-										</div>
-									</a>
-									<a href="view-mail.html" class="dropdown-item d-flex border-bottom pb-1">
-										<div class="main-img-user online"><img alt="avatar"
-												src="<?= Yii::getAlias('@web') ?>/assets/images/users/male/12.jpg">
-										</div>
-										<div class="media-body ms-2">
-											<p class="mb-1"><strong>Joshua Gray</strong> New Message
-												Received</p>
-											<span>feb 13 02:56am</span>
-										</div>
-									</a>
-									<a href="view-mail.html" class="dropdown-item d-flex border-bottom pb-1">
-										<div class="main-img-user online"><img alt="avatar"
-												src="<?= Yii::getAlias('@web') ?>/assets/images/users/female/8.jpg">
-										</div>
-										<div class="media-body ms-2">
-											<p class="mb-1"><strong>Elizabeth Lewis</strong> added new
-												schedule<br> realease</p>
-											<span>feb 12 10:40am</span>
-										</div>
-									</a>
-									<a href="view-mail.html" class="dropdown-item d-flex border-bottom pb-1">
-										<div class="main-img-user online"><img alt="avatar"
-												src="<?= Yii::getAlias('@web') ?>/assets/images/users/male/4.jpg">
-										</div>
-										<div class="media-body ms-2">
-											<p class="mb-1"><strong>Sonia Fraser</strong> Nemo enim
-												voluptatem<br> sequi nesciunt</p>
-											<span>Nov 3 10:21am</span>
-										</div>
-									</a>
-									<a href="view-mail.html" class="dropdown-item d-flex pb-1">
-										<div class="main-img-user online"><img alt="avatar"
-												src="<?= Yii::getAlias('@web') ?>/assets/images/users/male/8.jpg">
-										</div>
-										<div class="media-body ms-2">
-											<p class="mb-1"><strong>Kevin James</strong> simply dummy text
-												of<br> the printing</p>
-											<span>Nov 14 12:40pm</span>
-										</div>
-									</a>-->
-								</div>
-								<div class="dropdown-footer">
-									<a class="btn ripple btn-success btn-sm btn-block"
-										href="#">Xem tất cả thông báo</a>
-								</div>
-							</div>
-						</li>
+					
 						<!-- SHORTCUTS -->
 						<!-- 
 						<li class="dropdown main-header-notification shortcuts d-flex">
@@ -238,6 +167,7 @@ use app\modules\user\models\User;
 							</a>
 						</li>
 						 -->
+						 <?php /* ?>
 						<li class="dropdown d-flex main-profile-menu">
 
 							<a class="main-img-user d-flex" href="javascript:void(0);"
@@ -269,6 +199,7 @@ use app\modules\user\models\User;
 							</div>
 
 						</li>
+						<?php /*/ ?>
 					</ul>
 				</div>
 			</div>
