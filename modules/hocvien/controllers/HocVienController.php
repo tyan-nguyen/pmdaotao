@@ -57,7 +57,7 @@ class HocVienController extends Controller
     {    
         $searchModel = new HocVienSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->query->andWhere(['trang_thai' => ['NHAP_HOC','NHAPLIEU']]);
+        $dataProvider->query->andWhere(['trang_thai' => ['NHAP_HOC','NHAPTRUCTIEP']]);
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -108,7 +108,7 @@ class HocVienController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Create new HvHocVien",
+                    'title'=> "Thêm Học viên ",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -180,7 +180,7 @@ class HocVienController extends Controller
             }else if($model->load($request->post()) && $model->save()){
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "HvHocVien #".$id,
+                    'title'=> "Học viên  #".$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $model,
                     ]),

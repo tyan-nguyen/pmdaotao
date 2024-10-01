@@ -29,9 +29,6 @@ $currentYear = date('Y');
      
      <?php CardWidget::begin(['title'=>'Thông tin Văn bản']) ?>
      <div class="row">
-     	
-     		
-
          <div class="col-lg-3 col-md-6">         
             <?= $form->field($model, 'id_loai_van_ban')->widget(Select2::classname(), [
                 'data' => LoaiVanBan::getList(),
