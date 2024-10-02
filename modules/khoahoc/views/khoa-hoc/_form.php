@@ -3,6 +3,7 @@ use yii\bootstrap5\Html;
 use yii\widgets\ActiveForm;
 use kartik\date\DatePicker;
 use app\custom\CustomFunc;
+use app\widgets\CardWidget;
 use app\modules\hocvien\models\HangDaoTao;
 /* @var $this yii\web\View */
 /* @var $model app\modules\khoahoc\models\KhoaHoc */
@@ -15,8 +16,9 @@ $model->ngay_ket_thuc = CustomFunc::convertYMDToDMY($model->ngay_ket_thuc);
 <div class="khoa-hoc-form">
 
     <?php $form = ActiveForm::begin(); ?>
+    <?php CardWidget::begin(['title'=>'Thông tin khóa học']) ?>
     <div class='row'>
-         <div class ="col-md-6">
+         <div class ="col-lg-3 col-md-6">
          <?= $form->field($model, 'id_hang')->dropDownList(
             HangDaoTao::getList(), 
                 [
@@ -26,12 +28,11 @@ $model->ngay_ket_thuc = CustomFunc::convertYMDToDMY($model->ngay_ket_thuc);
         ) ?>
          </div>
        
-         <div class="col-md-6">
+         <div class="col-lg-3 col-md-6">
               <?= $form->field($model, 'ten_khoa_hoc')->textInput(['maxlength' => true]) ?>
         </div>
-    </div>
-    <div class='row'>
-        <div class="col-md-6">
+  
+        <div class="col-lg-3 col-md-6">
              <?= $form->field($model, 'ngay_bat_dau')->widget(DatePicker::classname(), [
             'options' => ['placeholder' => 'Chọn ngày bắt đầu  ...'],
             'pluginOptions' => [
@@ -40,7 +41,7 @@ $model->ngay_ket_thuc = CustomFunc::convertYMDToDMY($model->ngay_ket_thuc);
             ]
                ]); ?>
        </div>
-       <div class="col-md-6">
+       <div class="col-lg-3 col-md-6">
               <?= $form->field($model, 'ngay_ket_thuc')->widget(DatePicker::classname(), [
             'options' => ['placeholder' => 'Chọn ngày kết thúc  ...'],
             'pluginOptions' => [
@@ -49,13 +50,12 @@ $model->ngay_ket_thuc = CustomFunc::convertYMDToDMY($model->ngay_ket_thuc);
             ]
                ]); ?>
       </div>
-    </div>
-    <div class='row'>
+   
         <div class='col-md-12'>
         <?= $form->field($model, 'ghi_chu')->textarea(['rows' => 6, 'placeholder' => 'Nhập ghi chú']) ?>
         </div>
     </div>
-   
+    <?php CardWidget::end() ?>
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">
 	        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

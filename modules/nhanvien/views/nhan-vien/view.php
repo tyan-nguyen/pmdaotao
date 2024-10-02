@@ -2,6 +2,7 @@
 use app\widgets\FileDisplayWidget;
 use app\modules\nhanvien\models\NhanVien;
 use app\widgets\KhoDisplayWidget;
+
 /* @var $this yii\web\View */
 /* @var $model app\modules\nhanvien\models\NhanVien */
 ?>

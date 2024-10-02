@@ -8,7 +8,7 @@ use yii\data\ActiveDataProvider;
 use app\modules\nhanvien\models\NhanVien;
 
 /**
- * NhanVienSearch represents the model behind the search form about `app\modules\nhanvien\models\NhanVien`.
+ * NhanVienSearch đại diện cho mô hình phía sau form tìm kiếm về `app\modules\nhanvien\models\NhanVien`.
  */
 class NhanVienSearch extends NhanVien
 {
@@ -18,7 +18,7 @@ class NhanVienSearch extends NhanVien
     public function rules()
     {
         return [
-            [['id', 'id_phong_ban', 'tai_khoan', 'nguoi_tao','gioi_tinh'], 'integer'],
+            [['id', 'id_phong_ban', 'tai_khoan', 'nguoi_tao', 'gioi_tinh'], 'integer'],
             [['ho_ten', 'chuc_vu', 'so_cccd', 'dia_chi', 'dien_thoai', 'email', 'trinh_do', 'chuyen_nganh', 'vi_tri_cong_viec', 'kinh_nghiem_lam_viec', 'ma_so_thue', 'trang_thai', 'thoi_gian_tao'], 'safe'],
         ];
     }
@@ -28,12 +28,12 @@ class NhanVienSearch extends NhanVien
      */
     public function scenarios()
     {
-        // bypass scenarios() implementation in the parent class
+        // Bỏ qua việc triển khai scenarios() trong lớp cha
         return Model::scenarios();
     }
 
     /**
-     * Creates data provider instance with search query applied
+     * Tạo một instance của data provider với truy vấn tìm kiếm đã áp dụng
      *
      * @param array $params
      *
@@ -50,7 +50,7 @@ class NhanVienSearch extends NhanVien
         $this->load($params);
 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
+            // Bỏ uncomment dòng sau nếu bạn không muốn trả về bất kỳ bản ghi nào khi xác thực thất bại
             // $query->where('0=1');
             return $dataProvider;
         }
@@ -61,7 +61,6 @@ class NhanVienSearch extends NhanVien
             'tai_khoan' => $this->tai_khoan,
             'nguoi_tao' => $this->nguoi_tao,
             'thoi_gian_tao' => $this->thoi_gian_tao,
-            
         ]);
 
         $query->andFilterWhere(['like', 'ho_ten', $this->ho_ten])

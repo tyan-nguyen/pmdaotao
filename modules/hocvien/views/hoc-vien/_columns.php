@@ -75,7 +75,7 @@ return [
             'payment' => function($url, $model, $key) {
                 return Html::a('<i class="fas fa-dollar-sign"></i>', $url, [
                     'title' => 'Đóng học phí',
-                    'role' => 'modal-remote-2',
+                    'role' => 'modal-remote',
                     'class' => 'btn ripple btn-warning btn-sm',
                     'style' => 'width: 30px; text-align: center;',
                     'data-bs-placement' => 'top',

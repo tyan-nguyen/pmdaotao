@@ -40,9 +40,6 @@ $tenHang = $hocVien && $hocVien->hang ? $hocVien->hang->ten_hang : null;
                             echo $user ? Html::encode($user->ho_ten) : 'Không xác định';
                             ?>
                         </td>
-                        <td>
-                           
-                       </td>
                     </tr>
 
                     
