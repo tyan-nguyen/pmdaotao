@@ -5,7 +5,7 @@ use app\custom\CustomFunc;
 ?>
 <?php foreach ($files as $fileVB){ ?>
 <div id="dFile<?= $fileVB->id ?>" class="col-md-4">
-    <div class="card  custom-card mb-0">
+    <div class="card  custom-card mb-2">
         <div class="card-body p-2">
             <div class="d-flex">
                 <span class="bg-primary-transparent border border-primary br-3 pd-5">
