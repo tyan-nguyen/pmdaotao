@@ -28,12 +28,12 @@ class HangDaoTaoSearch extends HangDaoTao
      */
     public function scenarios()
     {
-        // bypass scenarios() implementation in the parent class
+        // Bỏ qua việc triển khai scenarios() trong lớp cha
         return Model::scenarios();
     }
 
     /**
-     * Creates data provider instance with search query applied
+     * Tạo một instance của data provider với truy vấn tìm kiếm đã áp dụng
      *
      * @param array $params
      *
@@ -50,7 +50,7 @@ class HangDaoTaoSearch extends HangDaoTao
         $this->load($params);
 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
+            // Bỏ uncomment dòng sau nếu bạn không muốn trả về bất kỳ bản ghi nào khi xác thực thất bại
             // $query->where('0=1');
             return $dataProvider;
         }

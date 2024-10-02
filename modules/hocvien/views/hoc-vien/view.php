@@ -21,7 +21,7 @@ use app\widgets\KhoDisplayWidget;
 									<div class="skill-tags">
                                         <p><strong>Tên học viên:</strong> <?= $model-> ho_ten ?></p>
                                         <p><strong>Giới tính:</strong> <?= $model->gioi_tinh == 1 ? 'Nam' : 'Nữ' ?></p>
-                                        <p><strong>Ngày sinh:</strong> <?= $model->ngay_sinh ?></p>
+                                        <p><strong>Ngày sinh:</strong> <?= $model->getNgaySinh() ?></p>
                                         <p><strong>Địa chỉ:</strong> <?= $model->dia_chi ?></p>
                                         <p><strong>Số CCCD:</strong> <?= $model->so_cccd ?></p>
 								    </div>

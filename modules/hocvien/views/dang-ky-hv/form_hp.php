@@ -3,7 +3,8 @@ use yii\bootstrap5\Html;
 use yii\widgets\ActiveForm;
 use kartik\date\DatePicker;
 use app\custom\CustomFunc;
-use yii\widgets\MaskedInput;
+use kartik\select2\Select2;
+use app\widgets\CardWidget;
 use app\modules\nhanvien\models\NhanVien;
 /* @var $this yii\web\View */
 /* @var $model app\models\HvHocVien */
@@ -23,9 +24,9 @@ $model->ngay_nop = CustomFunc::convertYMDToDMY($model->ngay_nop);
 </div>   
    </div>
    <hr style="width:400px; border-width:2px; border-color:black; margin-left:auto; margin-right:auto;">
-
+   <?php CardWidget::begin(['title'=>'Thông tin học phí']) ?>
    <div class ='row'>
-        <div class="col-md-6">
+        <div class="col-lg-4 col-md-6">
         <?= $form->field($model, 'ngay_nop')->widget(DatePicker::classname(), [
             'options' => ['placeholder' => 'Chọn ngày nộp  ...'],
             'pluginOptions' => [
@@ -34,20 +35,19 @@ $model->ngay_nop = CustomFunc::convertYMDToDMY($model->ngay_nop);
             ]
                ]); ?>
         </div>
-        <div class="col-md-6">
+        <div class="col-lg-4 col-md-6">
             <?= $form->field($model, 'so_tien_nop')->textInput(['placeholder' => 'VNĐ ...']) ?>
         </div>
-
-    </div>
-    <div class ='row'>
-    <div class="col-md-6">
-            <?= $form->field($model, 'nguoi_thu')->dropDownList(
-                 NhanVien::getList(), 
-                     [
-                      'prompt' => 'Chọn người thu',
-                      'class' => 'form-control dropdown-with-arrow',
-                     ]
-            ) ?>
+        <div class="col-lg-4 col-md-6">
+        <?= $form->field($model, 'nguoi_thu')->widget(Select2::classname(), [
+                 'data' => NhanVien::getList(),
+                    'language' => 'vi',
+                    'options' => ['placeholder' => 'Chọn người thu...'],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                        'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
+                    ],
+             ]);?>
         </div>
    </div>
    <div class='row'>
@@ -55,11 +55,11 @@ $model->ngay_nop = CustomFunc::convertYMDToDMY($model->ngay_nop);
           
             <br/>
             <div class='row'>
-                <div class="col-md-6" style="text-align:center;">
+                <div class="col-lg-8 col-md-12" style="text-align:center;">
                     <div id="my_camera" style="text-align:center;"></div>
                     <?= $form->field($model, 'bien_lai')->hiddenInput(['id' => 'bien_lai'])->label(false) ?>
                 </div>
-                <div class="col-md-6" style="text-align:center;">
+                <div class="col-lg-4 col-md-12" style="text-align:center;">
                     <div id="results" style="text-align:center;"></div>
                 </div>
             </div>
@@ -71,7 +71,7 @@ $model->ngay_nop = CustomFunc::convertYMDToDMY($model->ngay_nop);
                 </div>
             </div>
        </div>
-  
+       <?php CardWidget::end() ?>
    </div>
  
   

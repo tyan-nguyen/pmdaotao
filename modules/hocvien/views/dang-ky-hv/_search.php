@@ -1,35 +1,56 @@
-<?php
 
-use yii\helpers\Html;
+<?php
+use yii\bootstrap5\Html;
 use yii\widgets\ActiveForm;
 
-/** @var yii\web\View $this */
-/** @var app\models\VanBanSearch $model */
-/** @var yii\widgets\ActiveForm $form */
+use app\modules\hocvien\models\HangDaoTao;
+use kartik\date\DatePicker;
+/* @var $this yii\web\View */
+/* @var $model app\modules\vanban\models\VanBanDen */
+/* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="nhan-vien-search">
+<div class="hoc-vien-search">
 
     <?php $form = ActiveForm::begin([
-        'action' => ['index'],
-        'method' => 'get',
-    ]); ?>
+        	'id'=>'myFilterForm',
+            'method' => 'get',
+            'options' => [
+                'class' => 'myFilterForm'
+            ]
+      	]); ?>
 
-   
 <?= $form->field($model, 'ho_ten')->textInput(['maxlength' => true]) ?>
 
-<?= $form->field($model, 'so_dien_thoai')->textInput(['maxlength' => true]) ?>
+<?= $form->field($model, 'gioi_tinh')->dropDownList([
+             1 => 'Nam',
+             0 => 'Nữ',
+             ], ['prompt' => 'Chọn giới tính', 'class' => 'form-control dropdown-with-arrow']) ?>
 
+<?= $form->field($model, 'ngay_sinh')->widget(DatePicker::classname(), [
+        'options' => ['placeholder' => 'Chọn ngày sinh  ...'],
+        'pluginOptions' => [
+            'autoclose' => true,
+            'format' => 'dd/mm/yyyy',
+        ]
+        ]); ?>
 <?= $form->field($model, 'so_cccd')->textInput(['maxlength' => true]) ?>
+<?= $form->field($model, 'dia_chi')->textInput(['maxlength' => true]) ?>
+<?= $form->field($model, 'so_dien_thoai')->textInput(['maxlength' => true]) ?>
+<?= $form->field($model, 'id_hang')->dropDownList(HangDaoTao::getList(), ['prompt'=>'Chọn hạng']) ?>
+	<?php if (!Yii::$app->request->isAjax){ ?>
+	  	<div class="form-group">
+	        <?= Html::submitButton('Tìm kiếm',['class' => 'btn btn-primary']) ?>
+	        <?= Html::resetButton('Xóa tìm kiếm', ['class' => 'btn btn-outline-secondary']) ?>
+	    </div>
+	<?php } ?>
 
-
- 
-
-    <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-outline-secondary']) ?>
-    </div>
 
     <?php ActiveForm::end(); ?>
-
+    
 </div>
+<style>
+    .hoc-vien-search label {
+    font-weight: bold;
+}
+</style>

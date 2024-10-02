@@ -2,13 +2,13 @@
 
 namespace app\modules\giaovien\models\search;
 
-
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\modules\nhanvien\models\NhanVien;
 use app\modules\nhanvien\models\search\NhanVienSearch;
+
 /**
- * NhanVienSearch represents the model behind the search form about `app\modules\nhanvien\models\NhanVien`.
+ * GiaoVienSearch đại diện cho mô hình phía sau form tìm kiếm về `app\modules\nhanvien\models\NhanVien`.
  */
 class GiaoVienSearch extends NhanVienSearch
 {
@@ -18,7 +18,7 @@ class GiaoVienSearch extends NhanVienSearch
     public function rules()
     {
         return [
-            [['id', 'id_phong_ban', 'tai_khoan', 'nguoi_tao'], 'integer'],
+            [['id', 'id_phong_ban', 'tai_khoan', 'nguoi_tao','gioi_tinh'], 'integer'],
             [['ho_ten', 'chuc_vu', 'so_cccd', 'dia_chi', 'dien_thoai', 'email', 'trinh_do', 'chuyen_nganh', 'vi_tri_cong_viec', 'kinh_nghiem_lam_viec', 'ma_so_thue', 'trang_thai', 'thoi_gian_tao'], 'safe'],
         ];
     }
@@ -28,12 +28,12 @@ class GiaoVienSearch extends NhanVienSearch
      */
     public function scenarios()
     {
-        // bypass scenarios() implementation in the parent class
+        // Bỏ qua việc triển khai scenarios() trong lớp cha
         return Model::scenarios();
     }
 
     /**
-     * Creates data provider instance with search query applied
+     * Tạo một instance của data provider với truy vấn tìm kiếm đã áp dụng
      *
      * @param array $params
      *
@@ -50,7 +50,7 @@ class GiaoVienSearch extends NhanVienSearch
         $this->load($params);
 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
+            // Bỏ uncomment dòng sau nếu bạn không muốn trả về bất kỳ bản ghi nào khi xác thực thất bại
             // $query->where('0=1');
             return $dataProvider;
         }
@@ -65,6 +65,7 @@ class GiaoVienSearch extends NhanVienSearch
 
         $query->andFilterWhere(['like', 'ho_ten', $this->ho_ten])
             ->andFilterWhere(['like', 'chuc_vu', $this->chuc_vu])
+            ->andFilterWhere(['like', 'gioi_tinh', $this->gioi_tinh])
             ->andFilterWhere(['like', 'so_cccd', $this->so_cccd])
             ->andFilterWhere(['like', 'dia_chi', $this->dia_chi])
             ->andFilterWhere(['like', 'dien_thoai', $this->dien_thoai])
@@ -76,6 +77,7 @@ class GiaoVienSearch extends NhanVienSearch
             ->andFilterWhere(['like', 'ma_so_thue', $this->ma_so_thue])
             ->andFilterWhere(['like', 'trang_thai', $this->trang_thai])
             ->andFilterWhere(['like', 'doi_tuong', $this->doi_tuong]);
+
         return $dataProvider;
     }
 }

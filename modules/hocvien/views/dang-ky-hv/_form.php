@@ -4,6 +4,7 @@ use yii\widgets\ActiveForm;
 use app\modules\hocvien\models\HangDaoTao;
 use kartik\date\DatePicker;
 use app\custom\CustomFunc;
+use app\widgets\CardWidget;
 /* @var $this yii\web\View */
 /* @var $model app\models\HvHocVien */
 /* @var $form yii\widgets\ActiveForm */
@@ -14,20 +15,19 @@ $model->ngay_sinh = CustomFunc::convertYMDToDMY($model->ngay_sinh);
 <div class="hv-hoc-vien-form">
 
     <?php $form = ActiveForm::begin(); ?>
-
+      <?php CardWidget::begin(['title'=>'Thông tin cá nhân học viên']) ?>
    <div class ='row'>
-        <div class="col-md-6">
+        <div class="col-lg-3 col-md-6">
             <?= $form->field($model, 'ho_ten')->textInput(['maxlength' => true]) ?>
         </div>
-        <div class="col-md-6">
+        <div class="col-lg-3 col-md-6">
             <?= $form->field($model, 'gioi_tinh')->dropDownList([
              1 => 'Nam',
              0 => 'Nữ',
              ], ['prompt' => 'Chọn giới tính', 'class' => 'form-control dropdown-with-arrow']) ?>
         </div>
-    </div>
-    <div class='row'>
-            <div class="col-md-6">
+ 
+            <div class="col-lg-3 col-md-6">
             <?= $form->field($model, 'ngay_sinh')->widget(DatePicker::classname(), [
             'options' => ['placeholder' => 'Chọn ngày sinh  ...'],
             'pluginOptions' => [
@@ -36,21 +36,22 @@ $model->ngay_sinh = CustomFunc::convertYMDToDMY($model->ngay_sinh);
             ]
                ]); ?>
             </div>
-            <div class="col-md-6">
+            <div class="col-lg-3 col-md-6">
                  <?= $form->field($model, 'so_cccd')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                 <?= $form->field($model, 'dia_chi')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                 <?= $form->field($model, 'so_dien_thoai')->textInput(['maxlength' => true]) ?>
             </div>
            
     </div>
+    <?php CardWidget::end() ?>
+
+    <?php CardWidget::begin(['title'=>'Thông tin hạng đào tạo']) ?>
     <div class ='row'>
-            <div class="col-md-6">
-                 <?= $form->field($model, 'dia_chi')->textInput(['maxlength' => true]) ?>
-            </div>
-            <div class="col-md-6">
-                 <?= $form->field($model, 'so_dien_thoai')->textInput(['maxlength' => true]) ?>
-            </div>
-    </div>
-    <div class ='row'>
-    <div class="col-md-6">
+    <div class="col-lg-3 col-md-6">
         <?= $form->field($model, 'id_hang')->dropDownList(
     HangDaoTao::getList(), 
     [
@@ -61,7 +62,8 @@ $model->ngay_sinh = CustomFunc::convertYMDToDMY($model->ngay_sinh);
          </div>
         
     </div>
-</div>
+    <?php CardWidget::end() ?>
+
 
    
 
@@ -76,13 +78,10 @@ $model->ngay_sinh = CustomFunc::convertYMDToDMY($model->ngay_sinh);
     
 </div>
 <style>
-       .hv-hoc-vien-form label {
+     .hv-hoc-vien-form label {
     font-weight: bold;
 }
-.hv-hoc-vien-form .form-control {
-    border-color: #0000FF; 
-    border-width: 1px; 
-}
+
 .dropdown-with-arrow {
     position: relative;
     padding-right: 30px; /* Đảm bảo có khoảng trống cho mũi tên */

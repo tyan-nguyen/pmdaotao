@@ -1,5 +1,6 @@
 <?php 
 use yii\bootstrap5\Html;
+use app\widgets\BoolViewWidget;
 ?>
 <?php if (empty($phanCongDay)): ?>
         <!-- Giáo viên chưa có phân công dạy -->
@@ -41,8 +42,10 @@ use yii\bootstrap5\Html;
             <?php foreach ($phanCongDay as $phanCong): ?>
                     <tr>
                         <td><?= Html::encode($phanCong->hangXe->ten_hang) ?></td>
-                        <td><?= $phanCong->ly_thuyet ? '✔' : '✘' ?></td>
-                        <td><?= $phanCong->thuc_hanh ? '✔' : '✘' ?></td>
+                        <td><?php /* $phanCong->ly_thuyet ? '✔' : '✘' */ ?>
+                        <?= BoolViewWidget::widget(['value'=>$phanCong->ly_thuyet]) ?></td>
+                        <td>  <?php /* $phanCong->thuc_hanh ? '✔' : '✘'*/ ?>
+                        <?= BoolViewWidget::widget(['value'=>$phanCong->thuc_hanh]) ?></td>
                         <td>
                             <?= Html::a( '<i class="fa fa-pencil"> </i>',
                                 ['/giaovien/day/update', 
