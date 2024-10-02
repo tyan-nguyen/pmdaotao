@@ -30,7 +30,7 @@ use app\modules\nhanvien\models\NhanVien;
         ]
     ]); ?>
 
-    <?= $form->field($model, 'vbden_so_den')->textInput() ?>
+    <?= $form->field($model, 'so_vao_so')->textInput() ?>
     <?= $form->field($model, 'vbden_nguoi_nhan')->dropDownList(
         NhanVien::getList(), 
             [

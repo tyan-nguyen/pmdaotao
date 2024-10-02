@@ -18,7 +18,7 @@ class VanBanSearch extends VanBan
     public function rules()
     {
         return [
-            [['id', 'id_loai_van_ban', 'vbden_so_den', 'vbden_nguoi_nhan', 'vbdi_so_luong_ban', 'nguoi_tao'], 'integer'],
+            [['id', 'id_loai_van_ban', 'so_vao_so', 'vbden_nguoi_nhan', 'vbdi_so_luong_ban', 'nguoi_tao'], 'integer'],
             [['so_vb', 'ngay_ky', 'trich_yeu', 'nguoi_ky', 'vbden_ngay_den', 'vbden_ngay_chuyen', 'vbdi_noi_nhan', 'vbdi_ngay_chuyen', 'ghi_chu', 'thoi_gian_tao'], 'safe'],
         ];
     }
@@ -56,7 +56,7 @@ class VanBanSearch extends VanBan
             'id_loai_van_ban' => $this->id_loai_van_ban,
             'ngay_ky' => $this->ngay_ky,
             'vbden_ngay_den' => $this->vbden_ngay_den,
-            'vbden_so_den' => $this->vbden_so_den,
+            'so_vao_so' => $this->so_vao_so,
             'vbden_nguoi_nhan' => $this->vbden_nguoi_nhan,
             'vbden_ngay_chuyen' => $this->vbden_ngay_chuyen,
             'vbdi_so_luong_ban' => $this->vbdi_so_luong_ban,

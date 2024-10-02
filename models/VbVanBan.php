@@ -14,7 +14,7 @@ use Yii;
  * @property string $trich_yeu
  * @property string $nguoi_ky
  * @property string|null $vbden_ngay_den
- * @property int|null $vbden_so_den
+ * @property int|null $so_vao_so
  * @property int|null $vbden_nguoi_nhan
  * @property string|null $vbden_ngay_chuyen
  * @property string|null $vbdi_noi_nhan
@@ -47,7 +47,7 @@ class VbVanBan extends \yii\db\ActiveRecord
     {
         return [
             [['id_loai_van_ban', 'so_vb', 'ngay_ky', 'trich_yeu', 'nguoi_ky'], 'required'],
-            [['id_loai_van_ban', 'vbden_so_den', 'vbden_nguoi_nhan', 'vbdi_so_luong_ban', 'nguoi_tao'], 'integer'],
+            [['id_loai_van_ban', 'so_vao_so', 'vbden_nguoi_nhan', 'vbdi_so_luong_ban', 'nguoi_tao'], 'integer'],
             [['ngay_ky', 'vbden_ngay_den', 'vbden_ngay_chuyen', 'vbdi_ngay_chuyen', 'thoi_gian_tao'], 'safe'],
             [['so_vb', 'trich_yeu', 'nguoi_ky', 'vbdi_noi_nhan', 'ghi_chu', 'so_loai_van_ban'], 'string', 'max' => 255],
             [['id_loai_van_ban'], 'exist', 'skipOnError' => true, 'targetClass' => VbDmLoaiVanBan::class, 'targetAttribute' => ['id_loai_van_ban' => 'id']],
@@ -68,7 +68,7 @@ class VbVanBan extends \yii\db\ActiveRecord
             'trich_yeu' => 'Trich Yeu',
             'nguoi_ky' => 'Nguoi Ky',
             'vbden_ngay_den' => 'Vbden Ngay Den',
-            'vbden_so_den' => 'Vbden So Den',
+            'so_vao_so' => 'Vbden So Den',
             'vbden_nguoi_nhan' => 'Vbden Nguoi Nhan',
             'vbden_ngay_chuyen' => 'Vbden Ngay Chuyen',
             'vbdi_noi_nhan' => 'Vbdi Noi Nhan',

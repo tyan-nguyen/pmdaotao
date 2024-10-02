@@ -15,24 +15,38 @@ return [
         // 'attribute'=>'id',
     // ],
     [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'nam',
+        'width'=> '200px',
+        'contentOptions'=>['style'=>'text-align:center;']
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'so_vao_so',
+        'width'=> '100px',
+        'contentOptions'=>['style'=>'text-align:center;']
+    ],
+    [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'id_loai_van_ban',
         'value' => function ($model) {
             return $model->loaiVanBan->ten_loai; 
         },
-        
+        'width'=> '200px',
     ],
     
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'so_vb',
+        'width'=> '200px',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'ngayKy',
+        'attribute'=>'ngay_ky',
         'value'=>function($model){
             return $model->ngayKy;
-        }
+        },
+        'width'=> '200px',
     ],
    // [
      //   'class'=>'\kartik\grid\DataColumn',
@@ -41,6 +55,7 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'nguoi_ky',
+        'width'=> '200px',
     ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
@@ -48,7 +63,7 @@ return [
     // ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'vbden_so_den',
+        // 'attribute'=>'so_vao_so',
     // ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',

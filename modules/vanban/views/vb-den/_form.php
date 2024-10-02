@@ -41,7 +41,8 @@ $currentYear = date('Y');
             ]);?>
          </div>
          <div class="col-lg-3 col-md-6">
-                <?= $form->field($model, 'so_vb')->textInput(['maxlength' => true,'oninput' => "if (!this.value.includes('/')) { this.value = '/' + '$currentYear'; }",]) ?>
+                <?php /* $form->field($model, 'so_vb')->textInput(['maxlength' => true,'oninput' => "if (!this.value.includes('/')) { this.value = '/' + '$currentYear'; }",]) */ ?>
+                <?= $form->field($model, 'so_vb')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-lg-3 col-md-6">
             <?= $form->field($model, 'ngay_ky')->widget(DatePicker::classname(), [
@@ -65,6 +66,15 @@ $currentYear = date('Y');
     
     <?php CardWidget::begin(['title'=>'Thông tin Lưu sổ văn bản']) ?>
     <div class="row">        
+    	<div class="col-lg-3 col-md-6">   
+    		<div style="width:49%;float:left;padding-right:1%;">        
+        		<?= $form->field($model, 'nam')->textInput(['value'=>($model->nam?$model->nam:date('Y'))])->label('Sổ VB') ?>
+        	</div> 
+        	<div style="width:50%;float:left;">   
+            	<?= $form->field($model, 'so_vao_so')->textInput() ?>
+            </div>
+        </div>  
+        
          <div class="col-lg-3 col-md-6">
             <?= $form->field($model, 'vbden_ngay_den')->widget(DatePicker::classname(), [
                 'options' => ['placeholder' => 'dd/mm/yyyy'],
@@ -74,10 +84,7 @@ $currentYear = date('Y');
                 ],
                 'removeButton'=>false
              ]); ?>
-        </div>
-        <div class="col-lg-3 col-md-6">
-            <?= $form->field($model, 'vbden_so_den')->textInput() ?>
-        </div>        
+        </div>      
 
     	<div class="col-lg-3 col-md-6">
             

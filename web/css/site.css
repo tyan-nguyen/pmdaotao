@@ -17,6 +17,22 @@ form div.required label.control-label:after {
 .data:hover{
 	color: #f6866a !important;
 }
+
+/** div scroll */
+.div-scroll{
+	overflow-x: hidden;
+	overflow-y:scroll;
+}
+.dh-500{
+	height:500px;
+}
+.dh-600{
+	height:600px;
+}
+.dh-700{
+	height:700px;
+}
+
 /*an add*/
 @media (max-width: 991px){
 .main-header-left.horizontal .main-logo .desktop-logo {
@@ -245,3 +261,14 @@ a.desc:after {
 	overflow-y: auto;
 }
 
+/** custom modal */
+#ajaxCrudModal .modal-body {
+    padding: 10px 20px;
+}
+#ajaxCrudModal .custom-card .card-body {
+    padding: 1rem 1rem;
+}
+#ajaxCrudModal .custom-card .card-header {
+	min-height: 3rem;
+    padding: .5rem 1rem;
+}

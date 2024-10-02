@@ -1,14 +1,15 @@
 <?php
 use yii\helpers\Html;
 use app\modules\kholuutru\models\File;
+use app\custom\CustomFunc;
 ?>
 <?php foreach ($files as $fileVB){ ?>
 <div id="dFile<?= $fileVB->id ?>" class="col-md-4">
-    <div class="card  custom-card">
-        <div class="card-body p-3">
+    <div class="card  custom-card mb-0">
+        <div class="card-body p-2">
             <div class="d-flex">
                 <span class="bg-primary-transparent border border-primary br-3 pd-5">
-                    <?= Html::img($fileVB ? File::getIcon($fileVB->file_type) : '', ['width'=>50]) ?>
+                    <?= Html::img($fileVB ? File::getIcon($fileVB->file_type) : '', ['width'=>35]) ?>
                 </span>
                 <div class="ms-auto mt-1 file-dropdown">
                     <a href="javascript:void(0);" class="text-muted" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fe fe-more-vertical fs-18"></i></a>
@@ -76,15 +77,20 @@ use app\modules\kholuutru\models\File;
                 </div>
             </div>
         </div>
-        <div class="card-footer border-top-0">
-            <div class="d-flex">
-                <div>
-                <h5 class="fs-11 text-muted"><?= $fileVB->file_name ?></h5>
-                    <p class="text-muted fs-13 mb-0"><?= $fileVB->file_display_name ?></p>
+        <div class="card-footer border-top-0 p-2 m-1">
+            <div class="d-flex row">
+                <div class="col-md-8">
+                	<?= Html::a('<h5 class="fs-11 text-muted">'. CustomFunc::getStringByChars($fileVB->file_name,40) . '</h5>',
+                            ['/kholuutru/file/download', 'id'=>$fileVB->id],
+                            [
+                                'target'=>'_blank',
+                            ],
+                        ) ?>  
                 </div>
-                <div class="ms-auto">
+                <div class="col-md-4">
                     <h6 class="fs-11 text-muted"><?= $fileVB->file_size ?></h6>
                 </div>
+                
             </div>
         </div>
     </div>

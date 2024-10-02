@@ -55,6 +55,36 @@ class CustomFunc
     }
     
     /**
+     * get string limit by char
+     */
+    public static function getStringByChars($string, $numChar){
+        if($string != '' && strlen($string) > $numChar){
+            $pos=strpos($string, ' ', $numChar);
+            return substr($string,0,$pos ) . ' ..';
+        } else {
+            return $string;
+        }
+    }
+    /**
+     * get string limit by char in file name & extension
+     */
+    public static function getStringByCharsForFileName($string, $numChar){
+        $strUse = explode('.', $string);
+        $str1 = $strUse[0];
+        $str2 = $strUse[1];
+        $strAfter = '';
+        if($str1 != null){
+            if(strlen($str1) > $numChar){
+                $pos=strpos($str1, ' ', $numChar);
+                $strAfter = substr($str1,0,$pos ) . '(..)';
+            } else {
+                $strAfter = $str1;
+            }
+        }
+        return $strAfter . '.' . $str2;
+    }
+    
+    /**
      * doc so tien thanh chu
      */
     function chuyenSoTienThanhChu($number) {

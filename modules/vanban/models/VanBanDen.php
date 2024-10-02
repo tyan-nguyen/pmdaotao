@@ -12,7 +12,7 @@ class VanBanDen extends VanBan
 {
     CONST MODEL_ID = 'VBDEN';
     public function getPubName(){
-        return $this->vbden_so_den;
+        return $this->so_vao_so;
     }
     
     public function beforeSave($insert) {
@@ -45,13 +45,13 @@ class VanBanDen extends VanBan
     public function rules()
     {
         return [
-            [['so_vb', 'nguoi_ky', 'ngay_ky', 'vbden_so_den', 'id_loai_van_ban'], 'required'],
-            [['id_loai_van_ban', 'vbden_so_den', 'vbden_nguoi_nhan', 'nguoi_tao'], 'integer'],
+            [['so_vb', 'nguoi_ky', 'ngay_ky', 'so_vao_so', 'id_loai_van_ban', 'nam'], 'required'],
+            [['id_loai_van_ban', 'so_vao_so', 'vbden_nguoi_nhan', 'nguoi_tao'], 'integer'],
             [['ngay_ky', 'vbden_ngay_den', 'vbden_ngay_chuyen', 'thoi_gian_tao'], 'safe'],
             [['so_vb', 'trich_yeu', 'nguoi_ky', 'ghi_chu', 'so_loai_van_ban'], 'string', 'max' => 255],
             [['id_loai_van_ban'], 'exist', 'skipOnError' => true, 'targetClass' => DmLoaiVanBan::class, 'targetAttribute' => ['id_loai_van_ban' => 'id']],
             [['vbden_nguoi_nhan'], 'exist', 'skipOnError' => true, 'targetClass' => NhanVien::class, 'targetAttribute' => ['vbden_nguoi_nhan' => 'id']],
-            [['vbden_so_den'], 'validateUniqueVbdenSoDen'],
+            [['so_vao_so'], 'validateUniqueVbdenSoDen'],
         ];
     }
     

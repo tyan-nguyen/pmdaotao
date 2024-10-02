@@ -29,7 +29,7 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'vbden_ngay_den') ?>
 
-    <?php // echo $form->field($model, 'vbden_so_den') ?>
+    <?php // echo $form->field($model, 'so_vao_so') ?>
 
     <?php // echo $form->field($model, 'vbden_nguoi_nhan') ?>
 

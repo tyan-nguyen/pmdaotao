@@ -21,7 +21,25 @@ use app\widgets\KhoDisplayWidget;
 				<div class="skill-tags">
 					<ul class="list-unstyled mb-0">
 						<li>Số văn bản: <?= $model->so_vb ?></li>
-						<li>Số văn bản: <?= $model->ngayKy ?></li>
+						<li>Ngày Ký: <?= $model->ngayKy ?></li>
+						<li>Người ký: <?= $model->nguoi_ky ?></li>
+						<li>Trích yếu: <?= $model->trich_yeu ?></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+		<div class="card custom-card">
+			<div class="card-header custom-card-header rounded-bottom-0">
+				<div>
+					<h6 class="card-title mb-0 ">Lưu sổ văn bản</h6>
+				</div>
+			</div>
+			<div class="card-body">
+				<div class="skill-tags">
+					<ul class="list-unstyled mb-0">
+						<li>Vào sổ VB: <?= $model->nam ?></li>
+						<li>Số vào sổ: <?= $model->ngayKy ?></li>
 						<li>Số văn bản: <?= $model->trich_yeu ?></li>
 					</ul>
 				</div>
@@ -37,27 +55,9 @@ use app\widgets\KhoDisplayWidget;
 			<div class="card-body">
 				<div class="skill-tags">
 					<ul class="list-unstyled mb-0">
-						<li>Số văn bản: <?= $model->so_vb ?></li>
-						<li>Số văn bản: <?= $model->ngayKy ?></li>
-						<li>Số văn bản: <?= $model->trich_yeu ?></li>
-					</ul>
-				</div>
-			</div>
-		</div>
-		
-		<div class="card custom-card">
-			<div class="card-header custom-card-header rounded-bottom-0">
-				<div>
-					<h6 class="card-title mb-0 ">Lưu sổ văn bản</h6>
-				</div>
-			</div>
-			<div class="card-body">
-				<div class="skill-tags">
-					<ul class="list-unstyled mb-0">
-						<li>Số văn bản: <?= $model->so_vb ?></li>
-						<li>Số văn bản: <?= $model->ngayKy ?></li>
-						<li>Số văn bản: <?= $model->trich_yeu ?></li>
-					</ul>
+    					<li>Người nhận: <?= $model->vbden_nguoi_nhan ?></li>
+    					<li>Ngày chuyển: <?= $model->vbden_ngay_chuyen ?></li>
+    				</ul>
 				</div>
 			</div>
 		</div>
@@ -84,7 +84,7 @@ use app\widgets\KhoDisplayWidget;
                 ],
     
                 
-                'vbden_so_den',
+                'so_vao_so',
                 'vbden_nguoi_nhan',
                 'vbden_ngay_chuyen' => [
                     'attribute' => 'vbden_ngay_chuyen',
@@ -109,7 +109,7 @@ use app\widgets\KhoDisplayWidget;
         ],
 
             
-            'vbden_so_den',
+            'so_vao_so',
             'vbden_nguoi_nhan',
             'vbden_ngay_chuyen' => [
                 'attribute' => 'vbden_ngay_chuyen',
@@ -130,17 +130,38 @@ use app\widgets\KhoDisplayWidget;
     </div>
     
     <div class="col-md-8">
-        <?= FileDisplayWidget::widget([
-            'type'=>'ALL',
-            'doiTuong'=>VanBanDen::MODEL_ID,
-            'idDoiTuong'=>$model->id,
-        ])?>
-        
-        <?= KhoDisplayWidget::widget([
-            'doiTuong' => VanBanDen::MODEL_ID,
-            'idDoiTuong' => $model->id
-        ]) ?>
-                        
+    
+    
+    <div class="card-body p-0">
+		<div class="panel panel-primary">
+			<div class="tab-menu-heading tab-menu-heading-boxed">
+				<div class="tabs-menu-boxed">
+					<!-- Tabs -->
+					<ul class="nav panel-tabs" role="tablist">
+						<li><a href="#tabFile" class="active" data-bs-toggle="tab" aria-selected="true" role="tab" tabindex="-1">Tệp tin</a></li>
+						<li><a href="#tabKho" data-bs-toggle="tab" aria-selected="false" role="tab" class="" tabindex="-1">Lưu trữ</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="panel-body tabs-menu-body ps">
+				<div class="tab-content">
+					<div class="tab-pane active show" id="tabFile" role="tabpanel">
+						<?= FileDisplayWidget::widget([
+                            'type'=>'LOAIHOSO',
+                            'doiTuong'=>VanBanDen::MODEL_ID,
+                            'idDoiTuong'=>$model->id,
+                        ])?>
+					</div>
+					<div class="tab-pane" id="tabKho" role="tabpanel">						
+                         <?= KhoDisplayWidget::widget([
+                            'doiTuong' => VanBanDen::MODEL_ID,
+                            'idDoiTuong' => $model->id
+                        ]) ?>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>          
     </div>
 
 

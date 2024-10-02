@@ -111,11 +111,11 @@ class VbDenController extends Controller
     {
         $request = Yii::$app->request;
         $model = new VanBanDen();  
-        $maxSoDen = VanBanDen::find()->max('vbden_so_den');
-        $model->vbden_so_den = $maxSoDen ? $maxSoDen + 1 : 1;
-        $currentYear = date('Y');
+        $maxSoDen = VanBanDen::find()->max('so_vao_so');
+        $model->so_vao_so = $maxSoDen ? $maxSoDen + 1 : 1;
+        //$currentYear = date('Y');
         // Thiết lập giá trị mặc định cho 'so_vb'
-        $model->so_vb = "/$currentYear";    
+        //$model->so_vb = "/$currentYear";    
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){

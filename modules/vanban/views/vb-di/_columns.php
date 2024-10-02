@@ -45,7 +45,7 @@ return [
     // ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'vbden_so_den',
+        // 'attribute'=>'so_vao_so',
     // ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',

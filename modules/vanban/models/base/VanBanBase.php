@@ -16,7 +16,7 @@ use app\custom\CustomFunc;
  * @property string $trich_yeu
  * @property string $nguoi_ky
  * @property string|null $vbden_ngay_den
- * @property int|null $vbden_so_den
+ * @property int|null $so_vao_so
  * @property int|null $vbden_nguoi_nhan
  * @property string|null $vbden_ngay_chuyen
  * @property string|null $vbdi_noi_nhan
@@ -58,7 +58,7 @@ class VanBanBase extends \app\models\VbVanBan
     {
         return [
             [['so_vb', 'nguoi_ky','ngay_ky'], 'required'],
-            [['id_loai_van_ban', 'vbden_so_den', 'vbden_nguoi_nhan', 'vbdi_so_luong_ban', 'nguoi_tao'], 'integer'],
+            [['id_loai_van_ban', 'so_vao_so', 'vbden_nguoi_nhan', 'vbdi_so_luong_ban', 'nguoi_tao', 'nam'], 'integer'],
             [['ngay_ky', 'vbden_ngay_den', 'vbden_ngay_chuyen', 'vbdi_ngay_chuyen', 'thoi_gian_tao'], 'safe'],
             [['so_vb', 'trich_yeu', 'nguoi_ky', 'vbdi_noi_nhan', 'ghi_chu','so_loai_van_ban'], 'string', 'max' => 255],
             [['so_loai_van_ban'], 'string', 'max'=>20],
@@ -77,7 +77,7 @@ class VanBanBase extends \app\models\VbVanBan
             'trich_yeu' => 'Trích yếu',
             'nguoi_ky' => 'Người ký',
             'vbden_ngay_den' => 'Ngày đến',
-            'vbden_so_den' => 'Số đến',
+            'so_vao_so' => 'Số vào sổ',
             'vbden_nguoi_nhan' => 'Người nhận',
             'vbden_ngay_chuyen' => 'Ngày chuyển',
             'vbdi_noi_nhan' => 'Nơi nhận',
@@ -87,6 +87,7 @@ class VanBanBase extends \app\models\VbVanBan
             'nguoi_tao' => 'Người tạo',
             'thoi_gian_tao' => 'Thời gian tạo',
             'so_loai_van_ban' => 'Loại sổ văn bản',//phân biệt văn bản đến hoặc đi
+            'nam'=>'Sổ văn bản'
         ];
     }
     
@@ -97,8 +98,11 @@ class VanBanBase extends \app\models\VbVanBan
         if ($this->isNewRecord) {
             $this->nguoi_tao = Yii::$app->user->identity->id;
             $this->thoi_gian_tao = date('Y-m-d H:i:s');
-            $this->nam = date('Y'); 
+            if($this->nam == NULL){
+                $this->nam = date('Y'); 
+            }
         }
+        
         if($this->ngay_ky != null){
             $this->ngay_ky = CustomFunc::convertDMYToYMD($this->ngay_ky);
         }

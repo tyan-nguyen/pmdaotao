@@ -30,7 +30,7 @@ class FileDisplayWidget extends Widget{
             'doiTuong'=>$this->doiTuong,
             'idDoiTuong'=>$this->idDoiTuong,
         ]);
-        $html = '<div id="blockVanBan' . $this->idDoiTuong . '">';
+        $html = '<div id="blockVanBan' . $this->idDoiTuong . '" class="">';
         if($this->type == 'ALL'){
             $html .= FileDisplayAllWidget::widget([
                 'doiTuong'=>$this->doiTuong,

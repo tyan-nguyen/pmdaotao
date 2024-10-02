@@ -65,6 +65,11 @@ $currentYear = date('Y');
 
       <?php CardWidget::begin(['title'=>'Thông tin Lưu sổ văn bản']) ?>
         <div class="row">
+        	
+        	<div class="col-lg-3 col-md-6">
+                <?= $form->field($model, 'nam')->textInput() ?>
+            </div>
+            
             <div class="col-lg-3 col-md-6">
                 <?= $form->field($model, 'vbdi_noi_nhan')->textInput() ?>
             </div>
