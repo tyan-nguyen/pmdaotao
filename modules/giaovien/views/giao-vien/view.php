@@ -30,36 +30,8 @@ use app\modules\giaovien\models\GiaoVien;
 								    </div>
 						    </div>
 	</div>
-    <div class="card custom-card">
-				<div class="card-header custom-card-header rounded-bottom-0">
-					<div>
-						<h6 class="card-title mb-0 "style="color: red;">Thông tin công việc: </h6>
-					</div>
-			    </div>
-							<div class="card-body">
-									<div class="skill-tags">
-                                    <p><strong>Phòng:</strong> <?= $model->phongBan ? $model->phongBan->ten_phong_ban : 'Chưa có phòng ban' ?></p>
-                                    <p><strong>Tổ:</strong> <?= $model->to ? $model->to->ten_to : 'Chưa có tổ'?></p>
-                                        <p><strong>Chức vụ:</strong> <?= $model->chuc_vu?></p>
-                                        <p><strong>Vị trí công việc:</strong> <?= $model->vi_tri_cong_viec?></p>
-                                        <p><strong>Trạng thái:</strong> <?= $model->trang_thai ?></p>
-                                      
-								    </div>
-						    </div>
-	</div>
-    <div class="card custom-card">
-				<div class="card-header custom-card-header rounded-bottom-0">
-					<div>
-						<h6 class="card-title mb-0 " style="color:red;">Thông tin chuyên môn: </h6>
-					</div>
-			    </div>
-							<div class="card-body">
-									<div class="skill-tags">
-                                        <p><strong>Trình độ:</strong> <?= $model->trinh_do ?></p>
-                                        <p><strong>Kinh nghiệm làm việc:</strong> <br> <?= $model->kinh_nghiem_lam_viec ?></p> 
-								    </div>
-						    </div>
-	</div>
+    
+    
 </div>
 
 
@@ -68,6 +40,9 @@ use app\modules\giaovien\models\GiaoVien;
         <div class="card custom-card">
             <div class="card-header custom-card-header rounded-bottom-0">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="add-detail-tab" data-bs-toggle="tab" href="#add-detail" role="tab" aria-controls="add-detail" aria-selected="false"style="color: blue;"><i class="fa fa-address-card"></i> Thông tin chi tiết</a>
+                    </li>
                     <li class="nav-item" role="presentation">
                         <a class="nav-link" id="add-document-tab" data-bs-toggle="tab" href="#add-document" role="tab" aria-controls="add-student" aria-selected="false"style="color: blue;"><i class="fa fa-file"></i> Hồ sơ</a>
                     </li>
@@ -99,13 +74,18 @@ use app\modules\giaovien\models\GiaoVien;
 
 
                              <div class="tab-pane fade" id="add-phancong" role="tabpanel" aria-labelledby="add-phancong-tab">
-                                    <!-- Nội dung hiển thị khi click vào "Hồ sơ nhân viên " -->
+                                    <!-- Nội dung hiển thị khi click vào "Phân công dạy " -->
                                    <?= $this->render('phan_cong_day', ['model' => $model]) ?>
                              </div>
 
                              <div class="tab-pane fade" id="add-lichday" role="tabpanel" aria-labelledby="add-lichday-tab">
-                                    <!-- Nội dung hiển thị khi click vào "Hồ sơ nhân viên " -->
+                                    <!-- Nội dung hiển thị khi click vào "Lịch dạy " -->
                                    <p> Lịch dạy sẽ hiển thị tại đây </p>
+                                
+                             </div>
+                             <div class="tab-pane fade" id="add-detail" role="tabpanel" aria-labelledby="add-detail-tab">
+                                    <!-- Nội dung hiển thị khi click vào "Thông tin chi tiết " -->
+                                    <?= $this->render('tt_chitiet', ['model' => $model]) ?>
                                 
                              </div>
                         </div>

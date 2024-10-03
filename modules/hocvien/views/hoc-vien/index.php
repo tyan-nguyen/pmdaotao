@@ -1,5 +1,5 @@
 <?php
-use yii\helpers\Url;
+use yii\widgets\LinkPager;
 use yii\bootstrap5\Html;
 use yii\bootstrap5\Modal;
 use kartik\grid\GridView;
@@ -45,13 +45,15 @@ Yii::$app->params['showExport'] = true;
                     //'{toggleData}'.
                     '{export}'
                 ],
-            ],  
+            ], 
+          
                
             'striped' => false,
             'condensed' => true,
             'responsive' => true,
             'panelHeadingTemplate'=>'{title}',
             'panelFooterTemplate'=>'{summary}',
+          
             'summary'=>'Hiển thị dữ liệu {count}/{totalCount}, Trang {page}/{pageCount}',          
             'panel' => [
                 'type' => 'white', 
@@ -75,8 +77,10 @@ Yii::$app->params['showExport'] = true;
             ]
           
         ])?>
+         
     </div>
     
+                   
 </div>
 
 <?php Pjax::end(); ?>
@@ -112,3 +116,14 @@ Yii::$app->params['showExport'] = true;
     $searchContent = $this->render("_search", ["model" => $searchModel]);
     echo FilterFormWidget::widget(["content"=>$searchContent, "description"=>"Nhập thông tin tìm kiếm."]) 
 ?>
+<div class='row'>
+    <div class="col-md-12">
+  <?= LinkPager::widget([
+                'pagination' => $pagination,
+                'options' => ['class' => 'pagination justify-content-center'],
+                'linkContainerOptions' => ['class' => 'page-item'],
+                'linkOptions' => ['class' => 'page-link'],
+                'disabledListItemSubTagOptions' => ['class' => 'page-link disabled'],
+            ]) ?>
+    </div>
+</div>            
