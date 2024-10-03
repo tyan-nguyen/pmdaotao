@@ -54,6 +54,19 @@ class VanBan extends VanBanBase
     {
         return $this->hasOne(NhanVien::class, ['id' => 'vbden_nguoi_nhan']);
     }
+    
+    /**
+     * get list so van ban
+     */
+    public function getListSo(){
+        $nam = array();
+        $yearStart = 2022;
+        $yearEnd = date('Y');
+        for($i=$yearEnd; $i>= $yearStart; $i--){
+            $nam[$i] = $i;
+        }
+        return $nam;
+    }
    
     
    

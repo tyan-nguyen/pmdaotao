@@ -28,7 +28,7 @@ class VbDiController extends Controller
         $searchModel = new VbDiSearch();
     
         // Giá trị 'so_loai_van_ban' cần lọc
-        $soLoaiVanBanFilter = 'VB_DI'; 
+        $soLoaiVanBanFilter = VanBanDi::MODEL_ID;
     
         if (isset($_POST['search']) && $_POST['search'] != null) {
             $dataProvider = $searchModel->search(Yii::$app->request->post(), $_POST['search']);
@@ -88,8 +88,11 @@ class VbDiController extends Controller
         $request = Yii::$app->request;
         $model = new VanBanDi();  
         $currentYear = date('Y');
+        $nam = $model->nam?$model->nam:date('Y');
+        $maxSoVaoSo = VanBanDi::find()->where(['nam'=>$nam, 'so_loai_van_ban'=>VanBanDi::MODEL_ID])->max('so_vao_so');
+        $model->so_vao_so = $maxSoVaoSo ? $maxSoVaoSo + 1 : 1;
         // Thiết lập giá trị mặc định cho 'so_vb'
-        $model->so_vb = "/$currentYear";    
+        //$model->so_vb = "/$currentYear";    
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){

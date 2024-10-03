@@ -42,7 +42,6 @@ class ViboonAsset extends AssetBundle
         'assets/plugins/fullcalendar/fullcalendar.min.js',
         'assets/plugins/fullcalendar/locales/vi.js',
         //'assets/js/fullcalendar.js',
-        
         'assets/js/custom.js',
         //'assets/js/custom-switcher.js',
         //'assets/switcher/js/switcher.js',        
@@ -54,6 +53,7 @@ class ViboonAsset extends AssetBundle
         'js/ModalRemote.js?v=2',
         'js/ajaxcrud.js?v=2',        
         'js/custom.js',
+        'js/tinymce/tinymce_5.10.7.min.js'
         //'assets/plugins/tabs/jquery.multipurpose_tabcontent.js',
         //'assets/plugins/tabs/tab-content.js'
     ];

@@ -6,6 +6,8 @@ use Yii;
 use app\modules\vanban\models\DmLoaiVanBan;
 use app\modules\nhanvien\models\NhanVien;
 use app\custom\CustomFunc;
+use app\modules\vanban\models\VanBanDen;
+use app\modules\vanban\models\VanBanDi;
 /**
  * This is the model class for table "van_ban".
  *
@@ -34,8 +36,6 @@ use app\custom\CustomFunc;
  */
 class VanBanBase extends \app\models\VbVanBan
 {
-    CONST VBDEN_VALUE = 'VB_DEN';
-    CONST VBDI_VALUE = 'VB_DI';
     CONST VBDEN_LABEL = 'Văn bản đến';
     CONST VBDI_LABEL = 'Văn bản đi';
     
@@ -43,9 +43,9 @@ class VanBanBase extends \app\models\VbVanBan
      * lấy label cho loại sổ văn bản (đến/đi)
      */
     public function getLoaiSoVBLabel(){
-        if($this->so_loai_van_ban == $this::VBDEN_VALUE)
+        if($this->so_loai_van_ban == VanBanDen::MODEL_ID)
             return $this::VBDEN_LABEL;
-        else if($this->so_loai_van_ban == $this::VBDI_VALUE)
+        else if($this->so_loai_van_ban == VanBanDi::MODEL_ID)
             return $this::VBDI_LABEL;
         else 
             return null;
@@ -81,7 +81,7 @@ class VanBanBase extends \app\models\VbVanBan
             'vbden_nguoi_nhan' => 'Người nhận',
             'vbden_ngay_chuyen' => 'Ngày chuyển',
             'vbdi_noi_nhan' => 'Nơi nhận',
-            'vbdi_so_luong_ban' => 'Số lượng bản',
+            'vbdi_so_luong_ban' => 'Số bản',
             'vbdi_ngay_chuyen' => 'Ngày chuyển',
             'ghi_chu' => 'Ghi chú',
             'nguoi_tao' => 'Người tạo',

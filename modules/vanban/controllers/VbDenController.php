@@ -11,6 +11,7 @@ use yii\filters\VerbFilter;
 use \yii\web\Response;
 use yii\helpers\Html;
 use yii\filters\AccessControl;
+use app\modules\vanban\models\VanBanDi;
 
 /**
  * VbDenController implements the CRUD actions for VanBanDen model.
@@ -50,7 +51,7 @@ class VbDenController extends Controller
         $searchModel = new VBDenSearch();
     
         // Giá trị 'so_loai_van_ban' cần lọc
-        $soLoaiVanBanFilter = 'VB_DEN'; // Giá trị cụ thể cần lọc
+        $soLoaiVanBanFilter = VanBanDi::MODEL_ID; // Giá trị cụ thể cần lọc
     
         if (isset($_POST['search']) && $_POST['search'] != null) {
             $dataProvider = $searchModel->search(Yii::$app->request->post(), $_POST['search']);
@@ -111,7 +112,8 @@ class VbDenController extends Controller
     {
         $request = Yii::$app->request;
         $model = new VanBanDen();  
-        $maxSoDen = VanBanDen::find()->max('so_vao_so');
+        $nam = $model->nam?$model->nam:date('Y');
+        $maxSoDen = VanBanDen::find()->where(['nam'=>$nam, 'so_loai_van_ban'=>VanBanDen::MODEL_ID])->max('so_vao_so');
         $model->so_vao_so = $maxSoDen ? $maxSoDen + 1 : 1;
         //$currentYear = date('Y');
         // Thiết lập giá trị mặc định cho 'so_vb'

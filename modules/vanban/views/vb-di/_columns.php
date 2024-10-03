@@ -15,6 +15,18 @@ return [
         // 'attribute'=>'id',
     // ],
     [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'nam',
+        'width'=> '200px',
+        'contentOptions'=>['style'=>'text-align:center;']
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'so_vao_so',
+        'width'=> '100px',
+        'contentOptions'=>['style'=>'text-align:center;']
+    ],
+    [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'id_loai_van_ban',
         'value' => function ($model) {
@@ -23,6 +35,11 @@ return [
         
     ],
     
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'so_vb',
+        'width'=> '200px',
+    ],
 
     [
         'class'=>'\kartik\grid\DataColumn',
@@ -95,7 +112,7 @@ return [
             'class'=>'btn ripple btn-primary btn-sm',
             'data-bs-placement'=>'top',
             'data-bs-toggle'=>'tooltip-primary'],
-        'updateOptions'=>['role'=>'modal-remote-2','title'=>'Cập nhật dữ liệu', 
+        'updateOptions'=>['role'=>'modal-remote','title'=>'Cập nhật dữ liệu', 
             'class'=>'btn ripple btn-info btn-sm',
             'data-bs-placement'=>'top',
             'data-bs-toggle'=>'tooltip-info'],

@@ -1,5 +1,4 @@
 <?php
-use yii\helpers\Url;
 use yii\bootstrap5\Html;
 use yii\bootstrap5\Modal;
 use kartik\grid\GridView;
@@ -14,12 +13,9 @@ use app\widgets\FilterFormWidget;
 
 $this->title = 'Văn bản đến';
 $this->params['breadcrumbs'][] = $this->title;
-
 //CrudAsset::register($this);
-
 Yii::$app->params['showSearch'] = true;
 Yii::$app->params['showExport'] = true;
-
 ?>
 
 <?php Pjax::begin([

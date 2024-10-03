@@ -18,6 +18,14 @@ use app\modules\nhanvien\models\NhanVien;
 
     <?= $form->field($model, 'id_loai_van_ban')->dropDownList(LoaiVanBan::getList(), ['prompt'=>'Chọn loại văn bản']) ?>
     
+    <?= $form->field($model, 'nam')->dropDownList($model->getListSo(), [
+	    'prompt'=>'Chọn sổ VB'
+	]) ?>
+	
+    <?= $form->field($model, 'so_vao_so')->textInput() ?>
+    
+    <?= $form->field($model, 'so_vb')->textInput() ?>
+    
     <?= $form->field($model, 'vbden_ngay_den')->widget(DatePicker::classname(), [
         'options' => ['placeholder' => 'Chọn ngày đến ...'],
         'pluginOptions' => [
@@ -25,9 +33,6 @@ use app\modules\nhanvien\models\NhanVien;
             'format' => 'dd/mm/yyyy', // Đảm bảo khớp với định dạng trong CSDL
         ]
     ]); ?>
-
-
-    <?= $form->field($model, 'so_vao_so')->textInput() ?>
 
     <?= $form->field($model, 'vbden_nguoi_nhan')->dropDownList(
         NhanVien::getList(), 

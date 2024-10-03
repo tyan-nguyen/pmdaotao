@@ -22,6 +22,14 @@ use app\modules\nhanvien\models\NhanVien;
 
     <?= $form->field($model, 'id_loai_van_ban')->dropDownList(LoaiVanBan::getList(), ['prompt'=>'Chọn loại văn bản']) ?>
     
+    <?= $form->field($model, 'nam')->dropDownList($model->getListSo(), [
+	    'prompt'=>'Chọn sổ VB'
+	]) ?>
+	
+    <?= $form->field($model, 'so_vao_so')->textInput() ?>
+    
+    <?= $form->field($model, 'so_vb')->textInput() ?>
+    
     <?= $form->field($model, 'nguoi_ky')->textInput() ?>
   
     <?= $form->field($model, 'vbdi_noi_nhan')->textInput() ?>
@@ -32,7 +40,7 @@ use app\modules\nhanvien\models\NhanVien;
             'autoclose' => true,
             'format' => 'dd/mm/yyyy',
         ]
-        ]); ?>
+    ]); ?>
 
   
 	<?php if (!Yii::$app->request->isAjax){ ?>

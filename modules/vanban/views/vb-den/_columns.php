@@ -40,6 +40,7 @@ return [
         'attribute'=>'so_vb',
         'width'=> '200px',
     ],
+    
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ngay_ky',

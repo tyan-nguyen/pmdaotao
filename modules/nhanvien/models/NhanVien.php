@@ -54,5 +54,9 @@ class NhanVien extends NhanVienBase
         }
         return parent::beforeSave($insert);
     }
+    public static function getTenNhanVienByID($id){
+        $model = NhanVien::findOne($id);
+        return $model?$model->ho_ten:'-';
+    }
 
 }

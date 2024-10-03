@@ -45,7 +45,7 @@ class VanBanDen extends VanBan
     public function rules()
     {
         return [
-            [['so_vb', 'nguoi_ky', 'ngay_ky', 'so_vao_so', 'id_loai_van_ban', 'nam'], 'required'],
+            [['nguoi_ky', 'ngay_ky', 'so_vao_so', 'id_loai_van_ban', 'nam'], 'required'],
             [['id_loai_van_ban', 'so_vao_so', 'vbden_nguoi_nhan', 'nguoi_tao'], 'integer'],
             [['ngay_ky', 'vbden_ngay_den', 'vbden_ngay_chuyen', 'thoi_gian_tao'], 'safe'],
             [['so_vb', 'trich_yeu', 'nguoi_ky', 'ghi_chu', 'so_loai_van_ban'], 'string', 'max' => 255],
@@ -59,6 +59,7 @@ class VanBanDen extends VanBan
     {
         $query = self::find()->where([$attribute => $this->$attribute]);
         if (!$this->isNewRecord) {
+            $query->andFilterWhere(['so_loai_van_ban'=>VanBanDen::MODEL_ID, 'nam'=>$this->nam]);
             $query->andWhere(['<>', 'id', $this->id]);
         }
         $existingRecord = $query->exists();

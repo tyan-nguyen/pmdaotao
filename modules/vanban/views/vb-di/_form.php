@@ -41,7 +41,10 @@ $currentYear = date('Y');
             ]);?>
          </div>
         <div class="col-lg-3 col-md-6">
-            <?= $form->field($model, 'so_vb')->textInput(['maxlength' => true,'oninput' => "if (!this.value.includes('/')) { this.value = '/' + '$currentYear'; }",]) ?>
+            <?php /* $form->field($model, 'so_vb')->textInput(['maxlength' => true,'oninput' => "if (!this.value.includes('/')) { this.value = '/' + '$currentYear'; }",]) */ ?>
+            
+            <?= $form->field($model, 'so_vb')->textInput(['maxlength' => true]) ?>
+            
         </div>
      
       
@@ -58,7 +61,7 @@ $currentYear = date('Y');
                  <?= $form->field($model, 'nguoi_ky')->textInput(['maxlength' => true, 'class' => 'form-control']) ?>
         </div>
         <div class="col-md-12"> 
-            <?= $form->field($model, 'trich_yeu')->textarea(['rows' => 5]) ?>
+            <?= $form->field($model, 'trich_yeu')->textarea(['rows' => 3]) ?>
         </div>
       </div>
       <?php CardWidget::end() ?>
@@ -66,18 +69,17 @@ $currentYear = date('Y');
       <?php CardWidget::begin(['title'=>'Thông tin Lưu sổ văn bản']) ?>
         <div class="row">
         	
-        	<div class="col-lg-3 col-md-6">
-                <?= $form->field($model, 'nam')->textInput() ?>
-            </div>
-            
-            <div class="col-lg-3 col-md-6">
-                <?= $form->field($model, 'vbdi_noi_nhan')->textInput() ?>
-            </div>
-       
-     
-            <div class="col-lg-3 col-md-6">
-                <?= $form->field($model, 'vbdi_so_luong_ban')->textInput() ?>
-            </div>
+        	<div class="col-lg-3 col-md-6">   
+        		<div style="width:32%;float:left;padding-right:1%;">        
+            		<?= $form->field($model, 'nam')->dropDownList($model->getListSo()) ?>
+            	</div> 
+            	<div style="width:32%;float:left;padding-right:1%;">   
+                	<?= $form->field($model, 'so_vao_so')->textInput() ?>
+                </div>
+                <div style="width:33%;float:left;">   
+                	<?= $form->field($model, 'vbdi_so_luong_ban')->textInput() ?>
+                </div>
+        	</div>  
             <div class="col-lg-3 col-md-6">
                 <?= $form->field($model, 'vbdi_ngay_chuyen')->widget(DatePicker::classname(), [
                     'options' => ['placeholder' => 'Chọn ngày chuyển  ...'],
@@ -87,12 +89,18 @@ $currentYear = date('Y');
                      ]
                  ]); ?>
             </div>
-      
-    
-            <div class="col-md-12">
-                <?= $form->field($model, 'ghi_chu')->textarea(['rows' => 5]) ?>
+      		
+      		
+         </div>
+         <div class="row">
+         	<div class="col-md-6">
+                <?= $form->field($model, 'vbdi_noi_nhan')->textarea(['id'=>'txtNoiNhan','rows' => 3]) ?>
             </div>
-                </div>
+    
+            <div class="col-md-6">
+                <?= $form->field($model, 'ghi_chu')->textarea(['id'=>'txtGhiChu','rows' => 3]) ?>
+            </div>
+         </div>
         <?php CardWidget::end() ?>
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">
@@ -109,3 +117,29 @@ $currentYear = date('Y');
 }
 
 </style>
+<script>
+tinyMCE.remove();
+tinymce.init({
+	branding: false,
+  selector: 'textarea#txtNoiNhan,textarea#txtGhiChu',
+  height: 100,
+  menubar: false,
+  plugins: [
+    'advlist autolink lists link image charmap print preview anchor',
+    'searchreplace visualblocks code fullscreen',
+    'insertdatetime media table paste code help wordcount'
+  ],
+  toolbar: false,
+  statusbar: false,
+  /* toolbar: 'bold italic backcolor | alignleft aligncenter ' +
+  'alignright alignjustify | bullist numlist outdent indent | ' +
+  'removeformat | help', */
+  content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+  setup: function (editor) {
+	    editor.on('change', function () {
+	        tinymce.triggerSave();
+	    });
+	}
+});
+//tinyMCE.triggerSave();
+</script>
