@@ -1,6 +1,6 @@
 <?php
 use yii\helpers\Url;
-
+use yii\bootstrap5\Html;
 return [
     [
         'class' => 'kartik\grid\CheckboxColumn',
@@ -59,17 +59,31 @@ return [
     // ],
     [
         'class' => 'kartik\grid\ActionColumn',
+        'template' => '{adduser} {view} {update} {delete} ',
         'dropdown' => false,
         'vAlign'=>'middle',
         'width' => '200px',
         'urlCreator' => function($action, $model, $key, $index) { 
                 return Url::to([$action,'id'=>$key]);
         },
+            // Đặt buttons bên trong cấu hình của ActionColumn
+            'buttons' => [
+                'adduser' => function($url, $model, $key) {
+                    return Html::a('<i class="fa fa-user-plus"></i>', $url, [
+                        'title' => 'Thêm Học viên',
+                        'role' => 'modal-remote',
+                        'class' => 'btn ripple btn-warning btn-sm',
+                        'style' => 'width: 30px; text-align: center;',
+                        'data-bs-placement' => 'top',
+                        'data-bs-toggle' => 'tooltip-warning',
+                    ]);
+                }
+            ],
         'viewOptions'=>['role'=>'modal-remote','title'=>'View','title'=>'Xem thông tin',
             'class'=>'btn ripple btn-primary btn-sm',
             'data-bs-placement'=>'top',
             'data-bs-toggle'=>'tooltip-primary'],
-        'updateOptions'=>['role'=>'modal-remote-2','title'=>'Cập nhật dữ liệu', 
+        'updateOptions'=>['role'=>'modal-remote','title'=>'Cập nhật dữ liệu', 
             'class'=>'btn ripple btn-info btn-sm',
             'data-bs-placement'=>'top',
             'data-bs-toggle'=>'tooltip-info'],

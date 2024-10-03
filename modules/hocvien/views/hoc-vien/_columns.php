@@ -91,7 +91,7 @@ return [
             'data-bs-toggle' => 'tooltip-primary'
         ],
         'updateOptions' => [
-            'role' => 'modal-remote-2',
+            'role' => 'modal-remote',
             'title' => 'Cập nhật dữ liệu',
             'class' => 'btn ripple btn-info btn-sm',
             'data-bs-placement' => 'top',

@@ -56,13 +56,24 @@ class HocVienController extends Controller
     public function actionIndex()
     {    
         $searchModel = new HocVienSearch();
+        
+        // Tạo ActiveDataProvider với phân trang
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        
+        // Lọc theo trạng thái học viên 'NHAP_HOC' và 'NHAPTRUCTIEP'
         $dataProvider->query->andWhere(['trang_thai' => ['NHAP_HOC','NHAPTRUCTIEP']]);
+    
+        // Cấu hình phân trang (nếu cần)
+         $pagination = $dataProvider->getPagination();
+         $pagination->pageSize = 20;
+    
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'pagination'=>$pagination,
         ]);
     }
+    
 
 
     /**
