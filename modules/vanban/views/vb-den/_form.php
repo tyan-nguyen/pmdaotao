@@ -156,21 +156,24 @@ $currentYear = date('Y');
 }
 
 </style>
+
 <script>
 tinyMCE.remove();
 tinymce.init({
 	branding: false,
   selector: 'textarea#txtGhiChu',
-  height: 150,
+  height: 100,
   menubar: false,
   plugins: [
     'advlist autolink lists link image charmap print preview anchor',
     'searchreplace visualblocks code fullscreen',
     'insertdatetime media table paste code help wordcount'
   ],
-  toolbar: 'bold italic backcolor | alignleft aligncenter ' +
+  toolbar: false,
+  statusbar: false,
+  /* toolbar: 'bold italic backcolor | alignleft aligncenter ' +
   'alignright alignjustify | bullist numlist outdent indent | ' +
-  'removeformat | help',
+  'removeformat | help', */
   content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
   setup: function (editor) {
 	    editor.on('change', function () {
