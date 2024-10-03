@@ -13,27 +13,24 @@ use app\widgets\CardWidget;
  	<div class="col-md-4">
  
 		<?php CardWidget::begin(['title'=>'Thông tin văn bản']) ?>
-			<ul class="list-unstyled mb-0">
-				<li>Loai văn bản: <?= $model->so_loai_van_ban ?></li>
-				<li>Ngày ký: <?= $model->ngayKy ?></li>
-				<li>Trích yếu: <?= $model->trich_yeu ?></li>
-			</ul>
-		<?php CardWidget::end() ?>
-
-		<?php CardWidget::begin(['title'=>'Chuyển xử lý']) ?>
-			<ul class="list-unstyled mb-0">
-				<li>Người ký: <?= $model->nguoi_ky ?></li>
-				<li>Nơi nhận: <?= $model->vbdi_noi_nhan ?></li>
-				<li>Số lượng bản: <?= $model->vbdi_so_luong_ban ?></li>
-			</ul>
-		<?php CardWidget::end() ?>
-
-		<?php CardWidget::begin(['title'=>'Lưu sổ văn bản']) ?>
-			<ul class="list-unstyled mb-0">
+			<ul class="list-unstyled mb-0">				
 				<li>Số văn bản: <?= $model->so_vb ?></li>
-				<li>Ngày chuyển: <?= $model->VbdiNC?></li>
-				<li>Ghi chú: <?= $model->ghi_chu ?></li>
+        		<li>Loại VB: <?= $model->loaiVanBan->ten_loai ?></li>
+        		<li>Ngày Ký: <?= $model->ngayKy ?></li>
+        		<li>Người ký: <?= $model->nguoi_ky ?></li>
+        		<li>Trích yếu: <?= $model->trich_yeu ?></li>    
+        		<li>Số lượng bản: <?= $model->vbdi_so_luong_ban ?></li>		
+        		<li>Nơi nhận: <?= $model->vbdi_noi_nhan ?></li>
 			</ul>
+		<?php CardWidget::end() ?>
+		
+		<?php CardWidget::begin(['title'=>'Vào sổ VB']) ?>
+		<ul class="list-unstyled mb-0">
+			<li>Vào sổ VB: <?= $model->nam ?></li>
+			<li>Số vào sổ: <?= $model->so_vao_so ?></li>
+			<li>Ghi chú: <?= $model->ghi_chu ?></li>
+			<li>Ngày chuyển: <?= $model->VbdiNC?></li>
+		</ul>
 		<?php CardWidget::end() ?>
     </div>
     
