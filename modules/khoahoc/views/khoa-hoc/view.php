@@ -50,7 +50,7 @@ use app\widgets\KhoDisplayWidget;
                       <div class="skill-tags">
                         <div class="tab-content" id="myTabContent">
                         <!-- Nội dung Danh sách lớp -->
-                            <div class="tab-pane fade show active" id="list" role="tabpanel" aria-labelledby="list-tab">
+                            <div class="tab-pane fade show active" id="listHv" role="tabpanel" aria-labelledby="list-tab">
                         <!-- Nội dung hiển thị khi click vào "Danh sách lớp" -->
                                 <h3 style="text-align:center;">Danh sách học viên</h3>
                                 <?= $this->render('xem_hv', ['model' => $model]) ?>
