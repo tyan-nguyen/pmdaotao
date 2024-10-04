@@ -51,7 +51,7 @@ class VbDenController extends Controller
         $searchModel = new VBDenSearch();
     
         // Giá trị 'so_loai_van_ban' cần lọc
-        $soLoaiVanBanFilter = VanBanDi::MODEL_ID; // Giá trị cụ thể cần lọc
+        $soLoaiVanBanFilter = VanBanDen::MODEL_ID; // Giá trị cụ thể cần lọc
     
         if (isset($_POST['search']) && $_POST['search'] != null) {
             $dataProvider = $searchModel->search(Yii::$app->request->post(), $_POST['search']);

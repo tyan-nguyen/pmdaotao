@@ -35,42 +35,54 @@ class VanBanSearch extends VanBan
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $cusomSearch=NULL)
     {
         $query = VanBan::find();
-
+        
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
-
+        
         $this->load($params);
-
+        
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
             return $dataProvider;
         }
-
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'id_loai_van_ban' => $this->id_loai_van_ban,
-            'ngay_ky' => $this->ngay_ky,
-            'vbden_ngay_den' => $this->vbden_ngay_den,
-            'so_vao_so' => $this->so_vao_so,
-            'vbden_nguoi_nhan' => $this->vbden_nguoi_nhan,
-            'vbden_ngay_chuyen' => $this->vbden_ngay_chuyen,
-            'vbdi_so_luong_ban' => $this->vbdi_so_luong_ban,
-            'vbdi_ngay_chuyen' => $this->vbdi_ngay_chuyen,
-            'nguoi_tao' => $this->nguoi_tao,
-            'thoi_gian_tao' => $this->thoi_gian_tao,
-        ]);
-
-        $query->andFilterWhere(['like', 'so_vb', $this->so_vb])
+        if($cusomSearch != NULL){
+            $query->andFilterWhere ( [ 'OR' ,['like', 'so_vb', $cusomSearch],
+                ['like', 'trich_yeu', $cusomSearch],
+                ['like', 'nguoi_ky', $cusomSearch],
+                ['like', 'ngay_ky', $cusomSearch],
+                ['like', 'vbdi_noi_nhan', $cusomSearch],
+                ['like', 'vbden_ngay_chuyen', $cusomSearch],
+                ['like', 'so_loai_van_ban', $cusomSearch]] );
+            
+        } else {
+            $query->andFilterWhere([
+                'id' => $this->id,
+                'id_loai_van_ban' => $this->id_loai_van_ban,
+                'ngay_ky' => $this->ngay_ky,
+                'vbden_ngay_den' => $this->vbden_ngay_den,
+                'so_vao_so' => $this->so_vao_so,
+                'vbden_nguoi_nhan' => $this->vbden_nguoi_nhan,
+                'vbden_ngay_chuyen' => $this->vbden_ngay_chuyen,
+                'vbdi_so_luong_ban' => $this->vbdi_so_luong_ban,
+                'vbdi_ngay_chuyen' => $this->vbdi_ngay_chuyen,
+                'nguoi_tao' => $this->nguoi_tao,
+                'thoi_gian_tao' => $this->thoi_gian_tao,
+                'nam'=>$this->nam
+            ]);
+            
+            $query->andFilterWhere(['like', 'so_vb', $this->so_vb])
             ->andFilterWhere(['like', 'trich_yeu', $this->trich_yeu])
             ->andFilterWhere(['like', 'nguoi_ky', $this->nguoi_ky])
             ->andFilterWhere(['like', 'vbdi_noi_nhan', $this->vbdi_noi_nhan])
-            ->andFilterWhere(['like', 'ghi_chu', $this->ghi_chu]);
-
+            ->andFilterWhere(['like', 'ghi_chu', $this->ghi_chu])
+            ->andFilterWhere(['like', 'so_loai_van_ban', $this->so_loai_van_ban]);
+            
+        }
         return $dataProvider;
     }
 }
