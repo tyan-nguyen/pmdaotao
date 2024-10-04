@@ -37,9 +37,12 @@ class GiaoVienController extends Controller
         $searchModel = new GiaoVienSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->query->andWhere(['doi_tuong' => ['1']]);
+        $pagination = $dataProvider->getPagination();
+        $pagination->pageSize = 20;
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'pagination' =>$pagination,
         ]);
     }
 

@@ -63,7 +63,7 @@ class HocVienController extends Controller
         // Lọc theo trạng thái học viên 'NHAP_HOC' và 'NHAPTRUCTIEP'
         $dataProvider->query->andWhere(['trang_thai' => ['NHAP_HOC','NHAPTRUCTIEP']]);
     
-        // Cấu hình phân trang (nếu cần)
+        // Cấu hình phân trang 
          $pagination = $dataProvider->getPagination();
          $pagination->pageSize = 20;
     

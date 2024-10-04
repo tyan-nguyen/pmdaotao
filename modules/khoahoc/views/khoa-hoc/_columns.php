@@ -64,7 +64,10 @@ return [
         'vAlign'=>'middle',
         'width' => '200px',
         'urlCreator' => function($action, $model, $key, $index) { 
-                return Url::to([$action,'id'=>$key]);
+            if ($action === 'adduser') {
+                return Url::to(['create2', 'id' => $key]);
+            }
+            return Url::to([$action, 'id' => $key]);
         },
             // Đặt buttons bên trong cấu hình của ActionColumn
             'buttons' => [
