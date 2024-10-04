@@ -32,7 +32,7 @@ return [
         'value' => function ($model) {
             return $model->loaiVanBan->ten_loai; 
         },
-        
+        'width'=> '200px',
     ],
     
     [
@@ -46,7 +46,8 @@ return [
         'attribute'=>'ngay_ky',
         'value'=>function($model){
             return $model->ngayKy;
-        }
+        },
+        'width'=> '200px',
     ],
    // [
      //   'class'=>'\kartik\grid\DataColumn',
@@ -55,6 +56,7 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'nguoi_ky',
+        'width'=> '200px',
     ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',

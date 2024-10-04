@@ -37,7 +37,7 @@ class VanBanController extends Controller
     public function beforeAction($action)
     {
         Yii::$app->params['moduleID'] = 'Module Văn bản ';
-        Yii::$app->params['modelID'] = 'Quản lý Văn bản đến';
+        Yii::$app->params['modelID'] = 'Tra cứu văn bản';
         return true;
     }
     

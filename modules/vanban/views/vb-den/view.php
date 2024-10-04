@@ -50,7 +50,7 @@ use app\modules\nhanvien\models\NhanVien;
                 </ul>
 			</div>
            <div class="card-body">
-              <div class="skill-tags">
+              
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active p-1" id="tabFile" role="tabpanel" aria-labelledby="list-tab">
                        <?= FileDisplayWidget::widget([
@@ -66,7 +66,7 @@ use app\modules\nhanvien\models\NhanVien;
                         ]) ?>
                     </div>
                 </div>
-              </div>
+              
           </div>
         </div>   
     </div>
