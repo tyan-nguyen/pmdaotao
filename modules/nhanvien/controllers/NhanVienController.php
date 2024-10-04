@@ -37,9 +37,12 @@ class NhanVienController extends Controller
         $searchModel = new NhanVienSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->query->andWhere(['doi_tuong' => ['1', '0']]);
+        $pagination = $dataProvider->getPagination();
+        $pagination->pageSize = 20;
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'pagination' =>$pagination,
         ]);
     }
 

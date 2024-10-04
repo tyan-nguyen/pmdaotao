@@ -11,7 +11,7 @@ use yii\filters\VerbFilter;
 use \yii\web\Response;
 use yii\helpers\Html;
 use yii\filters\AccessControl;
-use yii\data\ActiveDataProvider;
+use app\modules\hocvien\models\HangDaoTao;
 use app\modules\hocvien\models\HocVien;
 /**
  * KhoaHocController implements the CRUD actions for KhoaHoc model.
@@ -70,6 +70,7 @@ class KhoaHocController extends Controller
      */
     public function actionView($id)
     {   
+        
         $request = Yii::$app->request;
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
@@ -84,6 +85,7 @@ class KhoaHocController extends Controller
         }else{
             return $this->render('view', [
                 'model' => $this->findModel($id),
+               
             ]);
         }
     }
@@ -283,4 +285,62 @@ class KhoaHocController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+    public function actionCreate2($id)
+    {
+        $request = Yii::$app->request;
+        $model = new HocVien();  
+        $model->id_khoa_hoc = $id;  // Lấy id khóa học hiện tại
+        
+        // Tìm hạng của khóa học hiện tại dựa vào $id_khoa_hoc
+        $khoaHoc = KhoaHoc::findOne($id);
+        if ($khoaHoc) {
+            $model->id_hang = $khoaHoc->id_hang;  // Gán đúng giá trị ID của hạng đào tạo
+        }
+        
+        if($request->isAjax){
+            /*
+            *   Process for ajax request
+            */
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            if($request->isGet){
+                return [
+                    'title'=> "Thêm Học viên ",
+                    'content'=>$this->renderAjax('create2', [
+                        'model' => $model,
+                    ]),
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                ];         
+            }else if($model->load($request->post()) && $model->save()){
+                return [
+                    'forceReload'=>'#crud-datatable-pjax',
+                    'title'=> "Thêm Học viên",
+                    'content'=>'<span class="text-success">Thêm Học viên thành công !</span>',
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                            Html::a('Tiếp tục thêm',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                ];         
+            }else{           
+                return [
+                    'title'=> "Thêm Học viên",
+                    'content'=>$this->renderAjax('create2', [
+                        'model' => $model,
+                    ]),
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                ];         
+            }
+        }else{
+            /*
+            *   Process for non-ajax request
+            */
+            if ($model->load($request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('create2', [
+                    'model' => $model,
+                ]);
+            }
+        }
+    }
+    
 }

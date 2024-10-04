@@ -1,5 +1,5 @@
 <?php
-use yii\helpers\Url;
+use yii\widgets\LinkPager;
 use yii\bootstrap5\Html;
 use yii\bootstrap5\Modal;
 use kartik\grid\GridView;
@@ -75,6 +75,13 @@ Yii::$app->params['showExport'] = true;
             ]
           
         ])?>
+          <?= LinkPager::widget([
+                'pagination' => $pagination,
+                'options' => ['class' => 'pagination justify-content-center'],
+                'linkContainerOptions' => ['class' => 'page-item'],
+                'linkOptions' => ['class' => 'page-link'],
+                'disabledListItemSubTagOptions' => ['class' => 'page-link disabled'],
+            ]) ?>
     </div>
     
 </div>

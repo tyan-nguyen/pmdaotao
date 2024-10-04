@@ -58,9 +58,12 @@ class DangKyHvController extends Controller
         $searchModel = new DangKyHvSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->query->andWhere(['trang_thai' => ['CHUA_NHAP_HOC']]);
+        $pagination = $dataProvider->getPagination();
+        $pagination->pageSize = 20;
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'pagination' =>$pagination, 
         ]);
     }
 

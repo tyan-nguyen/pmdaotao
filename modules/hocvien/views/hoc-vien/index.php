@@ -77,7 +77,13 @@ Yii::$app->params['showExport'] = true;
             ]
           
         ])?>
-         
+          <?= LinkPager::widget([
+                'pagination' => $pagination,
+                'options' => ['class' => 'pagination justify-content-center'],
+                'linkContainerOptions' => ['class' => 'page-item'],
+                'linkOptions' => ['class' => 'page-link'],
+                'disabledListItemSubTagOptions' => ['class' => 'page-link disabled'],
+            ]) ?>
     </div>
     
                    
@@ -116,14 +122,4 @@ Yii::$app->params['showExport'] = true;
     $searchContent = $this->render("_search", ["model" => $searchModel]);
     echo FilterFormWidget::widget(["content"=>$searchContent, "description"=>"Nhập thông tin tìm kiếm."]) 
 ?>
-<div class='row'>
-    <div class="col-md-12">
-  <?= LinkPager::widget([
-                'pagination' => $pagination,
-                'options' => ['class' => 'pagination justify-content-center'],
-                'linkContainerOptions' => ['class' => 'page-item'],
-                'linkOptions' => ['class' => 'page-link'],
-                'disabledListItemSubTagOptions' => ['class' => 'page-link disabled'],
-            ]) ?>
-    </div>
-</div>            
+          
