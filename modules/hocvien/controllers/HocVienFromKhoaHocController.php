@@ -170,66 +170,6 @@ class HocVienFromKhoaHocController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
-        $request = Yii::$app->request;
-        $model = $this->findModel($id);
-        
-        if($request->isAjax){
-            /*
-             *   Process for ajax request
-             */
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            if($request->isGet){
-                return [
-                    'title'=> "Cập nhật thông tin Học viên #".$id,
-                    'content'=>$this->renderAjax('update', [
-                        'model' => $model,
-                    ]),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                    Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
-                ];
-            }else if($model->load($request->post()) && $model->save()){
-                return [
-                    'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Học viên  #".$id,
-                    'content'=>$this->renderAjax('view', [
-                        'model' => $model,
-                    ]),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                    Html::a('Lưu lại',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
-                ];
-            }else{
-                return [
-                    'title'=> "Update HvHocVien #".$id,
-                    'content'=>$this->renderAjax('update', [
-                        'model' => $model,
-                    ]),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                    Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
-                ];
-            }
-        }else{
-            /*
-             *   Process for non-ajax request
-             */
-            if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            } else {
-                return $this->render('update', [
-                    'model' => $model,
-                ]);
-            }
-        }
-    }
-
-    /**
-     * Updates an existing HvHocVien model.
-     * For ajax request will return json object
-     * and for non-ajax request if update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     */
     public function actionUpdateFromKhoaHoc($id,$modalType='modal-remote',$idKhoaHoc)
     {
         $request = Yii::$app->request;
