@@ -3,7 +3,7 @@
 		<span class="side-menu__icon"><i class="fa fa-graduation-cap side_menu_img"></i></span>
 		<span class="side-menu__label">Khóa học</span><i class="angle fe fe-chevron-right"></i>
 	</a>
-	<ul class="slide-menu" data-menu="psc">
+	<ul class="slide-menu" data-menu="khoahoc">
 		<li class="panel sidetab-menu">
 			<div class="tab-menu-heading p-0 pb-2 border-0">
 				<div class="tabs-menu ">
@@ -24,9 +24,9 @@
 						<ul class="sidemenu-list">
 							<li class="side-menu__label1"><a href="javascript:void(0)">Danh mục chức năng</a>
 							</li>
-							<li class=""><a href="<?= Yii::getAlias('@web/khoahoc/khoa-hoc?menu=khoahoc') ?>" class="slide-item" data-menu="khoahoc">Danh sách khóa học</a>
+							<li class=""><a href="<?= Yii::getAlias('@web/khoahoc/khoa-hoc?menu=khoahoc1') ?>" class="slide-item" data-menu="khoahoc1">Danh sách khóa học</a>
 							</li>
-							<li class=""><a href="<?= Yii::getAlias('@web/khoahoc/hang-dao-tao?menu=hangdaotao') ?>" class="slide-item" data-menu="khoahoc">Danh sách hạng đào tạo</a>
+							<li class=""><a href="<?= Yii::getAlias('@web/khoahoc/hang-dao-tao?menu=khoahoc2') ?>" class="slide-item" data-menu="khoahoc2">Danh sách hạng đào tạo</a>
 							</li>
 						</ul>
 						<div class="menutabs-content px-0">
