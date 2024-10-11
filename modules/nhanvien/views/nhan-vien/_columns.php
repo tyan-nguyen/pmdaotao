@@ -18,10 +18,12 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ho_ten',
+        'width' => '150px',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'gioi_tinh',
+        'width' => '100px',
          'value'=> function ($model)
          {
             return $model->gioi_tinh == 1 ? 'Nam' : 'Nữ' ;
@@ -31,6 +33,7 @@ return [
     [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'id_phong_ban',
+        'width' => '150px',
         'value' => function ($model) {
             // Kiểm tra xem phongBan có tồn tại hay không
             return $model->phongBan ? $model->phongBan->ten_phong_ban : 'N/A';
@@ -40,6 +43,7 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'chuc_vu',
+        'width' => '150px',
     ],
    // [
     //    'class'=>'\kartik\grid\DataColumn',

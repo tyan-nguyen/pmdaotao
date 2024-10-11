@@ -21,35 +21,52 @@ use app\modules\nhanvien\models\NhanVien;
     <?= $form->field($model, 'nam')->dropDownList($model->getListSo(), [
 	    'prompt'=>'Chọn sổ VB'
 	]) ?>
-	
-    <?= $form->field($model, 'so_vao_so')->textInput() ?>
-    
-    <?= $form->field($model, 'so_vb')->textInput() ?>
-    
-    <?= $form->field($model, 'vbden_ngay_den')->widget(DatePicker::classname(), [
-        'options' => ['placeholder' => 'Chọn ngày đến ...'],
-        'pluginOptions' => [
-            'autoclose' => true,
-            'format' => 'dd/mm/yyyy', // Đảm bảo khớp với định dạng trong CSDL
-        ]
-    ]); ?>
-
-    <?= $form->field($model, 'vbden_nguoi_nhan')->dropDownList(
-        NhanVien::getList(), 
-        [
-            'prompt' => 'Chọn người nhận',
-            'class' => 'form-control dropdown-with-arrow',
-        ]
-    ) ?>
-
-    <?= $form->field($model, 'vbden_ngay_chuyen')->widget(DatePicker::classname(), [
-        'options' => ['placeholder' => 'Chọn ngày chuyển ...'],
-        'pluginOptions' => [
-            'autoclose' => true,
-            'format' => 'dd/mm/yyyy',
-        ]
-    ]); ?>
-
+	<div class="row">
+       <div class="col-md-6">
+           <?= $form->field($model, 'so_vao_so')->textInput() ?>
+       </div>
+       <div class="col-md-6">
+           <?= $form->field($model, 'so_vb')->textInput() ?>
+       </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+             <?= $form->field($model, 'nguoi_ky')->textInput() ?>
+        </div>
+        <div class="col-md-6">
+             <?= $form->field($model, 'vbden_nguoi_nhan')->dropDownList(
+             NhanVien::getList(), 
+              [
+                'prompt' => 'Chọn người nhận',
+                'class' => 'form-control dropdown-with-arrow',
+              ]
+             ) ?>
+        </div>
+    </div>
+    <div class="row">
+         <div class="col-md-12">
+             <?= $form->field($model, 'trich_yeu')->textInput() ?>
+         </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <?= $form->field($model, 'vbden_ngay_den')->widget(DatePicker::classname(), [
+               'options' => ['placeholder' => 'Chọn ngày đến ...'],
+               'pluginOptions' => [
+               'autoclose' => true,
+               'format' => 'dd/mm/yyyy', // Đảm bảo khớp với định dạng trong CSDL
+              ]
+            ]); ?>
+        </div>
+        <div class="col-md-6">
+            <?= $form->field($model, 'vbden_ngay_chuyen')->widget(DatePicker::classname(), [
+               'options' => ['placeholder' => 'Chọn ngày chuyển ...'],
+               'pluginOptions' => [
+               'autoclose' => true,
+               'format' => 'dd/mm/yyyy',
+               ]
+            ]); ?>
+        </div>
     <?php if (!Yii::$app->request->isAjax){ ?>
         <div class="form-group">
             <?= Html::submitButton('Tìm kiếm', ['class' => 'btn btn-primary']) ?>

@@ -49,4 +49,5 @@ class HocVien extends HocVienBase
   
         return parent::beforeSave($insert);
     }
+  
 }

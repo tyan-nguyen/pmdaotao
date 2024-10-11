@@ -6,7 +6,7 @@ use kartik\grid\GridView;
 //use cangak\ajaxcrud\CrudAsset; 
 use cangak\ajaxcrud\BulkButtonWidget;
 use yii\widgets\Pjax;
-use app\widgets\FilterFormWidget;
+use app\widgets\FilterFormWidget2;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\modules\vanban\models\search\VBDenSearch */
@@ -112,5 +112,5 @@ Yii::$app->params['showExport'] = true;
 
 <?php
     $searchContent = $this->render("_search", ["model" => $searchModel]);
-    echo FilterFormWidget::widget(["content"=>$searchContent, "description"=>"Nhập thông tin tìm kiếm."]) 
+    echo FilterFormWidget2::widget(["content"=>$searchContent, "description"=>"Nhập thông tin tìm kiếm."]) 
 ?>

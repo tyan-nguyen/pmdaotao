@@ -25,24 +25,41 @@ use app\modules\nhanvien\models\NhanVien;
     <?= $form->field($model, 'nam')->dropDownList($model->getListSo(), [
 	    'prompt'=>'Chọn sổ VB'
 	]) ?>
-	
-    <?= $form->field($model, 'so_vao_so')->textInput() ?>
-    
-    <?= $form->field($model, 'so_vb')->textInput() ?>
-    
-    <?= $form->field($model, 'nguoi_ky')->textInput() ?>
-  
-    <?= $form->field($model, 'vbdi_noi_nhan')->textInput() ?>
-    <?= $form->field($model, 'vbdi_so_luong_ban')->textInput() ?>
-    <?= $form->field($model, 'vbdi_ngay_chuyen')->widget(DatePicker::classname(), [
-        'options' => ['placeholder' => 'Chọn ngày chuyển  ...'],
-        'pluginOptions' => [
-            'autoclose' => true,
-            'format' => 'dd/mm/yyyy',
-        ]
-    ]); ?>
-
-  
+	<div class="row">
+         <div class="col-md-6">
+             <?= $form->field($model, 'so_vao_so')->textInput() ?>
+         </div>
+         <div class="col-md-6">
+             <?= $form->field($model, 'so_vb')->textInput() ?>
+         </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+             <?= $form->field($model, 'nguoi_ky')->textInput() ?>
+        </div>
+        <div class="col-md-6">
+             <?= $form->field($model, 'vbdi_noi_nhan')->textInput() ?>
+        </div>
+    </div> 
+    <div class="row">
+        <div class="col-md-12">
+             <?= $form->field($model, 'trich_yeu')->textInput() ?>
+        </div>
+    </div>    
+    <div class="row">
+        <div class="col-md-6">
+              <?= $form->field($model, 'vbdi_so_luong_ban')->textInput() ?>
+        </div>
+        <div class="col-md-6">
+            <?= $form->field($model, 'vbdi_ngay_chuyen')->widget(DatePicker::classname(), [
+                'options' => ['placeholder' => 'Chọn ngày chuyển  ...'],
+                'pluginOptions' => [
+                'autoclose' => true,
+                'format' => 'dd/mm/yyyy',
+              ]
+            ]); ?>
+        </div>
+    </div>
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">
 	        <?= Html::submitButton('Tìm kiếm',['class' => 'btn btn-primary']) ?>

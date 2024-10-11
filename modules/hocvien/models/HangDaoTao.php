@@ -63,6 +63,11 @@ class HangDaoTao extends \app\models\HvHangDaoTao
     {
         return $this->hasMany(HocPhi::class, ['id_hang' => 'id']);
     }
+    public function getHocPhi()
+    {
+        return $this->hasOne(HocPhi::class, ['id_hang' => 'id']);
+    }
+
 
     /**
      * Gets query for [[HvKhoaHocs]].

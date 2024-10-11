@@ -121,5 +121,8 @@ class NopHocPhi extends \app\models\HvHocPhi
         }
         return parent::beforeSave($insert);
     }
-    
+    public function getHangXe()
+    {
+        return $this->hasOne(HangDaoTao::class, ['id' => 'id_hang']);
+    } 
 }

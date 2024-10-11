@@ -21,23 +21,33 @@ use kartik\date\DatePicker;
       	]); ?>
 
 <?= $form->field($model, 'ho_ten')->textInput(['maxlength' => true]) ?>
-
-<?= $form->field($model, 'gioi_tinh')->dropDownList([
+<div class="row">
+    <div class="col-md-6">
+         <?= $form->field($model, 'gioi_tinh')->dropDownList([
              1 => 'Nam',
              0 => 'Nữ',
              ], ['prompt' => 'Chọn giới tính', 'class' => 'form-control dropdown-with-arrow']) ?>
-
-<?= $form->field($model, 'ngay_sinh')->widget(DatePicker::classname(), [
-        'options' => ['placeholder' => 'Chọn ngày sinh  ...'],
-        'pluginOptions' => [
-            'autoclose' => true,
-            'format' => 'dd/mm/yyyy',
-        ]
+    </div>
+    <div class="col-md-6">
+          <?= $form->field($model, 'ngay_sinh')->widget(DatePicker::classname(), [
+              'options' => ['placeholder' => 'Chọn ngày sinh  ...'],
+              'pluginOptions' => [
+              'autoclose' => true,
+              'format' => 'dd/mm/yyyy',
+            ]
         ]); ?>
+    </div>
+</div>    
 <?= $form->field($model, 'so_cccd')->textInput(['maxlength' => true]) ?>
 <?= $form->field($model, 'dia_chi')->textInput(['maxlength' => true]) ?>
-<?= $form->field($model, 'so_dien_thoai')->textInput(['maxlength' => true]) ?>
-<?= $form->field($model, 'id_hang')->dropDownList(HangDaoTao::getList(), ['prompt'=>'Chọn hạng']) ?>
+<div class="row">
+    <div class="col-md-6">
+           <?= $form->field($model, 'so_dien_thoai')->textInput(['maxlength' => true]) ?>
+    </div>
+    <div class="col-md-6">       
+        <?= $form->field($model, 'id_hang')->dropDownList(HangDaoTao::getList(), ['prompt'=>'Chọn hạng']) ?>
+    </div>
+</div>
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">
 	        <?= Html::submitButton('Tìm kiếm',['class' => 'btn btn-primary']) ?>

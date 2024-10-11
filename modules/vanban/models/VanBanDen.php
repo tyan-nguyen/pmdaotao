@@ -10,14 +10,14 @@ use app\modules\kholuutru\models\LuuKho;
 
 class VanBanDen extends VanBan
 {
-    CONST MODEL_ID = 'VBDEN';
+    CONST MODEL_ID = 'Văn bản đến';
     public function getPubName(){
         return $this->so_vao_so;
     }
     
     public function beforeSave($insert) {
         if ($this->isNewRecord) {
-            $this->so_loai_van_ban = $this::VBDEN_VALUE;
+            $this->so_loai_van_ban = $this::VBDEN_LABEL;
         }
         if($this->vbden_ngay_den != null){
             $this->vbden_ngay_den = CustomFunc::convertDMYToYMD($this->vbden_ngay_den);

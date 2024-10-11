@@ -33,10 +33,7 @@ use app\widgets\KhoDisplayWidget;
             <div class="card-header custom-card-header rounded-bottom-0">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link active" id="list-tab" data-bs-toggle="tab" href="#list" role="tab" aria-controls="list" aria-selected="true"style="color: blue;"><i class="fa fa-list"></i>  Danh sách học viên</a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="add-student-tab" data-bs-toggle="tab" href="#add-student" role="tab" aria-controls="add-student" aria-selected="false"style="color: blue;"><i class="fa fa-user-plus"></i> Thêm học viên</a>
+                        <a class="nav-link active" id="list-tab" data-bs-toggle="tab" href="#listHv" role="tab" aria-controls="list" aria-selected="true"style="color: blue;"><i class="fa fa-list"></i>  Danh sách học viên</a>
                     </li>
                     <li class="nav-item" role="presentation">
                         <a class="nav-link" id="add-timetable-tab" data-bs-toggle="tab" href="#add-timetable" role="tab" aria-controls="add-student" aria-selected="false"style="color: blue;"><i class="fa fa-calendar"></i> Lịch học</a>
@@ -56,14 +53,6 @@ use app\widgets\KhoDisplayWidget;
                                 <?= $this->render('xem_hv', ['model' => $model]) ?>
  
                                
-                            </div>
-
-                        <!-- Nội dung Thêm học viên -->
-                            <div class="tab-pane fade" id="add-student" role="tabpanel" aria-labelledby="add-student-tab">
-                        <!-- Nội dung hiển thị khi click vào "Thêm học viên" -->
-                                <h3>Thêm học viên</h3>
-                                <p>Hiển thị form thêm học viên tại đây.</p>
-                             
                             </div>
                              <!-- Nội dung Lịch học -->
                              <div class="tab-pane fade" id="add-timetable" role="tabpanel" aria-labelledby="add-timetable-tab">

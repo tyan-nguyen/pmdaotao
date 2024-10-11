@@ -16,15 +16,33 @@ $model->ngay_nop = CustomFunc::convertYMDToDMY($model->ngay_nop);
 <div class="hp-hoc-vien-form">
 
     <?php $form = ActiveForm::begin(); ?>
-   <div class ='row'>
-   <div class="col-md-6">
-    <label >Họ tên học viên</label>
-    <?= $form->field($model, 'id_hoc_vien')->hiddenInput()->label(false) ?>
-    <input style="color: blue;" type="text" class="form-control" value="<?= $hoTenHocVien ?>" readonly style="border-color: red; color: red;">
-</div>   
+    <?php CardWidget::begin(['title'=>'Thông tin học phí']) ?>
+   <div class='row'>
+      <!-- Cột 1: Họ tên học viên -->
+      <div class="col-md-4">
+         <label>Họ tên học viên</label>
+         <?= $form->field($model, 'id_hoc_vien')->hiddenInput()->label(false) ?>
+         <input style="color: blue;" type="text" class="form-control" value="<?= $hoTenHocVien ?>" readonly style="border-color: red; color: red;">
+      </div>
+
+      <!-- Cột 2: Hạng xe -->
+      <div class="col-md-4">
+         <label>Hạng xe</label>
+         <?= $form->field($model, 'id_hoc_vien')->hiddenInput()->label(false) ?>
+         <input  style="color: blue;"  type="text" class="form-control" value="<?= $tenHang ?>" readonly>
+      </div>
+
+      <!-- Cột 3: Học phí -->
+      <div class="col-md-4">
+         <label>Học phí</label>
+         <?= $form->field($model, 'id_hoc_vien')->hiddenInput()->label(false) ?>
+         <input style="color: blue;" type="text" class="form-control" value="<?= number_format($hocPhi->hoc_phi, 0, ',', '.') . ' VNĐ'; ?>" readonly style="border-color: red; color: red;">
+      </div>
    </div>
+<?php CardWidget::end() ?>
+
    <hr style="width:400px; border-width:2px; border-color:black; margin-left:auto; margin-right:auto;">
-   <?php CardWidget::begin(['title'=>'Thông tin học phí']) ?>
+   <?php CardWidget::begin(['title'=>'Chi tiết']) ?>
    <div class ='row'>
         <div class="col-lg-4 col-md-6">
         <?= $form->field($model, 'ngay_nop')->widget(DatePicker::classname(), [
@@ -74,10 +92,7 @@ $model->ngay_nop = CustomFunc::convertYMDToDMY($model->ngay_nop);
        .hp-hoc-vien-form label {
     font-weight: bold;
 }
-.hp-hoc-vien-form .form-control {
-    border-color: #0000FF; 
-    border-width: 1px; 
-}
+
 .dropdown-with-arrow {
     position: relative;
     padding-right: 30px; /* Đảm bảo có khoảng trống cho mũi tên */

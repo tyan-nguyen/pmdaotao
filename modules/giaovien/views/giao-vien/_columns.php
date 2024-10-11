@@ -20,16 +20,19 @@ return [
     [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'ho_ten',
+        'width' => '150px',
     ],
     
    
     [
         'class'=>'\kartik\grid\DataColumn',
        'attribute'=>'so_cccd',
+       'width' => '150px',
    ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'gioi_tinh',
+        'width' => '150px',
          'value'=> function ($model)
          {
             return $model->gioi_tinh == 1 ? 'Nam' : 'Nữ' ;
@@ -54,6 +57,7 @@ return [
     // ],
      [
         'class'=>'\kartik\grid\DataColumn',
+        'width' => '150px',
          'attribute'=>'trinh_do',
      ],
     // [

@@ -18,10 +18,12 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ten_khoa_hoc',
+        'width' => '150px',
     ],
     [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'id_hang',
+        'width' => '150px',
         'value' => function($model) {
             return $model->hang ? $model->hang->ten_hang : 'N/A';
         },
@@ -30,6 +32,7 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ngay_bat_dau',
+        'width' => '150px',
         'value'=>function($model){
             return $model->ngayBatDau;
         }
@@ -37,6 +40,7 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ngay_ket_thuc',
+        'width' => '150px',
         'value'=>function($model){
             return $model->ngayKetThuc;
         }
@@ -59,14 +63,18 @@ return [
     // ],
     [
         'class' => 'kartik\grid\ActionColumn',
-        'template' => '{adduser} {view} {update} {delete} ',
+        'template' => '{adduser} {addusers} {view} {update} {delete} ',
         'dropdown' => false,
         'vAlign'=>'middle',
-        'width' => '200px',
+        'width' => '300px',
         'urlCreator' => function($action, $model, $key, $index) { 
             if ($action === 'adduser') {
                 return Url::to(['create2', 'id' => $key]);
             }
+            if ($action === 'addusers') {
+                return Url::to(['create3', 'id' => $key]);
+            }
+
             return Url::to([$action, 'id' => $key]);
         },
             // Đặt buttons bên trong cấu hình của ActionColumn
@@ -80,8 +88,19 @@ return [
                         'data-bs-placement' => 'top',
                         'data-bs-toggle' => 'tooltip-warning',
                     ]);
+                },
+                'addusers' => function($url, $model, $key) {
+                    return Html::a('<i class="icon-people"></i>', $url, [
+                        'title' => 'Thêm nhiều Học viên',
+                        'role' => 'modal-remote',
+                        'class' => 'btn ripple btn-success btn-sm',
+                        'style' => 'width: 30px; text-align: center;',
+                        'data-bs-placement' => 'top',
+                        'data-bs-toggle' => 'tooltip-success',
+                    ]);
                 }
             ],
+          
         'viewOptions'=>['role'=>'modal-remote','title'=>'View','title'=>'Xem thông tin',
             'class'=>'btn ripple btn-primary btn-sm',
             'data-bs-placement'=>'top',

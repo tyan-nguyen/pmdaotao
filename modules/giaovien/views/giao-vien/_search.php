@@ -13,6 +13,7 @@ $taiKhoans = User::find()->all();
 $listTaiKhoan = ArrayHelper::map($taiKhoans, 'id', 'username');
 ?>
 
+
 <div class="giao-vien-search">
 
     <?php $form = ActiveForm::begin([
@@ -22,49 +23,97 @@ $listTaiKhoan = ArrayHelper::map($taiKhoans, 'id', 'username');
             'class' => 'myFilterForm'
         ]
     ]); ?>
-
-<?= $form->field($model, 'ho_ten')->textInput(['maxlength' => true]) ?>
-<?= $form->field($model, 'gioi_tinh')->dropDownList([
+<div class="row">
+    <div class="col-md-4">
+        <?= $form->field($model, 'ho_ten')->textInput(['maxlength' => true]) ?>
+    </div>
+    <div class="col-md-4">
+           <?= $form->field($model, 'gioi_tinh')->dropDownList([
                     1 => 'Nam',
                     0 => 'Nữ',
                     ], ['prompt' => 'Chọn giới tính', 'class' => 'form-control']) ?>
-<?= $form->field($model, 'ngay_sinh')->widget(DatePicker::classname(), [
+    </div>
+    <div class="col-md-4">
+           <?= $form->field($model, 'ngay_sinh')->widget(DatePicker::classname(), [
                    'options' => ['placeholder' => 'Chọn ngày sinh  ...'],
                    'pluginOptions' => [
                    'autoclose' => true,
                    'format' => 'dd/mm/yyyy',
                     ]
                ]); ?>
-<?= $form->field($model, 'so_cccd')->textInput(['maxlength' => true]) ?>   
-<?= $form->field($model, 'dia_chi')->textInput(['maxlength' => true]) ?>
-<?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?> 
-<?= $form->field($model, 'dien_thoai')->textInput(['maxlength' => true]) ?>  
-<?= $form->field($model, 'ma_so_thue')->textInput(['maxlength' => true]) ?>
-<?= $form->field($model, 'id_phong_ban')->dropDownList(
+    </div>
+</div> 
+<div class="row">
+    <div class="col-md-4">
+        <?= $form->field($model, 'chuc_vu')->textInput(['maxlength' => true]) ?>
+    </div>
+    <div class="col-md-4">
+         <?= $form->field($model, 'so_cccd')->textInput(['maxlength' => true]) ?>
+    </div> 
+    <div class="col-md-4">
+          <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+    </div>
+  
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+          <?= $form->field($model, 'dien_thoai')->textInput(['maxlength' => true]) ?> 
+    </div> 
+    <div class="col-md-4">
+          <?= $form->field($model, 'id_phong_ban')->dropDownList(
                     $listPhongBan,
                       [
                          'prompt' => 'Chọn phòng ban...',
                          'id' => 'phong-bans-dropdown'
                       ]
                  ) ?>
- <?= $form->field($model, 'id_to')->dropDownList(
+    </div>
+    <div class="col-md-4">
+         <?= $form->field($model, 'id_to')->dropDownList(
                     [],  
                     ['prompt' => 'Chọn tổ...', 'id' => 'to-dropdown']
                  ) ?>
+    </div>
+</div>
 
+<div class="row">
+    <div class="col-md-4">
+         <?= $form->field($model, 'vi_tri_cong_viec')->textInput(['maxlength' => true]) ?>
+    </div>
+    <div class="col-md-4">
+         <?= $form->field($model, 'chuyen_nganh')->textInput(['maxlength' => true]) ?>
+    </div>
+    <div class="col-md-4">
+          <?= $form->field($model, 'trinh_do')->textInput(['maxlength' => true]) ?>
+    </div>
+</div>   
 
-<?= $form->field($model, 'tai_khoan')->dropDownList(
+ 
+
+<div class="row">
+    <div class="col-md-4">
+        <?= $form->field($model, 'ma_so_thue')->textInput(['maxlength' => true]) ?>
+    </div>
+    <div class="col-md-4">
+        <?= $form->field($model, 'tai_khoan')->dropDownList(
                  $listTaiKhoan,
                  ['prompt' => 'Chọn tài khoản...']
                ) ?>
- <?= $form->field($model, 'chuc_vu')->textInput(['maxlength' => true]) ?>
- <?= $form->field($model, 'chuyen_nganh')->textInput(['maxlength' => true]) ?>
- <?= $form->field($model, 'vi_tri_cong_viec')->textInput(['maxlength' => true]) ?>
- <?= $form->field($model, 'trang_thai')->dropDownList([
+    </div>
+    <div class="col-md-4">
+         <?= $form->field($model, 'trang_thai')->dropDownList([
                      'Đang làm việc' => 'Đang làm việc',
                      'Đã nghỉ việc' => 'Đã nghỉ việc',
                   ], ['prompt' => 'Chọn trạng thái']) ?>
- <?= $form->field($model, 'trinh_do')->textInput(['maxlength' => true]) ?>
+    </div>
+</div>
+
+<br>
+
+
+ 
+
     <?php if (!Yii::$app->request->isAjax){ ?>
         <div class="form-group">
             <?= Html::submitButton('Tìm kiếm', ['class' => 'btn btn-primary']) ?>

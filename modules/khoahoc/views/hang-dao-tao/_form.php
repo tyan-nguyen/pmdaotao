@@ -25,10 +25,6 @@ use yii\widgets\ActiveForm;
     
 </div>
 <style>
-    .hang-dao-tao-form .form-control {
-    border-color: #0000FF; 
-    border-width: 1px; 
-}
 .hang-dao-tao-form label {
     font-weight: bold;
 }

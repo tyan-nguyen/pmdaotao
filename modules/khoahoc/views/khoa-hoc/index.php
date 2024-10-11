@@ -21,6 +21,11 @@ Yii::$app->params['showSearch'] = true;
 Yii::$app->params['showExport'] = true;
 
 ?>
+<?php if (Yii::$app->session->hasFlash('success')): ?>
+    <div id="successMessage" class="alert alert-success">
+        <?= Yii::$app->session->getFlash('success') ?>
+    </div>
+<?php endif; ?>
 
 <?php Pjax::begin([
     'id'=>'myGrid',
@@ -108,4 +113,14 @@ Yii::$app->params['showExport'] = true;
 <?php
     $searchContent = $this->render("_search", ["model" => $searchModel]);
     echo FilterFormWidget::widget(["content"=>$searchContent, "description"=>"Nhập thông tin tìm kiếm."]) 
+?>
+
+
+<?php
+// Chèn đoạn mã JavaScript để ẩn thông báo sau 3 giây
+$this->registerJs("
+    setTimeout(function() {
+        $('#successMessage').fadeOut('slow');
+    }, 5000);  // 5000ms = 3 giây
+", \yii\web\View::POS_READY);
 ?>

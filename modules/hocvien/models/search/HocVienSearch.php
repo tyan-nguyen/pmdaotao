@@ -18,7 +18,7 @@ class HocVienSearch extends HocVien
     {
         return [
             [['id', 'id_khoa_hoc', 'nguoi_tao', 'id_hang','gioi_tinh'], 'integer'],
-            [['ho_ten', 'so_dien_thoai', 'so_cccd', 'trang_thai', 'thoi_gian_tao', 'ngay_sinh'], 'safe'],
+            [['ho_ten', 'so_dien_thoai', 'so_cccd', 'trang_thai', 'thoi_gian_tao', 'ngay_sinh','check_hoc_phi'], 'safe'],
         ];
     }
 
@@ -59,6 +59,7 @@ class HocVienSearch extends HocVien
             ->andFilterWhere(['like', 'trang_thai', $this->trang_thai])
             ->andFilterWhere(['like', 'id_hang', $this->id_hang])
             ->andFilterWhere(['like', 'id_khoa_hoc', $this->id_khoa_hoc])
+            ->andFilterWhere(['like', 'check_hoc_phi', $this->check_hoc_phi])
             ->andFilterWhere(['ngay_sinh' => $this->ngay_sinh]);
 
         return $dataProvider;

@@ -11,7 +11,6 @@ use yii\filters\VerbFilter;
 use \yii\web\Response;
 use yii\helpers\Html;
 use yii\filters\AccessControl;
-use app\modules\hocvien\models\HangDaoTao;
 use app\modules\hocvien\models\HocVien;
 /**
  * KhoaHocController implements the CRUD actions for KhoaHoc model.
@@ -342,5 +341,59 @@ class KhoaHocController extends Controller
             }
         }
     }
+    public function actionCreate3($id) {
+        // Tìm khóa học dựa trên id
+        $khoaHoc = KhoaHoc::findOne($id);
+    
+        // Nếu không tìm thấy khóa học, bạn có thể redirect hoặc throw NotFoundHttpException
+        if ($khoaHoc === null) {
+            throw new NotFoundHttpException('Khóa học không tồn tại.');
+        }
+    
+     // Lấy danh sách học viên có id_hang giống với khóa học và id_khoa_hoc = NULL
+        $hocVien = HocVien::find()
+           ->where(['id_hang' => $khoaHoc->id_hang])
+           ->andWhere(['id_khoa_hoc' => null]) // Chỉ tìm học viên chưa được đăng ký vào khóa học
+           ->all();
+
+    
+        // Xử lý form submit
+        if (Yii::$app->request->isPost) {
+            $selectedHocVienIds = Yii::$app->request->post('hoc_vien_ids', []);
+    
+            foreach ($selectedHocVienIds as $hocVienId) {
+                $hv = HocVien::findOne($hocVienId);
+                if ($hv !== null) {
+                    $hv->id_khoa_hoc = $khoaHoc->id;
+                    $hv->trang_thai = "NHAP_HOC";
+                    $hv->save(false); // Lưu không cần validate
+                }
+                if ($hv->save())
+                {
+                    Yii::$app->session->setFlash('success', 'Thêm Học viên cho Khóa học thành công !');
+                    return $this->redirect(['index']);
+                    
+                }
+            }
+         
+            
+        }
+    
+        // Nếu không có POST, render lại form để thêm học viên
+        return $this->asJson([
+            'title' => 'Thêm học viên',
+            'content' => $this->renderAjax('create3', [
+                'hocVien' => $hocVien,
+                'khoaHoc' => $khoaHoc,
+            ]),
+            'footer' => Html::button('Đóng lại', [
+                'class' => 'btn btn-default pull-left',
+                'data-bs-dismiss' => "modal"
+            ]) 
+        ]);
+    }
+    
+   
+    
     
 }

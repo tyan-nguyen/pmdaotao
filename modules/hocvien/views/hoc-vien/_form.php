@@ -47,7 +47,7 @@ $model->ngay_sinh = CustomFunc::convertYMDToDMY($model->ngay_sinh);
             </div>
     </div>
     <?php CardWidget::end() ?>
-    <?php CardWidget::begin(['title'=>'Thông tin hạng đào tạo']) ?>
+    <?php CardWidget::begin(['title'=>'Thông tin đào tạo']) ?>
     <div class ='row'>
     <div class="col-lg-3 col-md-6">
         <?= $form->field($model, 'id_hang')->dropDownList(
@@ -55,10 +55,16 @@ $model->ngay_sinh = CustomFunc::convertYMDToDMY($model->ngay_sinh);
     [
         'prompt' => 'Chọn hạng',
         'class' => 'form-control dropdown-with-arrow',
+        'id' => 'hang-dropdown',
     ]
     ) ?>
          </div>
-        
+    <div class="col-lg-3 col-md-6">
+    <?= $form->field($model, 'id_khoa_hoc')->dropDownList(
+                    [],  
+                    ['prompt' => 'Chọn Khóa học...', 'id' => 'khoa-hoc-dropdown']
+                 ) ?>
+    </div>        
     </div>
     <?php CardWidget::end() ?>
 </div>
@@ -72,6 +78,32 @@ $model->ngay_sinh = CustomFunc::convertYMDToDMY($model->ngay_sinh);
     <?php ActiveForm::end(); ?>
     
 </div>
+
+<?php
+
+$this->registerJs("
+    $('#hang-dropdown').change(function() {
+        var idHang = $(this).val();
+        $.ajax({
+            url: '" . \yii\helpers\Url::to(['get-to-list']) . "',
+            data: {id_hang: idHang},
+            success: function(data) {
+                var response = $.parseJSON(data);
+                var options = '';
+                if (response.no_khoa_hoc) {
+                    options = '<option value=\"\">' + response.no_khoa_hoc + '</option>';
+                } else {
+                    options = '<option value=\"\">Chọn Khóa học...</option>';
+                    $.each(response, function(id, ten_khoa_hoc) {
+                        options += '<option value=\"' + id + '\">' + ten_khoa_hoc + '</option>';
+                    });
+                }
+                $('#khoa-hoc-dropdown').html(options);
+            }
+        });
+    });
+");
+?>
 <style>
        .hv-hoc-vien-form label {
     font-weight: bold;

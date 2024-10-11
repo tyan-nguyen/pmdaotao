@@ -57,7 +57,7 @@ class DangKyHvController extends Controller
     {    
         $searchModel = new DangKyHvSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->query->andWhere(['trang_thai' => ['CHUA_NHAP_HOC']]);
+        $dataProvider->query->andWhere(['trang_thai' => ['CHUA_NHAP_HOC','DONG_HOC_PHI']]);
         $pagination = $dataProvider->getPagination();
         $pagination->pageSize = 20;
         return $this->render('index', [
@@ -335,6 +335,23 @@ public function actionCreate2($id)
      // Tìm học viên theo id_hoc_vien
      $hocVien = HocVien::findOne($id);
      $hoTenHocVien = $hocVien ? $hocVien->ho_ten : '';
+      // Tìm học viên theo id_hoc_vien
+      $hocVien = HocVien::findOne($id);
+      $hoTenHocVien = $hocVien ? $hocVien->ho_ten : '';
+      if ($hocVien && $hocVien->hang) {
+         $tenHang = $hocVien->hang->ten_hang; // Lấy ten_hang từ bảng hang_xe
+     } else {
+         $tenHang = 'Chưa có hạng xe'; // Nếu không có thông tin hạng xe
+     }
+      // Kiểm tra nếu học viên tồn tại và lấy thông tin học phí dựa trên id_hang
+      $hocPhi = null;
+      if ($hocVien) {
+          $hangDaoTao = $hocVien->hangDaoTao;  // Lấy đối tượng HangDaoTao liên kết
+          if ($hangDaoTao) {
+              $hocPhi = $hangDaoTao->hocPhi;  // Lấy thông tin HocPhi từ HangDaoTao
+          }
+      }
+ 
     if($request->isAjax){
         /*
         *   Process for ajax request
@@ -346,6 +363,8 @@ public function actionCreate2($id)
                 'content'=>$this->renderAjax('create2', [
                     'model' => $model,
                     'hoTenHocVien' => $hoTenHocVien,
+                    'tenHang' => $tenHang,
+                    'hocPhi' => $hocPhi,
                 ]),
                 'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                             Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
@@ -353,7 +372,7 @@ public function actionCreate2($id)
             ];         
         }else if($model->load($request->post()) && $model->save()){
             if ($hocVien) {
-                $hocVien->trang_thai = 'NHAP_HOC'; // Cập nhật trạng thái
+                $hocVien->trang_thai = 'DONG_HOC_PHi'; // Cập nhật trạng thái
                 $hocVien->save(); // Lưu thay đổi
             }
             return [
@@ -369,6 +388,8 @@ public function actionCreate2($id)
                 'content'=>$this->renderAjax('create2', [
                     'model' => $model,
                     'hoTenHocVien' => $hoTenHocVien,
+                    'tenHang' => $tenHang,
+                    'hocPhi' => $hocPhi,
                 ]),
                 'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                             Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
@@ -380,15 +401,17 @@ public function actionCreate2($id)
         *   Process for non-ajax request
         */
         if ($model->load($request->post()) && $model->save()) {
-            if ($hocVien) {
-                $hocVien->trang_thai = 'NHAP_HOC'; // Cập nhật trạng thái
-                $hocVien->save(); // Lưu thay đổi
-            }
+          //  if ($hocVien) {
+               // $hocVien->trang_thai = 'NHAP_HOC'; // Cập nhật trạng thái
+               // $hocVien->save(); // Lưu thay đổi
+           // }
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create2', [
                 'model' => $model,
                 'hoTenHocVien' => $hoTenHocVien,
+                'tenHang' => $tenHang,
+                'hocPhi' => $hocPhi,
             ]);
         }
     }

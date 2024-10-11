@@ -12,5 +12,7 @@ use yii\bootstrap5\Html;
     <?= $this->render('form_hp', [
         'model' => $model,
         'hoTenHocVien' => $hoTenHocVien,
+        'tenHang' => $tenHang,
+        'hocPhi' => $hocPhi ,
     ]) ?>
 </div>

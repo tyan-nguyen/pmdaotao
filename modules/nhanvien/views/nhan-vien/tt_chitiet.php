@@ -26,6 +26,7 @@
 							<div class="card-body">
 									<div class="skill-tags">
                                         <p><strong>Trình độ:</strong> <?= $model->trinh_do ?></p>
+										<p><strong>Chuyên ngành:</strong> <?= $model->chuyen_nganh ?></p>
                                         <p><strong>Kinh nghiệm làm việc:</strong> <br> <?= $model->kinh_nghiem_lam_viec ?></p> 
 								    </div>
 						    </div>

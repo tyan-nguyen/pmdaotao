@@ -3,7 +3,7 @@
 namespace app\modules\hocvien\models\base;
 use app\custom\CustomFunc;
 use Yii;
-use app\modules\kholuutru\models\HoSo;
+
 use app\modules\hocvien\models\KhoaHoc;
 use app\modules\hocvien\models\HangDaoTao;
 use app\modules\hocvien\models\NopHocPhi;
@@ -20,6 +20,7 @@ use app\modules\hocvien\models\NopHocPhi;
  * @property int|null $nguoi_tao
  * @property string|null $thoi_gian_tao
  * @property string $ngay_sinh
+ * @property string $check_hoc_phi
  * @property HvHoSoHocVien[] $hvHoSoHocViens
  * @property HvNopHocPhi[] $hvNopHocPhis
  * @property HvKhoaHoc $khoaHoc
@@ -44,6 +45,7 @@ class HocVienBase extends \app\models\HvHocVien
             [['id_khoa_hoc', 'nguoi_tao','gioi_tinh','id_hang'], 'integer'],
             [['thoi_gian_tao','ngay_sinh'], 'safe'],
             [['ho_ten', 'so_dien_thoai', 'so_cccd', 'trang_thai','dia_chi'], 'string', 'max' => 255],
+            [['check_hoc_phi'],'string','max'=>25],
             [['nguoi_lap_phieu'],'string','max'=>55],
             [['id_khoa_hoc'], 'exist', 'skipOnError' => true, 'targetClass' => KhoaHoc::class, 'targetAttribute' => ['id_khoa_hoc' => 'id']],
         ];
@@ -68,6 +70,7 @@ class HocVienBase extends \app\models\HvHocVien
             'nguoi_tao' => 'Người tạo',
             'thoi_gian_tao' => 'Thời gian tạo',
             'nguoi_lap_phieu' => 'Người lặp phiếu',
+            'check_hoc_phi' => 'Học phí',
         ];
     }
 

@@ -19,6 +19,7 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ho_ten',
+        'width' => '150px',
     ],
    // [
       //  'class'=>'\kartik\grid\DataColumn',
@@ -27,16 +28,19 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'so_cccd',
+        'width' => '100px',
     ],
 
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'dia_chi',
+        'width' => '200px',
     ],
  
     [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'id_hang',
+        'width' => '100px',
         'value' => function($model) {
             return $model->hangDaoTao ? $model->hangDaoTao->ten_hang : 'N/A';
         },

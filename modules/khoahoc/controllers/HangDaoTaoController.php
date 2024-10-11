@@ -5,6 +5,7 @@ namespace app\modules\khoahoc\controllers;
 use Yii;
 use app\modules\khoahoc\models\HangDaoTao;
 use app\modules\khoahoc\models\search\HangDaoTaoSearch;
+use app\modules\hocvien\models\HocPhi;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -26,7 +27,7 @@ class HangDaoTaoController extends Controller
 				'class' => AccessControl::className(),
 				'rules' => [
 					[
-						'actions' => ['index', 'view', 'update','create','delete','bulkdelete'],
+						'actions' => ['index', 'view', 'update','create','delete','bulkdelete','tuition','update2'],
 						'allow' => true,
 						'roles' => ['@'],
 					],
@@ -56,7 +57,12 @@ class HangDaoTaoController extends Controller
         ]);
     }
 
-
+    public function beforeAction($action)
+	{
+	    Yii::$app->params['moduleID'] = 'Module Quản lý Khóa học';
+	    Yii::$app->params['modelID'] = 'Quản lý Hạng đào tạo';
+	    return true;
+	}
     /**
      * Displays a single HangDaoTao model.
      * @param integer $id
@@ -68,7 +74,7 @@ class HangDaoTaoController extends Controller
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "Hangj đào tạo #".$id,
+                    'title'=> "Hạng đào tạo #".$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
                     ]),
@@ -277,4 +283,112 @@ class HangDaoTaoController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+    public function actionTuition ($id)
+    {
+        $request = Yii::$app->request;
+        $model = new HocPhi();  
+        $model->id_hang= $id;
+        if($request->isAjax){
+            /*
+            *   Process for ajax request
+            */
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            if($request->isGet){
+                return [
+                    'title'=> "Thêm Học phí",
+                    'content'=>$this->renderAjax('tuition', [
+                        'model' => $model,
+                    ]),
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+        
+                ];         
+            }else if($model->load($request->post()) && $model->save()){
+                return [
+                    'forceReload'=>'#crud-datatable-pjax',
+                    'title'=> "Thêm Học phí",
+                    'content'=>'<span class="text-success">Thêm Học phí thành công !</span>',
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                            Html::a('Tiếp tục thêm',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
+        
+                ];         
+            }else{           
+                return [
+                    'title'=> "Thêm Học phí",
+                    'content'=>$this->renderAjax('tuition', [
+                        'model' => $model,
+                    ]),
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+        
+                ];         
+            }
+        }else{
+            /*
+            *   Process for non-ajax request
+            */
+            if ($model->load($request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('tuition', [
+                    'model' => $model,
+                ]);
+            }
+        }
+       
+    }
+
+    public function actionUpdate2 ($id)
+    {
+    $request = Yii::$app->request;
+    // Tìm kiếm model học phí dựa trên id_hang
+    $model = HocPhi::find()->where(['id_hang' => $id])->one();
+
+
+    if ($request->isAjax) {
+        // Xử lý cho yêu cầu AJAX
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        if ($request->isGet) {
+            return [
+                'title' => "Cập nhật Học phí #".$id,
+                'content' => $this->renderAjax('update2', [
+                    'model' => $model,
+                ]),
+                'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                            Html::button('Lưu lại', ['class' => 'btn btn-primary', 'type' => "submit"])
+            ];
+        } else if ($model->load($request->post()) && $model->save()) {
+            return [
+                'forceReload' => '#crud-datatable-pjax',
+                'title' => "Học phí #".$id,
+                'content' => $this->renderAjax('mess', [
+                    'model' => $model,
+                ]),
+                'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) 
+                           
+            ];
+        } else {
+            return [
+                'title' => "Cập nhật Học phí #".$id,
+                'content' => $this->renderAjax('update2', [
+                    'model' => $model,
+                ]),
+                'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                            Html::button('Lưu lại', ['class' => 'btn btn-primary', 'type' => "submit"])
+            ];
+        }
+    } else {
+        // Xử lý cho yêu cầu không phải AJAX
+        if ($model->load($request->post()) && $model->save()) {
+            return $this->redirect(['mess', 'id' => $model->id]); // Chuyển hướng tới trang xem
+        } else {
+            return $this->render('update2', [
+                'model' => $model,
+            ]);
+        }
+    }
+    }
+
+
+    
 }

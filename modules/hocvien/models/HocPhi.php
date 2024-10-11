@@ -3,7 +3,7 @@
 namespace app\modules\hocvien\models;
 
 use Yii;
-
+use app\custom\CustomFunc;
 /**
  * This is the model class for table "hv_hoc_phi".
  *
@@ -65,5 +65,16 @@ class HocPhi extends \app\models\HvHocPhi
     public function getHang()
     {
         return $this->hasOne(HangDaoTao::class, ['id' => 'id_hang']);
+    }
+    public function beforeSave($insert) {
+        $this->ngay_ap_dung = CustomFunc::convertDMYToYMD($this->ngay_ap_dung);
+        $this->ngay_ket_thuc = CustomFunc::convertDMYToYMD($this->ngay_ket_thuc);
+        if ($this->isNewRecord) {
+            $this->nguoi_tao = Yii::$app->user->identity->id;
+            $this->thoi_gian_tao = date('Y-m-d H:i:s');
+          
+        }
+  
+        return parent::beforeSave($insert);
     }
 }

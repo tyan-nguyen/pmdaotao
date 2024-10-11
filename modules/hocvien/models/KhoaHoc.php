@@ -89,10 +89,7 @@ class KhoaHoc extends \app\models\HvKhoaHoc
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getHvTaiLieuKhoaHocs()
-    {
-        return $this->hasMany(TaiLieuKhoaHoc::class, ['id_khoa_hoc' => 'id']);
-    }
+    
     public static function getList()
     {
         // Sắp xếp danh sách theo thứ tự bảng chữ cái dựa trên 'ten_loai'

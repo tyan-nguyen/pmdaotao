@@ -39,7 +39,7 @@ use app\widgets\KhoDisplayWidget;
             <div class="card-header custom-card-header rounded-bottom-0">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="add-detail-tab" data-bs-toggle="tab" href="#add-detail" role="tab" aria-controls="add-detail" aria-selected="false"style="color: blue;"><i class="fa fa-address-card"></i> Thông tin chi tiết</a>
+                        <a class="nav-link active" id="add-detail-tab" data-bs-toggle="tab" href="#add-detail" role="tab" aria-controls="add-detail" aria-selected="false"style="color: blue;"><i class="fa fa-address-card"></i> Thông tin chi tiết</a>
                     </li>
                     <li class="nav-item" role="presentation">
                         <a class="nav-link" id="add-document-tab" data-bs-toggle="tab" href="#add-document" role="tab" aria-controls="add-student" aria-selected="false"style="color: blue;"><i class="fa fa-file"></i> Hồ sơ</a>
@@ -63,7 +63,7 @@ use app\widgets\KhoDisplayWidget;
                                           'idDoiTuong' => $model->id
                                      ]) ?>
                              </div>
-                             <div class="tab-pane fade" id="add-detail" role="tabpanel" aria-labelledby="add-detail-tab">
+                             <div class="tab-pane fade show active" id="add-detail" role="tabpanel" aria-labelledby="add-detail-tab">
                                     <!-- Nội dung hiển thị khi click vào "Thông tin chi tiết " -->
                                     <?= $this->render('tt_chitiet', ['model' => $model]) ?>
                                 

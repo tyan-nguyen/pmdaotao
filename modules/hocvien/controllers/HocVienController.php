@@ -1,7 +1,7 @@
 <?php
 
 namespace app\modules\hocvien\controllers;
-use yii\helpers\Url;
+use yii\helpers\ArrayHelper;
 use Yii;
 use app\models\HvHocVien;
 use app\modules\hocvien\models\NopHocPhi;
@@ -15,6 +15,7 @@ use app\modules\hocvien\models\search\HocVienSearch;
 use app\modules\hocvien\models\HocPhi;
 use app\modules\hocvien\models\HocVien;
 use yii\web\UploadedFile;
+use app\modules\hocvien\models\KhoaHoc;
 /**
  * HocVienController implements the CRUD actions for HvHocVien model.
  */
@@ -358,9 +359,25 @@ class HocVienController extends Controller
     $request = Yii::$app->request;
     $model = new NopHocPhi();  
     $model->id_hoc_vien = $id;
+   
+
      // Tìm học viên theo id_hoc_vien
      $hocVien = HocVien::findOne($id);
      $hoTenHocVien = $hocVien ? $hocVien->ho_ten : '';
+     if ($hocVien && $hocVien->hang) {
+        $tenHang = $hocVien->hang->ten_hang; // Lấy ten_hang từ bảng hang_xe
+    } else {
+        $tenHang = 'Chưa có hạng xe'; // Nếu không có thông tin hạng xe
+    }
+     // Kiểm tra nếu học viên tồn tại và lấy thông tin học phí dựa trên id_hang
+     $hocPhi = null;
+     if ($hocVien) {
+         $hangDaoTao = $hocVien->hangDaoTao;  // Lấy đối tượng HangDaoTao liên kết
+         if ($hangDaoTao) {
+             $hocPhi = $hangDaoTao->hocPhi;  // Lấy thông tin HocPhi từ HangDaoTao
+         }
+     }
+
     if($request->isAjax){
         /*
         *   Process for ajax request
@@ -372,6 +389,8 @@ class HocVienController extends Controller
                 'content'=>$this->renderAjax('create2', [
                     'model' => $model,
                     'hoTenHocVien' => $hoTenHocVien,
+                    'tenHang' => $tenHang,
+                    'hocPhi' => $hocPhi,
                 ]),
                 'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                             Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
@@ -409,6 +428,8 @@ class HocVienController extends Controller
                 'content'=>$this->renderAjax('create2', [
                     'model' => $model,
                     'hoTenHocVien' => $hoTenHocVien,
+                    'tenHang' => $tenHang,
+                    'hocPhi' => $hocPhi ,
                 ]),
                 'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                             Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
@@ -429,6 +450,8 @@ class HocVienController extends Controller
             return $this->render('create2', [
                 'model' => $model,
                 'hoTenHocVien' => $hoTenHocVien,
+                'tenHang' => $tenHang,
+                'hocPhi' => $hocPhi ,
             ]);
         }
     }
@@ -449,6 +472,18 @@ public function actionMess($id)
         ])
     ]);
     
+}
+
+public function actionGetToList($id_hang)
+{
+   
+    $kh = KhoaHoc::find()->where(['id_hang' => $id_hang])->all();
+    
+    if (empty($kh)) {
+        return json_encode(['no_khoa_hoc' => 'Trống']);
+    }
+    $listKh = ArrayHelper::map($kh, 'id', 'ten_khoa_hoc');
+    return json_encode($listKh);
 }
 }
 
