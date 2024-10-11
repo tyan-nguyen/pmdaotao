@@ -109,17 +109,32 @@ return [
         'dropdown' => false,
         'vAlign' => 'middle',
         'width' => '200px',
-     'urlCreator' => function($action, $model, $key, $index) {
+   'urlCreator' => function($action, $model, $key, $index) {
     if ($action === 'payment') {
+        // Lấy thông tin học phí của học viên
+        $hocPhiHang = HocPhi::findOne(['id_hang' => $model->id_hang]);
+        
+        // Lấy thông tin các lần nộp học phí của học viên
         $nopHP = NopHocPhi::find()->where(['id_hoc_vien' => $model->id])->all();
-        if (empty($nopHP)) { 
-            return Url::to(['create2', 'id' => $key]); 
-        } else {
-            return Url::to(['create2', 'id' => $key]); 
+        
+        // Tính tổng số tiền đã nộp
+        $tongTienDaNop = 0;
+        foreach ($nopHP as $hcPhi) {
+            $tongTienDaNop += $hcPhi->so_tien_nop;
         }
-           }
-            return Url::to([$action, 'id' => $key]); // URL mặc định cho các action khác
-        },
+
+        // Kiểm tra trạng thái học phí
+        if ($hocPhiHang && $tongTienDaNop >= $hocPhiHang->hoc_phi) {
+            // Nếu học viên đã đóng đủ học phí
+            return Url::to(['mess', 'id' => $key]); //Ngừng cho nhập học phí và chuyển đến actionMess để thông báo đã nộp đủ
+        } else {
+            // Nếu học viên chưa đóng hoặc đóng thiếu học phí
+            return Url::to(['create2', 'id' => $key]);  // Tiếp tục cho nhập học phí
+        }
+    }
+    return Url::to([$action, 'id' => $key]);
+},
+
           // Đặt buttons bên trong cấu hình của ActionColumn
           'buttons' => [
             'payment' => function($url, $model, $key) {

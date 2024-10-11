@@ -56,12 +56,7 @@ if ($hocPhi): ?>
         </tr>
     </table>
 </div>
-
-  
-   
-
-
-
-
-   
 </div>
+
+
+                  

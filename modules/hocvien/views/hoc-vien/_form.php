@@ -62,7 +62,7 @@ $model->ngay_sinh = CustomFunc::convertYMDToDMY($model->ngay_sinh);
     <div class="col-lg-3 col-md-6">
     <?= $form->field($model, 'id_khoa_hoc')->dropDownList(
                     [],  
-                    ['prompt' => 'Chọn Khóa học...', 'id' => 'khoa-hoc-dropdown']
+                    ['prompt' => 'Chọn Khóa học...',  'class' => 'form-control dropdown-with-arrow','id' => 'khoa-hoc-dropdown']
                  ) ?>
     </div>        
     </div>
