@@ -53,7 +53,7 @@ use app\widgets\KhoDisplayWidget;
             <div class="card-header custom-card-header rounded-bottom-0">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="add-document-tab" data-bs-toggle="tab" href="#add-document" role="tab" aria-controls="add-student" aria-selected="false" style="color: blue;"><i class="fa fa-file"></i> Hồ sơ học viên</a>
+                        <a class="nav-link show active " id="add-document-tab" data-bs-toggle="tab" href="#add-document" role="tab" aria-controls="add-student" aria-selected="false" style="color: blue;"><i class="fa fa-file"></i> Hồ sơ học viên</a>
                     </li>
                     <li class="nav-item" role="presentation">
                         <a class="nav-link" id="add-student-tab" data-bs-toggle="tab" href="#add-student" role="tab" aria-controls="add-student" aria-selected="false"style="color: blue;"><i class="fa fa-dollar"></i> Học phí</a>
@@ -62,7 +62,7 @@ use app\widgets\KhoDisplayWidget;
                         <a class="nav-link" id="bien_lai-tab" data-bs-toggle="tab" href="#bien_lai" role="tab" aria-controls="add-student" aria-selected="false"style="color: blue;"><i class="bi bi-receipt"></i> Biên lai</a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link active" id="add-timetable-tab" data-bs-toggle="tab" href="#add-timetable" role="tab" aria-controls="add-student" aria-selected="false"style="color: blue;"><i class="fa fa-calendar"></i> Lịch học</a>
+                        <a class="nav-link " id="add-timetable-tab" data-bs-toggle="tab" href="#add-timetable" role="tab" aria-controls="add-student" aria-selected="false"style="color: blue;"><i class="fa fa-calendar"></i> Lịch học</a>
                     </li>
                     <li class="nav-item" role="presentation">
                         <a class="nav-link" id="list-tab" data-bs-toggle="tab" href="#list" role="tab" aria-controls="list" aria-selected="true"style="color: blue;"><i class="fa fa-address-card"></i>  Kết quả thi</a>
@@ -91,7 +91,7 @@ use app\widgets\KhoDisplayWidget;
                         <div class="tab-pane fade" id="bien_lai" role="tabpanel" aria-labelledby="bien_lai-tab">
                         <!-- Nội dung hiển thị khi click vào "Học phí" -->
                              <?= $this->render('bien_lai', ['model' => $model]) ?>
-                             
+            
                             </div>
                              <!-- Nội dung Lịch học -->
                              <div class="tab-pane fade " id="add-timetable" role="tabpanel" aria-labelledby="add-timetable-tab">

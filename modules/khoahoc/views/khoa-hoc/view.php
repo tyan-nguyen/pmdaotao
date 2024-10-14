@@ -51,8 +51,6 @@ use app\widgets\KhoDisplayWidget;
                         <!-- Nội dung hiển thị khi click vào "Danh sách lớp" -->
                                 <h3 style="text-align:center;">Danh sách học viên</h3>
                                 <?= $this->render('xem_hv', ['model' => $model]) ?>
- 
-                               
                             </div>
                              <!-- Nội dung Lịch học -->
                              <div class="tab-pane fade" id="add-timetable" role="tabpanel" aria-labelledby="add-timetable-tab">
