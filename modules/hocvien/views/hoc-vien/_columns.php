@@ -87,7 +87,7 @@ return [
             $hocVien->save();  
             return '<span class="badge bg-primary">Nộp đủ</span>';
         } elseif ($tongTienDaNop > 0) {
-            $hocVien->check_hoc_phi = 'Còn nợ học phí';  // Cập nhật giá trị t rường check_hoc_phi vào CSDL
+            $hocVien->check_hoc_phi = 'Còn nợ học phí';  // Cập nhật giá trị trường check_hoc_phi vào CSDL
             $hocVien->save();  
             return '<span class="badge bg-warning">Còn nợ học phí</span>';
         } else {

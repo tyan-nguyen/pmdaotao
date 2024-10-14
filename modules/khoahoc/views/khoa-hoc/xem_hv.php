@@ -38,12 +38,17 @@ use yii\widgets\Pjax;
                         'title' => 'Sửa',
                         'role'=>'modal-remote-2'
                     ]); ?>
-            <?= Html::a('<i class="fas fa-trash icon-white"></i>',  ['/hocvien/hoc-vien/delete', 'id'=>$hv->id, 'modalType'=>'modal-remote-2', 'idKhoaHoc'=>$model->id], [
-                            'class' => 'btn btn-sm btn-danger',
-                            'title' => 'Xóa',
-                            'data-confirm' => 'Bạn có chắc muốn xóa mục này không?',
-                            'data-method' => 'post',
-                        ])?>
+            <?= Html::a( '<i class="fa fa-remove"> </i>',
+                                ['/khoahoc/khoahoc/update2', 
+                                'id' => $hv->id
+                                ],
+                                [
+                                    'class' => 'btn ripple btn-info btn-sm',
+                                    'title' => 'Xóa học viên ',
+                                    'style' => 'color: white;',
+                                    'role'=>'modal-remote-2',
+                                ]
+                            ) ?>
         </td>
     </tr>
 <?php } ?>

@@ -87,10 +87,5 @@ $trangThai = ($tongTienDaNop >= $hocPhiHang->hoc_phi) ? 'Nộp đủ' : 'Chưa n
             </tbody>
         </table>
         <?php CardWidget::end() ?>
-        <?php CardWidget::begin(['title'=>'Biên lai']) ?>
-        <?php foreach ($hocPhi as $hcPhi): ?>
-           <img src="<?= Yii::getAlias('@web') . '/' . Html::encode($hcPhi->bien_lai) ?>" alt="Biên lai" style="width: 500px; height: 200px; margin: 5px 0;">
-        <?php endforeach; ?>
-        <?php CardWidget::end() ?>
     <?php endif; ?>
 </div>

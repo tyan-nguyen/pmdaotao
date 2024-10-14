@@ -172,7 +172,7 @@ class KhoaHocController extends Controller
                     'title'=> "Cập nhật Khóa học #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
-                    ]),
+                    ]), 
                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                                 Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
@@ -393,7 +393,10 @@ class KhoaHocController extends Controller
         ]);
     }
     
-   
+   public function actionUpdate2($id)
+   {
+      
+   }
     
     
 }
