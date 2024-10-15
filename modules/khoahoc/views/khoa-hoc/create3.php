@@ -73,10 +73,10 @@ $this->title = 'Thêm học viên';
             "searching": true,
             "ordering": true,
             "info": true,
-            "pageLength": 5,
-            "language": {
-                "url": "//cdn.datatables.net/plug-ins/1.11.5/i18n/vi.json"
-            }
+           // "pageLength": 5,
+           // "language": {
+           //     "url": "//cdn.datatables.net/plug-ins/1.11.5/i18n/vi.json"
+        //    }
         });
 
         // Chức năng "Chọn tất cả"
