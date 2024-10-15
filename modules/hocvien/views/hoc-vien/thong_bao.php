@@ -1,1 +1,0 @@
-<p> Xóa học viên thành công ! </p>

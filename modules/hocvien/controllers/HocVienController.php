@@ -65,13 +65,13 @@ class HocVienController extends Controller
         $dataProvider->query->andWhere(['trang_thai' => ['NHAP_HOC','NHAPTRUCTIEP']]);
     
         // Cấu hình phân trang 
-         $pagination = $dataProvider->getPagination();
-         $pagination->pageSize = 20;
+       //  $pagination = $dataProvider->getPagination();
+        // $pagination->pageSize = 20;
     
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'pagination'=>$pagination,
+            //'pagination'=>$pagination,
         ]);
     }
     
@@ -532,6 +532,15 @@ public function actionDeleteFromKhoaHoc($id)
         ]);
     }
 }
+
+
+public function actionTest()
+{   
+    
+        return $this->render('test', [
+        
+        ]);
+    }
 
 }
 
