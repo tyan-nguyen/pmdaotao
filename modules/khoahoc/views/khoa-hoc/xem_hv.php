@@ -1,9 +1,9 @@
 <?php
-use yii\grid\GridView;
-use yii\data\ActiveDataProvider;
+
+
 use app\modules\hocvien\models\HocVien;  // Import model HocVien
 use yii\bootstrap5\Html;
-use yii\widgets\Pjax;
+
 
 
 ?>
@@ -39,14 +39,14 @@ use yii\widgets\Pjax;
                         'role'=>'modal-remote-2'
                     ]); ?>
             <?= Html::a( '<i class="fa fa-remove"> </i>',
-                                ['/khoahoc/khoahoc/update2', 
+                                ['/hocvien/hoc-vien/delete-from-khoa-hoc', 
                                 'id' => $hv->id
                                 ],
                                 [
                                     'class' => 'btn ripple btn-info btn-sm',
                                     'title' => 'Xóa học viên ',
                                     'style' => 'color: white;',
-                                    'role'=>'modal-remote-2',
+                                    'role'=>'modal-remote-3',
                                 ]
                             ) ?>
         </td>

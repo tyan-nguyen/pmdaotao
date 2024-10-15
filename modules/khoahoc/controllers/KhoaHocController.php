@@ -350,12 +350,11 @@ class KhoaHocController extends Controller
             throw new NotFoundHttpException('Khóa học không tồn tại.');
         }
     
-     // Lấy danh sách học viên có id_hang giống với khóa học và id_khoa_hoc = NULL
+        // Lấy danh sách học viên có id_hang giống với khóa học và id_khoa_hoc = NULL
         $hocVien = HocVien::find()
            ->where(['id_hang' => $khoaHoc->id_hang])
            ->andWhere(['id_khoa_hoc' => null]) // Chỉ tìm học viên chưa được đăng ký vào khóa học
            ->all();
-
     
         // Xử lý form submit
         if (Yii::$app->request->isPost) {
@@ -368,15 +367,11 @@ class KhoaHocController extends Controller
                     $hv->trang_thai = "NHAP_HOC";
                     $hv->save(false); // Lưu không cần validate
                 }
-                if ($hv->save())
-                {
-                    Yii::$app->session->setFlash('success', 'Thêm Học viên cho Khóa học thành công !');
-                    return $this->redirect(['index']);
-                    
-                }
             }
-         
-            
+    
+            // Sau khi lưu tất cả học viên, thiết lập thông báo và chuyển hướng
+            Yii::$app->session->setFlash('success', 'Thêm Học viên cho Khóa học thành công !');
+            return $this->redirect(['index']);
         }
     
         // Nếu không có POST, render lại form để thêm học viên
@@ -392,11 +387,5 @@ class KhoaHocController extends Controller
             ]) 
         ]);
     }
-    
-   public function actionUpdate2($id)
-   {
-      
-   }
-    
     
 }

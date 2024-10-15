@@ -110,6 +110,20 @@ Yii::$app->params['showExport'] = true;
 
 <?php Modal::end(); ?>
 
+<?php Modal::begin([
+   'options' => [
+        'id'=>'ajaxCrudModal3',
+        'tabindex' => false // important for Select2 to work properly
+   ],
+   'dialogOptions'=>['class'=>'modal-md'],
+   'closeButton'=>['label'=>'<span aria-hidden=\'true\'>×</span>'],
+   'id'=>'ajaxCrudModal3',
+    'footer'=>'',// always need it for jquery plugin
+   
+])?>
+
+<?php Modal::end(); ?>
+
 <?php
     $searchContent = $this->render("_search", ["model" => $searchModel]);
     echo FilterFormWidget::widget(["content"=>$searchContent, "description"=>"Nhập thông tin tìm kiếm."]) 

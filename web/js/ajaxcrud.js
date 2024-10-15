@@ -73,6 +73,20 @@ $(document).ready(function () {
         // Open modal
         modal2.open(this, null);
     });
+    //Modal 3
+    if ($('#ajaxCrubModal3').length > 0 && $('#ajaxCrudModal3').length == 0) {
+        modal3 = new ModalRemote('#ajaxCrubModal3');
+    } else {
+        modal3 = new ModalRemote('#ajaxCrudModal3');
+    }
+
+    // Catch click event on all buttons that want to open a modal
+    $(document).on('click', '[role="modal-remote-3"]', function (event) {
+        event.preventDefault();
+
+        // Open modal
+        modal3.open(this, null);
+    });
     
     //************************************************ */
     //for modal remote-2

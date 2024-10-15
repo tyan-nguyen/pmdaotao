@@ -485,6 +485,54 @@ public function actionGetToList($id_hang)
     $listKh = ArrayHelper::map($kh, 'id', 'ten_khoa_hoc');
     return json_encode($listKh);
 }
+
+public function actionDeleteFromKhoaHoc($id)
+{
+    // Tìm học viên theo ID
+    $hocVien = HocVien::findOne($id);
+    
+    if ($hocVien !== null) {
+        // Cập nhật id_khoa_hoc về NULL
+        $hocVien->id_khoa_hoc = null;
+        $hocVien->save();
+        // Lưu lại thông tin học viên sau khi cập nhật
+        if ($hocVien->save()) {  // Bỏ qua validation, bạn có thể bật lại tùy trường hợp
+            return $this->asJson([
+                'title' => 'Thông báo !',
+                'content' => $this->renderAjax('thong_bao', [
+                    // Thêm các tham số cần thiết cho view
+                ]),
+                'footer' => Html::button('Đóng lại', [
+                    'class' => 'btn btn-default pull-left',
+                    'data-bs-dismiss' => "modal"
+                ]),
+                'message' => 'Xóa thành công!'
+            ]);
+            
+        } else {
+            // Nếu có lỗi khi lưu
+            return $this->asJson([
+                'title' => 'Thông báo !',
+                'content' => '<p>Đã có lỗi xảy ra khi xóa học viên.</p>',
+                'footer' => Html::button('Đóng lại', [
+                    'class' => 'btn btn-default pull-left',
+                    'data-bs-dismiss' => "modal"
+                ])
+            ]);
+        }
+    } else {
+        // Nếu không tìm thấy học viên
+        return $this->asJson([
+            'title' => 'Thông báo !',
+            'content' => '<p>Không tìm thấy học viên.</p>',
+            'footer' => Html::button('Đóng lại', [
+                'class' => 'btn btn-default pull-left',
+                'data-bs-dismiss' => "modal"
+            ])
+        ]);
+    }
+}
+
 }
 
 

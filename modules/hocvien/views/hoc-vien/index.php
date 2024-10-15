@@ -77,13 +77,7 @@ Yii::$app->params['showExport'] = true;
             ]
           
         ])?>
-          <?= LinkPager::widget([
-                'pagination' => $pagination,
-                'options' => ['class' => 'pagination justify-content-center'],
-                'linkContainerOptions' => ['class' => 'page-item'],
-                'linkOptions' => ['class' => 'page-link'],
-                'disabledListItemSubTagOptions' => ['class' => 'page-link disabled'],
-            ]) ?>
+       
     </div>
     
                    
