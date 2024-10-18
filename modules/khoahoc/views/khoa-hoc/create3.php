@@ -3,7 +3,10 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 $this->title = 'Thêm học viên';
+// Register DataTables assets
 
+$this->registerCssFile('https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css');
+$this->registerJsFile('https://cdn.datatables.net/2.1.8/js/dataTables.js', ['depends' => [\yii\web\JqueryAsset::class]]);
 ?>
 
 <?php if (!empty($hocVien)): ?>
@@ -46,6 +49,7 @@ $this->title = 'Thêm học viên';
         <div class="text-left mt-3">
              <?= Html::submitButton('<i class="fas fa-user-plus"></i> Thêm học viên', ['class' => 'btn btn-success btn-md']) ?>
         </div>
+       
 
     </div>
 
@@ -60,29 +64,31 @@ $this->title = 'Thêm học viên';
 <?php endif; ?>
 
 
-	
-<!-- Thêm jQuery và DataTables CDN -->
 
-<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css"/>
 <script>
-    // Khởi tạo DataTables cho bảng học viên
-    $(document).ready(function() {
-        $('#hocVienTable').DataTable({
-            "paging": true,
-            "searching": true,
-            "ordering": true,
-            "info": true,
-           // "pageLength": 5,
-           // "language": {
-           //     "url": "//cdn.datatables.net/plug-ins/1.11.5/i18n/vi.json"
-        //    }
-        });
-
-        // Chức năng "Chọn tất cả"
-        $('.select-all').on('change', function() {
+$(document).ready(function() {
+    $('#hocVienTable').DataTable({
+        "paging": true,
+        "searching": true,
+        "info": true,
+        "ordering": true,
+        "lengthMenu": [[5, 10, 25, 50, 100], [5, 10, 25, 50, 100]],
+        "language": {
+            "search": "Tìm kiếm:",
+            "lengthMenu": "Hiển thị _MENU_ học viên",
+            "info": "Hiển thị _START_ đến _END_ của _TOTAL_ học viên",
+            "paginate": {
+                "first": "Đầu",
+                "last": "Cuối",
+                "next": "Sau",
+                "previous": "Trước"
+            },
+        }
+    });
+      // Chức năng "Chọn tất cả"
+      $('.select-all').on('change', function() {
             var isChecked = $(this).is(':checked');
             $('input[name="hoc_vien_ids[]"]').prop('checked', isChecked);
         });
-    });
+});
 </script>

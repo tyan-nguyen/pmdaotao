@@ -298,61 +298,6 @@ class HocVienController extends Controller
         }
     }
 
-    public function actionCreateHp()
-    {
-        $request = Yii::$app->request;
-        $model = new HocPhi();  
-
-        if($request->isAjax){
-            /*
-            *   Process for ajax request
-            */
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            if($request->isGet){
-                return [
-                    'title'=> "Create new HvHocVien",
-                    'content'=>$this->renderAjax('create', [
-                        'model' => $model,
-                    ]),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
-        
-                ];         
-            }else if($model->load($request->post()) && $model->save()){
-                return [
-                    'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Create new HvHocVien",
-                    'content'=>'<span class="text-success">Create HvHocVien success</span>',
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::a('Tiếp tục thêm',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
-        
-                ];         
-            }else{           
-                return [
-                    'title'=> "Create new HvHocVien",
-                    'content'=>$this->renderAjax('create', [
-                        'model' => $model,
-                    ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
-        
-                ];         
-            }
-        }else{
-            /*
-            *   Process for non-ajax request
-            */
-            if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            } else {
-                return $this->render('create', [
-                    'model' => $model,
-                ]);
-            }
-        }
-       
-    }
-
 
     public function actionCreate2($id)
 {
@@ -372,11 +317,12 @@ class HocVienController extends Controller
      // Kiểm tra nếu học viên tồn tại và lấy thông tin học phí dựa trên id_hang
      $hocPhi = null;
      if ($hocVien) {
-         $hangDaoTao = $hocVien->hangDaoTao;  // Lấy đối tượng HangDaoTao liên kết
-         if ($hangDaoTao) {
-             $hocPhi = $hangDaoTao->hocPhi;  // Lấy thông tin HocPhi từ HangDaoTao
-         }
-     }
+        $khoaHoc = $hocVien->khoaHoc;  // Lấy đối tượng KhoaHoc liên kết
+        if ($khoaHoc && $khoaHoc->id_hoc_phi) {
+            // Truy vấn bảng HocPhi dựa trên id_hoc_phi của KhoaHoc
+            $hocPhi = HocPhi::findOne($khoaHoc->id_hoc_phi);
+        }
+    }
 
     if($request->isAjax){
         /*
@@ -473,6 +419,20 @@ public function actionMess($id)
     ]);
     
 }
+public function actionMess2($id)
+{   
+    return $this->asJson([
+        'title'=>'Thông báo !',
+        'content'=>$this->renderAjax('mess2', [
+          
+        ]),
+        'footer' => Html::button('Đóng lại', [
+            'class' => 'btn btn-default pull-left',
+            'data-bs-dismiss' => "modal"
+        ])
+    ]);
+    
+}
 
 public function actionGetToList($id_hang)
 {
@@ -486,63 +446,101 @@ public function actionGetToList($id_hang)
     return json_encode($listKh);
 }
 
-public function actionDeleteFromKhoaHoc($id)
+
+public function actionCreateHp()
+    {
+        $request = Yii::$app->request;
+        $model = new HocPhi();  
+
+        if($request->isAjax){
+            /*
+            *   Process for ajax request
+            */
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            if($request->isGet){
+                return [
+                    'title'=> "Create new HvHocVien",
+                    'content'=>$this->renderAjax('create', [
+                        'model' => $model,
+                    ]),
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+        
+                ];         
+            }else if($model->load($request->post()) && $model->save()){
+                return [
+                    'forceReload'=>'#crud-datatable-pjax',
+                    'title'=> "Create new HvHocVien",
+                    'content'=>'<span class="text-success">Create HvHocVien success</span>',
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                            Html::a('Tiếp tục thêm',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
+        
+                ];         
+            }else{           
+                return [
+                    'title'=> "Create new HvHocVien",
+                    'content'=>$this->renderAjax('create', [
+                        'model' => $model,
+                    ]),
+                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
+        
+                ];         
+            }
+        }else{
+            /*
+            *   Process for non-ajax request
+            */
+            if ($model->load($request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
+        }
+       
+    }
+
+    public function actionDeleteFromKhoaHoc($id)
 {
-    // Tìm học viên theo ID
-    $hocVien = HocVien::findOne($id);
-    
-    if ($hocVien !== null) {
-        // Cập nhật id_khoa_hoc về NULL
-        $hocVien->id_khoa_hoc = null;
-        $hocVien->save();
-        // Lưu lại thông tin học viên sau khi cập nhật
-        if ($hocVien->save()) {  // Bỏ qua validation, bạn có thể bật lại tùy trường hợp
-            return $this->asJson([
-                'title' => 'Thông báo !',
-                'content' => $this->renderAjax('thong_bao', [
-                    // Thêm các tham số cần thiết cho view
-                ]),
-                'footer' => Html::button('Đóng lại', [
-                    'class' => 'btn btn-default pull-left',
-                    'data-bs-dismiss' => "modal"
-                ]),
-                'message' => 'Xóa thành công!'
-            ]);
+    $request = Yii::$app->request;
+    $model = $this->findModel($id);
+
+    if ($request->isAjax) {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        
+        // Lưu trữ id_khoa_hoc trước khi cập nhật
+        $oldKhoaHocId = $model->id_khoa_hoc;
+        
+        // Cập nhật id_khoa_hoc = null
+        $model->id_khoa_hoc = null;
+
+        // Nếu lưu thành công
+        if ($model->save()) {
+            // Lấy lại danh sách học viên theo id_khoa_hoc trước khi cập nhật
+            $datas = HocVien::find()->where(['id_khoa_hoc' => $oldKhoaHocId])->all();
             
+            return [
+                'forceClose' => true,
+                'forceReload' => '#hocVienTable', // Chọn đúng block để reload lại bảng học viên
+                'reloadContent' => $this->renderAjax('xem_hv', [
+                    'datas' => $datas,  // Truyền đúng dữ liệu
+                    'isEmpty' => empty($datas),  // Kiểm tra mảng rỗng
+                ]),
+                'tcontent' => 'Học viên đã được xóa khỏi khóa học!',
+            ];
         } else {
-            // Nếu có lỗi khi lưu
-            return $this->asJson([
-                'title' => 'Thông báo !',
-                'content' => '<p>Đã có lỗi xảy ra khi xóa học viên.</p>',
-                'footer' => Html::button('Đóng lại', [
-                    'class' => 'btn btn-default pull-left',
-                    'data-bs-dismiss' => "modal"
-                ])
-            ]);
+            return [
+                'forceClose' => false,
+                'tcontent' => 'Lỗi khi xóa học viên.',
+            ];
         }
     } else {
-        // Nếu không tìm thấy học viên
-        return $this->asJson([
-            'title' => 'Thông báo !',
-            'content' => '<p>Không tìm thấy học viên.</p>',
-            'footer' => Html::button('Đóng lại', [
-                'class' => 'btn btn-default pull-left',
-                'data-bs-dismiss' => "modal"
-            ])
-        ]);
+        // Nếu không phải yêu cầu Ajax, sẽ redirect về trang index
+        return $this->redirect(['view']);
     }
 }
 
 
-public function actionTest()
-{   
-    
-        return $this->render('test', [
-        
-        ]);
-    }
-
 }
-
-
-

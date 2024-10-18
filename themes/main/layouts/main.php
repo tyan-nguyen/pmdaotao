@@ -19,7 +19,8 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 <html lang="vi" dir="ltr">
 	<head>
 		<link rel="shortcut icon" type="image/x-icon" href="<?= Yii::getAlias('@web')  ?>/assets/images/brand/favicon.ico" >
-		<link rel="stylesheet" href="../assets/css/theme.min.css">
+		<link rel="stylesheet" href="http://yourdomain.com/assets/css/theme.min.css">
+
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.min.js"></script>
 
 

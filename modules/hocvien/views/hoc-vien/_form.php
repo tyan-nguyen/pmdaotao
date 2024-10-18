@@ -5,7 +5,7 @@ use app\modules\hocvien\models\HangDaoTao;
 use kartik\date\DatePicker;
 use app\custom\CustomFunc;
 use app\widgets\CardWidget;
-
+use kartik\select2\Select2;
 /* @var $this yii\web\View */
 /* @var $model app\models\HvHocVien */
 /* @var $form yii\widgets\ActiveForm */
@@ -60,10 +60,19 @@ $model->ngay_sinh = CustomFunc::convertYMDToDMY($model->ngay_sinh);
     ) ?>
          </div>
     <div class="col-lg-3 col-md-6">
-    <?= $form->field($model, 'id_khoa_hoc')->dropDownList(
-                    [],  
-                    ['prompt' => 'Chọn Khóa học...',  'class' => 'form-control dropdown-with-arrow','id' => 'khoa-hoc-dropdown']
-                 ) ?>
+           <?= $form->field($model, 'id_khoa_hoc')->widget(Select2::classname(), [
+               'data' => [],  
+               'language' => 'vi',  
+               'options' => [
+                   'placeholder' => 'Chọn Khóa học...',  
+                   'class' => 'form-control dropdown-with-arrow',  
+                   'id' => 'khoa-hoc-dropdown'  
+                 ],
+                'pluginOptions' => [
+                    'allowClear' => true,  
+                    'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),  
+                  ],
+           ]); ?>
     </div>        
     </div>
     <?php CardWidget::end() ?>

@@ -34,35 +34,44 @@ return [
   //  ],
     [
         'class' => 'kartik\grid\ActionColumn',
-        'template' => '{tuition} {view} {update} {delete} ',
+        'template' => '{tuition} {listHP} {view} {update} {delete} ',
         'dropdown' => false,
         'vAlign'=>'middle',
-        'width' => '200px',
+        'width' => '300px',
     'urlCreator' => function($action, $model, $key, $index) {
-    if ($action === 'tuition') {
-        $hocPhi = \app\modules\hocvien\models\HocPhi::find()
-            ->where(['id_hang' => $model->id]) 
-            ->one();
-        if ($hocPhi !== null) {
-            return Url::to(['update2', 'id' => $hocPhi->id]); 
-        }
-        return Url::to(['tuition', 'id' => $key]);
-    }
-    return Url::to([$action, 'id' => $key]);
-},
+          if ($action === 'tuition') {
+             return Url::to(['tuition', 'id' => $key]);
+          }
+          if ($action === 'listHP') {
+             return Url::to(['list-hoc-phi', 'id' => $key]);
+          }
+         return Url::to([$action, 'id' => $key]);
+    },
 
         'buttons' => [
             'tuition' => function($url, $model, $key) {
                 return Html::a('<i class="fas fa-dollar-sign"></i>', $url, [
-                    'title' => 'Học phí',
+                    'title' => 'Thêm Học phí',
                     'role' => 'modal-remote-2',
                     'class' => 'btn ripple btn-warning btn-sm',
                     'style' => 'width: 30px; text-align: center;',
                     'data-bs-placement' => 'top',
                     'data-bs-toggle' => 'tooltip-warning',
                 ]);
+            },
+
+            'listHP' => function($url, $model, $key) {
+                return Html::a('<i class="fa fa-list"></i>', $url, [
+                    'title' => 'Danh sách Học phí',
+                    'role' => 'modal-remote',
+                    'class' => 'btn ripple btn-success btn-sm',
+                    'style' => 'width: 30px; text-align: center;',
+                    'data-bs-placement' => 'top',
+                    'data-bs-toggle' => 'tooltip-success',
+                ]);
             }
         ],
+     
         'viewOptions'=>['role'=>'modal-remote-2','title'=>'View','title'=>'Xem thông tin',
             'class'=>'btn ripple btn-primary btn-sm',
             'data-bs-placement'=>'top',

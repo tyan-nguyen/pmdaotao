@@ -4,6 +4,7 @@ use yii\bootstrap5\Html;
 use app\modules\hocvien\models\NopHocPhi;
 use app\modules\hocvien\models\HocVien;
 use app\modules\hocvien\models\HocPhi;
+use app\modules\hocvien\models\KhoaHoc;
 return [
     [
         'class' => 'kartik\grid\CheckboxColumn',
@@ -52,56 +53,51 @@ return [
     // ],
     [
         'class' => '\kartik\grid\DataColumn',
-        'attribute' => 'id_hang',
-        'width' => '200px',
-        'value' => function($model) {
-            return $model->hangDaoTao ? $model->hangDaoTao->ten_hang : 'N/A';
-        },
-        'label' => 'Hạng đào tạo',
-    ],
-
-    [
-        'class' => '\kartik\grid\DataColumn',
         'attribute' => 'check_hoc_phi',
         'label' => 'Trạng thái học phí',
         'value' => function($model) {
             // Tìm học viên hiện tại
             $hocVien = HocVien::findOne($model->id);
-            // Tìm học phí của hạng đào tạo
-            $hocPhiHang = HocPhi::findOne(['id_hang' => $hocVien->id_hang]);
+            
+            // Tìm thông tin khóa học của học viên
+            $khoaHoc = $hocVien ? KhoaHoc::findOne($hocVien->id_khoa_hoc) : null;
+    
+            // Tìm học phí dựa trên id_hoc_phi của khóa học
+            $hocPhiKhoaHoc = $khoaHoc ? HocPhi::findOne($khoaHoc->id_hoc_phi) : null;
     
             // Kiểm tra xem học phí có tồn tại không
-            if ($hocPhiHang) {
+            if ($hocPhiKhoaHoc) {
                 // Tìm thông tin các lần nộp học phí của học viên
                 $hocPhi = NopHocPhi::find()->where(['id_hoc_vien' => $hocVien->id])->all();
     
                 // Tính tổng số tiền đã nộp
                 $tongTienDaNop = 0;
-                foreach ($hocPhi as $hcPhi) {
-                    $tongTienDaNop += $hcPhi->so_tien_nop;
+                foreach ($hocPhi as $nopPhi) {
+                    $tongTienDaNop += $nopPhi->so_tien_nop;
                 }
     
-         // Kiểm tra trạng thái nộp học phí
-         if ($tongTienDaNop >= $hocPhiHang->hoc_phi) {
-            $hocVien->check_hoc_phi = 'Nộp đủ';  // Cập nhật giá trị trường check_hoc_phi vào CSDL
-            $hocVien->save();  
-            return '<span class="badge bg-primary">Nộp đủ</span>';
-        } elseif ($tongTienDaNop > 0) {
-            $hocVien->check_hoc_phi = 'Còn nợ học phí';  // Cập nhật giá trị trường check_hoc_phi vào CSDL
-            $hocVien->save();  
-            return '<span class="badge bg-warning">Còn nợ học phí</span>';
-        } else {
-            $hocVien->check_hoc_phi = 'Chưa đóng học phí';  // Cập nhật giá trị trường check_hoc_phi vào CSDL
-            $hocVien->save();  
-            return '<span class="badge bg-danger">Chưa đóng học phí</span>';
-        }
-    } else {
-        return 'Không có học phí';
-    }
-},
+                // Kiểm tra trạng thái nộp học phí
+                if ($tongTienDaNop >= $hocPhiKhoaHoc->hoc_phi) {
+                    $hocVien->check_hoc_phi = 'Nộp đủ';  // Cập nhật giá trị trường check_hoc_phi vào CSDL
+                    $hocVien->save();  
+                    return '<span class="badge bg-primary">Nộp đủ</span>';
+                } elseif ($tongTienDaNop > 0) {
+                    $hocVien->check_hoc_phi = 'Còn nợ học phí';  // Cập nhật giá trị trường check_hoc_phi vào CSDL
+                    $hocVien->save();  
+                    return '<span class="badge bg-warning">Còn nợ học phí</span>';
+                } else {
+                    $hocVien->check_hoc_phi = 'Chưa đóng học phí';  // Cập nhật giá trị trường check_hoc_phi vào CSDL
+                    $hocVien->save();  
+                    return '<span class="badge bg-danger">Chưa đóng học phí</span>';
+                }
+            } else {
+                return 'Không có học phí';
+            }
+        },
         'width' => '150px',
         'format' => 'raw', 
     ],
+    
     
     [
         'class' => 'kartik\grid\ActionColumn',
@@ -109,33 +105,45 @@ return [
         'dropdown' => false,
         'vAlign' => 'middle',
         'width' => '200px',
-   'urlCreator' => function($action, $model, $key, $index) {
+        'urlCreator' => function($action, $model, $key, $index) {
     if ($action === 'payment') {
-        // Lấy thông tin học phí của học viên
-        $hocPhiHang = HocPhi::findOne(['id_hang' => $model->id_hang]);
-        
+        // Lấy thông tin khóa học của học viên
+        $khoaHoc = KhoaHoc::findOne($model->id_khoa_hoc);
+
+        // Nếu không có thông tin khóa học, trả về URL mặc định
+        if (!$khoaHoc) {
+            return Url::to(['mess2', 'id' => $key]); 
+        }
+
+        // Lấy học phí dựa trên id_hoc_phi của khóa học
+        $hocPhiHang = HocPhi::findOne($khoaHoc->id_hoc_phi);
+
+        // Nếu không có thông tin học phí, trả về URL mặc định
+        if (!$hocPhiHang) {
+            return Url::to([$action, 'id' => $key]);
+        }
+
         // Lấy thông tin các lần nộp học phí của học viên
         $nopHP = NopHocPhi::find()->where(['id_hoc_vien' => $model->id])->all();
-        
+
         // Tính tổng số tiền đã nộp
         $tongTienDaNop = 0;
         foreach ($nopHP as $hcPhi) {
             $tongTienDaNop += $hcPhi->so_tien_nop;
         }
-
+    
         // Kiểm tra trạng thái học phí
-        if ($hocPhiHang && $tongTienDaNop >= $hocPhiHang->hoc_phi) {
-            // Nếu học viên đã đóng đủ học phí
-            return Url::to(['mess', 'id' => $key]); //Ngừng cho nhập học phí và chuyển đến actionMess để thông báo đã nộp đủ
-        } else {
-            // Nếu học viên chưa đóng hoặc đóng thiếu học phí
-            return Url::to(['create2', 'id' => $key]);  // Tiếp tục cho nhập học phí
+        if ($tongTienDaNop >= $hocPhiHang->hoc_phi) {
+            // Học viên đã đóng đủ học phí
+            return Url::to(['mess', 'id' => $key]); // Chuyển đến actionMess để thông báo đã nộp đủ
+        } else if($tongTienDaNop < $hocPhiHang->hoc_phi){
+            // Học viên chưa đóng hoặc đóng thiếu học phí
+            return Url::to(['create2', 'id' => $key]); // Tiếp tục cho nhập học phí
         }
     }
-    return Url::to([$action, 'id' => $key]);
+    return Url::to([$action, 'id' => $key]); // Trả về URL mặc định cho các hành động khác
 },
 
-          // Đặt buttons bên trong cấu hình của ActionColumn
           'buttons' => [
             'payment' => function($url, $model, $key) {
                 return Html::a('<i class="fas fa-dollar-sign"></i>', $url, [

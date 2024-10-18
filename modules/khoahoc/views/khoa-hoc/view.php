@@ -21,6 +21,14 @@ use app\widgets\KhoDisplayWidget;
                                         <p><strong>Hạng đào tạo:</strong> <?= $model->hang->ten_hang ?></p>
                                         <p><strong>Ngày bắt đầu:</strong> <?= $model->ngayBatDau ?></p>
                                         <p><strong>Ngày kết thúc:</strong> <?= $model->ngayKetThuc ?></p>
+                                        <p><strong>Học phí:</strong> 
+                                               <?php if (!empty($model->hocPhi->hoc_phi)): ?>
+                                                     <span style="color:blue;"> <?= number_format($model->hocPhi->hoc_phi, 0, ',', '.') . ' VNĐ'; ?></span>
+                                                   <?php else: ?>
+                                                       <span style="color:red;">Chưa có học phí</span>
+                                                <?php endif; ?>
+                                        </p>
+
                                         <p><strong>Trạng thái:</strong> <?= $model->trang_thai ?></p>
                                      
 
@@ -48,20 +56,20 @@ use app\widgets\KhoDisplayWidget;
                         <div class="tab-content" id="myTabContent">
                         <!-- Nội dung Danh sách lớp -->
                             <div class="tab-pane fade show active" id="listHv" role="tabpanel" aria-labelledby="list-tab">
-                        <!-- Nội dung hiển thị khi click vào "Danh sách lớp" -->
-                                <h3 style="text-align:center;">Danh sách học viên</h3>
+                        <!-- Nội dung hiển thị khi click vào "Danh sách học viên" -->
+                              
                                 <?= $this->render('xem_hv', ['model' => $model]) ?>
                             </div>
                              <!-- Nội dung Lịch học -->
                              <div class="tab-pane fade" id="add-timetable" role="tabpanel" aria-labelledby="add-timetable-tab">
-                        <!-- Nội dung hiển thị khi click vào "Thêm học viên" -->
+                        <!-- Nội dung hiển thị khi click vào "Lịch học" -->
                                 <h3>Lịch học</h3>
                                 <p>Hiển thị lịch học tại đây.</p>
                              
                             </div>
                               <!-- Nội dung Tài liệu khóa học -->
                               <div class="tab-pane fade" id="add-document" role="tabpanel" aria-labelledby="add-document-tab">
-                        <!-- Nội dung hiển thị khi click vào "Thêm học viên" -->
+                        <!-- Nội dung hiển thị khi click vào "Tài liệu khóa học" -->
                                 <?= FileDisplayWidget::widget([
                                     'type'=>'ALL',
                                      'doiTuong'=>KhoaHoc::MODEL_ID,

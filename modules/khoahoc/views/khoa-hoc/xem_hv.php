@@ -1,62 +1,74 @@
 <?php
-
-
-use app\modules\hocvien\models\HocVien;  // Import model HocVien
 use yii\bootstrap5\Html;
-
-
-
+use app\modules\hocvien\models\HocVien;
+$datas = HocVien::find()->where(['id_khoa_hoc' => $model->id])->all();
 ?>
-<table class="table">
-    <tr>
-    	<th>STT</th>
-    	<th>Họ tên</th>
-    	<th>Số CCCD</th>
-    	<th></th>
-    </tr>
-<?php 
-    $datas = HocVien::find()->where(['id_khoa_hoc' => $model->id])->all();
-    foreach ($datas as $iHv=>$hv){
-?>
-    <tr>
-        <td><?= $iHv+1 ?></td>
-        <td><?= $hv->ho_ten ?></td>
-        <td><?= $hv->so_cccd ?></td>
-        <td>
-        	<?= Html::a('<i class="fas fa-eye icon-white"></i>', 
-        	    ['/hocvien/hoc-vien/view', 'id'=>$hv->id, 'modalType'=>'modal-remote-2'], 
-                [
-                    'class' => 'btn btn-sm btn-primary', 
-                    'title' => 'Xem',
-                    'role'=>'modal-remote-2'
-                ]); ?>
-                
-            <?= Html::a('<i class="fas fa-pencil-alt icon-white"></i>', 
-                ['/hocvien/hoc-vien/update-from-khoa-hoc', 'id'=>$hv->id, 'modalType'=>'modal-remote-2', 'idKhoaHoc'=>$model->id], 
-                    [
-                        'class' => 'btn btn-sm btn-warning', 
-                        'title' => 'Sửa',
-                        'role'=>'modal-remote-2'
-                    ]); ?>
-            <?= Html::a( '<i class="fa fa-remove"> </i>',
-                                ['/hocvien/hoc-vien/delete-from-khoa-hoc', 
-                                'id' => $hv->id
-                                ],
-                                [
-                                    'class' => 'btn ripple btn-info btn-sm',
-                                    'title' => 'Xóa học viên ',
-                                    'style' => 'color: white;',
-                                    'role'=>'modal-remote-3',
-                                ]
-                            ) ?>
-        </td>
-    </tr>
-<?php } ?>
-</table>
 
-<div class="hoc-vien-index">
+<?php if (empty($datas)) : ?>
+    <p style="color:chartreuse">Không tìm thấy Học viên</p>
+<?php else : ?>
+    <table class="table" id="hocVienTable">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>Họ tên</th>
+                <th>Số CCCD</th>
+                <th>Giới tính</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php 
+            foreach ($datas as $iHv => $hv){
+        ?>
+            <tr>
+                <td><?= $iHv + 1 ?></td>
+                <td><?= $hv->ho_ten ?></td>
+                <td><?= $hv->so_cccd ?></td>
+                <td><?= $hv->gioi_tinh == 1 ? 'Nam' : 'Nữ' ?></td>
+                <td>
+                    <?= Html::a('<i class="fas fa-eye icon-white"></i>', 
+                        ['/hocvien/hoc-vien/view', 'id' => $hv->id, 'modalType' => 'modal-remote-2'], 
+                        ['class' => 'btn btn-sm btn-primary', 'title' => 'Xem', 'role' => 'modal-remote-2']
+                    ); ?>
+                    
+                    <?= Html::a('<i class="fa fa-remove"></i>', 
+                        ['/hocvien/hoc-vien/delete-from-khoa-hoc', 'id' => $hv->id], 
+                        ['class' => 'btn ripple btn-info btn-sm delete-hv-btn', 'title' => 'Xóa học viên', 'style' => 'color: white;', 'data-id' => $hv->id]
+                    ); ?>
+                </td>
+            </tr>
+        <?php } ?>
+        </tbody>
+    </table>
+<?php endif; ?>
 
-</div>
+
+<script>
+$(document).on('click', '.delete-hv-btn', function(e) {
+    e.preventDefault(); // Ngăn hành động mặc định (chuyển trang)
+
+    var url = $(this).attr('href'); // URL của hành động xóa
+
+    $.ajax({
+        url: url,
+        type: 'POST',
+        success: function(response) {
+            if (response.forceReload) {
+                // Reload lại nội dung bảng học viên
+                $(response.forceReload).html(response.reloadContent);
+            }
+            if (response.tcontent) {
+                alert(response.tcontent);  // Hiển thị thông báo
+           }
+        },
+        error: function() {
+            alert('Lỗi khi xóa học viên.');
+        }
+    });
+});
+
+</script>
 <style>
     .icon-white {
     color: white;

@@ -1,62 +1,88 @@
 <?php
+use yii\helpers\Html;
+
 /* @var $this yii\web\View */
 /* @var $model app\models\HvHocVien */
 ?>
-<div class="hv-hoc-vien-view" style="width: 700px; margin: 0 auto; font-family: Arial, sans-serif; font-size: 14px;">
-    <p style="text-align: left; line-height: 1.5;">
-        <strong>TRUNG TÂM GDNN & SÁT HẠCH LÁI XE NGUYỄN TRÌNH</strong>
-       
-    </p>
-<br>
-    <p style="text-align: center; margin-top: 30px;">
-        <strong style="font-size: 18px;">PHIẾU ĐĂNG KÝ</strong>
+
+<div class="hv-hoc-vien-view">
+
+    <div class="row">
+        <!-- Thông tin học viên -->
+        <div class="col-xl-6 col-md-12">
+            <div class="card custom-card">
+                <div class="card-header custom-card-header rounded-bottom-0">
+                    <h6 class="card-title mb-0 text-center" style="color: red;">Thông tin học viên</h6>
+                </div>
+                <div class="card-body">
+                    <div class="skill-tags">
+                        <p><strong>Tên học viên:</strong> <?= $model->ho_ten ?></p>
+                        <p><strong>Giới tính:</strong> <?= $model->gioi_tinh == 1 ? 'Nam' : 'Nữ' ?></p>
+                        <p><strong>Ngày sinh:</strong> <?= $model->getNgaySinh() ?></p>
+                        <p><strong>Địa chỉ:</strong> <?= $model->dia_chi ?></p>
+                        <p><strong>Số CCCD:</strong> <?= $model->so_cccd ?></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Thông tin khóa học -->
+        <div class="col-xl-6 col-md-12">
+            <div class="card custom-card">
+                <div class="card-header custom-card-header rounded-bottom-0">
+                    <h6 class="card-title mb-0 text-center" style="color: red;">Thông tin khóa học</h6>
+                </div>
+                <div class="card-body">
+                    <div class="skill-tags">
+                        <p><strong>Tên khóa học:</strong> 
+                            <?php if ($model->id_khoa_hoc === null): ?>
+                                Học viên chưa được sắp khóa học
+                            <?php else: ?>
+                                <?= $model->khoaHoc->ten_khoa_hoc ?>
+                            <?php endif; ?>
+                        </p>
+                        <p><strong>Hạng đào tạo:</strong> <?= $model->hangDaoTao->ten_hang ?></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+		<p>
+        <?= Html::button('<i class="fa fa-download"> </i> In Phiếu Thông Tin', ['class' => 'btn btn-success', 'onclick' => 'InPhieuThongTin()']) ?>
     </p>
 
-    <p style="margin-top: 40px; color: red;">
-        <strong>Thông tin học viên:</strong>
-    </p>
+    <!-- Phần tử ẩn chứa nội dung phiếu -->
+    <div style="display:none">
+        <div id="print"></div>
+    </div>
+    </div>
     
-    <table style="width: 100%; margin-top: 10px; border-spacing: 10px;">
-    <tr>
-        <td style="width: 50%; vertical-align: top;"><strong>Họ tên học viên:</strong> <?= $model->ho_ten ?></td>
-        <td style="width: 50%; vertical-align: top;"><strong>Ngày sinh:</strong> <?= $model->getNgaySinh() ?></td>
-    </tr>
-    <tr>
-        <td style="width: 50%; vertical-align: top;"><strong>Giới tính:</strong> <?= $model->gioi_tinh == 1 ? 'Nam' : 'Nữ' ?></td>
-        <td style="width: 50%; vertical-align: top;"><strong>Số CCCD:</strong> <?= $model->so_cccd ?></td>
-    </tr>
-    <tr>
-        <td style="width: 50%; vertical-align: top;"><strong>Địa chỉ:</strong> <?= $model->dia_chi ?></td>
-        <td style="width: 50%; vertical-align: top;"><strong>Số điện thoại:</strong> <?= $model->so_dien_thoai ?></td>
-    </tr>
-</table>
-
-
-    <p style="margin-top: 30px; color: red;">
-        <strong>Thông tin đào tạo</strong>
-    </p>
-    <p style="padding-left: 10px; "><strong style="font-weight: bold;">Hạng đào tạo:</strong> <?= $model->hangDaoTao ? $model->hangDaoTao->ten_hang : 'Chưa có hạng' ?></p>
-    <?php 
-$hocPhi = $model->getHocPhi();
-if ($hocPhi): ?>
-    <p style="padding-left: 10px;"><strong style="font-weight: bold;">Học phí:</strong> <u><?= number_format($hocPhi->hoc_phi, 0, ',', '.') ?> VND</u></p>
-<?php else: ?>
-    <p>Học phí chưa được cập nhật.</p>
-<?php endif; ?>
-
-   
-
-    <div style="width: 100%; text-align: right;">
-    <table style="width: 200px; padding: 10px; border-radius: 5px; margin-left: auto;">
-        <tr>
-            <td style="text-align: center;"><strong>Người lập phiếu</strong></td>
-        </tr>
-        <tr>
-        <td style="height: 150px; text-align: center;"><strong><?= $model->nguoi_lap_phieu?></strong></td>
-        </tr>
-    </table>
 </div>
-</div>
+<script>
+function InPhieuThongTin() {
+    $.ajax({
+        type: 'POST',
+        url: '/hocvien/dang-ky-hv/get-phieu-in-ajax?id=' + <?= $model->id ?> + '&type=phieuthongtin',
+        success: function (data) {
+            if(data.status === 'success'){
+                $('#print').html(data.content);
+                printPhieuXuat(); // Gọi hàm in phiếu
+            } else {
+                alert('Không thể tải phiếu!');
+            }
+        },
+        error: function () {
+            alert('Đã xảy ra lỗi.');
+        }
+    });
+}
 
+// Hàm in phiếu
+function printPhieuXuat() {
+    var printContents = document.getElementById('print').innerHTML;
+    var originalContents = document.body.innerHTML;
 
-                  
+    document.body.innerHTML = printContents;
+    window.print();
+    document.body.innerHTML = originalContents;
+}
+</script>

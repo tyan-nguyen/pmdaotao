@@ -83,8 +83,7 @@ class DangKyHvController extends Controller
                 'content'=>$this->renderAjax('view', [
                     'model' => $this->findModel($id),
                 ]),
-                'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                          Html::a(' <i class ="fa fa-download"></i> Xuất PDF',['export-pdf','id'=>$id],['class'=>'btn btn-primary', 'target' => '_blank']) // Mở trong tab mới hoặc tải xuống trực tiếp
+                'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"])          
             ];    
         } else {
             return $this->render('view', [
@@ -290,41 +289,6 @@ class DangKyHvController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
- public function actionExportPdf($id)
-{
-    $model = $this->findModel($id);
-    
-    // Lấy nội dung từ view _pdf.php
-    $content = $this->renderPartial('view', [
-        'model' => $model,
-    ]);
-
-    $pdf = new \kartik\mpdf\Pdf([
-        'mode' => \kartik\mpdf\Pdf::MODE_UTF8,
-        'format' => [210, 210], // Đặt kích thước trang (148mm x 210mm tương đương A5)
-        'content' => $content,
-        'options' => [
-            'title' => 'Thông tin học viên đăng ký',
-            'subject' => 'Xuất PDF thông tin học viên',
-        ],
-        'methods' => [
-            'SetHeader' => ['Thông tin học viên đăng ký'],
-            'SetFooter' => [''],
-            //'SetFooter' => ['{PAGENO}'],
-        ],
-        'marginTop' => 20, // Cài đặt lề trên
-        'marginBottom' => 20, // Cài đặt lề dưới
-        'marginLeft' => 10, // Cài đặt lề trái
-        'marginRight' => 10, // Cài đặt lề phải
-    ]);
-    
-
-    // Đặt tên file PDF sẽ tải về
-    $pdf->filename = 'ThongTinHocVien_' . $model->id . '.pdf';
-
-    // Gửi file PDF trực tiếp tới người dùng và tải xuống
-    return $pdf->render();
-}
 
     
 public function actionCreate2($id)
@@ -417,4 +381,23 @@ public function actionCreate2($id)
     }
    
 }
+
+public function actionGetPhieuInAjax($id, $type)
+{
+    $model = $this->findModel($id);
+
+    if ($type === 'phieuthongtin') {
+        $content = $this->renderPartial('_print_phieu_thong_tin', ['model' => $model]);
+        return $this->asJson([
+            'status' => 'success',
+            'content' => $content,
+        ]);
+    }
+
+    return $this->asJson([
+        'status' => 'error',
+        'message' => 'Không tìm thấy loại phiếu.',
+    ]);
+}
+
 }

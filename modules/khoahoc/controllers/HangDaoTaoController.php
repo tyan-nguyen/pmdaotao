@@ -388,7 +388,88 @@ class HangDaoTaoController extends Controller
         }
     }
     }
+  
+    public function actionListHocPhi($id)
+{   
+     // Lấy thông tin học phí của hạng dựa vào id_hang
+     $hocPhis = HocPhi::find()
+     ->where(['id_hang' => $id])
+     ->orderBy(['ngay_ap_dung' => SORT_ASC])
+     ->all();
+    return $this->asJson([
+        'title'=>'Danh sách học phí ',
+        'content'=>$this->renderAjax('list-hoc-phi', [
+            'hocPhis' => $hocPhis,
+        ]),
+        'footer' => Html::button('Đóng lại', [
+            'class' => 'btn btn-default pull-left',
+            'data-bs-dismiss' => "modal"
+        ])
+    ]);
+    
+}
+    public function actionUpdateListHocPhi ($id)
+    {
+        $request = Yii::$app->request;
+        $model = HocPhi::find()->where(['id' => $id])->one();
+        $idHang = $model->id_hang; 
+    if ($request->isAjax) {
+        // Xử lý cho yêu cầu AJAX
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        if ($request->isGet) {
+            return [
+                'title' => "Cập nhật Học phí #".$id,
+                'content' => $this->renderAjax('update2', [
+                    'model' => $model,
+                ]),
+                'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                            Html::button('Lưu lại', ['class' => 'btn btn-primary', 'type' => "submit"])
+            ];
+        } else if ($model->load($request->post()) && $model->save()) {
+            return [
+                'forceClose'=>true,   
+                'reloadType'=>'hocPhi',
+                'reloadBlock'=>'#hpContent',
+                'reloadContent'=>$this->renderAjax('list-hoc-phi', [
+                    'hocPhis' => HocPhi::find()->where(['id_hang' => $idHang])
+                    ->orderBy(['ngay_ap_dung' => SORT_ASC])
+                    ->all(),
+                ]),
+                
+                'tcontent'=>'Cập nhật học phí thành công!',
+            ];
+            /*
+            return [
+                'forceReload' => '#crud-datatable-pjax',
+                'title' => "Học phí #".$id,
+                'content' => $this->renderAjax('mess', [
+                    'model' => $model,
+                ]),
+                'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) 
+                           
+            ];*/
+        } else {
+            return [
+                'title' => "Cập nhật Học phí #".$id,
+                'content' => $this->renderAjax('update2', [
+                    'model' => $model,
+                ]),
+                'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                            Html::button('Lưu lại', ['class' => 'btn btn-primary', 'type' => "submit"])
+            ];
+        }
+    } else {
+        // Xử lý cho yêu cầu không phải AJAX
+        if ($model->load($request->post()) && $model->save()) {
 
+            return $this->redirect(['mess', 'id' => $model->id]); // Chuyển hướng tới trang xem
+        } else {
+            return $this->render('update2', [
+                'model' => $model,
+            ]);
+        }
+    }
+    }
 
     
 }

@@ -5,6 +5,7 @@ use app\custom\CustomFunc;
 use Yii;
 use app\modules\hocvien\models\HocVien;
 use app\modules\hocvien\models\HangDaoTao;
+use app\modules\hocvien\models\HocPhi;
 /**
  * This is the model class for table "hv_khoa_hoc".
  *
@@ -17,7 +18,7 @@ use app\modules\hocvien\models\HangDaoTao;
  * @property string $trang_thai
  * @property int|null $nguoi_tao
  * @property string|null $thoi_gian_tao
- *
+ * @property int|null $id_hoc_phi
  * @property HangDaoTao $hang
  * @property HocVien[] $hvHocViens
  * @property TaiLieuKhoaHoc[] $hvTaiLieuKhoaHocs
@@ -45,7 +46,7 @@ class KhoaHocBase extends \app\models\HvKhoaHoc
     {
         return [
             [['id_hang', 'ten_khoa_hoc'], 'required'],
-            [['id_hang', 'nguoi_tao'], 'integer'],
+            [['id_hang', 'nguoi_tao','id_hoc_phi'], 'integer'],
             [['ngay_bat_dau', 'ngay_ket_thuc', 'thoi_gian_tao'], 'safe'],
             [['ghi_chu'], 'string'],
             [['ten_khoa_hoc', 'trang_thai'], 'string', 'max' => 255],
@@ -68,6 +69,7 @@ class KhoaHocBase extends \app\models\HvKhoaHoc
             'trang_thai' => 'Trạng thái',
             'nguoi_tao' => 'Người tạo',
             'thoi_gian_tao' => 'Thời gian tạo',
+            'id_hoc_phi'=>'Id học phí',
         ];
     }
 
@@ -80,6 +82,10 @@ class KhoaHocBase extends \app\models\HvKhoaHoc
     {
         return $this->hasOne(HangDaoTao::class, ['id' => 'id_hang']);
     }
+    public function getHocPhi()
+    {
+        return $this->hasOne(HocPhi::class,['id'=>'id_hoc_phi']);
+    }
 
     /**
      * Gets query for [[HvHocViens]].
@@ -91,20 +97,32 @@ class KhoaHocBase extends \app\models\HvKhoaHoc
         return $this->hasMany(HocVien::class, ['id_khoa_hoc' => 'id']);
     }
 
-    public function beforeSave($insert) {
+    public function beforeSave($insert)
+    {
         // Chuyển đổi định dạng ngày tháng trước khi lưu, bất kể là tạo mới hay cập nhật
         $this->ngay_bat_dau = CustomFunc::convertDMYToYMD($this->ngay_bat_dau);
         $this->ngay_ket_thuc = CustomFunc::convertDMYToYMD($this->ngay_ket_thuc);
         
         if ($this->isNewRecord) {
-            // Chỉ áp dụng cho bản ghi mới
             $this->nguoi_tao = Yii::$app->user->identity->id;
             $this->thoi_gian_tao = date('Y-m-d H:i:s');
             $this->trang_thai = 'CHUA_HOAN_THANH';
+            // Tìm học phí mới nhất của hạng
+            $hocPhiMax = HocPhi::find()
+                ->where(['id_hang' => $this->id_hang])
+                ->orderBy(['id' => SORT_DESC])
+                ->one(); 
+            
+            if ($hocPhiMax) {
+                $this->id_hoc_phi = $hocPhiMax->id; 
+            } else {
+                $this->id_hoc_phi = null; 
+            }
         }
     
         return parent::beforeSave($insert);
     }
+    
     
    
 }
