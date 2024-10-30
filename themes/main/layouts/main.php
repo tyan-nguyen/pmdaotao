@@ -1,8 +1,8 @@
 <?php 
 use app\assets\ViboonAsset;
 use yii\helpers\Html;
-use app\modules\taisan\models\ThietBi;
-use yii\bootstrap5\ActiveForm;
+//use app\modules\taisan\models\ThietBi;
+
 
 ViboonAsset::register($this);
 
@@ -12,7 +12,6 @@ $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, 
 $this->registerMetaTag(['name' => 'description', 'content' => $this->params['meta_description'] ?? '']);
 $this->registerMetaTag(['name' => 'keywords', 'content' => $this->params['meta_keywords'] ?? '']);
 $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii::getAlias('@web/assets/images/brand/favicon.ico')]);
-
 ?>
 <?php $this->beginPage() ?>
 <!doctype html>
@@ -22,7 +21,8 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 		<link rel="stylesheet" href="http://yourdomain.com/assets/css/theme.min.css">
 
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.min.js"></script>
-
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/dropzone.min.css" rel="stylesheet">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/dropzone.min.js"></script>
 
 		<!-- Title -->
 		<title><?= Html::encode($this->title) ?></title>

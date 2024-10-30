@@ -24,7 +24,10 @@
 						<ul class="sidemenu-list">
 							<li class="side-menu__label1"><a href="javascript:void(0)">Danh mục chức năng</a></li>
 							
-							<li><a href="/hoc-vien/quan-ly-hoc-vien?menu=qlhv" class="slide-item" data-menu="qlhv">Phiếu thuê xe</a></li>
+							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/phieu-thue-xe?menu=dc1') ?>" class="slide-item" data-menu="dc">Phiếu thuê xe</a>
+							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/xe?menu=dc1') ?>" class="slide-item" data-menu="dc1">Danh sách Xe</a>
+							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/loai-xe?menu=dc3') ?>" class="slide-item" data-menu="dc3">Loại Xe</a>
+							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/loai-hinh-thue?menu=dc2') ?>" class="slide-item" data-menu="dc2">Loại hình thuê</a>
 						</ul>
 						<div class="menutabs-content px-0">
 							<!-- menu tab here -->

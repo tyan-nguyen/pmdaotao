@@ -55,6 +55,8 @@ class File extends FileBase{
             return File::FOLDER_ICONS . 'pdf.png';
         else if(strtoupper($icon) == 'DOCX')
             return File::FOLDER_ICONS . 'docx.png';
+        else if(strtoupper($icon) == 'PNG')
+            return File::FOLDER_ICONS . 'docx.png';
         else 
             return File::FOLDER_ICONS . 'none.png';
     }

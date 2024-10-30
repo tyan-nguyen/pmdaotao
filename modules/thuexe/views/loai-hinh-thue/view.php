@@ -3,20 +3,19 @@
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\HvKhoaHoc */
+/* @var $model app\modules\thuexe\models\LoaiHinhThue */
 ?>
-<div class="hv-khoa-hoc-view">
+<div class="loai-hinh-thue-view">
  
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
             'id',
-            'id_hang',
-            'ten_khoa_hoc',
-            'ngay_bat_dau',
+            'loai_hinh_thue',
+            'id_loai_xe',
+            'gia_thue',
+            'ngay_ap_dung',
             'ngay_ket_thuc',
-            'ghi_chu:ntext',
-            'trang_thai',
             'nguoi_tao',
             'thoi_gian_tao',
         ],

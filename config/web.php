@@ -37,6 +37,9 @@ $config = [
         'hocvien' => [
             'class' => 'app\modules\hocvien\Hocvien',
         ],
+        'thuexe' => [
+            'class' => 'app\modules\thuexe\ThueXe',
+        ],
 
         /* 'dynamikjs' => [
             'class' => 'dastanaron\dropzone\DynamicJSModule'

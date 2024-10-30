@@ -3,6 +3,7 @@ use yii\widgets\ActiveForm;
 ?>
 <form action="" class="dropzone">
   <div class="fallback">
+	
     <input name="file" type="file" multiple />
   </div>
 </form>

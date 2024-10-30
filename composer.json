@@ -31,7 +31,9 @@
         "wbraganca/yii2-dynamicform": "^2.0",
         "dastanaron/yii2-dropzone-widget": "@dev",
         "kartik-v/yii2-mpdf": "^1.0",
-        "kartik-v/yii2-money": "^1.2"
+        "kartik-v/yii2-money": "^1.2",
+        "kartik-v/yii2-widget-datetimepicker": "^1.5",
+        "rmrevin/yii2-fontawesome": "^3.7"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
