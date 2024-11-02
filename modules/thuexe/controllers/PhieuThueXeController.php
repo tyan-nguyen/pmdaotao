@@ -929,9 +929,19 @@ public function actionXemThongTinDuyetPhieu($id)
     }
 }
 
-public  function actionXemThongTinPhiThue()
+public  function actionXemThongTinPhiThue($id)
 {
-       
+    $model = $this->findModel($id); 
+    return $this->asJson([
+        'title'=>'Thông báo !',
+        'content'=>$this->renderAjax('xem_thong_tin_nop_phi', [ 
+            'model' => $model,
+        ]),
+        'footer' => Html::button('Đóng lại', [
+            'class' => 'btn btn-default pull-left',
+            'data-bs-dismiss' => "modal",
+        ])
+    ]);
 }
 
 }

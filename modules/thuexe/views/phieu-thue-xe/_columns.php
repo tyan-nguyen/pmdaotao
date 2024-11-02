@@ -130,6 +130,10 @@ return [
                 {
                     return Url::to(['thong-bao-chua-duyet', 'id' => $key]);
                 }
+                if(($phieuThueXe->trang_thai === 'Không duyệt') || ($phieuThueXe->trang_thai === 'Đã nhập') || ($phieuThueXe->trang_thai === 'Không gửi') )
+                {
+                    return Url::to(['thong-bao-chua-duyet', 'id' => $key]); 
+                }
                 // Nếu tìm thấy bản ghi trong bảng NopPhiThueXe
                 foreach ($nopPhiRecords as $record) {
                     // Trường hợp 1: `trang_thai` là "Phí thuê xe" và `chi_phi_thue_phat_sinh` của `phieuThueXe` là null
