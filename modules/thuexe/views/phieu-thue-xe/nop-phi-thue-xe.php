@@ -1,1 +1,0 @@
-<p> Trang phí thuê Xe </p> 

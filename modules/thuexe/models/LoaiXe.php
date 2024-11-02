@@ -90,4 +90,12 @@ class LoaiXe extends \app\models\PtxLoaiXe
     {
         return $this->hasOne(LoaiXe::class, ['id' => 'id_loai_xe']);
     }
+    public function beforeSave($insert)
+    {        
+        if ($this->isNewRecord) {
+            $this->nguoi_tao = Yii::$app->user->identity->id;
+            $this->thoi_gian_tao = date('Y-m-d H:i:s'); 
+        }
+        return parent::beforeSave($insert);
+    }
 }

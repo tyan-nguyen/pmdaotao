@@ -3,6 +3,7 @@
 namespace app\modules\thuexe\models;
 
 use Yii;
+use app\custom\CustomFunc;
 
 /**
  * This is the model class for table "ptx_nop_phi_thue_xe".
@@ -30,7 +31,7 @@ class NopPhiThueXe extends \app\models\PtxNopPhiThueXe
     {
         return 'ptx_nop_phi_thue_xe';
     }
-
+    public $file;
     /**
      * {@inheritdoc}
      */
@@ -44,6 +45,7 @@ class NopPhiThueXe extends \app\models\PtxNopPhiThueXe
             [['so_cccd_nguoi_thue'], 'string', 'max' => 15],
             [['dia_chi_nguoi_thue', 'bien_lai'], 'string', 'max' => 255],
             [['so_dien_thoai_nguoi_thue'], 'string', 'max' => 12],
+            [['file'], 'file','extensions' => 'png, jpg, jfif'],
         ];
     }
 
@@ -55,17 +57,43 @@ class NopPhiThueXe extends \app\models\PtxNopPhiThueXe
         return [
             'id' => 'ID',
             'id_phieu_thue_xe' => 'Id Phieu Thue Xe',
-            'id_hoc_vien' => 'Id Hoc Vien',
-            'ho_ten_nguoi_thue' => 'Ho Ten Nguoi Thue',
-            'so_cccd_nguoi_thue' => 'So Cccd Nguoi Thue',
-            'dia_chi_nguoi_thue' => 'Dia Chi Nguoi Thue',
-            'so_dien_thoai_nguoi_thue' => 'So Dien Thoai Nguoi Thue',
-            'so_tien_nop' => 'So Tien Nop',
-            'nguoi_thu' => 'Nguoi Thu',
-            'bien_lai' => 'Bien Lai',
-            'ngay_nop' => 'Ngay Nop',
-            'nguoi_tao' => 'Nguoi Tao',
-            'thoi_gian_tao' => 'Thoi Gian Tao',
+            'id_hoc_vien' => 'Học viên',
+            'ho_ten_nguoi_thue' => 'Họ tên người thuê',
+            'so_cccd_nguoi_thue' => 'Số CCCD người thuê',
+            'dia_chi_nguoi_thue' => 'Địa chỉ người thuê',
+            'so_dien_thoai_nguoi_thue' => 'Số điện thoại người thuê',
+            'so_tien_nop' => 'Phí thuê',
+            'nguoi_thu' => 'Người thu',
+            'bien_lai' => 'Biên lai',
+            'ngay_nop' => 'Ngày thu',
+            'nguoi_tao' => 'Người tạo',
+            'thoi_gian_tao' => 'Thời gian tạo',
+            'file' => 'Chọn biên lai',
         ];
     }
+    public function beforeSave($insert)
+    {     
+        $this->ngay_nop = CustomFunc::convertDMYToYMD($this->ngay_nop);   
+        if ($this->isNewRecord) {
+            $this->nguoi_tao = Yii::$app->user->identity->id;
+            $this->thoi_gian_tao = date('Y-m-d H:i:s'); 
+            if (!empty($this->id_phieu_thue_xe)) {
+                $phieuThueXe = PhieuThueXe::findOne($this->id_phieu_thue_xe);
+                if ($phieuThueXe && $phieuThueXe->chi_phi_thue_phat_sinh === null) {
+                    $this->trang_thai = 'Phí thuê xe'; 
+                }
+                if ($phieuThueXe && $phieuThueXe ->chi_phi_thue_phat_sinh > 0)
+                {
+                    $this->trang_thai = 'Phí phát sinh';
+                }
+                if ($phieuThueXe && $phieuThueXe ->chi_phi_thue_phat_sinh === 0)
+                {
+                    $this->trang_thai = 'Không tồn tại phí phát sinh';
+                }
+                
+            }
+        }
+        return parent::beforeSave($insert);
+    }
+    
 }

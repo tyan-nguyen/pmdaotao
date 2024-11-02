@@ -54,9 +54,7 @@ $model->ngay_sinh = CustomFunc::convertYMDToDMY($model->ngay_sinh);
 	        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
 	    </div>
 	<?php } ?>
-
     <?php ActiveForm::end(); ?>
-    
 </div>
 <style>
        .hv-hoc-vien-form label {

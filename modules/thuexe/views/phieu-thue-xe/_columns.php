@@ -3,6 +3,8 @@ use yii\helpers\Url;
 use yii\bootstrap5\Html;
 use app\modules\hocvien\models\HocVien;
 use app\modules\thuexe\models\Xe;
+use app\modules\thuexe\models\NopPhiThueXe;
+use app\modules\thuexe\models\PhieuThueXe;
 
 return [
     [
@@ -89,7 +91,6 @@ return [
         'dropdown' => false,
         'vAlign'=>'middle',
         'width' => '300px',
-    
         'urlCreator' => function($action, $model, $key, $index) { 
             if ($action === 'sent') {
                  if ($model->id_nguoi_gui === null) {
@@ -116,9 +117,40 @@ return [
                       }
              }
              if ($action === 'payment') {
-                 return Url::to(['nop-phi-thue-xe', 'id' => $key]);     
-             }
-
+                // Tìm tất cả các bản ghi trong bảng NopPhiThueXe có `id_phieu_thue_xe` bằng với `$key`
+                $nopPhiRecords = NopPhiThueXe::findAll(['id_phieu_thue_xe' => $key]);
+                 // Lấy bản ghi PhieuThueXe hiện tại dựa trên `$key`
+                $phieuThueXe = PhieuThueXe::findOne($key);
+                // Trường hợp không tìm thấy bản ghi nào
+               if (empty($nopPhiRecords)&& ($phieuThueXe ->trang_thai === 'Đã duyệt')) {
+                   return Url::to(['nop-phi-thue-xe', 'id' => $key]);
+                }
+                if($phieuThueXe-> trang_thai === 'Đả trả')
+                      if ($phieuThueXe->trang_thai != 'Đã duyệt')
+                {
+                    return Url::to(['thong-bao-chua-duyet', 'id' => $key]);
+                }
+                // Nếu tìm thấy bản ghi trong bảng NopPhiThueXe
+                foreach ($nopPhiRecords as $record) {
+                    // Trường hợp 1: `trang_thai` là "Phí thuê xe" và `chi_phi_thue_phat_sinh` của `phieuThueXe` là null
+                    if ($record->trang_thai === "Phí thuê xe" && $phieuThueXe->chi_phi_thue_phat_sinh === null) {
+                        return Url::to(['xem-thong-tin-phi-thue', 'id' => $key]);
+                    }
+                    
+                    // Trường hợp 2: `trang_thai` là "Phí thuê xe" và `chi_phi_thue_phat_sinh` của `phieuThueXe` là 0
+                    if ($record->trang_thai === "Phí thuê xe" && $phieuThueXe->chi_phi_thue_phat_sinh == 0) {
+                        return Url::to(['xem-thong-tin-phi-thue', 'id' => $key]);
+                    }
+            
+                    // Trường hợp 3: `trang_thai` là "Phí phát sinh"
+                    if ($record->trang_thai === "Phí phát sinh") {
+                        return Url::to(['xem-thong-tin-phi-thue', 'id' => $key]);
+                    }
+                    
+                }
+                // Mặc định trả về URL của `nop-phi-thue-xe` nếu không thỏa mãn các điều kiện trên
+                return Url::to(['nop-phi-thue-xe', 'id' => $key]);//Xem lại chỗ này 
+            }
             return Url::to([$action, 'id' => $key]);
        },
         'buttons' => [

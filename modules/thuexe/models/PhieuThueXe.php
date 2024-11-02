@@ -14,6 +14,10 @@ class PhieuThueXe extends PhieuThueXeBase
     {
            return $this->hasOne(User::class, ['id' => 'id_nguoi_gui']);
     }
+    public function getNguoiKiemDuyet()
+    {
+           return $this->hasOne(User::class, ['id' => 'id_nguoi_duyet']);
+    }
 
     public function getNgayThueXe(){
         return CustomFunc::convertYMDToDMY($this->ngay_thue_xe);

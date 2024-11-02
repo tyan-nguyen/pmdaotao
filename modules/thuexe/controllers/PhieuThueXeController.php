@@ -14,6 +14,8 @@ use yii\filters\AccessControl;
 use app\modules\thuexe\models\LoaiHinhThue;
 use app\modules\thuexe\models\Xe;
 use app\modules\thuexe\models\NopPhiThueXe;
+use app\modules\hocvien\models\HocVien;
+use app\modules\hocvien\models\KhoaHoc;
 use yii\web\UploadedFile;
 
 /**
@@ -333,7 +335,7 @@ public function actionSent($id)
             $model->id_nguoi_gui = Yii::$app->user->identity->id; 
             $model->thoi_gian_gui = date('Y-m-d H:i:s'); 
             $model->trang_thai = 'Đã gửi'; 
-
+            $model->save();
            
             if ($model->save()) {
                 
@@ -711,7 +713,6 @@ public function actionMessKdp($id)
             'data-bs-dismiss' => "modal"
         ])
     ]);
-    
 }
 
 
@@ -720,12 +721,43 @@ public function actionNopPhiThueXe($id)
     $request = Yii::$app->request;
     $model = new NopPhiThueXe();  
     $model->id_phieu_thue_xe = $id;
-   
-
-     // Tìm thông tin người thuê (học viên hoặc người thuê xe dựa trên id_phieu_thue_xe)
- 
-    
-
+     // Tìm phiếu thuê xe tương ứng
+     $phieuThueXe = PhieuThueXe::findOne($id);
+     $idHocVien = $phieuThueXe->id_hoc_vien;
+     // Kiểm tra phiếu thuê xe là học viên thuê hay người ở ngoài thuê và lấy thông tin tương ứng 
+     if ($phieuThueXe) {
+         // Kiểm tra xem id_hoc_vien có null không
+         if ($phieuThueXe->id_hoc_vien !== null) {
+            $hocVien = HocVien::findOne($idHocVien);
+            $khoaHoc = KhoaHoc::findOne($hocVien->id_khoa_hoc);
+            $hotenHV = $hocVien->ho_ten;
+            $cccdHV = $hocVien->so_cccd;
+            $diachiHV = $hocVien->dia_chi;
+            $sdtHV = $hocVien->so_dien_thoai;
+            $idHang = $hocVien->id_hang;
+            $idKhoaHoc = $hocVien->id_khoa_hoc;
+            $tenKhoaHoc = $khoaHoc ? $khoaHoc->ten_khoa_hoc : 'N/A';
+              // Lấy id_hoc_vien nếu có giá trị
+         } else {
+             // Nếu id_hoc_vien là null, lấy thông tin người thuê xe
+             $hotenNT = $phieuThueXe->ho_ten_nguoi_thue;
+             $cccdNT = $phieuThueXe->so_cccd_nguoi_thue;
+             $diachiNT = $phieuThueXe->dia_chi_nguoi_thue;
+             $sdtNT = $phieuThueXe->so_dien_thoai_nguoi_thue;
+         }
+     } else {
+         throw new NotFoundHttpException("Phiếu thuê xe không tồn tại.");
+     }
+     // Lấy thông tin chi phí thuê dự kiến và chi phí thuê phát sinh từ phiếu 
+     if($phieuThueXe)
+     {
+        $chiphithueDK = $phieuThueXe->chi_phi_thue_du_kien;
+        $chiphithuePS = $phieuThueXe -> chi_phi_thue_phat_sinh;
+        if($chiphithuePS != null)
+        {
+            $chiphithueDK = $chiphithuePS;
+        }
+     }
     if($request->isAjax){
         /*
         *   Process for ajax request
@@ -734,11 +766,22 @@ public function actionNopPhiThueXe($id)
         if($request->isGet){
             return [
                 'title'=> "Thông tin phí thuê xe",
-                'content'=>$this->renderAjax('nop-phi-thue-xe', [
-                    'model' => $model,
-                 
-                  
-                    
+                'content'=>$this->renderAjax('formNopPhiThue', [
+                    'model' => $model,  
+                    'idHocVien' => $idHocVien ?? null,
+                    'hotenNT' => $hotenNT ?? null,
+                    'cccdNT' => $cccdNT ?? null,
+                    'diachiNT' => $diachiNT ?? null,
+                    'sdtNT' => $sdtNT ?? null,
+                    'hotenHV' => $hotenHV ?? null,
+                    'cccdHV' => $cccdHV ?? null,
+                    'diachiHV' => $diachiHV ?? null,
+                    'sdtHV' => $sdtHV ?? null,
+                    'idHang' =>$idHang ?? null,
+                    'idKhoaHoc'=>$idKhoaHoc ?? null,
+                    'tenKhoaHoc' =>$tenKhoaHoc ?? null,
+                    'chiphithueDK' => $chiphithueDK,
+                    'chiphithuePS' => $chiphithuePS,
                 ]),
                 'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                             Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
@@ -763,17 +806,29 @@ public function actionNopPhiThueXe($id)
             return [
                 'forceReload'=>'#crud-datatable-pjax',
                 'title'=> "Thông tin học phí",
-                'content'=>'<span class="text-success">Thêm học phí thành công !</span>',
+                'content'=>'<span class="text-success">Thành công !</span>',
                 'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"])         
     
             ];         
         }else{           
             return [
                 'title'=> "Thông tin học phí",
-                'content'=>$this->renderAjax('nop-phi-thue-xê', [
+                'content'=>$this->renderAjax('formNopPhiThue', [
                     'model' => $model,
-                  
-                 
+                    'idHocVien' => $idHocVien ?? null,
+                    'hotenNT' => $hotenNT ?? null,
+                    'cccdNT' => $cccdNT ?? null,
+                    'diachiNT' => $diachiNT ?? null,
+                    'sdtNT' => $sdtNT ?? null,
+                    'hotenHV' => $hotenHV ?? null,
+                    'cccdHV' => $cccdHV ?? null,
+                    'diachiHV' => $diachiHV ?? null,
+                    'sdtHV' => $sdtHV ?? null,
+                    'idHang' =>$idHang ?? null,
+                    'idKhoaHoc'=>$idKhoaHoc ?? null,
+                    'tenKhoaHoc' =>$tenKhoaHoc ?? null,
+                    'chiphithueDK' => $chiphithueDK,
+                    'chiphithuePS' => $chiphithuePS ,
                 ]),
                 'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                             Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
@@ -788,14 +843,95 @@ public function actionNopPhiThueXe($id)
           
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            return $this->render('nop-phi-thue-xe', [
+            return $this->render('formNopPhiThue', [
                 'model' => $model,
-            
+                'idHocVien' => $idHocVien ?? null,
+                'hotenNT' => $hotenNT ?? null,
+                'cccdNT' => $cccdNT ?? null,
+                'diachiNT' => $diachiNT ?? null,
+                'sdtNT' => $sdtNT ?? null,
+                'hotenHV' => $hotenHV ?? null,
+                'cccdHV' => $cccdHV ?? null,
+                'diachiHV' => $diachiHV ?? null,
+                'sdtHV' => $sdtHV ?? null,
+                'idHang' =>$idHang ?? null,
+                'tenKhoaHoc' =>$tenKhoaHoc ?? null,
+                'idKhoaHoc'=>$idKhoaHoc ?? null,
+                'chiphithueDK' => $chiphithueDK,
+                'chiphithuePS' => $chiphithuePS,
             ]);
         }
     }
    
 }
 
+
+public function actionThongBaoChuaDuyet($id)
+{   
+    return $this->asJson([
+        'title'=>'Thông báo !',
+        'content'=>$this->renderAjax('thong-bao-chua-duyet', [
+          
+        ]),
+        'footer' => Html::button('Đóng lại', [
+            'class' => 'btn btn-default pull-left',
+            'data-bs-dismiss' => "modal"
+        ])
+    ]);
+    
+}
+
+
+public function actionXemThongTinDuyetPhieu($id)
+{
+    $request = Yii::$app->request; 
+    $model = $this->findModel($id); 
+
+    if ($request->isAjax) { 
+        /*
+        *   Process for ajax request
+        */
+        Yii::$app->response->format = Response::FORMAT_JSON; 
+
+        if ($request->isGet) { 
+            return [
+                'title' => "Thông tin duyệt phiếu",
+                'content' => $this->renderAjax('xem-thong-tin-duyet-phieu', [ 
+                    'model' => $model,
+                ]),
+                'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) 
+                            
+            ];
+        
+        } else {
+            return [
+                'title' => "Thông tin duyệt phiếu #" . $id,
+                'content' => $this->renderAjax('xem-thong-tin-duyet-phieu', [
+                    'model' => $model,
+                ]),
+                'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"])
+                           
+            ];
+        }
+    } else {
+        /*
+        *   Process for non-ajax request
+        */
+        if ($model->load($request->post()) && $model->save()) {
+           
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+          
+            return $this->render('xem-thong-tin-duyet-phieu', [
+                'model' => $model,
+            ]);
+        }
+    }
+}
+
+public  function actionXemThongTinPhiThue()
+{
+       
+}
 
 }
