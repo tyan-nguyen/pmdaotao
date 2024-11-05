@@ -77,7 +77,7 @@ $this->registerCssFile('@web/css/approve-ptx.css', [
             <div class="row">
                 <div class="col-md-6">
                 <?= $form->field($model, 'trang_thai')->radioList([
-                  'Đã duyệt' => 'Duyệt',
+                  'Đã duyệt' => 'Đã duyệt',
                   'Không duyệt' => 'Không duyệt',
                  ], [
                     'item' => function($index, $label, $name, $checked, $value) {
@@ -88,8 +88,6 @@ $this->registerCssFile('@web/css/approve-ptx.css', [
                    </div>';
              }
             ])->label('Trạng thái'); ?>
-
-
                 </div>
             </div>
             <div class="row">

@@ -4,6 +4,8 @@ namespace app\modules\thuexe\models;
 
 use Yii;
 use app\custom\CustomFunc;
+use app\modules\hocvien\models\HocVien;
+use app\modules\nhanvien\models\NhanVien;
 
 /**
  * This is the model class for table "ptx_nop_phi_thue_xe".
@@ -95,5 +97,16 @@ class NopPhiThueXe extends \app\models\PtxNopPhiThueXe
         }
         return parent::beforeSave($insert);
     }
+
+    public function getHocVien()
+     {
+         return $this->hasOne(HocVien::class, ['id' => 'id_hoc_vien']);
+     }
+     public function getNguoiThu()
+     {
+        return $this->hasOne(NhanVien:: class, ['id'=>'nguoi_thu']);
+     }
+    
+
     
 }

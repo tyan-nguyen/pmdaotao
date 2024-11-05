@@ -194,7 +194,7 @@ return [
             'payment' => function($url, $model, $key) {
                 return Html::a('<i class="fa fa-dollar"></i>', $url, [
                     'title' => 'Phí thuê',
-                    'role' => 'modal-remote-2',
+                    'role' => 'modal-remote',
                     'class' => 'btn ripple btn-danger btn-sm',
                     'style' => 'width: 30px; text-align: center;',
                     'data-bs-placement' => 'top',

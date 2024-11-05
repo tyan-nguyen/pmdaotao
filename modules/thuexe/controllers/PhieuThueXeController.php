@@ -522,6 +522,73 @@ public function actionTraXe($id)
     }
 }
 
+public function actionXemTraXe($id)
+{
+    $request = Yii::$app->request; 
+    $model = $this->findModel($id); 
+
+    if ($request->isAjax) { 
+        /*
+        *   Process for ajax request
+        */
+        Yii::$app->response->format = Response::FORMAT_JSON; 
+
+        if ($request->isGet) { 
+            return [
+                'title' => "Thông tin trả xe",
+                'content' => $this->renderAjax('xem_tra_xe', [ 
+                    'model' => $model,
+                ]),
+                'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) 
+                          
+            ];
+        } else if ($model->load($request->post())) { 
+                $model->trang_thai ='Đã trả'; 
+            
+            if ($model->save()) {
+                return [
+                    'forceReload' => '#crud-datatable-pjax', 
+                    'title' => "Gửi thành công !", 
+                    'content' => " Gửi thành công !.", 
+                    'footer' => Html::button('Đóng', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) // Nút đóng hộp thoại
+                ];
+            } else {
+              
+                return [
+                    'title' =>"Cập nhật thông tin trả xe #" . $id,
+                    'content' => $this->renderAjax('xem_tra_xe', [
+                        'model' => $model,
+                    ]),
+                    'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) 
+                                
+                ];
+            }
+        } else {
+            return [
+                'title' => "Cập nhật thông tin trả xe #" . $id,
+                'content' => $this->renderAjax('xem_tra_xe', [
+                    'model' => $model,
+                ]),
+                'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) 
+                           
+            ];
+        }
+    } else {
+        /*
+        *   Process for non-ajax request
+        */
+        if ($model->load($request->post()) && $model->save()) {
+           
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+          
+            return $this->render('tra_xe', [
+                'model' => $model,
+            ]);
+        }
+    }
+}
+
    
     public function actionMess($id)
     {   
@@ -929,19 +996,79 @@ public function actionXemThongTinDuyetPhieu($id)
     }
 }
 
-public  function actionXemThongTinPhiThue($id)
+public function actionXemThongTinPhiThue($id)
 {
-    $model = $this->findModel($id); 
+    // Tìm các bản ghi trong bảng NopPhiThueXe có id_phieu_thue_xe bằng $id
+    $nopPhiRecords = NopPhiThueXe::find()->where(['id_phieu_thue_xe' => $id])->all();
+
+    // Khởi tạo các biến để lưu thông tin
+    $idHocVien = null;
+    $hoTenNguoiThue = null;
+    $nguoiThu = null;
+    $soTienNop = null;
+    $ngayNop = null;
+    $trangThai = null;
+    $danhSachThongTin = [];
+    $checkTrangThai = null;
+    $bienlai = null;
+    $idNopPhi = null;
+
+    // Duyệt qua từng bản ghi và lấy thông tin cần thiết
+    foreach ($nopPhiRecords as $record) {
+        $idHocVien = isset($record->hocVien) ? $record->hocVien->ho_ten : null;
+
+        $hoTenNguoiThue = $record->ho_ten_nguoi_thue;
+        $nguoiThu = $record->nguoiThu->ho_ten;
+        $soTienNop = $record->so_tien_nop;
+        $ngayNop = $record->ngay_nop;
+        $trangThai = $record->trang_thai;
+        $idNopPhi = $record->id;
+        if($trangThai === 'Phí phát sinh')
+        {
+           $checkTrangThai = 1;
+        }
+
+        // Lưu thông tin vào mảng danh sách để hiển thị trong bảng
+        $danhSachThongTin[] = [
+            'id_hoc_vien' => $idHocVien,
+            'ho_ten_nguoi_thue' => $hoTenNguoiThue,
+            'nguoi_thu' => $nguoiThu,
+            'so_tien_nop' => $soTienNop,
+            'ngay_nop' => $ngayNop,
+            'trang_thai'=>$trangThai,
+            'bien_lai'=>$bienlai,
+            'checkTrangThai'=> $checkTrangThai,
+            'idNopPhi'=>$idNopPhi,
+        ];
+    }
     return $this->asJson([
-        'title'=>'Thông báo !',
-        'content'=>$this->renderAjax('xem_thong_tin_nop_phi', [ 
-            'model' => $model,
+        'title'=>'Thông tin nộp phí thuê xe !',
+        'content'=>$this->renderAjax('xem_thong_tin_nop_phi', [
+            'danhSachThongTin' => $danhSachThongTin,
+            'id'=>$id,
+            'idNopPhi'=>$idNopPhi,
         ]),
         'footer' => Html::button('Đóng lại', [
             'class' => 'btn btn-default pull-left',
-            'data-bs-dismiss' => "modal",
+            'data-bs-dismiss' => "modal"
         ])
     ]);
+}
+
+public function actionBienLai($idNopHp)
+{   
+    $model = NopPhiThueXe::findOne($idNopHp);
+    return $this->asJson([
+        'title'=>'Biên lai',
+        'content'=>$this->renderAjax('xem_bien_lai', [
+             'model'=>$model,
+        ]),
+        'footer' => Html::button('Đóng lại', [
+            'class' => 'btn btn-default pull-left',
+            'data-bs-dismiss' => "modal"
+        ])
+    ]);
+    
 }
 
 }

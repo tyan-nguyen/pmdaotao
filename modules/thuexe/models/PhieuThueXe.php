@@ -41,6 +41,10 @@ class PhieuThueXe extends PhieuThueXeBase
     {
         return $this->hasOne(NhanVien::class, ['id' => 'id_nhan_vien_cho_thue']);
     }
+    public function getNhanVienKyTra()
+    {
+        return $this->hasOne(NhanVien::class,['id'=>'id_nhan_vien_ky_tra']);
+    }
 
     public function beforeSave($insert)
     {
