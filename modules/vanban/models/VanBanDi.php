@@ -7,13 +7,13 @@ use app\modules\kholuutru\models\File;
 use app\custom\CustomFunc;
 class VanBanDi extends VanBan
 {
-    CONST MODEL_ID = 'Văn bản đi';
+    CONST MODEL_ID = 'VBDI';
     public function getPubName(){
         return $this->so_vao_so;
     } 
     public function beforeSave($insert) {
         if ($this->isNewRecord) {
-            $this->so_loai_van_ban = $this::VBDI_LABEL;
+            $this->so_loai_van_ban = $this::MODEL_ID;
         }
 	    if($this->vbdi_ngay_chuyen != null){
             $this->vbdi_ngay_chuyen = CustomFunc::convertDMYToYMD($this->vbdi_ngay_chuyen);

@@ -14,61 +14,63 @@ use app\modules\nhanvien\models\NhanVien;
 
     <?php $form = ActiveForm::begin([
         	'id'=>'myFilterForm',
-            'method' => 'post',
+            'method' => 'get',
             'options' => [
                 'class' => 'myFilterForm'
             ]
       	]); ?>
 
-    <?= $form->field($model, 'id_loai_van_ban')->dropDownList(LoaiVanBan::getList(), ['prompt'=>'Chọn loại văn bản']) ?>
-    
-    <?= $form->field($model, 'nam')->dropDownList($model->getListSo(), [
+<div class="row">
+	<div class="col-md-3">
+		 <?= $form->field($model, 'id_loai_van_ban')->dropDownList(LoaiVanBan::getList(), ['prompt'=>'Chọn loại văn bản']) ?>
+	</div>
+	<div class="col-md-3">
+		 <?= $form->field($model, 'nam')->dropDownList($model->getListSo(), [
 	    'prompt'=>'Chọn sổ VB'
 	]) ?>
-	<div class="row">
-         <div class="col-md-6">
-             <?= $form->field($model, 'so_vao_so')->textInput() ?>
-         </div>
-         <div class="col-md-6">
-             <?= $form->field($model, 'so_vb')->textInput() ?>
-         </div>
+	</div>
+     <div class="col-md-3">
+         <?= $form->field($model, 'so_vao_so')->textInput() ?>
+     </div>
+     <div class="col-md-3">
+         <?= $form->field($model, 'so_vb')->textInput() ?>
+     </div>
+    <div class="col-md-3">
+         <?= $form->field($model, 'nguoi_ky')->textInput() ?>
     </div>
-    <div class="row">
-        <div class="col-md-6">
-             <?= $form->field($model, 'nguoi_ky')->textInput() ?>
-        </div>
-        <div class="col-md-6">
-             <?= $form->field($model, 'vbdi_noi_nhan')->textInput() ?>
-        </div>
-    </div> 
-    <div class="row">
-        <div class="col-md-12">
-             <?= $form->field($model, 'trich_yeu')->textInput() ?>
-        </div>
-    </div>    
-    <div class="row">
-        <div class="col-md-6">
-              <?= $form->field($model, 'vbdi_so_luong_ban')->textInput() ?>
-        </div>
-        <div class="col-md-6">
-            <?= $form->field($model, 'vbdi_ngay_chuyen')->widget(DatePicker::classname(), [
-                'options' => ['placeholder' => 'Chọn ngày chuyển  ...'],
-                'pluginOptions' => [
+    <div class="col-md-3">
+         <?= $form->field($model, 'vbdi_noi_nhan')->textInput() ?>
+    </div>
+    <div class="col-md-3">
+        <?= $form->field($model, 'vbdi_ngay_chuyen')->widget(DatePicker::classname(), [
+            'options' => ['placeholder' => 'Chọn ngày chuyển  ...'],
+            'pluginOptions' => [
+                'orientation' => 'bottom left',
+                'todayHighlight' => true,
+                'todayBtn' => true,
                 'autoclose' => true,
                 'format' => 'dd/mm/yyyy',
-              ]
-            ]); ?>
-        </div>
+            ]
+        ]); ?>
     </div>
+
+    <div class="col-md-3">
+         <?= $form->field($model, 'trich_yeu')->textInput() ?>
+    </div>   
+    
+   
 	<?php if (!Yii::$app->request->isAjax){ ?>
-	  	<div class="form-group">
-	        <?= Html::submitButton('Tìm kiếm',['class' => 'btn btn-primary']) ?>
-	        <?= Html::resetButton('Xóa tìm kiếm', ['class' => 'btn btn-outline-secondary']) ?>
+	 <div class="col-md-12 text-center">
+	  	<div class="form-group mb-0">
+	        <?= Html::submitButton('<i class="fe fe-search"></i> Tìm kiếm',['class' => 'btn btn-primary']) ?>
+	        <?= Html::resetButton('<i class="fe fe-x"></i> Xóa tìm kiếm', ['class' => 'btn btn-info']) ?>
 	    </div>
+	</div>
 	<?php } ?>
 
     <?php ActiveForm::end(); ?>
     
+</div>
 </div>
 <style>
     .van-ban-den-search label {

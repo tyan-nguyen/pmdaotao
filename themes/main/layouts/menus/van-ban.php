@@ -1,7 +1,8 @@
 <li class="slide">
 	<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);">
-		<span class="side-menu__icon"><i class="fe fe-file-text side_menu_img"></i></span>
-		<span class="side-menu__label">Văn bản</span><i class="angle fe fe-chevron-right"></i>
+		<!-- <span class="side-menu__icon"><i class="fe fe-file-text side_menu_img"></i></span>
+		<span class="side-menu__label">Văn bản</span><i class="angle fe fe-chevron-right"></i> -->
+		<span class="side-menu__label"><i class="fa fa-folder-o"></i> Quản lý văn bản</span><i class="angle fa fa-caret-right"></i>
 	</a>
 	<ul class="slide-menu" data-menu="vb">
 		<li class="panel sidetab-menu">
@@ -25,10 +26,10 @@
 							<li class="side-menu__label1"><a href="javascript:void(0)">Danh mục chức năng</a>
 							</li>
 							<!--<li><a href="/vanban/truy-van-vb?menu=tvvb" class="slide-item" data-menu="vbden">Truy vấn văn bản</a></li>-->
-							<li><a href="/vanban/van-ban/tra-cuu?menu=vb3" class="slide-item" data-menu="vb2">Tra cứu văn bản</a></li>
-							<li><a href="/vanban/vb-den?menu=vb1" class="slide-item" data-menu="vb1">Danh sách văn bản đến</a></li>
-							<li><a href="/vanban/vb-di?menu=vb2" class="slide-item" data-menu="vb2">Danh sách văn bản đi</a></li>
-							<li><a href="/vanban/dm-loai-vb?menu=vb4" class="slide-item" data-menu="vb2">Danh mục loại văn bản</a></li>
+							<li><a href="/vanban/van-ban/tra-cuu?menu=vb3" class="slide-item" data-menu="vb3"><i class="fe fe-file-text"></i> Tra cứu văn bản</a></li>
+							<li><a href="/vanban/vb-den?menu=vb1" class="slide-item" data-menu="vb1"><i class="fe fe-file-text"></i> Danh sách văn bản đến</a></li>
+							<li><a href="/vanban/vb-di?menu=vb2" class="slide-item" data-menu="vb2"><i class="fe fe-file-text"></i> Danh sách văn bản đi</a></li>
+							<li><a href="/vanban/dm-loai-vb?menu=vb4" class="slide-item" data-menu="vb4"><i class="fe fe-file-text"></i> Danh mục loại văn bản</a></li>
 							</li>
 						</ul>
 						<div class="menutabs-content px-0">

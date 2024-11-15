@@ -79,3 +79,7 @@ function setMenuActive(){
 	}
 }
 setMenuActive();
+
+function toggleSearch(){
+	$("#divFilterExtend").toggle();
+}

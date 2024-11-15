@@ -12,7 +12,7 @@ use yii\helpers\Html;
 $this->title = "Đăng nhập"
 ?>
 
-<h4 class="text-center">Đăng nhập phần mềm</h4>    
+<!-- <h4 class="text-center">Đăng nhập phần mềm</h4>     -->
     
     <?php $form = ActiveForm::begin([
 			'id' => 'login-form',
@@ -25,15 +25,15 @@ $this->title = "Đăng nhập"
 		]) ?>
 
 			<?= $form->field($model, 'username')
-				->textInput(['placeholder'=>$model->getAttributeLabel('username'), 'autocomplete'=>'off']) ?>
+				->textInput(['placeholder'=>'Tài khoản', 'autocomplete'=>'off'])->label('Tài khoản') ?>
 
 			<?= $form->field($model, 'password')
-				->passwordInput(['placeholder'=>$model->getAttributeLabel('password'), 'autocomplete'=>'off']) ?>
+				->passwordInput(['placeholder'=>'Mật khẩu', 'autocomplete'=>'off'])->label('Mật khẩu') ?>
 
 			<!-- <?= (isset(Yii::$app->user->enableAutoLogin) && Yii::$app->user->enableAutoLogin) ? $form->field($model, 'rememberMe')->checkbox(['value'=>true]) : '' ?> -->
 
 			<?= Html::submitButton(
-				UserModule::t('front', 'Login'),
+				UserModule::t('front', '<i class="fa fa-unlock"></i> &nbsp;ĐĂNG NHẬP'),
 				['class' => 'btn btn-lg btn-primary btn-block']
 			) ?>
 

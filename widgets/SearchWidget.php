@@ -8,9 +8,8 @@ use yii\base\Widget;
  *
  *
  */
-class CardWidget extends Widget{
+class SearchWidget extends Widget{
     public $title = 'Title';
-    public $lastBlock = false;
     
     public function init(){
         parent::init();
@@ -21,8 +20,7 @@ class CardWidget extends Widget{
         
         $content = ob_get_clean();
         $html = $this->render('@app/widgets/views/card/begin', [
-            'title' => $this->title,
-            'lastBlock' => $this->lastBlock
+            'title' => $this->title
         ]);
         
         $html .= $content;

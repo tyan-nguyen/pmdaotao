@@ -36,12 +36,10 @@ class VbDiController extends Controller
          
             $searchModel = new VbDiSearch(); // "reset"
             $dataProvider = $searchModel->search(Yii::$app->request->post());
-        } else {
-          
+        } else {          
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         }
     
-  
         $query = $dataProvider->query;
         $query->andFilterWhere(['so_loai_van_ban' => $soLoaiVanBanFilter]);
     

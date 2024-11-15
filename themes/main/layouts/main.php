@@ -58,11 +58,13 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             			<!-- Page Header -->
             			<div class="page-header">
             				<div>
-            					<h2 class="main-content-title tx-20 mg-b-5"><?= $this->title ?></h2>
-            					<ol class="breadcrumb">
+            					<h2 class="main-content-title tx-20 mg-b-5">
+            						<i class="ion-model-s"></i> <?= $this->title ?>
+            					</h2>
+            					<!-- <ol class="breadcrumb">
             						<li class="breadcrumb-item"><a href="javascript:void(0);"><?= Yii::$app->params['moduleID'] ?></a></li>
             						<li class="breadcrumb-item active" aria-current="page"><?= Yii::$app->params['modelID'] ?></li>
-            					</ol>
+            					</ol> -->
             				</div>
             				<div class="d-flex">
             					<?php /* if(Yii::$app->params['showExport'] == true) {?>
@@ -117,14 +119,22 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             					
             					<?php if(Yii::$app->params['showSearch'] == true) {?>
             					&nbsp;<div>            						
-            						<a id="btnFilter" href="javascript:void(0);"
+            						<!-- <a id="btnFilter" href="javascript:void(0);"
             							class="btn ripple btn-secondary navresponsive-toggler mb-0 off-canvas"
             							data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
             							aria-expanded="false"
             							aria-label="Toggle navigation"
             							>
             							<i class="fe fe-filter me-1"></i> <?= (Yii::$app->params['searchLabel'] !=null ? Yii::$app->params['searchLabel'] : 'Tìm chi tiết') ?>
+            						</a> -->
+            						
+            						<a id="btnFilter" href="javascript:void(0);"
+            							class="btn ripple btn-info navresponsive-toggler mb-0 off-canvas"
+            							onClick="toggleSearch()"
+            							>
+            							<i class="fe fe-search"></i> <?= (Yii::$app->params['searchLabel'] !=null ? Yii::$app->params['searchLabel'] : 'Tìm chi tiết') ?>
             						</a>
+            						
             					</div>
             					<?php } ?>
             				</div>

@@ -1,7 +1,8 @@
 <li class="slide">
 	<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);">
-		<span class="side-menu__icon"><i class="bi bi-arrow-left-right side_menu_img"></i></span>
-		<span class="side-menu__label">Quản lý thuê xe</span><i class="angle fe fe-chevron-right"></i>
+		<!-- <span class="side-menu__icon"><i class="bi bi-arrow-left-right side_menu_img"></i></span>
+		<span class="side-menu__label">Quản lý thuê xe</span><i class="angle fe fe-chevron-right"></i> -->
+		<span class="side-menu__label"><i class="fa fa-folder-o"></i> Quản lý khóa học</span><i class="angle fa fa-caret-right"></i>
 	</a>
 	<ul class="slide-menu" data-menu="dc">
 		<li class="panel sidetab-menu">
@@ -24,10 +25,10 @@
 						<ul class="sidemenu-list">
 							<li class="side-menu__label1"><a href="javascript:void(0)">Danh mục chức năng</a></li>
 							
-							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/phieu-thue-xe?menu=dc1') ?>" class="slide-item" data-menu="dc">Phiếu thuê xe</a>
-							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/xe?menu=dc1') ?>" class="slide-item" data-menu="dc1">Danh sách Xe</a>
-							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/loai-xe?menu=dc3') ?>" class="slide-item" data-menu="dc3">Loại Xe</a>
-							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/loai-hinh-thue?menu=dc2') ?>" class="slide-item" data-menu="dc2">Loại hình thuê</a>
+							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/phieu-thue-xe?menu=dc1') ?>" class="slide-item" data-menu="dc"><i class="fe fe-file-text"></i> Phiếu thuê xe</a>
+							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/xe?menu=dc1') ?>" class="slide-item" data-menu="dc1"><i class="fe fe-file-text"></i> Danh sách Xe</a>
+							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/loai-xe?menu=dc3') ?>" class="slide-item" data-menu="dc3"><i class="fe fe-file-text"></i> Loại Xe</a>
+							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/loai-hinh-thue?menu=dc2') ?>" class="slide-item" data-menu="dc2"><i class="fe fe-file-text"></i> Loại hình thuê</a>
 						</ul>
 						<div class="menutabs-content px-0">
 							<!-- menu tab here -->

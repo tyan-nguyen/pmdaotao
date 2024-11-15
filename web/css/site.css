@@ -1,3 +1,84 @@
+/**for top link*/
+.header-icons .nav-link:hover{
+	color: red !important;
+}
+
+.service a:hover{
+	color: red !important;
+}
+
+.main-content-title{
+	font-weight: bold;
+	color: var(--primary-bg-color);
+	text-transform: uppercase;
+}
+
+.page-header {
+    margin-block-start: 1rem;
+    margin-block-end: 1rem;
+    min-height: 40px;
+}
+
+.app-sidebar {
+    background: linear-gradient(45deg, var(--primary-bg-color), transparent) !important;
+    color:black !important;
+    /*font-weight: bold !important;*/
+}
+
+.side-menu__label {
+    font-weight: bold;
+}
+
+.slide-item.active {
+    /*color: var(--primary-bg-color);*/
+    color: var(--secondary);
+    font-weight: bold;
+}
+
+.modal-content {
+    border: 0px solid var(--primary06) !important;
+    /*box-shadow: 0 0 0 1px rgba(--primary07, .12), 0 8px 16px 0 rgba(--primary07, .24) !important;*/
+
+}
+.modal-header {
+    background-color: var(--primary06) !important;
+    color:white !important;
+    border-start-start-radius: 0 !important;
+    border-start-end-radius: 0 !important;
+    padding: 15px 20px;
+}
+
+.modal-header .text-primary{
+	color:white !important;
+}
+
+.table-danger th, .table-danger td, .table-danger thead th, .table-danger tbody+tbody {
+    border-color: var(--info);
+}
+
+.table-danger>th, .table-danger>td {
+    background-color: var(--info);
+}
+
+.page-link {
+	border: 0px solid #ddd !important;
+}
+.page-item.active .page-link {
+	font-weight: bold;
+	color: var(--info);
+    background: none !important;
+}
+.kv-table-header {
+    background: linear-gradient(to bottom, #fff 0%, #ddd 100%);
+}
+
+.slide-item, .sub-side-menu__item, .sub-slide-item2 {
+    padding-inline-start: 1rem;
+}
+
+.datepicker-days table{
+	width: 100%;
+}
 /** add red * after required field **/
 form div.required label.control-label:after {
 
@@ -41,8 +122,8 @@ form div.required label.control-label:after {
 }
 
 .main-logo img{
-	max-width: 142px;
-	max-height: 35px;
+	max-width: 150px;
+	max-height: 50px;
 }
 
 /**qr code**/
@@ -61,7 +142,7 @@ form div.required label.control-label:after {
 	text-transform: uppercase;
 }
 /*custom*/
-body .select2-container {
+body .modal-dialog .select2-container {
   z-index: 9999 !important;
 }
 #ajaxCrudDatatable table .select2-container {
@@ -261,9 +342,13 @@ a.desc:after {
 	overflow-y: auto;
 }
 
+.card-end{
+	margin-bottom: 0;
+}
+
 /** custom modal */
 #ajaxCrudModal .modal-body {
-    padding: 10px 20px;
+    padding: 20px 20px;
 }
 #ajaxCrudModal .custom-card .card-body {
     padding: 1rem 1rem;

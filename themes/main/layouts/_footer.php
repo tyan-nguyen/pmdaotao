@@ -3,8 +3,8 @@
 	<div>
 		<div class="row">
 			<div class="col-md-12">
-				<span>Copyright © 2024 <a href="javascript:void(0);" class="text-primary">TRUNG TÂM GIÁO DỤC NGHỀ NGHIỆP VÀ SÁT HẠCH LÁI XE CƠ GIỚI ĐƯỜNG BỘ NGUYỄN TRÌNH</a>.
-					All rights reserved.</span>
+				<span>Bản quyền phần mềm của <a href="javascript:void(0);" class="text-primary">TRUNG TÂM GIÁO DỤC NGHỀ NGHIỆP VÀ SÁT HẠCH LÁI XE CƠ GIỚI ĐƯỜNG BỘ NGUYỄN TRÌNH</a>.
+					</span>
 			</div>
 		</div>
 	</div>

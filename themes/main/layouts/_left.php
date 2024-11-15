@@ -41,7 +41,7 @@ use app\modules\user\models\User;
 				</li>
 				-->
 				
-				<li class="side-item side-item-category">Module</li>
+				<li class="side-item side-item-category">CHỨC NĂNG</li>
 				<?= $this->render('menus/van-ban') ?>
 				
 				<?= $this->render('menus/hoc-vien') ?>
@@ -58,6 +58,7 @@ use app\modules\user\models\User;
 
 				<?= $this->render('menus/tai-khoan') ?>				
 				
+				<!-- 
 				<li class="side-item side-item-category">Tùy chỉnh</li>
 				<li>
 					<a class="side-menu__item help-support" href="<?= Yii::getAlias('@web/user/giao-dien?menu=gdtb') ?>" data-menu="gdtb">
@@ -73,6 +74,8 @@ use app\modules\user\models\User;
 						</span>
 						<span class="side-menu__label">Đăng xuất</span></a>
 				</li>
+				 -->
+				 
 				<!-- <li class="side-item side-item-category">Trợ giúp</li>
 				<li>
 					<a class="side-menu__item help-support" href="#">
