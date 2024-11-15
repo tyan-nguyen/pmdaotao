@@ -21,6 +21,7 @@ use app\modules\nhanvien\models\NhanVien;
  * @property int|null $nguoi_thu
  * @property string|null $bien_lai
  * @property string|null $ngay_nop
+ * @property string |null $trang_thai
  * @property int|null $nguoi_tao
  * @property int|null $thoi_gian_tao
  */
@@ -45,7 +46,9 @@ class NopPhiThueXe extends \app\models\PtxNopPhiThueXe
             [['ngay_nop'], 'safe'],
             [['ho_ten_nguoi_thue'], 'string', 'max' => 50],
             [['so_cccd_nguoi_thue'], 'string', 'max' => 15],
-            [['dia_chi_nguoi_thue', 'bien_lai'], 'string', 'max' => 255],
+            [['trang_thai'],'string','max'=>25],
+            [['dia_chi_nguoi_thue'], 'string', 'max' => 255],
+            [['bien_lai'], 'string'],
             [['so_dien_thoai_nguoi_thue'], 'string', 'max' => 12],
             [['file'], 'file','extensions' => 'png, jpg, jfif'],
         ];
@@ -64,13 +67,14 @@ class NopPhiThueXe extends \app\models\PtxNopPhiThueXe
             'so_cccd_nguoi_thue' => 'Số CCCD người thuê',
             'dia_chi_nguoi_thue' => 'Địa chỉ người thuê',
             'so_dien_thoai_nguoi_thue' => 'Số điện thoại người thuê',
-            'so_tien_nop' => 'Phí thuê',
+            'so_tien_nop' => 'Số tiền thu',
             'nguoi_thu' => 'Người thu',
             'bien_lai' => 'Biên lai',
             'ngay_nop' => 'Ngày thu',
             'nguoi_tao' => 'Người tạo',
             'thoi_gian_tao' => 'Thời gian tạo',
             'file' => 'Chọn biên lai',
+            'trang_thai'=>'Trạng thái',
         ];
     }
     public function beforeSave($insert)
@@ -88,11 +92,48 @@ class NopPhiThueXe extends \app\models\PtxNopPhiThueXe
                 {
                     $this->trang_thai = 'Phí phát sinh';
                 }
-                if ($phieuThueXe && $phieuThueXe ->chi_phi_thue_phat_sinh === 0)
+                if ($phieuThueXe && $phieuThueXe ->chi_phi_thue_phat_sinh == 0)
                 {
-                    $this->trang_thai = 'Không tồn tại phí phát sinh';
+                    $this->trang_thai = 'Phí thuê xe';
                 }
                 
+            }
+        }
+         // Xử lý trường 'bien_lai'  khi giá trị là Base64 (webcam)
+         if (!empty($this->bien_lai)) {
+            // Kiểm tra nếu 'bien_lai' chứa dữ liệu Base64
+            if (strpos($this->bien_lai, 'data:image') === 0) {
+                // Loại bỏ tiền tố Base64
+                $data = preg_replace('#^data:image/\w+;base64,#i', '', $this->bien_lai);
+                $data = base64_decode($data);
+    
+                // Kiểm tra xem việc giải mã có thành công không
+                if ($data === false) {
+                    $this->addError('bien_lai', 'Dữ liệu hình ảnh không hợp lệ.');
+                    return false;
+                }
+    
+                // Tạo tên file ngẫu nhiên và đường dẫn lưu file
+                $filename = uniqid('bien_lai_') . '.jpg';
+                $path = Yii::getAlias('@webroot/uploads/bien_lai/') . $filename;
+    
+                // Tạo thư mục nếu chưa tồn tại
+                if (!is_dir(dirname($path))) {
+                    mkdir(dirname($path), 0755, true);
+                }
+    
+                // Lưu file vào thư mục
+                if (file_put_contents($path, $data) === false) {
+                    $this->addError('bien_lai', 'Không thể lưu hình ảnh.');
+                    return false;
+                }
+    
+                // Gán lại giá trị 'bien_lai' là đường dẫn của file đã lưu
+                $this->bien_lai = 'uploads/bien_lai/' . $filename;
+              
+            } else {
+                // Nếu không phải Base64 (ví dụ chọn file bằng cách tải lên), giữ nguyên giá trị
+                $this->bien_lai = $this->bien_lai;
             }
         }
         return parent::beforeSave($insert);

@@ -76,13 +76,42 @@ function InPhieuThongTin() {
     });
 }
 
-// Hàm in phiếu
 function printPhieuXuat() {
     var printContents = document.getElementById('print').innerHTML;
-    var originalContents = document.body.innerHTML;
 
-    document.body.innerHTML = printContents;
-    window.print();
-    document.body.innerHTML = originalContents;
+    // Tạo iframe ẩn
+    var iframe = document.createElement('iframe');
+    iframe.style.position = 'absolute';
+    iframe.style.width = '0px';
+    iframe.style.height = '0px';
+    iframe.style.border = 'none';
+
+    // Thêm iframe vào body
+    document.body.appendChild(iframe);
+
+    // Ghi nội dung cần in vào iframe
+    var doc = iframe.contentWindow.document;
+    doc.open();
+    doc.write(`
+        <html>
+            <head>
+                <title>In phiếu</title>
+                <style>
+                    body { font-family: Arial, sans-serif; margin: 20px; }
+                </style>
+            </head>
+            <body>
+                ${printContents}
+            </body>
+        </html>
+    `);
+    doc.close();
+
+  
+    iframe.contentWindow.focus();
+    iframe.contentWindow.print();
+
+    // Xóa iframe 
+    setTimeout(() => document.body.removeChild(iframe), 1000);
 }
 </script>

@@ -14,5 +14,6 @@ return [
     'modelUpload'=>'',//imp
     'moduleID' => '',
     'modelID' =>'',
-    'siteUrl'=>'http://localhost:8888'
+    'siteUrl'=>'http://localhost:8888',
+    'bsDependencyEnabled' => false,
 ];

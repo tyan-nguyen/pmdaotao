@@ -26,6 +26,8 @@ $model->ngay_ket_thuc = CustomFunc::convertYMDToDMY($model->ngay_ket_thuc);
              'Giờ ' => 'Giờ ',
              'Buổi ' => 'Buổi ',
              'Ngày ' => 'Ngày ',
+             '1 Ngày 1 Đêm '=>'1 Ngày 1 Đêm ',
+             'Đêm '=>'Đêm ' 
           ],
           [
               'prompt' => 'Chọn loại hình thuê', 

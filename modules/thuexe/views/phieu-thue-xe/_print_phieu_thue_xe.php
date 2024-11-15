@@ -1,8 +1,9 @@
 <?php
 use yii\helpers\Html;
 use app\custom\CustomFunc;
-use app\modules\dungchung\models\HinhAnh;
-use app\modules\maucua\models\MauCua;
+
+
+
 $custom = new CustomFunc();
 ?>
 
@@ -22,34 +23,14 @@ $custom = new CustomFunc();
 				<br/>
 				<span style="font-size:10pt">ĐT: 0903.794.530 - 0903.794.531 - 0903.794.532</span>
 				<br/>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size:10pt">0903.794.533 - 0903.794.534 - 0903.794.535</span> 				
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size:10pt">0903.794.533 - 0903.794.534 - 0903.794.535</span> 				
 			</td>
 			<td width="100px">
-				<div style="margin-top: 10px;">Ngày:<?= date('d/m/Y') ?></div>
+			
 			
 			</td>
 		</tr>
     </table>
-    
-   
-    
-    
-    
-   
-    
-   
-    
-    
-    
-    
-    
-    
-    
- 
-    
-
-    
-    
     
     </div>
 </div> <!-- row -->

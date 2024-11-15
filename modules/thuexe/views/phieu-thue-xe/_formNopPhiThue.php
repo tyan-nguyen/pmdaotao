@@ -37,8 +37,9 @@ use app\custom\CustomFunc;
         <div class="col-md-4">
             <strong>Số điện thoại:</strong> <?= $sdtHV ?>
         </div>
+    
         <div class="col-md-4">
-            <strong>Khóa học:</strong> <i style="color:blue"><?= $tenKhoaHoc ?></i>
+             <strong>Chi phí thuê:</strong><span style="color: red;"> <?= number_format($chiphithueDK, 0, ',', '.') . ' VND' ?></span>
         </div>
 
     <?php else : ?>
@@ -59,6 +60,9 @@ use app\custom\CustomFunc;
             <strong>Số điện thoại:</strong> <?= $sdtNT ?>
             <?= $form->field($model, 'so_dien_thoai_nguoi_thue')->hiddenInput(['value' => $sdtNT])->label(false) ?>
         </div>
+        <div class="col-md-4">
+             <strong>Chi phí thuê:</strong><span style="color: red;"> <?= number_format($chiphithueDK, 0, ',', '.') . ' VND' ?></span>
+        </div>
     <?php endif; ?>
 </div>
 
@@ -67,13 +71,7 @@ use app\custom\CustomFunc;
     <?php CardWidget::begin(['title'=>'Thông tin nộp phí thuê']) ?>
        <div class="row">
            <div class="col-md-4">
-                 <label class="control-label">Phí thuê</label>
-                 <?= Html::textInput('so_tien_nop_display', number_format($chiphithueDK, 0, ',', '.') . ' VND', [
-                    'class' => 'form-control', 
-                    'style'=>'color:red',
-                    'readonly' => true
-                 ]) ?>
-                 <?= $form->field($model, 'so_tien_nop')->hiddenInput(['value' => $chiphithueDK,'readonly' => true])->label(false) ?>
+                 <?= $form->field($model, 'so_tien_nop')->textInput()?>
            </div>
            <div class="col-md-4">
            <?= $form->field($model, 'ngay_nop')->widget(DatePicker::classname(), [
@@ -96,12 +94,38 @@ use app\custom\CustomFunc;
             ]); ?>
           
            </div>
-           <div class="col-md-4">
-           <?= $form->field($model, 'file')->fileInput(['class' => 'form-control'])->label('Chọn biên lai') ?>
-               <div class="form-group">
-                   <label>&nbsp;</label> <!-- Tạo một nhãn rỗng để tạo không gian -->
+       </div>
+       <div class='row'>
+       <div class="col-md-12" >
+          
+            <br/>
+            <div class='row'>
+                <div class="col-lg-4 col-md-12" style="text-align:center;">
+                    <div id="my_camera" style="text-align:center;"></div>
+                    <?= $form->field($model, 'bien_lai')->hiddenInput(['id' => 'bien_lai'])->label(false) ?>
+                </div>
+                <div class="col-lg-4 col-md-12" style="text-align:center;">
+                    <div id="results" style="text-align:center; width: 100%; height: 240px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;">
                </div>
-           </div>
+          </div>
+
+                <div class="col-lg-4 col-md-12">
+                    <?= $form->field($model, 'file')->fileInput(['class' => 'form-control','id' => 'fileInput'])->label('Chọn biên lai') ?>
+                        <div class="form-group">
+                        <label>&nbsp;</label> <!-- Tạo một nhãn rỗng để tạo không gian -->
+                    </div>
+                </div>
+            </div>
+            <div class='row'>
+                <div class="col-md-8" >
+                <button id="takeSnapshotButton"  onClick="take_snapshot()" class="btn ripple btn-primary btn-sm" >
+                   <i class="fa fa-camera" style="font-size: 16px;"></i> Chụp biên lai
+               </button>
+               <button onClick="clear_snapshot()" class="btn ripple btn-danger btn-sm">
+                    <i class="fa fa-trash" style="font-size: 16px;"></i> Xóa ảnh
+                </button>
+                </div>
+            </div>
        </div>
     <?php CardWidget::end() ?>
 	<?php if (!Yii::$app->request->isAjax){ ?>
@@ -118,3 +142,66 @@ use app\custom\CustomFunc;
     font-weight: bold;
 }
 </style>
+<script language="JavaScript">
+       var fileInput = document.getElementById('fileInput'); // Tham chiếu đến trường file input
+       var takeSnapshotButton = document.getElementById('takeSnapshotButton');
+    // Cấu hình Webcam
+    Webcam.set({
+        width: 320,
+        height: 240,
+        image_format: 'jpeg',
+        jpeg_quality: 90
+    });
+    Webcam.attach('#my_camera');
+
+    // Hàm chụp ảnh
+    function take_snapshot() {
+        Webcam.snap(function(data_uri) {
+            // Hiển thị ảnh xem trước
+            document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';
+            // Gán dữ liệu ảnh vào input ẩn
+            document.getElementById('bien_lai').value = data_uri;
+            check_bien_lai();
+            event.preventDefault();
+        });
+    }
+    function clear_snapshot() {
+        // Xóa nội dung ảnh trong #results
+        document.getElementById('results').innerHTML = '';
+        // Đặt lại giá trị input hidden 'bien_lai' thành rỗng
+        document.getElementById('bien_lai').value = '';
+        check_bien_lai();
+        event.preventDefault();
+    }
+    function check_bien_lai() {
+    var bienLai = document.getElementById('bien_lai');  // Tham chiếu đến phần tử 'bien_lai'
+    var fileInput = document.getElementById('fileInput'); // Tham chiếu đến trường file input
+    // Kiểm tra nếu 'bien_lai' có giá trị (có ảnh từ webcam)
+    if (bienLai.value !== '') {  
+        fileInput.disabled = true;
+    } else {
+        fileInput.disabled = false;
+    }
+    event.preventDefault();
+}
+   // Hàm kiểm tra và vô hiệu hóa hoặc kích hoạt nút chụp biên lai
+   function checkFileInput() {
+        if (fileInput.value !== '') {
+            takeSnapshotButton.disabled = true; // Vô hiệu hóa nút chụp biên lai
+        } else {
+            takeSnapshotButton.disabled = false; // Kích hoạt lại nút chụp biên lai
+        }
+    }
+     // Lắng nghe sự kiện thay đổi trên input file
+     fileInput.addEventListener('change', checkFileInput);
+
+// Gọi kiểm tra lần đầu khi tải trang để chắc chắn trạng thái đúng
+checkFileInput();
+ 
+
+</script>
+
+
+
+
+

@@ -9,6 +9,9 @@ use app\modules\nhanvien\models\NhanVien;
 /* @var $this yii\web\View */
 /* @var $model app\models\HvHocVien */
 /* @var $form yii\widgets\ActiveForm */
+$this->registerCssFile('@web/css/hocVienHP.css', [
+    'depends' => [\yii\bootstrap5\BootstrapAsset::className()],
+]);
 ?>
 <?php
 $model->ngay_nop = CustomFunc::convertYMDToDMY($model->ngay_nop);
@@ -68,12 +71,38 @@ $model->ngay_nop = CustomFunc::convertYMDToDMY($model->ngay_nop);
                     ],
              ]);?>
         </div>
-        <div class="col-lg-4 col-md-6">
-            <?= $form->field($model, 'file')->fileInput(['class' => 'form-control'])->label('Chọn biên lai') ?>
-               <div class="form-group">
-                   <label>&nbsp;</label> <!-- Tạo một nhãn rỗng để tạo không gian -->
+        <div class='row'>
+       <div class="col-md-12" >
+          
+            <br/>
+            <div class='row'>
+                <div class="col-lg-4 col-md-12" style="text-align:center;">
+                    <div id="my_camera" style="text-align:center;"></div>
+                    <?= $form->field($model, 'bien_lai')->hiddenInput(['id' => 'bien_lai'])->label(false) ?>
+                </div>
+                <div class="col-lg-4 col-md-12" style="text-align:center;">
+                    <div id="results" style="text-align:center; width: 100%; height: 240px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;">
                </div>
-        </div>
+          </div>
+
+                <div class="col-lg-4 col-md-12">
+                    <?= $form->field($model, 'file')->fileInput(['class' => 'form-control','id' => 'fileInput'])->label('Chọn biên lai') ?>
+                        <div class="form-group">
+                        <label>&nbsp;</label> <!-- Tạo một nhãn rỗng để tạo không gian -->
+                    </div>
+                </div>
+            </div>
+            <div class='row'>
+                <div class="col-md-8" >
+                <button id="takeSnapshotButton"  onClick="take_snapshot()" class="btn ripple btn-primary btn-sm" >
+                   <i class="fa fa-camera" style="font-size: 16px;"></i> Chụp biên lai
+               </button>
+               <button onClick="clear_snapshot()" class="btn ripple btn-danger btn-sm">
+                    <i class="fa fa-trash" style="font-size: 16px;"></i> Xóa ảnh
+                </button>
+                </div>
+            </div>
+       </div>
         <?php CardWidget::end() ?>
    </div>
    
@@ -88,34 +117,66 @@ $model->ngay_nop = CustomFunc::convertYMDToDMY($model->ngay_nop);
     <?php ActiveForm::end(); ?>
     
 </div>
-<style>
-       .hp-hoc-vien-form label {
-    font-weight: bold;
-}
 
-.dropdown-with-arrow {
-    position: relative;
-    padding-right: 30px; /* Đảm bảo có khoảng trống cho mũi tên */
-}
+<script language="JavaScript">
+       var fileInput = document.getElementById('fileInput'); // Tham chiếu đến trường file input
+       var takeSnapshotButton = document.getElementById('takeSnapshotButton');
+    // Cấu hình Webcam
+    Webcam.set({
+        width: 320,
+        height: 240,
+        image_format: 'jpeg',
+        jpeg_quality: 90
+    });
+    Webcam.attach('#my_camera');
 
-.dropdown-with-arrow:after {
-    content: "\f078"; /* Font Awesome chevron-down */
-    font-family: "Font Awesome 5 Free";
-    font-weight: 900;
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
-    pointer-events: none;
+    // Hàm chụp ảnh
+    function take_snapshot() {
+        Webcam.snap(function(data_uri) {
+            // Hiển thị ảnh xem trước
+            document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';
+            // Gán dữ liệu ảnh vào input ẩn
+            document.getElementById('bien_lai').value = data_uri;
+            check_bien_lai();
+            event.preventDefault();
+        });
+    }
+    function clear_snapshot() {
+        // Xóa nội dung ảnh trong #results
+        document.getElementById('results').innerHTML = '';
+        // Đặt lại giá trị input hidden 'bien_lai' thành rỗng
+        document.getElementById('bien_lai').value = '';
+        check_bien_lai();
+        event.preventDefault();
+    }
+    function check_bien_lai() {
+    var bienLai = document.getElementById('bien_lai');  // Tham chiếu đến phần tử 'bien_lai'
+    var fileInput = document.getElementById('fileInput'); // Tham chiếu đến trường file input
+    // Kiểm tra nếu 'bien_lai' có giá trị (có ảnh từ webcam)
+    if (bienLai.value !== '') {  
+        fileInput.disabled = true;
+    } else {
+        fileInput.disabled = false;
+    }
+    event.preventDefault();
 }
-.dropdown-with-arrow {
-    position: relative;
-    padding-right: 30px;
-    appearance: none; /* Loại bỏ mũi tên mặc định */
-    background: url('data:image/svg+xml;charset=UTF-8,%3Csvg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24"%3E%3Cpath d="M7 10l5 5 5-5z"%3E%3C/path%3E%3C/svg%3E') no-repeat right 10px center;
-    background-size: 12px;
-}
-</style>
+   // Hàm kiểm tra và vô hiệu hóa hoặc kích hoạt nút chụp biên lai
+   function checkFileInput() {
+        if (fileInput.value !== '') {
+            takeSnapshotButton.disabled = true; // Vô hiệu hóa nút chụp biên lai
+        } else {
+            takeSnapshotButton.disabled = false; // Kích hoạt lại nút chụp biên lai
+        }
+    }
+     // Lắng nghe sự kiện thay đổi trên input file
+     fileInput.addEventListener('change', checkFileInput);
+
+// Gọi kiểm tra lần đầu khi tải trang để chắc chắn trạng thái đúng
+checkFileInput();
+ 
+
+</script>
+
 
 
    

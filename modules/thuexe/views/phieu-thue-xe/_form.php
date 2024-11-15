@@ -5,6 +5,7 @@ use app\modules\hocvien\models\HocVien;
 use app\modules\nhanvien\models\NhanVien;
 use yii\helpers\ArrayHelper;
 use app\widgets\CardWidget;
+use kartik\datetime\DateTimePicker;
 use kartik\date\DatePicker;
 use kartik\select2\Select2;
 use app\modules\thuexe\models\Xe;
@@ -107,7 +108,7 @@ $model->thoi_gian_tra_xe_du_kien = CustomFunc:: convertYMDHISToDMYHIS($model->th
                      'pluginOptions' => [
                      'autoclose' => true,
                      'format' => 'yyyy-mm-dd hh:ii:ss ',
-                     'todayHighlight' => true,
+                     'todayHighlight' => false,
                      'todayBtn' => true,
                      'minuteStep' => 5,  
                      'secondStep' => 10, 
@@ -116,23 +117,25 @@ $model->thoi_gian_tra_xe_du_kien = CustomFunc:: convertYMDHISToDMYHIS($model->th
                      ]
                   ]); ?>
 
+
                 </div>
         </div>
         <div class="row">
             <div class="col-md-6">
-            <?= $form->field($model, 'thoi_gian_tra_xe_du_kien')->widget(\kartik\datetime\DateTimePicker::classname(), [
-                     'options' => ['placeholder' => 'Chọn thời gian trả xe dự kiến...','id'=>'phieu_thue_xe-thoi_gian_tra_xe_du_kien'],
-                     'pluginOptions' => [
-                     'autoclose' => true,
-                     'format' => 'yyyy-mm-dd hh:ii:ss ',
-                     'todayHighlight' => true,
-                     'todayBtn' => true,
-                     'minuteStep' => 5,  
-                     'secondStep' => 10, 
-                     'language' => 'vi',
-                     'showMeridian' => false,
-                     ]
-                  ]); ?>
+<?= $form->field($model, 'thoi_gian_tra_xe_du_kien')->widget(\kartik\datetime\DateTimePicker::classname(), [
+    'options' => [
+        'placeholder' => 'Chọn thời gian trả xe dự kiến...',
+        'id'=>'phieu_thue_xe-thoi_gian_tra_xe_du_kien'
+    ],
+    'pluginOptions' => [
+        'autoclose' => true,
+        'format' => 'dd-M-yyyy hh:ii',
+    ],
+]) ?>
+
+
+
+
             </div>
             <div class="col-md-6">
                   <?= $form->field($model, 'chi_phi_thue_du_kien')->textInput(['id'=>'chi_phi_thue_du_kien'])?>
@@ -239,7 +242,18 @@ $(document).ready(function() {
 
 </script>
 <style>
- .phieu-thue-xe-form label {
-   color:blue;
+/* Loại bỏ màu xanh trên tiêu đề của DateTimePicker */
+.kv-datetime-picker .datetimepicker .datepicker-days .datepicker-switch,
+.kv-datetime-picker .datetimepicker .datepicker-months .datepicker-switch,
+.kv-datetime-picker .datetimepicker .datepicker-years .datepicker-switch,
+.kv-datetime-picker .datetimepicker .datepicker-decades .datepicker-switch {
+    background-color: transparent !important; /* Bỏ màu xanh */
+    color: inherit !important; /* Đảm bảo màu chữ giữ nguyên */
+    border: none !important; /* Loại bỏ đường viền nếu có */
 }
+
 </style>
+<script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js" crossorigin="anonymous"></script>
+
+
+

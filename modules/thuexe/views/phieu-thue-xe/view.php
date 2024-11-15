@@ -121,7 +121,7 @@ use yii\helpers\Html;
 
         <!-- Nút in phiếu -->
         <div class="col-12 text-center mt-3">
-            <?= Html::button('<i class="fa fa-download"> </i> In Phiếu Thông Tin', ['class' => 'btn btn-success btn-lg', 'onclick' => 'InPhieuThongTin()']) ?>
+            <?= Html::button('<i class="fa fa-download"> </i> In Phiếu Thuê Xe', ['class' => 'btn btn-success btn-lg', 'onclick' => 'InPhieuThueXe()']) ?>
         </div>
 
         <!-- Phần tử ẩn chứa nội dung phiếu -->
@@ -132,17 +132,17 @@ use yii\helpers\Html;
 </div>
 
 <script>
-function InPhieuThongTin() {
+function InPhieuThueXe() {
     var trangThai = '<?= $model->trang_thai ?>';
 
-    if (trangThai !== 'Đã duyệt') {
+    if ((trangThai !== 'Đã duyệt') && (trangThai !== 'Đã trả')){
         alert('Không thể in phiếu! Phiếu chưa được duyệt.');
         return;
     }
 
     $.ajax({
         type: 'POST',
-        url: '/thuexe/phieu-thue-xe/get-phieu-in-ajax?id=' + <?= $model->id ?> + '&type=phieuthongtin',
+        url: '/thuexe/phieu-thue-xe/get-phieu-in-ajax?id=' + <?= $model->id ?> + '&type=phieuthuexe',
         success: function (data) {
             if(data.status === 'success'){
                 $('#print').html(data.content);
@@ -159,10 +159,44 @@ function InPhieuThongTin() {
 
 function printPhieuXuat() {
     var printContents = document.getElementById('print').innerHTML;
-    var originalContents = document.body.innerHTML;
 
-    document.body.innerHTML = printContents;
-    window.print();
-    document.body.innerHTML = originalContents;
+    // Tạo iframe ẩn
+    var iframe = document.createElement('iframe');
+    iframe.style.position = 'absolute';
+    iframe.style.width = '0px';
+    iframe.style.height = '0px';
+    iframe.style.border = 'none';
+
+    // Thêm iframe vào body
+    document.body.appendChild(iframe);
+
+    // Ghi nội dung cần in vào iframe
+    var doc = iframe.contentWindow.document;
+    doc.open();
+    doc.write(`
+        <html>
+            <head>
+                <title>In phiếu</title>
+                <style>
+                    body { font-family: Arial, sans-serif; margin: 20px; }
+                </style>
+            </head>
+            <body>
+                ${printContents}
+            </body>
+        </html>
+    `);
+    doc.close();
+
+  
+    iframe.contentWindow.focus();
+    iframe.contentWindow.print();
+
+    // Xóa iframe 
+    setTimeout(() => document.body.removeChild(iframe), 1000);
 }
+
+
 </script>
+
+
