@@ -75,10 +75,10 @@ use kartik\select2\Select2;
 
     <?php if (!Yii::$app->request->isAjax){ ?>
     <div class="col-md-12 text-center">
-        <div class="form-group">
-            <?= Html::submitButton('Tìm kiếm', ['class' => 'btn btn-primary']) ?>
-            <?= Html::resetButton('Xóa tìm kiếm', ['class' => 'btn btn-outline-secondary']) ?>
-        </div>
+        <div class="form-group mb-0">
+	        <?= Html::submitButton('<i class="fe fe-search"></i> Tìm kiếm',['class' => 'btn btn-primary']) ?>
+	        <?= Html::resetButton('<i class="fe fe-x"></i> Xóa tìm kiếm', ['class' => 'btn btn-info']) ?>
+	    </div>
     </div>
     <?php } ?>
 
