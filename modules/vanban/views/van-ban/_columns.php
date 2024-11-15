@@ -57,7 +57,7 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'nam',
-        'width'=> '200px',
+        'width'=> '100px',
         'contentOptions'=>['style'=>'text-align:center;']
     ],
     [

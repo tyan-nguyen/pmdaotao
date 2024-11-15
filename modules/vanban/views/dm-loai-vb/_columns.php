@@ -49,10 +49,12 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ten_loai',
+        'width'=> '500px',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ghi_chu',
+        'width'=> '500px',
     ],
 
    /*  [
