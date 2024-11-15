@@ -3,6 +3,7 @@ use yii\bootstrap5\Html;
 use yii\widgets\ActiveForm;
 use app\custom\CustomFunc;
 use kartik\date\DatePicker;
+use kartik\datetime\DatetimePicker;
 use kartik\select2\Select2;
 use app\modules\nhanvien\models\NhanVien;
 use yii\helpers\ArrayHelper;
@@ -13,6 +14,12 @@ use yii\helpers\ArrayHelper;
 
 <?php
 $model->ngay_thue_xe = CustomFunc::convertYMDToDMY($model->ngay_tra_xe);
+?>
+<?php
+$this->registerCssFile("https://use.fontawesome.com/releases/v5.3.1/css/all.css", [
+    'depends' => [\yii\web\JqueryAsset::className()],
+    'media' => 'all'
+]);
 ?>
 
 <div class="tra-xe-form">
@@ -113,19 +120,19 @@ $model->ngay_thue_xe = CustomFunc::convertYMDToDMY($model->ngay_tra_xe);
                 ]); ?>
                 </div>
                 <div class="col-md-6">
+                <div class="datetime-icon-wrapper">
                 <?= $form->field($model, 'thoi_gian_tra_xe')->widget(\kartik\datetime\DateTimePicker::classname(), [
                      'options' => ['placeholder' => 'Chọn thời gian trả xe...','id'=>'thoi-gian-tra-xe'],
+                     'name' => 'dp_2',
+                     'type' => DateTimePicker::TYPE_COMPONENT_PREPEND,
+                     'value' => '23-Feb-1982 10:01',
                      'pluginOptions' => [
-                     'autoclose' => true,
-                     'format' => 'yyyy-mm-dd hh:ii:ss ',
-                     'todayHighlight' => true,
-                     'todayBtn' => true,
-                     'minuteStep' => 5,  
-                     'secondStep' => 10, 
-                     'language' => 'vi',
-                     'showMeridian' => false,
+                         'autoclose'=>true,
+                         'format' => 'dd-mm-yyyy hh:ii'
                      ]
+                     
                   ]); ?>
+                </div>
                 </div>
             </div>
             <div class="row">
@@ -199,10 +206,12 @@ $(document).ready(function() {
     $('#thoi-gian-tra-xe').change(calculateCost);
 });
 
-
 </script>
+<!-- on your view layout file HEAD section -->
+<script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js" crossorigin="anonymous"></script>
 <style>
  .tra-xe-form label {
    color:blue;
 }
 </style>
+

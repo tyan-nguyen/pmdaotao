@@ -8,6 +8,7 @@ use webvimark\modules\UserManagement\components\GhostHtml;
 use app\modules\user\UserModule;
 use yii\bootstrap5\ActiveForm;
 use yii\helpers\Html;
+use kartik\datetime\DateTimePicker;
 
 $this->title = "Đăng nhập"
 ?>
@@ -29,6 +30,7 @@ $this->title = "Đăng nhập"
 
 			<?= $form->field($model, 'password')
 				->passwordInput(['placeholder'=>'Mật khẩu', 'autocomplete'=>'off'])->label('Mật khẩu') ?>
+
 
 			<!-- <?= (isset(Yii::$app->user->enableAutoLogin) && Yii::$app->user->enableAutoLogin) ? $form->field($model, 'rememberMe')->checkbox(['value'=>true]) : '' ?> -->
 

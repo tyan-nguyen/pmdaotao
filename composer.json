@@ -32,8 +32,11 @@
         "dastanaron/yii2-dropzone-widget": "@dev",
         "kartik-v/yii2-mpdf": "^1.0",
         "kartik-v/yii2-money": "^1.2",
+    
+        "rmrevin/yii2-fontawesome": "^3.7",
         "kartik-v/yii2-widget-datetimepicker": "^1.5",
-        "rmrevin/yii2-fontawesome": "^3.7"
+        "kartik-v/yii2-widget-timepicker": "dev-master",
+        "yiisoft/yii2-jui": "^2.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

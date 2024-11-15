@@ -1,6 +1,8 @@
 <?php
 use yii\bootstrap5\Html;
-
+$this->registerCssFile('@web/css/xemHV.css', [
+    'depends' => [\yii\bootstrap5\BootstrapAsset::className()],
+]);
 if ($isEmpty) {
     echo "<p>Không tìm thấy Học viên</p>";
 } else {
@@ -68,36 +70,3 @@ $(document).on('click', '.delete-hv-btn', function(e) {
 </script>
 
 
-<style>
-    .icon-white {
-    color: white;
-}
-.pagination {
-    display:flex;
-    justify-content: center;
-    padding:10px;
-}
-
-.pagination li a {
-    color: #007bff; /* Màu văn bản cho các nút */
-    padding: 8px 12px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-}
-
-.pagination li a:hover {
-    background-color: #007bff; /* Màu nền khi di chuột */
-    color: #fff; /* Màu văn bản khi di chuột */
-}
-
-.pagination .active a {
-    background-color: #007bff; /* Màu nền cho nút đang được chọn */
-    color: white;
-    border-color: #007bff;
-}
-
-.pagination .disabled a {
-    color: #aaa;
-}
-</style>

@@ -15,6 +15,7 @@ use app\modules\hocvien\models\search\DangKyHvSearch;
 use app\modules\hocvien\models\HocVien;
 use app\modules\hocvien\models\DangKyHv;
 use app\modules\hocvien\models\NopHocPhi;
+use yii\web\UploadedFile;
 /**
  * HocVienController implements the CRUD actions for HvHocVien model.
  */
@@ -299,20 +300,20 @@ public function actionCreate2($id)
      // Tìm học viên theo id_hoc_vien
      $hocVien = HocVien::findOne($id);
      $hoTenHocVien = $hocVien ? $hocVien->ho_ten : '';
-      // Tìm học viên theo id_hoc_vien
+     
       $hocVien = HocVien::findOne($id);
       $hoTenHocVien = $hocVien ? $hocVien->ho_ten : '';
       if ($hocVien && $hocVien->hang) {
-         $tenHang = $hocVien->hang->ten_hang; // Lấy ten_hang từ bảng hang_xe
+         $tenHang = $hocVien->hang->ten_hang; 
      } else {
-         $tenHang = 'Chưa có hạng xe'; // Nếu không có thông tin hạng xe
+         $tenHang = 'Chưa có hạng xe'; 
      }
-      // Kiểm tra nếu học viên tồn tại và lấy thông tin học phí dựa trên id_hang
+      
       $hocPhi = null;
       if ($hocVien) {
-          $hangDaoTao = $hocVien->hangDaoTao;  // Lấy đối tượng HangDaoTao liên kết
+          $hangDaoTao = $hocVien->hangDaoTao;  
           if ($hangDaoTao) {
-              $hocPhi = $hangDaoTao->hocPhi;  // Lấy thông tin HocPhi từ HangDaoTao
+              $hocPhi = $hangDaoTao->hocPhi;  
           }
       }
  
@@ -335,16 +336,29 @@ public function actionCreate2($id)
     
             ];         
         }else if($model->load($request->post()) && $model->save()){
+              // Xử lý file upload
+              $model->file = UploadedFile::getInstance($model, 'file');
+              if($model->file) {
+                  $uploadPath = Yii::getAlias('@webroot/uploads/bien_lai/');
+                  if (!file_exists($uploadPath)) {
+                      mkdir($uploadPath, 0777, true);
+                  }
+                  $fileName = time() . '_' . $model->file->baseName . '.' . $model->file->extension;
+                  $filePath = $uploadPath . $fileName;
+                  if($model->file->saveAs($filePath)) {
+                      $model->bien_lai = 'uploads/bien_lai/' . $fileName;
+                      $model->save(false); 
+                  }
+                 }
             if ($hocVien) {
-                $hocVien->trang_thai = 'DONG_HOC_PHi'; // Cập nhật trạng thái
-                $hocVien->save(); // Lưu thay đổi
+                $hocVien->trang_thai = 'DONG_HOC_PHi'; 
+                $hocVien->save();
             }
             return [
                 'forceReload'=>'#crud-datatable-pjax',
                 'title'=> "Thông tin học phí",
                 'content'=>'<span class="text-success">Thêm học phí thành công !</span>',
                 'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"])         
-    
             ];         
         }else{           
             return [

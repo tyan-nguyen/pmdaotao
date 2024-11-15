@@ -15,8 +15,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="text-center">
                     <?= Html::img(Yii::getAlias('@web') . '/' . $model->bien_lai, [
                         'alt' => 'Biên Lai',
-                        'class' => 'img-fluid', // Tự động co dãn theo kích thước màn hình
-                        'style' => 'max-width: 100%; height: auto;', // Giới hạn kích thước ảnh cho phù hợp
+                        'class' => 'img-fluid', 
+                        'style' => 'max-width: 100%; height: auto;', 
                     ]) ?>
                 </div>
             <?php else: ?>

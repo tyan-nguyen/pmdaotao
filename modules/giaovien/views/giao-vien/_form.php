@@ -9,7 +9,9 @@ use app\widgets\CardWidget;
 /* @var $this yii\web\View */
 /* @var $model app\modules\nhanvien\models\NhanVien */
 /* @var $form yii\widgets\ActiveForm */
-
+$this->registerCssFile('@web/css/giaoVien.css', [
+    'depends' => [\yii\bootstrap5\BootstrapAsset::className()],
+]);
 
 $phongBans = PhongBan::find()->all();
 $listPhongBan = ArrayHelper::map($phongBans, 'id', 'ten_phong_ban');
@@ -152,35 +154,7 @@ $this->registerJs("
     });
 ");
 ?>
-<style>
- 
-.giao-vien-form label {
-    font-weight: bold;
-}
 
-select {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background: transparent;
-    border: 1px solid #ced4da; 
-    border-radius: 0.25rem;
-    padding: 0.375rem 0.75rem;
-    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 6"><path fill="%23000000" d="M1 1l4 4 4-4"/></svg>');
-    background-repeat: no-repeat;
-    background-position: right 10px center;
-    background-size: 10px;
-}
-
-select:focus {
-    outline: none;
-    box-shadow: none;
-}
-.form-check-label {
-        font-weight: normal; 
-    }
-
-    </style>
 
 
 

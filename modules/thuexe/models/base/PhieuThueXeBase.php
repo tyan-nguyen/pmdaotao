@@ -53,6 +53,8 @@ class PhieuThueXeBase extends \app\models\PtxPhieuThueXe
     /**
      * {@inheritdoc}
      */
+    public $check_buoiThue ;
+
     public function rules()
     {
         return [

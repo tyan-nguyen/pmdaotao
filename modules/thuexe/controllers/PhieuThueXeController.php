@@ -327,7 +327,7 @@ public function actionSent($id)
                     'model' => $model,
                 ]),
                 'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
-                            Html::button('<i class="fa fa-mail-forward"> </i> Gửi', ['class' => 'btn btn-primary', 'type' => "submit"]) // Nút gửi
+                            Html::button('<i class="fa fa-share"> </i> Gửi', ['class' => 'btn btn-primary', 'type' => "submit"]) // Nút gửi
             ];
         } else if ($model->load($request->post())) { 
             
@@ -353,7 +353,7 @@ public function actionSent($id)
                         'model' => $model,
                     ]),
                     'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
-                                Html::button('<i class="fa fa-mail-forward"> </i> Gửi', ['class' => 'btn btn-primary', 'type' => "submit"])
+                                Html::button('<i class="fa fa-share"> </i> Gửi', ['class' => 'btn btn-primary', 'type' => "submit"])
                 ];
             }
         } else {
@@ -363,7 +363,7 @@ public function actionSent($id)
                     'model' => $model,
                 ]),
                 'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
-                            Html::button('<i class="fa fa-mail-forward"> </i> Gửi', ['class' => 'btn btn-primary', 'type' => "submit"])
+                            Html::button('<i class="fa fa-share"> </i> Gửi', ['class' => 'btn btn-primary', 'type' => "submit"])
             ];
         }
     } else {
@@ -400,7 +400,7 @@ public function actionApprove($id)
                     'model' => $model,
                 ]),
                 'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
-                            Html::button('<i class="fa fa-mail-forward"> </i> Gửi', ['class' => 'btn btn-primary', 'type' => "submit"]) // Nút gửi
+                            Html::button('<i class="fa fa-share"> </i> Gửi', ['class' => 'btn btn-primary', 'type' => "submit"]) // Nút gửi
             ];
         } else if ($model->load($request->post())) { 
             
@@ -426,7 +426,7 @@ public function actionApprove($id)
                         'model' => $model,
                     ]),
                     'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
-                                Html::button('<i class="fa fa-mail-forward"> </i> Gửi', ['class' => 'btn btn-primary', 'type' => "submit"])
+                                Html::button('<i class="fa fa-share"> </i> Gửi', ['class' => 'btn btn-primary', 'type' => "submit"])
                 ];
             }
         } else {
@@ -473,7 +473,7 @@ public function actionTraXe($id)
                     'model' => $model,
                 ]),
                 'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
-                            Html::button('<i class="fa fa-mail-forward"> </i> Gửi', ['class' => 'btn btn-primary', 'type' => "submit"]) // Nút gửi
+                            Html::button('<i class="fa fa-share"> </i> Gửi', ['class' => 'btn btn-primary', 'type' => "submit"]) // Nút gửi
             ];
         } else if ($model->load($request->post())) { 
                 $model->trang_thai ='Đã trả'; 
@@ -493,7 +493,7 @@ public function actionTraXe($id)
                         'model' => $model,
                     ]),
                     'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
-                                Html::button('<i class="fa fa-mail-forward"> </i> Gửi', ['class' => 'btn btn-primary', 'type' => "submit"])
+                                Html::button('<i class="fa fa-share"> </i> Gửi', ['class' => 'btn btn-primary', 'type' => "submit"])
                 ];
             }
         } else {
@@ -503,7 +503,7 @@ public function actionTraXe($id)
                     'model' => $model,
                 ]),
                 'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
-                            Html::button('<i class="fa fa-mail-forward"> </i> Gửi', ['class' => 'btn btn-primary', 'type' => "submit"])
+                            Html::button('<i class="fa fa-share"> </i> Gửi', ['class' => 'btn btn-primary', 'type' => "submit"])
             ];
         }
     } else {
@@ -626,8 +626,8 @@ public function actionGetPhieuInAjax($id, $type)
 {
     $model = $this->findModel($id);
 
-    if ($type === 'phieuthongtin') {
-        $content = $this->renderPartial('_print_phieu_thong_tin', ['model' => $model]);
+    if ($type === 'phieuthuexe') {
+        $content = $this->renderPartial('_print_phieu_thue_xe', ['model' => $model]);
         return $this->asJson([
             'status' => 'success',
             'content' => $content,
@@ -678,8 +678,16 @@ public function actionTinhChiPhi()
                         $chiPhiDuKien = $sessions * $loaiHinh->gia_thue;
                         break;
                     case 'Ngày ':
-                        $days = ceil($hours / 24);
+                        $days = ceil($hours / 12);
                         $chiPhiDuKien = $days * $loaiHinh->gia_thue;
+                        break;
+                    case '1 Ngày 1 Đêm ':
+                        $ngayDem = ceil($hours / 24 );
+                        $chiPhiDuKien = $ngayDem * $loaiHinh->gia_thue;
+                        break;
+                    case 'Đêm ':
+                        $Dem = ceil($hours / 12 );
+                        $chiPhiDuKien = $Dem * $loaiHinh->gia_thue;
                         break;
                     default:
                         $chiPhiDuKien = 0;
@@ -705,42 +713,47 @@ public function actionTinhChiPhiPhatSinh()
         $loaiHinh = LoaiHinhThue::findOne($loaiHinhThue);
         if ($loaiHinh) {
             $dateStart = new \DateTime($thoiGianBatDau);
-            $dateEnd = new \DateTime( $thoiGianTraDuKien );
-            $dateTraXe = new \DateTime( $thoiGianTraXe);
-            $interval = $dateStart->diff($dateEnd);
-            $hours = $interval->h + ($interval->days * 24);
-            $intervalTX= $dateEnd -> diff($dateTraXe);
-            $hoursTX =  $intervalTX->h +($intervalTX->days *24);
-            $totalMinutes = $interval->i; 
-            $totalMinutesTX = $intervalTX->i; 
-            // Nếu có phút lẻ, thì cộng thêm 1 giờ để làm tròn
-            if ($totalMinutes > 0) {
-              $hours++;
-            }
-            if ($totalMinutesTX > 0) {
-                $hoursTX++;
-              }
-           //   echo "Tổng số giờ: " . $hoursTX;
+            $dateEnd = new \DateTime($thoiGianTraDuKien);
+            $dateTraXe = new \DateTime($thoiGianTraXe);
+            $intervalTX = $dateEnd->diff($dateTraXe);
 
-            //echo $dateStart->format('Y-m-d H:i:s');
-            // Kiểm tra $hours và đặt chi phí bằng 1 nếu $hours bằng 0
-            if (($hours === 0) || ( $dateEnd->getTimestamp() >= $dateTraXe->getTimestamp())){
+            // Tổng số giờ và phút lẻ
+            $hoursTX = $intervalTX->h + ($intervalTX->days * 24);
+            $minutesTX = $intervalTX->i;
+
+            // Làm tròn lên thêm 1 giờ nếu có phút lẻ
+            if ($minutesTX > 0) {
+                $hoursTX++;
+            }
+
+            // Kiểm tra thời gian vượt mức dự kiến và tính chi phí phát sinh
+            if ($dateEnd->getTimestamp() >= $dateTraXe->getTimestamp()) {
                 $chiPhiDuKien = 0;
             } else {
-                // Tính chi phí dựa trên loại hình thuê
                 $chiPhiDuKien = 0;
+                // Tìm đơn giá theo giờ của loại hình thuê "Giờ"
+                $giaThueGio = LoaiHinhThue::find()->where(['loai_hinh_thue' => 'Giờ '])->one()->gia_thue;
+
                 switch ($loaiHinh->loai_hinh_thue) {
                     case 'Giờ ':
+                        // Không thay đổi, tính dựa trên số giờ vượt quá
                         $chiPhiDuKien = $hoursTX * $loaiHinh->gia_thue;
                         break;
+
                     case 'Buổi ':
-                        $sessions = ceil($hoursTX / 4);
-                        $chiPhiDuKien = $sessions * $loaiHinh->gia_thue;
+                        // Tính số buổi và số giờ lẻ (1 buổi = 4 giờ)
+                        $sessions = intdiv($hoursTX, 4);  // Số buổi đầy đủ
+                        $remainingHours = $hoursTX % 4;   // Giờ lẻ còn lại
+                        $chiPhiDuKien = ($sessions * $loaiHinh->gia_thue) + ($remainingHours * $giaThueGio);
                         break;
+
                     case 'Ngày ':
-                        $days = ceil($hoursTX / 24);
-                        $chiPhiDuKien = $days * $loaiHinh->gia_thue;
+                        // Tính số ngày và số giờ lẻ (1 ngày = 24 giờ)
+                        $days = intdiv($hoursTX, 24);    // Số ngày đầy đủ
+                        $remainingHours = $hoursTX % 24; // Giờ lẻ còn lại
+                        $chiPhiDuKien = ($days * $loaiHinh->gia_thue) + ($remainingHours * $giaThueGio);
                         break;
+
                     default:
                         $chiPhiDuKien = 0;
                         break;
@@ -751,6 +764,7 @@ public function actionTinhChiPhiPhatSinh()
     }
     return 'Không thể tính chi phí';
 }
+
 
 public function actionMessSc($id)
 {   
@@ -790,7 +804,30 @@ public function actionNopPhiThueXe($id)
     $model->id_phieu_thue_xe = $id;
      // Tìm phiếu thuê xe tương ứng
      $phieuThueXe = PhieuThueXe::findOne($id);
+     $nopPhiRecords = NopPhiThueXe::find()->where(['id_phieu_thue_xe' => $id])->all();
      $idHocVien = $phieuThueXe->id_hoc_vien;
+     $phiThue = $phieuThueXe-> chi_phi_thue_du_kien;
+     $phiPhatSinh = $phieuThueXe -> chi_phi_thue_phat_sinh;
+     //Tính tổng phí thuê đã thu, phí phát sinh đã thu 
+     $phithueThu = 0;
+     foreach ($nopPhiRecords as $record)
+     {
+          if ($record->trang_thai === "Phí thuê xe")
+        {
+            $phithueThu += $record->so_tien_nop ;
+        }
+     }
+     $phithuePSthu = 0;
+     foreach ($nopPhiRecords as $record)
+     {
+         if ($record->trang_thai === "Phí phát sinh")
+         {
+             $phithuePSthu += $record->so_tien_nop;
+         }
+     }
+         //Tính chi phí còn nợ của phí thuê xe dự kiến, phí thuê xe phát sinh 
+    $chiphiThueConNo = $phiThue - $phithueThu ;
+    $chiphiThuePSConNo = $phiPhatSinh - $phithuePSthu;
      // Kiểm tra phiếu thuê xe là học viên thuê hay người ở ngoài thuê và lấy thông tin tương ứng 
      if ($phieuThueXe) {
          // Kiểm tra xem id_hoc_vien có null không
@@ -850,9 +887,17 @@ public function actionNopPhiThueXe($id)
                     'chiphithueDK' => $chiphithueDK,
                     'chiphithuePS' => $chiphithuePS,
                 ]),
-                'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                'footer'=>   
+                            Html::a('<i class="fa fa-history"> </i> Lịch sử nộp', 
+                               ['/thuexe/phieu-thue-xe/xem-thong-tin-phi-thue', 'id' => $phieuThueXe->id, 'modalType' => 'modal-remote-2'], 
+                                  [
+                                    'class' => 'btn btn-info',
+                                    'role' => 'modal-remote-2',
+                                    'title' => 'Xem lịch sử nộp'
+                                  ]
+                            ) .
+                            Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                             Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
-    
             ];         
         }else if($model->load($request->post()) && $model->save()){
              // Xử lý file upload
@@ -1000,7 +1045,54 @@ public function actionXemThongTinPhiThue($id)
 {
     // Tìm các bản ghi trong bảng NopPhiThueXe có id_phieu_thue_xe bằng $id
     $nopPhiRecords = NopPhiThueXe::find()->where(['id_phieu_thue_xe' => $id])->all();
-
+    $thongtinPhieu = PhieuThueXe :: find()->where(['id'=>$id])->one();
+    //Lấy các trường chi phí dự kiến và phát sinh trong phiếu thuê xe ra 
+    $phiThue = $thongtinPhieu -> chi_phi_thue_du_kien;
+    $phiPhatSinh = $thongtinPhieu -> chi_phi_thue_phat_sinh;
+    //Tính tổng phí thuê đã thu, phí phát sinh đã thu 
+    $phithueThu = 0;
+    foreach ($nopPhiRecords as $record)
+    {
+         if ($record->trang_thai === "Phí thuê xe")
+       {
+           $phithueThu += $record->so_tien_nop ;
+       }
+    }
+    $phithuePSthu = 0;
+    foreach ($nopPhiRecords as $record)
+    {
+        if ($record->trang_thai === "Phí phát sinh")
+        {
+            $phithuePSthu += $record->so_tien_nop;
+        }
+    }
+    //Tính chi phí còn nợ của phí thuê xe dự kiến, phí thuê xe phát sinh 
+    $chiphiThueConNo = $phiThue - $phithueThu ;
+    $chiphiThuePSConNo = $phiPhatSinh - $phithuePSthu;
+    $checkPhiThue =null;
+    if( $chiphiThueConNo > 0)
+       {
+            $checkPhiThue = 1; 
+       }
+    if($chiphiThueConNo == 0)
+        {
+             if(empty($phiPhatSinh) || ($phiPhatSinh == 0))
+             {
+                $checkPhiThue = 0; 
+             }
+             else 
+            if(!empty($phiPhatSinh))
+            {
+                if ($chiphiThuePSConNo > 0)
+               {
+                  $checkPhiThue = 1;
+               }
+                else if ($chiphiThuePSConNo === 0)
+                {
+                   $checkPhiThue = 0;
+                }
+            }
+        }
     // Khởi tạo các biến để lưu thông tin
     $idHocVien = null;
     $hoTenNguoiThue = null;
@@ -1016,7 +1108,6 @@ public function actionXemThongTinPhiThue($id)
     // Duyệt qua từng bản ghi và lấy thông tin cần thiết
     foreach ($nopPhiRecords as $record) {
         $idHocVien = isset($record->hocVien) ? $record->hocVien->ho_ten : null;
-
         $hoTenNguoiThue = $record->ho_ten_nguoi_thue;
         $nguoiThu = $record->nguoiThu->ho_ten;
         $soTienNop = $record->so_tien_nop;
@@ -1027,7 +1118,6 @@ public function actionXemThongTinPhiThue($id)
         {
            $checkTrangThai = 1;
         }
-
         // Lưu thông tin vào mảng danh sách để hiển thị trong bảng
         $danhSachThongTin[] = [
             'id_hoc_vien' => $idHocVien,
@@ -1036,9 +1126,9 @@ public function actionXemThongTinPhiThue($id)
             'so_tien_nop' => $soTienNop,
             'ngay_nop' => $ngayNop,
             'trang_thai'=>$trangThai,
-            'bien_lai'=>$bienlai,
-            'checkTrangThai'=> $checkTrangThai,
+            'bien_lai'=>$bienlai, 
             'idNopPhi'=>$idNopPhi,
+            'checkTrangThai'=>$checkTrangThai,
         ];
     }
     return $this->asJson([
@@ -1046,7 +1136,16 @@ public function actionXemThongTinPhiThue($id)
         'content'=>$this->renderAjax('xem_thong_tin_nop_phi', [
             'danhSachThongTin' => $danhSachThongTin,
             'id'=>$id,
-            'idNopPhi'=>$idNopPhi,
+            'phiThue'=>$phiThue,
+            'phiPhatSinh'=>$phiPhatSinh,
+            'phithueThu'=> $phithueThu,
+            'phithuePSthu'=> $phithuePSthu,
+            'chiphiThueConNo'=>$chiphiThueConNo,
+            'chiphiThuePSConNo'=>$chiphiThuePSConNo,
+            'trangThai'=>$trangThai,
+            'nopPhiRecords'=> $nopPhiRecords,
+            'checkPhiThue'=>$checkPhiThue,
+            'phiPhatSinh'=> $phiPhatSinh,
         ]),
         'footer' => Html::button('Đóng lại', [
             'class' => 'btn btn-default pull-left',

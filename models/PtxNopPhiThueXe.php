@@ -17,6 +17,7 @@ use Yii;
  * @property float|null $so_tien_nop
  * @property int|null $nguoi_thu
  * @property string|null $bien_lai
+ * @property string|null $trang_thai 
  * @property string|null $ngay_nop
  * @property int|null $nguoi_tao
  * @property int|null $thoi_gian_tao
@@ -42,6 +43,7 @@ class PtxNopPhiThueXe extends \yii\db\ActiveRecord
             [['ngay_nop'], 'safe'],
             [['ho_ten_nguoi_thue'], 'string', 'max' => 50],
             [['so_cccd_nguoi_thue'], 'string', 'max' => 15],
+            [['trang_thai'], 'string', 'max' => 25],
             [['dia_chi_nguoi_thue', 'bien_lai'], 'string', 'max' => 255],
             [['so_dien_thoai_nguoi_thue'], 'string', 'max' => 12],
         ];
@@ -66,6 +68,7 @@ class PtxNopPhiThueXe extends \yii\db\ActiveRecord
             'ngay_nop' => 'Ngay Nop',
             'nguoi_tao' => 'Nguoi Tao',
             'thoi_gian_tao' => 'Thoi Gian Tao',
+            'trang_thai'=>'Trạng thái',
         ];
     }
 }

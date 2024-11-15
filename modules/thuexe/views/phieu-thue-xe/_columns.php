@@ -53,24 +53,31 @@ return [
     //],
     [
         'class' => '\kartik\grid\DataColumn',
-        'attribute' => 'id_hoc_vien', 
+        'label' => 'NGƯỜI THUÊ',
         'value' => function($model) {
-            $hocVien = HocVien::findOne($model->id_hoc_vien);
-            return $hocVien ? $hocVien->ho_ten : '<span style="color: red;">Trống </span>'; 
+            if (!empty($model->id_hoc_vien)) {
+                $hocVien = HocVien::findOne($model->id_hoc_vien);
+                return $hocVien ? $hocVien->ho_ten : '<span style="color: red;">Trống</span>'; 
+            }
+            return !empty($model->ho_ten_nguoi_thue) ? $model->ho_ten_nguoi_thue : '<span style="color: red;">Trống</span>';
+        },
+        'format' => 'raw',
+    ],  
+    [
+        'class' => '\kartik\grid\DataColumn',
+        'label' => 'ĐỐI TƯỢNG',
+        'value' => function($model) {
+            if (empty($model->id_hoc_vien)) {
+                return '<span style="color: blue;">Khác</span>';
+            } else {
+                return '<span style="color: green;">Học viên</span>';
+            }
         },
         'format' => 'raw', 
     ],
     
     
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'ho_ten_nguoi_thue',
-        'value' => function($model) {
-            return empty($model->ho_ten_nguoi_thue) ? '<span style="color: red;">Trống </span>' : $model->ho_ten_nguoi_thue;
-           
-        },
-        'format' => 'raw',
-    ],
+    
     [
         'class'=>'\kartik\grid\DataColumn',
        'attribute'=>'id_xe',
@@ -135,20 +142,58 @@ return [
                     return Url::to(['thong-bao-chua-duyet', 'id' => $key]); 
                 }
                 // Nếu tìm thấy bản ghi trong bảng NopPhiThueXe
+                $tongtien = 0;
+                // Tính tổng số tiền đã nộp trước
+                foreach ($nopPhiRecords as $record) {
+                       $tongtien += $record->so_tien_nop;
+                }
+                $tongtienPhatSinh = 0;
+                // tính tổng tiền phí phát sinh đã nộp 
+               
+                foreach ($nopPhiRecords as $record)
+                {
+                  if ($record->trang_thai === "Phí phát sinh") 
+                    {
+                         $tongtienPhatSinh += $record->so_tien_nop;
+                    }
+                }
+                
                 foreach ($nopPhiRecords as $record) {
                     // Trường hợp 1: `trang_thai` là "Phí thuê xe" và `chi_phi_thue_phat_sinh` của `phieuThueXe` là null
+                  
                     if ($record->trang_thai === "Phí thuê xe" && $phieuThueXe->chi_phi_thue_phat_sinh === null) {
-                        return Url::to(['xem-thong-tin-phi-thue', 'id' => $key]);
+                        if($tongtien < $phieuThueXe->chi_phi_thue_du_kien)
+                        {
+                            return Url::to(['nop-phi-thue-xe', 'id' => $key]);
+                        }
+                        else 
+                        {
+                            return Url::to(['xem-thong-tin-phi-thue', 'id' => $key]);
+                        }
                     }
                     
                     // Trường hợp 2: `trang_thai` là "Phí thuê xe" và `chi_phi_thue_phat_sinh` của `phieuThueXe` là 0
                     if ($record->trang_thai === "Phí thuê xe" && $phieuThueXe->chi_phi_thue_phat_sinh == 0) {
-                        return Url::to(['xem-thong-tin-phi-thue', 'id' => $key]);
+                        if($tongtien < $phieuThueXe->chi_phi_thue_du_kien)
+                        {
+                            return Url::to(['nop-phi-thue-xe', 'id' => $key]);
+                        }
+                        else 
+                        {
+                            return Url::to(['xem-thong-tin-phi-thue', 'id' => $key]);
+                        }
                     }
             
                     // Trường hợp 3: `trang_thai` là "Phí phát sinh"
                     if ($record->trang_thai === "Phí phát sinh") {
-                        return Url::to(['xem-thong-tin-phi-thue', 'id' => $key]);
+                        if($tongtienPhatSinh < $phieuThueXe->chi_phi_thue_phat_sinh)
+                        {
+                            return Url::to(['nop-phi-thue-xe', 'id' => $key]);
+                        }
+                        else 
+                        {
+                            return Url::to(['xem-thong-tin-phi-thue', 'id' => $key]);
+                        }
                     }
                     
                 }
@@ -160,7 +205,7 @@ return [
         'buttons' => [
           
             'sent' => function($url, $model, $key) {
-                return Html::a('<i class="fa fa-mail-forward"></i>', $url, [
+                return Html::a('<i class="fa fa-share"></i>', $url, [
                     'title' => 'Gửi phiếu',
                     'role' => 'modal-remote-2',
                     'class' => 'btn ripple btn-warning btn-sm',
@@ -192,7 +237,7 @@ return [
                 
             },
             'payment' => function($url, $model, $key) {
-                return Html::a('<i class="fa fa-dollar"></i>', $url, [
+                return Html::a('<i class="fa fa-strikethrough"></i>', $url, [
                     'title' => 'Phí thuê',
                     'role' => 'modal-remote',
                     'class' => 'btn ripple btn-danger btn-sm',
