@@ -25,6 +25,7 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
+        $this->view->title = 'PHẦN MỀM QUẢN LÝ ĐÀO TẠO';
         return $this->render('index');
     }
 }

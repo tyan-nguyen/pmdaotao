@@ -4,10 +4,34 @@ use app\modules\vanban\models\VanBanDen;
 use app\modules\vanban\models\VanBanDi;
 
 return [
-    [
+    /* [
         'class' => 'kartik\grid\CheckboxColumn',
         'width' => '20px',
-    ],
+    ], */
+    [
+        'class' => 'kartik\grid\ActionColumn',
+        'header'=>'',
+        'dropdown' => true,
+        'dropdownOptions' => ['class' => 'float-right'],
+        'dropdownButton'=>[
+            'label'=>'<i class="fe fe-settings floating"></i>',
+            'class'=>'btn dropdown-toggle p-0'
+        ],
+        'vAlign'=>'middle',
+        'width' => '20px',
+        'template' => '{view}',
+        'urlCreator' => function($action, $model, $key, $index) {
+            if($model->so_loai_van_ban == VanBanDen::MODEL_ID){
+                return Url::to(['vb-den/view','id'=>$key]);
+            } else if($model->so_loai_van_ban == VanBanDi::MODEL_ID){
+                return Url::to(['vb-di/view','id'=>$key]);
+            }
+        },
+        'viewOptions'=>['role'=>'modal-remote','title'=>'',
+            'class'=>'btn ripple btn-primary btn-sm',
+            'data-bs-placement'=>'top',
+            'data-bs-toggle'=>'tooltip-primary'],
+        ],
     [
         'class' => 'kartik\grid\SerialColumn',
         'width' => '30px',
@@ -118,7 +142,7 @@ return [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'so_loai_van_ban',
     // ],
-    [
+    /*[
         'class' => 'kartik\grid\ActionColumn',
         'dropdown' => false,
         'vAlign'=>'middle',
@@ -135,6 +159,6 @@ return [
             'class'=>'btn ripple btn-primary btn-sm',
             'data-bs-placement'=>'top',
             'data-bs-toggle'=>'tooltip-primary']
-    ],
+    ],*/
 
 ];   

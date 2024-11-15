@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\modules\vanban\models\VanBanDi;
+use app\custom\CustomFunc;
 
 /**
  * VBDenSearch represents the model behind the search form about `app\modules\vanban\models\VanBanDen`.
@@ -45,6 +46,9 @@ class VbDiSearch extends VanBanDi
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => 10,
+            ],
         ]);
 
         $this->load($params);
@@ -73,11 +77,18 @@ class VbDiSearch extends VanBanDi
             'vbden_nguoi_nhan' => $this->vbden_nguoi_nhan,
             'vbden_ngay_chuyen' => $this->vbden_ngay_chuyen,
             'vbdi_so_luong_ban' => $this->vbdi_so_luong_ban,
-            'vbdi_ngay_chuyen' => $this->vbdi_ngay_chuyen,
+            //'vbdi_ngay_chuyen' => $this->vbdi_ngay_chuyen,
             'nguoi_tao' => $this->nguoi_tao,
             'thoi_gian_tao' => $this->thoi_gian_tao,
         	'nam'=>$this->nam
         ]);
+        
+        if($this->vbdi_ngay_chuyen){
+    	    $custom = new CustomFunc();
+    	    $query->andFilterWhere([
+    	        'vbdi_ngay_chuyen' => $custom->convertDMYToYMD($this->vbdi_ngay_chuyen),
+    	    ]);
+    	}
 
         $query->andFilterWhere(['like', 'so_vb', $this->so_vb])
             ->andFilterWhere(['like', 'trich_yeu', $this->trich_yeu])

@@ -66,7 +66,7 @@ $currentYear = date('Y');
       </div>
       <?php CardWidget::end() ?>
 
-      <?php CardWidget::begin(['title'=>'Thông tin Lưu sổ văn bản']) ?>
+      <?php CardWidget::begin(['title'=>'Thông tin Lưu sổ văn bản', 'lastBlock'=>true]) ?>
         <div class="row">
         	
         	<div class="col-lg-3 col-md-6">   

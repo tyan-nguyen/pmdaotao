@@ -1,7 +1,8 @@
 <li class="slide">
 	<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);">
-		<span class="side-menu__icon"><i class="fe fe-lock side_menu_img"></i></span>
-		<span class="side-menu__label">Tài khoản - Phân quyền</span><i class="angle fe fe-chevron-right"></i>
+		<!-- <span class="side-menu__icon"><i class="fe fe-lock side_menu_img"></i></span> -->
+		<!-- <span class="side-menu__label">Quản lý tài khoản</span><i class="angle fe fe-chevron-right"></i> -->
+		<span class="side-menu__label"><i class="fa fa-folder-o"></i> Quản lý tài khoản</span><i class="angle fa fa-caret-right"></i>
 	</a>
 	<ul class="slide-menu" data-menu="tk">
 		<li class="panel sidetab-menu">
@@ -24,7 +25,7 @@
 						<ul class="sidemenu-list">
 							<li class="side-menu__label1"><a href="javascript:void(0)">Danh mục chức năng</a>
 							</li>
-							<li><a href="<?= Yii::getAlias('@web/user/user-ajax?menu=tk1') ?>" class="slide-item" data-menu="tk1">Quản lý tài khoản</a>
+							<li><a href="<?= Yii::getAlias('@web/user/user-ajax?menu=tk1') ?>" class="slide-item" data-menu="tk1"><i class="fe fe-file-text"></i> Quản lý tài khoản</a>
 							</li>
 						</ul>
 						<div class="menutabs-content px-0">

@@ -52,7 +52,7 @@ class ViboonAsset extends AssetBundle
         'js/print-this/printThis.js',
         'js/ModalRemote.js?v=2',
         'js/ajaxcrud.js?v=2',        
-        'js/custom.js',
+        'js/custom.js?v=1',
         'js/tinymce/tinymce_5.10.7.min.js'
         //'assets/plugins/tabs/jquery.multipurpose_tabcontent.js',
         //'assets/plugins/tabs/tab-content.js'

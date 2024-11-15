@@ -80,13 +80,13 @@ use app\modules\user\models\User;
 						</li>-->
 						<!-- Country-selector-->
 						<!-- Theme-Layout -->
-						<li class="dropdown main-header-notification d-md-flex">
+						<!-- <li class="dropdown main-header-notification d-md-flex">
 							<a class="nav-link icon theme-layout nav-link-bg layout-setting"
 								href="javascript:void(0);">
 								<span class="dark-layout"><i class="bi bi-cloud-moon"></i></span>
 								<span class="light-layout"><i class="bi bi-cloud-sun"></i></span>
 							</a>
-						</li>
+						</li> -->
 						<!-- Theme-Layout -->
 						<li class="dropdown header-search">
 							<a class="nav-link icon header-search" data-bs-toggle="dropdown" href="#">
@@ -103,8 +103,22 @@ use app\modules\user\models\User;
 
 						<!-- FULL SCREEN -->
 						<li class="dropdown d-none d-md-flex mt-1">
-							<a class="nav-link icon full-screen-link">
-								<i class="bi bi-fullscreen-exit fullscreen-button floating" id="fullscreen-button"></i>
+							<a class="nav-link icon full-screen-link" title="Chế độ toàn màn hình">
+								<i class="fe fe-maximize fullscreen-button floating" id="fullscreen-button"></i>
+							</a>
+						</li>
+						
+						<!-- SETTINGS -->
+						<li class="dropdown d-none d-md-flex mt-1">
+							<a class="nav-link icon" title="Cấu hình tài khoản">
+								<i class="fe fe-settings floating"></i>
+							</a>
+						</li>
+						
+						<!-- LOGOUT -->
+						<li class="dropdown d-none d-md-flex mt-1">
+							<a class="nav-link icon" href="/user/auth/logout" title="Đăng xuất">
+								<i class="fe fe-power floating"></i>
 							</a>
 						</li>
 					
