@@ -24,16 +24,16 @@ $listTaiKhoan = ArrayHelper::map($taiKhoans, 'id', 'username');
         ]
     ]); ?>
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-3">
         <?= $form->field($model, 'ho_ten')->textInput(['maxlength' => true]) ?>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
            <?= $form->field($model, 'gioi_tinh')->dropDownList([
                     1 => 'Nam',
                     0 => 'Nữ',
                     ], ['prompt' => 'Chọn giới tính', 'class' => 'form-control']) ?>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
            <?= $form->field($model, 'ngay_sinh')->widget(DatePicker::classname(), [
                    'options' => ['placeholder' => 'Chọn ngày sinh  ...'],
                    'pluginOptions' => [
@@ -42,25 +42,21 @@ $listTaiKhoan = ArrayHelper::map($taiKhoans, 'id', 'username');
                     ]
                ]); ?>
     </div>
-</div> 
-<div class="row">
-    <div class="col-md-4">
+
+    <div class="col-md-3">
         <?= $form->field($model, 'chuc_vu')->textInput(['maxlength' => true]) ?>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
          <?= $form->field($model, 'so_cccd')->textInput(['maxlength' => true]) ?>
     </div> 
-    <div class="col-md-4">
+    <div class="col-md-3">
           <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
     </div>
   
-</div>
-
-<div class="row">
-    <div class="col-md-4">
+    <div class="col-md-3">
           <?= $form->field($model, 'dien_thoai')->textInput(['maxlength' => true]) ?> 
     </div> 
-    <div class="col-md-4">
+    <div class="col-md-3">
           <?= $form->field($model, 'id_phong_ban')->dropDownList(
                     $listPhongBan,
                       [
@@ -69,39 +65,33 @@ $listTaiKhoan = ArrayHelper::map($taiKhoans, 'id', 'username');
                       ]
                  ) ?>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
          <?= $form->field($model, 'id_to')->dropDownList(
                     [],  
                     ['prompt' => 'Chọn tổ...', 'id' => 'to-dropdown']
                  ) ?>
     </div>
-</div>
 
-<div class="row">
-    <div class="col-md-4">
+    <div class="col-md-3">
          <?= $form->field($model, 'vi_tri_cong_viec')->textInput(['maxlength' => true]) ?>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
          <?= $form->field($model, 'chuyen_nganh')->textInput(['maxlength' => true]) ?>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
           <?= $form->field($model, 'trinh_do')->textInput(['maxlength' => true]) ?>
     </div>
-</div>   
 
- 
-
-<div class="row">
-    <div class="col-md-4">
+    <div class="col-md-3">
         <?= $form->field($model, 'ma_so_thue')->textInput(['maxlength' => true]) ?>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
         <?= $form->field($model, 'tai_khoan')->dropDownList(
                  $listTaiKhoan,
                  ['prompt' => 'Chọn tài khoản...']
                ) ?>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
          <?= $form->field($model, 'trang_thai')->dropDownList([
                      'Đang làm việc' => 'Đang làm việc',
                      'Đã nghỉ việc' => 'Đã nghỉ việc',
@@ -110,15 +100,13 @@ $listTaiKhoan = ArrayHelper::map($taiKhoans, 'id', 'username');
 </div>
 
 <br>
-
-
- 
-
     <?php if (!Yii::$app->request->isAjax){ ?>
-        <div class="form-group">
-            <?= Html::submitButton('Tìm kiếm', ['class' => 'btn btn-primary']) ?>
-            <?= Html::resetButton('Xóa tìm kiếm', ['class' => 'btn btn-outline-secondary']) ?>
-        </div>
+    <div class="col-md-12 text-center">
+        <div class="form-group mb-0">
+	        <?= Html::submitButton('<i class="fe fe-search"></i> Tìm kiếm',['class' => 'btn btn-primary']) ?>
+	        <?= Html::resetButton('<i class="fe fe-x"></i> Xóa tìm kiếm', ['class' => 'btn btn-info']) ?>
+	    </div>
+    </div>
     <?php } ?>
 
 

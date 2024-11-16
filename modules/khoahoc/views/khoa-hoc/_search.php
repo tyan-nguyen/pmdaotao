@@ -19,29 +19,41 @@ use kartik\date\DatePicker;
                 'class' => 'myFilterForm'
             ]
       	]); ?>
-
-<?= $form->field($model, 'ten_khoa_hoc')->textInput(['maxlength' => true]) ?>
-<?= $form->field($model, 'id_hang')->dropDownList(HangDaoTao::getList(), ['prompt'=>'Chọn hạng']) ?>
-<?= $form->field($model, 'ngay_bat_dau')->widget(DatePicker::classname(), [
+    <div class='row'>
+        <div class="col-md-3">
+              <?= $form->field($model, 'ten_khoa_hoc')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-md-3">
+              <?= $form->field($model, 'id_hang')->dropDownList(HangDaoTao::getList(), ['prompt'=>'Chọn hạng']) ?>
+        </div>
+        <div class="col-md-3">   
+             <?= $form->field($model, 'ngay_bat_dau')->widget(DatePicker::classname(), [
             'options' => ['placeholder' => 'Chọn ngày bắt đầu  ...'],
             'pluginOptions' => [
                 'autoclose' => true,
                 'format' => 'dd/mm/yyyy',
             ]
                ]); ?>
-<?= $form->field($model, 'ngay_ket_thuc')->widget(DatePicker::classname(), [
+        </div>
+        <div class="col-md-3">
+            <?= $form->field($model, 'ngay_ket_thuc')->widget(DatePicker::classname(), [
             'options' => ['placeholder' => 'Chọn ngày kết thúc  ...'],
             'pluginOptions' => [
                 'autoclose' => true,
                 'format' => 'dd/mm/yyyy',
             ]
                ]); ?>
-	<?php if (!Yii::$app->request->isAjax){ ?>
-	  	<div class="form-group">
-	        <?= Html::submitButton('Tìm kiếm',['class' => 'btn btn-primary']) ?>
-	        <?= Html::resetButton('Xóa tìm kiếm', ['class' => 'btn btn-outline-secondary']) ?>
+        </div>
+    </div>
+
+    <?php if (!Yii::$app->request->isAjax){ ?>
+    <div class="col-md-12 text-center">
+        <div class="form-group mb-0">
+	        <?= Html::submitButton('<i class="fe fe-search"></i> Tìm kiếm',['class' => 'btn btn-primary']) ?>
+	        <?= Html::resetButton('<i class="fe fe-x"></i> Xóa tìm kiếm', ['class' => 'btn btn-info']) ?>
 	    </div>
-	<?php } ?>
+    </div>
+    <?php } ?>
 
 
     <?php ActiveForm::end(); ?>

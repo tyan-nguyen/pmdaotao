@@ -40,7 +40,7 @@ use kartik\select2\Select2;
     		<?= $form->field($model, 'nguoi_ky')->textInput() ?>
     	</div> -->
     	<div class="col-md-3">
-    		<label>&nbsp;</label>
+    	
     		<?= $form->field($model, 'vbden_nguoi_nhan')->widget(Select2::classname(), [
                  'data' => NhanVien::getList(),
                     'language' => 'vi',

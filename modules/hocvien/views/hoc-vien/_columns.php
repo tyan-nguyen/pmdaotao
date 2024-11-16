@@ -10,14 +10,99 @@ return [
         'class' => 'kartik\grid\CheckboxColumn',
         'width' => '20px',
     ],
-    [
-        'class' => 'kartik\grid\SerialColumn',
-        'width' => '30px',
-    ],
+ 
         // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'id',
     // ],
+    [
+        'class' => 'kartik\grid\ActionColumn',
+        'header'=>'',
+        'template' => '{payment} {view} {update} {delete} ',
+        'dropdown' => true,
+        'dropdownOptions' => ['class' => 'float-right'],
+        'dropdownButton'=>[
+            'label'=>'<i class="fe fe-settings floating"></i>',
+            'class'=>'btn dropdown-toggle p-0'
+        ],
+        'vAlign'=>'middle',
+        'width' => '20px',
+        'urlCreator' => function($action, $model, $key, $index) {
+            if ($action === 'payment') {
+                // Lấy thông tin khóa học của học viên
+                $khoaHoc = KhoaHoc::findOne($model->id_khoa_hoc);
+        
+                // Nếu không có thông tin khóa học, trả về URL mặc định
+                if (!$khoaHoc) {
+                    return Url::to(['mess2', 'id' => $key]); 
+                }
+        
+                // Lấy học phí dựa trên id_hoc_phi của khóa học
+                $hocPhiHang = HocPhi::findOne($khoaHoc->id_hoc_phi);
+        
+                // Nếu không có thông tin học phí, trả về URL mặc định
+                if (!$hocPhiHang) {
+                    return Url::to([$action, 'id' => $key]);
+                }
+        
+                // Lấy thông tin các lần nộp học phí của học viên
+                $nopHP = NopHocPhi::find()->where(['id_hoc_vien' => $model->id])->all();
+        
+                // Tính tổng số tiền đã nộp
+                $tongTienDaNop = 0;
+                foreach ($nopHP as $hcPhi) {
+                    $tongTienDaNop += $hcPhi->so_tien_nop;
+                }
+            
+                // Kiểm tra trạng thái học phí
+                if ($tongTienDaNop >= $hocPhiHang->hoc_phi) {
+                    // Học viên đã đóng đủ học phí
+                    return Url::to(['mess', 'id' => $key]); // Chuyển đến actionMess để thông báo đã nộp đủ
+                } else if($tongTienDaNop < $hocPhiHang->hoc_phi){
+                    // Học viên chưa đóng hoặc đóng thiếu học phí
+                    return Url::to(['create2', 'id' => $key]); // Tiếp tục cho nhập học phí
+                }
+            }
+            return Url::to([$action, 'id' => $key]); // Trả về URL mặc định cho các hành động khác
+        },
+        
+        'viewOptions' => [
+            'role' => 'modal-remote',
+            'title' => 'Xem',
+            'class' => 'btn ripple btn-primary btn-sm',
+            'data-bs-placement' => 'top',
+            'data-bs-toggle' => 'tooltip-primary'
+        ],
+        'updateOptions' => [
+            'role' => 'modal-remote',
+            'title' => 'Sửa', 
+            'class' => 'btn ripple btn-info btn-sm',
+            'data-bs-placement' => 'top',
+            'data-bs-toggle' => 'tooltip-info'
+        ],
+        'deleteOptions' => [
+            'role' => 'modal-remote',
+            'title' => 'Xóa', 
+            'class' => 'btn ripple btn-success btn-sm',
+            'data-bs-placement' => 'top',
+            'data-bs-toggle' => 'tooltip-success'
+        ],
+        'buttons' => [
+          'payment' => function ($url, $model, $key) {
+              return Html::a('<i class="fas fa-dollar-sign"></i> Đóng học phí', $url, [
+                'title' => 'Đóng học phí',
+                'role' => 'modal-remote',
+                'class' => 'btn ripple btn-warning dropdown-item', // Thêm dropdown-item để đồng bộ
+                'data-bs-placement' => 'top',
+                'data-bs-toggle' => 'tooltip',
+              ]);
+           },
+       ],
+    ],
+    [
+        'class' => 'kartik\grid\SerialColumn',
+        'width' => '30px',
+    ],
    
     [
         'class'=>'\kartik\grid\DataColumn',
@@ -99,92 +184,7 @@ return [
     ],
     
     
-    [
-        'class' => 'kartik\grid\ActionColumn',
-        'template' => '{payment} {view} {update} {delete} ',
-        'dropdown' => false,
-        'vAlign' => 'middle',
-        'width' => '200px',
-        'urlCreator' => function($action, $model, $key, $index) {
-    if ($action === 'payment') {
-        // Lấy thông tin khóa học của học viên
-        $khoaHoc = KhoaHoc::findOne($model->id_khoa_hoc);
 
-        // Nếu không có thông tin khóa học, trả về URL mặc định
-        if (!$khoaHoc) {
-            return Url::to(['mess2', 'id' => $key]); 
-        }
-
-        // Lấy học phí dựa trên id_hoc_phi của khóa học
-        $hocPhiHang = HocPhi::findOne($khoaHoc->id_hoc_phi);
-
-        // Nếu không có thông tin học phí, trả về URL mặc định
-        if (!$hocPhiHang) {
-            return Url::to([$action, 'id' => $key]);
-        }
-
-        // Lấy thông tin các lần nộp học phí của học viên
-        $nopHP = NopHocPhi::find()->where(['id_hoc_vien' => $model->id])->all();
-
-        // Tính tổng số tiền đã nộp
-        $tongTienDaNop = 0;
-        foreach ($nopHP as $hcPhi) {
-            $tongTienDaNop += $hcPhi->so_tien_nop;
-        }
-    
-        // Kiểm tra trạng thái học phí
-        if ($tongTienDaNop >= $hocPhiHang->hoc_phi) {
-            // Học viên đã đóng đủ học phí
-            return Url::to(['mess', 'id' => $key]); // Chuyển đến actionMess để thông báo đã nộp đủ
-        } else if($tongTienDaNop < $hocPhiHang->hoc_phi){
-            // Học viên chưa đóng hoặc đóng thiếu học phí
-            return Url::to(['create2', 'id' => $key]); // Tiếp tục cho nhập học phí
-        }
-    }
-    return Url::to([$action, 'id' => $key]); // Trả về URL mặc định cho các hành động khác
-},
-
-          'buttons' => [
-            'payment' => function($url, $model, $key) {
-                return Html::a('<i class="fas fa-dollar-sign"></i>', $url, [
-                    'title' => 'Đóng học phí',
-                    'role' => 'modal-remote',
-                    'class' => 'btn ripple btn-warning btn-sm',
-                    'style' => 'width: 30px; text-align: center;',
-                    'data-bs-placement' => 'top',
-                    'data-bs-toggle' => 'tooltip-warning',
-                ]);
-            }
-        ],
-        'viewOptions' => [
-            'role' => 'modal-remote',
-            'title' => 'Xem thông tin',
-            'class' => 'btn ripple btn-primary btn-sm',
-            'data-bs-placement' => 'top',
-            'data-bs-toggle' => 'tooltip-primary'
-        ],
-        'updateOptions' => [
-            'role' => 'modal-remote',
-            'title' => 'Cập nhật dữ liệu',
-            'class' => 'btn ripple btn-info btn-sm',
-            'data-bs-placement' => 'top',
-            'data-bs-toggle' => 'tooltip-info'
-        ],
-        'deleteOptions' => [
-            'role' => 'modal-remote',
-            'title' => 'Xóa dữ liệu này',
-            'data-confirm' => false,
-            'data-method' => false, // Override yii data API
-            'data-request-method' => 'post',
-            'data-toggle' => 'tooltip',
-            'data-confirm-title' => 'Xác nhận xóa dữ liệu?',
-            'data-confirm-message' => 'Bạn có chắc chắn thực hiện hành động này?',
-            'class' => 'btn ripple btn-secondary btn-sm',
-            'data-bs-placement' => 'top',
-            'data-bs-toggle' => 'tooltip-secondary'
-        ],
-      
-    ],
     
 
 ];   

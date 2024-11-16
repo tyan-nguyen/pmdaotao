@@ -16,26 +16,26 @@ use yii\widgets\ActiveForm;
                 'class' => 'myFilterForm'
             ]
       	]); ?>
+    <div class="row">
+         <div class="col-md-3">
+               <?= $form->field($model, 'ten_loai')->textInput(['maxlength' => true]) ?>
+         </div>
+         <div class="col-md-3">
+              <?= $form->field($model, 'ho_so_bat_buoc', [
+                  'template' => "{label}<br>{input}\n{error}",
+                   ])->checkbox(['class' => 'form-check-input ','id'=>'gray-checkbox'], false) ?>
+               </div>
+         </div>
+    </div>
 
-    <?= $form->field($model, 'ten_loai')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'ho_so_bat_buoc')->textInput() ?>
-
-    <?= $form->field($model, 'ghi_chu')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'nguoi_tao')->textInput() ?>
-
-    <?= $form->field($model, 'thoi_gian_tao')->textInput() ?>
-
-    <?= $form->field($model, 'doi_tuong')->textInput(['maxlength' => true]) ?>
-
-  
-	<?php if (!Yii::$app->request->isAjax){ ?>
-	  	<div class="form-group">
-	        <?= Html::submitButton('Tìm kiếm',['class' => 'btn btn-primary']) ?>
-	        <?= Html::resetButton('Xóa tìm kiếm', ['class' => 'btn btn-outline-secondary']) ?>
+    <?php if (!Yii::$app->request->isAjax){ ?>
+    <div class="col-md-12 text-left">
+        <div class="form-group mb-0">
+	        <?= Html::submitButton('<i class="fe fe-search"></i> Tìm kiếm',['class' => 'btn btn-primary']) ?>
+	        <?= Html::resetButton('<i class="fe fe-x"></i> Xóa tìm kiếm', ['class' => 'btn btn-info']) ?>
 	    </div>
-	<?php } ?>
+    </div>
+    <?php } ?>
 
     <?php ActiveForm::end(); ?>
     
