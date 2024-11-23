@@ -322,18 +322,15 @@ class XeController extends Controller
     public function actionAddImage($id)
     {
         $request = Yii::$app->request;
-        $model = new HinhXe(); // Model để lưu thông tin ảnh
-    
+        $model = new HinhXe(); 
         if ($request->isAjax) {
             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-    
             if ($request->isGet) {
-                // Hiển thị modal để chọn ảnh
                 return [
                     'title' => "Thêm ảnh Xe",
                     'content' => $this->renderAjax('add-image', [
-                        'id' => $id, // ID xe hiện tại
-                        'images' => $this->getUploadedImages($id), // Lấy ảnh đã tải lên tạm
+                        'id' => $id, 
+                        'images' => $this->getUploadedImages($id), 
                     ]),
                     'footer' => Html::button('Đóng lại', [
                             'class' => 'btn btn-default pull-left',
@@ -346,16 +343,16 @@ class XeController extends Controller
                         ]),
                 ];
             } elseif ($request->isPost) {
-                // Xử lý lưu ảnh vào CSDL khi người dùng nhấn Lưu
-                $selectedImages = $request->post('selectedImages'); // Danh sách ảnh người dùng đã chọn
+                
+                $selectedImages = $request->post('selectedImages'); 
     
                 if (!empty($selectedImages)) {
                     foreach ($selectedImages as $fileName) {
                         $hinhXeModel = new HinhXe();
-                        $hinhXeModel->id_xe = $id; // ID xe
-                        $hinhXeModel->hinh_anh = $fileName; // Tên ảnh
+                        $hinhXeModel->id_xe = $id;
+                        $hinhXeModel->hinh_anh = $fileName;
     
-                        // Lưu vào bảng HinhXe
+                     
                         if (!$hinhXeModel->save()) {
                             return [
                                 'success' => false,
@@ -376,7 +373,6 @@ class XeController extends Controller
                 }
             }
         } else {
-            // Nếu không phải AJAX request
             if ($model->load($request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
@@ -389,17 +385,17 @@ class XeController extends Controller
     }
     
     
-// Phương thức lấy các ảnh đã tải lên tạm
+
 protected function getUploadedImages($id)
 {
     $tempDir = Yii::getAlias('@webroot/images/temp');
     $uploadedImages = [];
 
-    // Kiểm tra nếu thư mục tạm có ảnh đã tải lên
+  
     if (is_dir($tempDir)) {
-        $files = scandir($tempDir);  // Lấy danh sách tất cả các file trong thư mục
+        $files = scandir($tempDir);  
         foreach ($files as $file) {
-            // Lọc ra những file ảnh
+          
             if (in_array(pathinfo($file, PATHINFO_EXTENSION), ['jpg', 'jpeg', 'png', 'gif', 'jfif'])) {
                 $uploadedImages[] = $file;
             }
@@ -413,15 +409,13 @@ public function actionUploadImages()
 {
     Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
-    $uploadDir = Yii::getAlias('@webroot/images/temp'); // Thư mục lưu trữ ảnh tạm
+    $uploadDir = Yii::getAlias('@webroot/images/temp'); 
     if (!is_dir($uploadDir)) {
-        mkdir($uploadDir, 0777, true); // Tạo thư mục nếu chưa tồn tại
+        mkdir($uploadDir, 0777, true); 
     }
-
-    $file = UploadedFile::getInstanceByName('file'); // Lấy file từ Dropzone
-
+    $file = UploadedFile::getInstanceByName('file');
     if ($file) {
-        $fileName = uniqid() . '.' . $file->extension; // Tạo tên file duy nhất
+        $fileName = uniqid() . '.' . $file->extension; 
         $filePath = $uploadDir . DIRECTORY_SEPARATOR . $fileName;
 
         if ($file->saveAs($filePath)) {
@@ -437,7 +431,6 @@ public function actionUploadImages()
             ];
         }
     }
-
     return [
         'success' => false,
         'message' => 'Không nhận được file tải lên.',

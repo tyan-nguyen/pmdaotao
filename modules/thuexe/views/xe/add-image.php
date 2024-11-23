@@ -19,14 +19,13 @@ Dropzone.autoDiscover = false;
 
 var selectedImages = [];
 var dropzone = new Dropzone("#image-dropzone", {
-    // API để upload ảnh
-    maxFilesize: 2, // Giới hạn kích thước mỗi file (MB)
-    acceptedFiles: "image/*", // Chỉ nhận file ảnh
-    addRemoveLinks: true, // Hiển thị nút xóa file
+    maxFilesize: 2, 
+    acceptedFiles: "image/*", 
+    addRemoveLinks: true, 
     dictRemoveFile: "Xóa",
     success: function(file, response) {
         if (response.success) {
-            selectedImages.push(response.fileName); // Lưu tên file đã upload
+            selectedImages.push(response.fileName); 
         } else {
             alert("Lỗi tải ảnh: " + response.message);
         }
@@ -51,7 +50,6 @@ function saveSelectedImages() {
         success: function(response) {
             if (response.success) {
                 alert(response.message);
-                // Reload dữ liệu hoặc đóng modal
                 $.pjax.reload({container: '#crud-datatable-pjax'});
                 $("#modal").modal("hide");
             } else {
@@ -59,10 +57,9 @@ function saveSelectedImages() {
             }
         },
         error: function(xhr) {
-    // In ra lỗi từ server
-    alert("Đã có lỗi xảy ra: " + xhr.status + " - " + xhr.responseText);
-    console.error("Chi tiết lỗi:", xhr); // Ghi toàn bộ thông tin lỗi vào console
-},
+        alert("Đã có lỗi xảy ra: " + xhr.status + " - " + xhr.responseText);
+        console.error("Chi tiết lỗi:", xhr); 
+    },
     });
 }
 </script>
