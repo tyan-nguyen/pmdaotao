@@ -7,7 +7,13 @@ use yii\widgets\ActiveForm;
 <div class="loai-xe-search">
 
 
-<?php $form = ActiveForm::begin(); ?>
+<?php $form = ActiveForm::begin([
+        'id' => 'myFilterForm',
+        'method' => 'get', 
+        'options' => [
+            'class' => 'myFilterForm'
+        ]
+]); ?>
 <div class="col-md-3">
     <?= $form->field($model, 'ten_loai_xe')->textInput(['maxlength' => true]) ?>
 </div>

@@ -146,6 +146,7 @@ $this->registerCssFile("https://use.fontawesome.com/releases/v5.3.1/css/all.css"
                   'options' => ['placeholder' => 'Chọn nhân viên...'],
                   'pluginOptions' => [
                       'allowClear' => true,
+                      'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
                      ],
                 ]); ?>
                 </div>

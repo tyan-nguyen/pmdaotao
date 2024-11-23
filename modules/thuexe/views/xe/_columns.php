@@ -11,7 +11,7 @@ return [
     [
         'class' => 'kartik\grid\ActionColumn',
         'header'=>'',
-        'template' => '{view} {update} {delete}',
+        'template' => '{image} {view} {update} {delete}',
         'dropdown' => true,
         'dropdownOptions' => ['class' => 'float-right'],
         'dropdownButton'=>[
@@ -20,9 +20,27 @@ return [
         ],
         'vAlign'=>'middle',
         'width' => '20px',
-        'urlCreator' => function($action, $model, $key, $index) {
-        return Url::to([$action,'id'=>$key]);
-        },
+   
+        'urlCreator' => function($action, $model, $key, $index) { 
+            if ($action === 'image') {
+                         return Url::to(['add-image', 'id' => $key]);
+            }
+                        return Url::to([$action,'id'=>$key]);
+              },
+        
+        'buttons' => [
+          
+            'image' => function($url, $model, $key) {
+                return Html::a('<i class="fa fa-image"></i> Thêm hình ảnh', $url, [
+                    'title' => 'Thêm hình ảnh',
+                    'role' => 'modal-remote-2',
+                    'class' => 'btn ripple btn-success dropdown-item',
+                    'data-bs-placement' => 'top',
+                    'data-bs-toggle' => 'tooltip-success',
+                ]);
+                
+            },
+        ],
         'viewOptions'=>['role'=>'modal-remote','title'=>'View','title'=>'Xem',
             'class'=>'btn ripple btn-primary btn-sm',
             'data-bs-placement'=>'top',

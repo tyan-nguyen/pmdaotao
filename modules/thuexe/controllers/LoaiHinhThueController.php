@@ -111,7 +111,16 @@ class LoaiHinhThueController extends Controller
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                    'footer'=>
+                              Html::a('<i class="fa fa-cog"> </i> Cài đặt', 
+                                  ['/thuexe/phieu-thue-xe/config-loai-hinh-thue', 'modalType' => 'modal-remote-2'], 
+                                    [
+                                      'class' => 'btn btn-info',
+                                      'role' => 'modal-remote-2',
+                                      'title' => 'Cài đặt loại hình thuê'
+                                    ]
+                                ) .
+                                Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                                 Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
@@ -120,7 +129,16 @@ class LoaiHinhThueController extends Controller
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Thêm mới Loại hình thuê",
                     'content'=>'<span class="text-success">Thêm mới Loại hình thuê thành công !</span>',
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                    'footer'=> 
+                          Html::a('<i class="fa fa-history"> </i> Lịch sử nộp', 
+                             ['/thuexe/phieu-thue-xe/xem-thong-tin-phi-thue', 'modalType' => 'modal-remote-2'], 
+                                [
+                                 'class' => 'btn btn-info',
+                                 'role' => 'modal-remote-2',
+                                 'title' => 'Xem lịch sử nộp'
+                            ]
+                           ) .
+                            Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                             Html::a('Tiếp tục tạo',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
         
                 ];         

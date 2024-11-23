@@ -79,6 +79,11 @@ class PhieuThueXeSearch extends PhieuThueXe
             'thoi_gian_tao' => $this->thoi_gian_tao,
         ]);
 
+        if ($this->ngay_tra_xe) {
+            $this->ngay_tra_xe = \DateTime::createFromFormat('d/m/Y', $this->ngay_tra_xe)->format('Y-m-d');
+        }
+        
+        $query->andFilterWhere(['like','ngay_tra_xe', $this->ngay_tra_xe]);
         $query->andFilterWhere(['like', 'ho_ten_nguoi_thue', $this->ho_ten_nguoi_thue])
             ->andFilterWhere(['like', 'so_cccd_nguoi_thue', $this->so_cccd_nguoi_thue])
             ->andFilterWhere(['like', 'dia_chi_nguoi_thue', $this->dia_chi_nguoi_thue])

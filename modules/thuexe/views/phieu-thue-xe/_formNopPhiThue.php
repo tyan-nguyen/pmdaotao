@@ -89,7 +89,7 @@ use app\custom\CustomFunc;
                   'options' => ['placeholder' => 'Chọn nhân viên...'], 
                   'pluginOptions' => [
                       'allowClear' => true, 
-                     
+                      'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
                      ],
             ]); ?>
           

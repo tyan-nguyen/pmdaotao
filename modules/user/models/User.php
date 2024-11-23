@@ -63,5 +63,18 @@ class User extends UserBase{
     public function getShowLinkNhanVien(){
         return 'test';
     }
+
+    public static function getList()
+    {
+        // Lấy danh sách nhân viên  và sắp xếp theo thứ tự bảng chữ cái
+        $dsUser = User::find()
+            ->orderBy(['username' => SORT_ASC])
+            ->all();
+    
+        // Thêm dấu + vào trước tên nhân viên
+        return ArrayHelper::map($dsUser, 'id', function($model) {
+            return '+ ' . $model->username; // Thêm dấu + trước tên nhân viên
+        });
+    }
     
 }

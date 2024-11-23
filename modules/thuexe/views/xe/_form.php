@@ -45,8 +45,8 @@ use yii\bootstrap5\Modal;
             ) ?>
         </div>
 
-         <div class="col-lg-12 col-md-12">
-             <?= $form->field($model, 'tinh_trang_xe')->textarea(['rows' => 6]) ?>
+         <div class="col-lg-6 col-md-12">
+             <?= $form->field($model, 'tinh_trang_xe')->textarea(['rows' => 8]) ?>
          </div>
     </div>
     <?php CardWidget::end() ?>

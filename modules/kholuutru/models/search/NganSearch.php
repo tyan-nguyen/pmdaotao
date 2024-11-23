@@ -8,7 +8,7 @@ use yii\data\ActiveDataProvider;
 use app\modules\kholuutru\models\Ngan;
 
 /**
- * NganSearch represents the model behind the search form about `app\modules\kholuutru\models\Ngan`.
+ * HopSearch represents the model behind the search form about `app\modules\kholuutru\models\Hop`.
  */
 class NganSearch extends Ngan
 {
@@ -18,7 +18,7 @@ class NganSearch extends Ngan
     public function rules()
     {
         return [
-            [['id', 'id_ke', 'nguoi_tao'], 'integer'],
+            [['id', 'nguoi_tao','id_ke'], 'integer'],
             [['ten_ngan', 'thoi_gian_tao'], 'safe'],
         ];
     }
@@ -57,7 +57,7 @@ class NganSearch extends Ngan
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'id_ke' => $this->id_ke,
+            'id_ke'=>$this->id_ke,
             'nguoi_tao' => $this->nguoi_tao,
             'thoi_gian_tao' => $this->thoi_gian_tao,
         ]);

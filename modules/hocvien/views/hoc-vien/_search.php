@@ -53,14 +53,14 @@ use kartik\date\DatePicker;
                      [
                        'prompt' => 'Chọn hạng',
                        'class' => 'form-control dropdown-with-arrow',
-                       'id' => 'hang-dropdown',
+                       'id' => 'hangs-dropdown',
                      ]
                 ) ?>
             </div>
             <div class="col-md-3">
                  <?= $form->field($model, 'id_khoa_hoc')->dropDownList(
                     [],  
-                    ['prompt' => 'Chọn Khóa học...', 'id' => 'khoa-hoc-dropdown']
+                    ['prompt' => 'Chọn Khóa học...', 'id' => 'khoa-hocs-dropdown']
                  ) ?>
             </div>
             <div class="col-md-3">
@@ -74,7 +74,8 @@ use kartik\date\DatePicker;
                     'prompt' => 'Chọn trạng thái học phí', 
                ]
              ) ?>
-    </div>    
+          </div>  
+       </div>  
 
     <?php if (!Yii::$app->request->isAjax){ ?>
     <div class="col-md-12 text-center">
@@ -97,7 +98,7 @@ use kartik\date\DatePicker;
 <script>
     <?php
 $this->registerJs("
-    $('#hang-dropdown').change(function() {
+    $('#hangs-dropdown').change(function() {
         var idHang = $(this).val();
         $.ajax({
             url: '" . \yii\helpers\Url::to(['get-to-list']) . "',
@@ -113,7 +114,7 @@ $this->registerJs("
                         options += '<option value=\"' + id + '\">' + ten_khoa_hoc + '</option>';
                     });
                 }
-                $('#khoa-hoc-dropdown').html(options);
+                $('#khoa-hocs-dropdown').html(options);
             }
         });
     });

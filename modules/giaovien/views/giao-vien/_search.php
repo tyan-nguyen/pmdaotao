@@ -61,14 +61,14 @@ $listTaiKhoan = ArrayHelper::map($taiKhoans, 'id', 'username');
                     $listPhongBan,
                       [
                          'prompt' => 'Chọn phòng ban...',
-                         'id' => 'phong-bans-dropdown'
+                         'id' => 'phong-ban-dropdown'
                       ]
                  ) ?>
     </div>
     <div class="col-md-3">
          <?= $form->field($model, 'id_to')->dropDownList(
                     [],  
-                    ['prompt' => 'Chọn tổ...', 'id' => 'to-dropdown']
+                    ['prompt' => 'Chọn tổ...', 'id' => 'tos-dropdown']
                  ) ?>
     </div>
 
@@ -118,7 +118,7 @@ $listTaiKhoan = ArrayHelper::map($taiKhoans, 'id', 'username');
 <?php
 
 $this->registerJs("
-    $('#phong-bans-dropdown').change(function() {
+    $('#phong-ban-dropdown').change(function() {
         var idPhongBan = $(this).val();
         $.ajax({
             url: '" . \yii\helpers\Url::to(['get-to-list']) . "',
@@ -134,7 +134,7 @@ $this->registerJs("
                         options += '<option value=\"' + id + '\">' + ten_to + '</option>';
                     });
                 }
-                $('#to-dropdown').html(options);
+                $('#tos-dropdown').html(options);
             }
         });
     });

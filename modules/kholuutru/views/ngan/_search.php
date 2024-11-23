@@ -2,6 +2,7 @@
 use yii\bootstrap5\Html;
 use yii\widgets\ActiveForm;
 use app\modules\kholuutru\models\Ke;
+use kartik\select2\Select2;
 /* @var $this yii\web\View */
 /* @var $model app\modules\kholuutru\models\LoaiFile */
 /* @var $form yii\widgets\ActiveForm */
@@ -11,7 +12,7 @@ use app\modules\kholuutru\models\Ke;
 
     <?php $form = ActiveForm::begin([
         	'id'=>'myFilterForm',
-            'method' => 'post',
+            'method' => 'get',
             'options' => [
                 'class' => 'myFilterForm'
             ]
@@ -21,14 +22,15 @@ use app\modules\kholuutru\models\Ke;
                <?= $form->field($model, 'ten_ngan')->textInput(['maxlength' => true]) ?>
          </div>
          <div class="col-md-3">
-              
-    <?= $form->field($model, 'id_ke')->dropDownList(
-                    Ke::getList(), 
-                     [
-                         'prompt' => 'Chọn Kệ',
-                         'class' => 'form-control dropdown-with-arrow',
-                     ]
-                ) ?>
+            <?= $form->field($model, 'id_ke')->widget(Select2::classname(), [
+                 'data' => Ke::getList(),
+                    'language' => 'vi',
+                    'options' => ['placeholder' => 'Chọn kệ...'],  
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                    ],
+             ]);?> 
+ 
          </div>
     </div>
 
@@ -44,3 +46,9 @@ use app\modules\kholuutru\models\Ke;
     <?php ActiveForm::end(); ?>
     
 </div>
+<style>
+      .select2-container {
+        width: 100% !important;  
+        display: block;
+    }
+</style>

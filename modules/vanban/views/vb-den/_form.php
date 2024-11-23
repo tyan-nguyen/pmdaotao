@@ -154,6 +154,10 @@ $currentYear = date('Y');
     /* border-color: #0000FF; */  /* Thay đổi màu viền */
     border-width: 1px; /* Độ dày viền */
 }
+.select2-container {
+        width: 100% !important;  /* Đảm bảo rằng Select2 chiếm hết chiều rộng của phần tử */
+        display: block; /* Đảm bảo Select2 xuống dòng */
+    }
 
 </style>
 

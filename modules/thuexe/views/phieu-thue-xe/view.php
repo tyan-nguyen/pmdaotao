@@ -88,9 +88,18 @@ use yii\helpers\Html;
                                 <td><?= Html::encode($model->xe->hieu_xe) ?></td>
                              </tr>
                              <tr>
-                                <th>Loại hình thuê</th>
-                                <td><?= Html::encode($model->loaiHinhThue->loai_hinh_thue) ?></td>
-                             </tr>
+                                 <th>Loại hình thuê</th>
+                                 <td>
+                                   <?php if ($model->loaiHinhThue->loai_hinh_thue === 'Buổi '): ?>
+                                   <?= Html::encode($model->loaiHinhThue->loai_hinh_thue) ?> 
+                                        | 
+                                   <?= !empty($model->buoi) ? Html::encode($model->buoi) : 'Trống' ?>
+                                     <?php else: ?>
+                                       <?= Html::encode($model->loaiHinhThue->loai_hinh_thue) ?>
+                                     <?php endif; ?>
+                                 </td>
+                            </tr>
+
                              <tr>
                                <th>Thời gian bắt đầu thuê</th>
                                <td><?= Html::encode(Yii::$app->formatter->asDatetime($model->thoi_gian_bat_dau_thue, 'php:d/m/Y | H:i:s')) ?></td>

@@ -61,7 +61,7 @@ class LoaiHinhThue extends \app\models\PtxLoaiHinhThue
         return [
             'id' => 'ID',
             'loai_hinh_thue' => 'Loại Hình Thuê',
-            'id_loai_xe' => 'Loại Xe',
+            'id_loai_xe' => 'Loại Xe Thuê',
             'gia_thue' => 'Giá Thuê',
             'ngay_ap_dung' => 'Ngày áp dụng',
             'ngay_ket_thuc' => 'Ngày Kết Thúc',

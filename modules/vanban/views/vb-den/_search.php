@@ -83,12 +83,12 @@ use kartik\select2\Select2;
        	</div>
      </div>
 
-    <?php if (!Yii::$app->request->isAjax){ ?>
-     <div class="col-md-12 text-center">
+     <?php if (!Yii::$app->request->isAjax){ ?>
+    <div class="col-md-12 text-center">
         <div class="form-group mb-0">
-            <?= Html::submitButton('Tìm kiếm', ['class' => 'btn btn-primary']) ?>
-            <?= Html::resetButton('Xóa tìm kiếm', ['class' => 'btn btn-outline-secondary']) ?>
-        </div>
+	        <?= Html::submitButton('<i class="fe fe-search"></i> Tìm kiếm',['class' => 'btn btn-primary']) ?>
+	        <?= Html::resetButton('<i class="fe fe-x"></i> Xóa tìm kiếm', ['class' => 'btn btn-info']) ?>
+	    </div>
     </div>
     <?php } ?>
 
@@ -100,4 +100,8 @@ use kartik\select2\Select2;
 .van-ban-den-search label {
     font-weight: bold;
 }
+.select2-container {
+        width: 100% !important;  
+        display: block; 
+    }
 </style>

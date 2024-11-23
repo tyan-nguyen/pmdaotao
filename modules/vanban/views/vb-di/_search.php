@@ -59,14 +59,14 @@ use app\modules\nhanvien\models\NhanVien;
     </div>   
     
    
-	<?php if (!Yii::$app->request->isAjax){ ?>
-	 <div class="col-md-12 text-center">
-	  	<div class="form-group mb-0">
+    <?php if (!Yii::$app->request->isAjax){ ?>
+    <div class="col-md-12 text-center">
+        <div class="form-group mb-0">
 	        <?= Html::submitButton('<i class="fe fe-search"></i> Tìm kiếm',['class' => 'btn btn-primary']) ?>
 	        <?= Html::resetButton('<i class="fe fe-x"></i> Xóa tìm kiếm', ['class' => 'btn btn-info']) ?>
 	    </div>
-	</div>
-	<?php } ?>
+    </div>
+    <?php } ?>
 
     <?php ActiveForm::end(); ?>
     
@@ -76,4 +76,8 @@ use app\modules\nhanvien\models\NhanVien;
     .van-ban-den-search label {
     font-weight: bold;
 }
+.select2-container {
+        width: 100% !important;  /* Đảm bảo rằng Select2 chiếm hết chiều rộng của phần tử */
+        display: block; /* Đảm bảo Select2 xuống dòng */
+    }
 </style>

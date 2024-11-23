@@ -35,6 +35,7 @@ use Yii;
  * @property string|null $trang_thai
  * @property int|null $nguoi_tao
  * @property string|null $thoi_gian_tao
+ * @property string|null $buoi
  *
  * @property PtxLoaiHinhThue $loaiHinhThue
  * @property PtxXe $xe
@@ -61,7 +62,7 @@ class PtxPhieuThueXe extends \yii\db\ActiveRecord
             [['chi_phi_thue_du_kien', 'chi_phi_thue_phat_sinh'], 'number'],
             [['noi_dung_thue', 'tinh_trang_xe_khi_tra', 'ghi_chu_nguoi_gui'], 'string'],
             [['ho_ten_nguoi_thue', 'so_cccd_nguoi_thue', 'dia_chi_nguoi_thue', 'so_dien_thoai_nguoi_thue'], 'string', 'max' => 255],
-            [['trang_thai'], 'string', 'max' => 25],
+            [['trang_thai','buoi'], 'string', 'max' => 25],
             [['id_xe'], 'exist', 'skipOnError' => true, 'targetClass' => PtxXe::class, 'targetAttribute' => ['id_xe' => 'id']],
             [['id_loai_hinh_thue'], 'exist', 'skipOnError' => true, 'targetClass' => PtxLoaiHinhThue::class, 'targetAttribute' => ['id_loai_hinh_thue' => 'id']],
         ];
@@ -101,6 +102,7 @@ class PtxPhieuThueXe extends \yii\db\ActiveRecord
             'trang_thai' => 'Trang Thai',
             'nguoi_tao' => 'Nguoi Tao',
             'thoi_gian_tao' => 'Thoi Gian Tao',
+            'buoi'=>'Buoi',
         ];
     }
 

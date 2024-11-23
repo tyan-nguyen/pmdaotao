@@ -2,6 +2,7 @@
 use yii\bootstrap5\Html;
 use yii\widgets\ActiveForm;
 use app\modules\kholuutru\models\Kho;
+use kartik\select2\Select2;
 /* @var $this yii\web\View */
 /* @var $model app\modules\kholuutru\models\Ke */
 /* @var $form yii\widgets\ActiveForm */
@@ -13,13 +14,15 @@ use app\modules\kholuutru\models\Kho;
 
     <?= $form->field($model, 'ten_ke')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'id_kho')->dropDownList(
-                    Kho::getList(), 
-                     [
-                         'prompt' => 'Chọn Kho',
-                         'class' => 'form-control dropdown-with-arrow',
-                     ]
-                ) ?>
+    <?= $form->field($model, 'id_kho')->widget(Select2::classname(), [
+                 'data' => Kho::getList(),
+                    'language' => 'vi',
+                    'options' => ['placeholder' => 'Chọn kho...'],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                        'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
+                    ],
+             ]);?>
 
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">
@@ -60,4 +63,8 @@ use app\modules\kholuutru\models\Kho;
     border-color: #0000FF; 
     border-width: 1px; 
 }
+.select2-container {
+        width: 100% !important;  
+        display: block;
+    }
 </style>

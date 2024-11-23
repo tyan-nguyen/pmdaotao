@@ -16,6 +16,7 @@ Yii::$app->params['showSearch'] = true;
 Yii::$app->params['showExport'] = true;
 ?>
 
+
 <div class="card border-default" id="divFilterExtend">
 	<div class="card-header rounded-bottom-0 card-header text-dark" id="simple">
 		<h5 class="mt-2"><i class="fe fe-search"></i> Tìm kiếm</h5>
@@ -37,7 +38,7 @@ Yii::$app->params['showExport'] = true;
     'formSelector' => '.myFilterForm'
 ]); ?>
 
-<div class="loai-hinh-thue-index">
+<div class="loai-xe-index">
     <div id="ajaxCrudDatatable">
         <?=GridView::widget([
             'id'=>'crud-datatable',
@@ -86,7 +87,7 @@ Yii::$app->params['showExport'] = true;
             'summary'=>'Tổng: {totalCount} dòng dữ liệu',
             'panel' => [
                 'headingOptions'=>['class'=>'card-header rounded-bottom-0 card-header text-dark'],
-                'heading' => '<i class="typcn typcn-folder-open"></i> DANH SÁCH LOẠI HÌNH THUÊ',
+                'heading' => '<i class="typcn typcn-folder-open"></i> DANH SÁCH LOẠI XE',
                 'before'=>false,
             ],
             'export'=>[
@@ -129,7 +130,3 @@ Yii::$app->params['showExport'] = true;
 
 <?php Modal::end(); ?>
 
-<?php
-    /* $searchContent = $this->render("_search", ["model" => $searchModel]);
-    echo FilterFormWidget::widget(["content"=>$searchContent, "description"=>"Nhập thông tin tìm kiếm."])  */
-?>

@@ -2,6 +2,7 @@
 use yii\bootstrap5\Html;
 use yii\widgets\ActiveForm;
 use app\modules\kholuutru\models\Kho;
+use kartik\select2\Select2;
 /* @var $this yii\web\View */
 /* @var $model app\modules\kholuutru\models\LoaiFile */
 /* @var $form yii\widgets\ActiveForm */
@@ -11,24 +12,24 @@ use app\modules\kholuutru\models\Kho;
 
     <?php $form = ActiveForm::begin([
         	'id'=>'myFilterForm',
-            'method' => 'post',
+            'method' => 'get',
             'options' => [
                 'class' => 'myFilterForm'
             ]
-      	]); ?>
+    ]); ?>
     <div class="row">
          <div class="col-md-3">
                <?= $form->field($model, 'ten_ke')->textInput(['maxlength' => true]) ?>
          </div>
          <div class="col-md-3">
-         <?= $form->field($model, 'id_kho')->dropDownList(
-                    Kho::getList(), 
-                     [
-                         'prompt' => 'Chọn Kho',
-                         'class' => 'form-control dropdown-with-arrow',
-                     ]
-                ) ?>
-         </div>
+         <?= $form->field($model, 'id_kho')->widget(Select2::classname(), [
+                 'data' => Kho::getList(),
+                    'language' => 'vi',
+                    'options' => ['placeholder' => 'Chọn kho...'],  
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                    ],
+             ]);?>
     </div>
 
     <?php if (!Yii::$app->request->isAjax){ ?>
@@ -43,3 +44,9 @@ use app\modules\kholuutru\models\Kho;
     <?php ActiveForm::end(); ?>
     
 </div>
+<style>
+    .select2-container {
+        width: 100% !important;  
+        display: block;
+    }
+</style>

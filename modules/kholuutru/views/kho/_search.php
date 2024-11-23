@@ -9,13 +9,13 @@ use app\modules\kholuutru\models\Ke;
 
 <div class="loai-file-search">
 
-    <?php $form = ActiveForm::begin([
-        	'id'=>'myFilterForm',
-            'method' => 'post',
-            'options' => [
-                'class' => 'myFilterForm'
-            ]
-      	]); ?>
+<?php $form = ActiveForm::begin([
+        'id' => 'myFilterForm',
+        'method' => 'get', 
+        'options' => [
+            'class' => 'myFilterForm'
+        ]
+]); ?>
     <div class="row">
          <div class="col-md-3">
                <?= $form->field($model, 'ten_kho')->textInput(['maxlength' => true]) ?>

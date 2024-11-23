@@ -36,7 +36,7 @@ use app\models\PtxLoaiHinhThue;
  * @property string|null $trang_thai
  * @property int|null $nguoi_tao
  * @property string|null $thoi_gian_tao
- *
+ * @property string|null $buoi
  * @property PtxLoaiHinhThue $loaiHinhThue
  * @property PtxXe $xe
  */
@@ -64,7 +64,7 @@ class PhieuThueXeBase extends \app\models\PtxPhieuThueXe
             [['chi_phi_thue_du_kien', 'chi_phi_thue_phat_sinh'], 'number'],
             [['noi_dung_thue', 'tinh_trang_xe_khi_tra', 'ghi_chu_nguoi_gui'], 'string'],
             [['ho_ten_nguoi_thue', 'so_cccd_nguoi_thue', 'dia_chi_nguoi_thue', 'so_dien_thoai_nguoi_thue'], 'string', 'max' => 255],
-            [['trang_thai'], 'string', 'max' => 25],
+            [['trang_thai','buoi'], 'string', 'max' => 25],
             [['id_xe'], 'exist', 'skipOnError' => true, 'targetClass' => PtxXe::class, 'targetAttribute' => ['id_xe' => 'id']],
             [['id_loai_hinh_thue'], 'exist', 'skipOnError' => true, 'targetClass' => PtxLoaiHinhThue::class, 'targetAttribute' => ['id_loai_hinh_thue' => 'id']],
         ];
@@ -78,13 +78,13 @@ class PhieuThueXeBase extends \app\models\PtxPhieuThueXe
         return [
             'id' => 'ID',
             'ngay_thue_xe' => 'Ngày Thuê Xe',
-            'id_hoc_vien' => 'Học Viên',
+            'id_hoc_vien' => 'Tên Học Viên',
             'ho_ten_nguoi_thue' => 'Họ Tên Người Thuê',
             'so_cccd_nguoi_thue' => 'Số CCCD Người Thuê',
             'dia_chi_nguoi_thue' => 'Địa Chỉ Người Thuê',
             'so_dien_thoai_nguoi_thue' => 'Số Điện Thoại Người Thuê',
-            'id_xe' => 'Xe Thuê',
-            'id_loai_hinh_thue' => 'Loại Hình Thuê',
+            'id_xe' => 'Tên loại xe thuê',
+            'id_loai_hinh_thue' => 'Chọn Loại Hình Thuê',
             'thoi_gian_bat_dau_thue' => 'Thời Gian Bắt Đầu Thuê',
             'thoi_gian_tra_xe_du_kien' => 'Thời Gian Trả Xe Dự Kiến',
             'chi_phi_thue_du_kien' => 'Chi Phí Thuê',
@@ -95,15 +95,16 @@ class PhieuThueXeBase extends \app\models\PtxPhieuThueXe
             'ngay_tra_xe' => 'Ngày Trả Xe',
             'tinh_trang_xe_khi_tra' => 'Tình Trạng Khi Trả',
             'id_nhan_vien_ky_tra' => 'Nhân Viên Ký Trả',
-            'id_nguoi_gui' => 'Người Gửi',
+            'id_nguoi_gui' => 'Người Gửi Phiếu',
             'thoi_gian_gui' => 'Thời Gian Gửi',
             'ghi_chu_nguoi_gui' => 'Ghi Chú Người Gửi',
-            'id_nguoi_duyet' => 'Người Duyệt',
+            'id_nguoi_duyet' => 'Người Duyệt Phiếu',
             'thoi_gian_duyet' => 'Thời Gian Duyệt',
             'ghi_chu_nguoi_duyet' => 'Ghi Chú Người Duyệt',
             'trang_thai' => 'Trạng Thái',
             'nguoi_tao' => 'Nguười Tạo',
             'thoi_gian_tao' => 'Thời Gian Tạo',
+            'buoi'=>'Buổi',
         ];
     }
 

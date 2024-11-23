@@ -18,7 +18,7 @@ class HopSearch extends Hop
     public function rules()
     {
         return [
-            [['id', 'id_ngan', 'nguoi_tao'], 'integer'],
+            [['id', 'nguoi_tao','id_ngan'], 'integer'],
             [['ten_hop', 'thoi_gian_tao'], 'safe'],
         ];
     }
@@ -57,7 +57,7 @@ class HopSearch extends Hop
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'id_ngan' => $this->id_ngan,
+            'id_ngan'=>$this->id_ngan,
             'nguoi_tao' => $this->nguoi_tao,
             'thoi_gian_tao' => $this->thoi_gian_tao,
         ]);

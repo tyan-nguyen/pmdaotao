@@ -15,5 +15,5 @@ return [
     'moduleID' => '',
     'modelID' =>'',
     'siteUrl'=>'http://localhost:8888',
-    'bsDependencyEnabled' => false,
+    //'bsDependencyEnabled' => false,
 ];

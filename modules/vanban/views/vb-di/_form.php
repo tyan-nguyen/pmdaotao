@@ -115,6 +115,10 @@ $currentYear = date('Y');
     .van-ban-di-form label {
     font-weight: bold;
 }
+.select2-container {
+        width: 100% !important;  
+        display: block; 
+    }
 
 </style>
 <script>

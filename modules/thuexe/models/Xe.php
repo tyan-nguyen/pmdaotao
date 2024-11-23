@@ -53,7 +53,7 @@ class Xe extends \app\models\PtxXe
     {
         return [
             'id' => 'ID',
-            'id_loai_xe' => 'Loại Xe',
+            'id_loai_xe' => 'Tên loại xe thuê',
             'hieu_xe' => 'Hiệu Xe',
             'bien_so_xe' => 'Biển Số Xe',
             'tinh_trang_xe' => 'Tình Trạng Xe',
@@ -85,12 +85,15 @@ class Xe extends \app\models\PtxXe
     public static function getList()
     {
         $dsXe = Xe::find()
+            ->where(['trang_thai' => 'Khả dụng']) // Thêm điều kiện trạng thái
             ->orderBy(['hieu_xe' => SORT_ASC])
             ->all();
+    
         return ArrayHelper::map($dsXe, 'id', function($model) {
             return '+ ' . $model->hieu_xe; 
         });
     }
+    
     public function beforeSave($insert)
     {        
         if ($this->isNewRecord) {

@@ -1,30 +1,29 @@
 <?php
 
-namespace app\modules\kholuutru\models\search;
+namespace app\modules\thuexe\models\search;
 
-use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\modules\kholuutru\models\Kho;
+use app\modules\thuexe\models\ConfigLoaiHinhThue;
 
 /**
- * HopSearch represents the model behind the search form about `app\modules\kholuutru\models\Hop`.
+ * ConfigLoaiHinhThueSearch represents the model behind the search form of `app\modules\thuexe\models\ConfigLoaiHinhThue`.
  */
-class KhoSearch extends Kho
+class ConfigLoaiHinhThueSearch extends ConfigLoaiHinhThue
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['id', 'nguoi_tao'], 'integer'],
-            [['ten_kho','so_do_kho', 'thoi_gian_tao'], 'safe'],
+            [['id', 'gio_bat_dau', 'gio_ket_thuc'], 'integer'],
+            [[',ten_loai_hinh_thue', 'buoi'], 'safe'],
         ];
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function scenarios()
     {
@@ -41,7 +40,9 @@ class KhoSearch extends Kho
      */
     public function search($params)
     {
-        $query = Kho::find();
+        $query = ConfigLoaiHinhThue::find();
+
+        // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -55,15 +56,15 @@ class KhoSearch extends Kho
             return $dataProvider;
         }
 
+        // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'ten_kho'=>$this->ten_kho,
-            'nguoi_tao' => $this->nguoi_tao,
-            'thoi_gian_tao' => $this->thoi_gian_tao,
+            'gio_bat_dau' => $this->gio_bat_dau,
+            'gio_ket_thuc' => $this->gio_ket_thuc,
         ]);
 
-        $query->andFilterWhere(['like', 'ten_kho', $this->ten_kho]);
-        $query->andFilterWhere(['like', 'so_do_kho', $this->so_do_kho]);
+        $query->andFilterWhere(['like', ',ten_loai_hinh_thue', $this->,ten_loai_hinh_thue])
+            ->andFilterWhere(['like', 'buoi', $this->buoi]);
 
         return $dataProvider;
     }

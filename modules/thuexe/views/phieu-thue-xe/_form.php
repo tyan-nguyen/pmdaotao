@@ -24,7 +24,12 @@ $model->thoi_gian_tra_xe_du_kien = CustomFunc:: convertYMDHISToDMYHIS($model->th
 
 <div class="phieu-thue-xe-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+<?php $form = ActiveForm::begin([
+    'options' => [
+        'class' => 'needs-validation ', // Thêm class vào thuộc tính options
+        'novalidate' => true, // Bỏ qua xác thực của trình duyệt (nếu cần)
+    ],
+]); ?>
   <!-- Chọn đối tượng thuê -->
 
    <div class="row">
@@ -90,8 +95,7 @@ $model->thoi_gian_tra_xe_du_kien = CustomFunc:: convertYMDHISToDMYHIS($model->th
                        ],
                     ]);?>
                 </div>
-         </div>
-         <div class="row">
+     
                 <div class="col-md-6">
                 <?= $form->field($model, 'id_loai_hinh_thue')->widget(Select2::classname(), [
                   'data' => [],
@@ -99,16 +103,30 @@ $model->thoi_gian_tra_xe_du_kien = CustomFunc:: convertYMDHISToDMYHIS($model->th
                   'options' => ['placeholder' => 'Chọn loại hình thuê...', 'id' => 'loai-hinh-thue-id'],
                   'pluginOptions' => [
                   'allowClear' => true,
+                  'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
                      ],
                 ]); ?>
                 </div>
+
+                <div class="col-md-6" id="field-buoi" style="display: none;">
+                      <?= $form->field($model, 'buoi')->dropDownList([
+                         'Sáng' => 'Sáng',
+                         'Trưa' => 'Chiều',
+                         'Chiều' => 'Tối'
+                      ], [
+                        'prompt' => 'Chọn buổi...',
+                        'class' => 'form-control',
+                     ]) ?>
+                </div>
+
+
                 <div class="col-md-6">
                 <?= $form->field($model, 'thoi_gian_bat_dau_thue')->widget(\kartik\datetime\DateTimePicker::classname(), [
                      'options' => ['placeholder' => 'Chọn thời gian bắt đầu thuê...','id'=>'phieu_thue_xe-thoi_gian_bat_dau_thue'],
                      'pluginOptions' => [
                      'autoclose' => true,
                      'format' => 'yyyy-mm-dd hh:ii:ss ',
-                     'todayHighlight' => false,
+                     'todayHighlight' => true,
                      'todayBtn' => true,
                      'minuteStep' => 5,  
                      'secondStep' => 10, 
@@ -119,29 +137,26 @@ $model->thoi_gian_tra_xe_du_kien = CustomFunc:: convertYMDHISToDMYHIS($model->th
 
 
                 </div>
-        </div>
-        <div class="row">
+      
             <div class="col-md-6">
-<?= $form->field($model, 'thoi_gian_tra_xe_du_kien')->widget(\kartik\datetime\DateTimePicker::classname(), [
-    'options' => [
-        'placeholder' => 'Chọn thời gian trả xe dự kiến...',
-        'id'=>'phieu_thue_xe-thoi_gian_tra_xe_du_kien'
-    ],
-    'pluginOptions' => [
-        'autoclose' => true,
-        'format' => 'dd-M-yyyy hh:ii',
-    ],
-]) ?>
-
-
-
-
+            <?= $form->field($model, 'thoi_gian_tra_xe_du_kien')->widget(\kartik\datetime\DateTimePicker::classname(), [
+                     'options' => ['placeholder' => 'Chọn thời gian trả xe dự kiến...','id'=>'phieu_thue_xe-thoi_gian_tra_xe_du_kien'],
+                     'pluginOptions' => [
+                     'autoclose' => true,
+                     'format' => 'yyyy-mm-dd hh:ii:ss ',
+                     'todayHighlight' => true,
+                     'todayBtn' => true,
+                     'minuteStep' => 5,  
+                     'secondStep' => 10, 
+                     'language' => 'vi',
+                     'showMeridian' => false,
+                     ]
+                  ]); ?>
             </div>
             <div class="col-md-6">
                   <?= $form->field($model, 'chi_phi_thue_du_kien')->textInput(['id'=>'chi_phi_thue_du_kien'])?>
             </div>
-        </div>
-        <div class="row">
+    
             <div class="col-md-6">
             <?= $form->field($model, 'id_nhan_vien_cho_thue')->widget(Select2::classname(), [
                   'data' => ArrayHelper::map(NhanVien::find()->all(), 'id', 'ho_ten'), 
@@ -150,6 +165,7 @@ $model->thoi_gian_tra_xe_du_kien = CustomFunc:: convertYMDHISToDMYHIS($model->th
                   'pluginOptions' => [
                       'allowClear' => true, 
                       'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'), 
+                      'containerCssClass' => 'select2-dropdown-adjustment', 
                      ],
             ]); ?>
             </div>
@@ -239,21 +255,30 @@ $(document).ready(function() {
     $('#loai-hinh-thue-id, #phieu_thue_xe-thoi_gian_bat_dau_thue, #phieu_thue_xe-thoi_gian_tra_xe_du_kien').change(calculateCost);
 });
 
+<?php
+$this->registerJs(<<<JS
+    $('#loai-hinh-thue-id').on('change', function () {
+        let selectedText = $(this).find("option:selected").text().trim();
+        if (selectedText === 'Buổi') {
+            $('#field-buoi').slideDown(); // Hiển thị dropdown buổi
+        } else {
+            $('#field-buoi').slideUp(); // Ẩn dropdown buổi
+        }
+    });
+JS
+);
+?>
 
 </script>
 <style>
-/* Loại bỏ màu xanh trên tiêu đề của DateTimePicker */
-.kv-datetime-picker .datetimepicker .datepicker-days .datepicker-switch,
-.kv-datetime-picker .datetimepicker .datepicker-months .datepicker-switch,
-.kv-datetime-picker .datetimepicker .datepicker-years .datepicker-switch,
-.kv-datetime-picker .datetimepicker .datepicker-decades .datepicker-switch {
-    background-color: transparent !important; /* Bỏ màu xanh */
-    color: inherit !important; /* Đảm bảo màu chữ giữ nguyên */
-    border: none !important; /* Loại bỏ đường viền nếu có */
+ .phieu-thue-xe-form label {
+   color:blue;
+}
+.select2-dropdown {
+    z-index: 9999 !important; 
 }
 
+
 </style>
-<script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js" crossorigin="anonymous"></script>
 
-
-
+<script id="fontawesome-script" src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>

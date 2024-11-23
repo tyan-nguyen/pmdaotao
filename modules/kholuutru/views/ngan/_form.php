@@ -9,7 +9,13 @@ use app\modules\kholuutru\models\Ke;
 
 <div class="ngan-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+        <?php $form = ActiveForm::begin([
+        	'id'=>'myFilterForm',
+            'method' => 'get',
+            'options' => [
+                'class' => 'myFilterForm'
+            ]
+      	]); ?>
 
     <?= $form->field($model, 'ten_ngan')->textInput(['maxlength' => true]) ?>
 

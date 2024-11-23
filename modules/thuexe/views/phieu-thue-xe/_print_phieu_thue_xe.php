@@ -27,10 +27,11 @@ $custom = new CustomFunc();
 			</td>
 			<td width="100px">
 			
-			
+			    
 			</td>
-		</tr>
+        </tr>
     </table>
+	    <h3> PHIẾU THUÊ XE </h3>
     
     </div>
 </div> <!-- row -->

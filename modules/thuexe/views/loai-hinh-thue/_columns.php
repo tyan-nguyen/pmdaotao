@@ -57,7 +57,7 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'id_loai_xe',
-        'width' => '300px',
+        'width' => '150px',
         'value'=>function($model){
             return $model->loaiXe->ten_loai_xe;
         }
@@ -65,6 +65,7 @@ return [
     [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'gia_thue',
+        'width' => '150px',
         'value' => function ($model) {
             return Yii::$app->formatter->asDecimal($model->gia_thue, 0) . ' VND';
         },

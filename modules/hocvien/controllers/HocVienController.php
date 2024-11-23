@@ -542,5 +542,21 @@ public function actionCreateHp()
     }
 }
 
+public function actionBienLai($idHP)
+{   
+    $model = NopHocPhi::findOne($idHP);
+    return $this->asJson([
+        'title'=>'Biên lai',
+        'content'=>$this->renderAjax('xem_bien_lai', [
+             'model'=>$model,
+        ]),
+        'footer' => Html::button('Đóng lại', [
+            'class' => 'btn btn-default pull-left',
+            'data-bs-dismiss' => "modal"
+        ])
+    ]);
+    
+}
+
 
 }

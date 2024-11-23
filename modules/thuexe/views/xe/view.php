@@ -1,11 +1,12 @@
 <?php
 
-use yii\widgets\DetailView;
-use app\widgets\FileDisplayWidget;
-use app\modules\hocvien\models\HocVien;
-use app\widgets\KhoDisplayWidget;
+use app\modules\thuexe\models\HinhXe;
+
 /* @var $this yii\web\View */
 /* @var $model app\models\HvHocVien */
+// Giả sử $id là ID của xe đang xem
+$hinhXeList = HinhXe::find()->where(['id_xe' => $model->id])->all();
+
 ?>
 <div class="hv-hoc-vien-view">
  
@@ -19,8 +20,7 @@ use app\widgets\KhoDisplayWidget;
 			    </div>
 							<div class="card-body">
 									<div class="skill-tags">
-                                        <p><strong>Tên xe:</strong> <?= $model-> id ?></p>
-                                        <p><strong>Hiệu xe:</strong> <?= $model->hieu_xe?></p>
+                                        <p><strong>Tên xe:</strong> <?= $model->hieu_xe?></p>
                                         <p><strong>Biển số xe:</strong> <?= $model->bien_so_xe?></p>
                                         <p><strong>Tình trạng xe:</strong> <?= $model->tinh_trang_xe ?></p>
                                         <p><strong>Trạng thái:</strong> <?= $model->trang_thai?></p>
@@ -43,13 +43,20 @@ use app\widgets\KhoDisplayWidget;
         <div class="card-body">
             <div class="skill-tags">
                 <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade active show" id="add-document" role="tabpanel" aria-labelledby="add-document-tab">
-                        <?= FileDisplayWidget::widget([
-                             'type'=>'ALL',
-                             'doiTuong'=>HocVien::MODEL_ID,
-                             'idDoiTuong'=>$model->id,
-                        ])?>
-                    </div>
+                <div class="tab-pane fade active show" id="add-document" role="tabpanel" aria-labelledby="add-document-tab">
+    <?php if (!empty($hinhXeList)): ?>
+        <div class="row">
+            <?php foreach ($hinhXeList as $hinhXe): ?>
+                <div class="col-md-4 mb-3">
+                    <img src="<?= Yii::getAlias('@web/images/temp/' . $hinhXe->hinh_anh) ?>" alt="Hình ảnh xe" class="img-fluid rounded" />
+                </div>
+            <?php endforeach; ?>
+        </div>
+    <?php else: ?>
+        <p>Không có hình ảnh nào cho xe này.</p>
+    <?php endif; ?>
+</div>
+
                 </div>
             </div>
         </div>

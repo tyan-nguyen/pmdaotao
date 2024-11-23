@@ -17,6 +17,7 @@ use app\modules\thuexe\models\NopPhiThueXe;
 use app\modules\hocvien\models\HocVien;
 use app\modules\hocvien\models\KhoaHoc;
 use yii\web\UploadedFile;
+use app\modules\thuexe\models\ConfigLoaiHinhThue;
 
 /**
  * PhieuThueXeController implements the CRUD actions for PhieuThueXe model.
@@ -459,6 +460,8 @@ public function actionTraXe($id)
 {
     $request = Yii::$app->request; 
     $model = $this->findModel($id); 
+    $id_xe = $model->id_xe;
+    $xe = Xe::findOne($id_xe);
 
     if ($request->isAjax) { 
         /*
@@ -477,6 +480,7 @@ public function actionTraXe($id)
             ];
         } else if ($model->load($request->post())) { 
                 $model->trang_thai ='Đã trả'; 
+                $xe->trang_thai ='Khả dụng';
             
             if ($model->save()) {
                 return [
@@ -674,21 +678,25 @@ public function actionTinhChiPhi()
                         $chiPhiDuKien = $hours * $loaiHinh->gia_thue;
                         break;
                     case 'Buổi ':
-                        $sessions = ceil($hours / 4);
-                        $chiPhiDuKien = $sessions * $loaiHinh->gia_thue;
+                       // $sessions = ceil($hours / 4);
+                        $chiPhiDuKien =  $loaiHinh->gia_thue;
                         break;
                     case 'Ngày ':
-                        $days = ceil($hours / 12);
-                        $chiPhiDuKien = $days * $loaiHinh->gia_thue;
+                       // $days = ceil($hours / 12);
+                        $chiPhiDuKien = $loaiHinh->gia_thue;
                         break;
                     case '1 Ngày 1 Đêm ':
-                        $ngayDem = ceil($hours / 24 );
-                        $chiPhiDuKien = $ngayDem * $loaiHinh->gia_thue;
+                        //$ngayDem = ceil($hours / 24 );
+                        $chiPhiDuKien = $loaiHinh->gia_thue;
                         break;
                     case 'Đêm ':
-                        $Dem = ceil($hours / 12 );
-                        $chiPhiDuKien = $Dem * $loaiHinh->gia_thue;
+                        //$Dem = ceil($hours / 12 );
+                        $chiPhiDuKien =  $loaiHinh->gia_thue;
                         break;
+                    case 'Tuần ':
+                            //$Dem = ceil($hours / 12 );
+                            $chiPhiDuKien =  $loaiHinh->gia_thue;
+                            break;
                     default:
                         $chiPhiDuKien = 0;
                         break;
@@ -720,7 +728,7 @@ public function actionTinhChiPhiPhatSinh()
             // Tổng số giờ và phút lẻ
             $hoursTX = $intervalTX->h + ($intervalTX->days * 24);
             $minutesTX = $intervalTX->i;
-
+            
             // Làm tròn lên thêm 1 giờ nếu có phút lẻ
             if ($minutesTX > 0) {
                 $hoursTX++;
@@ -742,18 +750,31 @@ public function actionTinhChiPhiPhatSinh()
 
                     case 'Buổi ':
                         // Tính số buổi và số giờ lẻ (1 buổi = 4 giờ)
-                        $sessions = intdiv($hoursTX, 4);  // Số buổi đầy đủ
-                        $remainingHours = $hoursTX % 4;   // Giờ lẻ còn lại
-                        $chiPhiDuKien = ($sessions * $loaiHinh->gia_thue) + ($remainingHours * $giaThueGio);
+                      //  $sessions = intdiv($hoursTX, 4);  // Số buổi đầy đủ
+                        $remainingHours =  $hoursTX;   // Giờ lẻ còn lại
+                        $chiPhiDuKien = ($remainingHours * $giaThueGio);
                         break;
 
                     case 'Ngày ':
                         // Tính số ngày và số giờ lẻ (1 ngày = 24 giờ)
-                        $days = intdiv($hoursTX, 24);    // Số ngày đầy đủ
-                        $remainingHours = $hoursTX % 24; // Giờ lẻ còn lại
-                        $chiPhiDuKien = ($days * $loaiHinh->gia_thue) + ($remainingHours * $giaThueGio);
+                       // $days = intdiv($hoursTX, 24);    // Số ngày đầy đủ
+                        $remainingHours =  $hoursTX; // Giờ lẻ còn lại
+                        $chiPhiDuKien = ($remainingHours * $giaThueGio);
                         break;
 
+
+                        case '1 Ngày 1 Đêm ':
+                            // Tính số ngày và số giờ lẻ (1 ngày = 24 giờ)
+                           // $days = intdiv($hoursTX, 24);    // Số ngày đầy đủ
+                            $remainingHours =  $hoursTX; // Giờ lẻ còn lại
+                            $chiPhiDuKien = ($remainingHours * $giaThueGio);
+                            break;
+                         case 'Tuần ':
+                        // Tính số ngày và số giờ lẻ (1 ngày = 24 giờ)
+                               // $days = intdiv($hoursTX, 24);    // Số ngày đầy đủ
+                                $remainingHours =  $hoursTX; // Giờ lẻ còn lại
+                                $chiPhiDuKien = ($remainingHours * $giaThueGio);
+                                break;
                     default:
                         $chiPhiDuKien = 0;
                         break;
@@ -1169,5 +1190,8 @@ public function actionBienLai($idNopHp)
     ]);
     
 }
+
+
+
 
 }

@@ -27,7 +27,8 @@ $model->ngay_ket_thuc = CustomFunc::convertYMDToDMY($model->ngay_ket_thuc);
              'Buổi ' => 'Buổi ',
              'Ngày ' => 'Ngày ',
              '1 Ngày 1 Đêm '=>'1 Ngày 1 Đêm ',
-             'Đêm '=>'Đêm ' 
+             'Đêm '=>'Đêm ' ,
+             'Tuần'=>'Tuần ',
           ],
           [
               'prompt' => 'Chọn loại hình thuê', 
@@ -87,4 +88,11 @@ $model->ngay_ket_thuc = CustomFunc::convertYMDToDMY($model->ngay_ket_thuc);
 .loai-hinh-thue-form label {
     font-weight: bold;
 }
+
+.select2-container {
+        width: 100% !important;  
+        display: block;
+    }
+
+
 </style>

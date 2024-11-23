@@ -1,16 +1,31 @@
 <?php
 use yii\bootstrap5\Html;
 use yii\widgets\ActiveForm;
+use app\modules\thuexe\models\LoaiXe;
+use kartik\select2\Select2;
 
 ?>
 
 <div class="xe-search">
 
-<?php $form = ActiveForm::begin(); ?>
+<?php $form = ActiveForm::begin([
+        'id' => 'myFilterForm',
+        'method' => 'get', 
+        'options' => [
+            'class' => 'myFilterForm'
+        ]
+]); ?>
 
-<div class="row">
+<div class="row"  style="text-align: left;">
     <div class="col-md-3">
-         <?= $form->field($model, 'id_loai_xe')->textInput() ?>
+           <?= $form->field($model, 'id_loai_xe')->widget(Select2::classname(), [
+                 'data' => LoaiXe::getList(),
+                    'language' => 'vi',
+                    'options' => ['placeholder' => 'Chọn loại xe...'],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                    ],
+             ]);?>
     </div>
     <div class="col-md-3">
          <?= $form->field($model, 'hieu_xe')->textInput(['maxlength' => true]) ?>
@@ -19,7 +34,13 @@ use yii\widgets\ActiveForm;
          <?= $form->field($model, 'bien_so_xe')->textInput(['maxlength' => true]) ?>
     </div>
     <div class="col-md-3">
-         <?= $form->field($model, 'trang_thai')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'trang_thai')->dropDownList(
+              [
+                 'Khả dụng' => 'Khả dụng', 
+                 'Không khả dụng' => 'Không khả dụng'  
+              ],
+             ['prompt' => 'Chọn trạng thái']  // 
+            ) ?>
     </div>
 </div>
 
@@ -39,5 +60,10 @@ use yii\widgets\ActiveForm;
 <style>
 .xe-search label {
     font-weight: bold;
+ 
 }
+.select2-container {
+        width: 100% !important;  
+        display: block; 
+    }
 </style>

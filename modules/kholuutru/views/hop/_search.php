@@ -2,6 +2,7 @@
 use yii\bootstrap5\Html;
 use yii\widgets\ActiveForm;
 use app\modules\kholuutru\models\Ngan;
+use kartik\select2\Select2;
 /* @var $this yii\web\View */
 /* @var $model app\modules\kholuutru\models\LoaiFile */
 /* @var $form yii\widgets\ActiveForm */
@@ -11,7 +12,7 @@ use app\modules\kholuutru\models\Ngan;
 
     <?php $form = ActiveForm::begin([
         	'id'=>'myFilterForm',
-            'method' => 'post',
+            'method' => 'get',
             'options' => [
                 'class' => 'myFilterForm'
             ]
@@ -21,13 +22,14 @@ use app\modules\kholuutru\models\Ngan;
                <?= $form->field($model, 'ten_hop')->textInput(['maxlength' => true]) ?>
          </div>
          <div class="col-md-3">
-         <?= $form->field($model, 'id_ngan')->dropDownList(
-                    Ngan::getList(), 
-                     [
-                         'prompt' => 'Chọn ngăn',
-                         'class' => 'form-control dropdown-with-arrow',
-                     ]
-                ) ?>
+             <?= $form->field($model, 'id_ngan')->widget(Select2::classname(), [
+                 'data' => Ngan::getList(),
+                    'language' => 'vi',
+                    'options' => ['placeholder' => 'Chọn ngăn...'],  
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                    ],
+             ]);?> 
          </div>
     </div>
 
@@ -39,7 +41,11 @@ use app\modules\kholuutru\models\Ngan;
 	    </div>
     </div>
     <?php } ?>
-
-    <?php ActiveForm::end(); ?>
-    
+    <?php ActiveForm::end(); ?> 
 </div>
+<style>
+    .select2-container {
+        width: 100% !important;  
+        display: block;
+    }
+</style>

@@ -11,6 +11,8 @@ use yii\filters\VerbFilter;
 use \yii\web\Response;
 use yii\helpers\Html;
 use yii\filters\AccessControl;
+use yii\web\UploadedFile;
+use app\modules\thuexe\models\HinhXe;
 
 /**
  * XeController implements the CRUD actions for Xe model.
@@ -95,61 +97,61 @@ class XeController extends Controller
      * and for non-ajax request if creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
-        $request = Yii::$app->request;
-        $model = new Xe();  
-
-        if($request->isAjax){
-            /*
-            *   Process for ajax request
-            */
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            if($request->isGet){
-                return [
-                    'title'=> "Thêm mới Xe",
-                    'content'=>$this->renderAjax('create', [
-                        'model' => $model,
-                    ]),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+   
+     public function actionCreate()
+     {
+         $request = Yii::$app->request;
+         $model = new Xe();  
+ 
+         if($request->isAjax){
+             /*
+             *   Process for ajax request
+             */
+             Yii::$app->response->format = Response::FORMAT_JSON;
+             if($request->isGet){
+                 return [
+                     'title'=> "Thêm mới Xe",
+                     'content'=>$this->renderAjax('create', [
+                         'model' => $model,
+                     ]),
+                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                 Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+         
+                 ];         
+             }else if($model->load($request->post()) && $model->save()){
+                 return [
+                     'forceReload'=>'#crud-datatable-pjax',
+                     'title'=> "Thêm mới Xe",
+                     'content'=>'<span class="text-success">Thêm mới Xe thành công !</span>',
+                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                             Html::a('Tiếp tục tạo',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
+         
+                 ];         
+             }else{           
+                 return [
+                     'title'=> "Thêm mới Xe",
+                     'content'=>$this->renderAjax('create', [
+                         'model' => $model,
+                     ]),
+                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                 Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+         
+                 ];         
+             }
+         }else{
+             /*
+             *   Process for non-ajax request
+             */
+             if ($model->load($request->post()) && $model->save()) {
+                 return $this->redirect(['view', 'id' => $model->id]);
+             } else {
+                 return $this->render('create', [
+                     'model' => $model,
+                 ]);
+             }
+         }
         
-                ];         
-            }else if($model->load($request->post()) && $model->save()){
-                return [
-                    'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Create new Xe",
-                    'content'=>'<span class="text-success">Thêm Xe thành công !</span>',
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::a('Tiếp tục tạo',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
-        
-                ];         
-            }else{           
-                return [
-                    'title'=> "Create new Xe",
-                    'content'=>$this->renderAjax('create', [
-                        'model' => $model,
-                    ]),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
-        
-                ];         
-            }
-        }else{
-            /*
-            *   Process for non-ajax request
-            */
-            if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            } else {
-                return $this->render('create', [
-                    'model' => $model,
-                ]);
-            }
-        }
-       
-    }
-
+     }
     /**
      * Updates an existing Xe model.
      * For ajax request will return json object
@@ -284,4 +286,163 @@ class XeController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+    public function actionAddImages($id) // $id là id của xe hiện tại
+    {
+        if (Yii::$app->request->isPost) {
+            $model = new HinhXe();
+            $model->id_xe = $id;
+            $uploadedFile = UploadedFile::getInstanceByName('file');
+    
+            if ($uploadedFile) {
+                $filePath = 'images/' . uniqid() . '.' . $uploadedFile->extension;
+                if ($uploadedFile->saveAs($filePath)) {
+                    $model->hinh_anh = $filePath;
+                    $model->save();
+                    if ($model->save()) {
+                        return $this->asJson(['success' => true, 'message' => 'Hình ảnh đã được tải lên thành công!']);
+                    }
+                }
+            }
+    
+            return $this->asJson(['success' => false, 'message' => 'Tải lên thất bại!']);
+        }
+    
+        return $this->asJson([
+            'title' => 'Thêm hình ảnh',
+            'content' => $this->renderAjax('add-image', [
+                'id' => $id,
+            ]),
+            'footer' => Html::button('Đóng lại', [
+                'class' => 'btn btn-default pull-left',
+                'data-bs-dismiss' => "modal"
+            ])
+        ]);
+    }
+
+    public function actionAddImage($id)
+    {
+        $request = Yii::$app->request;
+        $model = new HinhXe(); // Model để lưu thông tin ảnh
+    
+        if ($request->isAjax) {
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    
+            if ($request->isGet) {
+                // Hiển thị modal để chọn ảnh
+                return [
+                    'title' => "Thêm ảnh Xe",
+                    'content' => $this->renderAjax('add-image', [
+                        'id' => $id, // ID xe hiện tại
+                        'images' => $this->getUploadedImages($id), // Lấy ảnh đã tải lên tạm
+                    ]),
+                    'footer' => Html::button('Đóng lại', [
+                            'class' => 'btn btn-default pull-left',
+                            'data-bs-dismiss' => "modal",
+                        ]) .
+                        Html::button('Lưu lại', [
+                            'class' => 'btn btn-primary',
+                            'type' => "button",
+                            'onclick' => 'saveSelectedImages()',
+                        ]),
+                ];
+            } elseif ($request->isPost) {
+                // Xử lý lưu ảnh vào CSDL khi người dùng nhấn Lưu
+                $selectedImages = $request->post('selectedImages'); // Danh sách ảnh người dùng đã chọn
+    
+                if (!empty($selectedImages)) {
+                    foreach ($selectedImages as $fileName) {
+                        $hinhXeModel = new HinhXe();
+                        $hinhXeModel->id_xe = $id; // ID xe
+                        $hinhXeModel->hinh_anh = $fileName; // Tên ảnh
+    
+                        // Lưu vào bảng HinhXe
+                        if (!$hinhXeModel->save()) {
+                            return [
+                                'success' => false,
+                                'message' => 'Lỗi khi lưu ảnh vào cơ sở dữ liệu: ' . implode(', ', $hinhXeModel->getErrorSummary(true)),
+                            ];
+                        }
+                    }
+                    return [
+                        'success' => true,
+                        'message' => 'Thêm ảnh thành công!',
+                        'forceReload' => '#crud-datatable-pjax', // Làm mới bảng dữ liệu
+                    ];
+                } else {
+                    return [
+                        'success' => false,
+                        'message' => 'Vui lòng chọn ít nhất một ảnh.',
+                    ];
+                }
+            }
+        } else {
+            // Nếu không phải AJAX request
+            if ($model->load($request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('add-image', [
+                    'model' => $model,
+                    'id' => $id,
+                ]);
+            }
+        }
+    }
+    
+    
+// Phương thức lấy các ảnh đã tải lên tạm
+protected function getUploadedImages($id)
+{
+    $tempDir = Yii::getAlias('@webroot/images/temp');
+    $uploadedImages = [];
+
+    // Kiểm tra nếu thư mục tạm có ảnh đã tải lên
+    if (is_dir($tempDir)) {
+        $files = scandir($tempDir);  // Lấy danh sách tất cả các file trong thư mục
+        foreach ($files as $file) {
+            // Lọc ra những file ảnh
+            if (in_array(pathinfo($file, PATHINFO_EXTENSION), ['jpg', 'jpeg', 'png', 'gif', 'jfif'])) {
+                $uploadedImages[] = $file;
+            }
+        }
+    }
+
+    return $uploadedImages;
+}
+
+public function actionUploadImages()
+{
+    Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+    $uploadDir = Yii::getAlias('@webroot/images/temp'); // Thư mục lưu trữ ảnh tạm
+    if (!is_dir($uploadDir)) {
+        mkdir($uploadDir, 0777, true); // Tạo thư mục nếu chưa tồn tại
+    }
+
+    $file = UploadedFile::getInstanceByName('file'); // Lấy file từ Dropzone
+
+    if ($file) {
+        $fileName = uniqid() . '.' . $file->extension; // Tạo tên file duy nhất
+        $filePath = $uploadDir . DIRECTORY_SEPARATOR . $fileName;
+
+        if ($file->saveAs($filePath)) {
+            return [
+                'success' => true,
+                'fileName' => $fileName,
+                'fileUrl' => Yii::getAlias('@web') . '/images/temp/' . $fileName,
+            ];
+        } else {
+            return [
+                'success' => false,
+                'message' => 'Không thể lưu ảnh.',
+            ];
+        }
+    }
+
+    return [
+        'success' => false,
+        'message' => 'Không nhận được file tải lên.',
+    ];
+}
+
+
 }

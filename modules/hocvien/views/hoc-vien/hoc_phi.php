@@ -71,6 +71,7 @@ $trangThai = ($hocPhiKhoaHoc && $tongTienDaNop >= $hocPhiKhoaHoc->hoc_phi) ? 'N�
                     <th>Ngày nộp</th>
                     <th>Số tiền nộp</th>
                     <th>Người thu</th>
+                    <th>Biên lai</th>
                 </tr>
             </thead>
             <tbody>
@@ -87,6 +88,13 @@ $trangThai = ($hocPhiKhoaHoc && $tongTienDaNop >= $hocPhiKhoaHoc->hoc_phi) ? 'N�
                             $user = NhanVien::findOne($hcPhi->nguoi_thu);
                             echo $user ? Html::encode($user->ho_ten) : 'Không xác định';
                             ?>
+                        </td>
+                        <td>
+                            <?= Html::a(
+                                '<i class="fas fa-eye icon-white"></i>',
+                                ['/hocvien/hoc-vien/bien-lai', 'idHP' => $hcPhi->id, 'modalType' => 'modal-remote-2'],
+                                ['class' => 'btn btn-sm btn-warning', 'title' => 'Xem biên lai', 'role' => 'modal-remote-2']
+                            ); ?>   
                         </td>
                     </tr>
                 <?php

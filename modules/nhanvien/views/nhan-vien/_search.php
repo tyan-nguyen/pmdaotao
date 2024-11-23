@@ -63,14 +63,14 @@ $model->doi_tuong = null; // Đảm bảo giá trị null cho prompt
                     $listPhongBan,
                       [
                          'prompt' => 'Chọn phòng ban...',
-                         'id' => 'phong-bans-dropdown'
+                         'id' => 'phong-ban-dropdown'
                       ]
                  ) ?>
     </div>
     <div class="col-md-3">
          <?= $form->field($model, 'id_to')->dropDownList(
                     [],  
-                    ['prompt' => 'Chọn tổ...', 'id' => 'to-dropdown']
+                    ['prompt' => 'Chọn tổ...', 'id' => 'tos-dropdown']
                  ) ?>
     </div>
 
@@ -126,7 +126,7 @@ $model->doi_tuong = null; // Đảm bảo giá trị null cho prompt
 <?php
 
 $this->registerJs("
-    $('#phong-bans-dropdown').change(function() {
+    $('#phong-ban-dropdown').change(function() {
         var idPhongBan = $(this).val();
         $.ajax({
             url: '" . \yii\helpers\Url::to(['get-to-list']) . "',
@@ -142,7 +142,7 @@ $this->registerJs("
                         options += '<option value=\"' + id + '\">' + ten_to + '</option>';
                     });
                 }
-                $('#to-dropdown').html(options);
+                $('#tos-dropdown').html(options);
             }
         });
     });

@@ -58,9 +58,7 @@ use app\widgets\KhoDisplayWidget;
                     <li class="nav-item" role="presentation">
                         <a class="nav-link" id="add-student-tab" data-bs-toggle="tab" href="#add-student" role="tab" aria-controls="add-student" aria-selected="false"style="color: blue;"><i class="fa fa-dollar"></i> Học phí</a>
                     </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="bien_lai-tab" data-bs-toggle="tab" href="#bien_lai" role="tab" aria-controls="add-student" aria-selected="false"style="color: blue;"><i class="bi bi-receipt"></i> Biên lai</a>
-                    </li>
+                 
                     <li class="nav-item" role="presentation">
                         <a class="nav-link " id="add-timetable-tab" data-bs-toggle="tab" href="#add-timetable" role="tab" aria-controls="add-student" aria-selected="false"style="color: blue;"><i class="fa fa-calendar"></i> Lịch học</a>
                     </li>
@@ -86,13 +84,7 @@ use app\widgets\KhoDisplayWidget;
                              <?= $this->render('hoc_phi', ['model' => $model]) ?>
                              
                             </div>
-                            
-                        <!-- Nội dung Biên lai -->
-                        <div class="tab-pane fade" id="bien_lai" role="tabpanel" aria-labelledby="bien_lai-tab">
-                        <!-- Nội dung hiển thị khi click vào "Học phí" -->
-                             <?= $this->render('bien_lai', ['model' => $model]) ?>
-            
-                            </div>
+
                              <!-- Nội dung Lịch học -->
                              <div class="tab-pane fade " id="add-timetable" role="tabpanel" aria-labelledby="add-timetable-tab">
                         <!-- Nội dung hiển thị khi click vào "Lịch học " -->
