@@ -63,7 +63,7 @@ $this->registerCssFile("https://use.fontawesome.com/releases/v5.3.1/css/all.css"
                            ? (function() use ($model) {
                            $dateTime = new \DateTime($model->thoi_gian_bat_dau_thue);
                            $dateTime->modify('-0 hours'); 
-                           return Yii::$app->formatter->asDatetime($dateTime, 'php:d-m-Y | H:i:s');
+                           return Yii::$app->formatter->asDatetime($dateTime, 'php:d-m-Y | H:i');
                        })()
                          : '(Trống)',
                          ['class' => 'form-control', 'readonly' => true]
@@ -80,7 +80,7 @@ $this->registerCssFile("https://use.fontawesome.com/releases/v5.3.1/css/all.css"
                            ? (function() use ($model) {
                            $dateTime = new \DateTime($model->thoi_gian_tra_xe_du_kien);
                            $dateTime->modify('-0 hours'); 
-                           return Yii::$app->formatter->asDatetime($dateTime, 'php:d-m-Y | H:i:s');
+                           return Yii::$app->formatter->asDatetime($dateTime, 'php:d-m-Y | H:i');
                        })()
                          : '(Trống)',
                          ['class' => 'form-control', 'readonly' => true]
@@ -128,7 +128,7 @@ $this->registerCssFile("https://use.fontawesome.com/releases/v5.3.1/css/all.css"
                      'value' => '23-Feb-1982 10:01',
                      'pluginOptions' => [
                          'autoclose'=>true,
-                         'format' => 'dd-mm-yyyy hh:ii'
+                         'format' => 'yyyy-mm-dd hh:ii',
                      ]
                      
                   ]); ?>

@@ -387,6 +387,8 @@ public function actionApprove($id)
 {
     $request = Yii::$app->request; 
     $model = $this->findModel($id); 
+    $id_xe = $model->id_xe;
+    $xe = Xe::findOne($id_xe);
 
     if ($request->isAjax) { 
         /*
@@ -403,15 +405,16 @@ public function actionApprove($id)
                 'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
                             Html::button('<i class="fa fa-share"> </i> Gửi', ['class' => 'btn btn-primary', 'type' => "submit"]) // Nút gửi
             ];
-        } else if ($model->load($request->post())) { 
-            
-           
+        } else if ($model->load($request->post())) {     
             $model->id_nguoi_duyet = Yii::$app->user->identity->id; 
             $model->thoi_gian_duyet = date('Y-m-d H:i:s'); 
-        
 
-           
             if ($model->save()) {
+                if($model->trang_thai == 'Đã duyệt')
+                  {
+                    $xe->trang_thai = 'Không khả dụng';
+                    $xe->save();
+                  }
                 
                 return [
                     'forceReload' => '#crud-datatable-pjax', 
@@ -481,6 +484,7 @@ public function actionTraXe($id)
         } else if ($model->load($request->post())) { 
                 $model->trang_thai ='Đã trả'; 
                 $xe->trang_thai ='Khả dụng';
+                $xe->save();
             
             if ($model->save()) {
                 return [

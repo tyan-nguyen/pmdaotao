@@ -48,8 +48,9 @@ $hinhXeList = HinhXe::find()->where(['id_xe' => $model->id])->all();
         <div class="row">
             <?php foreach ($hinhXeList as $hinhXe): ?>
                 <div class="col-md-4 mb-3">
-                    <img src="<?= Yii::getAlias('@web/images/temp/' . $hinhXe->hinh_anh) ?>" alt="Hình ảnh xe" class="img-fluid rounded" />
+                    <img src="<?= Yii::getAlias('@web/images/temp/' . $hinhXe->hinh_anh) ?>" alt="Hình ảnh xe" class="img-fluid rounded uniform-img" />
                 </div>
+
             <?php endforeach; ?>
         </div>
     <?php else: ?>
@@ -66,4 +67,11 @@ $hinhXeList = HinhXe::find()->where(['id_xe' => $model->id])->all();
 </div>
 
 </div>
-
+<style>
+    .uniform-img {
+    width: 100%; 
+    height: 150px; 
+    object-fit: cover; 
+    border-radius: 8px; 
+}
+</style>

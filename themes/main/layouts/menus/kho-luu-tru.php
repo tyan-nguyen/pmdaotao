@@ -2,7 +2,7 @@
 	<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);">
 		<!-- <span class="side-menu__icon"><i class="fe fe-folder side_menu_img"></i></span>
 		<span class="side-menu__label">Danh mục kho</span><i class="angle fe fe-chevron-right"></i> -->
-		<span class="side-menu__label"><i class="fa fa-folder-o"></i> Quản lý kho</span><i class="angle fa fa-caret-right"></i>
+		<span class="side-menu__label"><i class="fa fa-folder"></i> Quản lý kho</span><i class="angle fa fa-caret-right"></i>
 	</a>
 	<ul class="slide-menu" data-menu="kholuutru">
 		<li class="panel sidetab-menu">

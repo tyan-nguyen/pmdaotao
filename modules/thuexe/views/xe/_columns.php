@@ -88,9 +88,19 @@ return [
         'attribute'=>'tinh_trang_xe',
     ],
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'trang_thai',
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'trang_thai',
+        'value' => function ($model) {
+            return $model->trang_thai === 'Khả dụng' ? 'Khả dụng' : 'Không khả dụng';
+        },
+        'contentOptions' => function ($model) {
+            return [
+                'class' => $model->trang_thai === 'Khả dụng' ? 'text-success' : 'text-danger',
+                'style' => 'font-weight: bold;', 
+            ];
+        },
     ],
+    
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'nguoi_tao',

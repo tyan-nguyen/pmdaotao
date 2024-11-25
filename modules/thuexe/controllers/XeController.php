@@ -175,7 +175,15 @@ class XeController extends Controller
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                    'footer'=>     Html::a('<i class="fa fa-image"> </i> Hình xe', 
+                    ['/thuexe/xe/delete-image', 'id' => $id, 'modalType' => 'modal-remote-2'], 
+                       [
+                         'class' => 'btn btn-info',
+                         'role' => 'modal-remote-2',
+                         'title' => 'Cập nhật Hình'
+                       ]
+                 ) .
+                                Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                                 Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
             }else if($model->load($request->post()) && $model->save()){
@@ -194,7 +202,8 @@ class XeController extends Controller
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                    'footer'=>   
+                                Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                                 Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
                 ];        
             }
@@ -437,5 +446,54 @@ public function actionUploadImages()
     ];
 }
 
+public function actionDeleteImage($id)
+{
+    // Lấy danh sách hình xe theo id của xe
+    $hinhXeList = HinhXe::find()->where(['id_xe' => $id])->all();
+
+    // Kiểm tra nếu không tìm thấy hình ảnh nào
+    if (empty($hinhXeList)) {
+        return $this->asJson([
+            'title' => 'Thông báo!',
+            'content' => '<p>Không tìm thấy hình ảnh nào cho xe này.</p>',
+            'footer' => Html::button('Đóng lại', [
+                'class' => 'btn btn-default pull-left',
+                'data-bs-dismiss' => "modal"
+            ]),
+        ]);
+    }
+
+    // Hiển thị danh sách hình ảnh
+    return $this->asJson([
+        'title' => 'Xóa Hình Ảnh Xe',
+        'content' => $this->renderAjax('delete-image', [
+            'hinhXeList' => $hinhXeList,
+            'id' => $id,
+        ]),
+        'footer' => Html::button('Đóng lại', [
+                'class' => 'btn btn-default pull-left',
+                'data-bs-dismiss' => "modal"
+            ]) ,
+          
+    ]);
+}
+
+public function actionDeleteSingleImage()
+{
+    Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    $imageId = Yii::$app->request->post('id');
+    $hinh = HinhXe::findOne($imageId);
+    if ($hinh->delete()) {
+        return [
+            'success' => true,
+            'message' => 'Hình ảnh đã được xóa thành công.',
+        ];
+    } else {
+        return [
+            'success' => false,
+            'message' => 'Không thể xóa hình ảnh. Vui lòng thử lại.',
+        ];
+    }
+}
 
 }

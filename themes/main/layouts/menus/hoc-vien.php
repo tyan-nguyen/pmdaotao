@@ -6,7 +6,7 @@ use app\modules\hocvien\models\HocVien;
 <li class="slide">
 	<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);">
 		
-		<span class="side-menu__label"><i class="fa fa-folder-o"></i> Quản lý học viên</span><i class="angle fa fa-caret-right"></i>
+		<span class="side-menu__label"><i class="fa fa-folder"></i> Quản lý học viên</span><i class="angle fa fa-caret-right"></i>
 	</a>
 	<ul class="slide-menu" data-menu="hv">
 		<li class="panel sidetab-menu">
