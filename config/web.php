@@ -40,6 +40,9 @@ $config = [
         'thuexe' => [
             'class' => 'app\modules\thuexe\ThueXe',
         ],
+        'lichhoc' => [
+            'class' => 'app\modules\lichhoc\Lichhoc',
+        ],
 
         /* 'dynamikjs' => [
             'class' => 'dastanaron\dropzone\DynamicJSModule'

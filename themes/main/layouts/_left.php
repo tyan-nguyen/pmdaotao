@@ -56,6 +56,8 @@ use app\modules\user\models\User;
 				
 				<?= $this->render('menus/thue-xe') ?>
 
+				<?= $this->render('menus/lich-hoc') ?>
+
 				<?= $this->render('menus/tai-khoan') ?>				
 				
 				<!-- 

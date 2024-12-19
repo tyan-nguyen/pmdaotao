@@ -133,3 +133,18 @@ Yii::$app->params['showExport'] = true;
     /* $searchContent = $this->render("_search", ["model" => $searchModel]);
     echo FilterFormWidget::widget(["content"=>$searchContent, "description"=>"Nhập thông tin tìm kiếm."])  */
 ?>
+<script>
+    $(document).ready(function () {
+    $('#ajaxCrudModal2').on('hidden.bs.modal', function () {
+        if ($('.modal.show').length) {
+            $('body').addClass('modal-open'); 
+        }
+    });
+    $('#ajaxCrudModal2').on('show.bs.modal', function () {
+        $('.modal-backdrop').not(':last').css('z-index', -1); 
+    }).on('hidden.bs.modal', function () {
+        $('.modal-backdrop').not(':last').css('z-index', ''); 
+    });
+    $('#ajaxCrudModal2').appendTo('body');
+});
+</script>

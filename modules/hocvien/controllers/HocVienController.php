@@ -16,6 +16,12 @@ use app\modules\hocvien\models\HocPhi;
 use app\modules\hocvien\models\HocVien;
 use yii\web\UploadedFile;
 use app\modules\hocvien\models\KhoaHoc;
+use Datetime;
+use app\modules\lichhoc\models\LichHoc;
+use yii\web\BadRequestHttpException;
+use app\modules\giaovien\models\GiaoVien;
+use app\modules\nhanvien\models\NhanVien;
+
 /**
  * HocVienController implements the CRUD actions for HvHocVien model.
  */
@@ -57,16 +63,8 @@ class HocVienController extends Controller
     public function actionIndex()
     {    
         $searchModel = new HocVienSearch();
-        
-        // Tạo ActiveDataProvider với phân trang
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        
-        // Lọc theo trạng thái học viên 'NHAP_HOC' và 'NHAPTRUCTIEP'
-        $dataProvider->query->andWhere(['trang_thai' => ['NHAP_HOC','NHAPTRUCTIEP']]);
-    
-        // Cấu hình phân trang 
-       //  $pagination = $dataProvider->getPagination();
-        // $pagination->pageSize = 20;
+        $dataProvider->query->andWhere(['trang_thai' => ['NHAP_HOC','NHAPTRUCTIEP','DUYET']]);
     
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -84,6 +82,10 @@ class HocVienController extends Controller
      */
     public function actionView($id)
     {   
+        $model = $this->findModel($id); 
+        $idKH = $model->id_khoa_hoc;
+        $modelKH = KhoaHoc::find()->where(['id' => $idKH])->one();
+        $weeks = $this->generateWeeks($modelKH->ngay_bat_dau, $modelKH->ngay_ket_thuc);
         $request = Yii::$app->request;
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
@@ -91,6 +93,7 @@ class HocVienController extends Controller
                     'title'=> "Học viên #".$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
+                        'weeks' => $weeks,
                     ]),
                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                             Html::a('Sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
@@ -98,8 +101,35 @@ class HocVienController extends Controller
         }else{
             return $this->render('view', [
                 'model' => $this->findModel($id),
+                'weeks' => $weeks,
             ]);
         }
+    }
+    protected function generateWeeks($startDate, $endDate)
+    {
+       $start = new DateTime($startDate);
+       $end = new DateTime($endDate);
+       $start->modify('last monday');
+       $end->modify('next sunday');
+
+       $weeks = [];
+       $weekNumber = 1;
+
+       while ($start < $end) {
+        $weekStart = clone $start;
+        $weekEnd = (clone $start)->modify('+6 days');
+
+        $weeks[$weekNumber] = sprintf(
+            'Tuần %d [%s - %s]',
+            $weekNumber,
+            $weekStart->format('d/m/Y'),
+            $weekEnd->format('d/m/Y')
+        );
+
+        $weekNumber++;
+        $start->modify('+7 days');
+       }
+        return $weeks;
     }
 
     /**
@@ -304,22 +334,18 @@ class HocVienController extends Controller
     $request = Yii::$app->request;
     $model = new NopHocPhi();  
     $model->id_hoc_vien = $id;
-   
-
-     // Tìm học viên theo id_hoc_vien
      $hocVien = HocVien::findOne($id);
      $hoTenHocVien = $hocVien ? $hocVien->ho_ten : '';
      if ($hocVien && $hocVien->hang) {
-        $tenHang = $hocVien->hang->ten_hang; // Lấy ten_hang từ bảng hang_xe
+        $tenHang = $hocVien->hang->ten_hang; 
     } else {
-        $tenHang = 'Chưa có hạng xe'; // Nếu không có thông tin hạng xe
+        $tenHang = 'Chưa có hạng xe'; 
     }
-     // Kiểm tra nếu học viên tồn tại và lấy thông tin học phí dựa trên id_hang
+
      $hocPhi = null;
      if ($hocVien) {
-        $khoaHoc = $hocVien->khoaHoc;  // Lấy đối tượng KhoaHoc liên kết
+        $khoaHoc = $hocVien->khoaHoc; 
         if ($khoaHoc && $khoaHoc->id_hoc_phi) {
-            // Truy vấn bảng HocPhi dựa trên id_hoc_phi của KhoaHoc
             $hocPhi = HocPhi::findOne($khoaHoc->id_hoc_phi);
         }
     }
@@ -505,28 +531,19 @@ public function actionCreateHp()
     public function actionDeleteFromKhoaHoc($id)
 {
     $request = Yii::$app->request;
-    $model = $this->findModel($id);
+    $model = HocVien:: find()->where(['id'=> $id])->one();
+    $idKH= $model->id_khoa_hoc;
+    $modelKH = KhoaHoc::find()->where(['id' => $idKH])->one();
 
     if ($request->isAjax) {
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-        
-        // Lưu trữ id_khoa_hoc trước khi cập nhật
-        $oldKhoaHocId = $model->id_khoa_hoc;
-        
-        // Cập nhật id_khoa_hoc = null
         $model->id_khoa_hoc = null;
-
-        // Nếu lưu thành công
         if ($model->save()) {
-            // Lấy lại danh sách học viên theo id_khoa_hoc trước khi cập nhật
-            $datas = HocVien::find()->where(['id_khoa_hoc' => $oldKhoaHocId])->all();
-            
             return [
                 'forceClose' => true,
-                'forceReload' => '#hocVienTable', // Chọn đúng block để reload lại bảng học viên
+                'forceReload' => '#hvContent', 
                 'reloadContent' => $this->renderAjax('xem_hv', [
-                    'datas' => $datas,  // Truyền đúng dữ liệu
-                    'isEmpty' => empty($datas),  // Kiểm tra mảng rỗng
+                    'modelKH' => $modelKH,
                 ]),
                 'tcontent' => 'Học viên đã được xóa khỏi khóa học!',
             ];
@@ -558,5 +575,167 @@ public function actionBienLai($idHP)
     
 }
 
+public function actionLoadScheduleWeek($week_string, $idKH, $idNhom, $idHV)
+{
+    if (preg_match('/Tuần \d+ \[(\d{2}\/\d{2}\/\d{4}) - (\d{2}\/\d{2}\/\d{4})\]/', $week_string, $matches)) {
+        $dayBD = \DateTime::createFromFormat('d/m/Y', $matches[1])->format('Y-m-d');
+        $dayKT = \DateTime::createFromFormat('d/m/Y', $matches[2])->format('Y-m-d');
+                $data = LichHoc::find()
+                ->where(['between', 'ngay', $dayBD, $dayKT])
+                ->andWhere(['id_khoa_hoc' => $idKH])
+                ->andWhere(['or',
+                    ['id_nhom' => $idNhom],
+                    ['id_nhom' => null]
+                ])
+                ->all();
+        return $this->renderPartial('_schedule_table', [
+            'data' => $data,
+            'idHV'=>$idHV,
+            'week_string'=>$week_string,
+        ]);
+    }
+    throw new BadRequestHttpException('Chuỗi tuần không hợp lệ.');
+}
 
+public function actionUpdateLichHoc($id, $idHV, $week_string)
+    {
+        $request = Yii::$app->request;
+        if (preg_match('/Tuần \d+ \[(\d{2}\/\d{2}\/\d{4}) - (\d{2}\/\d{2}\/\d{4})\]/', $week_string, $matches)) {
+            $dayBD = \DateTime::createFromFormat('d/m/Y', $matches[1])->format('Y-m-d');
+            $dayKT = \DateTime::createFromFormat('d/m/Y', $matches[2])->format('Y-m-d');
+        }
+        $model = LichHoc::find()->where(['id' => $id])->one(); 
+        $idKhoaHoc = $model->id_khoa_hoc;
+        $modelHV = HocVien::find()->where(['id'=>$idHV])->one();
+        $giaoViens = GiaoVien::find()->all();
+        $giaoVienList = \yii\helpers\ArrayHelper::map($giaoViens, 'id', 'ho_ten');
+        $idHV = $modelHV->id;
+        $idKH = $modelHV->id_khoa_hoc;
+        $idNhom = $modelHV->id_nhom;
+        $data = LichHoc::find()
+        ->where(['between', 'ngay', $dayBD, $dayKT])
+        ->andWhere(['id_khoa_hoc' => $idKH])
+        ->andWhere(['or',
+            ['id_nhom' => $idNhom],
+            ['id_nhom' => null]
+        ]);
+    if ($request->isAjax) {
+    
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        if ($request->isGet) {
+            return [
+                'title' => "Cập nhật lịch học #".$id,
+                'content' => $this->renderAjax('update_lich_hoc', [
+                    'model' => $model,
+                    'idKhoaHoc'=>$idKhoaHoc,
+                    'giaoVienList'=>$giaoVienList,
+                ]),
+                'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                            Html::button('Lưu lại', ['class' => 'btn btn-primary', 'type' => "submit"])
+            ];
+        } else if ($model->load($request->post()) && $model->save()) {
+            return [
+                'forceClose'=>true,   
+                'reloadType'=>'lichHoc',
+                'reloadBlock'=>'#lhContent',
+                'reloadContent'=>$this->renderAjax('_schedule_table', [ 
+                   'data'=>$data,  
+                ]), 
+                'tcontent'=>'Cập nhật lịch học thành công!',
+            ];
+        } else {
+            return [
+                'title' => "Cập nhật Học phí #".$id,
+                'content' => $this->renderAjax('update_lich_hoc', [
+                    'model' => $model,
+                    'idKhoaHoc'=>$idKhoaHoc,
+                    'giaoVienList'=>$giaoVienList,
+                ]),
+                'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                            Html::button('Lưu lại', ['class' => 'btn btn-primary', 'type' => "submit"])
+            ];
+        }
+    } else {
+        if ($model->load($request->post()) && $model->save()) {
+            return $this->redirect(['mess', 'id' => $model->id]); 
+        } else {
+            return $this->render('update_lich_hoc', [
+                'model' => $model,
+                'idKhoaHoc'=>$idKhoaHoc,
+                'giaoVienList'=>$giaoVienList,
+            ]);
+        }
+    }
+    }
+
+    public function actionGetGiaoVienList()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+    
+        $request = Yii::$app->request;
+    
+        if (!$request->isAjax || !$request->isPost) {
+            throw new BadRequestHttpException('Invalid request.');
+        }
+    
+        $idKhoaHoc = $request->post('id_khoa_hoc');
+        $hocPhan = $request->post('hoc_phan');
+    
+        if (!$idKhoaHoc || !$hocPhan) {
+            return json_encode(['no_giao_vien' => 'Trống']);
+        }
+    
+        $khoaHoc = KhoaHoc::findOne($idKhoaHoc);
+        if (!$khoaHoc) {
+            return json_encode(['no_giao_vien' => 'Khóa học không hợp lệ']);
+        }
+    
+        $hangDaoTaoId = $khoaHoc->id_hang;
+    
+        $giaoViens = NhanVien::find()
+            ->alias('nv')
+            ->select(['nv.id', 'nv.ho_ten'])
+            ->innerJoin('nv_day d', 'd.id_nhan_vien = nv.id')
+            ->where(['nv.doi_tuong' => 1, 'd.id_hang_xe' => $hangDaoTaoId])
+            ->andWhere([
+                $hocPhan === 'Lý thuyết' ? 'd.ly_thuyet' : 'd.thuc_hanh' => 1
+            ])
+            ->groupBy('nv.id, nv.ho_ten')
+            ->all();
+    
+        if (empty($giaoViens)) {
+            return json_encode(['no_giao_vien' => 'Trống']);
+        }
+    
+        $listGiaoVien = ArrayHelper::map($giaoViens, 'id', 'ho_ten');
+       return json_encode($listGiaoVien);
+    }
+
+    public function actionGetPhieuInAjax($id, $idHV, $type)
+    {
+        $modelKH = KhoaHoc::find()->where(['id'=>$id])->one();
+        $tenKH = $modelKH->ten_khoa_hoc;
+        $ngayBD = $modelKH->ngay_bat_dau;
+        $ngayKT = $modelKH->ngay_ket_thuc;
+        $start = new DateTime($ngayBD);
+        $end = new DateTime($ngayKT);
+        $startFormatted = $start->format('d/m/Y');
+        $endFormatted = $end->format('d/m/Y');
+        $modelHV = HocVien::find()->where(['id'=>$idHV])->one();
+        $tenHV = $modelHV->ho_ten;
+        $idNhom = $modelHV ->id_nhom;
+        $data = LichHoc::find()->where(['id_khoa_hoc'=>$modelKH->id ,'id_nhom'=>$idNhom])->all();
+        if ($type === 'lichhoc') {
+            $content = $this->renderPartial('_in_lich_hoc', ['tenKH' => $tenKH,'startFormatted'=>$startFormatted ,'endFormatted'=>$endFormatted,'tenHV'=>$tenHV,'data'=>$data]);
+            return $this->asJson([
+                'status' => 'success',
+                'content' => $content,
+            ]);
+        }
+        return $this->asJson([
+            'status' => 'error',
+            'message' => 'Không tìm thấy lịch học.',
+        ]);
+    }
+    
 }

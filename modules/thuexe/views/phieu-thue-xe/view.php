@@ -130,7 +130,7 @@ use yii\helpers\Html;
 
         <!-- Nút in phiếu -->
         <div class="col-12 text-center mt-3">
-            <?= Html::button('<i class="fa fa-download"> </i> In Phiếu Thuê Xe', ['class' => 'btn btn-success btn-lg', 'onclick' => 'InPhieuThueXe()']) ?>
+            <?= Html::button('<i class="fa fa-print"> </i> In Phiếu Thuê Xe', ['class' => 'btn btn-success btn-lg', 'onclick' => 'InPhieuThueXe()']) ?>
         </div>
 
         <!-- Phần tử ẩn chứa nội dung phiếu -->

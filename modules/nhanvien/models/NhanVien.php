@@ -23,17 +23,14 @@ class NhanVien extends NhanVienBase
     }
 
     public static function getList()
-{
-    // Lấy danh sách nhân viên  và sắp xếp theo thứ tự bảng chữ cái
-    $dsNguoiNhan = NhanVien::find()
+    {
+       $dsNguoiNhan = NhanVien::find()
         ->orderBy(['ho_ten' => SORT_ASC])
         ->all();
-
-    // Thêm dấu + vào trước tên nhân viên
-    return ArrayHelper::map($dsNguoiNhan, 'id', function($model) {
-        return '+ ' . $model->ho_ten; // Thêm dấu + trước tên nhân viên
-    });
-}
+        return ArrayHelper::map($dsNguoiNhan, 'id', function($model) {
+        return '+ ' . $model->ho_ten; 
+        });
+    }
 
     public static function getListTD()
     {

@@ -9,7 +9,7 @@ return [
     [
         'class' => 'kartik\grid\ActionColumn',
         'header'=>'',
-        'template' => '{adduser} {addusers} {view} {update} {delete} ',
+        'template' => '{adduser} {addusers} {addGroup} {view} {update} {delete} ',
         'dropdown' => true,
         'dropdownOptions' => ['class' => 'float-right'],
         'dropdownButton'=>[
@@ -25,10 +25,13 @@ return [
             if ($action === 'addusers') {
                 return Url::to(['create3', 'id' => $key]);
             }
+            if ($action === 'addGroup') {
+                return Url::to(['add-group', 'id' => $key]);
+            }
 
             return Url::to([$action, 'id' => $key]);
         },
-                 // Đặt buttons bên trong cấu hình của ActionColumn
+               
                  'buttons' => [
                     'adduser' => function($url, $model, $key) {
                         return Html::a('<i class="fa fa-user-plus"></i> Thêm học viên', $url, [
@@ -46,6 +49,15 @@ return [
                             'class' => 'btn ripple btn-success dropdown-item',
                             'data-bs-placement' => 'top',
                             'data-bs-toggle' => 'tooltip-success',
+                        ]);
+                    },
+                    'addGroup' => function($url, $model, $key) {
+                        return Html::a('<i class="fa fa-plus-circle"></i> Thêm nhóm', $url, [
+                            'title' => 'Thêm nhóm',
+                            'role' => 'modal-remote',
+                            'class' => 'btn ripple btn-success dropdown-item',
+                            'data-bs-placement' => 'top',
+                            'data-bs-toggle' => 'tooltip-warning',
                         ]);
                     }
                 ],

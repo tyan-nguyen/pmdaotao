@@ -7,6 +7,7 @@ use Yii;
 use app\modules\hocvien\models\KhoaHoc;
 use app\modules\hocvien\models\HangDaoTao;
 use app\modules\hocvien\models\NopHocPhi;
+use app\modules\khoahoc\models\NhomHoc;
 /**
  * This is the model class for table "hv_hoc_vien".
  *
@@ -21,9 +22,12 @@ use app\modules\hocvien\models\NopHocPhi;
  * @property string|null $thoi_gian_tao
  * @property string $ngay_sinh
  * @property string $check_hoc_phi
+ * @property int|null $id_nhom
  * @property HvHoSoHocVien[] $hvHoSoHocViens
  * @property HvNopHocPhi[] $hvNopHocPhis
  * @property HvKhoaHoc $khoaHoc
+* @property int|null $nguoi_duyet
+ * @property string|null $loai_dang_ky
  */
 class HocVienBase extends \app\models\HvHocVien
 {
@@ -41,13 +45,15 @@ class HocVienBase extends \app\models\HvHocVien
     public function rules()
     {
         return [
-           [['id_hang', 'ho_ten', 'so_cccd','id_hang'], 'required'],
-            [['id_khoa_hoc', 'nguoi_tao','gioi_tinh','id_hang'], 'integer'],
+            [['id_hang', 'ho_ten', 'so_cccd','id_hang'], 'required'],
+            [['id_khoa_hoc', 'nguoi_tao','gioi_tinh','id_hang','id_nhom','nguoi_duyet'], 'integer'],
             [['thoi_gian_tao','ngay_sinh'], 'safe'],
             [['ho_ten', 'so_dien_thoai', 'so_cccd', 'trang_thai','dia_chi'], 'string', 'max' => 255],
             [['check_hoc_phi'],'string','max'=>25],
             [['nguoi_lap_phieu'],'string','max'=>55],
+            [['loai_dang_ky'],'string','max'=>15],
             [['id_khoa_hoc'], 'exist', 'skipOnError' => true, 'targetClass' => KhoaHoc::class, 'targetAttribute' => ['id_khoa_hoc' => 'id']],
+            [['id_nhom'], 'exist', 'skipOnError' => true, 'targetClass' => NhomHoc::class, 'targetAttribute' => ['id_nhom' => 'id']],
         ];
     }
 
@@ -71,6 +77,9 @@ class HocVienBase extends \app\models\HvHocVien
             'thoi_gian_tao' => 'Thời gian tạo',
             'nguoi_lap_phieu' => 'Người lặp phiếu',
             'check_hoc_phi' => 'Học phí',
+            'id_nhom'=>'Nhóm',
+            'loai_dang_ky'=>'Loại hình đăng ký',
+            'nguoi_duyet'=>'Người duyệt'
         ];
     }
 
@@ -103,6 +112,10 @@ class HocVienBase extends \app\models\HvHocVien
     public function getHangDaoTao()
     {
         return $this->hasOne(HangDaoTao::class, ['id' => 'id_hang']);
+    }
+    public function getNhom()
+    {
+        return $this->hasOne(NhomHoc::class, ['id' => 'id_nhom']);
     }
     public function getNgaySinh(){
         return CustomFunc::convertYMDToDMY($this->ngay_sinh);

@@ -80,8 +80,7 @@ use app\modules\giaovien\models\GiaoVien;
 
                              <div class="tab-pane fade" id="add-lichday" role="tabpanel" aria-labelledby="add-lichday-tab">
                                     <!-- Nội dung hiển thị khi click vào "Lịch dạy " -->
-                                   <p> Lịch dạy sẽ hiển thị tại đây </p>
-                                
+                                    <?= $this->render('testTKB',['model'=>$model,'weeks'=>$weeks,'months'=>$months]) ?>
                              </div>
                              <div class="tab-pane fade show active" id="add-detail" role="tabpanel" aria-labelledby="add-detail-tab">
                                     <!-- Nội dung hiển thị khi click vào "Thông tin chi tiết " -->

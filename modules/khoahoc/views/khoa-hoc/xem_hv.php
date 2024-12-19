@@ -1,65 +1,106 @@
-<?php
-use yii\bootstrap5\Html;
-use app\modules\hocvien\models\HocVien;
-$datas = HocVien::find()->where(['id_khoa_hoc' => $model->id])->all();
+<?php 
+    use yii\bootstrap5\Html;
+    use app\modules\hocvien\models\HocVien;
+    use app\modules\khoahoc\models\NhomHoc;
+    $this->registerCssFile('@web/css/xem_hv.css', [
+        'depends' => [\yii\bootstrap5\BootstrapAsset::className()],
+    ]);
+    $datas = HocVien::find()->where(['id_khoa_hoc' => $model->id])->all();
+    $nhomHocs = NhomHoc::find()->where(['id_khoa_hoc' => $model->id])->all();
+    $hasNhomHoc = !empty($nhomHocs); 
 ?>
+<div id ="hvContent" class="hoc-vien-index">
 
 <?php if (empty($datas)) : ?>
     <p style="color:chartreuse">Không tìm thấy Học viên</p>
 <?php else : ?>
+    
     <table class="table" id="hocVienTable">
-        <thead>
-            <tr>
-                <th>STT</th>
-                <th>Họ tên</th>
-                <th>Số CCCD</th>
-                <th>Giới tính</th>
-                <th>Thao tác</th>
-            </tr>
-        </thead>
-        <tbody>
-        <?php 
-            foreach ($datas as $iHv => $hv){
-        ?>
-            <tr>
-                <td><?= $iHv + 1 ?></td>
-                <td><?= $hv->ho_ten ?></td>
-                <td><?= $hv->so_cccd ?></td>
-                <td><?= $hv->gioi_tinh == 1 ? 'Nam' : 'Nữ' ?></td>
+    <thead>
+        <tr>
+            <th>STT</th>
+            <th>Họ tên</th>
+            <th>Số CCCD</th>
+            <?php if ($hasNhomHoc): ?>
+                <th>Nhóm học</th>
+            <?php endif; ?>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($datas as $iHv => $hv): ?>
+        <tr>
+            <td><?= $iHv + 1 ?></td>
+            <td><?= $hv->ho_ten ?></td>
+            <td><?= $hv->so_cccd ?></td>
+            <?php if ($hasNhomHoc): ?>
                 <td>
-                    <?= Html::a('<i class="fas fa-eye icon-white"></i>', 
-                        ['/hocvien/hoc-vien/view', 'id' => $hv->id, 'modalType' => 'modal-remote-2'], 
-                        ['class' => 'btn btn-sm btn-primary', 'title' => 'Xem', 'role' => 'modal-remote-2']
-                    ); ?>
-                    
-                    <?= Html::a('<i class="fa fa-remove"></i>', 
-                        ['/hocvien/hoc-vien/delete-from-khoa-hoc', 'id' => $hv->id], 
-                        ['class' => 'btn ripple btn-info btn-sm delete-hv-btn', 'title' => 'Xóa học viên', 'style' => 'color: white;', 'data-id' => $hv->id]
-                    ); ?>
+                    <?php if ($hv->nhomHoc): ?>
+                        <span class="badge bg-warning"><b><?= $hv->nhomHoc->ten_nhom ?></b></span>
+                           <?php else: ?>
+                              <span class="badge bg-danger"><b> Chưa sắp Nhóm </b></span>
+                    <?php endif; ?>
                 </td>
-            </tr>
-        <?php } ?>
-        </tbody>
-    </table>
+            <?php endif; ?>
+            <td>
+                <?= Html::a('<i class="fas fa-eye icon-white"></i>', 
+                    ['/hocvien/hoc-vien/view', 'id' => $hv->id, 'modalType' => 'modal-remote-2'], 
+                    ['class' => 'btn btn-sm btn-primary', 'title' => 'Xem', 'role' => 'modal-remote-2']
+                ); ?>
+
+                <?= Html::a('<i class="fa fa-remove"></i>', 
+                    ['/hocvien/hoc-vien/delete-from-khoa-hoc', 'id' => $hv->id], 
+                    ['class' => 'btn ripple btn-info btn-sm delete-hv-btn', 'title' => 'Xóa học viên', 'style' => 'color: white;', 'data-id' => $hv->id]
+                ); ?>
+
+              <?php if ($hasNhomHoc && $hv->id_nhom != null): ?>
+                <?= Html::a('<i class="fa fa-exchange"> </i>', 
+                                    ['/khoahoc/khoa-hoc/update-nhom', 'id' => $hv->id],
+                                    [
+                                        'class' => 'btn ripple btn-success btn-sm',
+                                        'title' => 'Đổi nhóm',
+                                        'style' => 'color: white;',
+                                        'role' => 'modal-remote-2',
+                                    ]
+                        ) ?>
+              <?php endif; ?>
+
+              <?php if ($hasNhomHoc && $hv->id_nhom  == null): ?>
+                <?= Html::a('<i class="fa fa-plus"> </i>', 
+                                    ['/khoahoc/khoa-hoc/add-nhom', 'id' => $hv->id],
+                                    [
+                                        'class' => 'btn ripple btn-warning btn-sm',
+                                        'title' => 'Thêm nhóm',
+                                        'style' => 'color: white;',
+                                        'role' => 'modal-remote-2',
+                                    ]
+                        ) ?>
+              <?php endif; ?>
+
+            </td>
+        </tr>
+    <?php endforeach; ?>
+    </tbody>
+</table>
+
 <?php endif; ?>
-
-
+</div>
 <script>
 $(document).on('click', '.delete-hv-btn', function(e) {
-    e.preventDefault(); // Ngăn hành động mặc định (chuyển trang)
+    e.preventDefault(); 
 
-    var url = $(this).attr('href'); // URL của hành động xóa
+    var url = $(this).attr('href'); 
 
     $.ajax({
         url: url,
         type: 'POST',
         success: function(response) {
             if (response.forceReload) {
-                // Reload lại nội dung bảng học viên
+              
                 $(response.forceReload).html(response.reloadContent);
             }
             if (response.tcontent) {
-                alert(response.tcontent);  // Hiển thị thông báo
+                alert(response.tcontent);  
            }
         },
         error: function() {
@@ -69,36 +110,3 @@ $(document).on('click', '.delete-hv-btn', function(e) {
 });
 
 </script>
-<style>
-    .icon-white {
-    color: white;
-}
-.pagination {
-    display:flex;
-    justify-content: center;
-    padding:10px;
-}
-
-.pagination li a {
-    color: #007bff; /* Màu văn bản cho các nút */
-    padding: 8px 12px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-}
-
-.pagination li a:hover {
-    background-color: #007bff; /* Màu nền khi di chuột */
-    color: #fff; /* Màu văn bản khi di chuột */
-}
-
-.pagination .active a {
-    background-color: #007bff; /* Màu nền cho nút đang được chọn */
-    color: white;
-    border-color: #007bff;
-}
-
-.pagination .disabled a {
-    color: #aaa;
-}
-</style>

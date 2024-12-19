@@ -11,6 +11,10 @@ use app\modules\nhanvien\models\To;
 //use yii\filters\AccessControl;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
+use Datetime;
+use app\modules\lichhoc\models\LichHoc;
+use yii\web\BadRequestHttpException;
+
 
 //use yii\filters\VerbFilter;
 use \yii\web\Response;
@@ -52,7 +56,7 @@ class GiaoVienController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
+    public function actionView2($id)
     {   
         $request = Yii::$app->request;
         if($request->isAjax){
@@ -71,6 +75,155 @@ class GiaoVienController extends Controller
             ]);
         }
     }
+
+    public function actionView($id)
+{   
+    $request = Yii::$app->request;
+
+    // Lấy ngày bắt đầu và kết thúc từ bảng LichHoc
+    $ngayBD = (new \yii\db\Query())
+        ->select(['MIN(ngay)'])
+        ->from('lh_lich_hoc') 
+        ->where(['id_giao_vien' => $id])
+        ->scalar(); 
+    
+    $ngayKT = (new \yii\db\Query())
+        ->select(['MAX(ngay)'])
+        ->from('lh_lich_hoc')
+        ->where(['id_giao_vien' => $id])
+        ->scalar();
+
+    // Định dạng ngày
+    $ngayBD = $ngayBD ? Yii::$app->formatter->asDate($ngayBD, 'php:d/m/Y') : null;
+    $ngayKT = $ngayKT ? Yii::$app->formatter->asDate($ngayKT, 'php:d/m/Y') : null;
+
+    // Kiểm tra trường hợp chỉ có một ngày
+    if ($ngayBD === $ngayKT && $ngayBD !== null) {
+        // Thêm 6 ngày vào ngayKT để đảm bảo có một tuần
+        $date = DateTime::createFromFormat('d/m/Y', $ngayKT);
+        $date->modify('+0 days');
+        $ngayKT = $date->format('d/m/Y');
+    }
+
+    // Tạo danh sách tuần và tháng
+    $weeks = $this->generateWeeks($ngayBD, $ngayKT);
+    $months = $this->generateMonths($ngayBD, $ngayKT);
+
+    // Xử lý hiển thị cho Ajax hoặc không phải Ajax
+    if ($request->isAjax) {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        return [
+            'title'=> "Giáo viên #".$id,
+            'content'=>$this->renderAjax('view', [
+                'model' => $this->findModel($id),
+                'weeks'=>$weeks,
+                'months'=>$months,
+            ]),
+            'footer'=> Html::button('Đóng lại', ['class'=>'btn btn-default pull-left', 'data-bs-dismiss'=>"modal"]) .
+                      Html::a('Sửa', ['update', 'id' => $id], ['class'=>'btn btn-primary', 'role'=>'modal-remote'])
+        ];    
+    } else {
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+            'weeks'=>$weeks,
+            'months'=>$months,
+        ]);
+    }
+}
+
+
+    protected function generateWeeks($startDate, $endDate)
+    {
+        // Kiểm tra ngày bắt đầu và kết thúc
+        if (!$startDate || !$endDate) {
+            return []; // Trả về mảng rỗng nếu không có ngày hợp lệ
+        }
+    
+        // Tạo đối tượng DateTime từ ngày bắt đầu và ngày kết thúc
+        $start = DateTime::createFromFormat('d/m/Y', $startDate);
+        $end = DateTime::createFromFormat('d/m/Y', $endDate);
+    
+        // Kiểm tra nếu không tạo được đối tượng DateTime
+        if (!$start || !$end) {
+            return []; // Trả về mảng rỗng nếu không tạo được đối tượng DateTime
+        }
+    
+        // Điều chỉnh ngày về thứ Hai và Chủ Nhật gần nhất
+        $start->modify('last monday');
+        $end->modify('next sunday');
+    
+        $weeks = [];
+        $weekNumber = 1;
+    
+        // Lặp qua các tuần và tạo danh sách tuần
+        while ($start < $end) {
+            $weekStart = clone $start;
+            $weekEnd = (clone $start)->modify('+6 days');
+    
+            $weeks[$weekNumber] = sprintf(
+                'Tuần %d [%s - %s]',
+                $weekNumber,
+                $weekStart->format('d/m/Y'),
+                $weekEnd->format('d/m/Y')
+            );
+    
+            $weekNumber++;
+            $start->modify('+7 days');
+        }
+    
+        return $weeks;
+    }
+    
+    protected function generateMonths($startDate, $endDate)
+    {
+        // Kiểm tra ngày bắt đầu và kết thúc
+        if (!$startDate || !$endDate) {
+            return []; // Trả về mảng rỗng nếu không có ngày hợp lệ
+        }
+    
+        // Tạo đối tượng DateTime từ ngày bắt đầu và ngày kết thúc
+        $start = DateTime::createFromFormat('d/m/Y', $startDate);
+        $end = DateTime::createFromFormat('d/m/Y', $endDate);
+    
+        // Kiểm tra nếu không tạo được đối tượng DateTime
+        if (!$start || !$end) {
+            return []; // Trả về mảng rỗng nếu không tạo được đối tượng DateTime
+        }
+    
+        // Điều chỉnh ngày về thứ Hai và Chủ Nhật gần nhất
+        $start->modify('last monday');
+        $end->modify('next sunday');
+    
+        $weeksByMonth = [];
+        $weekNumber = 1; // Số tuần liên tiếp trên toàn bộ khoảng thời gian
+    
+        // Lặp qua các tuần và nhóm theo tháng
+        while ($start < $end) {
+            $weekStart = clone $start;
+            $weekEnd = (clone $start)->modify('+6 days');
+            $monthLabel = 'Tháng ' . $weekStart->format('n/Y');
+    
+            if (!isset($weeksByMonth[$monthLabel])) {
+                $weeksByMonth[$monthLabel] = [];
+            }
+    
+            $weeksByMonth[$monthLabel][] = sprintf(
+                'Tuần %d [%s - %s]',
+                $weekNumber,
+                $weekStart->format('d/m/Y'),
+                $weekEnd->format('d/m/Y')
+            );
+    
+            $weekNumber++; // Tăng tuần liên tục
+            $start->modify('+7 days');
+        }
+    
+        return $weeksByMonth;
+    }
+    
+    
+
+
 
     /**
      * Creates a new NhanVien model.
@@ -141,10 +294,9 @@ class GiaoVienController extends Controller
      * @return mixed
      */
     public function actionUpdate($id)
-{
+    {
     $request = Yii::$app->request;
     $model = $this->findModel($id);       
-
     if($request->isAjax){
         /*
         *   Process for ajax request
@@ -167,7 +319,7 @@ class GiaoVienController extends Controller
                         'model' => $model,
                     ]),
                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::a('Sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                               Html::a('Sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
                 ];    
         }else{
              return [
@@ -176,7 +328,7 @@ class GiaoVienController extends Controller
                     'model' => $model,
                 ]),
                 'footer'=> Html::button('Đóng lại ',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::button('Lưu lại ',['class'=>'btn btn-primary','type'=>"submit"])
+                           Html::button('Lưu lại ',['class'=>'btn btn-primary','type'=>"submit"])
             ];        
         }
     }else{
@@ -188,11 +340,10 @@ class GiaoVienController extends Controller
         } else {
             return $this->render('update', [
                 'model' => $model,
-               
             ]);
         }
     }
-}
+    }
 
 
     /**
@@ -219,10 +370,7 @@ class GiaoVienController extends Controller
             */
             return $this->redirect(['index']);
         }
-
-
     }
-
      /**
      * Delete multiple existing NhanVien model.
      * For ajax request will return json object
@@ -271,9 +419,7 @@ class GiaoVienController extends Controller
     }
     public function actionGetToList($id_phong_ban)
     {
-       
         $tos = To::find()->where(['id_phong_ban' => $id_phong_ban])->all();
-        
         if (empty($tos)) {
             return json_encode(['no_to' => 'Trống']);
         }
@@ -281,5 +427,18 @@ class GiaoVienController extends Controller
         return json_encode($listTo);
     }
 
-
+    public function actionLoadScheduleWeek($week_string, $idGV)
+{
+    if (preg_match('/Tuần \d+ \[(\d{2}\/\d{2}\/\d{4}) - (\d{2}\/\d{2}\/\d{4})\]/', $week_string, $matches)) {
+        $dayBD = \DateTime::createFromFormat('d/m/Y', $matches[1])->format('Y-m-d');
+        $dayKT = \DateTime::createFromFormat('d/m/Y', $matches[2])->format('Y-m-d');
+                $data = LichHoc::find()
+                ->where(['between', 'ngay', $dayBD, $dayKT])
+                ->andwhere(['id_giao_vien' => $idGV])->all();
+        return $this->renderPartial('_schedule_table', [
+            'data' => $data,
+        ]);
+    }
+    throw new BadRequestHttpException('Chuỗi tuần không hợp lệ.');
+}
 }

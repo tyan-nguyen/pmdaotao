@@ -1,20 +1,19 @@
 <?php
 use yii\bootstrap5\Html;
 use yii\widgets\ActiveForm;
-use app\modules\hocvien\models\HangDaoTao;
+
 use kartik\date\DatePicker;
 use app\custom\CustomFunc;
 use app\widgets\CardWidget;
+use kartik\select2\Select2;
+use app\modules\khoahoc\models\NhomHoc;
 
-/* @var $this yii\web\View */
-/* @var $model app\models\HvHocVien */
-/* @var $form yii\widgets\ActiveForm */
 ?>
 <?php
 $model->ngay_sinh = CustomFunc::convertYMDToDMY($model->ngay_sinh);
 ?>
-<div class="hv-hoc-vien-form">
 
+<div class="hv-hoc-vien-form">
     <?php $form = ActiveForm::begin(); ?>
     <?php CardWidget::begin(['title'=>'Thông tin học viên']) ?>
    <div class ='row'>
@@ -45,6 +44,22 @@ $model->ngay_sinh = CustomFunc::convertYMDToDMY($model->ngay_sinh);
             <div class="col-lg-3 col-md-6">
                  <?= $form->field($model, 'so_dien_thoai')->textInput(['maxlength' => true]) ?>
             </div>
+            <div class="col-lg-3 col-md-6">
+               <?php
+                  $dsNhom = NhomHoc::getList($model->id_khoa_hoc);
+                  if (!empty($dsNhom)): 
+               ?>
+               <?= $form->field($model, 'id_nhom')->widget(Select2::classname(), [
+                  'data' => $dsNhom,
+                  'language' => 'vi',
+                  'options' => ['placeholder' => 'Chọn nhóm học...'],
+                  'pluginOptions' => [
+                  'allowClear' => true,
+                  'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
+                  ],
+               ]); ?>
+               <?php endif; ?>
+            </div>
     </div>
     <?php CardWidget::end() ?>
 </div>
@@ -62,11 +77,11 @@ $model->ngay_sinh = CustomFunc::convertYMDToDMY($model->ngay_sinh);
 }
 .dropdown-with-arrow {
     position: relative;
-    padding-right: 30px; /* Đảm bảo có khoảng trống cho mũi tên */
+    padding-right: 30px; 
 }
 
 .dropdown-with-arrow:after {
-    content: "\f078"; /* Font Awesome chevron-down */
+    content: "\f078";
     font-family: "Font Awesome 5 Free";
     font-weight: 900;
     position: absolute;

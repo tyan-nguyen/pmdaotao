@@ -58,7 +58,7 @@ class DangKyHvController extends Controller
     {    
         $searchModel = new DangKyHvSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->query->andWhere(['trang_thai' => ['CHUA_NHAP_HOC','DONG_HOC_PHI']]);
+        $dataProvider->query->andWhere(['trang_thai' => ['CHO_DUYET','KHONG_DUYET']]);
         $pagination = $dataProvider->getPagination();
         $pagination->pageSize = 20;
         return $this->render('index', [
@@ -84,7 +84,15 @@ class DangKyHvController extends Controller
                 'content'=>$this->renderAjax('view', [
                     'model' => $this->findModel($id),
                 ]),
-                'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"])          
+                'footer'=>  Html::a('<i class="fa fa-check"> </i> Kiểm duyệt', 
+                              ['/hocvien/dang-ky-hv/duyet-hv', 'id' => $id, 'modalType' => 'modal-remote-2'], 
+                                  [
+                                    'class' => 'btn btn-info',
+                                    'role' => 'modal-remote-2',
+                                    'title' => 'Kiểm duyệt'
+                                  ]
+                               ) .
+                            Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"])          
             ];    
         } else {
             return $this->render('view', [
@@ -121,7 +129,10 @@ class DangKyHvController extends Controller
                                 Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
-            }else if($model->load($request->post()) && $model->save()){
+            }if ($model->load($request->post())) { 
+                $model->loai_dang_ky = 'Nhập trực tiếp'; 
+                $model->save();
+                if ($model->save()) {
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Thêm học viên",
@@ -155,7 +166,7 @@ class DangKyHvController extends Controller
         }
        
     }
-
+    }
     /**
      * Updates an existing HvHocVien model.
      * For ajax request will return json object
@@ -215,6 +226,57 @@ class DangKyHvController extends Controller
             }
         }
     }
+
+
+    public function actionDuyetHv($id)
+    {
+        $request = Yii::$app->request;
+        $model = $this->findModel($id);       
+
+        if($request->isAjax){
+            /*
+            *   Process for ajax request
+            */
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            if($request->isGet){
+                return [
+                    'title'=> "Kiểm duyệt Học viên",
+                    'content'=>$this->renderAjax('duyet-hv', [
+                        'model' => $model,
+                    ]),
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                ];         
+            }if ($model->load($request->post())) { 
+                $model->nguoi_duyet = Yii::$app->user->identity->id; 
+                $model->save();
+                if ($model->save()) {
+                return [
+                    'forceClose'=>true,   
+                     'reloadType'=>'hocVien',
+                     'reloadBlock'=>'#hvContent',
+                     'reloadContent'=>$this->renderAjax('view', [
+                         'model' => $model,
+                     ]),
+                     
+                     'tcontent'=>'Kiểm duyệt thành công!',
+                 ];
+                }   
+       
+        }else{
+            /*
+            *   Process for non-ajax request
+            */
+            if ($model->load($request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('duyet-hv', [
+                    'model' => $model,
+                ]);
+            }
+        }
+    }
+}
 
     /**
      * Delete an existing HvHocVien model.
@@ -351,7 +413,6 @@ public function actionCreate2($id)
                   }
                  }
             if ($hocVien) {
-                $hocVien->trang_thai = 'DONG_HOC_PHi'; 
                 $hocVien->save();
             }
             return [

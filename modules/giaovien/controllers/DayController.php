@@ -122,7 +122,7 @@ class DayController extends Controller
                     ]), */
                     'reloadType'=>'giaoVien',
                     'reloadBlock'=>'#dayContent',
-                    'reloadContent'=>$this->renderAjax('phan_cong_day', [
+                    'reloadContent'=>$this->renderAjax('_phan_cong_day', [
                         'model' => $model,
                         'phanCongDay' => Day::find()->where(['id_nhan_vien' => $model->id_nhan_vien])->all(),
                     ]),
@@ -194,23 +194,14 @@ class DayController extends Controller
             }else if($model->load($request->post()) && $model->save()){
                 return [
                     'forceClose'=>true,   
-                    'reloadType'=>'giaoVien',
+                    'reloadType'=>'giaovienDay',
                     'reloadBlock'=>'#dayContent',
-                    'reloadContent'=>$this->renderAjax('phan_cong_day', [
+                    'reloadContent'=>$this->renderAjax('_phan_cong_day', [
                         'model' => $model,
                         'phanCongDay' => Day::find()->where(['id_nhan_vien' => $model->id_nhan_vien])->all(),
                     ]),
-                    
                     'tcontent'=>'Cập nhật giảng dạy thành công!',
                 ];
-              /*  return [
-                   'forceClose'=>true,
-                    'tcontent'=>'Cập nhật thành công!',
-                   
-                    'functionResponse'=>$this->renderAjax('/giao-vien/phan_cong_day', ['model'=>$model]),
-                ];
-                
-                */
             }else{
                  return [
                     'title'=> "Update Day #".$id,

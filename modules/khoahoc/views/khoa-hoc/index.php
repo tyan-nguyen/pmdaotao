@@ -118,13 +118,13 @@ Yii::$app->params['showExport'] = true;
 <?php Modal::begin([
    'options' => [
         'id'=>'ajaxCrudModal2',
-        'tabindex' => false // important for Select2 to work properly
+        'tabindex' => false 
    ],
   // 'dialogOptions'=>['class'=>'modal-lg'],
    'closeButton'=>['label'=>'<span aria-hidden=\'true\'>×</span>'],
    'id'=>'ajaxCrudModal2',
-    'footer'=>'',// always need it for jquery plugin
-    'size'=>Modal::SIZE_LARGE
+    'footer'=>'',
+    'size'=>Modal::SIZE_EXTRA_LARGE
 ])?>
 
 <?php Modal::end(); ?>
@@ -133,3 +133,19 @@ Yii::$app->params['showExport'] = true;
     /* $searchContent = $this->render("_search", ["model" => $searchModel]);
     echo FilterFormWidget::widget(["content"=>$searchContent, "description"=>"Nhập thông tin tìm kiếm."])  */
 ?>
+
+<script>
+    $(document).ready(function () {
+    $('#ajaxCrudModal2').on('hidden.bs.modal', function () {
+        if ($('.modal.show').length) {
+            $('body').addClass('modal-open'); 
+        }
+    });
+    $('#ajaxCrudModal2').on('show.bs.modal', function () {
+        $('.modal-backdrop').not(':last').css('z-index', -1); 
+    }).on('hidden.bs.modal', function () {
+        $('.modal-backdrop').not(':last').css('z-index', ''); 
+    });
+    $('#ajaxCrudModal2').appendTo('body');
+});
+</script>

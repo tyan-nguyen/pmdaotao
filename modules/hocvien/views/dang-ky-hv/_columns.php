@@ -84,10 +84,35 @@ return [
     ],
 
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'dia_chi',
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'loai_dang_ky',
         'width' => '200px',
+        'format' => 'raw', 
+        'value' => function ($model) {
+            if (strtolower($model->loai_dang_ky) == 'nhập trực tiếp') {
+                return '<span style="color: green;">Nhập trực tiếp</span>';
+            } else {
+                return '<span style="color: orange;">' . $model->loai_dang_ky . '</span>';
+            }
+        },
     ],
+    
+    [
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'trang_thai',
+        'width' => '200px',
+        'format' => 'raw', 
+        'value' => function ($model) {
+            if ($model->trang_thai == 'CHO_DUYET') {
+                return '<span class="badge bg-primary">Chờ duyệt</span>';
+            } elseif ($model->trang_thai == 'KHONG_DUYET') {
+                return '<span class="badge bg-danger">Không duyệt</span>';
+            }
+            return '<span class="badge bg-secondary">Không xác định</span>'; 
+        },
+    ],
+    
+    
  
     [
         'class' => '\kartik\grid\DataColumn',

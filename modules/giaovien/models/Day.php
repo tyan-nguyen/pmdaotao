@@ -79,7 +79,7 @@ class Day extends \app\models\NvDay
     {
         return $this->hasOne(GiaoVien::class, ['id' => 'id_nhan_vien']);
     }
-    public function beforeSave($insert) {
+    public function beforeSave($insert) { 
         if ($this->isNewRecord) {
             $this->nguoi_tao = Yii::$app->user->identity->id;
             $this->thoi_gian_tao = date('Y-m-d H:i:s');

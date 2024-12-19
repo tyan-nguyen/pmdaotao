@@ -174,6 +174,11 @@ checkFileInput();
  
 
 </script>
+<style> 
+   .select2-dropdown {
+    z-index: 9999 !important; 
+     }
+</style>
 
    
 

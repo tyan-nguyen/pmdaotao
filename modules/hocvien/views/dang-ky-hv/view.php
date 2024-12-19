@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $model app\models\HvHocVien */
 ?>
 
-<div class="hv-hoc-vien-view">
+<div class="hv-hoc-vien-view" id="hvContent">
 
     <div class="row">
         <!-- Thông tin học viên -->
@@ -42,13 +42,22 @@ use yii\helpers\Html;
                             <?php endif; ?>
                         </p>
                         <p><strong>Hạng đào tạo:</strong> <?= $model->hangDaoTao->ten_hang ?></p>
+        
+                    </div>
+                </div>
+                <div class="card-header custom-card-header rounded-bottom-0">
+                    <h6 class="card-title mb-0 text-center" style="color: red;">Thông tin kiểm duyệt</h6>
+                </div>
+                <div class="card-body">
+                    <div class="skill-tags">
+                        <p><strong>Trạng thái:</strong> <?= $model->trang_thai ?></p>
                     </div>
                 </div>
             </div>
         </div>
 		<p>
-        <?= Html::button('<i class="fa fa-download"> </i> In Phiếu Thông Tin', ['class' => 'btn btn-success', 'onclick' => 'InPhieuThongTin()']) ?>
-    </p>
+            <?= Html::button('<i class="fa fa-print"> </i> In Phiếu Thông Tin', ['class' => 'btn btn-success', 'onclick' => 'InPhieuThongTin()']) ?>
+       </p>
 
     <!-- Phần tử ẩn chứa nội dung phiếu -->
     <div style="display:none">

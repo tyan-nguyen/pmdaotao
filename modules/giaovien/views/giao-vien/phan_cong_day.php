@@ -79,8 +79,4 @@ $phanCongDay = Day::find()->where(['id_nhan_vien' => $model->id])->all();
     <?php endif; ?>
 </div>
 
-<script>
-function funcUploadDay($data){
-    $('#dayContent').html($data);
-}
-</script>
+

@@ -63,9 +63,9 @@ use app\widgets\KhoDisplayWidget;
                              <!-- Nội dung Lịch học -->
                              <div class="tab-pane fade" id="add-timetable" role="tabpanel" aria-labelledby="add-timetable-tab">
                         <!-- Nội dung hiển thị khi click vào "Lịch học" -->
-                                <h3>Lịch học</h3>
-                                <p>Hiển thị lịch học tại đây.</p>
-                             
+                                
+                                <?= $this->render('testTKB', ['model'=>$model,'weeks' => $weeks]) ?>
+                                
                             </div>
                               <!-- Nội dung Tài liệu khóa học -->
                               <div class="tab-pane fade" id="add-document" role="tabpanel" aria-labelledby="add-document-tab">
