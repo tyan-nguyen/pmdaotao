@@ -85,7 +85,11 @@ class HocVienController extends Controller
         $model = $this->findModel($id); 
         $idKH = $model->id_khoa_hoc;
         $modelKH = KhoaHoc::find()->where(['id' => $idKH])->one();
-        $weeks = $this->generateWeeks($modelKH->ngay_bat_dau, $modelKH->ngay_ket_thuc);
+        if (!empty($modelKH)) {
+            $weeks = $this->generateWeeks($modelKH->ngay_bat_dau, $modelKH->ngay_ket_thuc);
+        } else {
+            $weeks = []; 
+        }  
         $request = Yii::$app->request;
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
