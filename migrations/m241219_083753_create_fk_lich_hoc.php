@@ -12,7 +12,7 @@ class m241219_083753_create_fk_lich_hoc extends Migration
      */
     public function safeUp()
     {
-          //FK cho bảng lh_lich_hoc
+        
           $this->addForeignKey(
             'lh_khoa_hoc',
             'lh_lich_hoc',
@@ -21,7 +21,7 @@ class m241219_083753_create_fk_lich_hoc extends Migration
             'id',
             'CASCADE'
         );
-          //FK cho bảng lh_lich_hoc
+         
           $this->addForeignKey(
             'lh_giao_vien',
             'lh_lich_hoc',
@@ -31,7 +31,7 @@ class m241219_083753_create_fk_lich_hoc extends Migration
             'CASCADE'
         );
 
-           //FK cho bảng lh_lich_hoc
+         
            $this->addForeignKey(
             'lh_nhom_hoc',
             'lh_lich_hoc',
@@ -41,7 +41,6 @@ class m241219_083753_create_fk_lich_hoc extends Migration
             'CASCADE'
         );
 
-         //FK cho bảng lh_lich_hoc
          $this->addForeignKey(
             'lh_phong_hoc',
             'lh_lich_hoc',
@@ -51,10 +50,10 @@ class m241219_083753_create_fk_lich_hoc extends Migration
             'CASCADE'
         );
 
-            //FK cho bảng lh_lich_hoc
+           
             $this->addForeignKey(
-                'lh_phong_hoc_khoa_hoc',
-                'lh_phong_hoc',
+                'lh_nhom_hoc_khoa_hoc',
+                'hv_nhom',
                 'id_khoa_hoc',
                 'hv_khoa_hoc',
                 'id',
@@ -85,8 +84,8 @@ class m241219_083753_create_fk_lich_hoc extends Migration
             'lh_lich_hoc'
         );
         $this->dropForeignKey(
-            'lh_phong_hoc_khoa_hoc',
-            'lh_phong_hoc'
+            'lh_nhom_hoc_khoa_hoc',
+            'hv_nhom'
         );
     }
 
