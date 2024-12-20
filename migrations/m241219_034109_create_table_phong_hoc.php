@@ -27,7 +27,7 @@ class m241219_034109_create_table_phong_hoc extends Migration
      */
     public function safeDown()
     {
-       $this->dropTable('lh_phong-hoc');
+       $this->dropTable('lh_phong_hoc');
     }
 
     /*

@@ -20,7 +20,7 @@ class m241219_033939_table_lich_hoc extends Migration
             'id_phong'=>$this->integer()->notNull(),
             'id_giao_vien'=>$this->integer()->notNull(),
             'ngay'=>$this->date(),
-            'thu'=>$this->$this->string(15),
+            'thu'=>$this->string(15),
             'tiet_bat_dau'=>$this->integer(),
             'tiet_ket_thuc'=>$this->integer(),
             'nguoi_tao'=>$this->integer(),

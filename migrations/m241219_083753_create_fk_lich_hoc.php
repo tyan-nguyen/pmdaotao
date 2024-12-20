@@ -53,7 +53,7 @@ class m241219_083753_create_fk_lich_hoc extends Migration
 
             //FK cho bảng lh_lich_hoc
             $this->addForeignKey(
-                'hv_khoa_hoc',
+                'lh_phong_hoc_khoa_hoc',
                 'lh_phong_hoc',
                 'id_khoa_hoc',
                 'hv_khoa_hoc',
@@ -85,7 +85,7 @@ class m241219_083753_create_fk_lich_hoc extends Migration
             'lh_lich_hoc'
         );
         $this->dropForeignKey(
-            'hv_khoa_hoc',
+            'lh_phong_hoc_khoa_hoc',
             'lh_phong_hoc'
         );
     }
