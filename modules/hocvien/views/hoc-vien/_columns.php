@@ -109,6 +109,11 @@ return [
         'attribute'=>'ho_ten',
         'width' => '150px',
     ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'gioi_tinh',
+        'width' => '150px',
+    ],
    // [
        // 'class'=>'\kartik\grid\DataColumn',
       //  'attribute'=>'so_dien_thoai',
@@ -118,12 +123,21 @@ return [
       //  'attribute'=>'so_cccd',
       //  'width' => '50px',
     //],
- 
+    [
+        'class'=>'\kartik\grid\DataColumn',
+       'attribute'=>'id_khoa_hoc',
+       'value' => function($model) {
+            $khoaHoc = KhoaHoc::findOne($model->id_khoa_hoc);
+            return $khoaHoc ? $khoaHoc->ten_khoa_hoc : 'Trống '; 
+        },
+    ],
+
      [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'dia_chi',
+        'attribute'=>'trang_thai',
         'width' => '200px',
      ],
+   
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'trang_thai',
@@ -139,7 +153,7 @@ return [
     [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'check_hoc_phi',
-        'label' => 'Trạng thái học phí',
+        'label' => 'Học phí',
         'value' => function($model) {
             // Tìm học viên hiện tại
             $hocVien = HocVien::findOne($model->id);
