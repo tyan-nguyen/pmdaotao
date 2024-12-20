@@ -107,13 +107,23 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ho_ten',
-        'width' => '150px',
+        'width' => '200px',
     ],
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'gioi_tinh',
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'gioi_tinh',
         'width' => '150px',
+        'value' => function ($model) {
+            return $model->gioi_tinh == 1 ? 'Nam' : 'Nữ';
+        },
+        'filter' => [
+            1 => 'Nam',
+            0 => 'Nữ',
+        ], 
+        'headerOptions' => ['style' => 'text-align: center;'],
+        'contentOptions' => ['style' => 'text-align: center;'],
     ],
+    
    // [
        // 'class'=>'\kartik\grid\DataColumn',
       //  'attribute'=>'so_dien_thoai',
