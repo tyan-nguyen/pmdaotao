@@ -103,6 +103,7 @@ $listTaiKhoan = ArrayHelper::map($taiKhoans, 'id', 'username');
              <div class="col-lg-3 col-md-6">
                 <?= $form->field($model, 'trang_thai')->dropDownList([
                    'Đang làm việc' => 'Đang làm việc',
+                   'Tạm nghỉ'=>'Tạm nghỉ',
                    'Đã nghỉ việc' => 'Đã nghỉ việc',
                 ], ['prompt' => 'Chọn trạng thái']) ?>
              </div>

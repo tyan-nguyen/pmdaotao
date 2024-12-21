@@ -96,6 +96,7 @@ $model->doi_tuong = null; // Đảm bảo giá trị null cho prompt
     <div class="col-md-3">
          <?= $form->field($model, 'trang_thai')->dropDownList([
                      'Đang làm việc' => 'Đang làm việc',
+                     'Tạm nghỉ'=>'Tạm nghỉ',
                      'Đã nghỉ việc' => 'Đã nghỉ việc',
                   ], ['prompt' => 'Chọn trạng thái']) ?>
     </div>

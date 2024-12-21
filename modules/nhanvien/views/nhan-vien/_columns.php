@@ -57,7 +57,7 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'gioi_tinh',
-        'width' => '100px',
+        'width' => '50px',
          'value'=> function ($model)
          {
             return $model->gioi_tinh == 1 ? 'Nam' : 'Nữ' ;
@@ -69,16 +69,57 @@ return [
         'attribute' => 'id_phong_ban',
         'width' => '150px',
         'value' => function ($model) {
-            // Kiểm tra xem phongBan có tồn tại hay không
-            return $model->phongBan ? $model->phongBan->ten_phong_ban : 'N/A';
+            return $model->phongBan 
+                ? '<b>' . $model->phongBan->ten_phong_ban . '</b>' 
+                : '<span class="badge bg-warning"> Trống </span>';
+        },
+        'format' => 'raw', 
+    ],
+    
+
+    [
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'id_to',
+        'width' => '150px',
+        'value' => function ($model) {
+            return $model->to 
+                ? '<b>' . $model->to->ten_to . '</b>' 
+                : '<span class="badge bg-warning"> Trống </span>';
+        },
+        'format' => 'raw', 
+    ],
+    
+    
+    [
+        'attribute' => 'trang_thai',
+        'format' => 'html',
+        'width' => '100px',
+        'value' => function ($model) {
+            if ($model->trang_thai === 'Đang làm việc') {
+                return '<span class="badge bg-success">Đang làm việc</span>';
+            } elseif ($model->trang_thai === 'Đã nghỉ việc') {
+                return '<span class="badge bg-danger">Đã nghỉ việc</span>';
+            } elseif ($model->trang_thai === 'Tạm nghỉ') {
+                return '<span class="badge bg-primary">Tạm nghỉ</span>';
+            }
+            return '<span class="badge bg-secondary">Không xác định</span>';
+        },
+    ],
+
+    [
+        'attribute' => 'is_giao_vien',
+        'label' => 'Giáo viên',
+        'format' => 'html',
+        'width' => '50px',
+        'value' => function ($model) {
+            if ($model->doi_tuong == 1) {
+                return '<span class="badge bg-warning"><i class="fas fa-check"></i></span>';
+            }
+            return '';
         },
     ],
     
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'chuc_vu',
-        'width' => '150px',
-    ],
+    
    // [
     //    'class'=>'\kartik\grid\DataColumn',
      //   'attribute'=>'so_cccd',
