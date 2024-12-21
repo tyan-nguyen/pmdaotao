@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Url;
-use yii\helpers\Html;
+use app\modules\khoahoc\models\HangDaoTao;
+use app\modules\giaovien\models\Day;
 $this->registerCssFile('https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css', ['depends' => [\yii\web\YiiAsset::class]]);
 $this->registerJsFile('https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js', ['depends' => [\yii\web\YiiAsset::class]]);
 return [
@@ -45,89 +46,79 @@ return [
     [
         'class' => 'kartik\grid\SerialColumn',
         'width' => '30px',
-    ],
-   // [
-   //     'class' => 'kartik\grid\SerialColumn',
-    //    'width' => '30px',
-   // ],
-        // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'id',
-    // ],
-   
+    ],   
     [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'ho_ten',
-        'width' => '150px',
+        'width' => '200px',
     ],
     
-   
-    [
-        'class'=>'\kartik\grid\DataColumn',
-       'attribute'=>'so_cccd',
-       'width' => '150px',
-   ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'gioi_tinh',
-        'width' => '150px',
+        'width' => '50px',
          'value'=> function ($model)
          {
             return $model->gioi_tinh == 1 ? 'Nam' : 'Nữ' ;
          },
         'filter'=> [1 => 'Nam', 0 => 'Nữ'],
     ],
-    //[
-     //  'class'=>'\kartik\grid\DataColumn',
-      // 'attribute'=>'dia_chi',
-  // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'dien_thoai',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'tai_khoan',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'email',
-    // ],
-     [
-        'class'=>'\kartik\grid\DataColumn',
+
+    [
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'id_phong_ban',
+        'width' => '200px',
+        'value' => function ($model) {
+            return $model->phongBan 
+                ? '<b>' . $model->phongBan->ten_phong_ban . '</b>' 
+                : '<span class="badge bg-warning"> Trống </span>';
+        },
+        'format' => 'raw', 
+    ],
+    
+    [
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'id_giao_vien',
+        'label' => 'Hạng dạy',
         'width' => '150px',
-         'attribute'=>'trinh_do',
-     ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'chuyen_nganh',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'vi_tri_cong_viec',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'kinh_nghiem_lam_viec',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'ma_so_thue',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'trang_thai',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'nguoi_tao',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'thoi_gian_tao',
-    // ],
-
-
+        'value' => function ($model) {
+            $hangs = Day::find()
+                ->where(['id_nhan_vien' => $model->id])  
+                ->all();
+    
+            if ($hangs) {
+                $hangNames = [];
+                foreach ($hangs as $hang) {
+                    $hangName = HangDaoTao::findOne($hang->id_hang_xe)->ten_hang;
+                    if ($hangName) {
+                        $hangNames[] = $hangName;
+                    }
+                }
+                return '<strong>' . implode(', ', $hangNames) . '</strong>'; 
+            } else {
+                return '<span class="badge bg-warning">Chưa phân công</span>';  
+            }
+        },
+        'format' => 'raw', 
+        'width' => '200px', 
+    ],
+    
+    
+     [
+        'attribute' => 'trang_thai',
+        'format' => 'html',
+        'width' => '100px',
+        'value' => function ($model) {
+            if ($model->trang_thai === 'Đang làm việc') {
+                return '<span class="badge bg-success">Đang làm việc</span>';
+            } elseif ($model->trang_thai === 'Đã nghỉ việc') {
+                return '<span class="badge bg-danger">Đã nghỉ việc</span>';
+            } elseif ($model->trang_thai === 'Tạm nghỉ') {
+                return '<span class="badge bg-primary">Tạm nghỉ</span>';
+            }
+            return '<span class="badge bg-secondary">Không xác định</span>';
+        },
+    ],
 ];   
 ?>
 

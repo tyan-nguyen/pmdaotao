@@ -1,0 +1,35 @@
+ .van-ban-den-form label {
+    font-weight: bold;
+}
+.dropdown-with-arrow {
+    position: relative;
+    padding-right: 30px; 
+}
+
+.dropdown-with-arrow:after {
+    content: "\f078";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+.dropdown-with-arrow {
+    position: relative;
+    padding-right: 30px;
+    appearance: none; 
+    background: url('data:image/svg+xml;charset=UTF-8,%3Csvg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24"%3E%3Cpath d="M7 10l5 5 5-5z"%3E%3C/path%3E%3C/svg%3E') no-repeat right 10px center;
+    background-size: 12px;
+}
+.van-ban-den-form .form-control {
+    border-width: 1px; 
+}
+.select2-container {
+        width: 100% !important; 
+        display: block; 
+    }
+.select2-dropdown {
+    z-index: 9999 !important; 
+     }

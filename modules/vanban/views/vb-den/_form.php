@@ -7,6 +7,9 @@ use app\custom\CustomFunc;
 use app\modules\nhanvien\models\NhanVien;
 use app\widgets\CardWidget;
 use kartik\select2\Select2;
+$this->registerCssFile('@web/css/vbDen.css', [
+    'depends' => [\yii\bootstrap5\BootstrapAsset::className()],
+]);
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\vanban\models\VanBanDen */
@@ -124,41 +127,6 @@ $currentYear = date('Y');
     <?php ActiveForm::end(); ?>
     
 </div>
-<style>
-    .van-ban-den-form label {
-    font-weight: bold;
-}
-.dropdown-with-arrow {
-    position: relative;
-    padding-right: 30px; /* Đảm bảo có khoảng trống cho mũi tên */
-}
-
-.dropdown-with-arrow:after {
-    content: "\f078"; /* Font Awesome chevron-down */
-    font-family: "Font Awesome 5 Free";
-    font-weight: 900;
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
-    pointer-events: none;
-}
-.dropdown-with-arrow {
-    position: relative;
-    padding-right: 30px;
-    appearance: none; /* Loại bỏ mũi tên mặc định */
-    background: url('data:image/svg+xml;charset=UTF-8,%3Csvg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24"%3E%3Cpath d="M7 10l5 5 5-5z"%3E%3C/path%3E%3C/svg%3E') no-repeat right 10px center;
-    background-size: 12px;
-}
-.van-ban-den-form .form-control {
-    /* border-color: #0000FF; */  /* Thay đổi màu viền */
-    border-width: 1px; /* Độ dày viền */
-}
-.select2-container {
-        width: 100% !important;  /* Đảm bảo rằng Select2 chiếm hết chiều rộng của phần tử */
-        display: block; /* Đảm bảo Select2 xuống dòng */
-    }
-
 </style>
 
 <script>

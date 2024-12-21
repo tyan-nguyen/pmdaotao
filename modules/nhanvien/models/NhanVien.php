@@ -24,13 +24,16 @@ class NhanVien extends NhanVienBase
 
     public static function getList()
     {
-       $dsNguoiNhan = NhanVien::find()
-        ->orderBy(['ho_ten' => SORT_ASC])
-        ->all();
-        return ArrayHelper::map($dsNguoiNhan, 'id', function($model) {
-        return '+ ' . $model->ho_ten; 
+        $dsnhanVien = NhanVien::find()
+            ->where(['trang_thai' => 'Đang làm việc']) 
+            ->orderBy(['ho_ten' => SORT_ASC])
+            ->all();
+    
+        return ArrayHelper::map($dsnhanVien, 'id', function ($model) {
+            return '+ ' . $model->ho_ten;
         });
     }
+    
 
     public static function getListTD()
     {
