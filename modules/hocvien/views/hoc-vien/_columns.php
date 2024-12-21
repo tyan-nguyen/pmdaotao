@@ -134,13 +134,17 @@ return [
       //  'width' => '50px',
     //],
     [
-        'class'=>'\kartik\grid\DataColumn',
-       'attribute'=>'id_khoa_hoc',
-       'value' => function($model) {
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'id_khoa_hoc',
+        'value' => function ($model) {
             $khoaHoc = KhoaHoc::findOne($model->id_khoa_hoc);
-            return $khoaHoc ? $khoaHoc->ten_khoa_hoc : 'Trống '; 
+            return $khoaHoc 
+                ? '<strong>' . $khoaHoc->ten_khoa_hoc . '</strong>' 
+                : '<span class="badge bg-warning"> Chưa sắp khóa học </span>'; 
         },
+        'format' => 'raw', 
     ],
+    
 
      [
         'class'=>'\kartik\grid\DataColumn',
@@ -200,7 +204,7 @@ return [
                     return '<span class="badge bg-danger">Chưa đóng học phí</span>';
                 }
             } else {
-                return 'Không có học phí';
+                return '<span class="badge bg-success"> Vui lòng sắp khóa học </span>';
             }
         },
         'width' => '150px',

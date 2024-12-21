@@ -22,7 +22,7 @@ $model->ngay_sinh = CustomFunc::convertYMDToDMY($model->ngay_sinh);
    <div class ='row'>
         <div class="col-lg-3 col-md-6">
             <?= $form->field($model, 'trang_thai')->dropDownList([
-             'DUYET' => 'DUYET',
+             'NHAP_HOC' => 'DUYET',
              'KHONG_DUYET' => 'KHONG_DUYET',
              ], ['prompt' => 'Kiểm duyệt', 'class' => 'form-control dropdown-with-arrow']) ?>
         </div>  
