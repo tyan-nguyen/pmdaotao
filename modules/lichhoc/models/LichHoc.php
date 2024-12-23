@@ -10,7 +10,6 @@ class LichHoc extends LichHocBase
 {
     public function beforeSave($insert)
 {
-    // Chuyển đổi ngày tháng theo định dạng YMD (nếu cần)
     $this->ngay = CustomFunc::convertDMYToYMD($this->ngay);
     $conflict = LichHoc::find()
         ->where([

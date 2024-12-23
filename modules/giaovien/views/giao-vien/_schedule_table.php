@@ -54,7 +54,7 @@
                                             </div>
                                         </div>
                                         <?= Html::a('<i class="fa fa-exchange"> </i>', 
-                                             ['/khoahoc/khoa-hoc/update-nhom'],
+                                             ['/giaovien/giao-vien/update-nhom','id'=>$row->id],
                                                 [
                                                    'class' => 'btn ripple btn-success btn-sm',
                                                    'title' => 'Cập nhật',

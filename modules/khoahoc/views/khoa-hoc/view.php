@@ -29,9 +29,16 @@ use app\widgets\KhoDisplayWidget;
                                                 <?php endif; ?>
                                         </p>
 
-                                        <p><strong>Trạng thái:</strong> <?= $model->trang_thai ?></p>
-                                     
-
+                                        <p>
+                                           <strong>Trạng thái:</strong> 
+                                              <?php if ($model->trang_thai === 'CHUA_HOAN_THANH'): ?>
+                                                 <span class="badge bg-danger">Chưa hoàn thành</span>
+                                              <?php elseif ($model->trang_thai === 'DA_HOAN_THANH'): ?>
+                                                 <span class="badge bg-success">Hoàn thành</span>
+                                              <?php else: ?>
+                                                   <span class="badge bg-secondary">Không xác định</span>
+                                            <?php endif; ?>
+                                        </p>
 								    </div>
 						    </div>
 	</div>

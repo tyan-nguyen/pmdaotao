@@ -93,21 +93,23 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ten_khoa_hoc',
-        'width' => '150px',
+        'width' => '200px',
     ],
     [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'id_hang',
-        'width' => '150px',
+        'width' => '100px',
         'value' => function($model) {
             return $model->hang ? $model->hang->ten_hang : 'N/A';
         },
         'label' => 'Hạng đào tạo',
     ],
+
+
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ngay_bat_dau',
-        'width' => '150px',
+        'width' => '100px',
         'value'=>function($model){
             return $model->ngayBatDau;
         }
@@ -115,27 +117,24 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ngay_ket_thuc',
-        'width' => '150px',
+        'width' => '100px',
         'value'=>function($model){
             return $model->ngayKetThuc;
         }
     ],
-    //[
-      //  'class'=>'\kartik\grid\DataColumn',
-      //  'attribute'=>'ghi_chu',
-   // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'trang_thai',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'nguoi_tao',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'thoi_gian_tao',
-    // ],
 
-
+    [
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'trang_thai',
+        'width' => '150px',
+        'format' => 'raw', 
+        'value' => function($model) {
+            if ($model->trang_thai === 'CHUA_HOAN_THANH') {
+                return '<span class="badge bg-danger"> Chưa hoàn thành </span>';
+            } elseif ($model->trang_thai === 'DA_HOAN_THANH') {
+                return '<span class="badge bg-success"> Hoàn thành </span>';
+            }
+            return '<span class="badge bg-secondary"> Không xác định </span>'; 
+        },
+    ],
 ];   

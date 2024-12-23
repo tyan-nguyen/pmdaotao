@@ -55,15 +55,25 @@ class KhoaHocController extends Controller
      * @return mixed
      */
     public function actionIndex()
-    {    
+    {
+        $today = date('Y-m-d');
+        $khoaHocs = KhoaHoc::find()
+            ->where(['<', 'ngay_ket_thuc', $today])
+            ->andWhere(['trang_thai' => 'CHUA_HOAN_THANH'])
+            ->all();
+        foreach ($khoaHocs as $khoaHoc) {
+            $khoaHoc->trang_thai = 'DA_HOAN_THANH';
+            $khoaHoc->save(false); 
+        }
         $searchModel = new KhoaHocSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-       
+    
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
+    
   
     public function beforeAction($action)
 	{

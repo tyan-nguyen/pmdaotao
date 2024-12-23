@@ -32,8 +32,7 @@
 							<li class=""><a href="<?= Yii::getAlias('@web/kholuutru/ngan?menu=kholuutru3') ?>" class="slide-item" data-menu="kholuutru3"><i class="fe fe-file-text"></i> Danh sách Ngăn</a>
 							</li>
 							<li class=""><a href="<?= Yii::getAlias('@web/kholuutru/hop?menu=kholuutru4') ?>" class="slide-item" data-menu="kholuutru4"><i class="fe fe-file-text"></i> Danh sách Hộp</a>
-							</li>
-
+                            </li>
 						</ul>
 						<div class="menutabs-content px-0">
 							<!-- menu tab here -->

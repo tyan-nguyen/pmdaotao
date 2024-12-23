@@ -99,29 +99,27 @@ class KhoaHocBase extends \app\models\HvKhoaHoc
 
     public function beforeSave($insert)
     {
-        // Chuyển đổi định dạng ngày tháng trước khi lưu, bất kể là tạo mới hay cập nhật
+        // Chuyển đổi định dạng ngày tháng trước khi lưu
         $this->ngay_bat_dau = CustomFunc::convertDMYToYMD($this->ngay_bat_dau);
         $this->ngay_ket_thuc = CustomFunc::convertDMYToYMD($this->ngay_ket_thuc);
-        
+        if (strtotime($this->ngay_ket_thuc) < strtotime($this->ngay_bat_dau)) {
+            $this->addError('ngay_ket_thuc', 'Ngày kết thúc không được nhỏ hơn ngày bắt đầu.');
+            return false; 
+        }
         if ($this->isNewRecord) {
             $this->nguoi_tao = Yii::$app->user->identity->id;
             $this->thoi_gian_tao = date('Y-m-d H:i:s');
             $this->trang_thai = 'CHUA_HOAN_THANH';
-            // Tìm học phí mới nhất của hạng
             $hocPhiMax = HocPhi::find()
                 ->where(['id_hang' => $this->id_hang])
                 ->orderBy(['id' => SORT_DESC])
                 ->one(); 
             
-            if ($hocPhiMax) {
-                $this->id_hoc_phi = $hocPhiMax->id; 
-            } else {
-                $this->id_hoc_phi = null; 
-            }
+            $this->id_hoc_phi = $hocPhiMax ? $hocPhiMax->id : null;
         }
-    
         return parent::beforeSave($insert);
     }
+    
     
     
    
