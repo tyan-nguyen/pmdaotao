@@ -58,7 +58,7 @@ class DangKyHvController extends Controller
     {    
         $searchModel = new DangKyHvSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->query->andWhere(['trang_thai' => ['CHO_DUYET','KHONG_DUYET']]);
+        $dataProvider->query->andWhere(['trang_thai' => ['DANG_KY']]);
         $pagination = $dataProvider->getPagination();
         $pagination->pageSize = 20;
         return $this->render('index', [
@@ -76,23 +76,30 @@ class DangKyHvController extends Controller
      */
     public function actionView($id)
     {   
+        $model = HocVien::find()->where(['id' => $id])->one();
+        $trang_thai_duyet = $model->trang_thai_duyet;
         $request = Yii::$app->request;
-        if($request->isAjax){
+        if ($request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
+            $kiemDuyetButton = '';
+            if (empty($trang_thai_duyet)) {
+                $kiemDuyetButton = Html::a(
+                    '<i class="fa fa-check"> </i> Kiểm duyệt', 
+                    ['/hocvien/dang-ky-hv/duyet-hv', 'id' => $id, 'modalType' => 'modal-remote-2'], 
+                    [
+                        'class' => 'btn btn-info',
+                        'role' => 'modal-remote-2',
+                        'title' => 'Kiểm duyệt'
+                    ]
+                );
+            }
             return [
-                'title'=> "Học viên  #".$id,
-                'content'=>$this->renderAjax('view', [
+                'title' => "Học viên  #" . $id,
+                'content' => $this->renderAjax('view', [
                     'model' => $this->findModel($id),
                 ]),
-                'footer'=>  Html::a('<i class="fa fa-check"> </i> Kiểm duyệt', 
-                              ['/hocvien/dang-ky-hv/duyet-hv', 'id' => $id, 'modalType' => 'modal-remote-2'], 
-                                  [
-                                    'class' => 'btn btn-info',
-                                    'role' => 'modal-remote-2',
-                                    'title' => 'Kiểm duyệt'
-                                  ]
-                               ) .
-                            Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"])          
+                'footer' => $kiemDuyetButton .
+                    Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"])
             ];    
         } else {
             return $this->render('view', [
@@ -100,7 +107,6 @@ class DangKyHvController extends Controller
             ]);
         }
     }
-    
     
 
     /**
@@ -127,10 +133,10 @@ class DangKyHvController extends Controller
                     ]),
                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                                 Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
-        
                 ];         
             }if ($model->load($request->post())) { 
                 $model->loai_dang_ky = 'Nhập trực tiếp'; 
+                $model->trang_thai_duyet = 'DA_DUYET';
                 $model->save();
                 if ($model->save()) {
                 return [
@@ -138,8 +144,7 @@ class DangKyHvController extends Controller
                     'title'=> "Thêm học viên",
                     'content'=>'<span class="text-success">Đăng ký học viên thành công !</span>',
                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::a('Tiếp tục thêm',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
-        
+                               Html::a('Tiếp tục thêm',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
                 ];         
             }else{           
                 return [
@@ -413,6 +418,7 @@ public function actionCreate2($id)
                   }
                  }
             if ($hocVien) {
+                $hocVien->trang_thai = 'NHAPTRUCTIEP'; 
                 $hocVien->save();
             }
             return [

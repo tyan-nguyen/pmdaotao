@@ -50,15 +50,13 @@ use yii\helpers\Html;
                 </div>
                 <div class="card-body">
                     <div class="skill-tags">
-                    <?php if ($model->trang_thai === 'NHAP_HOC'): ?>
-    <span class="text-success">Đã duyệt</span>
-<?php elseif ($model->trang_thai === 'KHONG_DUYET'): ?>
-    <span class="text-danger">Không duyệt</span>
-<?php else: ?>
-    <span class="text-warning">Chờ duyệt</span>
-<?php endif; ?>
-
-
+                    <?php if ($model->trang_thai_duyet === 'DA_DUYET'): ?>
+                             <span class="text-success">Đã duyệt</span>
+                                <?php elseif ($model->trang_thai === 'KHONG_DUYET'): ?>
+                             <span class="text-danger">Không duyệt</span>
+                    <?php else: ?>
+                         <span class="text-warning">Chờ duyệt</span>
+                    <?php endif; ?>
                     </div>
                 </div>
             </div>

@@ -144,12 +144,11 @@ return [
         },
         'format' => 'raw', 
     ],
-    
 
      [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'trang_thai',
-        'width' => '200px',
+        'width' => '150px',
      ],
    
     // [

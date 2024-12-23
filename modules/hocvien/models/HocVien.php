@@ -48,6 +48,7 @@ class HocVien extends HocVienBase
             $this->nguoi_tao = Yii::$app->user->identity->id;
             $this->thoi_gian_tao = date('Y-m-d H:i:s');
             $this->trang_thai='NHAPTRUCTIEP';
+            $this->loai_dang_ky = 'Nhập trực tiếp';
             $this->ngay_sinh = CustomFunc::convertDMYToYMD($this->ngay_sinh);
             
         }

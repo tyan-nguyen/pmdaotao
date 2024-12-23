@@ -64,7 +64,7 @@ class HocVienController extends Controller
     {    
         $searchModel = new HocVienSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->query->andWhere(['trang_thai' => ['NHAP_HOC','NHAPTRUCTIEP','DUYET']]);
+        $dataProvider->query->andWhere(['trang_thai' => ['NHAPTRUCTIEP']]);
     
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -387,8 +387,8 @@ class HocVienController extends Controller
                  }
                 }
             if ($hocVien) {
-                $hocVien->trang_thai = 'NHAP_HOC'; // Cập nhật trạng thái
-                $hocVien->save(); // Lưu thay đổi
+                $hocVien->trang_thai = 'NHAPTRUCTIEP';
+                $hocVien->save(); 
             }
             return [
                 'forceReload'=>'#crud-datatable-pjax',

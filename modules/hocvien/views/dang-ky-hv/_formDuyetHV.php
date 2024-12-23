@@ -21,9 +21,9 @@ $model->ngay_sinh = CustomFunc::convertYMDToDMY($model->ngay_sinh);
       <?php CardWidget::begin(['title'=>'Kiểm duyệt học viên']) ?>
    <div class ='row'>
         <div class="col-lg-3 col-md-6">
-            <?= $form->field($model, 'trang_thai')->dropDownList([
-             'NHAP_HOC' => 'DUYET',
-             'KHONG_DUYET' => 'KHONG_DUYET',
+            <?= $form->field($model, 'trang_thai_duyet')->dropDownList([
+             'DA_DUYET' => 'Duyệt',
+             'KHONG_DUYET' => 'Không duyệt',
              ], ['prompt' => 'Kiểm duyệt', 'class' => 'form-control dropdown-with-arrow']) ?>
         </div>  
     <?php CardWidget::end() ?>

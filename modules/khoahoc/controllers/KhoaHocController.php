@@ -419,7 +419,7 @@ class KhoaHocController extends Controller
                 $hv = HocVien::findOne($hocVienId);
                 if ($hv !== null) {
                     $hv->id_khoa_hoc = $khoaHoc->id;
-                    $hv->trang_thai = "NHAP_HOC";
+                    $hv->trang_thai = "NHAPTRUCTIEP";
                     $hv->save(false); 
                 }
             }

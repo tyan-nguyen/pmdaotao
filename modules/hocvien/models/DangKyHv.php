@@ -13,7 +13,7 @@ class DangKyHv extends HocVienBase
         if ($this->isNewRecord) {
             $this->nguoi_tao = Yii::$app->user->identity->id;
             $this->thoi_gian_tao = date('Y-m-d H:i:s');
-            $this->trang_thai='NHAP_HOC';
+            $this->trang_thai='DANG_KY';
             $this->nguoi_lap_phieu = Yii::$app->user->identity->fullname;
             $this->ngay_sinh = CustomFunc::convertDMYToYMD($this->ngay_sinh);
         }

@@ -99,14 +99,16 @@ return [
     
     [
         'class' => '\kartik\grid\DataColumn',
-        'attribute' => 'trang_thai',
-        'width' => '200px',
+        'attribute' => 'trang_thai_duyet',
+        'width' => '100px',
         'format' => 'raw', 
         'value' => function ($model) {
-            if ($model->trang_thai == 'CHO_DUYET') {
+            if ($model->trang_thai_duyet == 'CHO_DUYET') {
                 return '<span class="badge bg-primary">Chờ duyệt</span>';
-            } elseif ($model->trang_thai == 'KHONG_DUYET') {
+            } elseif ($model->trang_thai_duyet == 'KHONG_DUYET') {
                 return '<span class="badge bg-danger">Không duyệt</span>';
+            } elseif ($model->trang_thai_duyet == 'DA_DUYET') {
+                return '<span class="badge bg-danger">Đã duyệt</span>';
             }
             return '<span class="badge bg-secondary">Không xác định</span>'; 
         },

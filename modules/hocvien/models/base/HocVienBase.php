@@ -23,6 +23,7 @@ use app\modules\khoahoc\models\NhomHoc;
  * @property string $ngay_sinh
  * @property string $check_hoc_phi
  * @property int|null $id_nhom
+ * @property string|null $trang_thai_duyet 
  * @property HvHoSoHocVien[] $hvHoSoHocViens
  * @property HvNopHocPhi[] $hvNopHocPhis
  * @property HvKhoaHoc $khoaHoc
@@ -48,7 +49,7 @@ class HocVienBase extends \app\models\HvHocVien
             [['id_hang', 'ho_ten', 'so_cccd','id_hang'], 'required'],
             [['id_khoa_hoc', 'nguoi_tao','gioi_tinh','id_hang','id_nhom','nguoi_duyet'], 'integer'],
             [['thoi_gian_tao','ngay_sinh'], 'safe'],
-            [['ho_ten', 'so_dien_thoai', 'so_cccd', 'trang_thai','dia_chi'], 'string', 'max' => 255],
+            [['ho_ten', 'so_dien_thoai', 'so_cccd', 'trang_thai','dia_chi','trang_thai_duyet'], 'string', 'max' => 255],
             [['check_hoc_phi'],'string','max'=>25],
             [['nguoi_lap_phieu'],'string','max'=>55],
             [['loai_dang_ky'],'string','max'=>15],
@@ -79,7 +80,8 @@ class HocVienBase extends \app\models\HvHocVien
             'check_hoc_phi' => 'Học phí',
             'id_nhom'=>'Nhóm',
             'loai_dang_ky'=>'Loại hình đăng ký',
-            'nguoi_duyet'=>'Người duyệt'
+            'nguoi_duyet'=>'Người duyệt',
+            'trang_thai_duyet'=>'Trạng thái duyệt',
         ];
     }
 

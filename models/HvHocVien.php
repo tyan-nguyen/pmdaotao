@@ -20,6 +20,7 @@ use Yii;
  * @property string|null $thoi_gian_tao
  * @property int|null $id_nhom
  * @property int|null $nguoi_duyet
+ * @property string|null $trang_thai_duyet 
  * @property string|null $loai_dang_ky
  * @property HvHoSoHocVien[] $hvHoSoHocViens
  * @property HvNopHocPhi[] $hvNopHocPhis
@@ -44,7 +45,7 @@ class HvHocVien extends \yii\db\ActiveRecord
             [['ho_ten', 'so_dien_thoai', 'so_cccd', 'trang_thai','id_hang'], 'required'],
             [['id_khoa_hoc', 'nguoi_tao','id_nhom','nguoi_duyet'], 'integer'],
             [['ngay_cap_cccd', 'thoi_gian_tao','ngay_sinh'], 'safe'],
-            [['ho_ten', 'so_dien_thoai', 'so_cccd', 'trang_thai'], 'string', 'max' => 255],
+            [['ho_ten', 'so_dien_thoai', 'so_cccd', 'trang_thai','trâng_thai_duyet'], 'string', 'max' => 255],
             [['check_hoc_phi'],'string','max'=>25],
             [['loai_dang_ky'],'string','max'=>15],
             [['id_khoa_hoc'], 'exist', 'skipOnError' => true, 'targetClass' => HvKhoaHoc::class, 'targetAttribute' => ['id_khoa_hoc' => 'id']],
@@ -70,7 +71,8 @@ class HvHocVien extends \yii\db\ActiveRecord
             'check_hoc_phi' =>'Trạng thái Học phí',
             'id_nhom'=>'Id Nhom',
             'loai_dang_ky'=>'Loại hình đăng ký',
-            'nguoi_duyet'=>'Người duyệt'
+            'nguoi_duyet'=>'Người duyệt',
+            'trang_thai_duyet'=>'Trạng thái duyệt',
         ];
     }
 
