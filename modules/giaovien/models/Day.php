@@ -4,6 +4,7 @@ namespace app\modules\giaovien\models;
 
 use Yii;
 use app\modules\hocvien\models\HangDaoTao;
+use app\modules\lichhoc\models\LichHoc;
 /**
  * This is the model class for table "nv_day".
  *
@@ -79,11 +80,36 @@ class Day extends \app\models\NvDay
     {
         return $this->hasOne(GiaoVien::class, ['id' => 'id_nhan_vien']);
     }
-    public function beforeSave($insert) { 
+    public function beforeSave($insert)
+    {
+        if (!$this->isNewRecord) {
+            $original = self::findOne($this->id);
+            if ($original->ly_thuyet == 1 && $this->ly_thuyet == 0 || $original->thuc_hanh == 1 && $this->thuc_hanh == 0) {
+                $lichHoc = LichHoc::find()
+                  ->joinWith('khoaHoc') 
+                  ->where(['id_giao_vien' => $this->id_nhan_vien])
+                  ->andWhere(['in', 'hoc_phan', ['Lý thuyết', 'Thực hành']])
+                  ->andWhere(['hv_khoa_hoc.trang_thai' => 'CHUA_HOAN_THANH'])
+                  ->andWhere(['hv_khoa_hoc.id_hang' => $this->id_hang_xe])
+                  ->all();
+                foreach ($lichHoc as $lich) {
+                    if ($lich->hoc_phan == 'Lý thuyết' && $this->ly_thuyet == 0) {
+                        $this->addError('ly_thuyet', 'Không thể bỏ phân công dạy Lý thuyết khi giáo viên đang có lịch dạy trong khóa học chưa hoàn thành.');
+                        return false;
+                    }
+                    if ($lich->hoc_phan == 'Thực hành' && $this->thuc_hanh == 0) {
+                        $this->addError('thuc_hanh', 'Không thể bỏ phân công dạy Thực hành khi giáo viên đang có lịch dạy trong khóa học chưa hoàn thành.');
+                        return false;
+                    }
+                }
+            }
+        }
         if ($this->isNewRecord) {
             $this->nguoi_tao = Yii::$app->user->identity->id;
             $this->thoi_gian_tao = date('Y-m-d H:i:s');
         }
+    
         return parent::beforeSave($insert);
     }
+    
 }

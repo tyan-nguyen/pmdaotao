@@ -10,11 +10,6 @@ return [
         'class' => 'kartik\grid\CheckboxColumn',
         'width' => '20px',
     ],
- 
-        // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'id',
-    // ],
     [
         'class' => 'kartik\grid\ActionColumn',
         'header'=>'',
@@ -35,7 +30,7 @@ return [
                 // Nếu không có thông tin khóa học, trả về URL mặc định
                 if (!$khoaHoc) {
                     return Url::to(['mess2', 'id' => $key]); 
-                }
+                }        
         
                 // Lấy học phí dựa trên id_hoc_phi của khóa học
                 $hocPhiHang = HocPhi::findOne($khoaHoc->id_hoc_phi);
@@ -92,7 +87,7 @@ return [
               return Html::a('<i class="fas fa-dollar-sign"></i> Đóng học phí', $url, [
                 'title' => 'Đóng học phí',
                 'role' => 'modal-remote',
-                'class' => 'btn ripple btn-warning dropdown-item', // Thêm dropdown-item để đồng bộ
+                'class' => 'btn ripple btn-warning dropdown-item', 
                 'data-bs-placement' => 'top',
                 'data-bs-toggle' => 'tooltip',
               ]);
@@ -123,16 +118,6 @@ return [
         'headerOptions' => ['style' => 'text-align: center;'],
         'contentOptions' => ['style' => 'text-align: center;'],
     ],
-    
-   // [
-       // 'class'=>'\kartik\grid\DataColumn',
-      //  'attribute'=>'so_dien_thoai',
-    //],
-    //[
-     //   'class'=>'\kartik\grid\DataColumn',
-      //  'attribute'=>'so_cccd',
-      //  'width' => '50px',
-    //],
     [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'id_khoa_hoc',
@@ -150,19 +135,7 @@ return [
         'attribute'=>'trang_thai',
         'width' => '150px',
      ],
-   
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'trang_thai',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'nguoi_tao',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'thoi_gian_tao',
-    // ],
+
     [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'check_hoc_phi',
@@ -187,18 +160,17 @@ return [
                 foreach ($hocPhi as $nopPhi) {
                     $tongTienDaNop += $nopPhi->so_tien_nop;
                 }
-    
                 // Kiểm tra trạng thái nộp học phí
                 if ($tongTienDaNop >= $hocPhiKhoaHoc->hoc_phi) {
-                    $hocVien->check_hoc_phi = 'Nộp đủ';  // Cập nhật giá trị trường check_hoc_phi vào CSDL
+                    $hocVien->check_hoc_phi = 'Nộp đủ';  
                     $hocVien->save();  
                     return '<span class="badge bg-primary">Nộp đủ</span>';
                 } elseif ($tongTienDaNop > 0) {
-                    $hocVien->check_hoc_phi = 'Còn nợ học phí';  // Cập nhật giá trị trường check_hoc_phi vào CSDL
+                    $hocVien->check_hoc_phi = 'Còn nợ học phí'; 
                     $hocVien->save();  
                     return '<span class="badge bg-warning">Còn nợ học phí</span>';
                 } else {
-                    $hocVien->check_hoc_phi = 'Chưa đóng học phí';  // Cập nhật giá trị trường check_hoc_phi vào CSDL
+                    $hocVien->check_hoc_phi = 'Chưa đóng học phí';  
                     $hocVien->save();  
                     return '<span class="badge bg-danger">Chưa đóng học phí</span>';
                 }
@@ -209,9 +181,4 @@ return [
         'width' => '150px',
         'format' => 'raw', 
     ],
-    
-    
-
-    
-
 ];   

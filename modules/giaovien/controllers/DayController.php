@@ -204,7 +204,7 @@ class DayController extends Controller
                 ];
             }else{
                  return [
-                    'title'=> "Update Day #".$id,
+                    'title'=> "Phân công dạy #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
