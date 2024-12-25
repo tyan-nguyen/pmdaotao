@@ -229,12 +229,25 @@ return [
         'value' => function($model) {
             if (!empty($model->id_hoc_vien)) {
                 $hocVien = HocVien::findOne($model->id_hoc_vien);
-                return $hocVien ? $hocVien->ho_ten : '<span style="color: red;">Trống</span>'; 
+                if (!$hocVien) {
+                    // Xóa bản ghi nếu không tìm thấy học viên
+                    PhieuThueXe::findOne($model->id)->delete();
+                    return '<span style="color: red;">Trống</span>';
+                }
+                return $hocVien->ho_ten;
             }
-            return !empty($model->ho_ten_nguoi_thue) ? $model->ho_ten_nguoi_thue : '<span style="color: red;">Trống</span>';
+    
+            if (empty($model->ho_ten_nguoi_thue)) {
+                // Xóa bản ghi nếu tên người thuê trống
+                PhieuThueXe::findOne($model->id)->delete();
+                return '<span style="color: red;">Trống</span>';
+            }
+    
+            return $model->ho_ten_nguoi_thue;
         },
         'format' => 'raw',
-    ],  
+    ],
+    
     [
         'class' => '\kartik\grid\DataColumn',
         'label' => 'ĐỐI TƯỢNG',

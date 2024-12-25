@@ -615,13 +615,8 @@ public function actionUpdateLichHoc($id, $idHV, $week_string)
         $idHV = $modelHV->id;
         $idKH = $modelHV->id_khoa_hoc;
         $idNhom = $modelHV->id_nhom;
-        $data = LichHoc::find()
-        ->where(['between', 'ngay', $dayBD, $dayKT])
-        ->andWhere(['id_khoa_hoc' => $idKH])
-        ->andWhere(['or',
-            ['id_nhom' => $idNhom],
-            ['id_nhom' => null]
-        ]);
+     
+
     if ($request->isAjax) {
     
         Yii::$app->response->format = Response::FORMAT_JSON;
@@ -637,12 +632,22 @@ public function actionUpdateLichHoc($id, $idHV, $week_string)
                             Html::button('Lưu lại', ['class' => 'btn btn-primary', 'type' => "submit"])
             ];
         } else if ($model->load($request->post()) && $model->save()) {
+            $data = LichHoc::find()
+            ->where(['between', 'ngay', $dayBD, $dayKT])
+            ->andWhere(['id_khoa_hoc' => $idKH])
+            ->andWhere(['or',
+                ['id_nhom' => $idNhom],
+                ['id_nhom' => null]
+            ])->all();
+    
             return [
                 'forceClose'=>true,   
                 'reloadType'=>'lichHoc',
                 'reloadBlock'=>'#lhContent',
                 'reloadContent'=>$this->renderAjax('_schedule_table', [ 
                    'data'=>$data,  
+                   'idHV'=>$idHV, 
+                   'week_string'=>$week_string,
                 ]), 
                 'tcontent'=>'Cập nhật lịch học thành công!',
             ];
@@ -711,7 +716,7 @@ public function actionUpdateLichHoc($id, $idHV, $week_string)
         }
     
         $listGiaoVien = ArrayHelper::map($giaoViens, 'id', 'ho_ten');
-       return json_encode($listGiaoVien);
+        return json_encode($listGiaoVien);
     }
 
     public function actionGetPhieuInAjax($id, $idHV, $type)

@@ -54,7 +54,7 @@
                                             </div>
                                         </div>
                                         <?= Html::a('<i class="fa fa-exchange"> </i>', 
-                                             ['/khoahoc/khoa-hoc/update-lich-hoc','id' => $row->id],
+                                             ['/khoahoc/khoa-hoc/update-lich-hoc','id' => $row->id,'week_string'=>$week_string,'idKH'=>$idKH,'id_nhom'=>$id_nhom],
                                                 [
                                                    'class' => 'btn ripple btn-success btn-sm',
                                                    'title' => 'Cập nhật',

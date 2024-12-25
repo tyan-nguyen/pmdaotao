@@ -1191,11 +1191,7 @@ public function actionBienLai($idNopHp)
             'class' => 'btn btn-default pull-left',
             'data-bs-dismiss' => "modal"
         ])
-    ]);
-    
+        ]);
 }
-
-
-
 
 }

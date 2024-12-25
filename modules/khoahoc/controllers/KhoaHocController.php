@@ -711,14 +711,21 @@ public function actionLoadScheduleWeek($week_string, $idKH, $id_nhom)
         }
         return $this->renderPartial('_schedule_table', [
             'data' => $data,
-        ]);
+            'id_nhom'=>$id_nhom,
+            'idKH'=>$idKH,
+            'week_string'=>$week_string,
+        ]); 
     }
     throw new BadRequestHttpException('Chuỗi tuần không hợp lệ.');
 }
 
-public function actionUpdateLichHoc($id)
+public function actionUpdateLichHoc($id,$idKH,$week_string,$id_nhom)
     {
         $request = Yii::$app->request;
+        if (preg_match('/Tuần \d+ \[(\d{2}\/\d{2}\/\d{4}) - (\d{2}\/\d{2}\/\d{4})\]/', $week_string, $matches)) {
+            $dayBD = \DateTime::createFromFormat('d/m/Y', $matches[1])->format('Y-m-d');
+            $dayKT = \DateTime::createFromFormat('d/m/Y', $matches[2])->format('Y-m-d');
+        }
         $model = LichHoc::find()->where(['id' => $id])->one(); 
         $idKhoaHoc = $model->id_khoa_hoc;
         $giaoViens = GiaoVien::find()->all();
@@ -737,14 +744,22 @@ public function actionUpdateLichHoc($id)
                             Html::button('Lưu lại', ['class' => 'btn btn-primary', 'type' => "submit"])
             ];
         } else if ($model->load($request->post()) && $model->save()) {
-            $modelKH = KhoaHoc::find()->where(['id'=>$idKhoaHoc])->one();
+            $data = LichHoc::find()
+            ->where(['between', 'ngay', $dayBD, $dayKT])
+            ->andWhere(['id_khoa_hoc' => $idKH])
+            ->andWhere(['or',
+                ['id_nhom' => $id_nhom],
+                ['id_nhom' => null]
+            ])->all();
             return [
                 'forceClose'=>true,   
                 'reloadType'=>'lichHoc',
                 'reloadBlock'=>'#lhContent',
                 'reloadContent'=>$this->renderAjax('_schedule_table', [ 
-                    'modelKH'=>$modelKH,
-                    'model'=>$model,
+                    'data'=>$data,
+                    'week_string'=>$week_string,
+                    'idKH'=>$idKH,
+                    'id_nhom'=>$id_nhom, 
                 ]), 
                 'tcontent'=>'Cập nhật lịch học thành công!',
             ];

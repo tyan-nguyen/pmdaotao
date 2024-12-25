@@ -12,7 +12,6 @@ $this->title = 'Thời Khóa Biểu Khóa Học';
     $nhomHocList = !empty($nhomHoc) ? \yii\helpers\ArrayHelper::map($nhomHoc, 'id', 'ten_nhom') : []; 
     $data = '';  
     $idKH = $model->id;
-
 ?>
 
 <div class="schedule-index">
@@ -51,15 +50,14 @@ $this->title = 'Thời Khóa Biểu Khóa Học';
                     'title' => 'Sắp lịch',
                     'style' => 'color: white;',
                     'role' => 'modal-remote-2',
+                    'id' => 'sap-lich-button',
                 ]
             ) ?>
         </div>
     </div>
 </div>
 
-
-
-<div id="schedule-table">
+<div id="lhContent">
     <?= $this->render('_schedule_table', ['data' => $data,'model' =>$model]) ?>
 </div>
 
@@ -99,6 +97,8 @@ $(document).ready(function() {
 });
 ");
 ?>
+
+
 <script>
 function InLichHoc() {
     $.ajax({
@@ -128,15 +128,12 @@ function printPhieuXuat() {
         alert('Nội dung phiếu không có, vui lòng thử lại.');
         return;
     }
-
     var iframe = document.createElement('iframe');
     iframe.style.position = 'absolute';
     iframe.style.width = '0px';
     iframe.style.height = '0px';
     iframe.style.border = 'none';
-
     document.body.appendChild(iframe);
-
     var doc = iframe.contentWindow.document;
     doc.open();
     doc.write(`

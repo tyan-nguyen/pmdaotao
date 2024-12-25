@@ -51,11 +51,8 @@ class PhieuThueXeSearch extends PhieuThueXe
         $this->load($params);
 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
             return $dataProvider;
         }
-
         $query->andFilterWhere([
             'id' => $this->id,
             'ngay_thue_xe' => $this->ngay_thue_xe,
@@ -92,7 +89,6 @@ class PhieuThueXeSearch extends PhieuThueXe
             ->andFilterWhere(['like', 'tinh_trang_xe_khi_tra', $this->tinh_trang_xe_khi_tra])
             ->andFilterWhere(['like', 'ghi_chu_nguoi_gui', $this->ghi_chu_nguoi_gui])
             ->andFilterWhere(['like', 'trang_thai', $this->trang_thai]);
-
         return $dataProvider;
     }
 }
