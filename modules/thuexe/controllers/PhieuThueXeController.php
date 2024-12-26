@@ -335,9 +335,7 @@ public function actionSent($id)
            
             $model->id_nguoi_gui = Yii::$app->user->identity->id; 
             $model->thoi_gian_gui = date('Y-m-d H:i:s'); 
-            $model->trang_thai = 'Đã gửi'; 
-            $model->save();
-           
+            $model->trang_thai = 'Đã gửi';        
             if ($model->save()) {
                 
                 return [

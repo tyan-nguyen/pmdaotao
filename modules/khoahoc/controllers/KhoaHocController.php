@@ -812,7 +812,6 @@ public function actionUpdateLichHoc($id,$idKH,$week_string,$id_nhom)
                 ];         
             }else  if ($model->load($request->post())) { 
                 $model->id_khoa_hoc=$idKhoaHoc;
-                $model->save();
                 if ($model->save()) {
               
                 return [

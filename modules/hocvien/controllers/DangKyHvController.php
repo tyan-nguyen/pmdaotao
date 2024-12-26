@@ -137,7 +137,7 @@ class DangKyHvController extends Controller
             }if ($model->load($request->post())) { 
                 $model->loai_dang_ky = 'Nhập trực tiếp'; 
                 $model->trang_thai_duyet = 'DA_DUYET';
-                $model->save();
+                //$model->save();
                 if ($model->save()) {
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
