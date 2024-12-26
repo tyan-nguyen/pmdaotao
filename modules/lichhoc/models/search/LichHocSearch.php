@@ -54,6 +54,14 @@ class LichHocSearch extends LichHoc
             // $query->where('0=1');
             return $dataProvider;
         }
+        if (!empty($this->ngay)) {
+            $ngay = \DateTime::createFromFormat('d/m/Y', $this->ngay);
+            if ($ngay) {
+                $this->ngay = $ngay->format('Y-m-d');
+            } else {
+                $this->ngay = null; 
+            }
+        }
 
         $query->andFilterWhere([
             'id' => $this->id,
@@ -68,8 +76,7 @@ class LichHocSearch extends LichHoc
             'thoi_gian_tao' => $this->thoi_gian_tao,
         ]);
 
-        $query->andFilterWhere(['like', 'hoc_phan', $this->hoc_phan])
-            ->andFilterWhere(['like', 'thu', $this->thu]);
+        $query->andFilterWhere(['like', 'hoc_phan', $this->hoc_phan]);
 
         return $dataProvider;
     }

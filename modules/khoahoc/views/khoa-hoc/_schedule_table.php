@@ -44,7 +44,7 @@
                                             <b>GV:</b> <?= $row->giaoVien->ho_ten ?? '(Không có dữ liệu)' ?><br>
                                             <div class="course-details" style="text-align:left;">
                                                 <p><strong>Khóa học:</strong> <?= $row->khoaHoc->ten_khoa_hoc ?? '(Không có dữ liệu)'?></p>
-                                                <p><strong>Nhóm học:</strong> <?= $row->nhomHoc->ten_nhom ?? '(Không có dữ liệu)'?></p>
+                                                <p><strong>Nhóm học:</strong> <?= $row->nhomHoc->ten_nhom ?? '(Học chung)'?></p>
                                                 <p><strong>GVGD:</strong> <?= $row->giaoVien->ho_ten ?? '(Không có dữ liệu)' ?></p>
                                                 <p><strong>Phòng học:</strong> <?= $row->phong->ten_phong ?? '(Không có dữ liệu)'?></p>
                                                 <p><strong>Ngày học:</strong> <?= Yii::$app->formatter->asDate($row->ngay, 'php:d-m-Y') ?? '(Không có dữ liệu)' ?></p>

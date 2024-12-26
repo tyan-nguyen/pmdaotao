@@ -246,6 +246,12 @@ $this->registerJs("
    .select2-dropdown {
     z-index: 9999 !important; 
      }
+     .select2-container {
+        width: 100% !important;  
+        display: block; 
+    }
+
+    
 </style>
 
 

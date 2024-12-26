@@ -6,6 +6,7 @@ use app\modules\giaovien\models\base\GiaoVienBase;
 use app\custom\CustomFunc;
 use app\modules\kholuutru\models\LuuKho;
 use app\modules\kholuutru\models\File;
+use yii\helpers\ArrayHelper;
 
 class GiaoVien extends GiaoVienBase
 {
@@ -32,6 +33,16 @@ class GiaoVien extends GiaoVienBase
         return parent::beforeSave($insert);
     }
  
-  
+    public static function getList()
+    {
+        $dsnhanVien = GiaoVien::find()
+            ->where(['doi_tuong' => '1']) 
+            ->orderBy(['ho_ten' => SORT_ASC])
+            ->all();
+    
+        return ArrayHelper::map($dsnhanVien, 'id', function ($model) {
+            return '+ ' . $model->ho_ten;
+        });
+    }
     
 }

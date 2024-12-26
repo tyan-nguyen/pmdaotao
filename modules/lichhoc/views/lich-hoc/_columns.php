@@ -68,7 +68,7 @@ return [
        'attribute'=>'id_nhom',
        'value' => function($model) {
             $nhom = NhomHoc::findOne($model->id_nhom);
-            return $nhom ? $nhom->ten_nhom : 'Trống'; 
+            return $nhom ? $nhom->ten_nhom : 'Học chung'; 
         },
     ],
     [
