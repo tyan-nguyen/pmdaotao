@@ -160,7 +160,6 @@ JS
 );
 ?>
 
-
 <?php
 $this->registerJs("
     $('#khoa-hoc-dropdown').change(function() {
@@ -184,7 +183,6 @@ $this->registerJs("
              alert('Lỗi: ' + jqXHR.status + ' - ' + jqXHR.responseText);
              console.error('Chi tiết lỗi:', textStatus, errorThrown);
 }
-
         });
     });
 ");
@@ -251,7 +249,9 @@ $this->registerJs("
         display: block; 
     }
 
-    
+  .lich-hoc-form label {
+    font-weight: bold;
+   }
 </style>
 
 

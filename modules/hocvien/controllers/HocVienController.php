@@ -21,6 +21,8 @@ use app\modules\lichhoc\models\LichHoc;
 use yii\web\BadRequestHttpException;
 use app\modules\giaovien\models\GiaoVien;
 use app\modules\nhanvien\models\NhanVien;
+use app\modules\lichhoc\models\LichThi;
+use app\modules\khoahoc\models\NhomHoc;
 
 /**
  * HocVienController implements the CRUD actions for HvHocVien model.
@@ -745,5 +747,88 @@ public function actionUpdateLichHoc($id, $idHV, $week_string)
             'message' => 'Không tìm thấy lịch học.',
         ]);
     }
-    
+
+    public function actionGetLichThiAjax($id, $type)
+    {
+    $modelLT = LichThi::find()->where(['id'=>$id])->one();
+
+    if ($type === 'lichthi') {
+        $content = $this->renderPartial('_print_lich_thi', ['modelLT' => $modelLT]);
+        return $this->asJson([
+            'status' => 'success',
+            'content' => $content,
+        ]);
+    }
+
+    return $this->asJson([
+        'status' => 'error',
+        'message' => 'Không tìm thấy lịch thi.',
+    ]);
+    }
+    public function actionCreateLichThi($id)
+    {
+        $request = Yii::$app->request;
+        $model = new LichThi();  
+        $idKH = $id;
+        if($request->isAjax){
+            /*
+            *   Process for ajax request
+            */
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            if($request->isGet){
+                return [
+                    'title'=> "Thêm Lịch thi",
+                    'content'=>$this->renderAjax('create_LT', [
+                        'model' => $model,
+                        ''
+                    ]),
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+        
+                ];         
+            }else if($model->load($request->post()) && $model->save()){
+                return [
+                    'forceReload'=>'#crud-datatable-pjax',
+                    'title'=> "Thêm Lịch thi",
+                    'content'=>'<span class="text-success">Thêm lịch thi thành công !</span>',
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                            Html::a('Tiếp tục tạo',['create_LT'],['class'=>'btn btn-primary','role'=>'modal-remote'])
+        
+                ];         
+            }else{           
+                return [
+                    'title'=> "Thêm Lịch thi",
+                    'content'=>$this->renderAjax('create_LT', [
+                        'model' => $model,
+                    ]),
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('Lưu lại lại',['class'=>'btn btn-primary','type'=>"submit"])
+                ];         
+            }
+        }else{
+            /*
+            *   Process for non-ajax request
+            */
+            if ($model->load($request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('create_LT', [
+                    'model' => $model,
+                ]);
+            }
+        }
+       
+    }
+
+    public function actionGetNhomList($id_khoa_hoc)
+    {
+        $nhoms = NhomHoc::find()->where(['id_khoa_hoc' => $id_khoa_hoc])->all();
+        if (empty($nhoms)) {
+            return json_encode(['no_nhom' => 'Trống']);
+        }
+        $listNhom = ArrayHelper::map($nhoms, 'id', 'ten_nhom');
+        return json_encode($listNhom);
+    }
+
+
 }

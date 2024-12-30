@@ -2,13 +2,13 @@
 
 use yii\bootstrap5\Html;
 
-
 /* @var $this yii\web\View */
-/* @var $model app\modules\khoahoc\models\HangDaoTao */
-
+/* @var $model app\modules\lichhoc\models\LichThi */
 ?>
-<div class="hang-dao-tao-create">
+<div class="lich-thi-update">
+
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>
+
 </div>

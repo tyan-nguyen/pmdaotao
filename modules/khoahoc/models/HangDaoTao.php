@@ -10,7 +10,7 @@ use Yii;
  * @property string|null $ghi_chu
  * @property int|null $nguoi_tao
  * @property string|null $thoi_gian_tao
- *
+ * @property string $check_phan_hang 
  * @property HvHocPhi[] $hvHocPhis
  * @property HvKhoaHoc[] $hvKhoaHocs
  */
@@ -30,11 +30,12 @@ class HangDaoTao extends \app\models\HvHangDaoTao
     public function rules()
     {
         return [
-            [['ten_hang'], 'required'],
+            [['ten_hang','check_phan_hang'], 'required'],
             [['ghi_chu'], 'string'],
             [['nguoi_tao'], 'integer'],
             [['thoi_gian_tao'], 'safe'],
             [['ten_hang'], 'string', 'max' => 255],
+            [['check_phan_hang'],'string','max'=>15],
         ];
     }
 
@@ -49,6 +50,7 @@ class HangDaoTao extends \app\models\HvHangDaoTao
             'ghi_chu' => 'Ghi chú',
             'nguoi_tao' => 'Người tạo',
             'thoi_gian_tao' => 'Thời gian tạo',
+            'check_phan_hang'=>'Phân hạng',
         ];
     }
     public function beforeSave($insert) {

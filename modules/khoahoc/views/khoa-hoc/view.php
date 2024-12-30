@@ -54,6 +54,9 @@ use app\widgets\KhoDisplayWidget;
                         <a class="nav-link" id="add-timetable-tab" data-bs-toggle="tab" href="#add-timetable" role="tab" aria-controls="add-student" aria-selected="false"style="color: blue;"><i class="fa fa-calendar"></i> Lịch học</a>
                     </li>
                     <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="add-exsche-tab" data-bs-toggle="tab" href="#add-exsche" role="tab" aria-controls="add-exsche" aria-selected="false"style="color: blue;"><i class="fa fa-table"></i> Lịch thi</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
                         <a class="nav-link" id="add-document-tab" data-bs-toggle="tab" href="#add-document" role="tab" aria-controls="add-student" aria-selected="false"style="color: blue;"><i class="fa fa-file"></i> Tài liệu</a>
                     </li>
                 </ul>
@@ -70,10 +73,15 @@ use app\widgets\KhoDisplayWidget;
                              <!-- Nội dung Lịch học -->
                              <div class="tab-pane fade" id="add-timetable" role="tabpanel" aria-labelledby="add-timetable-tab">
                         <!-- Nội dung hiển thị khi click vào "Lịch học" -->
-                                
                                 <?= $this->render('testTKB', ['model'=>$model,'weeks' => $weeks]) ?>
-                                
                             </div>
+
+                              <!-- Nội dung Lịch thi -->
+                              <div class="tab-pane fade " id="add-exsche" role="tabpanel" aria-labelledby="add-exsche-tab">
+                        <!-- Nội dung hiển thị khi click vào "Lịch thi " -->
+                            <?= $this->render('_exsche',['model'=>$model]) ?>
+                            </div>
+                            
                               <!-- Nội dung Tài liệu khóa học -->
                               <div class="tab-pane fade" id="add-document" role="tabpanel" aria-labelledby="add-document-tab">
                         <!-- Nội dung hiển thị khi click vào "Tài liệu khóa học" -->

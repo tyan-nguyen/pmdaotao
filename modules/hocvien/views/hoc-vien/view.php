@@ -56,11 +56,14 @@ use app\widgets\KhoDisplayWidget;
                         <a class="nav-link show active " id="add-document-tab" data-bs-toggle="tab" href="#add-document" role="tab" aria-controls="add-student" aria-selected="false" style="color: blue;"><i class="fa fa-file"></i> Hồ sơ học viên</a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="add-student-tab" data-bs-toggle="tab" href="#add-student" role="tab" aria-controls="add-student" aria-selected="false"style="color: blue;"><i class="fa fa-dollar"></i> Học phí</a>
+                        <a class="nav-link" id="add-student-tab" data-bs-toggle="tab" href="#add-student" role="tab" aria-controls="add-student" aria-selected="false"style="color: blue;"><i class="fa fa-adjust"></i> Học phí</a>
                     </li>
                  
                     <li class="nav-item" role="presentation">
                         <a class="nav-link " id="add-timetable-tab" data-bs-toggle="tab" href="#add-timetable" role="tab" aria-controls="add-student" aria-selected="false"style="color: blue;"><i class="fa fa-calendar"></i> Lịch học</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link " id="exsche-tab" data-bs-toggle="tab" href="#add-exsche" role="tab" aria-controls="add-exsche" aria-selected="false"style="color: blue;"><i class="fa fa-table"></i> Lịch thi</a>
                     </li>
                     <li class="nav-item" role="presentation">
                         <a class="nav-link" id="list-tab" data-bs-toggle="tab" href="#list" role="tab" aria-controls="list" aria-selected="true"style="color: blue;"><i class="fa fa-address-card"></i>  Kết quả thi</a>
@@ -89,8 +92,14 @@ use app\widgets\KhoDisplayWidget;
                              <div class="tab-pane fade " id="add-timetable" role="tabpanel" aria-labelledby="add-timetable-tab">
                         <!-- Nội dung hiển thị khi click vào "Lịch học " -->
                             <?= $this->render('testTKB',['modelHV'=>$model, 'weeks' => $weeks]) ?>
-                             
                             </div>
+
+                            <!-- Nội dung Lịch thi -->
+                            <div class="tab-pane fade " id="add-exsche" role="tabpanel" aria-labelledby="add-exsche-tab">
+                        <!-- Nội dung hiển thị khi click vào "Lịch thi " -->
+                            <?= $this->render('_exsche',['model'=>$model]) ?>
+                            </div>
+
                               <!-- Nội dung Tài liệu khóa học -->
                               <div class="tab-pane fade" id="add-document" role="tabpanel" aria-labelledby="add-document-tab">
                         <!-- Nội dung hiển thị khi click vào "Thêm học viên" -->

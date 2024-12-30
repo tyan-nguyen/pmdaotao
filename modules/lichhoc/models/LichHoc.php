@@ -64,7 +64,6 @@ class LichHoc extends LichHocBase
         $startDate = strtotime($course->ngay_bat_dau);
         $endDate = strtotime($course->ngay_ket_thuc);
         $lessonDate = strtotime($this->ngay);
-
         if ($lessonDate < $startDate || $lessonDate > $endDate) {
             $this->addError('ngay', 'Ngày học phải nằm trong khoảng thời gian của khóa học.');
             return false;

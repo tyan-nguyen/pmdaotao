@@ -12,7 +12,7 @@ use Yii;
  * @property string|null $ghi_chu
  * @property int|null $nguoi_tao
  * @property string|null $thoi_gian_tao
- *
+ * @property string $check_phan_hang
  * @property HvHocPhi[] $hvHocPhis
  * @property HvKhoaHoc[] $hvKhoaHocs
  */
@@ -32,11 +32,12 @@ class HvHangDaoTao extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ten_hang'], 'required'],
+            [['ten_hang','check_phan_hang'], 'required'],
             [['ghi_chu'], 'string'],
             [['nguoi_tao'], 'integer'],
             [['thoi_gian_tao'], 'safe'],
             [['ten_hang'], 'string', 'max' => 255],
+            [['check_phan_hang'],'string','max'=>15],
         ];
     }
 
@@ -51,6 +52,7 @@ class HvHangDaoTao extends \yii\db\ActiveRecord
             'ghi_chu' => 'Ghi Chu',
             'nguoi_tao' => 'Nguoi Tao',
             'thoi_gian_tao' => 'Thoi Gian Tao',
+            'check_phan_hang'=> 'Check phan hang',
         ];
     }
 

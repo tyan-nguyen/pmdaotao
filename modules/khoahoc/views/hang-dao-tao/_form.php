@@ -11,9 +11,34 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'ten_hang')->textInput(['maxlength' => true]) ?>
+    <div class='row'> 
 
-    <?= $form->field($model, 'ghi_chu')->textarea(['rows' => 6]) ?>
+    <div class ="col-md-4">
+          <?= $form->field($model, 'ten_hang')->textInput(['maxlength' => true]) ?>
+    </div>
+
+    <div class="col-md-4">
+           <?= $form->field($model, 'check_phan_hang')->dropDownList(
+               [
+                  'MOTO' => 'Mô tô',
+                  'OTO' => 'Ô tô',
+               ],
+               [
+                  'prompt' => 'Chọn phân hạng', 
+                  'id' => 'hoc-phan-dropdown',
+               ]
+            ) ?>
+    </div>
+
+
+    <div class="col-md-4">
+           <?= $form->field($model, 'ghi_chu')->textarea(['rows' => 6]) ?>
+    </div>
+
+
+   
+
+   </div>
 
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">

@@ -25,8 +25,6 @@ class CustomFunc
         return $date_string!=null ? date("d/m/Y", strtotime($date_string)) : '';
     }
 
-    
-    
     /**
      * chuyen doi ngay chuoi dd/mm/yyyy -> Y-m-d để lưu CSDL
      * @param string $date_string

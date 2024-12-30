@@ -81,6 +81,16 @@ return [
         'attribute'=>'ten_hang',
         'width' => '100px',
     ],
+
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'check_phan_hang',
+        'width' => '100px',
+        'value' => function ($model) {
+            return $model->check_phan_hang === 'OTO' ? 'Xe Ô tô' : ($model->check_phan_hang === 'MOTO' ? 'Xe Moto' : $model->check_phan_hang);
+        },
+        'format' => 'text', 
+    ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ghi_chu',
