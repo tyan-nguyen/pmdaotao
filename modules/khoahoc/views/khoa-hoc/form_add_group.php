@@ -20,7 +20,10 @@ use app\widgets\CardWidget;
         <div class="col-md-4">
             <?= $form->field($model, 'ten_nhom')->textInput(['maxlength' => true]) ?>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
+            <?= $form->field($model, 'so_luong_hoc_vien')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-md-4">
            <?= $form->field($model, 'ghi_chu')->textarea(['rows' => 8]) ?>
         </div>
             
@@ -35,3 +38,8 @@ use app\widgets\CardWidget;
 	<?php } ?>
     <?php ActiveForm::end(); ?>
 </div>
+<style>
+.hv-nhom-form label {
+    font-weight: bold;
+}
+</style>

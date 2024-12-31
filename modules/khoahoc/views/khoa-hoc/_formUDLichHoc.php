@@ -191,10 +191,10 @@ $this->registerJs("
                         });
                     }
 
-                    // Cập nhật dropdown với các option mới
+              
                     $('#giao-vien-dropdown').html(options);
 
-                    // Sau khi cập nhật, nếu giá trị giáo viên hiện tại có trong options, chọn nó
+        
                     if (currentGiaoVien) {
                         $('#giao-vien-dropdown').val(currentGiaoVien); 
                     }
@@ -209,12 +209,10 @@ $this->registerJs("
                 }
             });
         } else {
-            // Nếu chưa chọn đủ hai dropdown, reset dropdown giao vien
             $('#giao-vien-dropdown').html('<option value=\"\">Chọn giáo viên...</option>');
         }
     }
     $('#hoc-phan-dropdown').change(updateGiaoVienDropdown);
-    // Gọi hàm updateGiaoVienDropdown ngay khi trang được tải nếu đã có giá trị sẵn cho hoc-phan
     updateGiaoVienDropdown();
 ");
 ?>

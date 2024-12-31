@@ -14,7 +14,7 @@ use yii\helpers\ArrayHelper;
  * @property string|null $ghi_chu
  * @property int|null $nguoi_tao
  * @property string|null $thoi_gian_tao
- *
+ * @property int $so_luong_hoc_vien
  * @property HvKhoaHoc $khoaHoc
  */
 class NhomHoc extends \app\models\HvNhom
@@ -30,11 +30,12 @@ class NhomHoc extends \app\models\HvNhom
     /**
      * {@inheritdoc}
      */
+    public $so_luong_hoc_vien = 5;
     public function rules()
     {
         return [
-            [['id_khoa_hoc', 'ten_nhom'], 'required'],
-            [['id_khoa_hoc', 'nguoi_tao'], 'integer'],
+            [['id_khoa_hoc', 'ten_nhom','so_luong_hoc_vien'], 'required'],
+            [['id_khoa_hoc', 'nguoi_tao','so_luong_hoc_vien'], 'integer'],
             [['ghi_chu'], 'string'],
             [['thoi_gian_tao'], 'safe'],
             [['ten_nhom'], 'string', 'max' => 50],
@@ -54,6 +55,7 @@ class NhomHoc extends \app\models\HvNhom
             'ghi_chu' => 'Ghi Chú',
             'nguoi_tao' => 'Người tạo',
             'thoi_gian_tao' => 'Thời gian tạo',
+            'so_luong_hoc_vien'=>'Số lượng học viên',
         ];
     }
 

@@ -52,8 +52,8 @@ return [
                         ]);
                     },
                     'addGroup' => function($url, $model, $key) {
-                        return Html::a('<i class="fa fa-plus-circle"></i> Thêm nhóm', $url, [
-                            'title' => 'Thêm nhóm',
+                        return Html::a('<i class="fa fa-plus-circle"></i> Quản lí nhóm', $url, [
+                            'title' => 'Quản lí nhóm',
                             'role' => 'modal-remote',
                             'class' => 'btn ripple btn-success dropdown-item',
                             'data-bs-placement' => 'top',

@@ -13,7 +13,7 @@ use Yii;
  * @property string|null $ghi_chu
  * @property int|null $nguoi_tao
  * @property string|null $thoi_gian_tao
- *
+ * @property int $so_luong_hoc_vien
  * @property HvKhoaHoc $khoaHoc
  */
 class HvNhom extends \yii\db\ActiveRecord
@@ -32,8 +32,8 @@ class HvNhom extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_khoa_hoc', 'ten_nhom'], 'required'],
-            [['id_khoa_hoc', 'nguoi_tao'], 'integer'],
+            [['id_khoa_hoc', 'ten_nhom','so_luong_hoc_vien'], 'required'],
+            [['id_khoa_hoc', 'nguoi_tao','so_luong_hoc_vien'], 'integer'],
             [['ghi_chu'], 'string'],
             [['thoi_gian_tao'], 'safe'],
             [['ten_nhom'], 'string', 'max' => 50],
@@ -53,6 +53,7 @@ class HvNhom extends \yii\db\ActiveRecord
             'ghi_chu' => 'Ghi Chu',
             'nguoi_tao' => 'Nguoi Tao',
             'thoi_gian_tao' => 'Thoi Gian Tao',
+            'so_luong_hoc_vien'=>'So luong hoc vien',
         ];
     }
 
