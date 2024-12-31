@@ -79,7 +79,7 @@ use app\widgets\KhoDisplayWidget;
                               <!-- Nội dung Lịch thi -->
                               <div class="tab-pane fade " id="add-exsche" role="tabpanel" aria-labelledby="add-exsche-tab">
                         <!-- Nội dung hiển thị khi click vào "Lịch thi " -->
-                            <?= $this->render('_exsche',['model'=>$model]) ?>
+                            <?= $this->render('_exsche',['modelKH'=>$model]) ?>
                             </div>
                             
                               <!-- Nội dung Tài liệu khóa học -->

@@ -6,10 +6,10 @@ use app\modules\lichhoc\models\LichThi;
 /* @var $this yii\web\View */
 /* @var $model app\modules\lichhoc\models\LichThi */
 
-$modelLTs = $model ? LichThi::find()->where(['id_khoa_hoc' => $model->id])->all() : null;
+$modelLTs = $modelKH ? LichThi::find()->where(['id_khoa_hoc' => $modelKH->id])->all() : null;
 
 ?>
-<div class="lich-thi-view">
+<div class="lich-thi-view" id ="ltContent">
     <div class="row">
         <?php if (!$modelLTs): ?>
             <div class="col-md-12">
@@ -17,7 +17,7 @@ $modelLTs = $model ? LichThi::find()->where(['id_khoa_hoc' => $model->id])->all(
                     <i class="fas fa-exclamation-circle me-2"></i>Khóa học chưa có lịch thi
                     <hr style = "width: 50%;border: 1px solid red;margin: 0 auto; ">
                             <?= Html::a('<i class="fa fa-plus"> </i>', 
-                                             ['/hocvien/hoc-vien/create-lich-thi','id'=>$model->id],
+                                             ['/khoahoc/khoa-hoc/create-lich-thi','id'=>$modelKH->id],
                                                 [
                                                    'class' => 'btn ripple btn-success btn-sm',
                                                    'title' => 'Thêm lịch thi',
@@ -29,7 +29,6 @@ $modelLTs = $model ? LichThi::find()->where(['id_khoa_hoc' => $model->id])->all(
             </div>
         <?php else: ?>
             <?php 
-            // Chia lịch thi thành 2 nhóm (giả định chia đều)
             $chunkedLichThi = array_chunk($modelLTs, ceil(count($modelLTs) / 2)); 
             ?>
             <?php foreach ($chunkedLichThi as $index => $lichThiGroup): ?>

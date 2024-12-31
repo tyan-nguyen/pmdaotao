@@ -39,4 +39,10 @@ class KhoaHoc extends KhoaHocBase
             return '+ ' . $model->ten_khoa_hoc; // Thêm dấu + trước tên loại
         });
     }
+    public static function getNameById($id)
+    {
+    $khoaHoc = self::findOne($id);
+    return $khoaHoc ? $khoaHoc->ten_khoa_hoc : null;
+    }
+
 }

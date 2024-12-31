@@ -10,5 +10,6 @@ use yii\bootstrap5\Html;
 <div class="create_lich_thi">
     <?= $this->render('_formCreateLT', [
         'model' => $model,
+        'idKH'=>$idKH,
     ]) ?>
 </div>

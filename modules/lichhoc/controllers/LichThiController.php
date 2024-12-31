@@ -54,6 +54,16 @@ class LichThiController extends Controller
         $searchModel = new LichThiSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        $currentDateTime = date('Y-m-d H:i:s');
+        $lichThiList = LichThi::find()->all();
+
+        foreach ($lichThiList as $lichThi) {
+            if (strtotime($lichThi->thoi_gian_thi) < strtotime($currentDateTime) && $lichThi->trang_thai !== 'DA_KET_THUC') {
+                $lichThi->trang_thai = 'DA_KET_THUC';
+                $lichThi->save(false); 
+            }
+        }
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -110,7 +120,6 @@ class LichThiController extends Controller
                     ]),
                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                                 Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
-        
                 ];         
             }else if($model->load($request->post()) && $model->save()){
                 return [

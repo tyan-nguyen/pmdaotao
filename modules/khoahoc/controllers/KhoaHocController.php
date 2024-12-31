@@ -19,6 +19,7 @@ use yii\web\BadRequestHttpException;
 use yii\helpers\ArrayHelper;
 use app\modules\giaovien\models\GiaoVien;
 use app\modules\nhanvien\models\NhanVien;
+use app\modules\lichhoc\models\LichThi;
 
 /**
  * KhoaHocController implements the CRUD actions for KhoaHoc model.
@@ -923,6 +924,55 @@ public function actionUpdateLichHoc($id,$idKH,$week_string,$id_nhom)
             'status' => 'error',
             'message' => 'Không tìm thấy lịch học.',
         ]);
+    }
+
+
+    public function actionCreateLichThi($id)
+    {
+        $request = Yii::$app->request;
+        $model = new LichThi();  
+        $idKH = $id;
+        $modelKH = KhoaHoc::find()->where(['id'=>$id])->one();
+        if($request->isAjax){
+            /*
+            *   Process for ajax request
+            */
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            if($request->isGet){
+                return [
+                    'title'=> "Thêm Lịch thi",
+                    'content'=>$this->renderAjax('create_LT', [
+                        'model' => $model,
+                        'idKH'=>$idKH,
+                    ]),
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                ];         
+            }else if($model->load($request->post()) && $model->save()){
+                return [
+                    'forceClose'=>true,   
+                    'reloadType'=>'lichThi',
+                    'reloadBlock'=>'#ltContent',
+                    'reloadContent'=>$this->renderAjax('_exsche', [
+                        'modelKH'=>$modelKH,
+                    ]),
+                    
+                    'tcontent'=>'Thêm lịch thi thành công!',
+                ];        
+            }
+        }else{
+            /*
+            *   Process for non-ajax request
+            */
+            if ($model->load($request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('create_LT', [
+                    'model' => $model,
+                ]);
+            }
+        }
+       
     }
     
 }

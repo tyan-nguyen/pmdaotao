@@ -22,17 +22,13 @@ use app\custom\CustomFunc;
     <?php CardWidget::begin(['title'=>'']) ?>
 
     <div class ="row">
-         <div class="col-md-4">
-             <?= $form->field($model, 'id_khoa_hoc')->widget(Select2::classname(), [
-                 'data' => KhoaHoc::getList(),
-                    'language' => 'vi',
-                    'options' => ['placeholder' => 'Chọn khóa học...','id'=>'khoa-hoc-dropdown'],
-                    'pluginOptions' => [
-                        'allowClear' => true,
-                       // 'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
-                    ],
-             ]);?>
-         </div>
+        <?= $form->field($model, 'id_khoa_hoc')->hiddenInput(['value' => $idKH])->label(false) ?>
+        <div class="col-md-4">
+            <?= $form->field($model, 'ten_khoa_hoc')->textInput([
+                'value' => \app\modules\khoahoc\models\KhoaHoc::getNameById($idKH), 
+                'readonly' => true, 
+            ])->label('Khóa học') ?>
+        </div>
          <div class="col-md-4">
             <?= $form->field($model, 'id_nhom')->dropDownList([], [
                 'id' => 'nhom-dropdown', 
@@ -89,32 +85,33 @@ use app\custom\CustomFunc;
 </div>
 <?php
 $this->registerJs("
-    $('#khoa-hoc-dropdown').change(function() {
-        var idKhoaHoc = $(this).val(); 
-        $.ajax({
-            url: '" . \yii\helpers\Url::to(['get-nhom-list']) . "', 
-            data: {id_khoa_hoc: idKhoaHoc}, 
-            success: function(data) {
-                var response = $.parseJSON(data); 
-                var options = '<option value=\"\">Chọn nhóm...</option>';
-                if (response.no_nhom) {
-                    options = '<option value=\"\">' + response.no_nhom + '</option>'; 
-                } else {
-                    $.each(response, function(id, ten_nhom) {
-                        options += '<option value=\"' + id + '\">' + ten_nhom + '</option>'; 
-                    });
-                }
-                $('#nhom-dropdown').html(options); 
-            },
-          error: function(jqXHR, textStatus, errorThrown) {
-             alert('Lỗi: ' + jqXHR.status + ' - ' + jqXHR.responseText);
-             console.error('Chi tiết lỗi:', textStatus, errorThrown);
-}
+    var idKH = $idKH; // Lấy id khóa học từ PHP
 
-        });
+    // Gửi yêu cầu AJAX để lấy danh sách nhóm khi trang tải xong
+    $.ajax({
+        url: '" . \yii\helpers\Url::to(['get-nhom-list']) . "', 
+        data: {id_khoa_hoc: idKH},
+        success: function(data) {
+            var response = $.parseJSON(data);
+            var options = '<option value=\"\">Chọn nhóm...</option>';
+
+            if (response.no_nhom) {
+                options = '<option value=\"\">' + response.no_nhom + '</option>';
+            } else {
+                $.each(response, function(id, ten_nhom) {
+                    options += '<option value=\"' + id + '\">' + ten_nhom + '</option>';
+                });
+            }
+            $('#nhom-dropdown').html(options); // Cập nhật danh sách nhóm
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert('Lỗi: ' + jqXHR.status + ' - ' + jqXHR.responseText);
+            console.error('Chi tiết lỗi:', textStatus, errorThrown);
+        }
     });
 ");
 ?>
+
 
 
 <style>

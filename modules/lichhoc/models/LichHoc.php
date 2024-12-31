@@ -81,8 +81,5 @@ class LichHoc extends LichHocBase
     }
 
     return parent::beforeSave($insert);
-}
-
-    
-    
+} 
 }

@@ -765,60 +765,7 @@ public function actionUpdateLichHoc($id, $idHV, $week_string)
         'message' => 'Không tìm thấy lịch thi.',
     ]);
     }
-    public function actionCreateLichThi($id)
-    {
-        $request = Yii::$app->request;
-        $model = new LichThi();  
-        $idKH = $id;
-        if($request->isAjax){
-            /*
-            *   Process for ajax request
-            */
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            if($request->isGet){
-                return [
-                    'title'=> "Thêm Lịch thi",
-                    'content'=>$this->renderAjax('create_LT', [
-                        'model' => $model,
-                        ''
-                    ]),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
-        
-                ];         
-            }else if($model->load($request->post()) && $model->save()){
-                return [
-                    'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Thêm Lịch thi",
-                    'content'=>'<span class="text-success">Thêm lịch thi thành công !</span>',
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::a('Tiếp tục tạo',['create_LT'],['class'=>'btn btn-primary','role'=>'modal-remote'])
-        
-                ];         
-            }else{           
-                return [
-                    'title'=> "Thêm Lịch thi",
-                    'content'=>$this->renderAjax('create_LT', [
-                        'model' => $model,
-                    ]),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Lưu lại lại',['class'=>'btn btn-primary','type'=>"submit"])
-                ];         
-            }
-        }else{
-            /*
-            *   Process for non-ajax request
-            */
-            if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            } else {
-                return $this->render('create_LT', [
-                    'model' => $model,
-                ]);
-            }
-        }
-       
-    }
+    
 
     public function actionGetNhomList($id_khoa_hoc)
     {
