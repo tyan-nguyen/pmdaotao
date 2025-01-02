@@ -777,5 +777,4 @@ public function actionUpdateLichHoc($id, $idHV, $week_string)
         return json_encode($listNhom);
     }
 
-
 }

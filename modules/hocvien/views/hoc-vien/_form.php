@@ -63,19 +63,21 @@ $model->ngay_sinh = CustomFunc::convertYMDToDMY($model->ngay_sinh);
     ) ?>
          </div>
     <div class="col-lg-3 col-md-6">
-           <?= $form->field($model, 'id_khoa_hoc')->widget(Select2::classname(), [
-               'data' => [],  
-               'language' => 'vi',  
-               'options' => [
-                   'placeholder' => 'Chọn Khóa học...',  
-                   'class' => 'form-control dropdown-with-arrow',  
-                   'id' => 'khoa-hoc-dropdown'  
-                 ],
-                'pluginOptions' => [
-                    'allowClear' => true,  
-                    'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),  
-                  ],
-           ]); ?>
+         <?= $form->field($model, 'id_khoa_hoc')->widget(Select2::classname(), [
+            'data' => !empty($model->id_khoa_hoc) ? [
+             $model->id_khoa_hoc => \app\modules\khoahoc\models\KhoaHoc::findOne($model->id_khoa_hoc)->ten_khoa_hoc
+         ] : [], 
+           'language' => 'vi',
+           'options' => [
+           'placeholder' => 'Chọn Khóa học...',  
+           'class' => 'form-control dropdown-with-arrow',
+           'id' => 'khoa-hoc-dropdown'
+         ],
+          'pluginOptions' => [
+              'allowClear' => true,
+              'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
+         ],
+          ]); ?>
     </div>        
     </div>
     <?php CardWidget::end() ?>
@@ -115,4 +117,6 @@ $this->registerJs("
         });
     });
 ");
+
 ?>
+
