@@ -98,14 +98,20 @@ $model->thoi_gian_tra_xe_du_kien = CustomFunc:: convertYMDHISToDMYHIS($model->th
      
                 <div class="col-md-6">
                 <?= $form->field($model, 'id_loai_hinh_thue')->widget(Select2::classname(), [
-                  'data' => [],
-                  'language' => 'vi',
-                  'options' => ['placeholder' => 'Chọn loại hình thuê...', 'id' => 'loai-hinh-thue-id'],
-                  'pluginOptions' => [
-                  'allowClear' => true,
-                  'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
-                     ],
-                ]); ?>
+                    'data' => !empty($model->id_loai_hinh_thue) ? [
+                    $model->id_loai_hinh_thue => \app\modules\thuexe\models\LoaiHinhThue::findOne($model->id_loai_hinh_thue)->loai_hinh_thue
+                     ] : [],
+                   'language' => 'vi',
+                   'options' => [
+                      'placeholder' => 'Chọn loại hình thuê...',
+                      'class' => 'form-control dropdown-with-arrow',
+                      'id' => 'loai-hinh-thue-id'
+                    ],
+                    'pluginOptions' => [
+                       'allowClear' => true,
+                       'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
+                    ],
+                    ]); ?>
                 </div>
 
                 <div class="col-md-6" id="field-buoi" style="display: none;">
@@ -253,6 +259,20 @@ $this->registerJs(<<<JS
             $('#field-buoi').slideDown();
         } else {
             $('#field-buoi').slideUp(); 
+        }
+    });
+JS
+);
+?>
+
+<?php
+$this->registerJs(<<<JS
+    $(document).ready(function () {
+        let selectedText = $('#loai-hinh-thue-id').find("option:selected").text().trim();
+        if (selectedText === 'Buổi') {
+            $('#field-buoi').show();
+        } else {
+            $('#field-buoi').hide();
         }
     });
 JS

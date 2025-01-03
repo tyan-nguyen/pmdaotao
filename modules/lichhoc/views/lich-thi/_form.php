@@ -52,17 +52,6 @@ use app\custom\CustomFunc;
              ]);?>
          </div>
          <div class="col-md-4">
-             <?= $form->field($model, 'id_giao_vien_gac')->widget(Select2::classname(), [
-                 'data' => NhanVien::getList(),
-                    'language' => 'vi',
-                    'options' => ['placeholder' => 'Chọn cán bộ coi thi...'],
-                    'pluginOptions' => [
-                        'allowClear' => true,
-                        'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
-                    ],
-             ]);?>
-         </div>
-         <div class="col-md-4">
                    <?= $form->field($model, 'thoi_gian_thi')->widget(\kartik\datetime\DateTimePicker::classname(), [
                      'options' => ['placeholder' => 'Chọn thời gian thi...'],
                      'name' => 'dp_2',
@@ -74,6 +63,18 @@ use app\custom\CustomFunc;
                      ]
                   ]); ?>
          </div>
+         <div class="col-md-4">
+             <?= $form->field($model, 'id_giao_vien_gac')->widget(Select2::classname(), [
+                 'data' => NhanVien::getList(),
+                    'language' => 'vi',
+                    'options' => ['placeholder' => 'Chọn cán bộ coi thi...'],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                        'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
+                    ],
+             ]);?>
+         </div>
+       
     </div>
 
     <?php CardWidget::end() ?>

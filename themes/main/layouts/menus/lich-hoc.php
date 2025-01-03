@@ -27,8 +27,9 @@
 
 							<li class=""><a href="<?= Yii::getAlias('@web/lichhoc/lich-hoc?menu=lh1') ?>" class="slide-item" data-menu="lh1"><i class="fe fe-file-text"></i> Sắp lịch học</a>
 
-							
 							<li class=""><a href="<?= Yii::getAlias('@web/lichhoc/lich-thi?menu=lh3') ?>" class="slide-item" data-menu="lh3"><i class="fe fe-file-text"></i> Sắp lịch thi</a>
+
+							<li class=""><a href="<?= Yii::getAlias('@web/lichhoc/phan-thi?menu=lh4') ?>" class="slide-item" data-menu="lh4"><i class="fe fe-file-text"></i> Cài đặt phần thi</a>
                               
 							<li class=""><a href="<?= Yii::getAlias('@web/lichhoc/phong-hoc?menu=lh2') ?>" class="slide-item" data-menu="lh2"><i class="fe fe-file-text"></i> Phòng học</a>
 							

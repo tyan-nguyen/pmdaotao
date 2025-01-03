@@ -34,6 +34,8 @@ class LichThi extends LichThiBase
             $this->addError('thoi_gian_thi', 'Khóa học này đã hoàn thành, không thể thêm hoặc sửa lịch thi.');
             return false;
         }
+       
+
     
         return parent::beforeSave($insert);
     }
