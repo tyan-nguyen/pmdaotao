@@ -22,6 +22,7 @@ $model->thoi_gian_bat_dau_thue = CustomFunc:: convertYMDHISToDMYHIS($model->thoi
 $model->thoi_gian_tra_xe_du_kien = CustomFunc:: convertYMDHISToDMYHIS($model->thoi_gian_tra_xe_du_kien);
 ?>
 
+
 <div class="phieu-thue-xe-form">
 
 <?php $form = ActiveForm::begin([
@@ -52,7 +53,7 @@ $model->thoi_gian_tra_xe_du_kien = CustomFunc:: convertYMDHISToDMYHIS($model->th
          <?= $form->field($model, 'id_hoc_vien')->widget(Select2::classname(), [
            'data' => ArrayHelper::map(HocVien::find()->all(), 'id', 'ho_ten'), 
            'language' => 'vi', 
-           'options' => ['placeholder' => 'Chọn học viên...'],
+           'options' => ['placeholder' => 'Chọn học viên...','id'=>'model-id_hoc_vien'],
            'pluginOptions' => [
            'allowClear' => true, 
            'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
@@ -62,12 +63,11 @@ $model->thoi_gian_tra_xe_du_kien = CustomFunc:: convertYMDHISToDMYHIS($model->th
 
     <!-- Thông tin người không phải học viên -->
     <div id="thong_tin_khong_hoc_vien" style="display:none;">
-        <?= $form->field($model, 'ho_ten_nguoi_thue')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'ho_ten_nguoi_thue')->textInput(['maxlength' => true,'id'=>'model-ho_ten_nguoi_thue']) ?>
         <?= $form->field($model, 'so_cccd_nguoi_thue')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'dia_chi_nguoi_thue')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'so_dien_thoai_nguoi_thue')->textInput(['maxlength' => true]) ?>
     </div>
-
     </div>
     <?php CardWidget::end() ?>
     
@@ -133,7 +133,7 @@ $model->thoi_gian_tra_xe_du_kien = CustomFunc:: convertYMDHISToDMYHIS($model->th
                      'type'=> DateTimePicker::TYPE_COMPONENT_PREPEND,
                      'pluginOptions' => [
                      'autoclose' => true,
-                     'format' => 'yyyy-mm-dd hh:ii',
+                     'format' => 'dd-mm-yyyy hh:ii',
                      ]
                   ]); ?>
                 </div>
@@ -146,7 +146,7 @@ $model->thoi_gian_tra_xe_du_kien = CustomFunc:: convertYMDHISToDMYHIS($model->th
                      'language' => 'vi',
                      'pluginOptions' => [
                      'autoclose' => true,
-                     'format' => 'yyyy-mm-dd hh:ii',
+                     'format' => 'dd-mm-yyyy hh:ii',
                      ]
                   ]); ?>
             </div>
@@ -200,6 +200,33 @@ document.getElementById('doi_tuong_thue').addEventListener('change', function ()
         document.getElementById('thong_tin_khong_hoc_vien').style.display = 'none';
     }
 });
+
+$(document).ready(function() {
+    // Kiểm tra nếu trường id_hoc_vien có giá trị
+    if ($('#model-id_hoc_vien').val() != '') {
+        $('#doi_tuong_thue').val('hoc_vien');  // Chọn 'Học viên'
+        $('#thong_tin_hoc_vien').show();
+        $('#thong_tin_khong_hoc_vien').hide();
+    }
+    // Kiểm tra nếu trường ho_ten_nguoi_thue có giá trị
+    else if ($('#model-ho_ten_nguoi_thue').val() != '') {
+        $('#doi_tuong_thue').val('khong_hoc_vien');  // Chọn 'Khác'
+        $('#thong_tin_khong_hoc_vien').show();
+        $('#thong_tin_hoc_vien').hide();
+    }
+
+    // Thêm sự kiện change cho dropdown
+    $('#doi_tuong_thue').change(function() {
+        if ($(this).val() == 'hoc_vien') {
+            $('#thong_tin_hoc_vien').show();
+            $('#thong_tin_khong_hoc_vien').hide();
+        } else {
+            $('#thong_tin_hoc_vien').hide();
+            $('#thong_tin_khong_hoc_vien').show();
+        }
+    });
+});
+
 // Xử lý sự kiện loading loại hình thuê dựa trên xe mà người dùng chọn 
 $(document).ready(function() {
     $('#xe-id').change(function() {
@@ -218,14 +245,25 @@ $(document).ready(function() {
     });
 });
 
-//Xử lý sự kiện tính toán chi phí thuê xe
+
 $(document).ready(function() {
+    // Chuyển đổi định dạng ngày từ dd-mm-yyyy hh:ii sang yyyy-mm-dd hh:ii
+    function convertToISOFormat(dateString) {
+        var parts = dateString.split(' ');
+        var dateParts = parts[0].split('-');
+        var timePart = parts[1]; 
+        return `${dateParts[2]}-${dateParts[1]}-${dateParts[0]} ${timePart}`; 
+    }
+    // Hàm tính toán chi phí thuê xe
     function calculateCost() {
         var loaiHinhThue = $('#loai-hinh-thue-id').val();
         var thoiGianBatDau = $('#phieu_thue_xe-thoi_gian_bat_dau_thue').val();
         var thoiGianTraDuKien = $('#phieu_thue_xe-thoi_gian_tra_xe_du_kien').val();
 
         if (loaiHinhThue && thoiGianBatDau && thoiGianTraDuKien) {
+            thoiGianBatDau = convertToISOFormat(thoiGianBatDau);
+            thoiGianTraDuKien = convertToISOFormat(thoiGianTraDuKien);
+
             $.ajax({
                 url: '<?= \yii\helpers\Url::to(['phieu-thue-xe/tinh-chi-phi']) ?>',
                 type: 'POST',
@@ -238,7 +276,6 @@ $(document).ready(function() {
                     $('#chi_phi_thue_du_kien').val(data);
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
-                    // Xuất lỗi ra console hoặc hiển thị trên giao diện
                     console.error("Error Status: " + textStatus);
                     console.error("Error Thrown: " + errorThrown);
                     console.error("Response Text: " + jqXHR.responseText);
@@ -247,10 +284,11 @@ $(document).ready(function() {
             });
         }
     }
-
     $('#loai-hinh-thue-id, #phieu_thue_xe-thoi_gian_bat_dau_thue, #phieu_thue_xe-thoi_gian_tra_xe_du_kien').change(calculateCost);
 });
 
+
+//Xử lý sự kiện load buổi đã có khi cập nhật
 <?php
 $this->registerJs(<<<JS
     $('#loai-hinh-thue-id').on('change', function () {
@@ -264,7 +302,7 @@ $this->registerJs(<<<JS
 JS
 );
 ?>
-
+//Xử lý sự kiện chọn Buổi khi tạo
 <?php
 $this->registerJs(<<<JS
     $(document).ready(function () {

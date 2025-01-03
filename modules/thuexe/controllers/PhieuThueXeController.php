@@ -175,7 +175,7 @@ class PhieuThueXeController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Cập nhật phiếu thu #".$id,
+                    'title'=> "Cập nhật phiếu thuê xe #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
