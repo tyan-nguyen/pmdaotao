@@ -85,7 +85,18 @@ class Xe extends \app\models\PtxXe
     public static function getList()
     {
         $dsXe = Xe::find()
-            ->where(['trang_thai' => 'Khả dụng']) // Thêm điều kiện trạng thái
+            ->where(['trang_thai' => 'Khả dụng']) 
+            ->orderBy(['hieu_xe' => SORT_ASC])
+            ->all();
+    
+        return ArrayHelper::map($dsXe, 'id', function($model) {
+            return '+ ' . $model->hieu_xe; 
+        });
+    }
+
+    public static function getList2()
+    {
+        $dsXe = Xe::find()
             ->orderBy(['hieu_xe' => SORT_ASC])
             ->all();
     

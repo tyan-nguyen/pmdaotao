@@ -85,33 +85,36 @@ $model->thoi_gian_tra_xe_du_kien = CustomFunc:: convertYMDHISToDMYHIS($model->th
                 ]); ?>
                 </div>
                 <div class="col-md-6">
-                    <?= $form->field($model, 'id_xe')->widget(Select2::classname(), [
-                      'data' => Xe::getList(),
-                      'language' => 'vi',
-                      'options' => ['placeholder' => 'Chọn xe...','id' => 'xe-id'],
-                      'pluginOptions' => [
-                        'allowClear' => true,
-                        'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
-                       ],
-                    ]);?>
+                <?= $form->field($model, 'id_xe')->widget(Select2::classname(), [
+                    'data' => empty($model->id_xe) ? \app\modules\thuexe\models\Xe::getList() : \app\modules\thuexe\models\Xe::getList2(),
+                    'language' => 'vi',
+                        'options' => [
+                        'placeholder' => 'Chọn xe...',
+                        'class' => 'form-control dropdown-with-arrow',
+                        'id' => 'xe-id',
+                     ],
+                    'pluginOptions' => [
+                    'allowClear' => true,
+                    'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
+                     ],
+                ]); ?>
+
                 </div>
      
                 <div class="col-md-6">
-                <?= $form->field($model, 'id_loai_hinh_thue')->widget(Select2::classname(), [
-                    'data' => !empty($model->id_loai_hinh_thue) ? [
-                    $model->id_loai_hinh_thue => \app\modules\thuexe\models\LoaiHinhThue::findOne($model->id_loai_hinh_thue)->loai_hinh_thue
-                     ] : [],
-                   'language' => 'vi',
-                   'options' => [
-                      'placeholder' => 'Chọn loại hình thuê...',
-                      'class' => 'form-control dropdown-with-arrow',
-                      'id' => 'loai-hinh-thue-id'
+                  <?= $form->field($model, 'id_loai_hinh_thue')->widget(Select2::classname(), [
+                   'data' => \app\modules\thuexe\models\LoaiHinhThue::getList(),
+                     'language' => 'vi',
+                     'options' => [
+                        'placeholder' => 'Chọn loại hình thuê...',
+                        'class' => 'form-control dropdown-with-arrow',
+                        'id' => 'loai-hinh-thue-id'
                     ],
-                    'pluginOptions' => [
-                       'allowClear' => true,
-                       'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
-                    ],
-                    ]); ?>
+                 'pluginOptions' => [
+                 'allowClear' => true,
+                 'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
+                 ],
+                 ]); ?>
                 </div>
 
                 <div class="col-md-6" id="field-buoi" style="display: none;">
@@ -316,6 +319,28 @@ $this->registerJs(<<<JS
 JS
 );
 ?>
+//Xử lý sự kiện chuyển đổi về dạng d-m-y h:i khi cập nhật phiếu thuê
+<?php
+$this->registerJs("
+    $(document).ready(function () {
+        // Tự động chuyển đổi định dạng nếu có giá trị
+        const formatDateTime = (dateTime) => {
+            if (!dateTime) return '';
+            return moment(dateTime, 'YYYY-MM-DD HH:mm:ss').format('DD-MM-YYYY HH:mm');
+        };
+
+        const batDauInput = $('#phieu_thue_xe-thoi_gian_bat_dau_thue');
+        const traXeInput = $('#phieu_thue_xe-thoi_gian_tra_xe_du_kien');
+
+        if (batDauInput.val()) {
+            batDauInput.val(formatDateTime(batDauInput.val()));
+        }
+
+        if (traXeInput.val()) {
+            traXeInput.val(formatDateTime(traXeInput.val()));
+        }
+    });
+");?>
 
 </script>
 <style>

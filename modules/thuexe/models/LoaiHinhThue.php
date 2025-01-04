@@ -6,6 +6,7 @@ use Yii;
 use app\modules\thuexe\models\LoaiXe;
 use app\modules\thuexe\models\PhieuThueXe;
 use app\custom\CustomFunc;
+use yii\helpers\ArrayHelper;
 /**
  * This is the model class for table "ptx_loai_hinh_thue".
  *
@@ -79,6 +80,16 @@ class LoaiHinhThue extends \app\models\PtxLoaiHinhThue
     public function getLoaiXe()
     {
         return $this->hasOne(LoaiXe::class, ['id' => 'id_loai_xe']);
+    }
+    public static function getList()
+    {
+        $dsloaiHTloaiHT = LoaiHinhThue::find()
+            ->orderBy(['loai_hinh_thue' => SORT_ASC])
+            ->all();
+    
+        return ArrayHelper::map($dsloaiHTloaiHT, 'id', function ($model) {
+            return '+ ' . $model->loai_hinh_thue;
+        });
     }
 
     /**
