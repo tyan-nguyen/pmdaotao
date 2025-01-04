@@ -18,7 +18,7 @@ class PhanThiSearch extends PhanThi
     public function rules()
     {
         return [
-            [['id', 'diem_dat_toi_thieu', 'nguoi_tao','id_hang'], 'integer'],
+            [['id', 'diem_dat_toi_thieu', 'nguoi_tao','id_hang','thu_tu_thi'], 'integer'],
             [['ten_phan_thi', 'trang_thai', 'thoi_gian_tao'], 'safe'],
         ];
     }
@@ -64,6 +64,7 @@ class PhanThiSearch extends PhanThi
 
         $query->andFilterWhere(['like', 'ten_phan_thi', $this->ten_phan_thi])
             ->andFilterWhere(['like', 'id_hang', $this->id_hang])
+            ->andFilterWhere(['like','thu_tu_thi',$this->thu_tu_thi])
             ->andFilterWhere(['like', 'trang_thai', $this->trang_thai]);
 
         return $dataProvider;

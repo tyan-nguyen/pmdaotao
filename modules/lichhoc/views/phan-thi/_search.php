@@ -1,11 +1,7 @@
 <?php
 use yii\bootstrap5\Html;
 use yii\widgets\ActiveForm;
-use app\modules\khoahoc\models\KhoaHoc;
-use app\modules\lichhoc\models\PhongHoc;
-use app\modules\nhanvien\models\NhanVien;
-use kartik\select2\Select2;
-use kartik\datetime\DateTimePicker;
+use app\modules\hocvien\models\HangDaoTao;
 ?>
 
 <div class="lich-thi-search">
@@ -19,55 +15,37 @@ use kartik\datetime\DateTimePicker;
 
 <div class ="row">
          <div class="col-md-4">
-             <?= $form->field($model, 'id_khoa_hoc')->widget(Select2::classname(), [
-                 'data' => KhoaHoc::getList(),
-                    'language' => 'vi',
-                    'options' => ['placeholder' => 'Chọn khóa học...','id'=>'khoa-hoc2-dropdown'],
-                    'pluginOptions' => [
-                        'allowClear' => true,
-                    ],
-             ]);?>
+               <?= $form->field($model, 'ten_phan_thi')->textInput(['maxlength' => true]) ?>
          </div>
          <div class="col-md-4">
-            <?= $form->field($model, 'id_nhom')->dropDownList([], [
-                'id' => 'nhom2-dropdown', 
-                'prompt' => 'Chọn nhóm...',
-             ]) ?>
-         </div>
-
-         <div class="col-md-4">
-            <?= $form->field($model, 'id_phong_thi')->widget(Select2::classname(), [
-                 'data' => PhongHoc::getList(),
-                    'language' => 'vi',
-                    'options' => ['placeholder' => 'Chọn phòng học...'],
-                    'pluginOptions' => [
-                        'allowClear' => true,
-                    ],
-             ]);?>
-         </div>
-         <div class="col-md-4">
-             <?= $form->field($model, 'id_giao_vien_gac')->widget(Select2::classname(), [
-                 'data' => NhanVien::getList(),
-                    'language' => 'vi',
-                    'options' => ['placeholder' => 'Chọn cán bộ coi thi...'],
-                    'pluginOptions' => [
-                        'allowClear' => true,
-                    ],
-             ]);?>
-         </div>
-         <div class="col-md-4">
-                   <?= $form->field($model, 'thoi_gian_thi')->widget(\kartik\datetime\DateTimePicker::classname(), [
-                     'options' => ['placeholder' => 'Chọn thời gian thi...'],
-                     'name' => 'dp_2',
-                     'type' => DateTimePicker::TYPE_COMPONENT_PREPEND,
-                     'language' => 'vi',
-                     'pluginOptions' => [
-                     'autoclose' => true,
-                     'format' => 'hh:ii dd-mm-yyyy',
+                <?= $form->field($model, 'id_hang')->dropDownList(
+                   HangDaoTao::getList(), 
+                     [
+                         'prompt' => 'Chọn hạng',
+                         'class' => 'form-control dropdown-with-arrow',
+                         'id' => 'hang-dropdown',
                      ]
-                  ]); ?>
+                ) ?>
          </div>
-    </div>
+         <div class="col-md-4">
+              <?= $form->field($model, 'diem_dat_toi_thieu')->textInput(['type' => 'number', 'min' => 0]) ?>
+         </div>
+         <div class="col-md-4">
+         <?= $form->field($model, 'thu_tu_thi')->dropDownList(
+               [
+                  '1' => '1',
+                  '2' => '2',
+                  '3' => '3',
+                  '4' => '4',
+                  '5' => '5',
+               ],
+               [
+                  'prompt' => 'Chọn thứ tự phần thi', 
+                  'id' => 'luot-thi-dropdown',
+               ]
+            ) ?>
+         </div>
+</div>
 <div class="row">
    <?php if (!Yii::$app->request->isAjax){ ?>
     <div class="col-md-12 text-left">

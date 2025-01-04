@@ -18,7 +18,7 @@ Yii::$app->params['showExport'] = true;
 		<div class="expanel expanel-default">
 			<div class="expanel-body">
 				<?php 
-                   // echo $this->render("_search", ["model" => $searchModel]);
+                    echo $this->render("_search", ["model" => $searchModel]);
                 ?>
 			</div>
 		</div>

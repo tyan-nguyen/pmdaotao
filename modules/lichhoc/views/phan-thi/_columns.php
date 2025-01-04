@@ -70,6 +70,12 @@ return [
             'style' => 'color: red; font-weight: bold; font-size: 16px;',
         ],
     ],
+
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'thu_tu_thi',
+        'width' => '100px',
+    ],
     
     [
         'class' => '\kartik\grid\DataColumn',

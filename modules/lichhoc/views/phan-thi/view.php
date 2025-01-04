@@ -12,7 +12,7 @@ use yii\widgets\DetailView;
         'attributes' => [
             'id',
             'ten_phan_thi',
-            'phan_hang',
+            'thu_tu_thi',
             'diem_dat_toi_thieu',
             'trang_thai',
             'nguoi_tao',
