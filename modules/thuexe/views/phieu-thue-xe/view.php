@@ -1,14 +1,17 @@
 <?php
 use yii\helpers\Html;
-
+use app\widgets\FileDisplayWidget;
+use app\modules\thuexe\models\PhieuThueXe;
 /* @var $this yii\web\View */
 /* @var $model app\modules\thuexe\models\PhieuThueXe */
 ?>
 
 <div class="phieu-thue-xe-view">
+  <div class="row">
+   <div class="col-md-6"> 
     <div class="row">
         <!-- Thông tin phiếu thuê xe -->
-        <div class="col-xl-6 col-md-12 mb-3">
+        <div class="col-xl-12 col-md-12 mb-3">
             <div class="card custom-card shadow-sm border-light">
                 <div class="card-header bg-warning text-white rounded-top">
                     <h6 class="card-title mb-0 text-center "style="color: white;">Thông tin người thuê</h6>
@@ -70,7 +73,7 @@ use yii\helpers\Html;
             </div>
         </div>
 
-        <div class="col-xl-6 col-md-12 mb-3">
+        <div class="col-xl-12 col-md-12 mb-3">
             <div class="card custom-card shadow-sm border-light">
                 <div class="card-header bg-success text-white rounded-top">
                     <h6 class="card-title mb-0 text-center" style="color: white;">Thông tin thuê xe</h6>
@@ -138,6 +141,31 @@ use yii\helpers\Html;
             <div id="print"></div>
         </div>
     </div>
+  </div>
+  <div class="col-md-6">
+    	<div class="card custom-card">
+            <div class="card-header custom-card-header rounded-bottom-0">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link active" id="tabFile-tab" data-bs-toggle="tab" href="#tabFile" role="tab" aria-controls="tabFile" aria-selected="false"style="color: blue;"><i class="fa fa-folder"></i> Lưu trữ </a>
+                    </li>
+                </ul>
+			</div>
+           <div class="card-body">
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active p-1" id="tabFile" role="tabpanel" aria-labelledby="list-tab">
+                       <?= FileDisplayWidget::widget([
+                            'type'=>'LOAIHOSO',
+                            'doiTuong'=>PhieuThueXe::MODEL_ID,
+                            'idDoiTuong'=>$model->id,
+                        ])?>
+                    </div>
+                </div>
+          </div>
+        </div>   
+   
+  </div>
+</div>
 </div>
 
 <script>

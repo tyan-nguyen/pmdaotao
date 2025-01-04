@@ -80,7 +80,7 @@ use app\custom\CustomFunc;
         <div class="card-footer border-top-0 p-2 m-1">
             <div class="d-flex row">
                 <div class="col-md-8">
-                	<?= Html::a('<h5 class="fs-11 text-muted">'. CustomFunc::getStringByChars($fileVB->file_name,40) . '</h5>',
+                	<?= Html::a('<h5 class="fs-11 text-muted">'. CustomFunc::getStringByChars($fileVB->file_display_name,40) . '</h5>',
                             ['/kholuutru/file/download', 'id'=>$fileVB->id],
                             [
                                 'target'=>'_blank',

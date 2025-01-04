@@ -10,6 +10,8 @@ use app\models\User;
 
 class PhieuThueXe extends PhieuThueXeBase
 {
+
+    CONST MODEL_ID = 'PHIEU_TX';
     public function getNguoiGui()
     {
            return $this->hasOne(User::class, ['id' => 'id_nguoi_gui']);
