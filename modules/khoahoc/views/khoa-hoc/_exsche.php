@@ -12,21 +12,25 @@ $modelLTs = $modelKH ? LichThi::find()->where(['id_khoa_hoc' => $modelKH->id])->
 <div class="lich-thi-view" id ="ltContent">
     <div class="row">
         <?php if (!$modelLTs): ?>
-            <div class="col-md-12">
-                <p class="text-danger text-center">
-                    <i class="fas fa-exclamation-circle me-2"></i>Khóa học chưa có lịch thi
-                    <hr style = "width: 50%;border: 1px solid red;margin: 0 auto; ">
-                            <?= Html::a('<i class="fa fa-plus"> </i>', 
-                                             ['/khoahoc/khoa-hoc/create-lich-thi','id'=>$modelKH->id],
-                                                [
-                                                   'class' => 'btn ripple btn-success btn-sm',
-                                                   'title' => 'Thêm lịch thi',
-                                                   'style' => 'color: white;',
-                                                   'role' => 'modal-remote-2',
-                                                ]
-                            ) ?>
-                </p>
-            </div>
+            <div class="col-md-12 text-center">
+               <p class="text-danger">
+                   <i class="fas fa-exclamation-circle me-2"></i>
+                    Khóa học chưa có lịch thi
+              </p>
+              <hr style="width: 50%; border: 1px solid red; margin: 0 auto;">
+              <?php if ($modelKH->trang_thai !== 'DA_HOAN_THANH'): ?>
+                   <?= Html::a(
+                      '<i class="fa fa-plus"></i>',
+                      ['/khoahoc/khoa-hoc/create-lich-thi', 'id' => $modelKH->id],
+                        [
+                           'class' => 'btn btn-success btn-sm ripple',
+                           'title' => 'Thêm lịch thi',
+                           'style' => 'color: white;',
+                           'role' => 'modal-remote-2',
+                        ]
+                    ) ?>
+       <?php endif; ?>
+       </div>
         <?php else: ?>
             <?php 
             $chunkedLichThi = array_chunk($modelLTs, ceil(count($modelLTs) / 2)); 

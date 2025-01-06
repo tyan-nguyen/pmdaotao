@@ -15,6 +15,7 @@ use app\custom\CustomFunc;
 <?php
     $model->thoi_gian_thi = CustomFunc::convertYMDHISToDMYHIS($model->thoi_gian_thi);
 ?>
+
 <div class="lich-thi-form">
 
     <?php $form = ActiveForm::begin(); ?>

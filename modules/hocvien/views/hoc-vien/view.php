@@ -77,8 +77,7 @@ use app\widgets\KhoDisplayWidget;
                         <!-- Nội dung Kết quả thi -->
                             <div class="tab-pane fade " id="list" role="tabpanel" aria-labelledby="list-tab">
                         <!-- Nội dung hiển thị khi click vào "Kết quả thi" -->
-                                <h3 style="text-align:center;">Kết quả thi</h3>
-                               <p> Kết quả thi được hiển thị tại đây </p>
+                        <?= $this->render('ket_qua_thi', ['model' => $model]) ?>
                             </div>
 
                         <!-- Nội dung Học phí  -->
