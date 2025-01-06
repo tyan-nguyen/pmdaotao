@@ -49,12 +49,7 @@ $this->registerJsFile('https://cdn.datatables.net/2.1.8/js/dataTables.js', ['dep
         <div class="text-left mt-3">
              <?= Html::submitButton('<i class="fas fa-user-plus"></i> Thêm học viên', ['class' => 'btn btn-success btn-md']) ?>
         </div>
-       
-
     </div>
-
-  
-
     <?php ActiveForm::end(); ?>
 
 <?php else: ?>
@@ -62,7 +57,6 @@ $this->registerJsFile('https://cdn.datatables.net/2.1.8/js/dataTables.js', ['dep
         <h5 style="color:red;">Không có học viên nào đăng ký theo hạng của khóa !</h5>
     </div>
 <?php endif; ?>
-
 
 
 <script>

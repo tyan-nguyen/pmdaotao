@@ -4,7 +4,8 @@ use yii\bootstrap5\Modal;
 use kartik\grid\GridView;
 use yii\widgets\Pjax;
 
-
+$this->registerCssFile('https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css');
+$this->registerJsFile('https://cdn.datatables.net/2.1.8/js/dataTables.js', ['depends' => [\yii\web\JqueryAsset::class]]);
 /* @var $this yii\web\View */
 /* @var $searchModel app\modules\vanban\models\search\VBDenSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -126,13 +127,7 @@ Yii::$app->params['showExport'] = true;
     'footer'=>'',
     'size'=>Modal::SIZE_EXTRA_LARGE
 ])?>
-
 <?php Modal::end(); ?>
-
-<?php
-    /* $searchContent = $this->render("_search", ["model" => $searchModel]);
-    echo FilterFormWidget::widget(["content"=>$searchContent, "description"=>"Nhập thông tin tìm kiếm."])  */
-?>
 
 <script>
     $(document).ready(function () {

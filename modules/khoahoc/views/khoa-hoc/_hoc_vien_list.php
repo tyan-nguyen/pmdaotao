@@ -10,8 +10,6 @@
     $hasNhomHoc = !empty($nhomHocs); 
 ?>
 
-
-
 <?php if (empty($datas)) : ?>
     <p style="color:chartreuse">Không tìm thấy Học viên</p>
 <?php else : ?>
