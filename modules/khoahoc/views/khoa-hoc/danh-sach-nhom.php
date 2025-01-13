@@ -17,6 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <tr>
                     <th>#</th>
                     <th>Tên nhóm</th>
+                    <th>Số lượng học viên</th>
                     <th>Hành động</th>
                 </tr>
             </thead>
@@ -25,6 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <tr id="row-<?= $nhom->id ?>">
                         <td><?= $index + 1 ?></td>
                         <td><?= Html::encode($nhom->ten_nhom) ?></td>
+                        <td><?= Html::encode($nhom->so_luong_hoc_vien)?></td>
                         <td>
                             <?= Html::button('<i class="fa fa-trash"></i> Xóa', [
                                 'class' => 'btn btn-danger btn-sm',

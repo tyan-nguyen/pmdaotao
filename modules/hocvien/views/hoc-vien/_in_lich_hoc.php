@@ -93,13 +93,13 @@ table, table th, table td {
 }
 
 table {
-    font-size: 12px; /* Kích cỡ chữ nhỏ lại */
-    width: 100%; /* Chiếm đủ chiều rộng */
+    font-size: 12px; 
+    width: 100%; 
     table-layout: fixed; 
     border-collapse: collapse; 
 }
 
-th, td {
+th {
     border: 1px solid #000;
     padding: 4px; 
     text-align: center;
@@ -115,6 +115,12 @@ th:first-child, td:first-child {
 height: 30px; 
 text-overflow: ellipsis; 
 white-space: nowrap; 
+}
+td {
+    word-wrap: break-word;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 </style>

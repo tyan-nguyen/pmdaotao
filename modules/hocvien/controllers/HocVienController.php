@@ -23,6 +23,7 @@ use app\modules\giaovien\models\GiaoVien;
 use app\modules\nhanvien\models\NhanVien;
 use app\modules\lichhoc\models\LichThi;
 use app\modules\khoahoc\models\NhomHoc;
+use app\modules\lichhoc\models\KetQuaThi;
 
 /**
  * HocVienController implements the CRUD actions for HvHocVien model.
@@ -38,7 +39,7 @@ class HocVienController extends Controller
 				'class' => AccessControl::className(),
 				'rules' => [
 					[
-						'actions' => ['index', 'view', 'update','create','delete','bulkdelete'],
+						'actions' => ['index', 'view', 'update','create','delete','bulkdelete','get-results'],
 						'allow' => true,
 						'roles' => ['@'],
 					],
@@ -776,5 +777,135 @@ public function actionUpdateLichHoc($id, $idHV, $week_string)
         $listNhom = ArrayHelper::map($nhoms, 'id', 'ten_nhom');
         return json_encode($listNhom);
     }
+
+    public function actionInsertKetQuaThi($idHV)
+    {
+        $request = Yii::$app->request;
+        $model = new KetQuaThi();  
+
+        if($request->isAjax){
+            /*
+            *   Process for ajax request
+            */
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            if($request->isGet){
+                return [
+                    'title'=> "Cài đặt Kết quả thi",
+                    'content'=>$this->renderAjax('create_ket_qua_thi', [
+                        'model' => $model,
+                        'idHV'=>$idHV,
+                    ]),
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+        
+                ];         
+            }else if($model->load($request->post()) && $model->save()){
+                return [
+                    'forceReload'=>'#crud-datatable-pjax',
+                    'title'=> "Cài đặt Kết quả thi",
+                    'content'=>'<span class="text-success">Cài đặt Kết quả thi thành công</span>',
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                            Html::a('Tiếp tục tạo',['create_ket_qua_thi'],['class'=>'btn btn-primary','role'=>'modal-remote'])
+        
+                ];         
+            }else{           
+                return [
+                    'title'=> "Cài đặt Kết quả thi",
+                    'content'=>$this->renderAjax('create_ket_qua_thi', [
+                        'model' => $model,
+                        'idHV'=>$idHV,
+                    ]),
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+        
+                ];         
+            }
+        }else{
+            /*
+            *   Process for non-ajax request
+            */
+            if ($model->load($request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('create_ket_qua_thi', [
+                    'model' => $model,
+                    'idHv'=>$idHV,
+                ]);
+            }
+        }
+    }
+
+    public function actionGetDiemDatToiThieu($id)
+    {
+    $phanThi = \app\modules\lichhoc\models\PhanThi::findOne($id);
+
+    if ($phanThi) {
+        return $phanThi->diem_dat_toi_thieu;
+    }
+
+    return 0; 
+    }
+ 
+
+    public function actionCreateKetQuaThi()
+    {
+    Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    $request = Yii::$app->request;
+
+    if ($request->isPost) {
+        $data = $request->post('ketQuaThiData', []);
+        $idHV = $request->post('idHV');
+        $idLT = $request->post('idLT');
+        if (empty($data) || !$idHV) {
+            return ['success' => false, 'message' => 'Dữ liệu không hợp lệ'];
+        }
+        
+        foreach ($data as $item) {
+            $model = new KetQuaThi();
+            $model->id_hoc_vien = $idHV;
+            $model->id_phan_thi = $item['id_phan_thi'];
+            $model->lan_thi = $item['lan_thi'];
+            $model->id_lich_thi = $idLT;
+            $model->diem_so = $item['diem_so'];
+            $model->ket_qua = $item['ket_qua'];
+            if (!$model->save()) {
+                return ['success' => false, 'message' => 'Không thể lưu dữ liệu'];
+            }
+        } 
+        return ['success' => true, 'message' => 'Lưu thành công'];
+    }
+
+    return [
+        'title' => "Cài đặt Kết quả thi",
+        'content' => $this->renderAjax('create_ket_qua_thi', [
+            'model' => new KetQuaThi(),
+            'idHV' => $request->get('idHV'),
+        ]),
+    ];
+    }
+
+    public function actionGetResults($hocVienId)
+    {
+        $results = KetQuaThi::find()
+            ->where(['id_hoc_vien' => $hocVienId])
+            ->with('phanThi') 
+            ->asArray()
+            ->all();
+    
+        $formattedResults = [];
+        foreach ($results as $result) {
+            $formattedResults[] = [
+                'ten_phan_thi' => $result['phanThi']['ten_phan_thi'] ?? 'N/A', 
+                'diem_so' => $result['diem_so'],
+                'ket_qua' => $result['ket_qua'],
+            ];
+        }
+    
+        return $this->asJson([
+            'success' => true,
+            'data' => $formattedResults,
+        ]);
+    }
+    
 
 }

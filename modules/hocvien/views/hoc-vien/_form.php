@@ -20,7 +20,7 @@ $model->ngay_sinh = CustomFunc::convertYMDToDMY($model->ngay_sinh);
 
     <?php $form = ActiveForm::begin(); ?>
     <?php CardWidget::begin(['title'=>'Thông tin cá nhân học viên']) ?>
-   <div class ='row'>
+      <div class ='row'>
         <div class="col-lg-3 col-md-6">
             <?= $form->field($model, 'ho_ten')->textInput(['maxlength' => true]) ?>
         </div>

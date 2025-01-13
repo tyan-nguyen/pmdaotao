@@ -101,7 +101,7 @@ class KhoaHocController extends Controller
                         'weeks' => $weeks,
                     ]),
                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                               Html::a('Sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote-2'])
+                               Html::a('Sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
                 ];    
         }else{
             return $this->render('view', [
@@ -217,7 +217,7 @@ class KhoaHocController extends Controller
     {
         $request = Yii::$app->request;
         $model = $this->findModel($id);       
-
+        $weeks = $this->generateWeeks($model->ngay_bat_dau, $model->ngay_ket_thuc);
         if($request->isAjax){
             /*
             *   Process for ajax request
@@ -238,7 +238,7 @@ class KhoaHocController extends Controller
                     'title'=> "KhoaHoc #".$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $model,
-        
+                        'weeks' => $weeks,
                     ]),
                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                             Html::a('Sửa',['update','id'=>$id],['class'=>'btn btn-primary'])
@@ -398,15 +398,11 @@ class KhoaHocController extends Controller
         }
     }
     public function actionCreate3($id) {
-    
+
         $khoaHoc = KhoaHoc::findOne($id);
-    
-      
         if ($khoaHoc === null) {
             throw new NotFoundHttpException('Khóa học không tồn tại.');
         }
-    
-       
         $hocVien = HocVien::find()
            ->where(['id_hang' => $khoaHoc->id_hang])
            ->andWhere(['id_khoa_hoc' => null])
@@ -415,7 +411,6 @@ class KhoaHocController extends Controller
         // Xử lý form submit
         if (Yii::$app->request->isPost) {
             $selectedHocVienIds = Yii::$app->request->post('hoc_vien_ids', []);
-    
             foreach ($selectedHocVienIds as $hocVienId) {
                 $hv = HocVien::findOne($hocVienId);
                 if ($hv !== null) {
@@ -424,13 +419,9 @@ class KhoaHocController extends Controller
                     $hv->save(false); 
                 }
             }
-    
-          
-            Yii::$app->session->setFlash('success', 'Thêm Học viên cho Khóa học thành công !');
-            return $this->redirect(['index']);
+           // Yii::$app->session->setFlash('success', 'Thêm Học viên cho Khóa học thành công !');
+          //  return $this->redirect(['index']);
         }
-    
-      
         return $this->asJson([
             'title' => 'Thêm học viên',
             'content' => $this->renderAjax('create3', [

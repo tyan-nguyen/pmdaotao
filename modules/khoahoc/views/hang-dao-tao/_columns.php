@@ -50,11 +50,11 @@ return [
             }
         ],
      
-        'viewOptions'=>['role'=>'modal-remote-2','title'=>'View','title'=>'Xem thông tin',
+        'viewOptions'=>['role'=>'modal-remote','title'=>'View','title'=>'Xem thông tin',
              'class'=>'btn ripple btn-primary btn-sm',
              'data-bs-placement'=>'top',
              'data-bs-toggle'=>'tooltip-primary'],
-        'updateOptions'=>['role'=>'modal-remote-2','title'=>'Cập nhật dữ liệu', 
+        'updateOptions'=>['role'=>'modal-remote','title'=>'Cập nhật dữ liệu', 
             'class'=>'btn ripple btn-info btn-sm',
             'data-bs-placement'=>'top',
             'data-bs-toggle'=>'tooltip-info'],

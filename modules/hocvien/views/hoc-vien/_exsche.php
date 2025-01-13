@@ -10,7 +10,8 @@ use app\modules\lichhoc\models\LichThi;
 $idKH = $model->id_khoa_hoc;
 $modelKH = KhoaHoc::find()->where(['id' => $idKH])->one();
 $modelLT = $modelKH ? LichThi::find()->where(['id_khoa_hoc' => $modelKH->id])->one() : null;
-
+//$idNhom = $model->id_nhom;
+$idNhom = $model->nhomHoc ? $model->nhomHoc->id : null;
 ?>
 <div class="lich-thi-view">
     <div class="row">
@@ -22,7 +23,7 @@ $modelLT = $modelKH ? LichThi::find()->where(['id_khoa_hoc' => $modelKH->id])->o
                     </h5>
                 </div>
                 <div class="card-body" style="background-color: #fdfdfe;">
-                    <?php if (!$modelKH || !$modelLT): ?>
+                    <?php if (!$modelKH || !$modelLT || $idNhom != $model->id_nhom): ?>
                         <p class="text-danger text-center">
                             <i class="fas fa-exclamation-circle me-2"></i>Chưa có lịch thi
                         </p>
