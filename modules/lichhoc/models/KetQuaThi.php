@@ -3,6 +3,8 @@
 namespace app\modules\lichhoc\models;
 
 use Yii;
+use app\modules\kholuutru\models\File;
+use app\modules\kholuutru\models\LuuKho;
 
 /**
  * This is the model class for table "lh_ket_qua_thi".
@@ -24,6 +26,12 @@ class KetQuaThi extends \app\models\LhKetQuaThi
      * {@inheritdoc}
      */
     CONST MODEL_ID = 'GIAY_PHEP_LX';
+    public function afterDelete()
+    {
+        File::deleteFileThamChieu($this::MODEL_ID, $this->id); 
+        LuuKho::deleteKhoThamChieu($this::MODEL_ID, $this->id); 
+        return parent::afterDelete();
+    }
     public static function tableName()
     {
         return 'lh_ket_qua_thi';

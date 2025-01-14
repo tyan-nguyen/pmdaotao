@@ -7,11 +7,19 @@ use app\modules\nhanvien\models\NhanVien;
 use Yii;
 use app\custom\CustomFunc;
 use app\models\User;
+use app\modules\kholuutru\models\File;
+use app\modules\kholuutru\models\LuuKho;
 
 class PhieuThueXe extends PhieuThueXeBase
 {
 
     CONST MODEL_ID = 'PHIEU_TX';
+    public function afterDelete()
+    {
+        File::deleteFileThamChieu($this::MODEL_ID, $this->id); 
+        LuuKho::deleteKhoThamChieu($this::MODEL_ID, $this->id); 
+        return parent::afterDelete();
+    }
     public function getNguoiGui()
     {
            return $this->hasOne(User::class, ['id' => 'id_nguoi_gui']);

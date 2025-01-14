@@ -24,6 +24,7 @@ use app\modules\nhanvien\models\NhanVien;
 use app\modules\lichhoc\models\LichThi;
 use app\modules\khoahoc\models\NhomHoc;
 use app\modules\lichhoc\models\KetQuaThi;
+use app\modules\lichhoc\models\PhanThi;
 
 /**
  * HocVienController implements the CRUD actions for HvHocVien model.
@@ -796,7 +797,7 @@ public function actionUpdateLichHoc($id, $idHV, $week_string)
                         'idHV'=>$idHV,
                     ]),
                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit2"])
         
                 ];         
             }else if($model->load($request->post()) && $model->save()){
@@ -816,7 +817,7 @@ public function actionUpdateLichHoc($id, $idHV, $week_string)
                         'idHV'=>$idHV,
                     ]),
                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit2"])
         
                 ];         
             }
@@ -873,6 +874,7 @@ public function actionUpdateLichHoc($id, $idHV, $week_string)
             }
         } 
         return ['success' => true, 'message' => 'Lưu thành công'];
+     
     }
 
     return [
@@ -906,6 +908,5 @@ public function actionUpdateLichHoc($id, $idHV, $week_string)
             'data' => $formattedResults,
         ]);
     }
-    
 
 }

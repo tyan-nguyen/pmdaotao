@@ -89,7 +89,9 @@ $overallResult = $isAllPassed ? 'Đủ điều kiện cấp giấy phép' : 'Ch�
             ?>
             <tr>
                 <td style="border: 4px solid skyblue;"><?= Html::encode($phanThi->ten_phan_thi) ?></td>
-                <td style="border: 4px solid skyblue;"><?= Html::encode($ketqua->lan_thi) ?></td>
+                <td style="border: 4px solid skyblue; font-weight: bold; color: blue;">
+                    <?= $ketqua ? Html::encode($ketqua->lan_thi) : '<span style="color:red;">X</span>' ?>
+                </td>
                 <td style="border: 4px solid skyblue; font-weight: bold; color: blue;">
                     <?= $ketqua ? Html::encode($ketqua->diem_so) : '<span style="color:red;">X</span>' ?>
                 </td>
@@ -111,4 +113,6 @@ $overallResult = $isAllPassed ? 'Đủ điều kiện cấp giấy phép' : 'Ch�
         ]) ?>
     </div>
 <?php endif; ?>
+
+
 

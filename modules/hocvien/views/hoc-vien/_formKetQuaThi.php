@@ -128,6 +128,12 @@ use app\modules\lichhoc\models\LichThi;
 </div>
 
     </div>
+
+    <?php if (!Yii::$app->request->isAjax){ ?>
+	  	<div class="form-group">
+	        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+	    </div>
+	<?php } ?>
     <?php ActiveForm::end(); ?>
 
 </div>
@@ -137,53 +143,58 @@ use app\modules\lichhoc\models\LichThi;
     var idLT = <?= $idLT ?>;
 </script>
 
+<script>
+     function reloadResultsTable(hocVienId) {
+       $.ajax({
+        url: '/hocvien/hoc-vien/get-results',
+        type: 'GET',
+        data: { hocVienId: hocVienId },
+        success: function (response) {
+            if (response.success) {
+                $('#reloadsTableBody').empty(); 
+                var results = response.data;
+                if (results.length === 0) {
+                    console.warn('Dữ liệu trả về rỗng.');
+                    return;
+                }
+                results.forEach(function (result) {
+                    var ketQuaColor = result.ket_qua === 'ĐẠT' ? 'green' : 'red'; 
+                    var ketQuaStyled = `
+                         <span style="font-weight: bold; color: ${ketQuaColor};">${result.ket_qua}</span>
+                    `;
+                    var diemSoStyled = `
+                         <span style="font-weight: bold; color: red;">${result.diem_so}</span>
+                    `;
+                    var row = `
+                        <tr>
+                            <td>${result.ten_phan_thi}</td>
+                            <td>${diemSoStyled}</td>
+                            <td>${ketQuaStyled}</td>
+                        </tr>
+                    `;
+                    $('#reloadsTableBody').append(row);
+                });
+            } else {
+                alert('Lỗi từ server: ' + (response.message || 'Không rõ nguyên nhân.'));
+                console.error('Lỗi từ server:', response);
+            }
+        },
+        error: function (xhr, status, error) {
+            alert('Không thể kết nối đến server. Vui lòng thử lại sau.');
+            console.error('Chi tiết lỗi:', {
+                status: status,
+                error: error,
+                responseText: xhr.responseText
+            });
+        }
+    });
+} 
+</script>
 
 <script>
     $(document).ready(function () {
         var hocVienId = idHV; 
-        $.ajax({
-            url: '/hocvien/hoc-vien/get-results',
-            type: 'GET',
-            data: { hocVienId: hocVienId },
-            success: function (response) {
-                if (response.success) {
-                    $('#reloadsTableBody').empty(); 
-                    var results = response.data;
-                    if (results.length === 0) {
-                        console.warn('Dữ liệu trả về rỗng.');
-                        return;
-                    }
-                    results.forEach(function (result) {
-                        var ketQuaColor = result.ket_qua === 'ĐẠT' ? 'green' : 'red'; 
-                        var ketQuaStyled = `
-                             <span style="font-weight: bold; color: ${ketQuaColor};">${result.ket_qua}</span>
-                        `;
-                        var diemSoStyled = `
-                             <span style="font-weight: bold; color: red;">${result.diem_so}</span>
-                        `;
-                        var row = `
-                            <tr>
-                                <td>${result.ten_phan_thi}</td>
-                                <td>${diemSoStyled}</td>
-                                <td>${ketQuaStyled}</td>
-                            </tr>
-                        `;
-                        $('#reloadsTableBody').append(row);
-                    });
-                } else {
-                    alert('Lỗi từ server: ' + (response.message || 'Không rõ nguyên nhân.'));
-                    console.error('Lỗi từ server:', response);
-                }
-            },
-            error: function (xhr, status, error) {
-                alert('Không thể kết nối đến server. Vui lòng thử lại sau.');
-                console.error('Chi tiết lỗi:', {
-                    status: status,
-                    error: error,
-                    responseText: xhr.responseText
-                });
-            }
-        });
+        reloadResultsTable(hocVienId);
     });
 </script>
 
@@ -285,12 +296,12 @@ $(document).ready(function () {
         addKetQuaThi(); 
     });
 
-    $(document).on('click', '.btn-primary[type="submit"]', function (e) {
+    $(document).on('click', '.btn-primary[type="submit2"]', function (e) {
         e.preventDefault(); 
-        if (ketQuaThiData.length === 0) {
-            alert('Chưa có dữ liệu để lưu!');
-            return;
-        }
+       // if (ketQuaThiData.length === 0) {
+         //   alert('Chưa có dữ liệu để lưu!');
+           // return;
+        //}
         $.ajax({
             url: '/hocvien/hoc-vien/create-ket-qua-thi',
             type: 'POST',
@@ -302,11 +313,10 @@ $(document).ready(function () {
             success: function (response) {
                 if (response.success) {
                     alert('Lưu thành công!');
+                    reloadResultsTable(idHV);
                     $('#modal').modal('hide'); 
                     ketQuaThiData = [];        
                     $('#resultsTableBody').empty();
-                } else {
-                    alert('Có lỗi xảy ra: ' + response.message);
                 }
             },
             error: function (xhr, status, error) {
