@@ -150,7 +150,6 @@ use app\modules\lichhoc\models\LichThi;
                     $('#reloadsTableBody').empty(); 
                     var results = response.data;
                     if (results.length === 0) {
-                        alert('Không tìm thấy kết quả thi cho học viên.');
                         console.warn('Dữ liệu trả về rỗng.');
                         return;
                     }
@@ -229,6 +228,7 @@ $(document).ready(function () {
     });
 });
 </script>
+
 <script>
 $(document).ready(function () {
     function checkFields() {
@@ -331,7 +331,6 @@ $(document).ready(function () {
     });
 });
 </script>
-
 
 
 

@@ -23,6 +23,7 @@ class KetQuaThi extends \app\models\LhKetQuaThi
     /**
      * {@inheritdoc}
      */
+    CONST MODEL_ID = 'GIAY_PHEP_LX';
     public static function tableName()
     {
         return 'lh_ket_qua_thi';

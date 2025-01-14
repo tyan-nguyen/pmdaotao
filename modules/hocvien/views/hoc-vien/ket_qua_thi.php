@@ -3,6 +3,7 @@ use app\modules\lichhoc\models\LichThi;
 use app\modules\lichhoc\models\KetQuaThi;
 use app\modules\lichhoc\models\PhanThi;
 use yii\helpers\Html;
+use app\widgets\FileDisplayWidget;
 
 $idHV = $model->id; 
 $idKH = $model->id_khoa_hoc;
@@ -14,13 +15,26 @@ $ketquaThiIndexed = [];
 foreach ($ketquaThi as $ketqua) {
     $ketquaThiIndexed[$ketqua->id_phan_thi] = $ketqua;
 }
-
-
 if (!empty($lichThi)) {
     $examDateTime = new DateTime($lichThi->thoi_gian_thi); 
     $isExamPassed = $currentDateTime > $examDateTime;
 }
 ?>
+<?php
+$isAllPassed = true; 
+
+foreach ($phanThis as $phanThi) {
+    $ketqua = isset($ketquaThiIndexed[$phanThi->id]) ? $ketquaThiIndexed[$phanThi->id] : null;
+
+    if (!$ketqua || $ketqua->ket_qua != 'ĐẠT') {
+        $isAllPassed = false; 
+        break;
+    }
+}
+
+$overallResult = $isAllPassed ? 'Đủ điều kiện cấp giấy phép' : 'Chưa đủ điều kiện cấp giấy phép';
+?>
+
 
 <?php if (empty($idKH)): ?>
     <p style="text-align:center; color:red;" class="alert alert-primary" role="alert">Học viên chưa được sắp khóa học.</p>
@@ -45,22 +59,26 @@ if (!empty($lichThi)) {
     <thead>
         <tr style="border: 4px solid skyblue;">
             <th style="border: 4px solid skyblue;">PHẦN THI</th>
+            <th style="border: 4px solid skyblue;">LẦN THI </th>
             <th style="border: 4px solid skyblue;">ĐIỂM SỐ</th>
             <th style="border: 4px solid skyblue;">KẾT QUẢ</th>
             <tfoot>
-                 <tr id="statusRow">
-                     <td colspan="3" style="text-align: center; font-weight: bold;">Kết quả:</td>
-                     <?= Html::a('<i class="fa fa-cog"> </i>', 
-                       ['/hocvien/hoc-vien/insert-ket-qua-thi','idHV'=>$idHV],
-                             [
-                                'class' => 'btn ripple btn-success btn-sm',
-                                'title' => 'Cài đặt Kết quả thi',
-                                'style' => 'color: white;',
-                                'role' => 'modal-remote-2',
-                             ]
-                     ) ?>
-                 </tr>
+                <tr id="statusRow">
+                    <td colspan="4" style="text-align: center; font-weight: bold; color: <?= $isAllPassed ? 'green' : 'red' ?>;">
+                            <?= $overallResult ?>
+                    </td>
+                    <?= Html::a('<i class="fa fa-cog"> </i>', 
+                         ['/hocvien/hoc-vien/insert-ket-qua-thi', 'idHV' => $idHV],
+                            [
+                               'class' => 'btn ripple btn-success btn-sm',
+                               'title' => 'Cài đặt Kết quả thi',
+                               'style' => 'color: white;',
+                               'role' => 'modal-remote-2',
+                            ]
+                    ) ?>
+                </tr>
             </tfoot>
+
         </tr>
     </thead>
     <tbody>
@@ -71,17 +89,26 @@ if (!empty($lichThi)) {
             ?>
             <tr>
                 <td style="border: 4px solid skyblue;"><?= Html::encode($phanThi->ten_phan_thi) ?></td>
+                <td style="border: 4px solid skyblue;"><?= Html::encode($ketqua->lan_thi) ?></td>
                 <td style="border: 4px solid skyblue; font-weight: bold; color: blue;">
                     <?= $ketqua ? Html::encode($ketqua->diem_so) : '<span style="color:red;">X</span>' ?>
                 </td>
-                <td style="border: 4px solid skyblue; font-weight: bold; color: <?= $ketqua && $ketqua->ket_qua == 'ĐẠT' ? 'green' : 'red' ?>;">
-                    <?= $ketqua ? Html::encode($ketqua->ket_qua) : '<span style="color:red;">X</span>' ?>
+                <td style="border: 4px solid skyblue; font-weight: bold; color: <?= $ketqua && $ketqua->ket_qua == 'ĐẠT' ? 'green' : ($ketqua && $ketqua->ket_qua == 'RỚT' ? 'red' : 'gray') ?>;">
+                     <?= $ketqua ? Html::encode($ketqua->ket_qua) : '<span style="color:red;">X</span>' ?>
                 </td>
             </tr>
         <?php endforeach; ?>
     </tbody>
 </table>
-
-
-
 <?php endif; ?>
+
+<?php if ($isAllPassed): ?>
+    <div class="tab-pane fade show active p-1" id="tabFile" role="tabpanel" aria-labelledby="list-tab">
+        <?= FileDisplayWidget::widget([
+            'type' => 'LOAIHOSO',
+            'doiTuong' => KetQuaThi::MODEL_ID,
+            'idDoiTuong' => $model->id,
+        ]) ?>
+    </div>
+<?php endif; ?>
+
