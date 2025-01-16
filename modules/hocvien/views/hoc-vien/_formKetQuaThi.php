@@ -5,6 +5,7 @@ use yii\widgets\ActiveForm;
 use app\widgets\CardWidget;
 use app\modules\hocvien\models\HocVien;
 use app\modules\lichhoc\models\LichThi;
+use app\modules\lichhoc\models\PhanThi;
 /** @var yii\web\View $this */
 /** @var app\modules\lichhoc\models\KetQuaThi $model */
 /** @var yii\widgets\ActiveForm $form */
@@ -15,24 +16,15 @@ use app\modules\lichhoc\models\LichThi;
     $idKH = $modelHV->id_khoa_hoc;
     $lichThi = LichThi::find()->where(['id_khoa_hoc' => $idKH])->one();
     $idLT = $lichThi->id;
+    $hangHV = $modelHV->id_hang;
+    $phanThi = PhanThi::find()->where(['id_hang' => $hangHV])->all();
+    $soLuongPT = count($phanThi);
 ?>
+
+
 
 <div class="form-ket-qua-thi">
     <?php $form = ActiveForm::begin(); ?>
-    <div class="row">
-        <div class="col-md-6">
-            <?php CardWidget::begin(['title' => 'Thông tin học viên']) ?>
-                <p>Họ tên: <span><?= $modelHV->ho_ten?> </span></p>
-                <p>Khóa học: <span><?= $modelHV->khoaHoc->ten_khoa_hoc?></span> </p>
-            <?php CardWidget::end() ?>
-        </div>
-        <div class="col-md-6">
-            <?php CardWidget::begin(['title'=>'Thông tin lịch thi'])?>
-                <p>Ngày thi: <span><?= Yii::$app->formatter->asDatetime($lichThi->thoi_gian_thi, 'php:d-m-Y | H:i') ?></span></p>
-                <p>Phòng thi: <span><?=$lichThi->phongThi->ten_phong?>  </span></p>
-            <?php CardWidget::end()?>
-        </div>
-    </div>
     <div class="row">
         <div class="col-md-6">
             <?php CardWidget ::begin(['title'=>'Nhập kết quả thi'])?>
@@ -94,7 +86,7 @@ use app\modules\lichhoc\models\LichThi;
         </div>
         <div class="col-md-6">
     <?php CardWidget::begin(['title' => 'KẾT QUẢ THI']) ?>
-        <table class="table table-bordered text-center">
+        <table class="table table-bordered text-center" id="resultsTable">
             <thead>
                 <tr>
                     <th>Phần thi</th>
@@ -108,12 +100,12 @@ use app\modules\lichhoc\models\LichThi;
             </tbody>
          
             <tbody id="resultsTableBody">
-                  
+
             </tbody>
             <tfoot>
-                 <tr id="statusRow">
-                     <td colspan="3" style="text-align: center; font-weight: bold;">Kết quả:</td>
-                 </tr>
+               <tr id="statusRow">
+                   <td colspan="3" style="text-align: center; font-weight: bold;">Kết quả:</td>
+               </tr>
             </tfoot>
         </table>
                  <div class="col-md-12">
@@ -143,9 +135,10 @@ use app\modules\lichhoc\models\LichThi;
     var idLT = <?= $idLT ?>;
 </script>
 
-<script>
-     function reloadResultsTable(hocVienId) {
-       $.ajax({
+<script>   
+var checkPhanThi = 0; 
+function reloadResultsTable(hocVienId) {
+    $.ajax({
         url: '/hocvien/hoc-vien/get-results',
         type: 'GET',
         data: { hocVienId: hocVienId },
@@ -155,8 +148,10 @@ use app\modules\lichhoc\models\LichThi;
                 var results = response.data;
                 if (results.length === 0) {
                     console.warn('Dữ liệu trả về rỗng.');
+                  //  $('#btn-chuyen').prop('disabled', false);
                     return;
                 }
+
                 results.forEach(function (result) {
                     var ketQuaColor = result.ket_qua === 'ĐẠT' ? 'green' : 'red'; 
                     var ketQuaStyled = `
@@ -167,13 +162,35 @@ use app\modules\lichhoc\models\LichThi;
                     `;
                     var row = `
                         <tr>
-                            <td>${result.ten_phan_thi}</td>
+                            <td>${result.ten_phan_thi} (${result.lan_thi})</td>
                             <td>${diemSoStyled}</td>
-                            <td>${ketQuaStyled}</td>
+                            <td id="idKq">${ketQuaStyled}</td>
                         </tr>
                     `;
                     $('#reloadsTableBody').append(row);
+
+                    if (result.ket_qua === 'ĐẠT') {
+                        checkPhanThi++;
+                    }
                 });
+
+                const soLuongPT = <?= $soLuongPT ?>; 
+
+                let resultText = checkPhanThi === soLuongPT ? "Đủ điều kiện cấp bằng" : "Chưa đủ điều kiện cấp bằng";
+                let resultColor = checkPhanThi === soLuongPT ? "green" : "red";
+                $('#statusRow').remove(); 
+                $('#resultsTable tfoot').html(`
+                    <tr id="statusRow">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: ${resultColor};">
+                            Kết quả: ${resultText}
+                        </td>
+                    </tr>
+                `);
+                  if (resultText === "Đủ điều kiện cấp bằng") {
+                        $('#btn-chuyen').prop('disabled', true);
+                    } else {
+                        $('#btn-chuyen').prop('disabled', false);
+                    }
             } else {
                 alert('Lỗi từ server: ' + (response.message || 'Không rõ nguyên nhân.'));
                 console.error('Lỗi từ server:', response);
@@ -188,7 +205,7 @@ use app\modules\lichhoc\models\LichThi;
             });
         }
     });
-} 
+}
 </script>
 
 <script>
@@ -250,8 +267,9 @@ $(document).ready(function () {
 
         if (phanThi && lanThi && diemSo && ketQua) {
             $('#btn-chuyen').prop('disabled', false);
+          //  reloadResultsTable(hocVienId)
         } else {
-            $('#btn-chuyen').prop('disabled', true);
+           $('#btn-chuyen').prop('disabled', true);
         }
     }
 
@@ -277,9 +295,9 @@ $(document).ready(function () {
             let color = ketQua === 'ĐẠT' ? 'green' : 'red';
             let phanThiName = $('#dropdown-phan-thi option:selected').text();
             let newRow = `<tr>
-                            <td>${phanThiName}</td>
+                             <td>${phanThiName} (${lanThi})</td>
                             <td style="color: red; font-weight: bold;">${diemSo}</td>
-                            <td style="color: ${color}; font-weight: bold;">${ketQua}</td>
+                            <td style="color: ${color}; font-weight: bold;" id="idKq">${ketQua}</td>
                           </tr>`;
             $('#resultsTableBody').append(newRow); 
 
@@ -298,10 +316,6 @@ $(document).ready(function () {
 
     $(document).on('click', '.btn-primary[type="submit2"]', function (e) {
         e.preventDefault(); 
-       // if (ketQuaThiData.length === 0) {
-         //   alert('Chưa có dữ liệu để lưu!');
-           // return;
-        //}
         $.ajax({
             url: '/hocvien/hoc-vien/create-ket-qua-thi',
             type: 'POST',
@@ -313,6 +327,7 @@ $(document).ready(function () {
             success: function (response) {
                 if (response.success) {
                     alert('Lưu thành công!');
+                    checkPhanThi = 0;
                     reloadResultsTable(idHV);
                     $('#modal').modal('hide'); 
                     ketQuaThiData = [];        

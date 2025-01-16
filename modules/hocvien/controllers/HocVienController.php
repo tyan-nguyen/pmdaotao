@@ -898,6 +898,7 @@ public function actionUpdateLichHoc($id, $idHV, $week_string)
         foreach ($results as $result) {
             $formattedResults[] = [
                 'ten_phan_thi' => $result['phanThi']['ten_phan_thi'] ?? 'N/A', 
+                'lan_thi' => $result['lan_thi'],
                 'diem_so' => $result['diem_so'],
                 'ket_qua' => $result['ket_qua'],
             ];
