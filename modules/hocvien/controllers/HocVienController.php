@@ -910,4 +910,19 @@ public function actionUpdateLichHoc($id, $idHV, $week_string)
         ]);
     }
 
+    public function actionReloadData($idHV)
+    {
+        $model = $this->findModel($idHV);
+        $phanThis = PhanThi::find()->where(['id_hang' => $model->id_hang])->all();
+        $ketquaThi = KetQuaThi::find()->where(['id_hoc_vien' => $idHV])->all();
+        $idKH = $model->id_khoa_hoc;
+
+       return $this->renderPartial('_partial_view', [
+        'model' => $model,
+        'phanThis' => $phanThis,
+        'ketquaThi' => $ketquaThi,
+    ]);
+    }
+
+
 }

@@ -21,8 +21,6 @@ use app\modules\lichhoc\models\PhanThi;
     $soLuongPT = count($phanThi);
 ?>
 
-
-
 <div class="form-ket-qua-thi">
     <?php $form = ActiveForm::begin(); ?>
     <div class="row">
@@ -148,10 +146,8 @@ function reloadResultsTable(hocVienId) {
                 var results = response.data;
                 if (results.length === 0) {
                     console.warn('Dữ liệu trả về rỗng.');
-                  //  $('#btn-chuyen').prop('disabled', false);
                     return;
                 }
-
                 results.forEach(function (result) {
                     var ketQuaColor = result.ket_qua === 'ĐẠT' ? 'green' : 'red'; 
                     var ketQuaStyled = `
@@ -186,11 +182,15 @@ function reloadResultsTable(hocVienId) {
                         </td>
                     </tr>
                 `);
-                  if (resultText === "Đủ điều kiện cấp bằng") {
-                        $('#btn-chuyen').prop('disabled', true);
-                    } else {
-                        $('#btn-chuyen').prop('disabled', false);
-                    }
+                if (resultText === 'Đủ điều kiện cấp bằng') {
+                   $('#btn-chuyen').hide(); 
+                   $('#input-lan-thi').prop('disabled', true);
+                   $('#dropdown-phan-thi').prop('disabled', true);
+                   $('#input-diem-so').prop('disabled', true);
+                   $('#input-ket-qua').prop('disabled', true);
+                     } else {
+                          $('#btn-chuyen').show(); 
+                }  
             } else {
                 alert('Lỗi từ server: ' + (response.message || 'Không rõ nguyên nhân.'));
                 console.error('Lỗi từ server:', response);
@@ -267,7 +267,7 @@ $(document).ready(function () {
 
         if (phanThi && lanThi && diemSo && ketQua) {
             $('#btn-chuyen').prop('disabled', false);
-          //  reloadResultsTable(hocVienId)
+            
         } else {
            $('#btn-chuyen').prop('disabled', true);
         }
@@ -356,8 +356,6 @@ $(document).ready(function () {
     });
 });
 </script>
-
-
 
 <style>
 .form-ket-qua-thi label {
