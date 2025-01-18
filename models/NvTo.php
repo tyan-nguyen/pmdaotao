@@ -13,6 +13,8 @@ use Yii;
  *
  * @property NvNhanVien[] $nvNhanViens
  * @property NvPhongBan $phongBan
+  * @property int|null $nguoi_tao
+ * @property string|null $thoi_gian_tao
  */
 class NvTo extends \yii\db\ActiveRecord
 {
@@ -33,6 +35,8 @@ class NvTo extends \yii\db\ActiveRecord
             [['id_phong_ban'], 'integer'],
             [['ten_to'], 'required'],
             [['ten_to'], 'string', 'max' => 255],
+            [['nguoi_tao'], 'integer'],
+            [['thoi_gian_tao'], 'safe'],
             [['id_phong_ban'], 'exist', 'skipOnError' => true, 'targetClass' => NvPhongBan::class, 'targetAttribute' => ['id_phong_ban' => 'id']],
         ];
     }
@@ -46,6 +50,8 @@ class NvTo extends \yii\db\ActiveRecord
             'id' => 'ID',
             'id_phong_ban' => 'Id Phong Ban',
             'ten_to' => 'Ten To',
+            'nguoi_tao' => 'Nguoi Tao',
+            'thoi_gian_tao' => 'Thoi Gian Tao',
         ];
     }
 

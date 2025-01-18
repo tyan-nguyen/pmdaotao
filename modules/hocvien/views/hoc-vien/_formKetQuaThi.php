@@ -6,6 +6,7 @@ use app\widgets\CardWidget;
 use app\modules\hocvien\models\HocVien;
 use app\modules\lichhoc\models\LichThi;
 use app\modules\lichhoc\models\PhanThi;
+use app\modules\lichhoc\models\KetQuaThi;
 /** @var yii\web\View $this */
 /** @var app\modules\lichhoc\models\KetQuaThi $model */
 /** @var yii\widgets\ActiveForm $form */
@@ -19,6 +20,10 @@ use app\modules\lichhoc\models\PhanThi;
     $hangHV = $modelHV->id_hang;
     $phanThi = PhanThi::find()->where(['id_hang' => $hangHV])->all();
     $soLuongPT = count($phanThi);
+    $ketQuaThi = KetQuaThi :: find()->where(['id_hoc_vien'=>$modelHV->id])->all();
+    if (empty($ketQuaThi)) {
+        $ketQuaThi = null; 
+    }
 ?>
 
 <div class="form-ket-qua-thi">

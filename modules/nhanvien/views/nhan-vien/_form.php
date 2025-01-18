@@ -26,7 +26,7 @@ $listTaiKhoan = ArrayHelper::map($taiKhoans, 'id', 'username');
 
 
 
-<div class="nhan-vien-form">
+<div class="nhan-vien-form" id = "pbContent">
 
     <?php $form = ActiveForm::begin(); ?>
     <?php CardWidget::begin(['title'=>'Thông tin cá nhân Nhân viên']) ?>
@@ -73,21 +73,53 @@ $listTaiKhoan = ArrayHelper::map($taiKhoans, 'id', 'username');
         
         <?php CardWidget::begin(['title'=>'Thông tin công việc Nhân viên']) ?>
            <div class="row">
-             <div class="col-lg-3 col-md-6">
-                 <?= $form->field($model, 'id_phong_ban')->dropDownList(
-                    $listPhongBan,
-                       [
-                          'prompt' => 'Chọn phòng ban...',
-                          'id' => 'phong-bans-dropdown'
-                       ]
-                ) ?>
-             </div>
-             <div class="col-lg-3 col-md-6">
-                 <?= $form->field($model, 'id_to')->dropDownList(
-                   [],  
-                   ['prompt' => 'Chọn tổ...', 'id' => 'to-dropdown']
-                 ) ?>
-             </div>
+           <div class="col-lg-3 col-md-6">
+                <div class="d-flex align-items-center gap-2">
+                    <label class="form-label mb-0">Phòng ban</label>
+                        <?= Html::a('<i class="fa fa-plus"> </i>', 
+                                             ['/nhanvien/nhan-vien/insert-phong-ban'],
+                                                [
+                                                   'class' => 'btn ripple btn-primary btn-sm',
+                                                   'title' => 'Cập nhật',
+                                                   'style' => 'color: white;font-size: 0.6rem;padding: 0.2rem 0.5rem;',
+                                                   'role' => 'modal-remote-2',
+                                                ]
+                        ) ?>
+                </div>
+   
+               <div class="mt-1">
+                   <?= $form->field($model, 'id_phong_ban')->dropDownList(
+                       $listPhongBan,
+                         [
+                           'prompt' => 'Chọn phòng ban...',
+                           'id' => 'phong-bans-dropdown',
+                         ]
+                   )->label(false) ?>
+               </div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+              <div class="d-flex align-items-center gap-2">
+                 <label class="form-label mb-0">Tổ</label>
+                        <?= Html::a('<i class="fa fa-plus"> </i>', 
+                                             ['/nhanvien/nhan-vien/insert-to'],
+                                                [
+                                                   'class' => 'btn ripple btn-primary btn-sm',
+                                                   'title' => 'Cập nhật',
+                                                   'style' => 'color: white;font-size: 0.6rem;padding: 0.2rem 0.5rem;',
+                                                   'role' => 'modal-remote-2',
+                                                ]
+                        ) ?>
+               </div>
+               <div class="mt-1">
+                  <?= $form->field($model, 'id_to')->dropDownList(
+                      [],
+                        [
+                          'prompt' => 'Chọn tổ...', 
+                          'id' => 'to-dropdown'
+                        ]
+                  )->label(false) ?>
+              </div>
+          </div>
              <div class="col-lg-3 col-md-6">
                  <?= $form->field($model, 'chuc_vu')->textInput(['maxlength' => true]) ?>
              </div>

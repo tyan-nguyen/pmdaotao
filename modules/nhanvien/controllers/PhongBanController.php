@@ -1,21 +1,21 @@
 <?php
 
-namespace app\modules\giaovien\controllers;
+namespace app\modules\nhanvien\controllers;
 
 use Yii;
-use app\modules\giaovien\models\Day;
-use app\modules\giaovien\models\search\DaySearch;
+use app\modules\nhanvien\models\PhongBan;
+use app\modules\nhanvien\models\search\PhongBanSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use \yii\web\Response;
 use yii\helpers\Html;
 use yii\filters\AccessControl;
-use app\modules\giaovien\models\GiaoVien;
+
 /**
- * DayController implements the CRUD actions for Day model.
+ * PhongBanController implements the CRUD actions for PhongBan model.
  */
-class DayController extends Controller
+class PhongBanController extends Controller
 {
     /**
      * @inheritdoc
@@ -28,7 +28,7 @@ class DayController extends Controller
 					[
 						'actions' => ['index', 'view', 'update','create','delete','bulkdelete'],
 						'allow' => true,
-						'roles' => ['@'],
+						'roles' => ['admin'],
 					],
 				],
 			],
@@ -42,23 +42,23 @@ class DayController extends Controller
 	}
 
     /**
-     * Lists all Day models.
+     * Lists all PhongBan models.
      * @return mixed
      */
     public function actionIndex()
     {    
-        $searchModel = new DaySearch();
+        $searchModel = new PhongBanSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-        ]); 
+        ]);
     }
 
 
     /**
-     * Displays a single Day model.
+     * Displays a single PhongBan model.
      * @param integer $id
      * @return mixed
      */
@@ -68,12 +68,12 @@ class DayController extends Controller
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "Day #".$id,
+                    'title'=> "PhongBan #".$id,
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
                     ]),
-                    'footer'=> Html::button('<i class="fa fa-close"></i>Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::a('<i class="fa fa-pencil"></i> Chỉnh sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                            Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
                 ];    
         }else{
             return $this->render('view', [
@@ -83,20 +83,16 @@ class DayController extends Controller
     }
 
     /**
-     * Creates a new Day model.
+     * Creates a new PhongBan model.
      * For ajax request will return json object
      * and for non-ajax request if creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($id_nhan_vien)
+    public function actionCreate()
     {
         $request = Yii::$app->request;
-        $model = new Day();  
-     
-        // Gán id_nhan_vien từ tham số URL
-        if ($id_nhan_vien !== null) {
-            $model->id_nhan_vien = $id_nhan_vien;
-        }
+        $model = new PhongBan();  
+
         if($request->isAjax){
             /*
             *   Process for ajax request
@@ -104,36 +100,31 @@ class DayController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Phân công giảng dạy",
+                    'title'=> "Create new PhongBan",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('<i class ="fa fa-close"></i> Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button(' <i class ="fa fa-save"></i> Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
             }else if($model->load($request->post()) && $model->save()){
                 return [
-                   'forceClose'=>true,   
-                    'reloadType'=>'giaoVien',
-                    'reloadBlock'=>'#dayContent',
-                    'reloadContent'=>$this->renderAjax('_phan_cong_day', [
-                        'model' => $model,
-                        'phanCongDay' => Day::find()->where(['id_nhan_vien' => $model->id_nhan_vien])->all(),
-                    ]),
-                    
-                    'tcontent'=>'Phân công giảng dạy thành công!',
-                ];   
+                    'forceReload'=>'#crud-datatable-pjax',
+                    'title'=> "Create new PhongBan",
+                    'content'=>'<span class="text-success">Create PhongBan success</span>',
+                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                            Html::a('Create More',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
+        
+                ];         
             }else{           
                 return [
-                    'title'=> "Phân công giảng dạy",
-                    
-                    'tcontent'=>'Thất bại!',
+                    'title'=> "Create new PhongBan",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('<i class ="fa fa-close"> </i> Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('<i class="fa fa-save"> </i>Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
             }
@@ -153,7 +144,7 @@ class DayController extends Controller
     }
 
     /**
-     * Updates an existing Day model.
+     * Updates an existing PhongBan model.
      * For ajax request will return json object
      * and for non-ajax request if update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
@@ -163,7 +154,7 @@ class DayController extends Controller
     {
         $request = Yii::$app->request;
         $model = $this->findModel($id);       
-   
+
         if($request->isAjax){
             /*
             *   Process for ajax request
@@ -171,32 +162,31 @@ class DayController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Phân công dạy",
+                    'title'=> "Update PhongBan #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('<i class="fa fa-close"></i> Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('<i class="fa fa-save"></i> Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
             }else if($model->load($request->post()) && $model->save()){
                 return [
-                    'forceClose'=>true,   
-                    'reloadType'=>'giaovienDay',
-                    'reloadBlock'=>'#dayContent',
-                    'reloadContent'=>$this->renderAjax('_phan_cong_day', [
+                    'forceReload'=>'#crud-datatable-pjax',
+                    'title'=> "PhongBan #".$id,
+                    'content'=>$this->renderAjax('view', [
                         'model' => $model,
-                        'phanCongDay' => Day::find()->where(['id_nhan_vien' => $model->id_nhan_vien])->all(),
                     ]),
-                    'tcontent'=>'Cập nhật giảng dạy thành công!',
-                ];
+                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                            Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                ];    
             }else{
                  return [
-                    'title'=> "Phân công dạy #".$id,
+                    'title'=> "Update PhongBan #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('<i class="fa fa-close"></i> Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('<i class="fa fa-save"></i> Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
                 ];        
             }
         }else{
@@ -214,15 +204,35 @@ class DayController extends Controller
     }
 
     /**
-     * Delete an existing Day model.
+     * Delete an existing PhongBan model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
      */
+    public function actionDelete($id)
+    {
+        $request = Yii::$app->request;
+        $this->findModel($id)->delete();
+
+        if($request->isAjax){
+            /*
+            *   Process for ajax request
+            */
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ['forceClose'=>true,'forceReload'=>'#crud-datatable-pjax'];
+        }else{
+            /*
+            *   Process for non-ajax request
+            */
+            return $this->redirect(['index']);
+        }
+
+
+    }
 
      /**
-     * Delete multiple existing Day model.
+     * Delete multiple existing PhongBan model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -253,19 +263,18 @@ class DayController extends Controller
     }
 
     /**
-     * Finds the Day model based on its primary key value.
+     * Finds the PhongBan model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Day the loaded model
+     * @return PhongBan the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Day::findOne($id)) !== null) {
+        if (($model = PhongBan::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-  
 }

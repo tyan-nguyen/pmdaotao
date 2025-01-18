@@ -2,7 +2,7 @@
 
 namespace app\modules\nhanvien\models;
 use Yii;
-
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "nv_phong_ban".
@@ -42,10 +42,28 @@ class PhongBan extends \app\models\NvPhongBan
     {
         return [
             'id' => 'ID',
-            'ten_phong_ban' => 'Ten Phong Ban',
-            'nguoi_tao' => 'Nguoi Tao',
-            'thoi_gian_tao' => 'Thoi Gian Tao',
+            'ten_phong_ban' => 'Tên Phòng Ban',
+            'nguoi_tao' => 'Người Tạo',
+            'thoi_gian_tao' => 'Thời Gian Tạo',
         ];
+    }
+
+    public static function getList()
+    {
+        $dsPhongBan = PhongBan::find()
+            ->orderBy(['ten_phong_ban' => SORT_ASC])
+            ->all();
+        return ArrayHelper::map($dsPhongBan, 'id', function($model) {
+            return '+ ' . $model->ten_phong_ban;
+        });
+    }
+
+    public function beforeSave($insert) {
+        if ($this->isNewRecord) {
+            $this->nguoi_tao = Yii::$app->user->identity->id;
+            $this->thoi_gian_tao = date('Y-m-d H:i:s');
+        }
+        return parent::beforeSave($insert);
     }
     
     

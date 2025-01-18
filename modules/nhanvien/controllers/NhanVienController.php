@@ -11,6 +11,7 @@ use app\modules\nhanvien\models\To;
 //use yii\filters\AccessControl;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
+use app\modules\nhanvien\models\PhongBan;
 
 //use yii\filters\VerbFilter;
 use \yii\web\Response;
@@ -281,5 +282,109 @@ class NhanVienController extends Controller
         return json_encode($listTo);
     }
 
+    public function actionInsertPhongBan()
+    {
+        $request = Yii::$app->request;
+        $model = new PhongBan();  
+        $modelNV = new NhanVien();
+        if($request->isAjax){
+            /*
+            *   Process for ajax request
+            */
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            if($request->isGet){
+                return [
+                    'title'=> "Thêm phòng ban",
+                    'content'=>$this->renderAjax('create_PB', [
+                        'model' => $model,
+                    ]),
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+        
+                ];         
+            }else if($model->load($request->post()) && $model->save()){
+                return [
+                    'forceClose'=>true,   
+                     'reloadType'=>'phongBan',
+                     'reloadBlock'=>'#pbContent',
+                     'reloadContent'=>$this->renderAjax('_form', [
+                         'model' => $modelNV,
+                         
+                     ]),
+                     
+                     'tcontent'=>'Thêm phòng ban thành công !',
+                 ];         
+            }
+        }else{
+            /*
+            *   Process for non-ajax request
+            */
+            if ($model->load($request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
+        }
+       
+    }
 
+    public function actionInsertTo()
+    {
+        $request = Yii::$app->request;
+        $model = new To();  
+        $modelNV = new NhanVien();
+
+        if($request->isAjax){
+            /*
+            *   Process for ajax request
+            */
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            if($request->isGet){
+                return [
+                    'title'=> "Thêm tổ",
+                    'content'=>$this->renderAjax('create_To', [
+                        'model' => $model,
+                    ]),
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+        
+                ];         
+            }else if($model->load($request->post()) && $model->save()){
+                return [
+                    'forceClose'=>true,   
+                     'reloadType'=>'to',
+                     'reloadBlock'=>'#pbContent',
+                     'reloadContent'=>$this->renderAjax('_form', [
+                         'model' => $modelNV,
+                     ]),
+                     
+                     'tcontent'=>'Thêm tổ thành công !',
+                 ];        
+            }else{           
+                return [
+                    'title'=> "Thêm tổ",
+                    'content'=>$this->renderAjax('create_To', [
+                        'model' => $model,
+                    ]),
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+        
+                ];         
+            }
+        }else{
+            /*
+            *   Process for non-ajax request
+            */
+            if ($model->load($request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('create_To', [
+                    'model' => $model,
+                ]);
+            }
+        }
+       
+    }
 }

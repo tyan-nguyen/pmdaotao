@@ -5,12 +5,12 @@ namespace app\modules\nhanvien\models\search;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\modules\nhanvien\models\PhongBan;
+use app\modules\nhanvien\models\To;
 
 /**
- * PhongBanSearch represents the model behind the search form about `app\modules\nhanvien\models\PhongBan`.
+ * ToSearch represents the model behind the search form about `app\modules\nhanvien\models\To`.
  */
-class PhongBanSearch extends PhongBan
+class ToSearch extends To
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class PhongBanSearch extends PhongBan
     public function rules()
     {
         return [
-            [['id', 'nguoi_tao'], 'integer'],
-            [['ten_phong_ban', 'thoi_gian_tao'], 'safe'],
+            [['id', 'id_phong_ban'], 'integer'],
+            [['ten_to'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class PhongBanSearch extends PhongBan
      */
     public function search($params)
     {
-        $query = PhongBan::find();
+        $query = To::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -57,11 +57,10 @@ class PhongBanSearch extends PhongBan
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'nguoi_tao' => $this->nguoi_tao,
-            'thoi_gian_tao' => $this->thoi_gian_tao,
+            'id_phong_ban' => $this->id_phong_ban,
         ]);
 
-        $query->andFilterWhere(['like', 'ten_phong_ban', $this->ten_phong_ban]);
+        $query->andFilterWhere(['like', 'ten_to', $this->ten_to]);
 
         return $dataProvider;
     }

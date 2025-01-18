@@ -27,8 +27,6 @@ use app\widgets\KhoDisplayWidget;
                                         <p><strong>Email:</strong> <?= $model->email ?></p>
                                         <p><strong>Mã số thuế:</strong> <?= $model->ma_so_thue ?></p>
 										<p><strong>Tài khoản:</strong> <?= isset($model->taiKhoan->username) && $model->taiKhoan->username != '' ? $model->taiKhoan->username : 'Trống' ?></p>
-
-
 								    </div>
 						    </div>
 	</div>

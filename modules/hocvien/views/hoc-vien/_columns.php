@@ -24,41 +24,32 @@ return [
         'width' => '20px',
         'urlCreator' => function($action, $model, $key, $index) {
             if ($action === 'payment') {
-                // Lấy thông tin khóa học của học viên
                 $khoaHoc = KhoaHoc::findOne($model->id_khoa_hoc);
-        
-                // Nếu không có thông tin khóa học, trả về URL mặc định
+    
                 if (!$khoaHoc) {
                     return Url::to(['mess2', 'id' => $key]); 
                 }        
         
-                // Lấy học phí dựa trên id_hoc_phi của khóa học
                 $hocPhiHang = HocPhi::findOne($khoaHoc->id_hoc_phi);
-        
-                // Nếu không có thông tin học phí, trả về URL mặc định
+    
                 if (!$hocPhiHang) {
                     return Url::to([$action, 'id' => $key]);
                 }
         
-                // Lấy thông tin các lần nộp học phí của học viên
                 $nopHP = NopHocPhi::find()->where(['id_hoc_vien' => $model->id])->all();
         
-                // Tính tổng số tiền đã nộp
                 $tongTienDaNop = 0;
                 foreach ($nopHP as $hcPhi) {
                     $tongTienDaNop += $hcPhi->so_tien_nop;
                 }
             
-                // Kiểm tra trạng thái học phí
                 if ($tongTienDaNop >= $hocPhiHang->hoc_phi) {
-                    // Học viên đã đóng đủ học phí
-                    return Url::to(['mess', 'id' => $key]); // Chuyển đến actionMess để thông báo đã nộp đủ
+                    return Url::to(['mess', 'id' => $key]); 
                 } else if($tongTienDaNop < $hocPhiHang->hoc_phi){
-                    // Học viên chưa đóng hoặc đóng thiếu học phí
-                    return Url::to(['create2', 'id' => $key]); // Tiếp tục cho nhập học phí
+                    return Url::to(['create2', 'id' => $key]);
                 }
             }
-            return Url::to([$action, 'id' => $key]); // Trả về URL mặc định cho các hành động khác
+            return Url::to([$action, 'id' => $key]);
         },
         
         'viewOptions' => [

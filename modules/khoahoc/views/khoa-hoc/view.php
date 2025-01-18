@@ -57,6 +57,9 @@ use app\widgets\KhoDisplayWidget;
                         <a class="nav-link" id="add-exsche-tab" data-bs-toggle="tab" href="#add-exsche" role="tab" aria-controls="add-exsche" aria-selected="false"style="color: blue;"><i class="fa fa-table"></i> Lịch thi</a>
                     </li>
                     <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="list-tab" data-bs-toggle="tab" href="#list" role="tab" aria-controls="list" aria-selected="true"style="color: blue;"><i class="fa fa-address-card"></i>  Kết quả thi</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
                         <a class="nav-link" id="add-document-tab" data-bs-toggle="tab" href="#add-document" role="tab" aria-controls="add-student" aria-selected="false"style="color: blue;"><i class="fa fa-file"></i> Tài liệu</a>
                     </li>
                 </ul>
@@ -67,7 +70,6 @@ use app\widgets\KhoDisplayWidget;
                         <!-- Nội dung Danh sách lớp -->
                             <div class="tab-pane fade show active" id="listHv" role="tabpanel" aria-labelledby="list-tab">
                         <!-- Nội dung hiển thị khi click vào "Danh sách học viên" -->
-                              
                                 <?= $this->render('xem_hv', ['model' => $model]) ?>
                             </div>
                              <!-- Nội dung Lịch học -->
@@ -81,6 +83,11 @@ use app\widgets\KhoDisplayWidget;
                         <!-- Nội dung hiển thị khi click vào "Lịch thi " -->
                             <?= $this->render('_exsche',['modelKH'=>$model]) ?>
                             </div>
+                             <!-- Nội dung Kết quả thi -->
+                             <div class="tab-pane fade " id="list" role="tabpanel" aria-labelledby="list-tab">
+                        <!-- Nội dung hiển thị khi click vào "Kết quả thi" -->
+                                 Danh sách kết quả thi của Học viên 
+                             </div>
                             
                               <!-- Nội dung Tài liệu khóa học -->
                               <div class="tab-pane fade" id="add-document" role="tabpanel" aria-labelledby="add-document-tab">
