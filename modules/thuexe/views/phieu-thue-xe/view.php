@@ -105,11 +105,11 @@ use app\modules\thuexe\models\PhieuThueXe;
 
                              <tr>
                                <th>Thời gian bắt đầu thuê</th>
-                               <td><?= Html::encode(Yii::$app->formatter->asDatetime($model->thoi_gian_bat_dau_thue, 'php:d/m/Y | H:i:s')) ?></td>
+                               <td><?= Html::encode(Yii::$app->formatter->asDatetime($model->thoi_gian_bat_dau_thue, 'php:d/m/Y | H:i')) ?></td>
                              </tr>
                              <tr>
                                 <th>Thời gian trả xe</th>
-                                <td><?= Html::encode(Yii::$app->formatter->asDatetime($model->thoi_gian_tra_xe_du_kien, 'php:d/m/Y | H:i:s')) ?></td>
+                                <td><?= Html::encode(Yii::$app->formatter->asDatetime($model->thoi_gian_tra_xe_du_kien, 'php:d/m/Y | H:i')) ?></td>
                              </tr>
                              <tr>
                                 <th>Chi phí thuê</th>
