@@ -15,25 +15,33 @@ foreach ($dshocVien as $index => $hocVien) {
     $soLuongPhanThi = PhanThi::find()->where(['id_hang' => $idHang])->count();
 
     $dsKetQuaThi = KetQuaThi::find()->where(['id_hoc_vien' => $idHV])->all();
-    $soLuongKetQuaDat = array_reduce($dsKetQuaThi, function($carry, $item) {
-        return $carry + ($item->ket_qua === 'ĐẠT' ? 1 : 0);
-    }, 0);
 
-    $trangThai = $soLuongKetQuaDat >= $soLuongPhanThi ? 'Hoàn thành' : 'Chưa hoàn thành';
+    if (empty($dsKetQuaThi)) {
+        $trangThai = '<span class="badge bg-secondary"> Học viên chưa thi </span>';
+    } else {
+
+        $soLuongKetQuaDat = array_reduce($dsKetQuaThi, function ($carry, $item) {
+            return $carry + ($item->ket_qua === 'ĐẠT' ? 1 : 0);
+        }, 0);
+
+        $trangThai = $soLuongKetQuaDat >= $soLuongPhanThi
+            ? '<span class="badge bg-success"> Hoàn thành </span>'
+            : '<span class="badge bg-warning"> Chưa hoàn thành </span>';
+    }
 
     $dataRows[] = [
         'stt' => $index + 1,
         'ho_ten' => $hocVien->ho_ten,
         'trang_thai' => $trangThai,
-        'chi_tiet' =>  Html::a('<i class="fa fa-window-maximize"> </i>', 
-        ['/khoahoc/khoa-hoc/add-nhom'],
-        [
-            'class' => 'btn ripple btn-warning btn-sm',
-            'title' => 'Chi tiết',
-            'style' => 'color: white;',
-            'role' => 'modal-remote-2',
-        ]
-      )
+        'chi_tiet' => Html::a('<i class="fa fa-window-maximize"></i>', 
+            ['/khoahoc/khoa-hoc/add-nhom'], 
+            [
+                'class' => 'btn ripple btn-warning btn-sm',
+                'title' => 'Chi tiết',
+                'style' => 'color: white;',
+                'role' => 'modal-remote-2',
+            ]
+        ),
     ];
 }
 ?>

@@ -113,7 +113,6 @@ function InLichHoc() {
             }
         },
         error: function (xhr, status, error) {
-            // Hiển thị chi tiết lỗi trong alert
             alert('Đã xảy ra lỗi trong quá trình tải dữ liệu.\n' +
                   'Mã lỗi: ' + xhr.status + '\n' + 
                   'Thông báo lỗi: ' + error + '\n' + 

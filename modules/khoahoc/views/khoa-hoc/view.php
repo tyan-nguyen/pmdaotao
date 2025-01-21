@@ -51,6 +51,9 @@ use app\widgets\KhoDisplayWidget;
                         <a class="nav-link active" id="list-tab" data-bs-toggle="tab" href="#listHv" role="tab" aria-controls="list" aria-selected="true"style="color: blue;"><i class="fa fa-list"></i>  Danh sách học viên</a>
                     </li>
                     <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="add-group-tab" data-bs-toggle="tab" href="#add-group" role="tab" aria-controls="add-group" aria-selected="false"style="color: blue;"><i class="fa fa-group"></i> Nhóm học</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
                         <a class="nav-link" id="add-timetable-tab" data-bs-toggle="tab" href="#add-timetable" role="tab" aria-controls="add-student" aria-selected="false"style="color: blue;"><i class="fa fa-calendar"></i> Lịch học</a>
                     </li>
                     <li class="nav-item" role="presentation">
@@ -72,6 +75,13 @@ use app\widgets\KhoDisplayWidget;
                         <!-- Nội dung hiển thị khi click vào "Danh sách học viên" -->
                                 <?= $this->render('xem_hv', ['model' => $model]) ?>
                             </div>
+
+                             <!-- Nội dung Nhóm học -->
+                             <div class="tab-pane fade" id="add-group" role="tabpanel" aria-labelledby="add-group-tab">
+                        <!-- Nội dung hiển thị khi click vào "Lịch học" -->
+                                <?= $this->render('viewGroup', ['model'=>$model]) ?>
+                            </div>
+
                              <!-- Nội dung Lịch học -->
                              <div class="tab-pane fade" id="add-timetable" role="tabpanel" aria-labelledby="add-timetable-tab">
                         <!-- Nội dung hiển thị khi click vào "Lịch học" -->

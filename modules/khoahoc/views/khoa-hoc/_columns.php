@@ -20,10 +20,10 @@ return [
         'width' => '20px',
         'urlCreator' => function($action, $model, $key, $index) { 
             if ($action === 'adduser') {
-                return Url::to(['create2', 'id' => $key]);
+                return Url::to(['insert-hoc-vien', 'id' => $key]);
             }
             if ($action === 'addusers') {
-                return Url::to(['create3', 'id' => $key]);
+                return Url::to(['insert-many-hoc-vien', 'id' => $key]);
             }
             if ($action === 'addGroup') {
                 return Url::to(['add-group', 'id' => $key]);
@@ -71,7 +71,7 @@ return [
                 'data-bs-placement'=>'top',
                 'data-bs-toggle'=>'tooltip-info'],
             'deleteOptions'=>['role'=>'modal-remote','title'=>'Xóa dữ liệu này', 
-                              'data-confirm'=>false, 'data-method'=>false,// for overide yii data api
+                              'data-confirm'=>false, 'data-method'=>false,
                               'data-request-method'=>'post',
                               'data-toggle'=>'tooltip',
                               'data-confirm-title'=>'Xác nhận xóa dữ liệu?',
@@ -79,7 +79,6 @@ return [
                                'class'=>'btn ripple btn-secondary btn-sm',
                                'data-bs-placement'=>'top',
                                'data-bs-toggle'=>'tooltip-secondary'], 
-      
     ],
     [
         'class' => 'kartik\grid\SerialColumn',

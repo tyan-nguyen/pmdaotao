@@ -340,7 +340,7 @@ class KhoaHocController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-    public function actionCreate2($id)
+    public function actionInsertHocVien($id)
     {
         $request = Yii::$app->request;
         $model = new HocVien();  
@@ -360,11 +360,11 @@ class KhoaHocController extends Controller
             if($request->isGet){
                 return [
                     'title'=> "Thêm Học viên ",
-                    'content'=>$this->renderAjax('create2', [
+                    'content'=>$this->renderAjax('insert-hoc-vien', [
                         'model' => $model,
                     ]),
                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                               Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
             }else if($model->load($request->post()) && $model->save()){
                 return [
@@ -372,12 +372,12 @@ class KhoaHocController extends Controller
                     'title'=> "Thêm Học viên",
                     'content'=>'<span class="text-success">Thêm Học viên thành công !</span>',
                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::a('Tiếp tục thêm',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                               Html::a('Tiếp tục thêm',['insert-hoc-vien'],['class'=>'btn btn-primary','role'=>'modal-remote'])
                 ];         
             }else{           
                 return [
                     'title'=> "Thêm Học viên",
-                    'content'=>$this->renderAjax('create2', [
+                    'content'=>$this->renderAjax('insert-hoc-vien', [
                         'model' => $model,
                     ]),
                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
@@ -391,13 +391,13 @@ class KhoaHocController extends Controller
             if ($model->load($request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
-                return $this->render('create2', [
+                return $this->render('insert-hoc-vien', [
                     'model' => $model,
                 ]);
             }
         }
     }
-    public function actionCreate3($id) {
+    public function actionInsertManyHocVien($id) {
 
         $khoaHoc = KhoaHoc::findOne($id);
         if ($khoaHoc === null) {
@@ -407,8 +407,6 @@ class KhoaHocController extends Controller
            ->where(['id_hang' => $khoaHoc->id_hang])
            ->andWhere(['id_khoa_hoc' => null])
            ->all();
-    
-        // Xử lý form submit
         if (Yii::$app->request->isPost) {
             $selectedHocVienIds = Yii::$app->request->post('hoc_vien_ids', []);
             foreach ($selectedHocVienIds as $hocVienId) {
@@ -419,12 +417,12 @@ class KhoaHocController extends Controller
                     $hv->save(false); 
                 }
             }
-           // Yii::$app->session->setFlash('success', 'Thêm Học viên cho Khóa học thành công !');
-          //  return $this->redirect(['index']);
+            Yii::$app->session->setFlash('success', 'Thêm Học viên cho Khóa học thành công !');
+           return $this->redirect(['index']);
         }
         return $this->asJson([
             'title' => 'Thêm học viên',
-            'content' => $this->renderAjax('create3', [
+            'content' => $this->renderAjax('insert-many-hoc-vien', [
                 'hocVien' => $hocVien,
                 'khoaHoc' => $khoaHoc,
             ]),
@@ -965,5 +963,39 @@ public function actionUpdateLichHoc($id,$idKH,$week_string,$id_nhom)
         }
        
     }
+
+    public function actionGroupDetails($id)
+    {
+        $nhomHoc = NhomHoc::findOne($id);
+        if (!$nhomHoc) {
+            return $this->asJson([
+                'title' => 'Lỗi!',
+                'content' => '<p>Nhóm học không tồn tại.</p>',
+                'footer' => Html::button('Đóng lại', [
+                    'class' => 'btn btn-default pull-left',
+                    'data-bs-dismiss' => "modal"
+                ])
+            ]);
+        }
+    
+        $hocVienTrongNhom = HocVien::find()->where(['id_nhom' => $id])->all();
+        $hocVienChuaCoNhom = HocVien::find()
+            ->where(['id_nhom' => null, 'id_khoa_hoc' => $nhomHoc->id_khoa_hoc])
+            ->all();
+    
+        return $this->asJson([
+            'title' => 'Chi tiết nhóm học: ' . $nhomHoc->ten_nhom,
+            'content' => $this->renderAjax('group-details', [
+                'nhomHoc' => $nhomHoc,
+                'hocVienTrongNhom' => $hocVienTrongNhom,
+                'hocVienChuaCoNhom' => $hocVienChuaCoNhom,
+            ]),
+            'footer' => Html::button('Đóng lại', [
+                'class' => 'btn btn-default pull-left',
+                'data-bs-dismiss' => "modal"
+            ])
+        ]);
+    }
+    
     
 }

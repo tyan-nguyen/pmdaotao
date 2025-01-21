@@ -30,7 +30,7 @@ class NhomHoc extends \app\models\HvNhom
     /**
      * {@inheritdoc}
      */
-    public $so_luong_hoc_vien = 5;
+   // public $so_luong_hoc_vien = 5;
     public function rules()
     {
         return [
@@ -55,7 +55,7 @@ class NhomHoc extends \app\models\HvNhom
             'ghi_chu' => 'Ghi Chú',
             'nguoi_tao' => 'Người tạo',
             'thoi_gian_tao' => 'Thời gian tạo',
-            'so_luong_hoc_vien'=>'Số lượng học viên',
+            'so_luong_hoc_vien'=>'Số lượng học viên tối đa',
         ];
     }
 
@@ -73,7 +73,7 @@ class NhomHoc extends \app\models\HvNhom
     {
         $query = self::find()->where(['id_khoa_hoc' => $idKhoaHoc]);
         $list = $query->all();
-        $options = [null => 'Chung'];  
+        $options = [];  
         foreach ($list as $item) {
             $options[$item->id] = $item->ten_nhom;
         } 
