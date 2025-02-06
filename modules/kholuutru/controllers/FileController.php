@@ -89,7 +89,7 @@ class FileController extends Controller
                     'doiTuong' => $doiTuong,
                     'idDoiTuong' => $idDoiTuong
                 ]),
-                'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                'footer'=>Html::button('Đóng lại', ['class'=>'btn btn-default pull-left', 'data-bs-dismiss'=>"modal"]).
                 Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
                 
             ];
@@ -120,7 +120,7 @@ class FileController extends Controller
                     'title'=> "Thêm mới File",
                     'content'=>'<span class="text-success">Tải file thành công</span>',
                     'tcontent'=>'Tải file '.$model->file_name.' thành công!',
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal2"]).
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                     Html::a('Tiếp tục thêm',[
                         'upload-single', 
                         'doiTuong'=>VanBanDen::MODEL_ID,

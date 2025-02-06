@@ -38,7 +38,7 @@ class KhoaHocController extends Controller
 						'actions' => ['index', 'view', 'update','create','delete','bulkdelete','delete-lh'],
                      
 						'allow' => true,
-						'roles' => ['@'],
+						'roles' => ['user'],
 					],
 				],
 			],
@@ -156,7 +156,7 @@ class KhoaHocController extends Controller
         $request = Yii::$app->request;
         $model = new KhoaHoc();  
 
-        if($request->isAjax){
+        if($request->isAjax){ 
             /*
             *   Process for ajax request
             */
