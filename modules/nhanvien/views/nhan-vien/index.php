@@ -125,6 +125,7 @@ Yii::$app->params['showExport'] = true;
    'id'=>'ajaxCrudModal2',
     'footer'=>'',// always need it for jquery plugin
     'size'=>Modal::SIZE_LARGE
+   // 'size'=>Modal::SIZE_EXTRA_LARGE
 ])?>
 
 <?php Modal::end(); ?>

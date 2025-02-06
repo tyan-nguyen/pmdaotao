@@ -1,9 +1,6 @@
 <?php
 use yii\helpers\Html;
 
-/* @var $this yii\web\View */
-/* @var $hocPhis app\models\HocPhi[] */
-
 $this->title = 'Danh sách học phí theo hạng';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -24,8 +21,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 <tr>
                     <td>
                         <?= $index + 1 ?>
-                        <?php if ($index === count($hocPhis) - 1): // Kiểm tra nếu đây là phần tử cuối cùng ?>
-                            <span style="color: red;">*</span> <!-- Dấu sao màu đỏ -->
+                        <?php if ($index === count($hocPhis) - 1): ?>
+                            <span style="color: red;">*</span>
                         <?php endif; ?>
                     </td>
                     <td><?= number_format($hocPhi->hoc_phi, 0, ',', '.') . ' VNĐ'; ?></td>

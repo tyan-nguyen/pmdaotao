@@ -100,8 +100,8 @@ use app\widgets\KhoDisplayWidget;
                             </div>
 
                               <!-- Nội dung Tài liệu khóa học -->
-                              <div class="tab-pane fade" id="add-document" role="tabpanel" aria-labelledby="add-document-tab">
-                        <!-- Nội dung hiển thị khi click vào "Thêm học viên" -->
+                              <div class="tab-pane fade show active" id="add-document" role="tabpanel" aria-labelledby="add-document-tab">
+
                         <?= FileDisplayWidget::widget([
                              'type'=>'ALL',
                              'doiTuong'=>HocVien::MODEL_ID,

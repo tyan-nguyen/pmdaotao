@@ -119,7 +119,7 @@ $model->ngay_nop = CustomFunc::convertYMDToDMY($model->ngay_nop);
 </div>
 
 <script language="JavaScript">
-       var fileInput = document.getElementById('fileInput'); // Tham chiếu đến trường file input
+       var fileInput = document.getElementById('fileInput'); 
        var takeSnapshotButton = document.getElementById('takeSnapshotButton');
     // Cấu hình Webcam
     Webcam.set({
@@ -135,7 +135,6 @@ $model->ngay_nop = CustomFunc::convertYMDToDMY($model->ngay_nop);
         Webcam.snap(function(data_uri) {
             // Hiển thị ảnh xem trước
             document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';
-            // Gán dữ liệu ảnh vào input ẩn
             document.getElementById('bien_lai').value = data_uri;
             check_bien_lai();
             event.preventDefault();
@@ -150,8 +149,8 @@ $model->ngay_nop = CustomFunc::convertYMDToDMY($model->ngay_nop);
         event.preventDefault();
     }
     function check_bien_lai() {
-    var bienLai = document.getElementById('bien_lai');  // Tham chiếu đến phần tử 'bien_lai'
-    var fileInput = document.getElementById('fileInput'); // Tham chiếu đến trường file input
+    var bienLai = document.getElementById('bien_lai');  
+    var fileInput = document.getElementById('fileInput');
     // Kiểm tra nếu 'bien_lai' có giá trị (có ảnh từ webcam)
     if (bienLai.value !== '') {  
         fileInput.disabled = true;
@@ -163,12 +162,11 @@ $model->ngay_nop = CustomFunc::convertYMDToDMY($model->ngay_nop);
    // Hàm kiểm tra và vô hiệu hóa hoặc kích hoạt nút chụp biên lai
    function checkFileInput() {
         if (fileInput.value !== '') {
-            takeSnapshotButton.disabled = true; // Vô hiệu hóa nút chụp biên lai
+            takeSnapshotButton.disabled = true; 
         } else {
-            takeSnapshotButton.disabled = false; // Kích hoạt lại nút chụp biên lai
+            takeSnapshotButton.disabled = false;
         }
     }
-     // Lắng nghe sự kiện thay đổi trên input file
      fileInput.addEventListener('change', checkFileInput);
 
 // Gọi kiểm tra lần đầu khi tải trang để chắc chắn trạng thái đúng

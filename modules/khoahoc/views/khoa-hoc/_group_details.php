@@ -1,19 +1,11 @@
 <?php
-use yii\helpers\Html;
 use yii\helpers\Url;
-
-
-$this->title = 'Chi tiết nhóm: ' . $nhomHoc->ten_nhom;
-$this->params['breadcrumbs'][] = ['label' => 'Danh sách nhóm học', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+use yii\bootstrap5\Html;
 ?>
-<?php $totalTrongNhom = count($hocVienTrongNhom); ?>
-<?php $totalChuaNhom = count($hocVienChuaCoNhom); ?>
-
 
 <div class="group-details">
     <h5 style="color:blue; text-align:center;">DANH SÁCH HỌC VIÊN</h5>
-    <table class="table table-bordered table-striped"id="nhomHVTable" >
+    <table class="table table-bordered table-striped" id="nhomHVTable">
         <thead>
             <tr>
                 <th>#</th>
@@ -25,14 +17,16 @@ $this->params['breadcrumbs'][] = $this->title;
         </thead>
         <tbody>
             <?php if (empty($hocVienTrongNhom)): ?>
-            
+                <tr>
+                    <td colspan="5" style="text-align:center;">Chưa có học viên nào trong nhóm.</td>
+                </tr>
             <?php else: ?>
                 <?php foreach ($hocVienTrongNhom as $index => $hocVien): ?>
                     <tr>
                         <td><?= $index + 1 ?></td>
                         <td><?= Html::encode($hocVien->ho_ten) ?></td>
                         <td><?= Yii::$app->formatter->asDate($hocVien->ngay_sinh, 'php:d-m-Y') ?></td>
-                        <td><?= Html::encode($hocVien->gioi_tinh =='1' ? 'Nam' : 'Nữ') ?></td>
+                        <td><?= Html::encode($hocVien->gioi_tinh === '1' ? 'Nam' : 'Nữ') ?></td>
                         <td><?= Html::encode($hocVien->dia_chi) ?></td>
                     </tr>
                 <?php endforeach; ?>
@@ -47,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <hr style="text-align:center;">
 
     <h5 style="color:red; text-align:center;">DANH SÁCH HỌC VIÊN CHƯA SẮP NHÓM</h5>
-    <form id="add-students-form" method="post" action="<?= Url::to(['add-students-to-group', 'id_nhom' => $nhomHoc->id]) ?>">
+    <form id="add-students-form" method="post" action="<?= Url::to(['add-students-to-group', 'id_nhom' => $nhomHoc]) ?>">
         <table class="table table-bordered table-striped" id="noNhomHVTable">
             <thead>
                 <tr>
@@ -61,7 +55,9 @@ $this->params['breadcrumbs'][] = $this->title;
             </thead>
             <tbody>
                 <?php if (empty($hocVienChuaCoNhom)): ?>
-            
+                    <tr>
+                        
+                    </tr>
                 <?php else: ?>
                     <?php foreach ($hocVienChuaCoNhom as $index => $hocVien): ?>
                         <tr>
@@ -83,72 +79,6 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </form>
 </div>
-
-
-<?php
-$js = <<<JS
-    $('#select-all').on('change', function() {
-        $('input[name="selected_hoc_vien[]"]').prop('checked', this.checked);
-    });
-JS;
-$this->registerJs($js);
-?>
-<script>
-    $(document).ready(function() {
-        $('#nhomHVTable').DataTable({
-            "language": {
-                "url": "https://cdn.datatables.net/plug-ins/1.13.6/i18n/vi.json"
-            }
-        });
-    });
-    $(document).ready(function() {
-        $('#noNhomHVTable').DataTable({
-            "language": {
-                "url": "https://cdn.datatables.net/plug-ins/1.13.6/i18n/vi.json"
-            }
-        });
-    });
-</script>
-
-<script>
-$(document).on('submit', '#add-students-form', function(e) {
-    e.preventDefault();
-    const form = $(this);
-    const url = form.attr('action');
-    const data = form.serialize();
-
-    $.ajax({
-        url: url,
-        type: 'POST',
-        data: data,
-        success: function(response) {
-            if (response.status === 'success') {
-                $('.group-details').html(response.content);
-                alert(response.message);
-            } else {
-                alert(response.message);
-            }
-        },
-        error: function() {
-            alert('Đã xảy ra lỗi khi gửi yêu cầu.');
-        }
-    });
-});
-</script>
-
-<script>
-    $.ajax({
-    url: 'your-url',
-    success: function(response) {
-        $('#group-details').html(response); 
-        $('#nhomHVTable, #noNhomHVTable').DataTable({
-            "language": {
-                "url": "https://cdn.datatables.net/plug-ins/1.13.6/i18n/vi.json"
-            }
-        });
-    }
-});
-</script>
 
 
 

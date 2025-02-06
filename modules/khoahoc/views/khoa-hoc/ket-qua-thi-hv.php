@@ -18,26 +18,12 @@ if (!empty($lichThi)) {
     $isExamPassed = $currentDateTime > $examDateTime;
 }
 ?>
-
+<h5 style="text-align:center; color:red;">CHI TIẾT ĐIỂM THI HỌC VIÊN</h5>
 <div id="data-container-<?= $idHV ?>">
      <?= $this->render('_partial_view', ['model' => $model, 'phanThis' => $phanThis, 'ketquaThi' => $ketquaThi]) ?>
 </div>
 
-<script>
-   function reloadData() {
-    $.ajax({
-        url: '<?= \yii\helpers\Url::to(['/hocvien/hoc-vien/reload-data', 'idHV' => $idHV]) ?>',
-        type: 'GET',
-        success: function(response) {
-            $('#data-container-<?= $idHV ?>').html(response);
-        },
-        error: function() {
-            console.error('Không thể tải dữ liệu mới.');
-        }
-    });
-   }
-       setInterval(reloadData, 5000);
-</script>
+
 
 
 

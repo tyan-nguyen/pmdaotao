@@ -28,21 +28,22 @@ foreach ($dshocVien as $index => $hocVien) {
             ? '<span class="badge bg-success"> Hoàn thành </span>'
             : '<span class="badge bg-warning"> Chưa hoàn thành </span>';
     }
-
     $dataRows[] = [
         'stt' => $index + 1,
         'ho_ten' => $hocVien->ho_ten,
         'trang_thai' => $trangThai,
-        'chi_tiet' => Html::a('<i class="fa fa-window-maximize"></i>', 
-            ['/khoahoc/khoa-hoc/add-nhom'], 
+        'chi_tiet' => empty($dsKetQuaThi) ? '' : Html::a(
+            '<i class="fa fa-window-maximize"></i>', 
+            ['/khoahoc/khoa-hoc/details-ket-qua-thi','id'=>$idHV], 
             [
-                'class' => 'btn ripple btn-warning btn-sm',
+                'class' => 'btn ripple btn-primary btn-sm',
                 'title' => 'Chi tiết',
                 'style' => 'color: white;',
                 'role' => 'modal-remote-2',
             ]
         ),
     ];
+    
 }
 ?>
 
@@ -51,6 +52,7 @@ foreach ($dshocVien as $index => $hocVien) {
         <tr>
             <th>STT</th>
             <th>Học viên</th>
+          
             <th>Kết quả</th>
             <th>Chi tiết</th>
         </tr>
@@ -60,6 +62,7 @@ foreach ($dshocVien as $index => $hocVien) {
             <tr>
                 <td><?= $row['stt'] ?></td>
                 <td><?= Html::encode($row['ho_ten']) ?></td>
+          
                 <td><?= $row['trang_thai'] ?></td>
                 <td><?= $row['chi_tiet'] ?></td>
             </tr>

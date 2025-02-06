@@ -10,7 +10,7 @@ return [
     [
         'class' => 'kartik\grid\ActionColumn',
         'header'=>'',
-        'template' => '{tuition} {listHP} {view} {update} {delete}  ',
+        'template' => '{tuition} {listHP} {listPhanThi} {view} {update} {delete}  ',
         'dropdown' => true,
         'dropdownOptions' => ['class' => 'float-right'],
         'dropdownButton'=>[
@@ -25,6 +25,9 @@ return [
             }
             if ($action === 'listHP') {
                return Url::to(['list-hoc-phi', 'id' => $key]);
+            }
+            if ($action === 'listPhanThi'){
+                return Url::to(['list-phan-thi','id'=>$key]);
             }
            return Url::to([$action, 'id' => $key]);
       },
@@ -47,7 +50,17 @@ return [
                     'data-bs-placement' => 'top',
                     'data-bs-toggle' => 'tooltip-success',
                 ]);
-            }
+            },
+            'listPhanThi'=>function($url, $model, $key)
+            {
+              return Html::a('<i class="fa fa-book"></i> Danh sách phần thi',$url,[
+                   'title'=>'Danh sách phần thi',
+                   'role' =>'modal-remote',
+                   'class'=>'btn ripple btn-warning dropdown-item',
+                   'data-bs-placement'=>'top',
+                   'data-bs-toggle' => 'tooltip-success',
+                ]);
+            },
         ],
      
         'viewOptions'=>['role'=>'modal-remote','title'=>'View','title'=>'Xem thông tin',

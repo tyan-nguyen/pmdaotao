@@ -90,11 +90,15 @@ $trangThai = ($hocPhiKhoaHoc && $tongTienDaNop >= $hocPhiKhoaHoc->hoc_phi) ? 'N�
                             ?>
                         </td>
                         <td>
-                            <?= Html::a(
-                                '<i class="fas fa-eye icon-white"></i>',
-                                ['/hocvien/hoc-vien/bien-lai', 'idHP' => $hcPhi->id, 'modalType' => 'modal-remote-2'],
-                                ['class' => 'btn btn-sm btn-warning', 'title' => 'Xem biên lai', 'role' => 'modal-remote-2']
-                            ); ?>   
+                            <?= Html::a('<i class="fas fa-eye"> </i>', 
+                                             ['/hocvien/hoc-vien/bien-lai','idHP' => $hcPhi->id],
+                                                [
+                                                   'class' => 'btn ripple btn-primary btn-sm',
+                                                   'title' => 'Xem biên lai',
+                                                   'style' => 'color: white;',
+                                                   'role' => 'modal-remote-2',
+                                                ]
+                            ) ?>
                         </td>
                     </tr>
                 <?php

@@ -10,9 +10,17 @@ $this->registerJsFile('https://cdn.datatables.net/2.1.8/js/dataTables.js', ['dep
 ?>
 
 <?php if (!empty($hocVien)): ?>
-    <h5 class="text-center mb-4" style="color:red;">Danh sách học viên đăng ký theo hạng xe</h5>
-
-    <?php $form = ActiveForm::begin(); ?>
+    <h5 class="text-center mb-4" style="color:red;">DANH SÁCH HỌC VIÊN ĐĂNG KÝ THEO HẠNG XE</h5>
+<?php
+    $form = ActiveForm::begin([
+    'id' => 'add-hoc-vien-form',
+    'enableAjaxValidation' => true,
+    'enableClientValidation' => true,
+    'options' => [
+        'data-pjax' => true,
+    ],
+]);
+?>
 
     <div class="table-responsive" style="max-width: 1000px; margin: 0 auto;">
         <!-- Bảng học viên -->
@@ -35,7 +43,7 @@ $this->registerJsFile('https://cdn.datatables.net/2.1.8/js/dataTables.js', ['dep
                     <td>
                         <?= Html::checkBox('hoc_vien_ids[]', false, ['value' => $h->id]) ?>
                     </td>
-                    <td class="text-start"><span class="badge bg-success"><?= Html::encode($h->ho_ten) ?></span></td>
+                    <td class="text-start"><span class="badge bg-primary"><?= Html::encode($h->ho_ten) ?></span></td>
                     <td class="text-start">
                         <?= Html::encode($h->gioi_tinh == 1 ? 'Nam' : ($h->gioi_tinh == 0 ? 'Nữ' : 'Không xác định')) ?>
                     </td>
@@ -46,43 +54,56 @@ $this->registerJsFile('https://cdn.datatables.net/2.1.8/js/dataTables.js', ['dep
                 <?php endforeach; ?>
             </tbody>
         </table>
-        <div class="text-left mt-3">
-             <?= Html::submitButton('<i class="fas fa-user-plus"></i> Thêm học viên', ['class' => 'btn btn-success btn-md']) ?>
+        <div class="form-group">
+             <?= Html::submitButton('Thêm học viên', ['class' => 'btn btn-success']) ?>
         </div>
     </div>
     <?php ActiveForm::end(); ?>
 
 <?php else: ?>
-    <div class="">
-        <h5 style="color:red;">Không có học viên nào đăng ký theo hạng của khóa !</h5>
-    </div>
+        <div class="alert alert-warning">
+            Không tìm thấy Học viên.
+        </div>
 <?php endif; ?>
 
 
 <script>
-$(document).ready(function() {
-    $('#hocVienTable').DataTable({
-        "paging": true,
-        "searching": true,
-        "info": true,
-        "ordering": true,
-        "lengthMenu": [[5, 10, 25, 50, 100], [5, 10, 25, 50, 100]],
-        "language": {
-            "search": "Tìm kiếm:",
-            "lengthMenu": "Hiển thị _MENU_ học viên",
-            "info": "Hiển thị _START_ đến _END_ của _TOTAL_ học viên",
-            "paginate": {
-                "first": "Đầu",
-                "last": "Cuối",
-                "next": "Sau",
-                "previous": "Trước"
-            },
+      $(document).ready(function() {
+        $('#hocVienTable').DataTable({
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/1.13.6/i18n/vi.json"
+            }
+        });
+    });
+</script>
+
+<script>
+ $(document).on('beforeSubmit', '#add-hoc-vien-form', function (e) {
+    e.preventDefault(); 
+    let $form = $(this);
+
+    if ($form.find('.has-error').length) {
+        return false; 
+    }
+
+    $.ajax({
+        type: $form.attr('method'),
+        url: $form.attr('action'),
+        data: $form.serialize(),
+        success: function (response) {
+            if (response.success) {
+                $('#hoc-vien-list-container').html(response.content);
+                alert('Thêm học viên thành công!');
+            } else {
+                alert(response.message || 'Có lỗi xảy ra khi thêm học viên.');
+            }
+        },
+        error: function () {
+            alert('Không thể gửi yêu cầu. Vui lòng thử lại.');
         }
     });
-      // Chức năng "Chọn tất cả"
-      $('.select-all').on('change', function() {
-            var isChecked = $(this).is(':checked');
-            $('input[name="hoc_vien_ids[]"]').prop('checked', isChecked);
-        });
+
+    return false; 
 });
+
 </script>

@@ -996,6 +996,58 @@ public function actionUpdateLichHoc($id,$idKH,$week_string,$id_nhom)
             ])
         ]);
     }
+
+    public function actionDetailsKetQuaThi ($id)
+    {
+        $model = HocVien::find()->where(['id'=>$id])->one();
+        return $this->asJson([
+            'title' => 'Chi tiết',
+            'content' => $this->renderAjax('ket-qua-thi-hv', [
+                 'model'=>$model,
+            ]),
+            'footer' => Html::button('Đóng lại', [
+                'class' => 'btn btn-default pull-left',
+                'data-bs-dismiss' => "modal"
+            ])
+        ]);
+    }
+
+    public function actionAddStudentsToGroup($id_nhom)
+    {
+        $nhomHoc = NhomHoc::find()->where(['id'=>$id_nhom])->one();
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
     
+        $selectedHocVien = Yii::$app->request->post('selected_hoc_vien', []);
+        $response = ['status' => 'error', 'message' => 'Vui lòng chọn ít nhất một học viên.'];
+    
+        if (!empty($selectedHocVien)) {
+            foreach ($selectedHocVien as $hocVienId) {
+                $hocVien = HocVien::findOne($hocVienId);
+                if ($hocVien) {
+                    $hocVien->id_nhom = $id_nhom;
+                    $hocVien->save(false);
+                }
+            }
+    
+            $hocVienTrongNhom = HocVien::find()->where(['id_nhom' => $id_nhom])->all();
+            $hocVienChuaCoNhom = HocVien::find()
+            ->where(['id_nhom' => null, 'id_khoa_hoc' => $nhomHoc->id_khoa_hoc])
+            ->all();
+            $totalTrongNhom = count($hocVienTrongNhom);
+    
+            $response = [
+                'status' => 'success',
+                'message' => 'Đã bổ sung học viên vào nhóm.',
+                'content' => $this->renderPartial('_group_details', [
+                    'hocVienTrongNhom' => $hocVienTrongNhom,
+                    'hocVienChuaCoNhom' => $hocVienChuaCoNhom,
+                    'totalTrongNhom' => $totalTrongNhom,
+                    'nhomHoc' => $id_nhom,
+                ]),
+            ];
+        }
+    
+        return $response;
+    }
     
 }

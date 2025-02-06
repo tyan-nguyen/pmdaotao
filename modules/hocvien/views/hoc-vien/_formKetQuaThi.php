@@ -177,7 +177,7 @@ function reloadResultsTable(hocVienId) {
 
                 const soLuongPT = <?= $soLuongPT ?>; 
 
-                let resultText = checkPhanThi === soLuongPT ? "Đủ điều kiện cấp bằng" : "Chưa đủ điều kiện cấp bằng";
+                let resultText = checkPhanThi === soLuongPT ? "Đủ điều kiện cấp giấy phép" : "Chưa đủ điều kiện cấp giấy phép";
                 let resultColor = checkPhanThi === soLuongPT ? "green" : "red";
                 $('#statusRow').remove(); 
                 $('#resultsTable tfoot').html(`
@@ -314,7 +314,6 @@ $(document).ready(function () {
             alert('Vui lòng điền đầy đủ thông tin!');
         }
     }
-  
     $('#btn-chuyen').click(function () {
         addKetQuaThi(); 
     });
@@ -352,13 +351,26 @@ $(document).ready(function () {
 
 <script>
 $(document).ready(function () {
+  
+    function checkResultsTable() {
+        let hasData = $('#resultsTableBody tr').length > 0;
+        $('#btn-save').prop('disabled', !hasData);
+    }
+    checkResultsTable();
     $('#btn-reset').click(function () {
-        $('#resultsTableBody').empty(); 
-        $('#dropdown-phan-thi').val('');
-        $('#input-lan-thi').val('');
-        $('#input-diem-so').val('');
-        $('#input-ket-qua').val('');
+        $('#resultsTableBody').empty();
+        $('#dropdown-phan-thi, #input-lan-thi, #input-diem-so, #input-ket-qua').val('');
+        checkResultsTable();
     });
+    const observer = new MutationObserver(function () {
+        checkResultsTable();
+    });
+
+    observer.observe(document.getElementById('resultsTableBody'), {
+        childList: true, 
+        subtree: false  
+    });
+
 });
 </script>
 

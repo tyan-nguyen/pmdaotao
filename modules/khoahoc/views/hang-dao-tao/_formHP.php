@@ -19,22 +19,29 @@ $model->ngay_ket_thuc = CustomFunc::convertYMDToDMY($model->ngay_ket_thuc);
 <div class="hoc-phi-form">
 
     <?php $form = ActiveForm::begin(); ?>
+    <div class="row">
+        <div class="col-md-4">
           <?= $form->field($model, 'hoc_phi')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-md-4">
           <?= $form->field($model, 'ngay_ap_dung')->widget(DatePicker::classname(), [
             'options' => ['placeholder' => 'Chọn ngày bắt đầu  ...'],
             'pluginOptions' => [
                 'autoclose' => true,
                 'format' => 'dd/mm/yyyy',
             ]
-               ]); ?>
+            ]); ?>
+          </div>
+        <div class="col-md-4">
           <?= $form->field($model, 'ngay_ket_thuc')->widget(DatePicker::classname(), [
             'options' => ['placeholder' => 'Chọn ngày kết thúc  ...'],
             'pluginOptions' => [
                 'autoclose' => true,
                 'format' => 'dd/mm/yyyy',
             ]
-               ]); ?>
-    
+          ]); ?>
+        </div>
+    </div>
   
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">

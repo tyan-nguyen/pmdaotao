@@ -12,6 +12,7 @@ use yii\filters\VerbFilter;
 use \yii\web\Response;
 use yii\helpers\Html;
 use yii\filters\AccessControl;
+use app\modules\lichhoc\models\PhanThi;
 
 /**
  * HangDaoTaoController implements the CRUD actions for HangDaoTao model.
@@ -390,7 +391,7 @@ class HangDaoTaoController extends Controller
     }
   
     public function actionListHocPhi($id)
-{   
+    {   
      // Lấy thông tin học phí của hạng dựa vào id_hang
      $hocPhis = HocPhi::find()
      ->where(['id_hang' => $id])
@@ -406,8 +407,24 @@ class HangDaoTaoController extends Controller
             'data-bs-dismiss' => "modal"
         ])
     ]);
+    }
     
-}
+    public function actionListPhanThi($id)
+    {
+       // Lấy thông tin phần thi dựa vào id_hang 
+       $phanThi = PhanThi::find()->where(['id_hang'=> $id])->all();
+       return $this->asJson ([
+        'title'=>'Danh sách phần thi',
+        'content'=>$this->renderAjax('list-phan-thi',[
+            'phanThi'=>$phanThi,
+        ]),
+        'footer'=>Html::button('Đóng lại',[
+             'class' =>'btn btn-default pull-left',
+             'data-bs-dismiss'=>"modal"
+        ])
+       ]);
+    }
+
     public function actionUpdateListHocPhi ($id)
     {
         $request = Yii::$app->request;
@@ -418,7 +435,7 @@ class HangDaoTaoController extends Controller
         Yii::$app->response->format = Response::FORMAT_JSON;
         if ($request->isGet) {
             return [
-                'title' => "Cập nhật Học phí #".$id,
+                'title' => "Cập nhật Học phí ",
                 'content' => $this->renderAjax('update2', [
                     'model' => $model,
                 ]),
@@ -438,19 +455,10 @@ class HangDaoTaoController extends Controller
                 
                 'tcontent'=>'Cập nhật học phí thành công!',
             ];
-            /*
-            return [
-                'forceReload' => '#crud-datatable-pjax',
-                'title' => "Học phí #".$id,
-                'content' => $this->renderAjax('mess', [
-                    'model' => $model,
-                ]),
-                'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) 
-                           
-            ];*/
+        
         } else {
             return [
-                'title' => "Cập nhật Học phí #".$id,
+                'title' => "Cập nhật Học phí",
                 'content' => $this->renderAjax('update2', [
                     'model' => $model,
                 ]),
@@ -459,10 +467,9 @@ class HangDaoTaoController extends Controller
             ];
         }
     } else {
-        // Xử lý cho yêu cầu không phải AJAX
         if ($model->load($request->post()) && $model->save()) {
 
-            return $this->redirect(['mess', 'id' => $model->id]); // Chuyển hướng tới trang xem
+            return $this->redirect(['mess', 'id' => $model->id]); 
         } else {
             return $this->render('update2', [
                 'model' => $model,
@@ -471,5 +478,54 @@ class HangDaoTaoController extends Controller
     }
     }
 
+    public function actionUpdateListPhanThi($id)
+    {
+        $request = Yii::$app->request;
+        $model = PhanThi::find()->where(['id' => $id])->one();
+        $idHang = $model->id_hang; 
+        if ($request->isAjax) {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        if ($request->isGet) {
+            return [
+                'title' => "Cập nhật Phần thi ",
+                'content' => $this->renderAjax('updatePhanThi', [
+                    'model' => $model,
+                ]),
+                'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                            Html::button('Lưu lại', ['class' => 'btn btn-primary', 'type' => "submit"])
+            ];
+        } else if ($model->load($request->post()) && $model->save()) {
+            return [
+                'forceClose'=>true,   
+                'reloadType'=>'phanThi',
+                'reloadBlock'=>'#ptContent',
+                'reloadContent'=>$this->renderAjax('list-phan-thi', [
+                    'phanThi' => PhanThi::find()->where(['id_hang' => $idHang])->all(),
+                ]),
+                
+                'tcontent'=>'Cập nhật phần thi thành công!',
+            ];
+        
+        } else {
+            return [
+                'title' => "Cập nhật Phần thi ",
+                'content' => $this->renderAjax('updatePhanThi', [
+                    'model' => $model,
+                ]),
+                'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                            Html::button('Lưu lại', ['class' => 'btn btn-primary', 'type' => "submit"])
+            ];
+        }
+    } else {
+        if ($model->load($request->post()) && $model->save()) {
+
+            return $this->redirect(['mess', 'id' => $model->id]); 
+        } else {
+            return $this->render('updatePhanThi', [
+                'model' => $model,
+            ]);
+        }
+    }
+    }
     
 }

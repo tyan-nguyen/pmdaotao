@@ -797,7 +797,7 @@ public function actionUpdateLichHoc($id, $idHV, $week_string)
                         'idHV'=>$idHV,
                     ]),
                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit2"])
+                                Html::button('Lưu lại',['id'=>'btn-save','class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
             }else if($model->load($request->post()) && $model->save()){
@@ -817,7 +817,7 @@ public function actionUpdateLichHoc($id, $idHV, $week_string)
                         'idHV'=>$idHV,
                     ]),
                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit2"])
+                               Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit2"])
         
                 ];         
             }

@@ -85,6 +85,15 @@ $listTaiKhoan = ArrayHelper::map($taiKhoans, 'id', 'username');
                                                    'role' => 'modal-remote-2',
                                                 ]
                         ) ?>
+                        <?= Html::a('<i class="fa fa-cog"> </i>', 
+                                             ['/nhanvien/nhan-vien/setting-phong-ban'],
+                                                [
+                                                   'class' => 'btn ripple btn-success btn-sm',
+                                                   'title' => 'Cài đặt',
+                                                   'style' => 'color: white;font-size: 0.6rem;padding: 0.2rem 0.5rem;',
+                                                   'role' => 'modal-remote-2',
+                                                ]
+                        ) ?>
                 </div>
    
                <div class="mt-1">
@@ -104,7 +113,17 @@ $listTaiKhoan = ArrayHelper::map($taiKhoans, 'id', 'username');
                                              ['/nhanvien/nhan-vien/insert-to'],
                                                 [
                                                    'class' => 'btn ripple btn-primary btn-sm',
-                                                   'title' => 'Cập nhật',
+                                                   'title' => 'Thêm tổ',
+                                                   'style' => 'color: white;font-size: 0.6rem;padding: 0.2rem 0.5rem;',
+                                                   'role' => 'modal-remote-2',
+                                                ]
+                        ) ?>
+
+                        <?= Html::a('<i class="fa fa-cog"> </i>', 
+                                             ['/nhanvien/nhan-vien/setting-to'],
+                                                [
+                                                   'class' => 'btn ripple btn-success btn-sm',
+                                                   'title' => 'Cài đặt',
                                                    'style' => 'color: white;font-size: 0.6rem;padding: 0.2rem 0.5rem;',
                                                    'role' => 'modal-remote-2',
                                                 ]

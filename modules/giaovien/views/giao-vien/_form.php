@@ -16,14 +16,11 @@ $this->registerCssFile('@web/css/giaoVien.css', [
 $phongBans = PhongBan::find()->all();
 $listPhongBan = ArrayHelper::map($phongBans, 'id', 'ten_phong_ban');
 
-
 $taiKhoans = User::find()->all();
 $listTaiKhoan = ArrayHelper::map($taiKhoans, 'id', 'username');
-
 ?>
 
 <div class="giao-vien-form"  id ="pbContent">
-
     <?php $form = ActiveForm::begin(); ?>
     <?php CardWidget::begin(['title'=>'Thông tin cá nhân giáo viên']) ?>
        <div class="row">
@@ -67,7 +64,6 @@ $listTaiKhoan = ArrayHelper::map($taiKhoans, 'id', 'username');
                ) ?>
            </div>
       </div>
-           
         <?php CardWidget::end([]) ?>
 
         <?php CardWidget::begin(['title'=>'Thông tin công việc']) ?>
