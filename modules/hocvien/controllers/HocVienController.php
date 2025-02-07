@@ -924,5 +924,16 @@ public function actionUpdateLichHoc($id, $idHV, $week_string)
     ]);
     }
 
-
+    public function actionGetThuTuThi($id_phan_thi)
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    
+        $phanThi = PhanThi::findOne($id_phan_thi);
+        if ($phanThi) {
+            return ['success' => true, 'thu_tu_thi' => $phanThi->thu_tu_thi];
+        } else {
+            return ['success' => false];
+        }
+    }
+    
 }

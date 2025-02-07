@@ -93,7 +93,8 @@ use app\modules\lichhoc\models\KetQuaThi;
             <thead>
                 <tr>
                     <th>Phần thi</th>
-                    <th>Điểm số</th>
+                    <th class="hidden-column" style=" display: none;">Thứ tự thi</th>
+                    <th>Điểm</th>
                     <th>Kết quả</th>
                 </tr>
             </thead>
@@ -107,7 +108,7 @@ use app\modules\lichhoc\models\KetQuaThi;
             </tbody>
             <tfoot>
                <tr id="statusRow">
-                   <td colspan="3" style="text-align: center; font-weight: bold;">Kết quả:</td>
+                   <td colspan="4" style="text-align: center; font-weight: bold;">Kết quả:</td>
                </tr>
             </tfoot>
         </table>
@@ -187,7 +188,7 @@ function reloadResultsTable(hocVienId) {
                         </td>
                     </tr>
                 `);
-                if (resultText === 'Đủ điều kiện cấp bằng') {
+                if (resultText === 'Đủ điều kiện cấp giấy phép') {
                    $('#btn-chuyen').hide(); 
                    $('#input-lan-thi').prop('disabled', true);
                    $('#dropdown-phan-thi').prop('disabled', true);
@@ -263,6 +264,7 @@ $(document).ready(function () {
 </script>
 
 <script>
+let ketQuaThiData = []; 
 $(document).ready(function () {
     function checkFields() {
         var phanThi = $('#dropdown-phan-thi').val();
@@ -284,7 +286,7 @@ $(document).ready(function () {
 
     checkFields();
 
-    let ketQuaThiData = []; 
+   
     function addKetQuaThi() {
         let idPhanThi = $('#dropdown-phan-thi').val(); 
         let lanThi = $('#input-lan-thi').val();       
@@ -359,6 +361,7 @@ $(document).ready(function () {
     checkResultsTable();
     $('#btn-reset').click(function () {
         $('#resultsTableBody').empty();
+        ketQuaThiData = []; 
         $('#dropdown-phan-thi, #input-lan-thi, #input-diem-so, #input-ket-qua').val('');
         checkResultsTable();
     });
@@ -370,7 +373,6 @@ $(document).ready(function () {
         childList: true, 
         subtree: false  
     });
-
 });
 </script>
 
