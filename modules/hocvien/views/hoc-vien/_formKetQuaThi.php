@@ -264,34 +264,28 @@ $(document).ready(function () {
 </script>
 
 <script>
-let ketQuaThiData = []; 
 $(document).ready(function () {
+    let ketQuaThiData = [];
+
     function checkFields() {
         var phanThi = $('#dropdown-phan-thi').val();
         var lanThi = $('#input-lan-thi').val();
         var diemSo = $('#input-diem-so').val();
         var ketQua = $('#input-ket-qua').val();
 
-        if (phanThi && lanThi && diemSo && ketQua) {
-            $('#btn-chuyen').prop('disabled', false);
-            
-        } else {
-           $('#btn-chuyen').prop('disabled', true);
-        }
+        $('#btn-chuyen').prop('disabled', !(phanThi && lanThi && diemSo && ketQua));
     }
 
-    $('#dropdown-phan-thi, #input-lan-thi, #input-diem-so, #input-ket-qua').on('input change', function() {
-        checkFields();
-    });
+    function checkResultsTable() {
+        $('#btn-save').prop('disabled', $('#resultsTableBody tr').length === 0);
+    }
 
-    checkFields();
-
-   
     function addKetQuaThi() {
-        let idPhanThi = $('#dropdown-phan-thi').val(); 
-        let lanThi = $('#input-lan-thi').val();       
-        let diemSo = $('#input-diem-so').val();       
-        let ketQua = $('#input-ket-qua').val();       
+        let idPhanThi = $('#dropdown-phan-thi').val();
+        let lanThi = $('#input-lan-thi').val();
+        let diemSo = $('#input-diem-so').val();
+        let ketQua = $('#input-ket-qua').val();
+
         if (idPhanThi && lanThi && diemSo && ketQua) {
             ketQuaThiData.push({
                 id_phan_thi: idPhanThi,
@@ -299,45 +293,54 @@ $(document).ready(function () {
                 ket_qua: ketQua,
                 lan_thi: lanThi,
             });
+
             let color = ketQua === 'ĐẠT' ? 'green' : 'red';
             let phanThiName = $('#dropdown-phan-thi option:selected').text();
             let newRow = `<tr>
-                             <td>${phanThiName} (${lanThi})</td>
+                            <td>${phanThiName} (${lanThi})</td>
                             <td style="color: red; font-weight: bold;">${diemSo}</td>
                             <td style="color: ${color}; font-weight: bold;" id="idKq">${ketQua}</td>
                           </tr>`;
-            $('#resultsTableBody').append(newRow); 
 
-            $('#dropdown-phan-thi').val('');
-            $('#input-lan-thi').val('');
-            $('#input-diem-so').val('');
-            $('#input-ket-qua').val('');
+            $('#resultsTableBody').append(newRow);
+
+            $('#dropdown-phan-thi, #input-lan-thi, #input-diem-so, #input-ket-qua').val('');
+            checkFields();
+            checkResultsTable();
         } else {
             alert('Vui lòng điền đầy đủ thông tin!');
         }
     }
-    $('#btn-chuyen').click(function () {
-        addKetQuaThi(); 
+
+    $('#dropdown-phan-thi, #input-lan-thi, #input-diem-so, #input-ket-qua').on('input change', checkFields);
+    $('#btn-chuyen').click(addKetQuaThi);
+
+    $('#btn-reset').click(function () {
+        $('#resultsTableBody').empty();
+        ketQuaThiData = [];
+        $('#dropdown-phan-thi, #input-lan-thi, #input-diem-so, #input-ket-qua').val('');
+        checkResultsTable();
     });
 
     $(document).on('click', '.btn-primary[type="submit2"]', function (e) {
-        e.preventDefault(); 
+        e.preventDefault();
         $.ajax({
             url: '/hocvien/hoc-vien/create-ket-qua-thi',
             type: 'POST',
             data: {
-                ketQuaThiData: ketQuaThiData, 
-                idHV: idHV,                  
-                idLT: idLT,                  
+                ketQuaThiData: ketQuaThiData,
+                idHV: idHV,
+                idLT: idLT,
             },
             success: function (response) {
                 if (response.success) {
                     alert('Lưu thành công!');
                     checkPhanThi = 0;
                     reloadResultsTable(idHV);
-                    $('#modal').modal('hide'); 
-                    ketQuaThiData = [];        
+                    $('#modal').modal('hide');
+                    ketQuaThiData = [];
                     $('#resultsTableBody').empty();
+                    checkResultsTable();
                 }
             },
             error: function (xhr, status, error) {
@@ -348,33 +351,16 @@ $(document).ready(function () {
             },
         });
     });
-});
-</script>
 
-<script>
-$(document).ready(function () {
-  
-    function checkResultsTable() {
-        let hasData = $('#resultsTableBody tr').length > 0;
-        $('#btn-save').prop('disabled', !hasData);
-    }
+    const observer = new MutationObserver(checkResultsTable);
+    observer.observe(document.getElementById('resultsTableBody'), { childList: true, subtree: false });
+
+    checkFields();
     checkResultsTable();
-    $('#btn-reset').click(function () {
-        $('#resultsTableBody').empty();
-        ketQuaThiData = []; 
-        $('#dropdown-phan-thi, #input-lan-thi, #input-diem-so, #input-ket-qua').val('');
-        checkResultsTable();
-    });
-    const observer = new MutationObserver(function () {
-        checkResultsTable();
-    });
-
-    observer.observe(document.getElementById('resultsTableBody'), {
-        childList: true, 
-        subtree: false  
-    });
 });
 </script>
+
+
 
 <style>
 .form-ket-qua-thi label {
