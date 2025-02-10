@@ -36,7 +36,7 @@ $modelLTs = $modelKH ? LichThi::find()->where(['id_khoa_hoc' => $modelKH->id])->
             $chunkedLichThi = array_chunk($modelLTs, ceil(count($modelLTs) / 2)); 
             ?>
             <?php foreach ($chunkedLichThi as $index => $lichThiGroup): ?>
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <div class="card custom-card shadow-lg">
                         <div class="card-header custom-card-header rounded-bottom-0 text-center" style="background-color: #f8f9fa; border-bottom: 2px solid #0d6efd;">
                             <h5 class="card-title mb-0" style="color: #0d6efd; font-weight: bold;">
@@ -46,8 +46,12 @@ $modelLTs = $modelKH ? LichThi::find()->where(['id_khoa_hoc' => $modelKH->id])->
                         <div class="card-body" style="background-color: #fdfdfe;">
                             <?php foreach ($lichThiGroup as $modelLT): ?>
                                 <p>
+                                    <i class= "fas fa-book text-success me-2"></i>
+                                    <strong> Kỳ thi: </strong><?= Html::encode($modelLT->ten_ky_thi ?? '(Chưa xác định)') ?>
+                                </p>
+                                <p>
                                     <i class="fas fa-book text-success me-2"></i>
-                                    <strong>Tên khóa học:</strong> <?= Html::encode($modelLT->khoaHoc->ten_khoa_hoc ?? '(Chưa xác định)') ?>
+                                    <strong>Khóa học:</strong> <?= Html::encode($modelLT->khoaHoc->ten_khoa_hoc ?? '(Chưa xác định)') ?>
                                 </p>
                                 <p>
                                     <i class="fas fa-users text-warning me-2"></i>

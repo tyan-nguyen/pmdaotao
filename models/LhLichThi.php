@@ -16,6 +16,8 @@ use Yii;
  * @property string|null $trang_thai
  * @property int|null $nguoi_tao
  * @property string|null $thoi_gian_tao
+ * @property string $ten_ky_thi
+ * @property string $loai_lich_thi
  *
  * @property NvNhanVien $giaoVienGac
  * @property HvKhoaHoc $khoaHoc
@@ -41,6 +43,8 @@ class LhLichThi extends \yii\db\ActiveRecord
             [['id_khoa_hoc', 'hoc_phan', 'id_phong_thi', 'id_giao_vien_gac', 'thoi_gian_thi'], 'required'],
             [['id_khoa_hoc', 'id_nhom', 'id_phong_thi', 'id_giao_vien_gac', 'nguoi_tao'], 'integer'],
             [['thoi_gian_thi', 'thoi_gian_tao'], 'safe'],
+            [['loai_lich_thi'], 'string', 'max' => 20],
+            [['ten_ky_thi'], 'string', 'max' => 50],
             [['id_giao_vien_gac'], 'exist', 'skipOnError' => true, 'targetClass' => NvNhanVien::class, 'targetAttribute' => ['id_giao_vien_gac' => 'id']],
             [['id_khoa_hoc'], 'exist', 'skipOnError' => true, 'targetClass' => HvKhoaHoc::class, 'targetAttribute' => ['id_khoa_hoc' => 'id']],
             [['id_nhom'], 'exist', 'skipOnError' => true, 'targetClass' => HvNhom::class, 'targetAttribute' => ['id_nhom' => 'id']],

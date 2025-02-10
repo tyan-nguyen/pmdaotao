@@ -23,6 +23,9 @@ use app\custom\CustomFunc;
 
     <div class ="row">
          <div class="col-md-4">
+               <?= $form->field($model, 'ten_ky_thi')->textInput(['maxlength' => true]) ?>
+         </div>
+         <div class="col-md-4">
              <?= $form->field($model, 'id_khoa_hoc')->widget(Select2::classname(), [
                  'data' => KhoaHoc::getList(),
                     'language' => 'vi',
@@ -51,7 +54,7 @@ use app\custom\CustomFunc;
                     ],
              ]);?>
          </div>
-         <div class="col-md-4">
+        <div class="col-md-4">
                    <?= $form->field($model, 'thoi_gian_thi')->widget(\kartik\datetime\DateTimePicker::classname(), [
                      'options' => ['placeholder' => 'Chọn thời gian thi...'],
                      'name' => 'dp_2',
@@ -73,6 +76,17 @@ use app\custom\CustomFunc;
                         'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
                     ],
              ]);?>
+         </div>
+         <div class="col-md-4">
+            <?= $form->field($model, 'loai_lich_thi')->dropDownList(
+               [
+                  'CHINH_THUC' => 'CHÍNH THỨC',
+                  'THI_LAI' => 'THI LẠI',
+               ],
+               [
+                  'prompt' => 'Chọn loại kỳ thi', 
+               ]
+            ) ?>
          </div>
        
     </div>

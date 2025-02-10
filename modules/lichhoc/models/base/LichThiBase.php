@@ -20,11 +20,14 @@ use app\modules\lichhoc\models\PhongHoc;
  * @property string|null $trang_thai
  * @property int|null $nguoi_tao
  * @property string|null $thoi_gian_tao
+ * @property string $ten_ky_thi
+ * @property string $loai_lich_thi
  *
  * @property NhanVien $giaoVienGac
  * @property KhoaHoc $khoaHoc
  * @property Nhom $nhom
  * @property PhongHoc $phongThi
+ 
  */
 class LichThiBase extends \app\models\LhLichThi 
 {
@@ -45,6 +48,8 @@ class LichThiBase extends \app\models\LhLichThi
             [['id_khoa_hoc', 'id_phong_thi', 'id_giao_vien_gac', 'thoi_gian_thi'], 'required'],
             [['id_khoa_hoc', 'id_nhom', 'id_phong_thi', 'id_giao_vien_gac', 'nguoi_tao'], 'integer'],
             [['thoi_gian_thi', 'thoi_gian_tao'], 'safe'],
+            [['loai_lich_thi'], 'string', 'max' => 20],
+            [['ten_ky_thi'], 'string', 'max' => 50],
             [['id_giao_vien_gac'], 'exist', 'skipOnError' => true, 'targetClass' => NhanVien::class, 'targetAttribute' => ['id_giao_vien_gac' => 'id']],
             [['id_khoa_hoc'], 'exist', 'skipOnError' => true, 'targetClass' => KhoaHoc::class, 'targetAttribute' => ['id_khoa_hoc' => 'id']],
             [['id_nhom'], 'exist', 'skipOnError' => true, 'targetClass' => NhomHoc::class, 'targetAttribute' => ['id_nhom' => 'id']],
@@ -67,6 +72,8 @@ class LichThiBase extends \app\models\LhLichThi
             'trang_thai' => 'Trạng thái',
             'nguoi_tao' => 'Người tạo',
             'thoi_gian_tao' => 'Thời gian tạo',
+            'ten_ky_thi'=>'Tên kỳ thi',
+            'loai_lich_thi'=>'Loại kỳ thi',
         ];
     }
 
