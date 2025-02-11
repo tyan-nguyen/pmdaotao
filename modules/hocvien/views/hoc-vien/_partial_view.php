@@ -52,13 +52,13 @@ $overallResult = $isAllPassed ? 'Đủ điều kiện cấp giấy phép' : 'Ch�
         ) ?>
     <?php endif; ?>
 <?php else: ?>
-    <table class="table table-bordered text-center" style="border: 4px solid skyblue;">
+    <table class="table table-bordered text-center" style="border: 2px solid skyblue;">
     <thead>
-        <tr style="border: 4px solid skyblue;">
-            <th style="border: 4px solid skyblue;">PHẦN THI</th>
-            <th style="border: 4px solid skyblue;">LẦN THI </th>
-            <th style="border: 4px solid skyblue;">ĐIỂM SỐ</th>
-            <th style="border: 4px solid skyblue;">KẾT QUẢ</th>
+        <tr style="border: 2px solid skyblue;">
+            <th style="border: 2px solid skyblue;">PHẦN THI</th>
+            <th style="border: 2px solid skyblue;">LẦN THI </th>
+            <th style="border: 2px solid skyblue;">ĐIỂM SỐ</th>
+            <th style="border: 2px solid skyblue;">KẾT QUẢ</th>
             <tfoot>
                 <tr id="statusRow">
                     <td colspan="4" style="text-align: center; font-weight: bold; color: <?= $isAllPassed ? 'green' : 'red' ?>;">
@@ -84,14 +84,14 @@ $overallResult = $isAllPassed ? 'Đủ điều kiện cấp giấy phép' : 'Ch�
             $ketqua = isset($ketquaThiIndexed[$phanThi->id]) ? $ketquaThiIndexed[$phanThi->id] : null;
             ?>
             <tr>
-                <td style="border: 4px solid skyblue;"><?= Html::encode($phanThi->ten_phan_thi) ?></td>
-                <td style="border: 4px solid skyblue; font-weight: bold; color: blue;">
+                <td style="border: 2px solid skyblue;"><?= Html::encode($phanThi->ten_phan_thi) ?></td>
+                <td style="border: 2px solid skyblue; font-weight: bold; color: blue;">
                     <?= $ketqua ? Html::encode($ketqua->lan_thi) : '<span style="color:red;">X</span>' ?>
                 </td>
-                <td style="border: 4px solid skyblue; font-weight: bold; color: blue;">
+                <td style="border: 2px solid skyblue; font-weight: bold; color: blue;">
                     <?= $ketqua ? Html::encode($ketqua->diem_so) : '<span style="color:red;">X</span>' ?>
                 </td>
-                <td style="border: 4px solid skyblue; font-weight: bold; color: <?= $ketqua && $ketqua->ket_qua == 'ĐẠT' ? 'green' : ($ketqua && $ketqua->ket_qua == 'RỚT' ? 'red' : 'gray') ?>;">
+                <td style="border: 2px solid skyblue; font-weight: bold; color: <?= $ketqua && $ketqua->ket_qua == 'ĐẠT' ? 'green' : ($ketqua && $ketqua->ket_qua == 'RỚT' ? 'red' : 'gray') ?>;">
                      <?= $ketqua ? Html::encode($ketqua->ket_qua) : '<span style="color:red;">X</span>' ?>
                 </td>
             </tr>

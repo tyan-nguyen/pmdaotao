@@ -439,7 +439,7 @@ class KhoaHocController extends Controller
     {
         $request = Yii::$app->request;
         $model = new NhomHoc();  
-      
+     
         if($request->isAjax){
             /*
             *   Process for ajax request
@@ -451,38 +451,23 @@ class KhoaHocController extends Controller
                     'content'=>$this->renderAjax('add-group', [
                         'model' => $model, 
                     ]),
-                    'footer'=>    Html::a('<i class="fa fa-list-ul"> </i> Danh sách Nhóm', 
-                                  ['/khoahoc/khoa-hoc/danh-sach-nhom', 'id' => $id, 'modalType' => 'modal-remote-2'], 
-                                    [
-                                      'class' => 'btn btn-info',
-                                      'role' => 'modal-remote-2',
-                                      'title' => 'Danh sách Nhóm'
-                                    ]
-                                ) .
+                    'footer'=>
                                 Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                                 Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
             } else if ($model->load($request->post())) {  
                 $model->id_khoa_hoc = $id;
-                $model->save();
                 if ($model->save()) {
-                return [
-                    'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Thêm nhóm học",
-                    'content'=>'<span class="text-success">Thêm Nhóm học thành công !</span>',
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                               Html::a('Tiếp tục thêm',['add-group','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
-                ];         
-            }else{           
-                return [
-                    'title'=> "Thêm nhóm học",
-                    'content'=>$this->renderAjax('add-group', [
-                        'model' => $model,
-                       
-                    ]),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
-                ];         
+                    $nhomHoc = NhomHoc::find()->where(['id_khoa_hoc' => $id])->all();
+                    return [
+                        'forceClose'=>true,   
+                        'reloadType'=>'dsNhom',
+                        'reloadBlock'=>'#dsNhomContent',
+                        'reloadContent'=>$this->renderAjax('danh-sach-nhom', [
+                            'nhomHoc' => $nhomHoc, 
+                        ]),
+                        'tcontent'=>'Thêm nhóm thành công!',
+                    ];             
             }
         }else{
             /*
@@ -503,7 +488,6 @@ class KhoaHocController extends Controller
 
 public function actionDanhSachNhom($id)
 {
-    
     if (!$id || !is_numeric($id)) {
         return $this->asJson([
             'title' => 'Lỗi!',
@@ -523,7 +507,16 @@ public function actionDanhSachNhom($id)
         return $this->asJson([
             'title' => 'Thông báo!',
             'content' => 'Không có nhóm nào thuộc khóa học này.',
-            'footer' => Html::button('Đóng lại', [
+            'footer' => Html::a('<i class="fa fa-plus"> </i> Thêm nhóm', 
+            ['/khoahoc/khoa-hoc/add-group', 'id' => $id, 'modalType' => 'modal-remote-2'], 
+              [
+                'class' => 'btn btn-info',
+                'role' => 'modal-remote-2',
+                'title' => 'Danh sách Nhóm'
+              ]
+          ) .
+                 
+                Html::button('Đóng lại', [
                 'class' => 'btn btn-default pull-left',
                 'data-bs-dismiss' => 'modal'
             ]),
@@ -537,7 +530,15 @@ public function actionDanhSachNhom($id)
             'nhomHoc' => $nhomHoc,
             'idKhoaHoc' => $id,
         ]),
-        'footer' => Html::button('Đóng lại', [
+        'footer' =>   Html::a('<i class="fa fa-plus"> </i> Thêm nhóm', 
+        ['/khoahoc/khoa-hoc/add-group', 'id' => $id, 'modalType' => 'modal-remote-2'], 
+          [
+            'class' => 'btn btn-info',
+            'role' => 'modal-remote-2',
+            'title' => 'Danh sách Nhóm'
+          ]
+      ) .
+            Html::button('Đóng lại', [
             'class' => 'btn btn-default pull-left',
             'data-bs-dismiss' => 'modal'
         ]),
@@ -1014,40 +1015,98 @@ public function actionUpdateLichHoc($id,$idKH,$week_string,$id_nhom)
 
     public function actionAddStudentsToGroup($id_nhom)
     {
-        $nhomHoc = NhomHoc::find()->where(['id'=>$id_nhom])->one();
+        $nhomHoc = NhomHoc::findOne($id_nhom);
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
     
         $selectedHocVien = Yii::$app->request->post('selected_hoc_vien', []);
         $response = ['status' => 'error', 'message' => 'Vui lòng chọn ít nhất một học viên.'];
     
-        if (!empty($selectedHocVien)) {
-            foreach ($selectedHocVien as $hocVienId) {
-                $hocVien = HocVien::findOne($hocVienId);
-                if ($hocVien) {
-                    $hocVien->id_nhom = $id_nhom;
-                    $hocVien->save(false);
-                }
+        if ($nhomHoc) {
+            $soLuongChoPhep = $nhomHoc->so_luong_hoc_vien;
+            $soLuongTrongNhom = HocVien::find()->where(['id_nhom' => $id_nhom])->count(); 
+            $soLuongMuonThem = count($selectedHocVien);
+    
+            if (($soLuongTrongNhom + $soLuongMuonThem) > $soLuongChoPhep) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Số lượng học viên vượt quá số lượng cho phép của nhóm (' . $soLuongChoPhep . ').',
+                ];
             }
     
-            $hocVienTrongNhom = HocVien::find()->where(['id_nhom' => $id_nhom])->all();
-            $hocVienChuaCoNhom = HocVien::find()
-            ->where(['id_nhom' => null, 'id_khoa_hoc' => $nhomHoc->id_khoa_hoc])
-            ->all();
-            $totalTrongNhom = count($hocVienTrongNhom);
+            if (!empty($selectedHocVien)) {
+                foreach ($selectedHocVien as $hocVienId) {
+                    $hocVien = HocVien::findOne($hocVienId);
+                    if ($hocVien) {
+                        $hocVien->id_nhom = $id_nhom;
+                        $hocVien->save(false);
+                    }
+                }
     
-            $response = [
-                'status' => 'success',
-                'message' => 'Đã bổ sung học viên vào nhóm.',
-                'content' => $this->renderPartial('_group_details', [
-                    'hocVienTrongNhom' => $hocVienTrongNhom,
-                    'hocVienChuaCoNhom' => $hocVienChuaCoNhom,
-                    'totalTrongNhom' => $totalTrongNhom,
-                    'nhomHoc' => $id_nhom,
-                ]),
-            ];
+                // Cập nhật danh sách học viên sau khi thêm
+                $hocVienTrongNhom = HocVien::find()->where(['id_nhom' => $id_nhom])->all();
+                $hocVienChuaCoNhom = HocVien::find()
+                    ->where(['id_nhom' => null, 'id_khoa_hoc' => $nhomHoc->id_khoa_hoc])
+                    ->all();
+                $totalTrongNhom = count($hocVienTrongNhom);
+    
+                $response = [
+                    'status' => 'success',
+                    'message' => 'Đã bổ sung học viên vào nhóm.',
+                    'content' => $this->renderPartial('_group_details', [
+                        'hocVienTrongNhom' => $hocVienTrongNhom,
+                        'hocVienChuaCoNhom' => $hocVienChuaCoNhom,
+                        'totalTrongNhom' => $totalTrongNhom,
+                        'nhomHoc' => $id_nhom,
+                    ]),
+                ];
+            }
         }
     
         return $response;
     }
     
+    public function actionUpdateNhomHoc ($id)
+    {
+        $request = Yii::$app->request;
+        $model = NhomHoc:: find()->where(['id'=> $id])->one();
+        if ($request->isAjax) {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        if ($request->isGet) {
+            return [
+                'title' => "Cập nhật chi tiết nhóm #".$id,
+                'content' => $this->renderAjax('update_chi_tiet_nhom', [
+                    'model' => $model,
+                ]),
+                'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                            Html::button('Lưu lại', ['class' => 'btn btn-primary', 'type' => "submit"])
+            ];
+        } else if ($model->load($request->post()) && $model->save()) {
+            $nhomHoc = NhomHoc::find()->where(['id_khoa_hoc'=>$model->id_khoa_hoc])->all();
+            return [
+                'forceClose'=>true,   
+                'reloadType'=>'chitietNhom',
+                'reloadBlock'=>'#dsNhomContent',
+                'reloadContent'=>$this->renderAjax('danh-sach-nhom', [
+                    'nhomHoc' => $nhomHoc, 
+                    
+                ]),
+                'tcontent'=>'Cập nhật thành công!',
+            ];
+        } else {
+            return [
+                'title' => "Cập nhật Nhóm #".$id,
+                'content' => $this->renderAjax('update_chi_tiet_nhom', [
+                    'model' => $model,
+                    
+                ]),
+                'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                            Html::button('Lưu lại', ['class' => 'btn btn-primary', 'type' => "submit"])
+            ];
+        }
+    } else {
+        
+        
+    }
+    }
+
 }

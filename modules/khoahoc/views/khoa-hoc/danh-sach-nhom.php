@@ -11,7 +11,8 @@ $this->title = 'Danh sách Nhóm';
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
-<div class="nhom-hoc-danh-sach">
+
+<div class="nhom-hoc-danh-sach" id="dsNhomContent">
     <?php if (!empty($nhomHoc)): ?>
         <table class="table table-bordered">
             <thead>
@@ -31,8 +32,18 @@ $this->params['breadcrumbs'][] = $this->title;
                         <td style="color:red;"><?= Html::encode($nhom->so_luong_hoc_vien)?></td>
                         <td style ="color:blue;"><?= HocVien::find()->where(['id_nhom' => $nhom->id])->count() ?></td>
                         <td>
-                            <?= Html::button('<i class="fa fa-trash"></i> Xóa', [
+                            <?= Html::a('<i class="fa fa-exchange"> </i>', 
+                                ['/khoahoc/khoa-hoc/update-nhom-hoc', 'id' => $nhom->id],
+                                [
+                                    'class' => 'btn ripple btn-success btn-sm',
+                                    'title' => 'Cập nhật',
+                                    'style' => 'color: white;',
+                                    'role' => 'modal-remote-2',
+                                ]
+                            ) ?>
+                            <?= Html::button('<i class="fa fa-trash"></i>', [
                                 'class' => 'btn btn-danger btn-sm',
+                                'title'=>'Xóa',
                                 'onclick' => "deleteRecord({$nhom->id})",
                             ]) ?>
                         </td>
@@ -41,7 +52,9 @@ $this->params['breadcrumbs'][] = $this->title;
             </tbody>
         </table>
     <?php else: ?>
-        <p>Không có nhóm học nào trong khóa học này.</p>
+        <div class="alert alert-warning">
+            Không có nhóm nào thuộc khóa học này.
+        </div>
     <?php endif; ?>
 </div>
 
@@ -71,6 +84,7 @@ function deleteRecord(id) {
 JS;
 $this->registerJs($js);
 ?>
+
 <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 

@@ -12,21 +12,20 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 <div class="group-details">
-    <h5 style="color:blue; text-align:center;">DANH SÁCH HỌC VIÊN</h5>
-    <table class="table table-bordered table-striped"id="nhomHVTable" >
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Tên học viên</th>
-                <th>Ngày sinh</th>
-                <th>Giới tính</th>
-                <th>Địa chỉ</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php if (empty($hocVienTrongNhom)): ?>
-            
-            <?php else: ?>
+    <!-- Tiêu đề danh sách học viên -->
+    <h5 id="toggleTrongNhom" class="toggle-title active">DANH SÁCH HỌC VIÊN</h5>
+    <div id="hocVienTrongNhomWrapper">
+        <table class="table table-bordered table-striped" id="nhomHVTable">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Tên học viên</th>
+                    <th>Ngày sinh</th>
+                    <th>Giới tính</th>
+                    <th>Địa chỉ</th>
+                </tr>
+            </thead>
+            <tbody>
                 <?php foreach ($hocVienTrongNhom as $index => $hocVien): ?>
                     <tr>
                         <td><?= $index + 1 ?></td>
@@ -36,33 +35,28 @@ $this->params['breadcrumbs'][] = $this->title;
                         <td><?= Html::encode($hocVien->dia_chi) ?></td>
                     </tr>
                 <?php endforeach; ?>
-            <?php endif; ?>
-        </tbody>
-    </table>
-    <div style="text-align: right; margin-top: 20px;">
-       <button style="background-color:rgb(55, 11, 211); color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
-         <span><i class="fa fa-group"></i> :<?= $totalTrongNhom ?> HV</span>
-       </button>
+            </tbody>
+        </table>
     </div>
-    <hr style="text-align:center;">
 
-    <h5 style="color:red; text-align:center;">DANH SÁCH HỌC VIÊN CHƯA SẮP NHÓM</h5>
-    <form id="add-students-form" method="post" action="<?= Url::to(['add-students-to-group', 'id_nhom' => $nhomHoc->id]) ?>">
-        <table class="table table-bordered table-striped" id="noNhomHVTable">
-            <thead>
-                <tr>
-                    <th><input type="checkbox" id="select-all"></th>
-                    <th>#</th>
-                    <th>Tên học viên</th>
-                    <th>Ngày sinh</th>
-                    <th>Giới tính</th>
-                    <th>Địa chỉ</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php if (empty($hocVienChuaCoNhom)): ?>
-            
-                <?php else: ?>
+    <hr>
+
+    <!-- Tiêu đề danh sách học viên chưa có nhóm -->
+    <h5 id="toggleChuaNhom" class="toggle-title">DANH SÁCH HỌC VIÊN CHƯA SẮP NHÓM</h5>
+    <div id="hocVienChuaNhomWrapper" style="display: none;">
+        <form id="add-students-form" method="post" action="<?= Url::to(['add-students-to-group', 'id_nhom' => $nhomHoc->id]) ?>">
+            <table class="table table-bordered table-striped" id="noNhomHVTable">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" id="select-all"></th>
+                        <th>#</th>
+                        <th>Tên học viên</th>
+                        <th>Ngày sinh</th>
+                        <th>Giới tính</th>
+                        <th>Địa chỉ</th>
+                    </tr>
+                </thead>
+                <tbody>
                     <?php foreach ($hocVienChuaCoNhom as $index => $hocVien): ?>
                         <tr>
                             <td><input type="checkbox" name="selected_hoc_vien[]" value="<?= $hocVien->id ?>"></td>
@@ -73,16 +67,17 @@ $this->params['breadcrumbs'][] = $this->title;
                             <td><?= Html::encode($hocVien->dia_chi) ?></td>
                         </tr>
                     <?php endforeach; ?>
-                <?php endif; ?>
-            </tbody>
-        </table>
-        <div style="text-align: right; margin-top: 20px;">
-            <button type="submit" class="btn btn-success">
-                <i class="fa fa-user-plus"></i> Bổ sung học viên
-            </button>
-        </div>
-    </form>
+                </tbody>
+            </table>
+            <div style="text-align: right; margin-top: 20px;">
+                <button type="submit" class="btn btn-success">
+                    <i class="fa fa-user-plus"></i> Bổ sung học viên
+                </button>
+            </div>
+        </form>
+    </div>
 </div>
+
 
 
 <?php
@@ -149,6 +144,49 @@ $(document).on('submit', '#add-students-form', function(e) {
     }
 });
 </script>
+
+
+<script>
+$(document).ready(function () {
+    $("#toggleTrongNhom").click(function () {
+        $("#hocVienTrongNhomWrapper").slideDown();
+        $("#hocVienChuaNhomWrapper").slideUp();
+        $("#toggleTrongNhom").addClass("active");
+        $("#toggleChuaNhom").removeClass("active");
+    });
+
+    $("#toggleChuaNhom").click(function () {
+        $("#hocVienTrongNhomWrapper").slideUp();
+        $("#hocVienChuaNhomWrapper").slideDown();
+        $("#toggleTrongNhom").removeClass("active");
+        $("#toggleChuaNhom").addClass("active");
+    });
+});
+</script>
+
+
+<style>
+.toggle-title {
+    color: blue;
+    text-align: center;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 10px;
+    background: #f0f0f0;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    transition: all 0.3s ease-in-out;
+}
+
+.toggle-title:hover {
+    background: #dcdcdc;
+}
+
+.toggle-title.active {
+    background: #0056b3;
+    color: white;
+}
+</style>
 
 
 

@@ -26,7 +26,7 @@ return [
                 return Url::to(['insert-many-hoc-vien', 'id' => $key]);
             }
             if ($action === 'addGroup') {
-                return Url::to(['add-group', 'id' => $key]);
+                return Url::to(['danh-sach-nhom', 'id' => $key]);
             }
 
             return Url::to([$action, 'id' => $key]);

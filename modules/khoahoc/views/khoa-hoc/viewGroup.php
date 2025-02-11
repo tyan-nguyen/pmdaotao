@@ -6,8 +6,8 @@ use yii\helpers\Html;
 $modelNhom = NhomHoc::find()->where(['id_khoa_hoc'=>$model->id])->all();
 if(empty($modelNhom))
 {
-  echo '<p style="text-align:center;">KHÔNG CÓ NHÓM HỌC CHO KHÓA HỌC NÀY </p>';
-}
+  echo '<p style="text-align:center; class="alert alert-warning"" >KHÔNG CÓ NHÓM HỌC CHO KHÓA HỌC NÀY </p>';
+}  
 
 echo '<div style="display: flex; flex-wrap: wrap; gap: 20px;">';
 

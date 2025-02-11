@@ -29,8 +29,12 @@ $idNhom = $model->nhomHoc ? $model->nhomHoc->id : null;
                         </p>
                     <?php else: ?>
                         <p>
+                           <i class= "fas fa-book text-success me-2"></i>
+                           <strong> Kỳ thi: </strong><?= Html::encode($modelLT->ten_ky_thi ?? '(Chưa xác định)') ?>
+                        </p>
+                        <p>
                             <i class="fas fa-book text-success me-2"></i>
-                            <strong>Tên khóa học:</strong> <?= Html::encode($modelKH->ten_khoa_hoc) ?>
+                            <strong>Khóa học:</strong> <?= Html::encode($modelKH->ten_khoa_hoc) ?>
                         </p>
                         <p>
                             <i class="fas fa-users text-warning me-2"></i>

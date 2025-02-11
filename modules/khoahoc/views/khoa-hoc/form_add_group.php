@@ -24,7 +24,7 @@ use app\widgets\CardWidget;
             <?= $form->field($model, 'so_luong_hoc_vien')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-4">
-           <?= $form->field($model, 'ghi_chu')->textarea(['rows' => 8]) ?>
+           <?= $form->field($model, 'ghi_chu')->textarea(['rows' => 6]) ?>
         </div>
             
     </div>
