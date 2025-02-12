@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <td style="color:red;"><?= Html::encode($nhom->so_luong_hoc_vien)?></td>
                         <td style ="color:blue;"><?= HocVien::find()->where(['id_nhom' => $nhom->id])->count() ?></td>
                         <td>
-                            <?= Html::a('<i class="fa fa-exchange"> </i>', 
+                            <?= Html::a('<i class="fa fa-pencil"> </i>', 
                                 ['/khoahoc/khoa-hoc/update-nhom-hoc', 'id' => $nhom->id],
                                 [
                                     'class' => 'btn ripple btn-success btn-sm',

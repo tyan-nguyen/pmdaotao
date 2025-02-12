@@ -418,12 +418,71 @@ class HangDaoTaoController extends Controller
         'content'=>$this->renderAjax('list-phan-thi',[
             'phanThi'=>$phanThi,
         ]),
-        'footer'=>Html::button('Đóng lại',[
+        'footer'=>Html::a('<i class="fa fa-plus"> </i> Thêm phần thi', 
+        ['/khoahoc/hang-dao-tao/them-phan-thi','id'=>$id, 'modalType' => 'modal-remote-2'], 
+          [
+            'class' => 'btn btn-info',
+            'role' => 'modal-remote-2',
+            'title' => 'Thêm phần thi',
+          ]
+        ) .
+             Html::button('Đóng lại',[
              'class' =>'btn btn-default pull-left',
              'data-bs-dismiss'=>"modal"
         ])
        ]);
     }
+
+    public function actionThemPhanThi($id)
+    {
+        $request = Yii::$app->request;
+        $model = new PhanThi();  
+     
+        if($request->isAjax){
+            /*
+            *   Process for ajax request
+            */
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            if($request->isGet){
+                return [
+                    'title'=> "Thêm phần thi",
+                    'content'=>$this->renderAjax('them-phan-thi', [
+                        'model' => $model, 
+                    ]),
+                    'footer'=>
+                                Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                ];         
+            } else if ($model->load($request->post())) {  
+                $model->id_hang = $id;
+                if ($model->save()) {
+                    $phanThi = PhanThi::find()->where(['id_hang' => $id])->all();
+                    return [
+                        'forceClose'=>true,   
+                        'reloadType'=>'dsPhanThi',
+                        'reloadBlock'=>'#ptContent',
+                        'reloadContent'=>$this->renderAjax('list-phan-thi', [
+                            'phanThi' => $phanThi, 
+                        ]),
+                        'tcontent'=>'Thêm phần thi thành công!',
+                    ];             
+            }
+        }else{
+            /*
+            *   Process for non-ajax request
+            */
+            if ($model->load($request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('add-group', [
+                    'model' => $model,
+                 
+                ]);
+            }
+        }
+    }
+    
+}
 
     public function actionUpdateListHocPhi ($id)
     {
