@@ -534,32 +534,7 @@ public function actionDanhSachNhom($id)
             ]),
         ]);
     }
-
-  
     $nhomHoc = NhomHoc::find()->where(['id_khoa_hoc' => $id])->all();
-
-    // Kiểm tra nếu không có bản ghi nào
-    if (empty($nhomHoc)) {
-        return $this->asJson([
-            'title' => 'Thông báo!',
-            'content' => 'Không có nhóm nào thuộc khóa học này.',
-            'footer' => Html::a('<i class="fa fa-plus"> </i> Thêm nhóm', 
-            ['/khoahoc/khoa-hoc/add-group', 'id' => $id, 'modalType' => 'modal-remote-2'], 
-              [
-                'class' => 'btn btn-info',
-                'role' => 'modal-remote-2',
-                'title' => 'Danh sách Nhóm'
-              ]
-          ) .
-                 
-                Html::button('Đóng lại', [
-                'class' => 'btn btn-default pull-left',
-                'data-bs-dismiss' => 'modal'
-            ]),
-        ]);
-    }
-
-  
     return $this->asJson([
         'title' => 'Danh sách Nhóm',
         'content' => $this->renderAjax('danh-sach-nhom', [
@@ -1139,9 +1114,7 @@ public function actionUpdateLichHoc($id,$idKH,$week_string,$id_nhom)
                             Html::button('Lưu lại', ['class' => 'btn btn-primary', 'type' => "submit"])
             ];
         }
-    } else {
-        
-        
+    } else {    
     }
     }
 
