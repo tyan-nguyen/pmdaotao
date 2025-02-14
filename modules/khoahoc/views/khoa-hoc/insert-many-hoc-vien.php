@@ -8,7 +8,7 @@ $this->title = 'Thêm học viên';
 $this->registerCssFile('https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css');
 $this->registerJsFile('https://cdn.datatables.net/2.1.8/js/dataTables.js', ['depends' => [\yii\web\JqueryAsset::class]]);
 ?>
-
+<div id="dsHVContent">
 <?php if (!empty($hocVien)): ?>
     <h5 class="text-center mb-4" style="color:red;">DANH SÁCH HỌC VIÊN ĐĂNG KÝ THEO HẠNG XE</h5>
 <?php
@@ -66,7 +66,7 @@ $this->registerJsFile('https://cdn.datatables.net/2.1.8/js/dataTables.js', ['dep
         </div>
 <?php endif; ?>
 
-
+</div>
 <script>
       $(document).ready(function() {
         $('#hocVienTable').DataTable({
@@ -78,7 +78,7 @@ $this->registerJsFile('https://cdn.datatables.net/2.1.8/js/dataTables.js', ['dep
 </script>
 
 <script>
- $(document).on('beforeSubmit', '#add-hoc-vien-form', function (e) {
+$(document).on('beforeSubmit', '#add-hoc-vien-form', function (e) {
     e.preventDefault(); 
     let $form = $(this);
 
@@ -93,7 +93,7 @@ $this->registerJsFile('https://cdn.datatables.net/2.1.8/js/dataTables.js', ['dep
         success: function (response) {
             if (response.success) {
                 $('#hoc-vien-list-container').html(response.content);
-                alert('Thêm học viên thành công!');
+                alert(response.message);
             } else {
                 alert(response.message || 'Có lỗi xảy ra khi thêm học viên.');
             }
@@ -105,5 +105,6 @@ $this->registerJsFile('https://cdn.datatables.net/2.1.8/js/dataTables.js', ['dep
 
     return false; 
 });
+
 
 </script>

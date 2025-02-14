@@ -466,6 +466,16 @@ class HangDaoTaoController extends Controller
                         ]),
                         'tcontent'=>'Thêm phần thi thành công!',
                     ];             
+            }else{           
+                return [
+                    'title'=> "Thêm phần thi",
+                    'content'=>$this->renderAjax('them-phan-thi', [
+                        'model' => $model,
+                      
+                    ]),
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                               Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                ];         
             }
         }else{
             /*

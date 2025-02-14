@@ -397,30 +397,58 @@ class KhoaHocController extends Controller
             }
         }
     }
-    public function actionInsertManyHocVien($id) {
 
+
+    public function actionInsertManyHocVien($id)
+    {
+        // Bắt buộc định dạng response là JSON
+        Yii::$app->response->format = Response::FORMAT_JSON;
+    
         $khoaHoc = KhoaHoc::findOne($id);
         if ($khoaHoc === null) {
             throw new NotFoundHttpException('Khóa học không tồn tại.');
         }
+    
+        // Lấy danh sách học viên chưa được gán vào khóa học dựa theo id_hang của khóa học
         $hocVien = HocVien::find()
-           ->where(['id_hang' => $khoaHoc->id_hang])
-           ->andWhere(['id_khoa_hoc' => null])
-           ->all();
+            ->where(['id_hang' => $khoaHoc->id_hang])
+            ->andWhere(['id_khoa_hoc' => null])
+            ->all();
+    
+        // Nếu là yêu cầu POST (tức khi form được submit qua AJAX)
         if (Yii::$app->request->isPost) {
             $selectedHocVienIds = Yii::$app->request->post('hoc_vien_ids', []);
-            foreach ($selectedHocVienIds as $hocVienId) {
-                $hv = HocVien::findOne($hocVienId);
-                if ($hv !== null) {
-                    $hv->id_khoa_hoc = $khoaHoc->id;
-                    $hv->trang_thai = "NHAPTRUCTIEP";
-                    $hv->save(false); 
+            if (!empty($selectedHocVienIds)) {
+                foreach ($selectedHocVienIds as $hocVienId) {
+                    $hv = HocVien::findOne($hocVienId);
+                    if ($hv !== null) {
+                        $hv->id_khoa_hoc = $khoaHoc->id;
+                        $hv->trang_thai = "NHAPTRUCTIEP";
+                        // Lưu mà không cần chạy validate
+                        $hv->save(false);
+                    }
                 }
             }
-            Yii::$app->session->setFlash('success', 'Thêm Học viên cho Khóa học thành công !');
-           return $this->redirect(['index']);
+            
+            // Sau khi cập nhật, truy vấn lại danh sách học viên chưa được thêm
+            $hocVien = HocVien::find()
+                ->where(['id_hang' => $khoaHoc->id_hang])
+                ->andWhere(['id_khoa_hoc' => null])
+                ->all();
+
+
+                
+            return [
+                'success' => true,
+                'content' => $this->renderAjax('insert-many-hoc-vien', [
+                    'hocVien' => $hocVien,
+                    'khoaHoc' => $khoaHoc,
+                ]),
+                'message' => 'Thêm Học viên cho Khóa học thành công!'
+            ];
         }
-        return $this->asJson([
+        
+        return [
             'title' => 'Thêm học viên',
             'content' => $this->renderAjax('insert-many-hoc-vien', [
                 'hocVien' => $hocVien,
@@ -429,11 +457,9 @@ class KhoaHocController extends Controller
             'footer' => Html::button('Đóng lại', [
                 'class' => 'btn btn-default pull-left',
                 'data-bs-dismiss' => "modal"
-            ]) 
-        ]);
+            ])
+        ];
     }
-
-
    
     public function actionAddGroup($id)
     {
@@ -468,6 +494,16 @@ class KhoaHocController extends Controller
                         ]),
                         'tcontent'=>'Thêm nhóm thành công!',
                     ];             
+            }else{           
+                return [
+                    'title'=> "Thêm nhóm học",
+                    'content'=>$this->renderAjax('add-group', [
+                        'model' => $model,
+                      
+                    ]),
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                               Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                ];         
             }
         }else{
             /*

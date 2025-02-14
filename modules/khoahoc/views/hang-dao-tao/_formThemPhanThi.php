@@ -2,10 +2,7 @@
 use yii\bootstrap5\Html;
 use yii\widgets\ActiveForm;
 use app\widgets\CardWidget;
-use app\modules\hocvien\models\HangDaoTao;
-/* @var $this yii\web\View */
-/* @var $model app\modules\lichhoc\models\PhanThi */
-/* @var $form yii\widgets\ActiveForm */
+
 ?>
 
 <div class="phan-thi-form">
