@@ -429,15 +429,11 @@ class KhoaHocController extends Controller
                     }
                 }
             }
-            
             // Sau khi cập nhật, truy vấn lại danh sách học viên chưa được thêm
             $hocVien = HocVien::find()
                 ->where(['id_hang' => $khoaHoc->id_hang])
                 ->andWhere(['id_khoa_hoc' => null])
-                ->all();
-
-
-                
+                ->all();  
             return [
                 'success' => true,
                 'content' => $this->renderAjax('insert-many-hoc-vien', [
