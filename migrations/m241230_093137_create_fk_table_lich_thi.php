@@ -31,7 +31,7 @@ class m241230_093137_create_fk_table_lich_thi extends Migration
         );
 
         $this->addForeignKey(
-            'fk_nhom',
+            'fk_nhom_hoc',
             'lh_lich_thi',
             'id_nhom',
             'hv_nhom',
@@ -42,8 +42,8 @@ class m241230_093137_create_fk_table_lich_thi extends Migration
         $this->addForeignKey(
             'fk_phong',
             'lh_lich_thi',
-            'id_phong_thi',
-            'lh_phong',
+            'id_phong',
+            'lh_phong_hoc',
             'id',
             'CASCADE'
         );
@@ -66,7 +66,7 @@ class m241230_093137_create_fk_table_lich_thi extends Migration
             'lh_lich_thi'
         );
         $this->dropForeignKey(
-            'fk_nhom',
+            'fk_nhom_hoc',
             'lh_lich_thi'
         );
         $this->dropForeignKey(

@@ -55,7 +55,7 @@ $this->registerJsFile('https://cdn.datatables.net/2.1.8/js/dataTables.js', ['dep
             </tbody>
         </table>
         <div class="form-group">
-             <?= Html::submitButton('Thêm học viên', ['class' => 'btn btn-success']) ?>
+             <?= Html::submitButton('<i class="fa fa-plus"> </i> Thêm học viên', ['class' => 'btn btn-success']) ?>
         </div>
     </div>
     <?php ActiveForm::end(); ?>

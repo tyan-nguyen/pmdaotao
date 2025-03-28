@@ -16,7 +16,7 @@ class m250102_023958_create_table_lh_ket_qua_thi extends Migration
             'id'=>$this->primaryKey(),
             'id_hoc_vien'=>$this->integer()->notNull(),
             'id_lich_thi'=>$this->integer()->notNull(),
-            'id_phan_thi'=>$this->string(30),
+            'id_phan_thi'=>$this->integer() ->notNull(),
             'diem_so'=>$this->integer(),
             'ket_qua'=>$this->string(20),
             'trang_thai'=>$this->string(20),

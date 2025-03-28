@@ -33,7 +33,7 @@ class m240917_034238_insert_data_for_loai_file extends Migration
     
     public function safeDown()
     {
-        $model = LoaiFile::findOne(1);
+       $model = LoaiFile::findOne(1);
         if($model){
             $model->delete();
         }
