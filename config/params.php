@@ -15,5 +15,9 @@ return [
     'moduleID' => '',
     'modelID' =>'',
     'siteUrl'=>'http://localhost:8888',
+    'listReceiveEmail' => [
+        'nguyenvantyan@gmail.com',
+        'nguyenvantyan@yahoo.com'
+    ],
     //'bsDependencyEnabled' => false,
 ];
