@@ -46,7 +46,8 @@ class HocVienBase extends \app\models\HvHocVien
     public function rules()
     {
         return [
-            [['id_hang', 'ho_ten', 'so_cccd','id_hang'], 'required'],
+            /*[['id_hang', 'ho_ten', 'so_cccd','id_hang'], 'required'],*/
+            [['id_hang', 'ho_ten', 'id_hang'], 'required'],
             [['id_khoa_hoc', 'nguoi_tao','gioi_tinh','id_hang','id_nhom','nguoi_duyet'], 'integer'],
             [['thoi_gian_tao','ngay_sinh'], 'safe'],
             [['ho_ten', 'so_dien_thoai', 'so_cccd', 'trang_thai','dia_chi','trang_thai_duyet'], 'string', 'max' => 255],
