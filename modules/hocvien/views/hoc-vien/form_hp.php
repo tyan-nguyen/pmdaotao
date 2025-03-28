@@ -49,12 +49,12 @@ $model->ngay_nop = CustomFunc::convertYMDToDMY($model->ngay_nop);
    <div class ='row'>
         <div class="col-lg-4 col-md-6">
         <?= $form->field($model, 'ngay_nop')->widget(DatePicker::classname(), [
-            'options' => ['placeholder' => 'Chọn ngày nộp  ...'],
-            'pluginOptions' => [
-                'autoclose' => true,
-                'format' => 'dd/mm/yyyy',
-            ]
-               ]); ?>
+             'options' => ['placeholder' => 'Chọn ngày nộp ...', 'value' => date('d/m/Y')],
+             'pluginOptions' => [
+             'autoclose' => true,
+             'format' => 'dd/mm/yyyy',
+             ]
+           ]); ?>
         </div>
         <div class="col-lg-4 col-md-6">
             <?= $form->field($model, 'so_tien_nop')->textInput(['placeholder' => 'VNĐ ...']) ?>

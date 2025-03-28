@@ -53,8 +53,12 @@ $model->ngay_ket_thuc = CustomFunc::convertYMDToDMY($model->ngay_ket_thuc);
             ]
                ]); ?>
       </div>
-   
-        <div class='col-md-12'>
+      
+      <div class="col-lg-3 col-md-6">
+          <?= $form->field($model, 'so_hoc_vien_khoa_hoc')->textInput(['type' => 'number', 'maxlength' => true]) ?>
+      </div>
+
+        <div class='col-md-9'>
         <?= $form->field($model, 'ghi_chu')->textarea(['rows' => 6, 'placeholder' => 'Nhập ghi chú']) ?>
         </div>
     </div>

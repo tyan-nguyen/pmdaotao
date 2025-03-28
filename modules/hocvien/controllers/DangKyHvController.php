@@ -137,7 +137,6 @@ class DangKyHvController extends Controller
             }if ($model->load($request->post())) { 
                 $model->loai_dang_ky = 'Nhập trực tiếp'; 
                 $model->trang_thai_duyet = 'DA_DUYET';
-                //$model->save();
                 if ($model->save()) {
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
@@ -466,6 +465,8 @@ public function actionCreate2($id)
 public function actionGetPhieuInAjax($id, $type)
 {
     $model = $this->findModel($id);
+  //  $model->so_lan_in_phieu = ($model->so_lan_in_phieu ?? 0) + 1;
+    $model->save(false);
 
     if ($type === 'phieuthongtin') {
         $content = $this->renderPartial('_print_phieu_thong_tin', ['model' => $model]);
@@ -479,6 +480,20 @@ public function actionGetPhieuInAjax($id, $type)
         'status' => 'error',
         'message' => 'Không tìm thấy loại phiếu.',
     ]);
+}
+
+public function actionUpdatePrintCount($id)
+{
+    Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+    $model = HocVien::findOne($id);
+    if ($model !== null) {
+        $model->so_lan_in_phieu = ($model->so_lan_in_phieu ?? 0) + 1;
+        if ($model->save(false)) {
+            return ['success' => true, 'so_lan_in' => $model->so_lan_in_phieu];
+        }
+    }
+    return ['success' => false];
 }
 
 }

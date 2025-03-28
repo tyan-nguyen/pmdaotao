@@ -15,7 +15,7 @@ use app\modules\khoahoc\models\NhomHoc;
  * @property int $id_khoa_hoc
  * @property string $ho_ten
  * @property string $so_dien_thoai
- * @property string $so_cccd
+ * @property string|null $so_cccd
  * @property string $ngay_sinh
  * @property string $trang_thai
  * @property int|null $nguoi_tao
@@ -24,6 +24,10 @@ use app\modules\khoahoc\models\NhomHoc;
  * @property string $check_hoc_phi
  * @property int|null $id_nhom
  * @property string|null $trang_thai_duyet 
+ * @property string|null $ngay_het_han_cccd 
+ * @property string|null $noi_dang_ky
+  * @property int|null $ma_so_phieu 
+ * @property int|null $so_lan_in_phieu
  * @property HvHoSoHocVien[] $hvHoSoHocViens
  * @property HvNopHocPhi[] $hvNopHocPhis
  * @property HvKhoaHoc $khoaHoc
@@ -46,13 +50,14 @@ class HocVienBase extends \app\models\HvHocVien
     public function rules()
     {
         return [
-            [['id_hang', 'ho_ten', 'so_cccd','id_hang'], 'required'],
-            [['id_khoa_hoc', 'nguoi_tao','gioi_tinh','id_hang','id_nhom','nguoi_duyet'], 'integer'],
-            [['thoi_gian_tao','ngay_sinh'], 'safe'],
+            [['id_hang', 'ho_ten','id_hang'], 'required'],
+            [['id_khoa_hoc', 'nguoi_tao','gioi_tinh','id_hang','id_nhom','nguoi_duyet','ma_so_phieu','so_lan_in_phieu'], 'integer'],
+            [['thoi_gian_tao','ngay_sinh','ngay_het_han_cccd'], 'safe'],
             [['ho_ten', 'so_dien_thoai', 'so_cccd', 'trang_thai','dia_chi','trang_thai_duyet'], 'string', 'max' => 255],
             [['check_hoc_phi'],'string','max'=>25],
             [['nguoi_lap_phieu'],'string','max'=>55],
             [['loai_dang_ky'],'string','max'=>15],
+            [['noi_dang_ky'],'string','max'=>50],
             [['id_khoa_hoc'], 'exist', 'skipOnError' => true, 'targetClass' => KhoaHoc::class, 'targetAttribute' => ['id_khoa_hoc' => 'id']],
             [['id_nhom'], 'exist', 'skipOnError' => true, 'targetClass' => NhomHoc::class, 'targetAttribute' => ['id_nhom' => 'id']],
         ];
@@ -82,6 +87,10 @@ class HocVienBase extends \app\models\HvHocVien
             'loai_dang_ky'=>'Loại hình đăng ký',
             'nguoi_duyet'=>'Người duyệt',
             'trang_thai_duyet'=>'Trạng thái duyệt',
+            'ngay_het_han_cccd'=>'Ngày hết hạn CCCD',
+            'noi_dang_ky'=>'Nơi đăng ký',
+            'ma_so_phieu'=>'Mã số phiếu',
+            'so_lan_in_phieu'=>'Số lần in phiếu',
         ];
     }
 
@@ -122,5 +131,26 @@ class HocVienBase extends \app\models\HvHocVien
     public function getNgaySinh(){
         return CustomFunc::convertYMDToDMY($this->ngay_sinh);
     }
+    public function getNgayHetHanCccd(){
+        return CustomFunc::convertYMDToDMY($this->ngay_het_han_cccd);
+    } 
+    public function getMaSoPhieu()
+    {
+        $hocVien = self::findOne($this->id);
+        if ($hocVien && !empty($hocVien->ma_so_phieu) && $hocVien->ma_so_phieu != 0) {
+            return $hocVien->ma_so_phieu;
+        }
+    
+        $maxMaSoPhieu = self::find()->select('MAX(ma_so_phieu)')->scalar();
+        $newMaSoPhieu = $maxMaSoPhieu ? $maxMaSoPhieu + 1 : 1;
+
+        if ($hocVien) {
+            $hocVien->ma_so_phieu = $newMaSoPhieu;
+            $hocVien->save(false); 
+        }
+    
+        return $newMaSoPhieu;
+    }
+    
 
 }

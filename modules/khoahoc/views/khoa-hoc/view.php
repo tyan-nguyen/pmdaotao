@@ -28,7 +28,7 @@ use app\widgets\KhoDisplayWidget;
                                                        <span style="color:red;">Chưa có học phí</span>
                                                 <?php endif; ?>
                                         </p>
-
+                                        <p><strong> Số học viên tối đa:</strong> <?= $model->so_hoc_vien_khoa_hoc ?></p>
                                         <p>
                                            <strong>Trạng thái:</strong> 
                                               <?php if ($model->trang_thai === 'CHUA_HOAN_THANH'): ?>

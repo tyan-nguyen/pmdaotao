@@ -24,6 +24,8 @@ use app\widgets\KhoDisplayWidget;
                                         <p><strong>Ngày sinh:</strong> <?= $model->getNgaySinh() ?></p>
                                         <p><strong>Địa chỉ:</strong> <?= $model->dia_chi ?></p>
                                         <p><strong>Số CCCD:</strong> <?= $model->so_cccd ?></p>
+                                        <p><strong>Ngày hết hạn CCCD:</strong> <?= $model->getNgayHetHanCccd() ?></p>
+                                        <p><strong>Nơi đăng ký:</strong> <?= $model->noi_dang_ky ?></p>
 								    </div>
 						    </div>
 	</div>
@@ -42,7 +44,6 @@ use app\widgets\KhoDisplayWidget;
                                                  <?= $model->khoaHoc->ten_khoa_hoc ?>
                                         <?php endif; ?>
                                     </p>
-
                                         <p><strong>Hạng đào tạo :</strong> <?= $model->hangDaoTao->ten_hang ?></p>
 								    </div>
 						    </div>

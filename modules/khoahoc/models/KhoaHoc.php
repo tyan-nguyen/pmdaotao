@@ -7,7 +7,6 @@ use app\modules\kholuutru\models\LuuKho;
 use yii\helpers\ArrayHelper;
 class KhoaHoc extends KhoaHocBase
 {
-   
     CONST MODEL_ID = 'KHOAHOC';
 
     public function getPubName(){

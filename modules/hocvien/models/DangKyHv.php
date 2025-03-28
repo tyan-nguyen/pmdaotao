@@ -10,20 +10,21 @@ use app\custom\CustomFunc;
 class DangKyHv extends HocVienBase
 {
     public function beforeSave($insert) {
-        if ($this->isNewRecord) {
+          $this->ngay_sinh = CustomFunc::convertDMYToYMD($this->ngay_sinh);
+          $this->ngay_het_han_cccd = CustomFunc::convertDMYToYMD($this->ngay_het_han_cccd);
+        if ($this->isNewRecord) { 
             $this->nguoi_tao = Yii::$app->user->identity->id;
             $this->thoi_gian_tao = date('Y-m-d H:i:s');
-            $this->trang_thai='DANG_KY';
+            $this->trang_thai = 'DANG_KY';
             $this->nguoi_lap_phieu = Yii::$app->user->identity->fullname;
-            $this->ngay_sinh = CustomFunc::convertDMYToYMD($this->ngay_sinh);
         }
-  
         return parent::beforeSave($insert);
     }
-    public function getKhoaHoc()
-{
-    return $this->hasOne(KhoaHoc::class, ['id' => 'id_khoa_hoc']);
-}
+    
+   public function getKhoaHoc()
+     {
+        return $this->hasOne(KhoaHoc::class, ['id' => 'id_khoa_hoc']);
+     }
 
 
 }

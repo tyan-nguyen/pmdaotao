@@ -3,10 +3,15 @@
 /* @var $model app\models\HvHocVien */
 ?>
 <div class="hv-hoc-vien-view" style="width: 700px; margin: 0 auto; font-family: Arial, sans-serif; font-size: 14px;">
-    <p style="text-align: left; line-height: 1.5;">
-        <strong>TRUNG TÂM GDNN & SÁT HẠCH LÁI XE NGUYỄN TRÌNH</strong>
-       
-    </p>
+<div style="display: flex; justify-content: space-between; align-items: center;">
+        <p style="text-align: left; line-height: 1.5;">
+            <strong>TRUNG TÂM GDNN & SÁT HẠCH LÁI XE NGUYỄN TRÌNH</strong>
+        </p>
+        <p style="text-align: right; line-height: 1.5;">
+           <strong>Mã phiếu: <?= $model->getMaSoPhieu() ?></strong>
+
+        </p>
+    </div>
 <br>
     <p style="text-align: center; margin-top: 30px;">
         <strong style="font-size: 18px;">PHIẾU ĐĂNG KÝ</strong>
@@ -30,8 +35,6 @@
         <td style="width: 50%; vertical-align: top;"><strong>Số điện thoại:</strong> <?= $model->so_dien_thoai ?></td>
     </tr>
 </table>
-
-
     <p style="margin-top: 30px; color: red;">
         <strong>Thông tin đào tạo</strong>
     </p>
@@ -43,9 +46,6 @@ if ($hocPhi): ?>
 <?php else: ?>
     <p>Học phí chưa được cập nhật.</p>
 <?php endif; ?>
-
-   
-
     <div style="width: 100%; text-align: right;">
     <table style="width: 200px; padding: 10px; border-radius: 5px; margin-left: auto;">
         <tr>

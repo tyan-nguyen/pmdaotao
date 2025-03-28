@@ -17,6 +17,7 @@ use Yii;
  * @property int|null $nguoi_tao
  * @property string|null $thoi_gian_tao
  * @property int|null $id_hoc_phi
+ * @property int | $so_hoc_vien_khoa_hoc 
  * @property HvHangDaoTao $hang
  * @property HvHocVien[] $hvHocViens
  * @property HvTaiLieuKhoaHoc[] $hvTaiLieuKhoaHocs

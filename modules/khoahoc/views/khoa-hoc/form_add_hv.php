@@ -11,6 +11,7 @@ use app\modules\khoahoc\models\NhomHoc;
 ?>
 <?php
 $model->ngay_sinh = CustomFunc::convertYMDToDMY($model->ngay_sinh);
+$model->ngay_het_han_cccd = CustomFunc::convertYMDToDMY($model->ngay_het_han_cccd);
 ?>
 
 <div class="hv-hoc-vien-form">
@@ -39,10 +40,28 @@ $model->ngay_sinh = CustomFunc::convertYMDToDMY($model->ngay_sinh);
                  <?= $form->field($model, 'so_cccd')->textInput(['maxlength' => true]) ?>
             </div>
             <div class="col-lg-3 col-md-6">
+            <?= $form->field($model, 'ngay_het_han_cccd')->widget(DatePicker::classname(), [
+            'options' => ['placeholder' => 'Chọn ngày  ...'],
+            'pluginOptions' => [
+                'autoclose' => true,
+                'format' => 'dd/mm/yyyy',
+            ]
+               ]); ?>
+            </div>
+            <div class="col-lg-3 col-md-6">
                  <?= $form->field($model, 'dia_chi')->textInput(['maxlength' => true]) ?>
             </div>
             <div class="col-lg-3 col-md-6">
                  <?= $form->field($model, 'so_dien_thoai')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                 <?= $form->field($model, 'noi_dang_ky')->dropDownList(
+                     [
+                      'Cơ sở 1 (Cửa hàng Nguyễn Trình)' => 'Cơ sở 1 (Cửa hàng Nguyễn Trình)',
+                      'Cơ sở 2 (Trướng lái Nguyễn Trình)' => 'Cơ sở 2 (Trướng lái Nguyễn Trình)'
+                     ],
+                     ['prompt' => '- Nơi đăng ký -']
+                 ) ?>
             </div>
             <div class="col-lg-3 col-md-6">
                <?php

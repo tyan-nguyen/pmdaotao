@@ -21,6 +21,8 @@ use yii\helpers\Html;
                         <p><strong>Ngày sinh:</strong> <?= $model->getNgaySinh() ?></p>
                         <p><strong>Địa chỉ:</strong> <?= $model->dia_chi ?></p>
                         <p><strong>Số CCCD:</strong> <?= $model->so_cccd ?></p>
+                        <p><strong>Ngày hết hạn CCCD:</strong> <?= $model->getNgayHetHanCccd()?></p>
+                        <p><strong>Nơi đăng ký:</strong> <?= $model->noi_dang_ky ?></p>
                     </div>
                 </div>
             </div>
@@ -64,11 +66,12 @@ use yii\helpers\Html;
 		<p>
             <?= Html::button('<i class="fa fa-print"> </i> In Phiếu Thông Tin', ['class' => 'btn btn-success', 'onclick' => 'InPhieuThongTin()']) ?>
        </p>
+       <p>Lần in: <strong id="soLanIn"><?= $model->so_lan_in_phieu ?? 0 ?></strong></p>
 
-    <!-- Phần tử ẩn chứa nội dung phiếu -->
-    <div style="display:none">
-        <div id="print"></div>
-    </div>
+        <!-- Phần tử ẩn chứa nội dung phiếu -->
+          <div style="display:none">
+              <div id="print"></div>
+          </div>
     </div>
     
 </div>
@@ -78,9 +81,14 @@ function InPhieuThongTin() {
         type: 'POST',
         url: '/hocvien/dang-ky-hv/get-phieu-in-ajax?id=' + <?= $model->id ?> + '&type=phieuthongtin',
         success: function (data) {
-            if(data.status === 'success'){
+            if (data.status === 'success') {
                 $('#print').html(data.content);
                 printPhieuXuat(); // Gọi hàm in phiếu
+
+                // Khi in xong, cập nhật số lần in
+                setTimeout(function() {
+                    updatePrintCount(<?= $model->id ?>);
+                }, 1000); // Đợi 1 giây sau khi in để cập nhật
             } else {
                 alert('Không thể tải phiếu!');
             }
@@ -90,6 +98,25 @@ function InPhieuThongTin() {
         }
     });
 }
+
+// Hàm cập nhật số lần in
+function updatePrintCount(id) {
+    $.ajax({
+        type: 'POST',
+        url: '/hocvien/dang-ky-hv/update-print-count?id='+<?= $model->id ?>,
+        success: function (response) {
+            if (response.success) {
+                $('#soLanIn').text(response.so_lan_in); // Cập nhật số lần in
+            } else {
+                alert('Cập nhật số lần in thất bại!');
+            }
+        },
+        error: function () {
+            alert('Lỗi kết nối server!');
+        }
+    });
+}
+
 
 function printPhieuXuat() {
     var printContents = document.getElementById('print').innerHTML;
@@ -130,3 +157,4 @@ function printPhieuXuat() {
     setTimeout(() => document.body.removeChild(iframe), 1000);
 }
 </script>
+

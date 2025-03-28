@@ -28,11 +28,11 @@ return [
             if ($action === 'addGroup') {
                 return Url::to(['danh-sach-nhom', 'id' => $key]);
             }
-
             return Url::to([$action, 'id' => $key]);
         },
                
                  'buttons' => [
+                
                     'adduser' => function($url, $model, $key) {
                         return Html::a('<i class="fa fa-user-plus"></i> Thêm học viên', $url, [
                             'title' => 'Thêm Học viên',

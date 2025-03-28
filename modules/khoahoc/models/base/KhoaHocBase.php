@@ -19,6 +19,7 @@ use app\modules\hocvien\models\HocPhi;
  * @property int|null $nguoi_tao
  * @property string|null $thoi_gian_tao
  * @property int|null $id_hoc_phi
+ * @property int| $so_hoc_vien_khoa_hoc 
  * @property HangDaoTao $hang
  * @property HocVien[] $hvHocViens
  * @property TaiLieuKhoaHoc[] $hvTaiLieuKhoaHocs
@@ -45,8 +46,8 @@ class KhoaHocBase extends \app\models\HvKhoaHoc
     public function rules()
     {
         return [
-            [['id_hang', 'ten_khoa_hoc'], 'required'],
-            [['id_hang', 'nguoi_tao','id_hoc_phi'], 'integer'],
+            [['id_hang', 'ten_khoa_hoc','so_hoc_vien_khoa_hoc'], 'required'],
+            [['id_hang', 'nguoi_tao','id_hoc_phi','so_hoc_vien_khoa_hoc'], 'integer'],
             [['ngay_bat_dau', 'ngay_ket_thuc', 'thoi_gian_tao'], 'safe'],
             [['ghi_chu'], 'string'],
             [['ten_khoa_hoc', 'trang_thai'], 'string', 'max' => 255],
@@ -70,6 +71,7 @@ class KhoaHocBase extends \app\models\HvKhoaHoc
             'nguoi_tao' => 'Người tạo',
             'thoi_gian_tao' => 'Thời gian tạo',
             'id_hoc_phi'=>'Id học phí',
+            'so_hoc_vien_khoa_hoc'=>'Số học viên khóa học',
         ];
     }
 
@@ -99,7 +101,6 @@ class KhoaHocBase extends \app\models\HvKhoaHoc
 
     public function beforeSave($insert)
     {
-        // Chuyển đổi định dạng ngày tháng trước khi lưu
         $this->ngay_bat_dau = CustomFunc::convertDMYToYMD($this->ngay_bat_dau);
         $this->ngay_ket_thuc = CustomFunc::convertDMYToYMD($this->ngay_ket_thuc);
         if (strtotime($this->ngay_ket_thuc) < strtotime($this->ngay_bat_dau)) {
@@ -113,14 +114,9 @@ class KhoaHocBase extends \app\models\HvKhoaHoc
             $hocPhiMax = HocPhi::find()
                 ->where(['id_hang' => $this->id_hang])
                 ->orderBy(['id' => SORT_DESC])
-                ->one(); 
-            
+                ->one();   
             $this->id_hoc_phi = $hocPhiMax ? $hocPhiMax->id : null;
         }
         return parent::beforeSave($insert);
     }
-    
-    
-    
-   
 }
