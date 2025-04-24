@@ -5,6 +5,7 @@ use app\modules\hocvien\models\HangDaoTao;
 use kartik\date\DatePicker;
 use app\custom\CustomFunc;
 use app\widgets\CardWidget;
+use kartik\select2\Select2;
 /* @var $this yii\web\View */
 /* @var $model app\models\HvHocVien */
 /* @var $form yii\widgets\ActiveForm */
@@ -19,6 +20,9 @@ $model->ngay_het_han_cccd = CustomFunc::convertYMDToDMY($model->ngay_het_han_ccc
 <div class="hv-hoc-vien-form">
 
     <?php $form = ActiveForm::begin(); ?>
+    
+    <?= $form->errorSummary($model) ?>
+    
       <?php CardWidget::begin(['title'=>'Thông tin cá nhân học viên']) ?>
    <div class ='row'>
         <div class="col-lg-3 col-md-6">
@@ -62,7 +66,7 @@ $model->ngay_het_han_cccd = CustomFunc::convertYMDToDMY($model->ngay_het_han_ccc
                  <?= $form->field($model, 'noi_dang_ky')->dropDownList(
                      [
                       'Cơ sở 1 (Cửa hàng Nguyễn Trình)' => 'Cơ sở 1 (Cửa hàng Nguyễn Trình)',
-                      'Cơ sở 2 (Trướng lái Nguyễn Trình)' => 'Cơ sở 2 (Trướng lái Nguyễn Trình)'
+                      'Cơ sở 2 (Trường lái Nguyễn Trình)' => 'Cơ sở 2 (Trường lái Nguyễn Trình)'
                      ],
                      ['prompt' => '- Nơi đăng ký -']
                  ) ?>
@@ -81,7 +85,54 @@ $model->ngay_het_han_cccd = CustomFunc::convertYMDToDMY($model->ngay_het_han_ccc
         'class' => 'form-control dropdown-with-arrow',
     ]
     ) ?>
-         </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+         <?= $form->field($model, 'id_khoa_hoc')->widget(Select2::classname(), [
+            'data' => !empty($model->id_khoa_hoc) ? [
+             $model->id_khoa_hoc => \app\modules\khoahoc\models\KhoaHoc::findOne($model->id_khoa_hoc)->ten_khoa_hoc
+            ] : \app\modules\khoahoc\models\KhoaHoc::getList(1), //an khoa hoc da du hoc vien
+           'language' => 'vi',
+           'options' => [
+           'placeholder' => 'Chọn Khóa học...',  
+           'class' => 'form-control dropdown-with-arrow',
+           'id' => 'khoa-hoc-dropdown'
+         ],
+          'pluginOptions' => [
+              'allowClear' => true,
+              'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
+         ],
+          ]); ?>
+    </div>
+    <div class="col-lg-6 col-md-6">
+    	<?= $form->field($model, 'ghi_chu')->textarea(['rows' => 3, 'style'=>'width:100%']) ?>
+    </div>
+        
+    </div>
+    <?php CardWidget::end() ?>
+    
+    <?php CardWidget::begin(['title'=>'Thông tin nhận đồng phục']) ?>
+    <div class ='row'>
+     <div class="col-lg-3 col-md-6">
+    	<?= $form->field($model, 'da_nhan_ao')->checkbox() ?>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <?= $form->field($model, 'size')->dropDownList(
+            [
+                'S'=>'Size S', 
+                'M'=>'Size M', 
+                'L'=>'Size L', 
+                'XL'=>'Size XL', 
+                '2XL'=>'Size 2XL', 
+                '3XL'=>'Size 3XL', 
+                '4XL'=>'Size 4XL'
+            ],
+    [
+        'prompt' => 'Chọn size áo',
+        'class' => 'form-control dropdown-with-arrow',
+    ]
+    ) ?>
+    </div>
+   
         
     </div>
     <?php CardWidget::end() ?>

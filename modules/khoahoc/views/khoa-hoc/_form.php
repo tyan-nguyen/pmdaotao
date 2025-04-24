@@ -21,7 +21,7 @@ $model->ngay_ket_thuc = CustomFunc::convertYMDToDMY($model->ngay_ket_thuc);
     <?php $form = ActiveForm::begin(); ?>
     <?php CardWidget::begin(['title'=>'Thông tin khóa học']) ?>
     <div class='row'>
-         <div class ="col-lg-3 col-md-6">
+         <!-- <div class ="col-lg-3 col-md-6">
          <?= $form->field($model, 'id_hang')->dropDownList(
             HangDaoTao::getList(), 
                 [
@@ -29,7 +29,7 @@ $model->ngay_ket_thuc = CustomFunc::convertYMDToDMY($model->ngay_ket_thuc);
                  'class' => 'form-control dropdown-with-arrow',
                 ]
         ) ?>
-         </div>
+         </div> -->
        
          <div class="col-lg-3 col-md-6">
               <?= $form->field($model, 'ten_khoa_hoc')->textInput(['maxlength' => true]) ?>

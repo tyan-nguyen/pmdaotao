@@ -18,7 +18,7 @@ use app\widgets\KhoDisplayWidget;
 							<div class="card-body">
 									<div class="skill-tags">
                                         <p><strong>Tên khóa học:</strong> <?= $model->ten_khoa_hoc ?></p>
-                                        <p><strong>Hạng đào tạo:</strong> <?= $model->hang->ten_hang ?></p>
+                                        <p><strong>Hạng đào tạo:</strong> <?= $model->hang?$model->hang->ten_hang:'' ?></p>
                                         <p><strong>Ngày bắt đầu:</strong> <?= $model->ngayBatDau ?></p>
                                         <p><strong>Ngày kết thúc:</strong> <?= $model->ngayKetThuc ?></p>
                                         <p><strong>Học phí:</strong> 

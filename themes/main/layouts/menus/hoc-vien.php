@@ -29,7 +29,9 @@ use app\modules\hocvien\models\HocVien;
 						<ul class="sidemenu-list">
 							<li class="side-menu__label1"><a href="javascript:void(0)">Danh mục chức năng</a></li>
 							<li><a href="/hocvien/dang-ky-hv?menu=hv1" class="slide-item" data-menu="hv1"> <i class="fe fe-file-text"></i> Học viên đăng ký</a></li>
-							<li><a href="/hocvien/hoc-vien?menu=hv2" class="slide-item" data-menu="hv2"> <i class="fe fe-file-text"></i> Danh sách học viên</a></li>
+							<li><a href="/hocvien/hv-ho-so?menu=hv4" class="slide-item" data-menu="hv4"> <i class="fe fe-file-text"></i> Hồ sơ học viên</a></li>
+							<li><a href="/hocvien/hv-thue?menu=hv5" class="slide-item" data-menu="hv5"> <i class="fe fe-file-text"></i> Hồ sơ thuế</a></li>
+							<!-- <li><a href="/hocvien/hoc-vien?menu=hv2" class="slide-item" data-menu="hv2"> <i class="fe fe-file-text"></i> Danh sách học viên</a></li> -->
 							<li><a href="/kholuutru/loai-file/index?doiTuong=<?= HocVien::MODEL_ID ?>&menu=hv3" class="slide-item" data-menu="hv3"> <i class="fe fe-file-text"></i> Loại hồ sơ</a></li>
 							
 						</ul>

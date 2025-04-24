@@ -31,17 +31,9 @@ class KhoaHocController extends Controller
      */
     public function behaviors() {
 		return [
-			'access' => [
-				'class' => AccessControl::className(),
-				'rules' => [
-					[
-						'actions' => ['index', 'view', 'update','create','delete','bulkdelete','delete-lh'],
-                     
-						'allow' => true,
-						'roles' => ['user'],
-					],
-				],
-			],
+		    'ghost-access'=> [
+		        'class' => 'webvimark\modules\UserManagement\components\GhostAccessControl',
+		    ],
 			'verbs' => [
 				'class' => VerbFilter::className(),
 				'actions' => [
@@ -80,7 +72,7 @@ class KhoaHocController extends Controller
 	{
 	    Yii::$app->params['moduleID'] = 'Module Quản lý Khóa học';
 	    Yii::$app->params['modelID'] = 'Quản lý Khóa học';
-	    return true;
+	    return parent::beforeAction($action);
 	}
     /**
      * Displays a single KhoaHoc model.

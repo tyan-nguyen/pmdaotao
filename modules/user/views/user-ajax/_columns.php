@@ -58,6 +58,10 @@ return [
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'ho_ten',
+    ],
+    /* [
+        'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'username',
         'label'=>'Nhân viên',
         //'value'=>'tenNhanVien',
@@ -68,7 +72,7 @@ return [
                 'link'=>$model->showLinkNhanVien
             ]);
         }
-    ],
+    ], */
     [
         'attribute'=>'email',
         'format'=>'raw',

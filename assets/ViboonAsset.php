@@ -24,8 +24,9 @@ class ViboonAsset extends AssetBundle
         'assets/css/icons.css',
         'assets/switcher/css/switcher.css',
         'assets/switcher/demo.css',
-        'css/site.css?v=1.3',
+        'css/site.css?v=1.4',
         'assets/fontawesome-free-6.4.0-web/css/all.min.css',
+        'js/fancybox/fancybox.css'
     ];
     public $js = [
         'assets/plugins/bootstrap/popper.min.js',
@@ -42,7 +43,7 @@ class ViboonAsset extends AssetBundle
         'assets/plugins/fullcalendar/fullcalendar.min.js',
         'assets/plugins/fullcalendar/locales/vi.js',
         //'assets/js/fullcalendar.js',
-        'assets/js/custom.js',
+        'assets/js/custom.js?v=1',
         //'assets/js/custom-switcher.js',
         //'assets/switcher/js/switcher.js',        
         'assets/js/tooltip.js',
@@ -51,9 +52,11 @@ class ViboonAsset extends AssetBundle
         'assets/js/carousel.js',
         'js/print-this/printThis.js',
         'js/ModalRemote.js?v=2',
-        'js/ajaxcrud.js?v=2',        
+        'js/ajaxcrud.js?v=2',
+        'js/tinymce/tinymce_5.10.7.min.js',
+        //fancybox
+        'js/fancybox/fancybox.umd.js',
         'js/custom.js?v=1',
-        'js/tinymce/tinymce_5.10.7.min.js'
         //'assets/plugins/tabs/jquery.multipurpose_tabcontent.js',
         //'assets/plugins/tabs/tab-content.js'
     ];

@@ -46,7 +46,8 @@ class KhoaHocBase extends \app\models\HvKhoaHoc
     public function rules()
     {
         return [
-            [['id_hang', 'ten_khoa_hoc','so_hoc_vien_khoa_hoc'], 'required'],
+            //[['id_hang', 'ten_khoa_hoc','so_hoc_vien_khoa_hoc'], 'required'],
+            [['ten_khoa_hoc','so_hoc_vien_khoa_hoc'], 'required'],
             [['id_hang', 'nguoi_tao','id_hoc_phi','so_hoc_vien_khoa_hoc'], 'integer'],
             [['ngay_bat_dau', 'ngay_ket_thuc', 'thoi_gian_tao'], 'safe'],
             [['ghi_chu'], 'string'],
@@ -111,11 +112,11 @@ class KhoaHocBase extends \app\models\HvKhoaHoc
             $this->nguoi_tao = Yii::$app->user->identity->id;
             $this->thoi_gian_tao = date('Y-m-d H:i:s');
             $this->trang_thai = 'CHUA_HOAN_THANH';
-            $hocPhiMax = HocPhi::find()
+            /* $hocPhiMax = HocPhi::find()
                 ->where(['id_hang' => $this->id_hang])
                 ->orderBy(['id' => SORT_DESC])
                 ->one();   
-            $this->id_hoc_phi = $hocPhiMax ? $hocPhiMax->id : null;
+            $this->id_hoc_phi = $hocPhiMax ? $hocPhiMax->id : null; */
         }
         return parent::beforeSave($insert);
     }

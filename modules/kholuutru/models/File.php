@@ -53,10 +53,14 @@ class File extends FileBase{
     public static function getIcon($icon){
         if(strtoupper($icon) == 'PDF')
             return File::FOLDER_ICONS . 'pdf.png';
-        else if(strtoupper($icon) == 'DOCX')
+        else if(strtoupper($icon) == 'DOCX' || strtoupper($icon) == 'DOC')
             return File::FOLDER_ICONS . 'docx.png';
         else if(strtoupper($icon) == 'PNG')
-            return File::FOLDER_ICONS . 'docx.png';
+            return File::FOLDER_ICONS . 'image.png';
+        else if(strtoupper($icon) == 'JPG' || strtoupper($icon) == 'JPEG')
+            return File::FOLDER_ICONS . 'image.png';
+        else if(strtoupper($icon) == 'XLS' || strtoupper($icon) == 'XLSX')
+            return File::FOLDER_ICONS . 'excel.png';
         else 
             return File::FOLDER_ICONS . 'none.png';
     }

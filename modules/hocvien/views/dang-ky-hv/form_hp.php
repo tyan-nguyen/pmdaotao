@@ -6,6 +6,8 @@ use app\custom\CustomFunc;
 use kartik\select2\Select2;
 use app\widgets\CardWidget;
 use app\modules\nhanvien\models\NhanVien;
+use app\modules\hocvien\models\NopHocPhi;
+use app\modules\user\models\User;
 /* @var $this yii\web\View */
 /* @var $model app\models\HvHocVien */
 /* @var $form yii\widgets\ActiveForm */
@@ -19,34 +21,50 @@ $model->ngay_nop = CustomFunc::convertYMDToDMY($model->ngay_nop);
 <div class="hp-hoc-vien-form">
 
     <?php $form = ActiveForm::begin(); ?>
+    <?php // $form->errorSummary($model) ?>
     <?php CardWidget::begin(['title'=>'Thông tin học phí']) ?>
    <div class='row'>
       <!-- Cột 1: Họ tên học viên -->
-      <div class="col-md-4">
+      <div class="col-md-3">
          <label>Họ tên học viên</label>
          <?= $form->field($model, 'id_hoc_vien')->hiddenInput()->label(false) ?>
          <input style="color: blue;" type="text" class="form-control" value="<?= $hoTenHocVien ?>" readonly style="border-color: red; color: red;">
       </div>
 
       <!-- Cột 2: Hạng xe -->
-      <div class="col-md-4">
+      <div class="col-md-3">
          <label>Hạng xe</label>
          <?= $form->field($model, 'id_hoc_vien')->hiddenInput()->label(false) ?>
          <input  style="color: blue;"  type="text" class="form-control" value="<?= $tenHang ?>" readonly>
       </div>
 
       <!-- Cột 3: Học phí -->
-      <div class="col-md-4">
+      <div class="col-md-3">
          <label>Học phí</label>
          <?= $form->field($model, 'id_hoc_vien')->hiddenInput()->label(false) ?>
          <input style="color: blue;" type="text" class="form-control" value="<?= $hocPhi->hoc_phi; ?>" readonly style="border-color: red; color: red;">
       </div>
+      
+      <div class="col-md-3">
+      <label>Người thu</label>
+      <?= $form->field($model, 'id_hoc_vien')->hiddenInput()->label(false) ?>
+        <?= $form->field($model, 'nguoi_thu')->widget(Select2::classname(), [
+                 'data' => $model->nguoi_thu ? [$model->nguoi_thu=>User::findOne($model->nguoi_thu)->username] : /* User::getList(), */ [Yii::$app->user->id => User::getCurrentUser()->username],
+                    'language' => 'vi',
+                    //'options' => ['placeholder' => 'Chọn người thu...'],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                        'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
+                    ],
+        ])->label(false);?>
+        </div>
+        
    </div>
 <?php CardWidget::end() ?>
    <hr style="width:400px; border-width:2px; border-color:black; margin-left:auto; margin-right:auto;">
    <?php CardWidget::begin(['title'=>'Thông tin học phí']) ?>
    <div class ='row'>
-       <div class="col-lg-4 col-md-6">
+       <div class="col-lg-3 col-md-6">
            <?= $form->field($model, 'ngay_nop')->widget(DatePicker::classname(), [
              'options' => ['placeholder' => 'Chọn ngày nộp ...', 'value' => date('d/m/Y')],
              'pluginOptions' => [
@@ -55,22 +73,29 @@ $model->ngay_nop = CustomFunc::convertYMDToDMY($model->ngay_nop);
              ]
            ]); ?>
       </div>
+      
+      <div class="col-lg-3 col-md-6">
+            <?= $form->field($model, 'loai_nop')->dropDownList(NopHocPhi::getDmLoaiNop(), ['prompt'=>'-Chọn-','class'=>'form-control','id'=>'selectLoaiNop']) ?>
+        </div>
 
-        <div class="col-lg-4 col-md-6">
-            <?= $form->field($model, 'so_tien_nop')->textInput(['placeholder' => 'VNĐ ...']) ?>
+        <div class="col-lg-3 col-md-6">
+            <?= $form->field($model, 'so_tien_nop')->textInput(['placeholder' => 'VNĐ ...', 'id'=>'txtSoTienNop']) ?>
         </div>
-        <div class="col-lg-4 col-md-6">
-        <?= $form->field($model, 'nguoi_thu')->widget(Select2::classname(), [
-                 'data' => NhanVien::getList(),
-                    'language' => 'vi',
-                    'options' => ['placeholder' => 'Chọn người thu...'],
-                    'pluginOptions' => [
-                        'allowClear' => true,
-                        'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
-                    ],
-             ]);?>
+        
+        <div class="col-lg-3 col-md-6">
+            <?= $form->field($model, 'chiet_khau')->textInput(['placeholder' => 'VNĐ ...', 'id'=>'txtChietKhau']) ?>
         </div>
+        
+        <div class="col-lg-3 col-md-6">
+            <?= $form->field($model, 'hinh_thuc_thanh_toan')->dropDownList(NopHocPhi::getDmHinhThucThanhToan(), ['prompt'=>'-Chọn-','class'=>'form-control','id'=>'selectHinhThucThanhToan']) ?>
+        </div>
+        <div class="col-lg-9 col-md-6">
+            <?= $form->field($model, 'ghi_chu')->textInput([]) ?>
+        </div>
+        
    </div>
+   
+   <?php /* ?>
    <div class='row'>
        <div class="col-md-12" >
           
@@ -103,9 +128,10 @@ $model->ngay_nop = CustomFunc::convertYMDToDMY($model->ngay_nop);
                 </div>
             </div>
        </div>
-       <?php CardWidget::end() ?>
-   </div>
+       
+   </div> <?php */ ?>
  
+ <?php CardWidget::end() ?>
   
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">
@@ -118,6 +144,7 @@ $model->ngay_nop = CustomFunc::convertYMDToDMY($model->ngay_nop);
 </div>
 
 <script language="JavaScript">
+/*
        var fileInput = document.getElementById('fileInput'); // Tham chiếu đến trường file input
        var takeSnapshotButton = document.getElementById('takeSnapshotButton');
     // Cấu hình Webcam
@@ -172,6 +199,27 @@ $model->ngay_nop = CustomFunc::convertYMDToDMY($model->ngay_nop);
 
 // Gọi kiểm tra lần đầu khi tải trang để chắc chắn trạng thái đúng
 checkFileInput();
+*/
+
+var hphi = <?= $hocPhi->hoc_phi; ?>;
+$('#selectLoaiNop').on('change', function() { 
+  if(this.value == 'NOP100' ){
+  	//$('#txtSoTienNop').val(hphi);
+  	$('#txtSoTienNop').attr('readonly', false);
+  } else if(this.value == 'NOP50' ){
+  	//$('#txtSoTienNop').val(hphi/2);
+  	$('#txtSoTienNop').attr('readonly', false);
+  }else if(this.value == 'COC1TR' ){
+  	$('#txtSoTienNop').val(1000000);
+  	$('#txtSoTienNop').attr('readonly', true);
+  }else if(this.value == 'KHAC' ){
+  	$('#txtSoTienNop').val('');
+  	$('#txtSoTienNop').attr('readonly', false);
+  } else if(this.value == '' ){
+  	$('#txtSoTienNop').val('');
+  	$('#txtSoTienNop').attr('readonly', false);
+  }
+});
  
 
 </script>

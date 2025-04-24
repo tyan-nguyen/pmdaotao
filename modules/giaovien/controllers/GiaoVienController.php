@@ -19,12 +19,28 @@ use app\modules\nhanvien\models\PhongBan;
 
 //use yii\filters\VerbFilter;
 use \yii\web\Response;
+use yii\filters\VerbFilter;
 /**
  * NhanVienController implements the CRUD actions for NhanVien model.
  */
 class GiaoVienController extends Controller
 {
-   
+    /**
+     * @inheritdoc
+     */
+    public function behaviors() {
+        return [
+            'ghost-access'=> [
+                'class' => 'webvimark\modules\UserManagement\components\GhostAccessControl',
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ];
+    }
 
     /**
      * Lists all NhanVien models.
@@ -34,7 +50,7 @@ class GiaoVienController extends Controller
 	{
 	    Yii::$app->params['moduleID'] = 'Module Quản lý Giáo viên';
 	    Yii::$app->params['modelID'] = 'Quản lý Giáo viên';
-	    return true;
+	    return parent::beforeAction($action);
 	}
     
     public function actionIndex()

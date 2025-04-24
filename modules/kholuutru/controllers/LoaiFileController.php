@@ -17,6 +17,7 @@ use yii\filters\AccessControl;
  */
 class LoaiFileController extends Controller
 {
+    public $freeAccess = true;
     /**
      * @inheritdoc
      */
@@ -38,7 +39,7 @@ class LoaiFileController extends Controller
 	{
 	    Yii::$app->params['moduleID'] = 'Module Kho lưu trữ';
 	    Yii::$app->params['modelID'] = 'Quản lý Loại hồ sơ';
-	    return true;
+	    return parent::beforeAction($action);
 	}
 
     /**

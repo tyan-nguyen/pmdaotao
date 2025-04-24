@@ -65,7 +65,7 @@ class HangDaoTao extends \app\models\HvHangDaoTao
     }
     public function getHocPhi()
     {
-        return $this->hasOne(HocPhi::class, ['id_hang' => 'id']);
+        return $this->hasOne(HocPhi::class, ['id_hang' => 'id'])->orderBy(['id'=>SORT_DESC]);
     }
 
 
@@ -81,7 +81,8 @@ class HangDaoTao extends \app\models\HvHangDaoTao
     public static function getList()
     {
         // Sắp xếp danh sách theo thứ tự bảng chữ cái dựa trên 'ten_loai'
-        $dsHang = HangDaoTao::find()->orderBy(['ten_hang' => SORT_ASC])->all();
+        //$dsHang = HangDaoTao::find()->orderBy(['ten_hang' => SORT_ASC])->all();
+        $dsHang = HangDaoTao::find()->orderBy(['id' => SORT_ASC])->all();
     
         // Thêm dấu + vào trước mỗi tên loại văn bản
         return ArrayHelper::map($dsHang, 'id', function($model) {

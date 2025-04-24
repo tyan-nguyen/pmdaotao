@@ -18,6 +18,7 @@ use app\widgets\KhoDisplayWidget;
  */
 class HoSoKhoController extends Controller
 {
+    public $freeAccessActions = ['view'];
     /**
      * @inheritdoc
      */

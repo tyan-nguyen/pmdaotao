@@ -143,6 +143,7 @@ return [
     
             // Kiểm tra xem học phí có tồn tại không
             if ($hocPhiKhoaHoc) {
+                /*an cmmt
                 // Tìm thông tin các lần nộp học phí của học viên
                 $hocPhi = NopHocPhi::find()->where(['id_hoc_vien' => $hocVien->id])->all();
     
@@ -154,22 +155,31 @@ return [
                 // Kiểm tra trạng thái nộp học phí
                 if ($tongTienDaNop >= $hocPhiKhoaHoc->hoc_phi) {
                     $hocVien->check_hoc_phi = 'Nộp đủ';  
-                    $hocVien->save();  
+                    $hocVien->save();//tam bo qua cho chay truoc  
                     return '<span class="badge bg-primary">Nộp đủ</span>';
                 } elseif ($tongTienDaNop > 0) {
                     $hocVien->check_hoc_phi = 'Còn nợ học phí'; 
-                    $hocVien->save();  
+                    $hocVien->save();  //tam bo qua cho chay truoc
                     return '<span class="badge bg-warning">Còn nợ học phí</span>';
                 } else {
                     $hocVien->check_hoc_phi = 'Chưa đóng học phí';  
-                    $hocVien->save();  
+                    $hocVien->save(); //tam bo qua cho chay truoc  
                     return '<span class="badge bg-danger">Chưa đóng học phí</span>';
                 }
+                */
             } else {
                 return '<span class="badge bg-success"> Vui lòng sắp khóa học </span>';
             }
         },
         'width' => '150px',
         'format' => 'raw', 
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'nguoi_tao',
+        'value'=>function($model){
+        return $model->nguoiTao->username;
+        },
+        'width' => '100px',
     ],
 ];   

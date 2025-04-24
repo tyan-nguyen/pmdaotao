@@ -1,0 +1,121 @@
+<?php
+
+namespace app\modules\hocvien\controllers;
+
+use Yii;
+use app\models\HvHocVien;
+
+use yii\web\Controller;
+use yii\web\NotFoundHttpException;
+use yii\filters\VerbFilter;
+use \yii\web\Response;
+use yii\helpers\Html;
+use yii\filters\AccessControl;
+use app\modules\hocvien\models\search\DangKyHvSearch;
+use app\modules\hocvien\models\HocVien;
+use app\modules\hocvien\models\DangKyHv;
+use app\modules\hocvien\models\NopHocPhi;
+use yii\web\UploadedFile;
+use app\custom\CustomFunc;
+use yii\db\Expression;
+/**
+ * HocVienController implements the CRUD actions for HvHocVien model.
+ */
+class BaoCaoController extends Controller
+{
+    public $freeAccessActions = ['rp-danh-sach-dang-ky', 'rp-danh-sach-dang-ky-print'];
+    /**
+     * @inheritdoc
+     */
+    public function behaviors() {
+        return [
+            'ghost-access'=> [
+                'class' => 'webvimark\modules\UserManagement\components\GhostAccessControl',
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ];
+    }
+    public function beforeAction($action)
+    {
+        Yii::$app->params['moduleID'] = 'Module Quản lý Học viên';
+        Yii::$app->params['modelID'] = 'Đăng ký học';
+        //return true;
+        return parent::beforeAction($action);
+    }
+    /**
+     * in danh sách theo ca
+     */
+    public function actionRpDanhSachDangKy(){
+        $request = Yii::$app->request;
+        if ($request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            
+            return [
+                'title' => "Báo cáo danh sách học viên",
+                'content' => $this->renderAjax('rp_danh_sach_dang_ky', [
+                    
+                ]),
+                'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"])
+            ];
+        }
+    }
+    
+    public function actionRpDanhSachDangKyPrint($startdate, $starttime, $enddate, $endtime, $byuser=0, $byhocphi='all', $sortby='date', $byhangdaotao=NULL, $typereport=0)//0 for all
+    {
+        if($byuser==null){
+            $byuser = 0;
+        }
+        $start = CustomFunc::convertDMYToYMD($startdate) . ' ' . $starttime;
+        $end = CustomFunc::convertDMYToYMD($enddate) . ' ' . $endtime;;
+        
+        // $start = '2025-03-31 06:00:00';
+        //$end = '2025-04-01 11:00:00';
+        $query = HocVien::find()->alias('t');
+        //if($byhocphi != 'all'){
+        $query = $query->select(['t.*', '(SELECT SUM(i.so_tien_nop) FROM hv_nop_hoc_phi AS i WHERE t.id = i.id_hoc_vien) as tongtiennop']);
+        //}
+        
+        $query=$query->andFilterWhere(['>=', 't.thoi_gian_tao', new Expression("STR_TO_DATE('".$start."','%Y-%m-%d %H:%i:%s')")]);
+        $query=$query->andFilterWhere(['<=', 't.thoi_gian_tao', new Expression("STR_TO_DATE('".$end."','%Y-%m-%d %H:%i:%s')")]);
+        if($byuser>0){
+            $query = $query->andFilterWhere(['t.nguoi_tao' => $byuser]);
+        }
+        if($byhocphi != 'all'){
+            if($byhocphi=='danop'){
+                $query=$query->andFilterWhere(['>', '(SELECT SUM(i.so_tien_nop) FROM hv_nop_hoc_phi AS i WHERE t.id = i.id_hoc_vien)', 2000000]);
+            }else if($byhocphi=='coc'){
+                $query=$query->andFilterWhere(['<=', '(SELECT SUM(i.so_tien_nop) FROM hv_nop_hoc_phi AS i WHERE t.id = i.id_hoc_vien)', 2000000]);
+            }
+        }
+        
+        if($byhangdaotao!=NULL){
+            $query = $query->andFilterWhere(['t.id_hang' => $byhangdaotao]);
+        }
+        
+        $model=$query->all();
+        $modelCount=$query->count();       
+       
+        
+        if($typereport==0){
+            $content = $this->renderPartial('rp_danh_sach_dang_ky_print', [
+                'model' => $model,
+                'start'=>$start,
+                'end'=>$end,
+                'modelCount'=>$modelCount,
+                'byuser' => $byuser,
+                'byhangdaotao' => $byhangdaotao
+            ]);
+        }
+        return $this->asJson([
+            'status' => 'success',
+            'content' => $content,
+        ]);
+        
+    }
+    
+}

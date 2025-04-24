@@ -100,7 +100,7 @@ return [
         'attribute'=>'check_phan_hang',
         'width' => '100px',
         'value' => function ($model) {
-            return $model->check_phan_hang === 'OTO' ? 'Xe Ô tô' : ($model->check_phan_hang === 'MOTO' ? 'Xe Moto' : $model->check_phan_hang);
+            return $model->check_phan_hang === 'OTO' ? 'Xe Ô tô' : ($model->check_phan_hang === 'MOTO' ? 'Xe Mô tô' : $model->check_phan_hang);
         },
         'format' => 'text', 
     ],

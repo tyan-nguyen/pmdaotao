@@ -17,6 +17,19 @@ class DangKyHv extends HocVienBase
             $this->thoi_gian_tao = date('Y-m-d H:i:s');
             $this->trang_thai = 'DANG_KY';
             $this->nguoi_lap_phieu = Yii::$app->user->identity->fullname;
+            if($this->id_hang){
+                $this->id_hoc_phi = HangDaoTao::findOne($this->id_hang)->hocPhi->id;
+            }
+            if($this->co_ho_so_thue==null){
+                $this->co_ho_so_thue = 0;
+            }
+            if($this->da_nhan_ao==null){
+                $this->da_nhan_ao = 0;
+            }
+        }
+        
+        if(!$this->id_hoc_phi){
+            $this->id_hoc_phi = HangDaoTao::findOne($this->id_hang)->hocPhi->id;
         }
         return parent::beforeSave($insert);
     }

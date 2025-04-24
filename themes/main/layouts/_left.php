@@ -42,6 +42,12 @@ use app\modules\user\models\User;
 				-->
 				
 				<li class="side-item side-item-category">CHỨC NĂNG</li>
+				
+				<?php if(User::hasRole('nThue',false)): ?>
+				<?= $this->render('menus/_menu-thue') ?>
+				<?php elseif (User::hasRole('nDaoTao',false)):?>
+				<?= $this->render('menus/_menu-dao-tao') ?>
+				<?php else:?>
 				<?= $this->render('menus/van-ban') ?>
 				
 				<?= $this->render('menus/hoc-vien') ?>
@@ -59,7 +65,7 @@ use app\modules\user\models\User;
 				<?= $this->render('menus/lich-hoc') ?>
 
 				<?= $this->render('menus/tai-khoan') ?>				
-				
+				<?php endif;?>
 				<!-- 
 				<li class="side-item side-item-category">Tùy chỉnh</li>
 				<li>

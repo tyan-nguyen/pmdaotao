@@ -16,26 +16,22 @@ use app\modules\hocvien\models\HocVien;
 use app\modules\hocvien\models\DangKyHv;
 use app\modules\hocvien\models\NopHocPhi;
 use yii\web\UploadedFile;
+use app\custom\CustomFunc;
+use yii\db\Expression;
 /**
  * HocVienController implements the CRUD actions for HvHocVien model.
  */
 class DangKyHvController extends Controller
 {
+    public $freeAccessActions = ['get-phieu-in-ajax', 'update-print-count', 'report-list', 'get-phieu-in-report-list-ajax'];
     /**
      * @inheritdoc
      */
     public function behaviors() {
 		return [
-			'access' => [
-				'class' => AccessControl::className(),
-				'rules' => [
-					[
-						'actions' => ['index', 'view', 'update','create','delete','bulkdelete'],
-						'allow' => true,
-						'roles' => ['@'],
-					],
-				],
-			],
+		    'ghost-access'=> [
+		        'class' => 'webvimark\modules\UserManagement\components\GhostAccessControl',
+		    ],
 			'verbs' => [
 				'class' => VerbFilter::className(),
 				'actions' => [
@@ -48,7 +44,8 @@ class DangKyHvController extends Controller
 	{
 	    Yii::$app->params['moduleID'] = 'Module Quản lý Học viên';
 	    Yii::$app->params['modelID'] = 'Đăng ký học';
-	    return true;
+	    //return true;
+	    return parent::beforeAction($action);
 	}
     /**
      * Lists all HvHocVien models.
@@ -58,7 +55,9 @@ class DangKyHvController extends Controller
     {    
         $searchModel = new DangKyHvSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->query->andWhere(['trang_thai' => ['DANG_KY']]);
+        //an add
+        //$dataProvider->query->andWhere(['trang_thai' => ['DANG_KY']]);
+        //$dataProvider->query->andWhere('id_khoa_hoc is NULL');
         $pagination = $dataProvider->getPagination();
         $pagination->pageSize = 20;
         return $this->render('index', [
@@ -143,7 +142,8 @@ class DangKyHvController extends Controller
                     'title'=> "Thêm học viên",
                     'content'=>'<span class="text-success">Đăng ký học viên thành công !</span>',
                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                               Html::a('Tiếp tục thêm',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                            Html::a('Xem thông tin',['view', 'id'=>$model->id],['class'=>'btn btn-primary','role'=>'modal-remote']).
+                               Html::a('Tiếp tục thêm mới',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
                 ];         
             }else{           
                 return [
@@ -377,10 +377,11 @@ public function actionCreate2($id)
       
       $hocPhi = null;
       if ($hocVien) {
-          $hangDaoTao = $hocVien->hangDaoTao;  
+          $hocPhi = $hocVien->hocPhi;
+          /* $hangDaoTao = $hocVien->hangDaoTao;  
           if ($hangDaoTao) {
               $hocPhi = $hangDaoTao->hocPhi;  
-          }
+          } */
       }
  
     if($request->isAjax){
@@ -420,12 +421,20 @@ public function actionCreate2($id)
                 $hocVien->trang_thai = 'NHAPTRUCTIEP'; 
                 $hocVien->save();
             }
-            return [
+            /* return [
                 'forceReload'=>'#crud-datatable-pjax',
                 'title'=> "Thông tin học phí",
                 'content'=>'<span class="text-success">Thêm học phí thành công !</span>',
                 'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"])         
-            ];         
+            ];  */     
+            return [
+                'title' => "Học viên  #" . $model->hocVien->id,
+                'content' => $this->renderAjax('view', [
+                    'model' => $hocVien,
+                ]),
+                'footer' => 
+                Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"])
+            ];    
         }else{           
             return [
                 'title'=> "Thông tin học phí",
@@ -458,18 +467,60 @@ public function actionCreate2($id)
                 'hocPhi' => $hocPhi,
             ]);
         }
-    }
-   
+    }   
 }
 
-public function actionGetPhieuInAjax($id, $type)
+public function actionGetPhieuInAjax($id, $type, $nhap)//$nhap in nhap hay in that
 {
-    $model = $this->findModel($id);
+    $model = NopHocPhi::findOne($id);
   //  $model->so_lan_in_phieu = ($model->so_lan_in_phieu ?? 0) + 1;
-    $model->save(false);
+    //$model->save(false);
 
-    if ($type === 'phieuthongtin') {
-        $content = $this->renderPartial('_print_phieu_thong_tin', ['model' => $model]);
+    if ($type === 'phieuthu') {
+        $soTienDong = 0;
+        $soTienConLai = 0;
+        $phanTram = null;
+        $hocPhi = $model->hocVien->hocPhi;
+        $tongTienDong = NopHocPhi::find()->where(['id_hoc_vien'=>$model->id_hoc_vien])->sum('so_tien_nop');
+        if($model->loai_nop == 'NOP100'){//100%
+            //$soTienDong = $model->so_tien_nop;
+            //$soTienConLai = 0;
+           // $soTienConLai = $hocPhi->hoc_phi - $tongTienDong;
+            $phanTram = '100%';
+        } else if($model->loai_nop == 'NOP50'){//50%
+           // $soTienDong = $model->so_tien_nop;
+            //$soTienConLai = $model->so_tien_nop;
+           // $soTienConLai = $hocPhi->hoc_phi - $tongTienDong;
+            $phanTram = '50%';
+        } else if($model->loai_nop == 'COC1TR'){
+            //$soTienDong = $model->so_tien_nop;
+            //$soTienConLai = $hocPhi->hoc_phi - $model->so_tien_nop;
+           // $soTienConLai = $hocPhi->hoc_phi - $tongTienDong;
+            $phanTram = null;
+        }else if($model->loai_nop == 'KHAC'){
+           // $soTienDong = $model->so_tien_nop;
+           // $soTienConLai = $hocPhi->hoc_phi - $model->so_tien_nop;
+           // $soTienConLai = $hocPhi->hoc_phi - $tongTienDong;
+            $phanTram = null;
+        }
+        
+        if($model->loai_phieu==NopHocPhi::PHIEUTHULABEL){
+            $content = $this->renderPartial('_print_phieu_thong_tin', [
+                'model' => $model,
+                //'soTienDong' => $soTienDong,
+                //'soTienConLai' => $soTienConLai,
+                'phanTram' => $phanTram,
+                'nhap'=>$nhap
+            ]);
+        } else if($model->loai_phieu==NopHocPhi::PHIEUCHILABEL){
+            $content = $this->renderPartial('_print_phieu_thong_tin_chi', [
+                'model' => $model,
+                //'soTienDong' => $soTienDong,
+                //'soTienConLai' => $soTienConLai,
+                'phanTram' => $phanTram,
+                'nhap'=>$nhap
+            ]);
+        }
         return $this->asJson([
             'status' => 'success',
             'content' => $content,
@@ -486,7 +537,7 @@ public function actionUpdatePrintCount($id)
 {
     Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
-    $model = HocVien::findOne($id);
+    $model = NopHocPhi::findOne($id);
     if ($model !== null) {
         $model->so_lan_in_phieu = ($model->so_lan_in_phieu ?? 0) + 1;
         if ($model->save(false)) {
@@ -494,6 +545,131 @@ public function actionUpdatePrintCount($id)
         }
     }
     return ['success' => false];
+}
+
+/**
+ * in danh sách theo ca
+ */
+public function actionReportList(){
+    /* if($ca=='sang'){
+       // $timeStart = date('Y-m-d 06:00:00');
+        $title = 'Ca sáng';
+    } else if($ca=='chieu'){
+        $title = 'Ca chiều';
+    } */
+    //$model = HocVien::find()->where(['id' => $id])->one();
+    //$trang_thai_duyet = $model->trang_thai_duyet;
+    $request = Yii::$app->request;
+    if ($request->isAjax) {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+ 
+        return [
+            'title' => "Báo cáo danh sách theo ca",
+            'content' => $this->renderAjax('report-list', [
+                
+            ]),
+            'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"])
+        ];
+    }
+}
+
+public function actionGetPhieuInReportListAjax($startdate, $starttime, $enddate, $endtime, $byuser=0,$typereport)//0 for all
+{
+    if($byuser==null){
+        $byuser = 0;
+    }
+   // $startStr = $startdate . ' ' .$starttime;//add second
+   // $endStr = $enddate . ' ' .$endtime;//add second
+    $start = CustomFunc::convertDMYToYMD($startdate) . ' ' . $starttime;
+    $end = CustomFunc::convertDMYToYMD($enddate) . ' ' . $endtime;;
+    
+   // $start = '2025-03-31 06:00:00';
+    //$end = '2025-04-01 11:00:00';
+    $query = NopHocPhi::find()
+        ->andFilterWhere(['>=', 'thoi_gian_tao', new Expression("STR_TO_DATE('".$start."','%Y-%m-%d %H:%i:%s')")])
+        ->andFilterWhere(['<=', 'thoi_gian_tao', new Expression("STR_TO_DATE('".$end."','%Y-%m-%d %H:%i:%s')")]);
+    if($byuser>0){
+        $query = $query->andFilterWhere(['nguoi_tao' => $byuser]);
+    }
+    $model=$query->all();
+    $modelCount=$query->count();
+    $modelSoTienNop = $query->sum('so_tien_nop');
+    
+    $queryCK = NopHocPhi::find()
+    ->andFilterWhere(['>=', 'thoi_gian_tao', new Expression("STR_TO_DATE('".$start."','%Y-%m-%d %H:%i:%s')")])
+    ->andFilterWhere(['<=', 'thoi_gian_tao', new Expression("STR_TO_DATE('".$end."','%Y-%m-%d %H:%i:%s')")]);
+    if($byuser>0){
+        $queryCK = $queryCK->andFilterWhere(['nguoi_tao' => $byuser]);
+    }
+    $queryCK = $queryCK->andFilterWhere(['hinh_thuc_thanh_toan' => 'CK']);
+    $modelSoTienNopCK = $queryCK->sum('so_tien_nop');
+    
+    $queryTM = NopHocPhi::find()
+    ->andFilterWhere(['>=', 'thoi_gian_tao', new Expression("STR_TO_DATE('".$start."','%Y-%m-%d %H:%i:%s')")])
+    ->andFilterWhere(['<=', 'thoi_gian_tao', new Expression("STR_TO_DATE('".$end."','%Y-%m-%d %H:%i:%s')")]);
+    if($byuser>0){
+        $queryTM = $queryTM->andFilterWhere(['nguoi_tao' => $byuser]);
+    }
+    $queryTM = $queryTM->andFilterWhere(['hinh_thuc_thanh_toan' => 'TM']);
+    
+    $modelSoTienNopTM = $queryTM->sum('so_tien_nop');
+    
+    $queryChietKhau = NopHocPhi::find()
+    ->andFilterWhere(['>=', 'thoi_gian_tao', new Expression("STR_TO_DATE('".$start."','%Y-%m-%d %H:%i:%s')")])
+    ->andFilterWhere(['<=', 'thoi_gian_tao', new Expression("STR_TO_DATE('".$end."','%Y-%m-%d %H:%i:%s')")]);
+    if($byuser>0){
+        $queryChietKhau = $queryChietKhau->andFilterWhere(['nguoi_tao' => $byuser]);
+    } 
+    $modelSoTienChietKhau = $queryChietKhau->sum('chiet_khau');
+    
+    if($typereport==0){
+        $content = $this->renderPartial('_print_report_list_0', [
+            'model' => $model,
+            'start'=>$start,
+            'end'=>$end,
+            'modelCount'=>$modelCount,
+            'modelSoTienNop'=> $modelSoTienNop,
+            'modelSoTienNopTM'=> $modelSoTienNopTM,
+            'modelSoTienNopCK'=> $modelSoTienNopCK,
+            'modelSoTienChietKhau' => $modelSoTienChietKhau,
+            'byuser' => $byuser
+        ]);
+    }else if($typereport==1){
+        $content = $this->renderPartial('_print_report_list_1', [
+            'model' => $model,
+            'start'=>$start,
+            'end'=>$end,
+            'modelCount'=>$modelCount,
+            'modelSoTienNop'=> $modelSoTienNop,
+            'modelSoTienNopTM'=> $modelSoTienNopTM,
+            'modelSoTienNopCK'=> $modelSoTienNopCK,
+            'modelSoTienChietKhau' => $modelSoTienChietKhau,
+            'byuser' => $byuser
+        ]);
+    }
+    return $this->asJson([
+        'status' => 'success',
+        'content' => $content,
+    ]);
+    
+}
+
+/**
+ * in danh sách báo cáo tổng
+ */
+public function actionReportSum(){
+    $request = Yii::$app->request;
+    if ($request->isAjax) {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        
+        return [
+            'title' => "Báo cáo danh sách theo ca",
+            'content' => $this->renderAjax('report-sum', [
+                
+            ]),
+            'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"])
+        ];
+    }
 }
 
 }

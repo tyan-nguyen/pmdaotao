@@ -6,7 +6,32 @@ namespace app\custom;
 use webvimark\modules\UserManagement\models\User;
 
 class CustomFunc 
-{        
+{  
+    /**
+     * fill number 000.. cho so hoa don neu so tu 1->9999 
+     * @param unknown $number
+     * @return string|unknown
+     */
+    public static function fillNumber($number){
+        $num = strlen($number);
+        if( $num < 5){
+            $str0 = '';
+            for($i=1;$i<=(5-$num); $i++){
+                $str0 .= '0';
+            }
+            return $str0 . $number;
+        } else {
+            return $number;
+        }
+    }
+    /**
+     * chuyen doi ngay chuoi Y-m-d H:i:s -> dd/mm/yyyy
+     * @param string $date_string
+     * @return string
+     */
+    public static function convertYMDHISToDMY($date_string){
+        return $date_string!=null ? date("d/m/Y", strtotime($date_string)) : '';
+    }
     /**
      * chuyen doi ngay chuoi Y-m-d H:i:s -> dd/mm/yyyy H:i:s
      * @param string $date_string
@@ -14,6 +39,22 @@ class CustomFunc
      */
     public static function convertYMDHISToDMYHIS($date_string){
         return $date_string!=null ? date("Y-m-d H:i:s", strtotime($date_string)) : '';
+    }
+    /**
+     * chuyen doi ngay chuoi Y-m-d H:i:s -> dd/mm/yyyy H:i:s
+     * @param string $date_string
+     * @return string
+     */
+    public static function convertDMYHISToYMDHIS($date_string){
+        return $date_string!=null ? date("Y-m-d H:i:s", strtotime($date_string)) : '';
+    }
+    /**
+     * chuyen doi ngay chuoi Y-m-d H:i:s -> dd/mm/yyyy H:i
+     * @param string $date_string
+     * @return string
+     */
+    public static function convertYMDHISToDMYHI($date_string){
+        return $date_string!=null ? date("d/m/Y H:i", strtotime($date_string)) : '';
     }
     
     /**

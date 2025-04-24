@@ -1,3 +1,6 @@
+Fancybox.bind('[data-fancybox="gallery"]', {
+  // Your custom options for a specific gallery
+});
 /**
  * ham hien thi notify
  * tham so truyen vao: text can hien thi
@@ -32,7 +35,9 @@ function printPhieu(){
 	$('#print').printThis({
 		 //debug: false,               // show the iframe for debugging
 		 importCSS: false,            // import parent page css
-		 loadCSS: ['/css/print-phieu.css?v=2'],
+		 loadCSS: ['/css/print-phieu.css?v=3',
+		 	'/assets/fontawesome-free-6.4.0-web/css/all.min.css',
+		 ],
 		 //printDelay: 333,
     });
 }

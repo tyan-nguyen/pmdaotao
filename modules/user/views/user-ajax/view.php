@@ -32,6 +32,7 @@ use app\modules\user\models\User;
                 'attributes' => [
                     //'id',
                     'username',
+                    'ho_ten',
                     'auth_key',
                    // 'password_hash',
                     'confirmation_token',
@@ -51,7 +52,7 @@ use app\modules\user\models\User;
             </div>
 			
 			<div class="tab-pane" id="tab2" role="tabpanel">
-				<?= History::showHistory(KhoLuuTru::MODEL_ID, $model->id) ?>
+				<?php // History::showHistory(KhoLuuTru::MODEL_ID, $model->id) ?>
 			</div>
 	</div>
 	</div>

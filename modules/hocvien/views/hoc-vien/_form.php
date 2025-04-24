@@ -45,7 +45,7 @@ $model->ngay_het_han_cccd = CustomFunc::convertYMDToDMY($model->ngay_het_han_ccc
             </div>
             <div class="col-lg-3 col-md-6">
             <?= $form->field($model, 'ngay_het_han_cccd')->widget(DatePicker::classname(), [
-            'options' => ['placeholder' => 'Chọn ngày  ...'],
+            'options' => ['placeholder' => 'Chọn ngày...'],
             'pluginOptions' => [
                 'autoclose' => true,
                 'format' => 'dd/mm/yyyy',
@@ -62,7 +62,7 @@ $model->ngay_het_han_cccd = CustomFunc::convertYMDToDMY($model->ngay_het_han_ccc
                  <?= $form->field($model, 'noi_dang_ky')->dropDownList(
                      [
                       'Cơ sở 1 (Cửa hàng Nguyễn Trình)' => 'Cơ sở 1 (Cửa hàng Nguyễn Trình)',
-                      'Cơ sở 2 (Trướng lái Nguyễn Trình)' => 'Cơ sở 2 (Trướng lái Nguyễn Trình)'
+                      'Cơ sở 2 (Trường lái Nguyễn Trình)' => 'Cơ sở 2 (Trường lái Nguyễn Trình)'
                      ],
                      ['prompt' => '- Nơi đăng ký -']
                  ) ?>
@@ -85,7 +85,7 @@ $model->ngay_het_han_cccd = CustomFunc::convertYMDToDMY($model->ngay_het_han_ccc
          <?= $form->field($model, 'id_khoa_hoc')->widget(Select2::classname(), [
             'data' => !empty($model->id_khoa_hoc) ? [
              $model->id_khoa_hoc => \app\modules\khoahoc\models\KhoaHoc::findOne($model->id_khoa_hoc)->ten_khoa_hoc
-         ] : [], 
+            ] : \app\modules\khoahoc\models\KhoaHoc::getListByHang($model->id_hang), 
            'language' => 'vi',
            'options' => [
            'placeholder' => 'Chọn Khóa học...',  

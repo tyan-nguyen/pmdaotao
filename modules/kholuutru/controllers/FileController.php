@@ -21,6 +21,8 @@ use app\widgets\FileDisplayTypeWidget;
  */
 class FileController extends Controller
 {
+    //public $freeAccess = true;
+    public $freeAccessActions = ['reload', 'download', 'view'];
     /**
      * @inheritdoc
      */

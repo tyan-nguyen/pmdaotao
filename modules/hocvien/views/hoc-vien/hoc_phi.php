@@ -109,3 +109,50 @@ $trangThai = ($hocPhiKhoaHoc && $tongTienDaNop >= $hocPhiKhoaHoc->hoc_phi) ? 'N�
         <?php CardWidget::end() ?>
     <?php endif; ?>
 </div>
+
+<?php if (empty($hocPhiKhoaHoc)){?>
+ <?php CardWidget::begin(['title'=>'Chi tiết']) ?>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Lần nộp</th>
+                    <th>Ngày nộp</th>
+                    <th>Số tiền nộp</th>
+                    <th>Người thu</th>
+                    <th>Biên lai</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $index = 1;
+                foreach ($hocPhi as $hcPhi): ?>
+                    <tr>
+                        <td><?= $index ?></td>
+                        <td><?= Yii::$app->formatter->asDate($hcPhi->ngay_nop, 'php:d-m-Y') ?></td>
+                        <td><?= number_format($hcPhi->so_tien_nop, 0, ',', '.') . ' VNĐ' ?></td>
+                        <td>
+                            <?php
+                            // Tìm thông tin người thu từ bảng user
+                            $user = NhanVien::findOne($hcPhi->nguoi_thu);
+                            echo $user ? Html::encode($user->ho_ten) : 'Không xác định';
+                            ?>
+                        </td>
+                        <td>
+                            <?= Html::a('<i class="fas fa-eye"> </i>', 
+                                             ['/hocvien/hoc-vien/bien-lai','idHP' => $hcPhi->id],
+                                                [
+                                                   'class' => 'btn ripple btn-primary btn-sm',
+                                                   'title' => 'Xem biên lai',
+                                                   'style' => 'color: white;',
+                                                   'role' => 'modal-remote-2',
+                                                ]
+                            ) ?>
+                        </td>
+                    </tr>
+                <?php
+                $index++;
+                endforeach; ?>
+            </tbody>
+        </table>
+        <?php CardWidget::end() ?>
+<?php } ?>

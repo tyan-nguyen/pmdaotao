@@ -6,6 +6,8 @@ use kartik\grid\GridView;
 use cangak\ajaxcrud\BulkButtonWidget;
 use yii\widgets\Pjax;
 use app\widgets\FilterFormWidget;
+use app\modules\hocvien\models\HangDaoTao;
+use app\modules\hocvien\models\HocVien;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\modules\vanban\models\search\VBDenSearch */
@@ -46,6 +48,7 @@ Yii::$app->params['showExport'] = true;
             'dataProvider' => $dataProvider,
             //'filterModel' => $searchModel,
             'pjax'=>true,
+            'showPageSummary' => true,
             'columns' => require(__DIR__.'/_columns.php'),
             'toolbar'=> [
                 ['content'=>
@@ -72,8 +75,15 @@ Yii::$app->params['showExport'] = true;
                             'data-confirm-title'=>'Xác nhận xóa?',
                             'data-confirm-message'=>'Bạn có chắc muốn xóa?'
                         ])
-                    .
-                    '
+                    .'<li><hr class="dropdown-divider"></li>'
+                    . Html::a('<i class="fas fa-clipboard-list"></i> In DS theo ca', ['report-list'],
+                        ['role'=>'modal-remote','title'=> 'In DS theo ca','class'=>'dropdown-item'])
+                    .'<li><hr class="dropdown-divider"></li>'
+                    . Html::a('<i class="fas fa-clipboard-list"></i> Báo cáo DS HV', ['/hocvien/bao-cao/rp-danh-sach-dang-ky'],
+                        ['role'=>'modal-remote','title'=> 'Báo cáo danh sách học viên','class'=>'dropdown-item'])
+                   /*  . Html::a('<i class="fas fa-clipboard-list"></i> In Báo cáo theo ca', ['report-sum'],
+                        ['role'=>'modal-remote','title'=> 'In Báo cáo tổng','class'=>'dropdown-item']) */
+                    .'
 						</div>
 					</div>
                     '.

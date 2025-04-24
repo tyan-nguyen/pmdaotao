@@ -9,7 +9,13 @@ use app\custom\CustomFunc;
         <div class="card-body p-2">
             <div class="d-flex">
                 <span class="bg-primary-transparent border border-primary br-3 pd-5">
+                	<?php if(strtoupper($fileVB->file_type) == 'JPG' || strtoupper($fileVB->file_type) == 'JPEG'|| strtoupper($fileVB->file_type) == 'PNG'){ ?>
+                	<a href="<?= File::FOLDER_DOCUMENTS . $fileVB->fileSaveName ?>" data-fancybox="gallery" data-caption="<?= $fileVB->file_display_name ?>">
+                	<?php } ?>
                     <?= Html::img($fileVB ? File::getIcon($fileVB->file_type) : '', ['width'=>35]) ?>
+                    <?php if(strtoupper($fileVB->file_type) == 'JPG' || strtoupper($fileVB->file_type) == 'JPEG'|| strtoupper($fileVB->file_type) == 'PNG'){ ?>
+                    </a>
+                    <?php } ?>
                 </span>
                 <div class="ms-auto mt-1 file-dropdown">
                     <a href="javascript:void(0);" class="text-muted" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fe fe-more-vertical fs-18"></i></a>

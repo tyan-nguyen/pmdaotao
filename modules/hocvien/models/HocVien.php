@@ -28,13 +28,13 @@ class HocVien extends HocVienBase
         return parent::afterDelete();
     }
     
-    public function getHocPhi()
+    /* public function getHocPhi()
     {
         // Truy vấn học phí từ bảng hoc_phi dựa trên id_hang
         return HocPhi::find()
             ->where(['id_hang' => $this->id_hang])
             ->one();
-    }
+    } */
     public function getHang()
     {
         return $this->hasOne(HangDaoTao::class, ['id' => 'id_hang']);
@@ -45,6 +45,8 @@ class HocVien extends HocVienBase
     }
     public function beforeSave($insert)
     {
+       
+        
         if ($this->id_khoa_hoc) { // Kiểm tra nếu có id_khoa_hoc
             // Truy vấn số học viên tối đa cho phép của khóa học
             $khoaHoc = KhoaHoc::findOne($this->id_khoa_hoc);
@@ -71,13 +73,34 @@ class HocVien extends HocVienBase
             $this->thoi_gian_tao = date('Y-m-d H:i:s');
             $this->trang_thai = 'NHAPTRUCTIEP';
             $this->loai_dang_ky = 'Nhập trực tiếp';
-            $this->ngay_sinh = CustomFunc::convertDMYToYMD($this->ngay_sinh);
-            $this->ngay_het_han_cccd = CustomFunc::convertDMYToYMD($this->ngay_het_han_cccd);
+            $this->id_hoc_phi =1; 
+            //if($this->id_hang){
+              //  $this->id_hoc_phi = 1;
+            //}
         }
+        //set id_hoc_phi
+        /* if($this->id_hoc_phi == null){
+             $this->id_hoc_phi = HangDaoTao::findOne($this->id_hang)->hocPhi->id;
+        } */
+        
+        $this->ngay_sinh = CustomFunc::convertDMYToYMD($this->ngay_sinh);
+        $this->ngay_het_han_cccd = CustomFunc::convertDMYToYMD($this->ngay_het_han_cccd);
+        
+        
     
         return parent::beforeSave($insert);
     }
-    
+    /**
+     * {@inheritdoc}
+     */
+    /* public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+        if($this->id_hang){
+            $this->id_hoc_phi = 25;
+            $this->updateAttributes(['id_hoc_phi']);
+        }
+    } */
     
   
 }

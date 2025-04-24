@@ -5,6 +5,8 @@ use yii\widgets\ActiveForm;
 
 use app\modules\hocvien\models\HangDaoTao;
 use kartik\date\DatePicker;
+use app\modules\user\models\User;
+use app\modules\khoahoc\models\KhoaHoc;
 /* @var $this yii\web\View */
 /* @var $model app\modules\vanban\models\VanBanDen */
 /* @var $form yii\widgets\ActiveForm */
@@ -23,11 +25,11 @@ use kartik\date\DatePicker;
            <div class="col-md-3">
                   <?= $form->field($model, 'ho_ten')->textInput(['maxlength' => true]) ?>
            </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                   <?= $form->field($model, 'gioi_tinh')->dropDownList([
                           1 => 'Nam',
                           0 => 'Nữ',
-                          ], ['prompt' => 'Chọn giới tính', 'class' => 'form-control dropdown-with-arrow']) ?>
+                          ], ['prompt' => 'Tất cả', 'class' => 'form-control dropdown-with-arrow']) ?>
             </div>
             <div class="col-md-3">
                   <?= $form->field($model, 'ngay_sinh')->widget(DatePicker::classname(), [
@@ -38,17 +40,38 @@ use kartik\date\DatePicker;
                   ]
                   ]); ?>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                   <?= $form->field($model, 'so_cccd')->textInput(['maxlength' => true]) ?>
             </div>
-            <div class="col-md-3">
+            
+            <div class="col-md-2">
                   <?= $form->field($model, 'dia_chi')->textInput(['maxlength' => true]) ?>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                   <?= $form->field($model, 'so_dien_thoai')->textInput(['maxlength' => true]) ?>
             </div>
-            <div class="col-md-3">
-                  <?= $form->field($model, 'id_hang')->dropDownList(HangDaoTao::getList(), ['prompt'=>'Chọn hạng']) ?>
+            <div class="col-md-2">
+                  <?= $form->field($model, 'id_hang')->dropDownList(HangDaoTao::getList(), ['prompt'=>'Tất cả']) ?>
+            </div>
+            <div class="col-md-2">
+                  <?= $form->field($model, 'id_khoa_hoc')->dropDownList(KhoaHoc::getList(), ['prompt'=>'Tất cả']) ?>
+            </div>
+            <div class="col-md-2">
+                  <?= $form->field($model, 'nguoi_tao')->dropDownList(User::getList(), ['prompt'=>'Tất cả'])->label('NV tiếp nhận') ?>
+            </div>
+            <div class="col-md-2">
+                  <?= $form->field($model, 'da_nhan_ao')->dropDownList([1=>'Đã nhận', 0=>'Chưa nhận', ], ['prompt'=>'Tất cả'])->label('Nhận áo') ?>
+            </div>
+            <div class="col-md-2">
+                  <?= $form->field($model, 'size')->dropDownList([
+                      'S'=>'Size S',
+                      'M'=>'Size M',
+                      'L'=>'Size L',
+                      'XL'=>'Size XL',
+                      '2XL'=>'Size 2XL',
+                      '3XL'=>'Size 3XL',
+                      '4XL'=>'Size 4XL'
+                  ], ['prompt'=>'Tất cả'])->label('Size') ?>
             </div>
     </div>    
 

@@ -1,3 +1,7 @@
+.tr-red, .tr-red td{
+	color: red !important;
+}
+
 /**for top link*/
 .header-icons .nav-link:hover{
 	color: red !important;
@@ -357,5 +361,3 @@ a.desc:after {
 	min-height: 3rem;
     padding: .5rem 1rem;
 }
-
-
