@@ -132,7 +132,7 @@ return [
      ],
      [
          'class' => '\kartik\grid\DataColumn',
-         'label'=>'Chiết khấu(C)',
+         'label'=>'C.Khấu(C)',
          'width' => '120px',
          'value' => function($model) {
             return $model->tienChietKhau;
@@ -176,7 +176,7 @@ return [
          'value'=>function($model){
              return $model->nguoiTao->username;
          },
-         'width' => '100px',
+         'width' => '80px',
          'contentOptions' => [ 'style' => 'text-align:center'],
      ],
      [
@@ -217,6 +217,17 @@ return [
         'format'=>'html',
         'width' => '30px',
         'contentOptions' => [ 'style' => 'text-align:center'],
+     ],
+     [
+         'class'=>'\kartik\grid\DataColumn',
+         'attribute'=>'ngay_nhan_ao',
+         'label'=>'Ngày nhận',
+         'value'=>function($model){
+            return CustomFunc::convertYMDToDMY($model->ngay_nhan_ao);
+         },
+         'format'=>'html',
+         'width' => '60px',
+         'contentOptions' => [ 'style' => 'text-align:center'],
      ],
     /* [
         'class'=>'\kartik\grid\DataColumn',

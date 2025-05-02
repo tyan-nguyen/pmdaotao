@@ -31,7 +31,7 @@ use app\modules\khoahoc\models\KhoaHoc;
                           0 => 'Nữ',
                           ], ['prompt' => 'Tất cả', 'class' => 'form-control dropdown-with-arrow']) ?>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                   <?= $form->field($model, 'ngay_sinh')->widget(DatePicker::classname(), [
                          'options' => ['placeholder' => 'Chọn ngày sinh  ...'],
                          'pluginOptions' => [
@@ -44,9 +44,12 @@ use app\modules\khoahoc\models\KhoaHoc;
                   <?= $form->field($model, 'so_cccd')->textInput(['maxlength' => true]) ?>
             </div>
             
+            <!-- 
             <div class="col-md-2">
                   <?= $form->field($model, 'dia_chi')->textInput(['maxlength' => true]) ?>
             </div>
+             -->
+             
             <div class="col-md-2">
                   <?= $form->field($model, 'so_dien_thoai')->textInput(['maxlength' => true]) ?>
             </div>
@@ -72,6 +75,15 @@ use app\modules\khoahoc\models\KhoaHoc;
                       '3XL'=>'Size 3XL',
                       '4XL'=>'Size 4XL'
                   ], ['prompt'=>'Tất cả'])->label('Size') ?>
+            </div>
+            <div class="col-md-2">
+                  <?= $form->field($model, 'ngay_nhan_ao')->widget(DatePicker::classname(), [
+                         'options' => ['placeholder' => 'Chọn ngày nhận  ...'],
+                         'pluginOptions' => [
+                         'autoclose' => true,
+                         'format' => 'dd/mm/yyyy',
+                  ]
+                  ]); ?>
             </div>
     </div>    
 

@@ -49,7 +49,7 @@ class KhoaHocController extends Controller
      */
     public function actionIndex()
     {
-        $today = date('Y-m-d');
+        /* $today = date('Y-m-d');
         $khoaHocs = KhoaHoc::find()
             ->where(['<', 'ngay_ket_thuc', $today])
             ->andWhere(['trang_thai' => 'CHUA_HOAN_THANH'])
@@ -57,7 +57,7 @@ class KhoaHocController extends Controller
         foreach ($khoaHocs as $khoaHoc) {
             $khoaHoc->trang_thai = 'DA_HOAN_THANH';
             $khoaHoc->save(false); 
-        }
+        } */
         $searchModel = new KhoaHocSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
     

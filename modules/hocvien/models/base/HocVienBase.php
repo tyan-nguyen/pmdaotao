@@ -43,6 +43,7 @@ use yii\db\Expression;
  * @property int|null $co_ho_so_thue
  * @property int|null $da_nhan_ao
  * @property string|null $size
+ * @property string|null $ngay_nhan_ao
  */
 class HocVienBase extends \app\models\HvHocVien
 {
@@ -66,7 +67,7 @@ class HocVienBase extends \app\models\HvHocVien
             [['tongtiennop'], 'number'],//virtual attribute select when report
             [['id_khoa_hoc'], 'exist', 'skipOnError' => true, 'targetClass' => KhoaHoc::class, 'targetAttribute' => ['id_khoa_hoc' => 'id']],
             [['id_nhom'], 'exist', 'skipOnError' => true, 'targetClass' => NhomHoc::class, 'targetAttribute' => ['id_nhom' => 'id']],
-            [['ghi_chu'], 'safe'],
+            [['ghi_chu', 'ngay_nhan_ao'], 'safe'],
         ];
     }
 
@@ -103,7 +104,8 @@ class HocVienBase extends \app\models\HvHocVien
             'thoi_gian_hoan_thanh_ho_so' => 'Thời gian hoàn thành hồ sơ',
             'co_ho_so_thue' => 'Có hồ sơ thuế',
             'da_nhan_ao' => 'Đã nhận áo',
-            'size'=>'Size'
+            'size'=>'Size',
+            'ngay_nhan_ao' => 'Ngày nhận áo',
         ];
     }
 

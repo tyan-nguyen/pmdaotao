@@ -5,6 +5,7 @@ namespace app\modules\hocvien\models\search;
 use Yii;
 use yii\data\ActiveDataProvider;
 use app\modules\hocvien\models\DangKyHv;
+use app\custom\CustomFunc;
 
 /**
  * DangKyHvSearch represents the model behind the search form about `app\modules\hocvien\models\DangKyHv`.
@@ -18,7 +19,7 @@ class DangKyHvSearch extends DangKyHv
     {
         return [
             [['id', 'id_khoa_hoc', 'nguoi_tao', 'id_hang','gioi_tinh', 'da_nhan_ao'], 'integer'],
-            [['ho_ten', 'so_dien_thoai', 'so_cccd', 'trang_thai', 'thoi_gian_tao', 'ngay_sinh', 'nguoi_tao', 'thoi_gian_hoan_thanh_ho_so', 'dia_chi', 'size'], 'safe'],
+            [['ho_ten', 'so_dien_thoai', 'so_cccd', 'trang_thai', 'thoi_gian_tao', 'ngay_sinh', 'nguoi_tao', 'thoi_gian_hoan_thanh_ho_so', 'dia_chi', 'size', 'ngay_nhan_ao'], 'safe'],
         ];
     }
 
@@ -45,6 +46,10 @@ class DangKyHvSearch extends DangKyHv
             // $query->where('0=1');
             return $dataProvider;
         }
+        
+        if($this->ngay_nhan_ao){
+            $this->ngay_nhan_ao = CustomFunc::convertDMYToYMD($this->ngay_nhan_ao);
+        }
 
         $query->andFilterWhere([
             'id' => $this->id,
@@ -55,6 +60,7 @@ class DangKyHvSearch extends DangKyHv
             'id_hang'=>$this->id_hang,
             'nguoi_tao'=>$this->nguoi_tao,
             'da_nhan_ao' => $this->da_nhan_ao,
+            'ngay_nhan_ao' => $this->ngay_nhan_ao,
             'size' => $this->size
         ]);
 

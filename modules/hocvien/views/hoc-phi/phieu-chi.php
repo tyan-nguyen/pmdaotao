@@ -1,23 +1,25 @@
 <?php
+use yii\helpers\Url;
 use yii\bootstrap5\Html;
 use yii\bootstrap5\Modal;
 use kartik\grid\GridView;
-//use cangak\ajaxcrud\CrudAsset; 
+use cangak\ajaxcrud\CrudAsset;
 use cangak\ajaxcrud\BulkButtonWidget;
 use yii\widgets\Pjax;
 use app\widgets\FilterFormWidget;
-use app\modules\hocvien\models\HangDaoTao;
-use app\modules\hocvien\models\HocVien;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\modules\vanban\models\search\VBDenSearch */
+/* @var $searchModel app\modules\hocvien\models\search\NopHocPhiSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Hồ sơ thuế (HĐĐT)';
+$this->title = 'Phiếu chi tiền';
 $this->params['breadcrumbs'][] = $this->title;
-//CrudAsset::register($this);
+
+CrudAsset::register($this);
+
 Yii::$app->params['showSearch'] = true;
 Yii::$app->params['showExport'] = true;
+
 ?>
 
 <div class="card border-default" id="divFilterExtend">
@@ -41,7 +43,7 @@ Yii::$app->params['showExport'] = true;
     'formSelector' => '.myFilterForm'
 ]); ?>
 
-<div class="van-ban-den-index">
+<div class="nop-hoc-phi-index">
     <div id="ajaxCrudDatatable">
         <?=GridView::widget([
             'id'=>'crud-datatable',
@@ -49,7 +51,7 @@ Yii::$app->params['showExport'] = true;
             //'filterModel' => $searchModel,
             'pjax'=>true,
             'showPageSummary' => true,
-            'columns' => require(__DIR__.'/_columns.php'),
+            'columns' => require(__DIR__.'/_columns-phieu-chi.php'),
             'toolbar'=> [
                 ['content'=>
                     '
@@ -58,14 +60,12 @@ Yii::$app->params['showExport'] = true;
 						<div class="dropdown-menu tx-13" style="">
 							<h6 class="dropdown-header tx-uppercase tx-11 tx-bold bg-info tx-spacing-1">
 								Chọn chức năng</h6>'
-                   /*  .
+                    /* .
                     Html::a('<i class="fas fa fa-plus" aria-hiddi="true"></i> Thêm mới', ['create'],
                         ['role'=>'modal-remote','title'=> 'Thêm mới','class'=>'dropdown-item']) */
                     .
                     Html::a('<i class="fas fa fa-sync" aria-hidden="true"></i> Tải lại', [''],
                         ['data-pjax'=>1, 'class'=>'dropdown-item', 'title'=>'Tải lại'])
-                    
-                    .'{toggleData}'
                     /* .
                     Html::a('<i class="fas fa fa-trash" aria-hidden="true"></i>&nbsp; Xóa danh sách',
                         ["bulkdelete"],
@@ -76,20 +76,19 @@ Yii::$app->params['showExport'] = true;
                             'data-request-method'=>'post',
                             'data-confirm-title'=>'Xác nhận xóa?',
                             'data-confirm-message'=>'Bạn có chắc muốn xóa?'
-                        ])
-                    .'<li><hr class="dropdown-divider"></li>'
+                        ]) */
+                   /*  .'<li><hr class="dropdown-divider"></li>'
                     . Html::a('<i class="fas fa-clipboard-list"></i> In DS theo ca', ['report-list'],
                         ['role'=>'modal-remote','title'=> 'In DS theo ca','class'=>'dropdown-item'])
                     .'<li><hr class="dropdown-divider"></li>'
                     . Html::a('<i class="fas fa-clipboard-list"></i> Báo cáo DS HV', ['/hocvien/bao-cao/rp-danh-sach-dang-ky'],
-                        ['role'=>'modal-remote','title'=> 'Báo cáo danh sách học viên','class'=>'dropdown-item']) */
-                   /*  . Html::a('<i class="fas fa-clipboard-list"></i> In Báo cáo theo ca', ['report-sum'],
-                        ['role'=>'modal-remote','title'=> 'In Báo cáo tổng','class'=>'dropdown-item']) */
+                        ['role'=>'modal-remote','title'=> 'Báo cáo danh sách học viên','class'=>'dropdown-item'])
+ */
                     .'
 						</div>
 					</div>
-                    '.
-                    '{export}'
+                    '/* .
+                    '{export}' */
                 ],
             ],          
             'striped' => false,
@@ -100,7 +99,7 @@ Yii::$app->params['showExport'] = true;
             'summary'=>'Tổng: {totalCount} dòng dữ liệu',
             'panel' => [
                 'headingOptions'=>['class'=>'card-header rounded-bottom-0 card-header text-dark'],
-                'heading' => '<i class="typcn typcn-folder-open"></i> DANH SÁCH HỌC VIÊN ĐĂNG KÝ',
+                'heading' => '<i class="typcn typcn-folder-open"></i> DANH SÁCH PHIẾU CHI',
                 'before'=>false,
             ],
             'export'=>[
@@ -110,7 +109,6 @@ Yii::$app->params['showExport'] = true;
             ]
         ])?>
     </div>
-    
 </div>
 
 <?php Pjax::end(); ?>
@@ -120,30 +118,10 @@ Yii::$app->params['showExport'] = true;
         'id'=>'ajaxCrudModal',
         'tabindex' => false // important for Select2 to work properly
    ],
-   //'dialogOptions'=>['class'=>'modal-lg'],
+   'dialogOptions'=>['class'=>'modal-lg'],
    'closeButton'=>['label'=>'<span aria-hidden=\'true\'>×</span>'],
    'id'=>'ajaxCrudModal',
     'footer'=>'',// always need it for jquery plugin
-    'size'=>Modal::SIZE_EXTRA_LARGE
 ])?>
 
 <?php Modal::end(); ?>
-
-<?php Modal::begin([
-   'options' => [
-        'id'=>'ajaxCrudModal2',
-        'tabindex' => false // important for Select2 to work properly
-   ],
-  // 'dialogOptions'=>['class'=>'modal-lg'],
-   'closeButton'=>['label'=>'<span aria-hidden=\'true\'>×</span>'],
-   'id'=>'ajaxCrudModal2',
-    'footer'=>'',// always need it for jquery plugin
-    'size'=>Modal::SIZE_LARGE
-])?>
-
-<?php Modal::end(); ?>
-
-<?php
-    /* $searchContent = $this->render("_search", ["model" => $searchModel]);
-    echo FilterFormWidget::widget(["content"=>$searchContent, "description"=>"Nhập thông tin tìm kiếm."])  */
-?>

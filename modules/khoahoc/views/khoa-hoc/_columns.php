@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Url;
 use yii\bootstrap5\Html;
+use app\modules\khoahoc\models\KhoaHoc;
 return [
     [
         'class' => 'kartik\grid\CheckboxColumn',
@@ -131,10 +132,12 @@ return [
         'width' => '150px',
         'format' => 'raw', 
         'value' => function($model) {
-            if ($model->trang_thai === 'CHUA_HOAN_THANH') {
-                return '<span class="badge bg-danger"> Chưa hoàn thành </span>';
-            } elseif ($model->trang_thai === 'DA_HOAN_THANH') {
-                return '<span class="badge bg-success"> Hoàn thành </span>';
+            if ($model->trang_thai == KhoaHoc::TRANGTHAI_CHUAHOANTHANH) {
+                return '<span class="badge bg-danger">'.$model->tenTrangThai.'</span>';
+            } elseif ($model->trang_thai == KhoaHoc::TRANGTHAI_DANGHOC) {
+                return '<span class="badge bg-success">'.$model->tenTrangThai.'</span>';
+            }elseif ($model->trang_thai == KhoaHoc::TRANGTHAI_DAHOANTHANH) {
+                return '<span class="badge bg-success">'.$model->tenTrangThai.'</span>';
             }
             return '<span class="badge bg-secondary"> Không xác định </span>'; 
         },

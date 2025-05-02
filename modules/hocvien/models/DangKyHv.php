@@ -12,6 +12,7 @@ class DangKyHv extends HocVienBase
     public function beforeSave($insert) {
           $this->ngay_sinh = CustomFunc::convertDMYToYMD($this->ngay_sinh);
           $this->ngay_het_han_cccd = CustomFunc::convertDMYToYMD($this->ngay_het_han_cccd);
+          $this->ngay_nhan_ao = CustomFunc::convertDMYToYMD($this->ngay_nhan_ao);
         if ($this->isNewRecord) { 
             $this->nguoi_tao = Yii::$app->user->identity->id;
             $this->thoi_gian_tao = date('Y-m-d H:i:s');

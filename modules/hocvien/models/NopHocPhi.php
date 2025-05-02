@@ -213,8 +213,7 @@ class NopHocPhi extends \app\models\HvNopHocPhi
             'NOP100' => 'Nộp 100%',
             'NOP50' => 'Nộp 50%',
             'COC1TR' => 'Cọc 1 triệu',
-            'KHAC'=>'Số tiền tùy chọn'
-            
+            'KHAC'=>'Số tiền tùy chọn'            
         ];
     }
     /**
@@ -272,6 +271,28 @@ class NopHocPhi extends \app\models\HvNopHocPhi
                 break;
             case 'TM':
                 $label = "Tiền mặt";
+                break;
+            default:
+                $label = '';
+        }
+        return $label;
+    }
+    /**
+     * Danh muc loai phieu label
+     * @param int $val
+     * @return string
+     */
+    public function getTenLoaiPhieu($val = NULL)
+    {
+        if ($val == NULL) {
+            $val = $this->loai_phieu;
+        }
+        switch ($val) {
+            case self::PHIEUTHULABEL:
+                $label = "Phiếu thu";
+                break;
+            case self::PHIEUCHILABEL:
+                $label = "Phiếu chi";
                 break;
             default:
                 $label = '';

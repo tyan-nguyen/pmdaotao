@@ -5,6 +5,7 @@ use kartik\date\DatePicker;
 use app\custom\CustomFunc;
 use app\widgets\CardWidget;
 use app\modules\hocvien\models\HangDaoTao;
+use app\modules\khoahoc\models\KhoaHoc;
 /* @var $this yii\web\View */
 /* @var $model app\modules\khoahoc\models\KhoaHoc */
 /* @var $form yii\widgets\ActiveForm */
@@ -57,6 +58,12 @@ $model->ngay_ket_thuc = CustomFunc::convertYMDToDMY($model->ngay_ket_thuc);
       <div class="col-lg-3 col-md-6">
           <?= $form->field($model, 'so_hoc_vien_khoa_hoc')->textInput(['type' => 'number', 'maxlength' => true]) ?>
       </div>
+      
+       <div class="col-lg-3 col-md-6">
+              <?= $form->field($model, 'trang_thai')->dropDownList($model->getListTrangThai(), [
+                  'prompt'=>'-Chọn-'
+              ]) ?>
+        </div>
 
         <div class='col-md-9'>
         <?= $form->field($model, 'ghi_chu')->textarea(['rows' => 6, 'placeholder' => 'Nhập ghi chú']) ?>

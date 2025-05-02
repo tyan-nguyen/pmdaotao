@@ -15,32 +15,32 @@ use app\widgets\KhoDisplayWidget;
 						<h6 class="card-title mb-0 "style="color: red;">Thông tin khóa học: </h6>
 					</div>
 			    </div>
-							<div class="card-body">
-									<div class="skill-tags">
-                                        <p><strong>Tên khóa học:</strong> <?= $model->ten_khoa_hoc ?></p>
-                                        <p><strong>Hạng đào tạo:</strong> <?= $model->hang?$model->hang->ten_hang:'' ?></p>
-                                        <p><strong>Ngày bắt đầu:</strong> <?= $model->ngayBatDau ?></p>
-                                        <p><strong>Ngày kết thúc:</strong> <?= $model->ngayKetThuc ?></p>
-                                        <p><strong>Học phí:</strong> 
-                                               <?php if (!empty($model->hocPhi->hoc_phi)): ?>
-                                                     <span style="color:blue;"> <?= number_format($model->hocPhi->hoc_phi, 0, ',', '.') . ' VNĐ'; ?></span>
-                                                   <?php else: ?>
-                                                       <span style="color:red;">Chưa có học phí</span>
-                                                <?php endif; ?>
-                                        </p>
-                                        <p><strong> Số học viên tối đa:</strong> <?= $model->so_hoc_vien_khoa_hoc ?></p>
-                                        <p>
-                                           <strong>Trạng thái:</strong> 
-                                              <?php if ($model->trang_thai === 'CHUA_HOAN_THANH'): ?>
-                                                 <span class="badge bg-danger">Chưa hoàn thành</span>
-                                              <?php elseif ($model->trang_thai === 'DA_HOAN_THANH'): ?>
-                                                 <span class="badge bg-success">Hoàn thành</span>
-                                              <?php else: ?>
-                                                   <span class="badge bg-secondary">Không xác định</span>
-                                            <?php endif; ?>
-                                        </p>
-								    </div>
-						    </div>
+				<div class="card-body">
+						<div class="skill-tags">
+                            <p><strong>Tên khóa học:</strong> <?= $model->ten_khoa_hoc ?></p>
+                            <p><strong>Hạng đào tạo:</strong> <?= $model->hang?$model->hang->ten_hang:'' ?></p>
+                            <p><strong>Ngày bắt đầu:</strong> <?= $model->ngayBatDau ?></p>
+                            <p><strong>Ngày kết thúc:</strong> <?= $model->ngayKetThuc ?></p>
+                            <p><strong>Học phí:</strong> 
+                                   <?php if (!empty($model->hocPhi->hoc_phi)): ?>
+                                         <span style="color:blue;"> <?= number_format($model->hocPhi->hoc_phi, 0, ',', '.') . ' VNĐ'; ?></span>
+                                       <?php else: ?>
+                                           <span style="color:red;">Chưa có học phí</span>
+                                    <?php endif; ?>
+                            </p>
+                            <p><strong> Số học viên tối đa:</strong> <?= $model->so_hoc_vien_khoa_hoc ?></p>
+                            <p>
+                               <strong>Trạng thái:</strong> 
+                                  <?php if ($model->trang_thai === 'CHUA_HOAN_THANH'): ?>
+                                     <span class="badge bg-danger">Chưa hoàn thành</span>
+                                  <?php elseif ($model->trang_thai === 'DA_HOAN_THANH'): ?>
+                                     <span class="badge bg-success">Hoàn thành</span>
+                                  <?php else: ?>
+                                       <span class="badge bg-secondary">Không xác định</span>
+                                <?php endif; ?>
+                            </p>
+					    </div>
+			    </div>
 	</div>
     </div>
     <div class="col-xl-9 col-md-12">

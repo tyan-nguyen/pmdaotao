@@ -85,6 +85,7 @@ class HocVien extends HocVienBase
         
         $this->ngay_sinh = CustomFunc::convertDMYToYMD($this->ngay_sinh);
         $this->ngay_het_han_cccd = CustomFunc::convertDMYToYMD($this->ngay_het_han_cccd);
+        $this->ngay_nhan_ao = CustomFunc::convertDMYToYMD($this->ngay_nhan_ao);
         
         
     

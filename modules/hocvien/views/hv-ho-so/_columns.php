@@ -181,14 +181,7 @@ return [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'trang_thai',
     // ],
-     /* [
-         'class'=>'\kartik\grid\DataColumn',
-         'attribute'=>'nguoi_tao',
-         'value'=>function($model){
-             return $model->nguoiTao->username;
-         },
-         'width' => '100px',
-     ], */
+     
         [
             'class'=>'\kartik\grid\DataColumn',
             'attribute'=>'noi_dang_ky',
@@ -211,6 +204,16 @@ return [
         },
         'width' => '100px',
         ],
+        
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'nguoi_tao',
+        'value'=>function($model){
+            return $model->nguoiTao->ho_ten;
+        },
+        'width' => '100px',
+    ],
+            
     /* [
         'class'=>'\kartik\grid\DataColumn',
         'header'=>'HT hồ sơ',

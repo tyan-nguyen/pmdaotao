@@ -16,6 +16,7 @@ $this->registerCssFile('@web/css/dkHocVien.css', [
 <?php
 $model->ngay_sinh = CustomFunc::convertYMDToDMY($model->ngay_sinh);
 $model->ngay_het_han_cccd = CustomFunc::convertYMDToDMY($model->ngay_het_han_cccd);
+$model->ngay_nhan_ao = CustomFunc::convertYMDToDMY($model->ngay_nhan_ao);
 ?>
 <div class="hv-hoc-vien-form">
 
@@ -131,6 +132,17 @@ $model->ngay_het_han_cccd = CustomFunc::convertYMDToDMY($model->ngay_het_han_ccc
         'class' => 'form-control dropdown-with-arrow',
     ]
     ) ?>
+    </div>
+    <div class="col-lg-3 col-md-6">
+    <?= $form->field($model, 'ngay_nhan_ao')->widget(DatePicker::classname(), [
+    'options' => ['placeholder' => 'Chọn ngày  ...'],
+    'pluginOptions' => [
+        'autoclose' => true,
+        'format' => 'dd/mm/yyyy',
+        'todayHighlight'=>true,
+        'todayBtn'=>true
+    ]
+       ]); ?>
     </div>
    
         

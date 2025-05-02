@@ -5,6 +5,7 @@ use app\modules\khoahoc\models\base\KhoaHocBase;
 use app\modules\kholuutru\models\File;
 use app\modules\kholuutru\models\LuuKho;
 use yii\helpers\ArrayHelper;
+
 class KhoaHoc extends KhoaHocBase
 {
     CONST MODEL_ID = 'KHOAHOC';
@@ -33,7 +34,8 @@ class KhoaHoc extends KhoaHocBase
         // Sắp xếp danh sách theo thứ tự bảng chữ cái dựa trên 'ten_loai'
         //$dsKH = KhoaHoc::find()->orderBy(['ten_khoa_hoc' => SORT_ASC])->all();
         if($anKhoaHocFull){
-            $dsKH = KhoaHoc::find()->orderBy(['id' => SORT_ASC])->all();
+            $dsKH = KhoaHoc::find()->where(['trang_thai'=>self::TRANGTHAI_CHUAHOANTHANH])
+                ->orderBy(['id' => SORT_ASC])->all();
         } else {
             $dsKH = KhoaHoc::find()->orderBy(['id' => SORT_ASC])->all();
         }

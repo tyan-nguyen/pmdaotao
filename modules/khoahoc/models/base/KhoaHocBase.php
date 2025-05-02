@@ -26,6 +26,37 @@ use app\modules\hocvien\models\HocPhi;
  */
 class KhoaHocBase extends \app\models\HvKhoaHoc
 {
+   CONST TRANGTHAI_CHUAHOANTHANH = 'CHUA_HOAN_THANH';//MỚI TẠO CHƯA ĐỦ HỌC VIÊN
+   CONST TRANGTHAI_DAHOANTHANH = 'DA_HOAN_THANH';//ĐÃ KẾT THÚC KHÓA HỌC
+   CONST TRANGTHAI_DANGHOC = 'DANG_HOC';//KHÓA HỌC ĐANG HỌC HOẶC ĐÃ ĐỦ HỌC VIÊN
+   //show list trang thai
+   public function getListTrangThai(){
+       return [
+           self::TRANGTHAI_CHUAHOANTHANH => $this->getLabelTrangThai(self::TRANGTHAI_CHUAHOANTHANH),
+           self::TRANGTHAI_DANGHOC => $this->getLabelTrangThai(self::TRANGTHAI_DANGHOC),
+           self::TRANGTHAI_DAHOANTHANH => $this->getLabelTrangThai(self::TRANGTHAI_DAHOANTHANH),
+       ];
+   }
+   //get label trang thai by value
+   public function getLabelTrangThai($trangThai){
+       $label = '';
+       switch ($trangThai){
+           case self::TRANGTHAI_CHUAHOANTHANH:
+               $label = 'Chưa hoàn thành';
+               break;
+           case self::TRANGTHAI_DAHOANTHANH:
+               $label = 'Hoàn thành';
+               break;
+           case self::TRANGTHAI_DANGHOC:
+               $label = 'Đào tạo/Đủ học viên';
+               break;
+       }
+       return $label;
+   }
+   //get label trang thai cua model
+   public function getTenTrangThai(){
+       return $this->getLabelTrangThai($this->trang_thai);
+   }
     /**
      * {@inheritdoc}
      */
@@ -35,10 +66,10 @@ class KhoaHocBase extends \app\models\HvKhoaHoc
     public function getNgayKetThuc(){
         return CustomFunc::convertYMDToDMY($this->ngay_ket_thuc);
     }
-    public static function tableName()
+    /* public static function tableName()
     {
         return 'hv_khoa_hoc';
-    }
+    } */
 
     /**
      * {@inheritdoc}
