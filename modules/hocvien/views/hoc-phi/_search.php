@@ -21,7 +21,7 @@ use kartik\date\DatePicker;
       	]); ?>
 	 <div class="row">
 	 	<div class="col-md-2">
-	 		 <?= $form->field($model, 'ma_so_hoc_vien')->textInput() ?>
+	 		 <?= $form->field($model, 'ma_so_hoc_vien')->textInput()->label('Mã học viên (CCCD)') ?>
 	 	</div>
 	 	<div class="col-md-2">
 	 		 <?= $form->field($model, 'ma_so_phieu')->textInput() ?>

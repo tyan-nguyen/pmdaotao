@@ -117,6 +117,7 @@ class NopHocPhi extends \app\models\HvNopHocPhi
     }
     
     public function beforeSave($insert) {
+        //$this->ngay_nop = CustomFunc::convertDMYToYMD($this->ngay_nop);
         if ($this->isNewRecord) {
             $this->nguoi_tao = Yii::$app->user->identity->id;
             $this->thoi_gian_tao = date('Y-m-d H:i:s');

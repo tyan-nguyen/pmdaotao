@@ -47,7 +47,65 @@ use yii\db\Expression;
  */
 class HocVienBase extends \app\models\HvHocVien
 {
+    const NOIDANGKY_CS1 = 'CS1';
+    const NOIDANGKY_CS2 = 'CS2';
+    
     public $tongtiennop;//virtual attribute select when report
+        
+    
+    /**
+     * Danh muc hinh thuc chuyen khoan
+     * @return string[]
+     */
+    public static function getDmNoiDangKy()
+    {
+        return [
+            self::NOIDANGKY_CS1 => 'Cơ sở 1 (Cửa hàng Nguyễn Trình)',
+            self::NOIDANGKY_CS2 => 'Cơ sở 2 (Trường lái Nguyễn Trình)',
+        ];
+    }
+    /**
+     * Danh muc trang thai label
+     * @param int $val
+     * @return string
+     */
+    public function getLabelNoiDangKy($val = NULL)
+    {
+        if ($val == NULL) {
+            $val = $this->noi_dang_ky;
+        }
+        switch ($val) {
+            case self::NOIDANGKY_CS1:
+                $label = "Cơ sở 1 (Cửa hàng Nguyễn Trình)";
+                break;
+            case self::NOIDANGKY_CS2:
+                $label = "Cơ sở 2 (Trường lái Nguyễn Trình)";
+                break;
+            default:
+                $label = '';
+        }
+        return $label;
+    }
+    
+    /**
+     * Danh muc trang thai label
+     * @param int $val
+     * @return string
+     */
+    public static function getLabelNoiDangKyOther($val=NULL)
+    {
+        switch ($val) {
+            case self::NOIDANGKY_CS1:
+                $label = "Cơ sở 1 (Cửa hàng Nguyễn Trình)";
+                break;
+            case self::NOIDANGKY_CS2:
+                $label = "Cơ sở 2 (Trường lái Nguyễn Trình)";
+                break;
+            default:
+                $label = '';
+        }
+        return $label;
+    }
 
     /**
      * {@inheritdoc}
@@ -56,7 +114,7 @@ class HocVienBase extends \app\models\HvHocVien
     {
         return [
             /*[['id_hang', 'ho_ten', 'so_cccd','id_hang'], 'required'],*/
-            [['id_hang', 'ho_ten'], 'required'],
+            [['id_hang', 'ho_ten', 'noi_dang_ky'], 'required'],
             [['id_khoa_hoc', 'id_hoc_phi', 'nguoi_tao','gioi_tinh','id_hang','id_nhom','nguoi_duyet','ma_so_phieu','so_lan_in_phieu','co_ho_so_thue', 'da_nhan_ao'], 'integer'],
             [['thoi_gian_tao', 'thoi_gian_hoan_thanh_ho_so', 'ngay_sinh','ngay_het_han_cccd'], 'safe'],
             [['ho_ten', 'so_dien_thoai', 'so_cccd', 'trang_thai','dia_chi','trang_thai_duyet'], 'string', 'max' => 255],

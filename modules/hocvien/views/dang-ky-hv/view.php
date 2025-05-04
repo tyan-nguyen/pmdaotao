@@ -28,7 +28,7 @@ use app\custom\CustomFunc;
                         <p><strong>Số CCCD:</strong> <?= $model->so_cccd ?>
                         <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                         <strong>Ngày hết hạn CCCD:</strong> <?= $model->getNgayHetHanCccd()?></p>
-                        <p><strong>Nơi đăng ký:</strong> <?= $model->noi_dang_ky ?></p>
+                        <p><strong>Nơi đăng ký:</strong> <?= $model->getLabelNoiDangKy() ?></p>
                         <p><strong>Đã nhận đồng phục:</strong> <?= $model->da_nhan_ao?'<i class="ion-checkmark-round text-primary"></i> Có':'<i class="ion-close-round" data-bs-toggle="tooltip" aria-label="ion-close-round" data-bs-original-title="ion-close-round"></i> Không' ?><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <strong>Size:</strong> <?= $model->size ?><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <strong>Ngày nhận:</strong> <?= CustomFunc::convertYMDToDMY($model->ngay_nhan_ao) ?></p>
                         <p><strong>Ngày đăng ký:</strong> <?= CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_tao) ?><strong> <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Nhận hồ sơ:</strong> <?= CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_hoan_thanh_ho_so) ?></p>    
                         <p><strong>Ghi chú thêm:</strong> <?= $model->ghi_chu ?></p>

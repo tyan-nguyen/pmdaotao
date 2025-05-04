@@ -23,7 +23,7 @@ use app\modules\hocvien\models\HocVien;
                         <p><strong>Ngày sinh:</strong> <?= $model->getNgaySinh() ?></p>
                         <p><strong>Địa chỉ:</strong> <?= $model->dia_chi ?></p>
                         <p><strong>Số CCCD:</strong> <?= $model->so_cccd ?></p>
-                        <p><strong>Nơi đăng ký:</strong> <?= $model->noi_dang_ky ?></p>
+                        <p><strong>Nơi đăng ký:</strong> <?= $model->getLabelNoiDangKy() ?></p>
                         <p><strong>Có xuất hóa đơn thuế:</strong> <?= $model->co_ho_so_thue?'<i class="ion-checkmark-round text-primary" data-bs-toggle="tooltip" aria-label="ion-checkmark-round" data-bs-original-title="ion-checkmark-round"></i> Có':'<i class="ion-close-round" data-bs-toggle="tooltip" aria-label="ion-close-round" data-bs-original-title="ion-close-round"></i> Không' ?></p>
                     </div>
                 </div>

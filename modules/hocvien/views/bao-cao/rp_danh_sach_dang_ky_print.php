@@ -2,6 +2,7 @@
 use app\modules\user\models\User;
 use app\custom\CustomFunc;
 use app\modules\hocvien\models\HangDaoTao;
+use app\modules\hocvien\models\base\HocVienBase;
 ?>
 
 <link href="/css/print-display.css" rel="stylesheet">
@@ -37,6 +38,7 @@ use app\modules\hocvien\models\HangDaoTao;
     				<?= $byhangdaotao==null?'':'<br/><span>Hạng: '.HangDaoTao::findOne($byhangdaotao)->ten_hang.'</span>' ?>
     				<br/><span>Nhân viên lập báo cáo: <?= User::getCurrentUser()->getHoTen() ?></span>
     				<br/><span>Nhân viên nhận hồ sơ: <?= $byuser ? User::findOne($byuser)->ho_ten : 'Tất cả' ?></span>
+    				<br/><span>Nơi đăng ký: <?= $byaddress ? HocVienBase::getLabelNoiDangKyOther($byaddress) : 'Tất cả' ?></span>
     			</td>
     			
     		</tr>

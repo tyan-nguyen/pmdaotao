@@ -7,6 +7,8 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use webvimark\modules\UserManagement\components\GhostHtml;
 use app\widgets\LinkToModalWidget;
+use app\modules\user\models\UserBase;
+use app\modules\hocvien\models\base\HocVienBase;
 
 return [
     [
@@ -59,6 +61,13 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ho_ten',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'noi_dang_ky',
+        'value'=>function($model){
+            return HocVienBase::getLabelNoiDangKyOther($model->noi_dang_ky);
+        }
     ],
     /* [
         'class'=>'\kartik\grid\DataColumn',

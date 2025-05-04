@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
 use app\modules\user\models\User;
+use app\modules\hocvien\models\base\HocVienBase;
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\user\models\User */
@@ -41,6 +42,11 @@ use app\modules\user\models\User;
                             <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
                             
                             <?= $form->field($model, 'ho_ten')->textInput(['maxlength' => true]) ?>
+                            
+                            <?= $form->field($model, 'noi_dang_ky')->dropDownList(
+                                HocVienBase::getDmNoiDangKy(),
+                                ['prompt'=>'-Chọn nơi nhận hồ sơ-']
+                                ) ?>
                             
                             
                         

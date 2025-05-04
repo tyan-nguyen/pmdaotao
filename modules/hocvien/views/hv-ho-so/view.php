@@ -27,7 +27,7 @@ use app\custom\CustomFunc;
                                         <p><strong>Địa chỉ:</strong> <?= $model->dia_chi ?></p>
                                         <p><strong>Số CCCD:</strong> <?= $model->so_cccd ?></p>
                                         <p><strong>Ngày hết hạn CCCD:</strong> <?= $model->getNgayHetHanCccd() ?></p>
-                                        <p><strong>Nơi đăng ký:</strong> <?= $model->noi_dang_ky ?></p>
+                                        <p><strong>Nơi đăng ký:</strong> <?= $model->getLabelNoiDangKy() ?></p>
                                         <p><strong>Ghi chú thêm:</strong> <?= $model->ghi_chu ?></p>
 								    </div>
 						    </div>

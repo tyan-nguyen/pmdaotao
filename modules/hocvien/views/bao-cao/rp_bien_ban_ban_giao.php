@@ -42,14 +42,6 @@ use app\modules\hocvien\models\DangKyHv;
         <?= Html::textInput('endtime', '', ['id'=>'endtime', 'class'=>'form-control']) ?>
     </div>
     <div class="col-md-2">    
-    	<label class="form-label">Học phí</label>
-        <?= Html::dropDownList('byhocphi', null, [
-            'all'=>'Tất cả danh sách',
-            'danop'=>'Học viên đã nộp 50%-100% học phí',
-            'coc'=>'Cọc 1 triệu hoặc 2 triệu'
-        ] , ['id'=>'byhocphi', 'class'=>'form-control']) ?>
-    </div>
-    <div class="col-md-2">    
     	<label class="form-label">Hạng đào tạo</label>
         <?= Html::dropDownList('byhangdaotao', null, HangDaoTao::getList(), ['id'=>'byhangdaotao', 'class'=>'form-control  dropdown-with-arrow', 'prompt'=>'-Tất cả-']) ?>
     </div>
@@ -61,8 +53,15 @@ use app\modules\hocvien\models\DangKyHv;
     	<label class="form-label">Nơi đăng ký</label>
         <?= Html::dropDownList('byaddress', null, DangKyHv::getDmNoiDangKy() , ['id'=>'byaddress', 'class'=>'form-control', 'prompt'=>'-Tất cả-']) ?>
     </div>
+    <div class="col-md-2">    
+    	<label class="form-label">Sắp xếp</label>
+        <?= Html::dropDownList('sort', null, [
+            'ngay'=>'Sắp xếp theo ngày nhận hồ sơ',
+            'hang'=>'Sắp xếp theo hạng', 
+        ] , ['id'=>'sort', 'class'=>'form-control']) ?>
+    </div>
     
-     <div class="col-md-2" style="padding-top:20px">    
+     <div class="col-md-3" style="padding-top:20px">    
     	<?= Html::button('<i class="fa fa-print"> </i> In báo cáo', ['class' => 'btn btn-success', 'style'=>'width:100%', 'onclick' => 'InBaoCao(0)']) ?>
     </div>
 </div>
@@ -77,7 +76,7 @@ use app\modules\hocvien\models\DangKyHv;
 function InBaoCao(typereport) {
     $.ajax({
         type: 'POST',
-        url: '/hocvien/bao-cao/rp-danh-sach-dang-ky-print?startdate=' + $('#startdate').val() + '&starttime=' + $('#starttime').val() + '&enddate=' + $('#enddate').val() + '&endtime=' + $('#endtime').val() + '&byuser='+ $('#byuser').val() + '&byhocphi=' + $('#byhocphi').val() + '&sortby=0'+ '&byhangdaotao=' + $('#byhangdaotao').val() + '&typereport=' + typereport + '&byaddress=' + $('#byaddress').val(),
+        url: '/hocvien/bao-cao/rp-bien-ban-ban-giao-print?startdate=' + $('#startdate').val() + '&starttime=' + $('#starttime').val() + '&enddate=' + $('#enddate').val() + '&endtime=' + $('#endtime').val() + '&byuser='+ $('#byuser').val() + '&sortby='+ $('#sort').val() + '&byhangdaotao=' + $('#byhangdaotao').val() + '&typereport=' + typereport + '&byaddress=' + $('#byaddress').val(),
         success: function (data) {
             if (data.status === 'success') {
                 $('#print').html(data.content);

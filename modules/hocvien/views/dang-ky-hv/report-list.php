@@ -4,6 +4,7 @@
 use kartik\date\DatePicker;
 use yii\helpers\Html;
 use app\modules\user\models\User;
+use app\modules\hocvien\models\DangKyHv;
 ?>
 
 <div class="row">
@@ -45,11 +46,15 @@ use app\modules\user\models\User;
     	<label class="form-label">Nhân viên</label>
         <?= Html::dropDownList('byuser', null, User::getList() , ['id'=>'byuser', 'class'=>'form-control', 'prompt'=>'-Tất cả-']) ?>
     </div>
+    <div class="col-md-2">    
+    	<label class="form-label">Nơi đăng ký</label>
+        <?= Html::dropDownList('byaddress', null, DangKyHv::getDmNoiDangKy() , ['id'=>'byaddress', 'class'=>'form-control', 'prompt'=>'-Tất cả-']) ?>
+    </div>
     
-    <div class="col-md-4" style="padding-top:20px">    
+    <div class="col-md-2" style="padding-top:20px">    
     	<?= Html::button('<i class="fa fa-print"> </i> In Phiếu mẫu cũ', ['class' => 'btn btn-success', 'style'=>'width:100%', 'onclick' => 'InBaoCao(0,0)']) ?>
     </div>
-     <div class="col-md-4" style="padding-top:20px">    
+     <div class="col-md-2" style="padding-top:20px">    
     	<?= Html::button('<i class="fa fa-print"> </i> In Phiếu mẫu 1', ['class' => 'btn btn-success', 'style'=>'width:100%', 'onclick' => 'InBaoCao(0,1)']) ?>
     </div>
 </div>
@@ -64,7 +69,7 @@ use app\modules\user\models\User;
 function InBaoCao(nhap, typereport) {
     $.ajax({
         type: 'POST',
-        url: '/hocvien/dang-ky-hv/get-phieu-in-report-list-ajax?startdate=' + $('#startdate').val() + '&starttime=' + $('#starttime').val() + '&enddate=' + $('#enddate').val() + '&endtime=' + $('#endtime').val() + '&byuser='+ $('#byuser').val() + '&typereport=' + typereport,
+        url: '/hocvien/dang-ky-hv/get-phieu-in-report-list-ajax?startdate=' + $('#startdate').val() + '&starttime=' + $('#starttime').val() + '&enddate=' + $('#enddate').val() + '&endtime=' + $('#endtime').val() + '&byuser='+ $('#byuser').val() + '&typereport=' + typereport + '&byaddress=' + $('#byaddress').val(),
         success: function (data) {
             if (data.status === 'success') {
                 $('#print').html(data.content);

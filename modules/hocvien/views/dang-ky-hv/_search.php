@@ -7,9 +7,13 @@ use app\modules\hocvien\models\HangDaoTao;
 use kartik\date\DatePicker;
 use app\modules\user\models\User;
 use app\modules\khoahoc\models\KhoaHoc;
+use app\custom\CustomFunc;
+use app\modules\hocvien\models\DangKyHv;
 /* @var $this yii\web\View */
 /* @var $model app\modules\vanban\models\VanBanDen */
 /* @var $form yii\widgets\ActiveForm */
+
+$model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gian_hoan_thanh_ho_so);
 ?>
 
 <div class="hoc-vien-search">
@@ -25,7 +29,7 @@ use app\modules\khoahoc\models\KhoaHoc;
            <div class="col-md-3">
                   <?= $form->field($model, 'ho_ten')->textInput(['maxlength' => true]) ?>
            </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
                   <?= $form->field($model, 'gioi_tinh')->dropDownList([
                           1 => 'Nam',
                           0 => 'Nữ',
@@ -54,6 +58,9 @@ use app\modules\khoahoc\models\KhoaHoc;
                   <?= $form->field($model, 'so_dien_thoai')->textInput(['maxlength' => true]) ?>
             </div>
             <div class="col-md-2">
+                  <?= $form->field($model, 'noi_dang_ky')->dropDownList(DangKyHv::getDmNoiDangKy(), ['prompt'=>'Tất cả'])->label('Nơi ĐK') ?>
+            </div>
+            <div class="col-md-2">
                   <?= $form->field($model, 'id_hang')->dropDownList(HangDaoTao::getList(), ['prompt'=>'Tất cả']) ?>
             </div>
             <div class="col-md-2">
@@ -76,7 +83,7 @@ use app\modules\khoahoc\models\KhoaHoc;
                       '4XL'=>'Size 4XL'
                   ], ['prompt'=>'Tất cả'])->label('Size') ?>
             </div>
-            <div class="col-md-2">
+            <!-- <div class="col-md-2">
                   <?= $form->field($model, 'ngay_nhan_ao')->widget(DatePicker::classname(), [
                          'options' => ['placeholder' => 'Chọn ngày nhận  ...'],
                          'pluginOptions' => [
@@ -84,7 +91,18 @@ use app\modules\khoahoc\models\KhoaHoc;
                          'format' => 'dd/mm/yyyy',
                   ]
                   ]); ?>
+            </div> -->
+            <div class="col-md-2">
+                  <?= $form->field($model, 'thoi_gian_hoan_thanh_ho_so')->widget(DatePicker::classname(), [
+                         'options' => ['placeholder' => 'Chọn ngày HTHS  ...'],
+                         'pluginOptions' => [
+                             'autoclose' => true,
+                             'format' => 'dd/mm/yyyy',
+                             'zIndexOffset'=>'9999'
+                        ]
+                  ]); ?>
             </div>
+            
     </div>    
 
     <?php if (!Yii::$app->request->isAjax){ ?>

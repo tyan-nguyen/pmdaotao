@@ -35,6 +35,7 @@ class UserBase extends \webvimark\modules\UserManagement\models\User{
             ['repeat_password', 'compare', 'compareAttribute'=>'password'],
             //user info
             ['ho_ten', 'string', 'max' => 255],
+            ['noi_dang_ky', 'string', 'max' => 20],
         ];
     }
     /**
@@ -59,6 +60,7 @@ class UserBase extends \webvimark\modules\UserManagement\models\User{
             'email'              => 'Tài khoản Email',
             //user info
             'ho_ten'            => 'Họ tên',
+            'noi_dang_ky'       => 'Nơi đăng ký',
         ];
     }
     

@@ -23,7 +23,11 @@ use yii\db\Expression;
  */
 class BaoCaoController extends Controller
 {
-    public $freeAccessActions = ['rp-danh-sach-dang-ky', 'rp-danh-sach-dang-ky-print'];
+    public $freeAccessActions = [
+        'rp-danh-sach-dang-ky', 
+        'rp-danh-sach-dang-ky-print', 
+        'rp-bien-ban-ban-giao', 
+        'rp-bien-ban-ban-giao-print'];
     /**
      * @inheritdoc
      */
@@ -65,7 +69,7 @@ class BaoCaoController extends Controller
         }
     }
     
-    public function actionRpDanhSachDangKyPrint($startdate, $starttime, $enddate, $endtime, $byuser=0, $byhocphi='all', $sortby='date', $byhangdaotao=NULL, $typereport=0)//0 for all
+    public function actionRpDanhSachDangKyPrint($startdate, $starttime, $enddate, $endtime, $byuser=0, $byhocphi='all', $sortby='date', $byhangdaotao=NULL, $typereport=0,$byaddress)//0 for all
     {
         if($byuser==null){
             $byuser = 0;
@@ -78,8 +82,7 @@ class BaoCaoController extends Controller
         $query = HocVien::find()->alias('t');
         //if($byhocphi != 'all'){
         $query = $query->select(['t.*', '(SELECT SUM(i.so_tien_nop) FROM hv_nop_hoc_phi AS i WHERE t.id = i.id_hoc_vien) as tongtiennop']);
-        //}
-        
+        //}        
         $query=$query->andFilterWhere(['>=', 't.thoi_gian_tao', new Expression("STR_TO_DATE('".$start."','%Y-%m-%d %H:%i:%s')")]);
         $query=$query->andFilterWhere(['<=', 't.thoi_gian_tao', new Expression("STR_TO_DATE('".$end."','%Y-%m-%d %H:%i:%s')")]);
         if($byuser>0){
@@ -97,6 +100,10 @@ class BaoCaoController extends Controller
             $query = $query->andFilterWhere(['t.id_hang' => $byhangdaotao]);
         }
         
+        if($byaddress>0){
+            $query = $query->andFilterWhere(['noi_dang_ky' => $byaddress]);
+        }
+        
         $model=$query->all();
         $modelCount=$query->count();       
        
@@ -108,7 +115,86 @@ class BaoCaoController extends Controller
                 'end'=>$end,
                 'modelCount'=>$modelCount,
                 'byuser' => $byuser,
-                'byhangdaotao' => $byhangdaotao
+                'byhangdaotao' => $byhangdaotao,
+                'byaddress' => $byaddress
+            ]);
+        }
+        return $this->asJson([
+            'status' => 'success',
+            'content' => $content,
+        ]);
+        
+    }
+    
+    /**
+     * in danh sách theo ca
+     */
+    public function actionRpBienBanBanGiao(){
+        $request = Yii::$app->request;
+        if ($request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            
+            return [
+                'title' => "Biên bản bàn giao hồ sơ học viên",
+                'content' => $this->renderAjax('rp_bien_ban_ban_giao', [
+                    
+                ]),
+                'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"])
+            ];
+        }
+    }
+    
+    public function actionRpBienBanBanGiaoPrint($startdate, $starttime, $enddate, $endtime, $byuser=0, $sortby='ngay', $byhangdaotao=NULL, $typereport=0,$byaddress)//0 for all
+    {
+        if($byuser==null){
+            $byuser = 0;
+        }
+        $start = CustomFunc::convertDMYToYMD($startdate) . ' ' . $starttime;
+        $end = CustomFunc::convertDMYToYMD($enddate) . ' ' . $endtime;;
+        
+        // $start = '2025-03-31 06:00:00';
+        //$end = '2025-04-01 11:00:00';
+        $query = HocVien::find()->alias('t');
+        //if($byhocphi != 'all'){
+        /* $query = $query->select(['t.*', '(SELECT SUM(i.so_tien_nop) FROM hv_nop_hoc_phi AS i WHERE t.id = i.id_hoc_vien) as tongtiennop']); */
+        //}
+        
+        $query=$query->andFilterWhere(['>=', 't.thoi_gian_hoan_thanh_ho_so', new Expression("STR_TO_DATE('".$start."','%Y-%m-%d %H:%i:%s')")]);
+        $query=$query->andFilterWhere(['<=', 't.thoi_gian_hoan_thanh_ho_so', new Expression("STR_TO_DATE('".$end."','%Y-%m-%d %H:%i:%s')")]);
+        if($byuser>0){
+            $query = $query->andFilterWhere(['t.nguoi_tao' => $byuser]);
+        }
+        
+        if($byhangdaotao!=NULL){
+            $query = $query->andFilterWhere(['t.id_hang' => $byhangdaotao]);
+        }
+        
+        $model=$query->all();
+        if($sortby==null)
+            $sortby = 'ngay';
+        if($sortby == 'hang'){
+            $model=$query->orderBy(['id_hang'=>SORT_ASC, 'thoi_gian_hoan_thanh_ho_so'=>SORT_ASC])->all();
+        } else if($sortby == 'ngay'){
+            $model=$query->orderBy(['thoi_gian_hoan_thanh_ho_so'=>SORT_ASC])->all();
+        }        
+        
+        if($byaddress>0){
+            $query = $query->andFilterWhere(['noi_dang_ky' => $byaddress]);
+        }
+
+        $modelCount=$query->count();
+        
+        
+        if($typereport==0){
+            $content = $this->renderPartial('rp_bien_ban_ban_giao_print', [
+                'model' => $model,
+                'start'=>$start,
+                'end'=>$end,
+                'modelCount'=>$modelCount,
+                'byuser' => $byuser,
+                'byhangdaotao' => $byhangdaotao,
+                'sortby'=>$sortby,
+                'byaddress' => $byaddress
             ]);
         }
         return $this->asJson([

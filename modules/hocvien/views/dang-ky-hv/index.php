@@ -83,6 +83,9 @@ Yii::$app->params['showExport'] = true;
                         ['role'=>'modal-remote','title'=> 'Báo cáo danh sách học viên','class'=>'dropdown-item'])
                    /*  . Html::a('<i class="fas fa-clipboard-list"></i> In Báo cáo theo ca', ['report-sum'],
                         ['role'=>'modal-remote','title'=> 'In Báo cáo tổng','class'=>'dropdown-item']) */
+                    .'<li><hr class="dropdown-divider"></li>'
+                    . Html::a('<i class="fas fa-clipboard-list"></i> Biên bản bàn giao H.S.', ['/hocvien/bao-cao/rp-bien-ban-ban-giao'],
+                        ['role'=>'modal-remote','title'=> 'Biên bản bàn giao hồ sơ','class'=>'dropdown-item'])
                     .'
 						</div>
 					</div>

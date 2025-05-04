@@ -6,6 +6,8 @@ use kartik\date\DatePicker;
 use app\custom\CustomFunc;
 use app\widgets\CardWidget;
 use kartik\select2\Select2;
+use app\modules\hocvien\models\DangKyHv;
+use app\modules\user\models\User;
 /* @var $this yii\web\View */
 /* @var $model app\models\HvHocVien */
 /* @var $form yii\widgets\ActiveForm */
@@ -17,6 +19,13 @@ $this->registerCssFile('@web/css/dkHocVien.css', [
 $model->ngay_sinh = CustomFunc::convertYMDToDMY($model->ngay_sinh);
 $model->ngay_het_han_cccd = CustomFunc::convertYMDToDMY($model->ngay_het_han_cccd);
 $model->ngay_nhan_ao = CustomFunc::convertYMDToDMY($model->ngay_nhan_ao);
+
+if($model->isNewRecord){
+    $user = User::getCurrentUser();
+    if($user->noi_dang_ky){
+        $model->noi_dang_ky = $user->noi_dang_ky;
+    }
+}
 ?>
 <div class="hv-hoc-vien-form">
 
@@ -65,10 +74,7 @@ $model->ngay_nhan_ao = CustomFunc::convertYMDToDMY($model->ngay_nhan_ao);
             </div>
             <div class="col-lg-3 col-md-6">
                  <?= $form->field($model, 'noi_dang_ky')->dropDownList(
-                     [
-                      'Cơ sở 1 (Cửa hàng Nguyễn Trình)' => 'Cơ sở 1 (Cửa hàng Nguyễn Trình)',
-                      'Cơ sở 2 (Trường lái Nguyễn Trình)' => 'Cơ sở 2 (Trường lái Nguyễn Trình)'
-                     ],
+                     DangKyHv::getDmNoiDangKy(),
                      ['prompt' => '- Nơi đăng ký -']
                  ) ?>
             </div>

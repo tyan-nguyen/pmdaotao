@@ -573,7 +573,7 @@ public function actionReportList(){
     }
 }
 
-public function actionGetPhieuInReportListAjax($startdate, $starttime, $enddate, $endtime, $byuser=0,$typereport)//0 for all
+public function actionGetPhieuInReportListAjax($startdate, $starttime, $enddate, $endtime, $byuser=0,$typereport,$byaddress)//0 for all
 {
     if($byuser==null){
         $byuser = 0;
@@ -585,42 +585,54 @@ public function actionGetPhieuInReportListAjax($startdate, $starttime, $enddate,
     
    // $start = '2025-03-31 06:00:00';
     //$end = '2025-04-01 11:00:00';
-    $query = NopHocPhi::find()
-        ->andFilterWhere(['>=', 'thoi_gian_tao', new Expression("STR_TO_DATE('".$start."','%Y-%m-%d %H:%i:%s')")])
-        ->andFilterWhere(['<=', 'thoi_gian_tao', new Expression("STR_TO_DATE('".$end."','%Y-%m-%d %H:%i:%s')")]);
+    $query = NopHocPhi::find()->alias('t')->joinWith(['hocVien as hv'])->select(['t.*', 'hv.noi_dang_ky'])
+        ->andFilterWhere(['>=', 't.thoi_gian_tao', new Expression("STR_TO_DATE('".$start."','%Y-%m-%d %H:%i:%s')")])
+        ->andFilterWhere(['<=', 't.thoi_gian_tao', new Expression("STR_TO_DATE('".$end."','%Y-%m-%d %H:%i:%s')")]);
     if($byuser>0){
-        $query = $query->andFilterWhere(['nguoi_tao' => $byuser]);
+        $query = $query->andFilterWhere(['t.nguoi_tao' => $byuser]);
+    }
+    if($byaddress>0){
+        $query = $query->andFilterWhere(['hv.noi_dang_ky' => $byaddress]);
     }
     $model=$query->all();
     $modelCount=$query->count();
-    $modelSoTienNop = $query->sum('so_tien_nop');
+    $modelSoTienNop = $query->sum('t.so_tien_nop');
     
-    $queryCK = NopHocPhi::find()
-    ->andFilterWhere(['>=', 'thoi_gian_tao', new Expression("STR_TO_DATE('".$start."','%Y-%m-%d %H:%i:%s')")])
-    ->andFilterWhere(['<=', 'thoi_gian_tao', new Expression("STR_TO_DATE('".$end."','%Y-%m-%d %H:%i:%s')")]);
+    $queryCK = NopHocPhi::find()->alias('t')->joinWith(['hocVien as hv'])->select(['t.*', 'hv.noi_dang_ky'])
+    ->andFilterWhere(['>=', 't.thoi_gian_tao', new Expression("STR_TO_DATE('".$start."','%Y-%m-%d %H:%i:%s')")])
+    ->andFilterWhere(['<=', 't.thoi_gian_tao', new Expression("STR_TO_DATE('".$end."','%Y-%m-%d %H:%i:%s')")]);
     if($byuser>0){
-        $queryCK = $queryCK->andFilterWhere(['nguoi_tao' => $byuser]);
+        $queryCK = $queryCK->andFilterWhere(['t.nguoi_tao' => $byuser]);
     }
-    $queryCK = $queryCK->andFilterWhere(['hinh_thuc_thanh_toan' => 'CK']);
-    $modelSoTienNopCK = $queryCK->sum('so_tien_nop');
-    
-    $queryTM = NopHocPhi::find()
-    ->andFilterWhere(['>=', 'thoi_gian_tao', new Expression("STR_TO_DATE('".$start."','%Y-%m-%d %H:%i:%s')")])
-    ->andFilterWhere(['<=', 'thoi_gian_tao', new Expression("STR_TO_DATE('".$end."','%Y-%m-%d %H:%i:%s')")]);
-    if($byuser>0){
-        $queryTM = $queryTM->andFilterWhere(['nguoi_tao' => $byuser]);
+    if($byaddress>0){
+        $queryCK = $queryCK->andFilterWhere(['hv.noi_dang_ky' => $byaddress]);
     }
-    $queryTM = $queryTM->andFilterWhere(['hinh_thuc_thanh_toan' => 'TM']);
+    $queryCK = $queryCK->andFilterWhere(['t.hinh_thuc_thanh_toan' => 'CK']);
+    $modelSoTienNopCK = $queryCK->sum('t.so_tien_nop');
     
-    $modelSoTienNopTM = $queryTM->sum('so_tien_nop');
-    
-    $queryChietKhau = NopHocPhi::find()
-    ->andFilterWhere(['>=', 'thoi_gian_tao', new Expression("STR_TO_DATE('".$start."','%Y-%m-%d %H:%i:%s')")])
-    ->andFilterWhere(['<=', 'thoi_gian_tao', new Expression("STR_TO_DATE('".$end."','%Y-%m-%d %H:%i:%s')")]);
+    $queryTM = NopHocPhi::find()->alias('t')->joinWith(['hocVien as hv'])->select(['t.*', 'hv.noi_dang_ky'])
+    ->andFilterWhere(['>=', 't.thoi_gian_tao', new Expression("STR_TO_DATE('".$start."','%Y-%m-%d %H:%i:%s')")])
+    ->andFilterWhere(['<=', 't.thoi_gian_tao', new Expression("STR_TO_DATE('".$end."','%Y-%m-%d %H:%i:%s')")]);
     if($byuser>0){
-        $queryChietKhau = $queryChietKhau->andFilterWhere(['nguoi_tao' => $byuser]);
+        $queryTM = $queryTM->andFilterWhere(['t.nguoi_tao' => $byuser]);
+    }
+    if($byaddress>0){
+        $queryTM = $queryTM->andFilterWhere(['hv.noi_dang_ky' => $byaddress]);
+    }
+    $queryTM = $queryTM->andFilterWhere(['t.hinh_thuc_thanh_toan' => 'TM']);
+    
+    $modelSoTienNopTM = $queryTM->sum('t.so_tien_nop');
+    
+    $queryChietKhau = NopHocPhi::find()->alias('t')->joinWith(['hocVien as hv'])->select(['t.*', 'hv.noi_dang_ky'])
+    ->andFilterWhere(['>=', 't.thoi_gian_tao', new Expression("STR_TO_DATE('".$start."','%Y-%m-%d %H:%i:%s')")])
+    ->andFilterWhere(['<=', 't.thoi_gian_tao', new Expression("STR_TO_DATE('".$end."','%Y-%m-%d %H:%i:%s')")]);
+    if($byuser>0){
+        $queryChietKhau = $queryChietKhau->andFilterWhere(['t.nguoi_tao' => $byuser]);
     } 
-    $modelSoTienChietKhau = $queryChietKhau->sum('chiet_khau');
+    if($byaddress>0){
+        $queryChietKhau = $queryChietKhau->andFilterWhere(['hv.noi_dang_ky' => $byaddress]);
+    }
+    $modelSoTienChietKhau = $queryChietKhau->sum('t.chiet_khau');
     
     if($typereport==0){
         $content = $this->renderPartial('_print_report_list_0', [
