@@ -7,6 +7,7 @@ use yii\data\ActiveDataProvider;
 use app\modules\hocvien\models\DangKyHv;
 use app\custom\CustomFunc;
 use yii\db\Expression;
+use app\modules\user\models\User;
 
 /**
  * DangKyHvSearch represents the model behind the search form about `app\modules\hocvien\models\DangKyHv`.
@@ -77,6 +78,14 @@ class DangKyHvSearch extends DangKyHv
             ->andFilterWhere(['like', 'trang_thai', $this->trang_thai])
            // ->andFilterWhere(['like', 'id_hang', $this->id_hang])
             ->andFilterWhere(['like', 'ngay_sinh', $this->ngay_sinh]);
+        
+       //load danh sách của cơ sở nhân viên nhận hồ sơ 
+        $user = User::getCurrentUser();
+        if(!$user->superadmin && $user->noi_dang_ky){
+            $query->andFilterWhere([
+                'noi_dang_ky' => $user->noi_dang_ky
+            ]);
+        }
 
         return $dataProvider;
     }

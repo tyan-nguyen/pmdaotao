@@ -120,11 +120,11 @@ use app\modules\hocvien\models\base\HocVienBase;
     			<td></td>
     			<td><span class="text-13">(Ký, Họ tên)</span></td>
     		</tr>
-    		<!-- <tr>
+    		<tr>
+        		<td style="padding-top:40px;font-size:13pt"><?= User::getCurrentUser()->getHoTen() ?></td>
         		<td></td>
-        		<td></td>
-    			<td style="padding-top:40px;font-size:13pt"><?= $byuser ? User::findOne($byuser)->ho_ten : '' ?></td>
-    		</tr> -->
+    			<td style="padding-top:40px;font-size:13pt"><?php /* $byuser ? User::findOne($byuser)->ho_ten : ''*/ ?></td>
+    		</tr>
     	</table>
     	
     </div>

@@ -69,7 +69,7 @@ class BaoCaoController extends Controller
         }
     }
     
-    public function actionRpDanhSachDangKyPrint($startdate, $starttime, $enddate, $endtime, $byuser=0, $byhocphi='all', $sortby='date', $byhangdaotao=NULL, $typereport=0,$byaddress)//0 for all
+    public function actionRpDanhSachDangKyPrint($startdate, $starttime, $enddate, $endtime, $byuser=0, $byhocphi='all', $sortby='date', $byhangdaotao=NULL, $typereport=0,$byaddress=null)//0 for all
     {
         if($byuser==null){
             $byuser = 0;
@@ -100,8 +100,9 @@ class BaoCaoController extends Controller
             $query = $query->andFilterWhere(['t.id_hang' => $byhangdaotao]);
         }
         
-        if($byaddress>0){
-            $query = $query->andFilterWhere(['noi_dang_ky' => $byaddress]);
+        if($byaddress!=NULL){
+           // $byaddress = strtoupper($byaddress);
+            $query = $query->andFilterWhere(['t.noi_dang_ky' => $byaddress]);
         }
         
         $model=$query->all();
@@ -144,7 +145,7 @@ class BaoCaoController extends Controller
         }
     }
     
-    public function actionRpBienBanBanGiaoPrint($startdate, $starttime, $enddate, $endtime, $byuser=0, $sortby='ngay', $byhangdaotao=NULL, $typereport=0,$byaddress)//0 for all
+    public function actionRpBienBanBanGiaoPrint($startdate, $starttime, $enddate, $endtime, $byuser=0, $sortby='ngay', $byhangdaotao=NULL, $typereport=0,$byaddress=NULL)//0 for all
     {
         if($byuser==null){
             $byuser = 0;
@@ -169,20 +170,23 @@ class BaoCaoController extends Controller
             $query = $query->andFilterWhere(['t.id_hang' => $byhangdaotao]);
         }
         
+        if($byaddress!=NULL){
+            //$byaddress = strtoupper($byaddress);
+            $query = $query->andFilterWhere(['t.noi_dang_ky' => $byaddress]);
+        }
+        
         $model=$query->all();
+        $modelCount=$query->count();
+        
         if($sortby==null)
             $sortby = 'ngay';
         if($sortby == 'hang'){
-            $model=$query->orderBy(['id_hang'=>SORT_ASC, 'thoi_gian_hoan_thanh_ho_so'=>SORT_ASC])->all();
+            $model=$query->orderBy(['t.id_hang'=>SORT_ASC, 't.thoi_gian_hoan_thanh_ho_so'=>SORT_ASC])->all();
         } else if($sortby == 'ngay'){
-            $model=$query->orderBy(['thoi_gian_hoan_thanh_ho_so'=>SORT_ASC])->all();
+            $model=$query->orderBy(['t.thoi_gian_hoan_thanh_ho_so'=>SORT_ASC])->all();
         }        
-        
-        if($byaddress>0){
-            $query = $query->andFilterWhere(['noi_dang_ky' => $byaddress]);
-        }
 
-        $modelCount=$query->count();
+       
         
         
         if($typereport==0){

@@ -8,12 +8,18 @@ use yii\widgets\Pjax;
 use app\widgets\FilterFormWidget;
 use app\modules\hocvien\models\HangDaoTao;
 use app\modules\hocvien\models\HocVien;
+use app\modules\user\models\User;
+use app\modules\hocvien\models\base\HocVienBase;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\modules\vanban\models\search\VBDenSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-
-$this->title = 'Đăng ký học';
+$user = User::getCurrentUser();
+$listTitle = 'Đăng ký học (tại tất cả cơ sở)';
+if(!$user->superadmin && $user->noi_dang_ky){
+    $listTitle = 'Đăng ký học tại ' . HocVienBase::getLabelNoiDangKyOther($user->noi_dang_ky);
+}
+$this->title = $listTitle;
 $this->params['breadcrumbs'][] = $this->title;
 //CrudAsset::register($this);
 Yii::$app->params['showSearch'] = true;
