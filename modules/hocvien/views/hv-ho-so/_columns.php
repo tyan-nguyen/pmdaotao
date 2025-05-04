@@ -186,6 +186,9 @@ return [
             'class'=>'\kartik\grid\DataColumn',
             'attribute'=>'noi_dang_ky',
             'width' => '200px',
+            'value' => function($model){
+                return $model->getLabelNoiDangKy();
+            }
         ],
      [
          'class'=>'\kartik\grid\DataColumn',
