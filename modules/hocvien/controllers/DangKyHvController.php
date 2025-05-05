@@ -658,6 +658,18 @@ public function actionGetPhieuInReportListAjax($startdate, $starttime, $enddate,
             'modelSoTienChietKhau' => $modelSoTienChietKhau,
             'byuser' => $byuser
         ]);
+    } else if($typereport==2){
+        $content = $this->renderPartial('_print_report_list_2', [
+            'model' => $model,
+            'start'=>$start,
+            'end'=>$end,
+            'modelCount'=>$modelCount,
+            'modelSoTienNop'=> $modelSoTienNop,
+            'modelSoTienNopTM'=> $modelSoTienNopTM,
+            'modelSoTienNopCK'=> $modelSoTienNopCK,
+            'modelSoTienChietKhau' => $modelSoTienChietKhau,
+            'byuser' => $byuser
+        ]);
     }
     return $this->asJson([
         'status' => 'success',
