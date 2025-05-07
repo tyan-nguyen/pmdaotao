@@ -35,10 +35,9 @@ class DangKyHv extends HocVienBase
         return parent::beforeSave($insert);
     }
     
-   public function getKhoaHoc()
-     {
+    public function getKhoaHoc()
+    {
         return $this->hasOne(KhoaHoc::class, ['id' => 'id_khoa_hoc']);
-     }
-
+    }
 
 }

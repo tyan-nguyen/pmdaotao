@@ -106,6 +106,26 @@ class HocVienBase extends \app\models\HvHocVien
         }
         return $label;
     }
+    
+    /**
+     * Danh muc trang thai label
+     * @param int $val
+     * @return string
+     */
+    public static function getLabelNoiDangKyBadge($val=NULL)
+    {
+        switch ($val) {
+            case self::NOIDANGKY_CS1:
+                $label = '<span class="badge bg-primary">'.$val.'</span> ';
+                break;
+            case self::NOIDANGKY_CS2:
+                $label = '<span class="badge bg-info">'.$val.'</span> ';
+                break;
+            default:
+                $label = '';
+        }
+        return $label;
+    }
 
     /**
      * {@inheritdoc}

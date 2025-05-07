@@ -3,6 +3,7 @@ use yii\helpers\Html;
 use app\widgets\FileDisplayWidget;
 use app\modules\hocvien\models\HocVien;
 use app\custom\CustomFunc;
+use app\modules\user\models\User;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\HvHocVien */
@@ -85,14 +86,18 @@ use app\custom\CustomFunc;
         	<?= $this->render('hoc_phi', ['model' => $model]) ?>               
         </div>
         <div class="col-md-12" style="text-align: right;margin-bottom:20px">
-            <?= Html::a('<i class="fas fa-dollar-sign"></i> Đóng học phí', '/hocvien/dang-ky-hv/create2?id='.$model->id, [
+            <?php 
+                $user = User::getCurrentUser();
+                // only show 'payment' if user chung co so
+            ?>
+            <?= ($model->noi_dang_ky == $user->noi_dang_ky || $user->superadmin) ? Html::a('<i class="fas fa-dollar-sign"></i> Đóng học phí', '/hocvien/dang-ky-hv/create2?id='.$model->id, [
                 'title' => 'Đóng học phí',
                 'role' => 'modal-remote',
                 'class' => 'btn btn-warning', 
                 'data-bs-placement' => 'top',
                 'data-bs-toggle' => 'tooltip',
                 'style'=>'color:white'
-            ]) ?>
+            ]) : '' ?>
         </div>
 
         <!-- Thông tin file -->

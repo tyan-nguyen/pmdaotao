@@ -80,12 +80,12 @@ class DangKyHvSearch extends DangKyHv
             ->andFilterWhere(['like', 'ngay_sinh', $this->ngay_sinh]);
         
        //load danh sách của cơ sở nhân viên nhận hồ sơ 
-        $user = User::getCurrentUser();
+        /* $user = User::getCurrentUser();
         if(!$user->superadmin && $user->noi_dang_ky){
             $query->andFilterWhere([
                 'noi_dang_ky' => $user->noi_dang_ky
             ]);
-        }
+        } */
 
         return $dataProvider;
     }

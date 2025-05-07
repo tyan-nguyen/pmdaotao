@@ -2,6 +2,8 @@
 use yii\helpers\Url;
 use yii\bootstrap5\Html;
 use app\custom\CustomFunc;
+use app\modules\user\models\User;
+use app\modules\hocvien\models\DangKyHv;
 return [
     [
         'class' => 'kartik\grid\CheckboxColumn',
@@ -30,6 +32,23 @@ return [
             }
             return Url::to([$action, 'id' => $key]);
         },
+        'visibleButtons' => [
+            'payment' => function ($model, $key, $index) {
+                $user = User::getCurrentUser();
+                // only show 'payment' if user chung co so
+                return ($model->noi_dang_ky == $user->noi_dang_ky || $user->superadmin);
+            },
+            'update' => function ($model, $key, $index) {
+                $user = User::getCurrentUser();
+                // only show 'update' if use created
+                return ($model->nguoi_tao == $user->id || $user->superadmin);
+            },
+            'delete' => function ($model, $key, $index) {
+                $user = User::getCurrentUser();
+                // Only show delete button if user is admin
+                return $user->superadmin;
+            },
+        ],
         'viewOptions' => [
             'role' => 'modal-remote',
             'title' => 'Xem',
@@ -68,7 +87,17 @@ return [
         'class' => 'kartik\grid\SerialColumn',
         'width' => '30px',
     ],
-    
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'noi_dang_ky',
+        'label'=>'NĐK',
+        'value'=>function($model){
+            return DangKyHv::getLabelNoiDangKyBadge($model->noi_dang_ky);
+        },
+        'format'=>'raw',
+        'width' => '50px',
+        'contentOptions' => [ 'style' => 'text-align:center' ],
+    ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ho_ten',
