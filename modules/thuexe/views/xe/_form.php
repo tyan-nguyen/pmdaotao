@@ -5,6 +5,7 @@ use app\widgets\CardWidget;
 use kartik\select2\Select2;
 use app\modules\thuexe\models\LoaiXe;
 use yii\bootstrap5\Modal;
+use app\modules\thuexe\models\Xe;
 /* @var $this yii\web\View */
 /* @var $model app\modules\thuexe\models\Xe */
 /* @var $form yii\widgets\ActiveForm */
@@ -36,6 +37,12 @@ use yii\bootstrap5\Modal;
              <?= $form->field($model, 'bien_so_xe')->textInput(['maxlength' => true]) ?>
          </div>
          <div class="col-lg-3 col-md-6">
+            <?= $form->field($model, 'tinh_trang_xe')->dropDownList(
+              Xe::getDmTinhTrangXe(),
+             ['prompt' => 'Chọn tình trạng xe']  // 
+            ) ?>
+        </div>
+         <div class="col-lg-3 col-md-6">
             <?= $form->field($model, 'trang_thai')->dropDownList(
               [
                  'Khả dụng' => 'Khả dụng', 
@@ -46,7 +53,7 @@ use yii\bootstrap5\Modal;
         </div>
 
          <div class="col-lg-6 col-md-12">
-             <?= $form->field($model, 'tinh_trang_xe')->textarea(['rows' => 8]) ?>
+             <?= $form->field($model, 'ghi_chu')->textarea(['rows' => 8]) ?>
          </div>
     </div>
     <?php CardWidget::end() ?>

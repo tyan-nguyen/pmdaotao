@@ -3,6 +3,8 @@ use yii\bootstrap5\Html;
 use yii\widgets\ActiveForm;
 use app\modules\thuexe\models\LoaiXe;
 use kartik\select2\Select2;
+use app\modules\giaovien\models\GiaoVien;
+use app\modules\thuexe\models\Xe;
 
 ?>
 
@@ -17,7 +19,7 @@ use kartik\select2\Select2;
 ]); ?>
 
 <div class="row"  style="text-align: left;">
-    <div class="col-md-3">
+    <div class="col-md-2">
            <?= $form->field($model, 'id_loai_xe')->widget(Select2::classname(), [
                  'data' => LoaiXe::getList(),
                     'language' => 'vi',
@@ -27,13 +29,20 @@ use kartik\select2\Select2;
                     ],
              ]);?>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-2">
          <?= $form->field($model, 'hieu_xe')->textInput(['maxlength' => true]) ?>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-2">
          <?= $form->field($model, 'bien_so_xe')->textInput(['maxlength' => true]) ?>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-2">
+            <?= $form->field($model, 'tinh_trang_xe')->dropDownList(
+              Xe::getDmTinhTrangXe(),
+             ['prompt' => 'Chọn trạng thái']  // 
+            ) ?>
+    </div>
+    <!-- 
+    <div class="col-md-2">
             <?= $form->field($model, 'trang_thai')->dropDownList(
               [
                  'Khả dụng' => 'Khả dụng', 
@@ -41,7 +50,21 @@ use kartik\select2\Select2;
               ],
              ['prompt' => 'Chọn trạng thái']  // 
             ) ?>
-    </div>
+    </div> -->
+    <div class="col-md-3">
+            <?= $form->field($model, 'id_giao_vien')->widget(Select2::classname(), [
+                   'data' => GiaoVien::getList(),
+                   'language' => 'vi',
+                   'options' => [
+                        'placeholder' => 'Chọn giáo viên...',  
+                        'class' => 'form-control dropdown-with-arrow',
+                        'id' => 'gv-dropdown'
+                    ],
+                   'pluginOptions' => [
+                      'allowClear' => true
+                  ],
+            ]); ?>
+      </div>
 </div>
 
 <?php if (!Yii::$app->request->isAjax){ ?>

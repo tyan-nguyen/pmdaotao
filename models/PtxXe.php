@@ -13,14 +13,19 @@ use Yii;
  * @property string|null $bien_so_xe
  * @property string|null $tinh_trang_xe
  * @property string|null $trang_thai
+ * @property string|null $ghi_chu
+ * @property int|null $id_giao_vien
  * @property int|null $nguoi_tao
  * @property string|null $thoi_gian_tao
  *
+ * @property GdTietHoc[] $gdTietHocs
  * @property PtxLoaiXe $loaiXe
  * @property PtxPhieuThueXe[] $ptxPhieuThueXes
  */
 class PtxXe extends \yii\db\ActiveRecord
 {
+
+
     /**
      * {@inheritdoc}
      */
@@ -35,11 +40,13 @@ class PtxXe extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['hieu_xe', 'bien_so_xe', 'tinh_trang_xe', 'trang_thai', 'ghi_chu', 'id_giao_vien', 'nguoi_tao', 'thoi_gian_tao'], 'default', 'value' => null],
             [['id_loai_xe'], 'required'],
-            [['id_loai_xe', 'nguoi_tao'], 'integer'],
-            [['tinh_trang_xe'], 'string'],
+            [['id_loai_xe', 'id_giao_vien', 'nguoi_tao'], 'integer'],
+            [['ghi_chu'], 'string'],
             [['thoi_gian_tao'], 'safe'],
             [['hieu_xe', 'bien_so_xe'], 'string', 'max' => 50],
+            [['tinh_trang_xe'], 'string', 'max' => 20],
             [['trang_thai'], 'string', 'max' => 25],
             [['id_loai_xe'], 'exist', 'skipOnError' => true, 'targetClass' => PtxLoaiXe::class, 'targetAttribute' => ['id_loai_xe' => 'id']],
         ];
@@ -57,9 +64,21 @@ class PtxXe extends \yii\db\ActiveRecord
             'bien_so_xe' => 'Bien So Xe',
             'tinh_trang_xe' => 'Tinh Trang Xe',
             'trang_thai' => 'Trang Thai',
+            'ghi_chu' => 'Ghi Chu',
+            'id_giao_vien' => 'Id Giao Vien',
             'nguoi_tao' => 'Nguoi Tao',
             'thoi_gian_tao' => 'Thoi Gian Tao',
         ];
+    }
+
+    /**
+     * Gets query for [[GdTietHocs]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGdTietHocs()
+    {
+        return $this->hasMany(GdTietHoc::class, ['id_xe' => 'id']);
     }
 
     /**
@@ -81,4 +100,5 @@ class PtxXe extends \yii\db\ActiveRecord
     {
         return $this->hasMany(PtxPhieuThueXe::class, ['id_xe' => 'id']);
     }
+
 }

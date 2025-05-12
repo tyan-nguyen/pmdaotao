@@ -11,6 +11,7 @@ use app\modules\khoahoc\models\NhomHoc;
 use app\modules\user\models\User;
 use app\modules\hocvien\models\HocPhi;
 use yii\db\Expression;
+use app\modules\giaovien\models\GiaoVien;
 
 /**
  * This is the model class for table "hv_hoc_vien".
@@ -44,6 +45,7 @@ use yii\db\Expression;
  * @property int|null $da_nhan_ao
  * @property string|null $size
  * @property string|null $ngay_nhan_ao
+ * @property int|null $id_giao_vien
  */
 class HocVienBase extends \app\models\HvHocVien
 {
@@ -135,7 +137,7 @@ class HocVienBase extends \app\models\HvHocVien
         return [
             /*[['id_hang', 'ho_ten', 'so_cccd','id_hang'], 'required'],*/
             [['id_hang', 'ho_ten', 'noi_dang_ky'], 'required'],
-            [['id_khoa_hoc', 'id_hoc_phi', 'nguoi_tao','gioi_tinh','id_hang','id_nhom','nguoi_duyet','ma_so_phieu','so_lan_in_phieu','co_ho_so_thue', 'da_nhan_ao'], 'integer'],
+            [['id_khoa_hoc', 'id_hoc_phi', 'nguoi_tao','gioi_tinh','id_hang','id_nhom','nguoi_duyet','ma_so_phieu','so_lan_in_phieu','co_ho_so_thue', 'da_nhan_ao', 'id_giao_vien'], 'integer'],
             [['thoi_gian_tao', 'thoi_gian_hoan_thanh_ho_so', 'ngay_sinh','ngay_het_han_cccd'], 'safe'],
             [['ho_ten', 'so_dien_thoai', 'so_cccd', 'trang_thai','dia_chi','trang_thai_duyet'], 'string', 'max' => 255],
             [['check_hoc_phi'],'string','max'=>25],
@@ -146,6 +148,7 @@ class HocVienBase extends \app\models\HvHocVien
             [['id_khoa_hoc'], 'exist', 'skipOnError' => true, 'targetClass' => KhoaHoc::class, 'targetAttribute' => ['id_khoa_hoc' => 'id']],
             [['id_nhom'], 'exist', 'skipOnError' => true, 'targetClass' => NhomHoc::class, 'targetAttribute' => ['id_nhom' => 'id']],
             [['ghi_chu', 'ngay_nhan_ao'], 'safe'],
+            //[['id_giao_vien'], 'required', 'on'=>'phan-cong-giao-vien'], //on phan cong giao vien phu trach cho hoc vien
         ];
     }
 
@@ -184,6 +187,7 @@ class HocVienBase extends \app\models\HvHocVien
             'da_nhan_ao' => 'Đã nhận áo',
             'size'=>'Size',
             'ngay_nhan_ao' => 'Ngày nhận áo',
+            'id_giao_vien' => 'Giáo viên phụ trách'
         ];
     }
 
@@ -235,6 +239,10 @@ class HocVienBase extends \app\models\HvHocVien
     public function getHangDaoTao()
     {
         return $this->hasOne(HangDaoTao::class, ['id' => 'id_hang']);
+    }
+    public function getGiaoVien()
+    {
+        return $this->hasOne(GiaoVien::class, ['id' => 'id_giao_vien']);
     }
     public function getNhom()
     {

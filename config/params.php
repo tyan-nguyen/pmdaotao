@@ -7,6 +7,7 @@ return [
     'bsVersion' => '5.x',
     'showTopSearch' =>true,
     'showSearch' => false,
+    'showView' => false,
     'searchLabel' => '',
     'showExport' => false,
     'showImport' => false,//imp

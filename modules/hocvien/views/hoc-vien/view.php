@@ -59,6 +59,9 @@ use app\widgets\KhoDisplayWidget;
                     <li class="nav-item" role="presentation">
                         <a class="nav-link" id="add-student-tab" data-bs-toggle="tab" href="#add-student" role="tab" aria-controls="add-student" aria-selected="false"style="color: blue;"><i class="fa fa-adjust"></i> Học phí</a>
                     </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="ketquahoc-tab" data-bs-toggle="tab" href="#ketquahoc" role="tab" aria-controls="ketquahoc" aria-selected="false"style="color: blue;"><i class="fa fa-adjust"></i> Thời gian học</a>
+                    </li>
                  
                     <li class="nav-item" role="presentation">
                         <a class="nav-link " id="add-timetable-tab" data-bs-toggle="tab" href="#add-timetable" role="tab" aria-controls="add-student" aria-selected="false"style="color: blue;"><i class="fa fa-calendar"></i> Lịch học</a>
@@ -85,6 +88,13 @@ use app\widgets\KhoDisplayWidget;
                             <div class="tab-pane fade" id="add-student" role="tabpanel" aria-labelledby="add-student-tab">
                         <!-- Nội dung hiển thị khi click vào "Học phí" -->
                              <?= $this->render('hoc_phi', ['model' => $model]) ?>
+                             
+                            </div>
+                            
+                            <!-- Nội dung thời gian học  -->
+                            <div class="tab-pane fade" id="ketquahoc" role="tabpanel" aria-labelledby="ketquahoc-tab">
+
+                             <?= $this->render('ket_qua_hoc', ['model' => $model]) ?>
                              
                             </div>
 

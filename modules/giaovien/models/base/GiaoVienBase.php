@@ -38,18 +38,7 @@ use app\custom\CustomFunc;
  * @property VanBan[] $vbVanBans
  */
 class GiaoVienBase extends \app\models\NvNhanVien
-{
-    /**
-     * {@inheritdoc}
-     */
-    public static function tableName()
-    {
-        return 'nv_nhan_vien';
-    }
-   
- 
-    
- 
+{  
     /**
      * {@inheritdoc}
      */

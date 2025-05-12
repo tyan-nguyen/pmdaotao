@@ -8,6 +8,7 @@ use app\modules\kholuutru\models\LuuKho;
 use app\modules\khoahoc\models\NhomHoc;
 use app\custom\CustomFunc;
 use Yii;
+use yii\helpers\ArrayHelper;
 
 class HocVien extends HocVienBase
 {
@@ -102,6 +103,18 @@ class HocVien extends HocVienBase
             $this->updateAttributes(['id_hoc_phi']);
         }
     } */
+    
+    public static function getListByGiaoVien($idgv)
+    {
+        $dsHocVien = HocVien::find()
+        ->where(['id_giao_vien' => $idgv])
+        ->orderBy(['id_khoa_hoc' => SORT_ASC,'ho_ten' => SORT_ASC])
+        ->all();
+        
+        return ArrayHelper::map($dsHocVien, 'id', function ($model) {
+            return '+ ' . $model->ho_ten;
+        });
+    }
     
   
 }

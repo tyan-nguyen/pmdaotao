@@ -5,6 +5,7 @@ namespace app\modules\thuexe\models;
 use Yii;
 use app\modules\thuexe\models\LoaiXe;
 use yii\helpers\ArrayHelper;
+use app\modules\giaovien\models\GiaoVien;
 /**
  * This is the model class for table "ptx_xe".
  *
@@ -14,6 +15,7 @@ use yii\helpers\ArrayHelper;
  * @property string|null $bien_so_xe
  * @property string|null $tinh_trang_xe
  * @property string|null $trang_thai
+ * @property int|null $id_giao_vien
  * @property int|null $nguoi_tao
  * @property string|null $thoi_gian_tao
  *
@@ -22,14 +24,105 @@ use yii\helpers\ArrayHelper;
  */
 class Xe extends \app\models\PtxXe 
 {
+    const XE_BINHTHUONG = 'BINHTHUONG';
+    const XE_HUHONG = 'HUHONG';
+    const XE_SUACHUA = 'SUACHUA';
+    const XE_BAOTRI = 'BAOTRI';
+    
     /**
-     * {@inheritdoc}
+     * Danh muc hinh thuc chuyen khoan
+     * @return string[]
      */
-    public static function tableName()
+    public static function getDmTinhTrangXe()
     {
-        return 'ptx_xe';
+        return [
+            self::XE_BINHTHUONG => 'Bình thường',
+            self::XE_HUHONG => 'Hư hỏng',
+            self::XE_SUACHUA => 'Sửa chữa',
+            self::XE_BAOTRI => 'Bảo trì',
+        ];
     }
-
+    /**
+     * Danh muc trang thai label
+     * @param int $val
+     * @return string
+     */
+    public function getLabelTinhTrangXe($val = NULL)
+    {
+        if ($val == NULL) {
+            $val = $this->noi_dang_ky;
+        }
+        switch ($val) {
+            case self::XE_BINHTHUONG:
+                $label = "Bình thường";
+                break;
+            case self::XE_HUHONG:
+                $label = "Hư hỏng";
+                break;
+            case self::XE_SUACHUA:
+                $label = "Sửa chữa";
+                break;
+            case self::XE_BAOTRI:
+                $label = "Bảo trì";
+                break;
+            default:
+                $label = '';
+        }
+        return $label;
+    }
+    
+    /**
+     * Danh muc trang thai label
+     * @param int $val
+     * @return string
+     */
+    public static function getLabelTinhTrangXeOther($val=NULL)
+    {
+        switch ($val) {
+            case self::XE_BINHTHUONG:
+                $label = "Bình thường";
+                break;
+            case self::XE_HUHONG:
+                $label = "Hư hỏng";
+                break;
+            case self::XE_SUACHUA:
+                $label = "Sửa chữa";
+                break;
+            case self::XE_BAOTRI:
+                $label = "Bảo trì";
+                break;
+            default:
+                $label = '';
+        }
+        return $label;
+    }
+    
+    /**
+     * Danh muc trang thai label
+     * @param int $val
+     * @return string
+     */
+    public static function getLabelTinhTrangXeBadge($val=NULL)
+    {
+        switch ($val) {
+            case self::XE_BINHTHUONG:
+                $label = '<span class="badge bg-primary">Bình thường</span> ';
+                break;
+            case self::XE_HUHONG:
+                $label = '<span class="badge bg-danger">Hư hỏng</span> ';
+                break;
+            case self::XE_SUACHUA:
+                $label = '<span class="badge bg-warning">Sửa chữa</span> ';
+                break;
+            case self::XE_BAOTRI:
+                $label = '<span class="badge bg-info">Bảo trì</span> ';
+                break;
+            default:
+                $label = '';
+        }
+        return $label;
+    }
+    
     /**
      * {@inheritdoc}
      */
@@ -37,8 +130,9 @@ class Xe extends \app\models\PtxXe
     {
         return [
             [['id_loai_xe'], 'required'],
-            [['id_loai_xe', 'nguoi_tao'], 'integer'],
-            [['tinh_trang_xe'], 'string'],
+            [['id_loai_xe', 'nguoi_tao', 'id_giao_vien'], 'integer'],
+            [['ghi_chu'], 'string'],
+            [['tinh_trang_xe'], 'string', 'max' => 20],
             [['thoi_gian_tao'], 'safe'],
             [['hieu_xe', 'bien_so_xe'], 'string', 'max' => 50],
             [['trang_thai'], 'string', 'max' => 25],
@@ -53,11 +147,13 @@ class Xe extends \app\models\PtxXe
     {
         return [
             'id' => 'ID',
-            'id_loai_xe' => 'Tên loại xe thuê',
+            'id_loai_xe' => 'Tên loại xe',
             'hieu_xe' => 'Hiệu Xe',
             'bien_so_xe' => 'Biển Số Xe',
             'tinh_trang_xe' => 'Tình Trạng Xe',
+            'ghi_chu' => 'Ghi chú',
             'trang_thai' => 'Trạng Thái',
+            'id_giao_vien' => 'Giáo viên phụ trách',
             'nguoi_tao' => 'Người Tạo',
             'thoi_gian_tao' => 'Thời Gian Tạo',
         ];
@@ -71,6 +167,14 @@ class Xe extends \app\models\PtxXe
     public function getLoaiXe()
     {
         return $this->hasOne(LoaiXe::class, ['id' => 'id_loai_xe']);
+    }
+    /**
+     * relation for giao vien
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGiaoVien()
+    {
+        return $this->hasOne(GiaoVien::class, ['id' => 'id_giao_vien']);
     }
 
     /**
@@ -102,6 +206,17 @@ class Xe extends \app\models\PtxXe
     
         return ArrayHelper::map($dsXe, 'id', function($model) {
             return '+ ' . $model->hieu_xe; 
+        });
+    }
+    
+    public static function getListByGiaoVien($idgv)
+    {
+        $dsXe = Xe::find()->where(['id_giao_vien'=>$idgv])
+        ->orderBy(['hieu_xe' => SORT_ASC])
+        ->all();
+        
+        return ArrayHelper::map($dsXe, 'id', function($model) {
+            return '+ ' . $model->bien_so_xe;
         });
     }
     

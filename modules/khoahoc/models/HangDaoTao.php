@@ -2,6 +2,7 @@
 
 namespace app\modules\khoahoc\models;
 use Yii;
+use app\modules\daotao\models\HangMonHoc;
 /**
  * This is the model class for table "hv_hang_dao_tao".
  *
@@ -59,5 +60,15 @@ class HangDaoTao extends \app\models\HvHangDaoTao
             $this->thoi_gian_tao = date('Y-m-d H:i:s');
         }
         return parent::beforeSave($insert);
+    }
+    
+    /**
+     * Gets query for [[MonHoc]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getListModule()
+    {
+        return $this->hasMany(HangMonHoc::class, ['id_hang' => 'id']);
     }
 }

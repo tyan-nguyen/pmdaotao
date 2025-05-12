@@ -94,7 +94,7 @@ return [
                         $hangNames[] = $hangName;
                     }
                 }
-                return '<strong>' . implode(', ', $hangNames) . '</strong>'; 
+                return '<strong>' . implode(',<br/> ', $hangNames) . '</strong>'; 
             } else {
                 return '<span class="badge bg-warning">Chưa phân công</span>';  
             }

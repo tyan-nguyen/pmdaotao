@@ -64,6 +64,61 @@ class XeController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+    /**
+     * cập nhật giáo viên phụ trách xe
+     * tham số: $id -> id xe
+     */
+    public function actionPhanCongGiaoVien($id){
+        $request = Yii::$app->request;
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $model = Xe::findOne($id);
+        //$model->scenario = 'phan-cong-giao-vien';
+        if($model == null){
+            return [
+                'title'=> 'Thông báo',
+                'content'=>'Xe không tồn tại!',
+                'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"])
+            ];
+        }
+        if($request->isAjax){
+            if($request->isGet){
+                return [
+                    'title'=> "Phân công giáo viên phụ trách xe",
+                    'content'=>$this->renderAjax('_formGiaoVien', [
+                        'model' => $model,
+                    ]),
+                    'footer'=> Html::button('Lưu lại',['type'=>'submit','class'=>'btn btn-primary']). '&nbsp;'
+                    .Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"])
+                ];
+            }else if($model->load($request->post())){
+                if($model->id_giao_vien && $model->validate('id_giao_vien')){
+                    $model->updateAttributes(['id_giao_vien']);
+                    return [
+                        'forceReload'=>'#crud-datatable-pjax',
+                        'forceClose'=>true,
+                        'tcontent'=>'Phân công giáo viên phụ trách thành công!',
+                    ];
+                }else{
+                    $model->updateAttributes(['id_giao_vien']);
+                    return [
+                        'forceReload'=>'#crud-datatable-pjax',
+                        'forceClose'=>true,
+                        'tcontent'=>'Xóa thông tin giáo viên phụ trách thành công!',
+                    ];
+                }
+                
+            }else{
+                return [
+                    'title'=> "Phân công giáo viên phụ trách xe",
+                    'content'=>$this->renderAjax('_formGiaoVien', [
+                        'model' => $model,
+                    ]),
+                    'footer'=> Html::button('Lưu lại',['type'=>'submit','class'=>'btn btn-primary']). '&nbsp;'
+                    .Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"])
+                ];
+            }
+        }//if isAjax
+    }
 
 
     /**

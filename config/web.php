@@ -43,6 +43,9 @@ $config = [
         'lichhoc' => [
             'class' => 'app\modules\lichhoc\Lichhoc',
         ],
+        'daotao' => [
+            'class' => 'app\modules\daotao\DaoTao',
+        ],
 
         /* 'dynamikjs' => [
             'class' => 'dastanaron\dropzone\DynamicJSModule'
@@ -166,9 +169,9 @@ $config = [
                 'yii\web\JqueryAsset' => [
                     'jsOptions' => [ 'position' => \yii\web\View::POS_HEAD ],
                 ],
-             //   'kartik\form\ActiveFormAsset' => [
-                  //  'bsDependencyEnabled' => false // do not load bootstrap assets for a specific asset bundle
-               // ],
+                /* 'kartik\form\ActiveFormAsset' => [
+                    'bsDependencyEnabled' => false // do not load bootstrap assets for a specific asset bundle
+                ], */
             ],
         ],
         

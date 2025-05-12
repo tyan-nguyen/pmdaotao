@@ -26,7 +26,8 @@ class ViboonAsset extends AssetBundle
         'assets/switcher/demo.css',
         'css/site.css?v=1.4',
         'assets/fontawesome-free-6.4.0-web/css/all.min.css',
-        'js/fancybox/fancybox.css'
+        'js/fancybox/fancybox.css',
+        'https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css'
     ];
     public $js = [
         'assets/plugins/bootstrap/popper.min.js',
@@ -54,6 +55,7 @@ class ViboonAsset extends AssetBundle
         'js/ModalRemote.js?v=2',
         'js/ajaxcrud.js?v=2',
         'js/tinymce/tinymce_5.10.7.min.js',
+        'https://cdn.jsdelivr.net/npm/flatpickr',
         //fancybox
         'js/fancybox/fancybox.umd.js',
         'js/custom.js?v=1',

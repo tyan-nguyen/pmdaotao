@@ -5,6 +5,7 @@ use app\modules\hocvien\models\NopHocPhi;
 use app\modules\hocvien\models\HocVien;
 use app\modules\hocvien\models\HocPhi;
 use app\modules\hocvien\models\KhoaHoc;
+use app\custom\CustomFunc;
 return [
     [
         'class' => 'kartik\grid\CheckboxColumn',
@@ -13,7 +14,7 @@ return [
     [
         'class' => 'kartik\grid\ActionColumn',
         'header'=>'',
-        'template' => '{payment} {view} {update} {delete} ',
+        'template' => '{capNhapGiaoVien} {view}',
         'dropdown' => true,
         'dropdownOptions' => ['class' => 'float-right'],
         'dropdownButton'=>[
@@ -23,31 +24,8 @@ return [
         'vAlign'=>'middle',
         'width' => '20px',
         'urlCreator' => function($action, $model, $key, $index) {
-            if ($action === 'payment') {
-                $khoaHoc = KhoaHoc::findOne($model->id_khoa_hoc);
-    
-                if (!$khoaHoc) {
-                    return Url::to(['mess2', 'id' => $key]); 
-                }        
-        
-                $hocPhiHang = HocPhi::findOne($khoaHoc->id_hoc_phi);
-    
-                if (!$hocPhiHang) {
-                    return Url::to([$action, 'id' => $key]);
-                }
-        
-                $nopHP = NopHocPhi::find()->where(['id_hoc_vien' => $model->id])->all();
-        
-                $tongTienDaNop = 0;
-                foreach ($nopHP as $hcPhi) {
-                    $tongTienDaNop += $hcPhi->so_tien_nop;
-                }
-            
-                if ($tongTienDaNop >= $hocPhiHang->hoc_phi) {
-                    return Url::to(['mess', 'id' => $key]); 
-                } else if($tongTienDaNop < $hocPhiHang->hoc_phi){
-                    return Url::to(['create2', 'id' => $key]);
-                }
+            if ($action === 'capNhapGiaoVien') {
+                return Url::to(['phan-cong-giao-vien', 'id' => $key]);
             }
             return Url::to([$action, 'id' => $key]);
         },
@@ -74,9 +52,9 @@ return [
             'data-bs-toggle' => 'tooltip-success'
         ],
         'buttons' => [
-          'payment' => function ($url, $model, $key) {
-              return Html::a('<i class="fas fa-dollar-sign"></i> Đóng học phí', $url, [
-                'title' => 'Đóng học phí',
+          'capNhapGiaoVien' => function ($url, $model, $key) {
+              return Html::a('<i class="fa-solid fa-list-check"></i> Phân công giáo viên', $url, [
+                'title' => 'Phân công giáo viên giảng dạy',
                 'role' => 'modal-remote',
                 'class' => 'btn ripple btn-warning dropdown-item', 
                 'data-bs-placement' => 'top',
@@ -89,11 +67,32 @@ return [
         'class' => 'kartik\grid\SerialColumn',
         'width' => '30px',
     ],
+    
+    [
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'id_khoa_hoc',
+        'value' => function ($model) {
+        $khoaHoc = KhoaHoc::findOne($model->id_khoa_hoc);
+        return $khoaHoc
+        ? '<strong>' . $khoaHoc->ten_khoa_hoc . '</strong>'
+            : '<span class="badge bg-warning"> Chưa sắp khóa học </span>';
+        },
+        'format' => 'raw',
+        'width' => '200px',
+    ],
    
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ho_ten',
         'width' => '200px',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'ngay_sinh',
+        'value'=>function($model){
+            return CustomFunc::convertYMDToDMY($model->ngay_sinh);  
+        },
+        'width' => '100px',
     ],
     [
         'class' => '\kartik\grid\DataColumn',
@@ -110,70 +109,39 @@ return [
         'contentOptions' => ['style' => 'text-align: center;'],
     ],
     [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'so_cccd',
+        'label'=>'CCCD (Mã KH)',
+        'width' => '150px',
+        'contentOptions' => [ 'style' => 'text-align:center' ],
+    ],
+    [
         'class' => '\kartik\grid\DataColumn',
-        'attribute' => 'id_khoa_hoc',
-        'value' => function ($model) {
-            $khoaHoc = KhoaHoc::findOne($model->id_khoa_hoc);
-            return $khoaHoc 
-                ? '<strong>' . $khoaHoc->ten_khoa_hoc . '</strong>' 
-                : '<span class="badge bg-warning"> Chưa sắp khóa học </span>'; 
+        'attribute' => 'id_hang',
+        'width' => '250px',
+        'value' => function($model) {
+            return $model->hangDaoTao ? $model->hangDaoTao->ten_hang : 'N/A';
         },
-        'format' => 'raw', 
+        'label' => 'Hạng đào tạo',
+        ],
+    
+    
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'id_giao_vien',
+        'value'=>function($model){
+            return $model->giaoVien?$model->giaoVien->ho_ten:'';
+        },
+        'width' => '150px',
     ],
 
-     [
+     /* [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'trang_thai',
         'width' => '150px',
-     ],
+     ], */
 
-    [
-        'class' => '\kartik\grid\DataColumn',
-        'attribute' => 'check_hoc_phi',
-        'label' => 'Học phí',
-        'value' => function($model) {
-            // Tìm học viên hiện tại
-            $hocVien = HocVien::findOne($model->id);
-            
-            // Tìm thông tin khóa học của học viên
-            $khoaHoc = $hocVien ? KhoaHoc::findOne($hocVien->id_khoa_hoc) : null;
     
-            // Tìm học phí dựa trên id_hoc_phi của khóa học
-            $hocPhiKhoaHoc = $khoaHoc ? HocPhi::findOne($khoaHoc->id_hoc_phi) : null;
-    
-            // Kiểm tra xem học phí có tồn tại không
-            if ($hocPhiKhoaHoc) {
-                /*an cmmt
-                // Tìm thông tin các lần nộp học phí của học viên
-                $hocPhi = NopHocPhi::find()->where(['id_hoc_vien' => $hocVien->id])->all();
-    
-                // Tính tổng số tiền đã nộp
-                $tongTienDaNop = 0;
-                foreach ($hocPhi as $nopPhi) {
-                    $tongTienDaNop += $nopPhi->so_tien_nop;
-                }
-                // Kiểm tra trạng thái nộp học phí
-                if ($tongTienDaNop >= $hocPhiKhoaHoc->hoc_phi) {
-                    $hocVien->check_hoc_phi = 'Nộp đủ';  
-                    $hocVien->save();//tam bo qua cho chay truoc  
-                    return '<span class="badge bg-primary">Nộp đủ</span>';
-                } elseif ($tongTienDaNop > 0) {
-                    $hocVien->check_hoc_phi = 'Còn nợ học phí'; 
-                    $hocVien->save();  //tam bo qua cho chay truoc
-                    return '<span class="badge bg-warning">Còn nợ học phí</span>';
-                } else {
-                    $hocVien->check_hoc_phi = 'Chưa đóng học phí';  
-                    $hocVien->save(); //tam bo qua cho chay truoc  
-                    return '<span class="badge bg-danger">Chưa đóng học phí</span>';
-                }
-                */
-            } else {
-                return '<span class="badge bg-success"> Vui lòng sắp khóa học </span>';
-            }
-        },
-        'width' => '150px',
-        'format' => 'raw', 
-    ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'nguoi_tao',

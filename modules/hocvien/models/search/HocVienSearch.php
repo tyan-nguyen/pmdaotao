@@ -17,7 +17,7 @@ class HocVienSearch extends HocVien
     public function rules()
     {
         return [
-            [['id', 'id_khoa_hoc', 'nguoi_tao', 'id_hang','gioi_tinh'], 'integer'],
+            [['id', 'id_khoa_hoc', 'nguoi_tao', 'id_hang','gioi_tinh', 'id_giao_vien'], 'integer'],
             [['ho_ten', 'so_dien_thoai', 'so_cccd', 'trang_thai', 'thoi_gian_tao', 'ngay_sinh','check_hoc_phi'], 'safe'],
         ];
     }
@@ -51,6 +51,7 @@ class HocVienSearch extends HocVien
             'nguoi_tao' => $this->nguoi_tao,
             'thoi_gian_tao' => $this->thoi_gian_tao,
             'gioi_tinh'=>$this->gioi_tinh,
+            'id_giao_vien'=>$this->id_giao_vien
         ]);
 
         $query->andFilterWhere(['like', 'ho_ten', $this->ho_ten])

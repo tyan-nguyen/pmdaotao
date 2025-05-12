@@ -36,7 +36,9 @@ use Yii;
  * @property int|null $da_nhan_ao
  * @property string|null $size
  * @property string|null $ngay_nhan_ao
+ * @property int|null $id_giao_vien
  *
+ * @property GdTietHoc[] $gdTietHocs
  * @property HvHangDaoTao $hang
  * @property HvHocPhi $hocPhi
  * @property HvNopHocPhi[] $hvNopHocPhis
@@ -61,8 +63,8 @@ class HvHocVien extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_khoa_hoc', 'id_hoc_phi', 'so_cccd', 'ngay_het_han_cccd', 'nguoi_tao', 'thoi_gian_tao', 'gioi_tinh', 'dia_chi', 'ngay_sinh', 'nguoi_lap_phieu', 'ma_so_phieu', 'so_lan_in_phieu', 'check_hoc_phi', 'id_nhom', 'loai_dang_ky', 'noi_dang_ky', 'nguoi_duyet', 'trang_thai_duyet', 'ghi_chu', 'thoi_gian_hoan_thanh_ho_so', 'co_ho_so_thue', 'da_nhan_ao', 'size', 'ngay_nhan_ao'], 'default', 'value' => null],
-            [['id_khoa_hoc', 'id_hoc_phi', 'nguoi_tao', 'gioi_tinh', 'ma_so_phieu', 'so_lan_in_phieu', 'id_hang', 'id_nhom', 'nguoi_duyet', 'co_ho_so_thue', 'da_nhan_ao'], 'integer'],
+            [['id_khoa_hoc', 'id_hoc_phi', 'so_cccd', 'ngay_het_han_cccd', 'nguoi_tao', 'thoi_gian_tao', 'gioi_tinh', 'dia_chi', 'ngay_sinh', 'nguoi_lap_phieu', 'ma_so_phieu', 'so_lan_in_phieu', 'check_hoc_phi', 'id_nhom', 'loai_dang_ky', 'noi_dang_ky', 'nguoi_duyet', 'trang_thai_duyet', 'ghi_chu', 'thoi_gian_hoan_thanh_ho_so', 'co_ho_so_thue', 'da_nhan_ao', 'size', 'ngay_nhan_ao', 'id_giao_vien'], 'default', 'value' => null],
+            [['id_khoa_hoc', 'id_hoc_phi', 'nguoi_tao', 'gioi_tinh', 'ma_so_phieu', 'so_lan_in_phieu', 'id_hang', 'id_nhom', 'nguoi_duyet', 'co_ho_so_thue', 'da_nhan_ao', 'id_giao_vien'], 'integer'],
             [['ho_ten', 'so_dien_thoai', 'trang_thai', 'id_hang'], 'required'],
             [['ngay_het_han_cccd', 'thoi_gian_tao', 'ngay_sinh', 'thoi_gian_hoan_thanh_ho_so', 'ngay_nhan_ao'], 'safe'],
             [['ghi_chu'], 'string'],
@@ -113,7 +115,18 @@ class HvHocVien extends \yii\db\ActiveRecord
             'da_nhan_ao' => 'Da Nhan Ao',
             'size' => 'Size',
             'ngay_nhan_ao' => 'Ngay Nhan Ao',
+            'id_giao_vien' => 'Id Giao Vien',
         ];
+    }
+
+    /**
+     * Gets query for [[GdTietHocs]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGdTietHocs()
+    {
+        return $this->hasMany(GdTietHoc::class, ['id_hoc_vien' => 'id']);
     }
 
     /**

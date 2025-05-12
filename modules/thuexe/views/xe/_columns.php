@@ -2,6 +2,7 @@
 use yii\helpers\Url;
 use app\modules\thuexe\models\LoaiXe;
 use yii\bootstrap5\Html;
+use app\modules\thuexe\models\Xe;
 return [
     [
         'class' => 'kartik\grid\CheckboxColumn',
@@ -11,7 +12,7 @@ return [
     [
         'class' => 'kartik\grid\ActionColumn',
         'header'=>'',
-        'template' => '{image} {view} {update} {delete}',
+        'template' => '{capNhapGiaoVien} {image} {view} {update} {delete}',
         'dropdown' => true,
         'dropdownOptions' => ['class' => 'float-right'],
         'dropdownButton'=>[
@@ -22,14 +23,24 @@ return [
         'width' => '20px',
    
         'urlCreator' => function($action, $model, $key, $index) { 
+            if ($action === 'capNhapGiaoVien') {
+                return Url::to(['phan-cong-giao-vien', 'id' => $key]);
+            }
             if ($action === 'image') {
                          return Url::to(['add-image', 'id' => $key]);
             }
                         return Url::to([$action,'id'=>$key]);
-              },
-        
+        },        
         'buttons' => [
-          
+            'capNhapGiaoVien' => function ($url, $model, $key) {
+                return Html::a('<i class="fa-solid fa-list-check"></i> Phân công giáo viên', $url, [
+                    'title' => 'Phân công giáo viên giảng dạy',
+                    'role' => 'modal-remote',
+                    'class' => 'btn ripple btn-warning dropdown-item',
+                    'data-bs-placement' => 'top',
+                    'data-bs-toggle' => 'tooltip',
+                ]);
+            },
             'image' => function($url, $model, $key) {
                 return Html::a('<i class="fa fa-image"></i> Thêm hình ảnh', $url, [
                     'title' => 'Thêm hình ảnh',
@@ -77,17 +88,33 @@ return [
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'hieu_xe',
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'bien_so_xe',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'tinh_trang_xe',
+        'attribute'=>'id_giao_vien',
+        'value'=>function($model){
+        return $model->giaoVien?$model->giaoVien->ho_ten:'';
+        },
+        'width' => '150px',
     ],
     [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'tinh_trang_xe',
+        'value'=>function($model){
+            return Xe::getLabelTinhTrangXeBadge($model->tinh_trang_xe);
+        },
+        'format'=>'raw',
+    ],
+    /* [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'hieu_xe',
+    ], */
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'ghi_chu',
+    ],
+    /* [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'trang_thai',
         'value' => function ($model) {
@@ -99,7 +126,7 @@ return [
                 'style' => 'font-weight: bold;', 
             ];
         },
-    ],
+    ], */
     
     // [
         // 'class'=>'\kartik\grid\DataColumn',

@@ -5,6 +5,9 @@ use yii\widgets\ActiveForm;
 
 use app\modules\hocvien\models\HangDaoTao;
 use kartik\date\DatePicker;
+use app\modules\khoahoc\models\KhoaHoc;
+use kartik\select2\Select2;
+use app\modules\giaovien\models\GiaoVien;
 /* @var $this yii\web\View */
 /* @var $model app\modules\vanban\models\VanBanDen */
 /* @var $form yii\widgets\ActiveForm */
@@ -23,13 +26,13 @@ use kartik\date\DatePicker;
            <div class="col-md-3">
                   <?= $form->field($model, 'ho_ten')->textInput(['maxlength' => true]) ?>
            </div>
-            <div class="col-md-3">
+           <!-- <div class="col-md-3">
                   <?= $form->field($model, 'gioi_tinh')->dropDownList([
                           1 => 'Nam',
                           0 => 'Nữ',
                           ], ['prompt' => 'Chọn giới tính', 'class' => 'form-control dropdown-with-arrow']) ?>
-            </div>
-            <div class="col-md-3">
+            </div> --> 
+            <!-- <div class="col-md-3">
                   <?= $form->field($model, 'ngay_sinh')->widget(DatePicker::classname(), [
                          'options' => ['placeholder' => 'Chọn ngày sinh  ...'],
                          'pluginOptions' => [
@@ -37,14 +40,14 @@ use kartik\date\DatePicker;
                          'format' => 'dd/mm/yyyy',
                   ]
                   ]); ?>
-            </div>
-            <div class="col-md-3">
+            </div> -->
+            <div class="col-md-2">
                   <?= $form->field($model, 'so_cccd')->textInput(['maxlength' => true]) ?>
             </div>
-            <div class="col-md-3">
+             <!-- <div class="col-md-3">
                   <?= $form->field($model, 'dia_chi')->textInput(['maxlength' => true]) ?>
-            </div>
-            <div class="col-md-3">
+            </div>-->
+            <div class="col-md-2">
                   <?= $form->field($model, 'so_dien_thoai')->textInput(['maxlength' => true]) ?>
             </div>
             <div class="col-md-3">
@@ -57,13 +60,25 @@ use kartik\date\DatePicker;
                      ]
                 ) ?>
             </div>
-            <div class="col-md-3">
-                 <?= $form->field($model, 'id_khoa_hoc')->dropDownList(
-                    [],  
-                    ['prompt' => 'Chọn Khóa học...', 'id' => 'khoa-hocs-dropdown']
-                 ) ?>
+            <div class="col-md-2">
+                  <?= $form->field($model, 'id_khoa_hoc')->dropDownList(KhoaHoc::getList(), ['prompt'=>'Tất cả']) ?>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
+                <?= $form->field($model, 'id_giao_vien')->widget(Select2::classname(), [
+                       'data' => GiaoVien::getList(),
+                       'language' => 'vi',
+                       'options' => [
+                            'placeholder' => 'Chọn giáo viên...',  
+                            'class' => 'form-control dropdown-with-arrow',
+                            'id' => 'gv-dropdown'
+                        ],
+                       'pluginOptions' => [
+                          'allowClear' => true
+                      ],
+                ]); ?>
+          </div>
+          
+           <!-- <div class="col-md-3">
             <?= $form->field($model, 'check_hoc_phi')->dropDownList(
                [
                    'Chưa đóng học phí' => 'Chưa đóng học phí',
@@ -74,7 +89,7 @@ use kartik\date\DatePicker;
                     'prompt' => 'Chọn trạng thái học phí', 
                ]
              ) ?>
-          </div>  
+          </div>  -->
        </div>  
 
     <?php if (!Yii::$app->request->isAjax){ ?>

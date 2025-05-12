@@ -78,6 +78,18 @@ class CustomFunc
         } else 
             return '';
     }
+    /**
+     * chuyen doi thoi gian tu chuoi 12:00:00 -> 12:00
+     * @param string $time_string
+     * @return string
+     */
+    public static function convertHIStoHI($time_string){
+        if($time_string!=null){
+            return date ('H:i',strtotime($time_string));
+        } else {
+            return '';
+        }
+    }
     
     /**
      * generate random 4 string or number
