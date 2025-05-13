@@ -25,7 +25,11 @@ $this->params['breadcrumbs'][] = $this->title;
 Yii::$app->params['showSearch'] = true;
 Yii::$app->params['showExport'] = true;
 ?>
-
+<style>
+#crud-datatable-togdata-page{
+    border:0px!important;
+}
+</style>
 <div class="card border-default" id="divFilterExtend">
 	<div class="card-header rounded-bottom-0 card-header text-dark" id="simple">
 		<h5 class="mt-2"><i class="fe fe-search"></i> Tìm kiếm</h5>
@@ -97,7 +101,8 @@ Yii::$app->params['showExport'] = true;
 						</div>
 					</div>
                     '.
-                    '{export}'
+                    '{toggleData}'
+                    .'{export}'
                 ],
             ],          
             'striped' => false,

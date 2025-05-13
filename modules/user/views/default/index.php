@@ -26,23 +26,7 @@ $dash = new Dashboard();
 
 
 <div class="row">
-	<div class="col-sm-12 col-md-6 col-lg-6 col-xl-3 ">
-		<div class="card custom-card service">
-			<div class="card-body">
-				<div class="item-box text-center">
-					<div class=" text-center mb-2 text-primary"><i class="fa fa-graduation-cap"></i>
-					</div>
-					<div class="item-box-wrap">						
-						<h5 class="mb-2">
-							<a href="/khoahoc/khoa-hoc?menu=khoahoc">Quản lý khóa học</a>
-						</h5>						
-						<p class="text-muted mb-0">Quản lý thông tin khóa học, 
-							<br/>hạng đào tạo, lịch học</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+	
 	<div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
 		<div class="card custom-card service">
 			<div class="card-body">
@@ -51,10 +35,10 @@ $dash = new Dashboard();
 					</div>
 					<div class="item-box-wrap">
 						<h5 class="mb-2">
-							<a href="/hocvien/hoc-vien?menu=hv2">Quản lý học viên</a>
+							<a href="/hocvien/dang-ky-hv?menu=hv1">Quản lý học viên đăng ký</a>
 						</h5>
-						<p class="text-muted mb-0">Quản lý thông tin học viên, <br/>
-							học phí, sắp xếp lịch học</p>
+						<p class="text-muted mb-0">Quản lý thông tin học viên, 
+							học phí</p>
 					</div>
 				</div>
 			</div>
@@ -71,24 +55,39 @@ $dash = new Dashboard();
 							<a href="/giaovien/giao-vien?menu=gv1">Quản lý giáo viên</a>
 						</h5>
 						<p class="text-muted mb-0">Quản lý thông tin giáo viên, 
-							hồ sơ giáo viên, lên lịch giảng dạy</p>
+							hồ sơ giáo viên</p>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
+	<div class="col-sm-12 col-md-6 col-lg-6 col-xl-3 ">
 		<div class="card custom-card service">
 			<div class="card-body">
 				<div class="item-box text-center">
-					<div class="text-center text-warning mb-2"><i class="fa fa-automobile"></i>
+					<div class=" text-center mb-2 text-primary"><i class="fa fa-graduation-cap"></i>
 					</div>
-					<div class="item-box-wrap">
+					<div class="item-box-wrap">						
 						<h5 class="mb-2">
-							<a href="/hoc-vien/quan-ly-hoc-vien?menu=qlhv">Quản lý thuê xe</a>
-						</h5>
-						<p class="text-muted mb-0">Quản lý xe, thời gian cho thuê, 
-							quản lý phân phối xe giảng dạy</p>
+							<a href="/daotao/ke-hoach?menu=dt5">Kế hoạch giảng dạy</a>
+						</h5>				
+						<p class="text-muted mb-0">Sắp xếp lịch học thực hành GV-HV</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-12 col-md-6 col-lg-6 col-xl-3 ">
+		<div class="card custom-card service">
+			<div class="card-body">
+				<div class="item-box text-center">
+					<div class=" text-center mb-2 text-info"><i class="fa fa-graduation-cap"></i>
+					</div>
+					<div class="item-box-wrap">						
+						<h5 class="mb-2">
+							<a href="/khoahoc/khoa-hoc?menu=khoahoc1">Quản lý khóa học</a>
+						</h5>				
+						<p class="text-muted mb-0">Quản lý thông tin khóa học</p>
 					</div>
 				</div>
 			</div>

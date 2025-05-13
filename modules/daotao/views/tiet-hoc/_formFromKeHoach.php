@@ -40,6 +40,11 @@ $keHoach = KeHoach::findOne($model->id_ke_hoach);
                       'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal2")'),
                    ],
             ])->label(false); ?>
+            <?php /* $form->field($model, 'id_hoc_vien')->dropDownList(!empty($model->id_hoc_vien) ? [
+            	        $model->id_hoc_vien => HocVien::findOne($model->id_hoc_vien)->ho_ten
+            	    ] : HocVien::getListByGiaoVien($model->id_giao_vien), [
+            	        'prompt'=>'-Chọn-', 'id'=>'hvfrm-dropdown'
+            	    ])*/ ?>
         </div>
         <div class="col-md-4">
         	<label>Module</label>
@@ -79,6 +84,11 @@ $keHoach = KeHoach::findOne($model->id_ke_hoach);
                    ],
             ])->label(false); ?>
         </div>
+        <div class="col-md-12">
+        	<div id="tt-hoc-vien">
+        		
+        	</div>
+        </div>
         <div class="col-md-4">
         	<?= $form->field($model, 'trang_thai')->dropDownList(
         	    $keHoach->trang_thai_duyet==KeHoach::TT_NHAP ?TietHoc::getDmTrangThaiChuaDuyet() :TietHoc::getDmTrangThai(), [
@@ -99,3 +109,38 @@ $keHoach = KeHoach::findOne($model->id_ke_hoach);
     <?php ActiveForm::end(); ?>
     
 </div>
+
+<script>
+/* $('#hvfrm-dropdown').select2({
+	dropdownParent: $('#ajaxCrudModal2'),
+  	selectOnClose: true,
+  	width: '100%'
+}); */
+$('#hvfrm-dropdown').on("select2:select", function(e) { 
+   if(this.value != ''){
+   		getHocVienFromKeHoachAjax(this.value);
+   } else {
+   		$('#tt-hoc-vien').html('');
+   }
+});
+function getHocVienFromKeHoachAjax(idhv){
+    $.ajax({
+        type: 'post',
+        url: '/daotao/tiet-hoc/get-hoc-vien-from-ke-hoach-ajax?idhv=' + idhv,
+        //data: frm.serialize(),
+        success: function (data) {
+            console.log('Submission was successful.');
+            console.log(data);            
+            if(data.status == 'success'){
+            	$('#tt-hoc-vien').html(data.content);
+            } else {
+            	alert('Thông tin Khách hàng không còn tồn tại trên hệ thống!');
+            }
+        },
+        error: function (data) {
+            console.log('An error occurred.');
+            console.log(data);
+        },
+    });
+}
+</script>

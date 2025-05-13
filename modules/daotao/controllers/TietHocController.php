@@ -56,6 +56,17 @@ class TietHocController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+    
+    public function actionGetHocVienFromKeHoachAjax($idhv){
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        
+        return [
+            'status' => 'success',
+            'content' => $this->renderAjax('_viewHocVienFromKeHoach', [
+                'model' => $this->findModel($id),
+            ]),
+        ];
+    }
 
 
     /**
