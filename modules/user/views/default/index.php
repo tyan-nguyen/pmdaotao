@@ -52,15 +52,32 @@ $dash = new Dashboard();
 					</div>
 					<div class="item-box-wrap">
 						<h5 class="mb-2">
-							<a href="/giaovien/giao-vien?menu=gv1">Quản lý giáo viên</a>
+							<a href="/hocvien/hoc-phi/phieu-thu?menu=hv6">Quản lý phiếu thu</a>
 						</h5>
-						<p class="text-muted mb-0">Quản lý thông tin giáo viên, 
-							hồ sơ giáo viên</p>
+						<p class="text-muted mb-0">Quản lý phiếu thu tiền học phí</p>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	
+	<div class="col-sm-12 col-md-6 col-lg-6 col-xl-3 ">
+		<div class="card custom-card service">
+			<div class="card-body">
+				<div class="item-box text-center">
+					<div class=" text-center mb-2 text-info"><i class="fa fa-graduation-cap"></i>
+					</div>
+					<div class="item-box-wrap">						
+						<h5 class="mb-2">
+							<a href="/hocvien/thong-ke/cong-no?menu=hv8">Công nợ</a>
+						</h5>				
+						<p class="text-muted mb-0">Thống kê công nợ</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 	<div class="col-sm-12 col-md-6 col-lg-6 col-xl-3 ">
 		<div class="card custom-card service">
 			<div class="card-body">
@@ -77,22 +94,7 @@ $dash = new Dashboard();
 			</div>
 		</div>
 	</div>
-	<div class="col-sm-12 col-md-6 col-lg-6 col-xl-3 ">
-		<div class="card custom-card service">
-			<div class="card-body">
-				<div class="item-box text-center">
-					<div class=" text-center mb-2 text-info"><i class="fa fa-graduation-cap"></i>
-					</div>
-					<div class="item-box-wrap">						
-						<h5 class="mb-2">
-							<a href="/hocvien/thong-ke/cong-no?menu=hv8">Công nợ</a>
-						</h5>				
-						<p class="text-muted mb-0">Thống kê số liệu</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+	
 </div>
 
 <div class="row">
