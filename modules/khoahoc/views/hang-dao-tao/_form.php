@@ -12,7 +12,11 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <div class='row'> 
-
+	
+	<div class ="col-md-4">
+          <?= $form->field($model, 'ma_hang')->textInput(['maxlength' => true]) ?>
+    </div>
+    
     <div class ="col-md-4">
           <?= $form->field($model, 'ten_hang')->textInput(['maxlength' => true]) ?>
     </div>

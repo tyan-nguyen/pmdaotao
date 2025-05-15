@@ -3,12 +3,12 @@
 use yii\bootstrap5\Html;
 use yii\widgets\ActiveForm;
 
-use app\modules\hocvien\models\HangDaoTao;
 use kartik\date\DatePicker;
 use app\modules\user\models\User;
 use app\modules\khoahoc\models\KhoaHoc;
 use app\custom\CustomFunc;
 use app\modules\hocvien\models\DangKyHv;
+use app\modules\hocvien\models\HangDaoTao;
 /* @var $this yii\web\View */
 /* @var $model app\modules\vanban\models\VanBanDen */
 /* @var $form yii\widgets\ActiveForm */
@@ -101,6 +101,18 @@ $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gi
                              'zIndexOffset'=>'9999'
                         ]
                   ]); ?>
+            </div>
+            <div class="col-md-2">
+                  <?= $form->field($model, 'thoi_gian_tao')->widget(DatePicker::classname(), [
+                         'options' => ['placeholder' => 'Chọn ngày tiếp nhận đăng ký  ...'],
+                         'pluginOptions' => [
+                             'autoclose' => true,
+                             'format' => 'dd/mm/yyyy',
+                             'zIndexOffset'=>'9999',
+                             'todayHighlight'=>true,
+                             'todayBtn'=>true
+                        ]
+                  ])->label('Ngày nhận HV mới'); ?>
             </div>
             
     </div>    

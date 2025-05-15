@@ -18,7 +18,7 @@ class User extends UserBase{
        
     }
     public function getHoTen(){
-        return $this->ho_ten?$this->ho_ten:'';
+        return $this->ho_ten?$this->ho_ten:$this->username;
     }
     /**
      * lay nhan vien co lien ket voi tai khoan

@@ -4,6 +4,8 @@ use yii\widgets\ActiveForm;
 use app\modules\hocvien\models\NopHocPhi;
 use app\modules\user\models\User;
 use kartik\date\DatePicker;
+use app\modules\hocvien\models\DangKyHv;
+use app\modules\hocvien\models\HangDaoTao;
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\hocvien\models\NopHocPhi */
@@ -23,6 +25,40 @@ use kartik\date\DatePicker;
 	 	<div class="col-md-2">
 	 		 <?= $form->field($model, 'ma_so_hoc_vien')->textInput()->label('Mã học viên (CCCD)') ?>
 	 	</div>
+	 	<div class="col-md-2">
+              <?= $form->field($model, 'noi_dang_ky')->dropDownList(DangKyHv::getDmNoiDangKy(), ['prompt'=>'Tất cả'])->label('Nơi ĐK') ?>
+        </div>
+        <div class="col-md-2">
+              <?= $form->field($model, 'id_hang')->dropDownList(HangDaoTao::getList(), ['prompt'=>'Tất cả'])->label('Hạng đào tạo') ?>
+        </div>
+        <div class="col-md-2">
+	 		  <?= $form->field($model, 'startdate')->widget(DatePicker::classname(), [
+                         'options' => ['placeholder' => 'Chọn ngày  ...'],
+                         'pluginOptions' => [
+                             'autoclose' => true,
+                             'format' => 'dd/mm/yyyy',
+                             'zIndexOffset'=>'9999'
+                        ]
+              ])->label('Từ ngày, giờ, phút') ?>
+	 	</div>
+	 	<div class="col-md-1">
+	 		  <?= $form->field($model, 'starttime')->textInput()->label('&nbsp;') ?>
+	 	</div>
+	 	<div class="col-md-2">
+	 		   <?= $form->field($model, 'enddate')->widget(DatePicker::classname(), [
+                         'options' => ['placeholder' => 'Chọn ngày  ...'],
+                         'pluginOptions' => [
+                             'autoclose' => true,
+                             'format' => 'dd/mm/yyyy',
+                             'zIndexOffset'=>'9999'
+                            ]
+              ])->label('Đến ngày, giờ, phút') ?>
+	 	</div>
+	 	<div class="col-md-1">
+	 		  <?= $form->field($model, 'endtime')->textInput()->label('&nbsp;') ?>
+	 	</div>
+     </div>
+     <div class="row">
 	 	<div class="col-md-2">
 	 		 <?= $form->field($model, 'ma_so_phieu')->textInput() ?>
 	 	</div>
@@ -55,32 +91,6 @@ use kartik\date\DatePicker;
               ]); ?>
 	 	</div>
  	</div>
- 	<div class="row">
-	 	<div class="col-md-2">
-	 		  <?= $form->field($model, 'startdate')->widget(DatePicker::classname(), [
-                         'options' => ['placeholder' => 'Chọn ngày  ...'],
-                         'pluginOptions' => [
-                         'autoclose' => true,
-                         'format' => 'dd/mm/yyyy',
-                  ]
-              ])->label('Từ ngày') ?>
-	 	</div>
-	 	<div class="col-md-2">
-	 		  <?= $form->field($model, 'starttime')->textInput()->label('&nbsp;') ?>
-	 	</div>
-	 	<div class="col-md-2">
-	 		   <?= $form->field($model, 'enddate')->widget(DatePicker::classname(), [
-                         'options' => ['placeholder' => 'Chọn ngày  ...'],
-                         'pluginOptions' => [
-                         'autoclose' => true,
-                         'format' => 'dd/mm/yyyy',
-                  ]
-              ])->label('Đến ngày') ?>
-	 	</div>
-	 	<div class="col-md-2">
-	 		  <?= $form->field($model, 'endtime')->textInput()->label('&nbsp;') ?>
-	 	</div>
-	 </div>
 
   
 	<?php if (!Yii::$app->request->isAjax){ ?>

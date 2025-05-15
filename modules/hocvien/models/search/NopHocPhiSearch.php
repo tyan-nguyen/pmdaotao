@@ -19,6 +19,8 @@ class NopHocPhiSearch extends NopHocPhi
     public $enddate;
     public $endtime;
     public $ma_so_hoc_vien;
+    public $id_hang;
+    public $noi_dang_ky;
     /**
      * @inheritdoc
      */
@@ -26,7 +28,7 @@ class NopHocPhiSearch extends NopHocPhi
     {
         return [
             [['id', 'id_hoc_vien', 'id_hoc_phi', 'ma_so_phieu', 'so_lan_in_phieu', 'nguoi_thu', 'nguoi_tao'], 'integer'],
-            [['loai_phieu', 'loai_nop', 'ngay_nop', 'hinh_thuc_thanh_toan', 'bien_lai', 'thoi_gian_tao', 'da_kiem_tra', 'ghi_chu', 'startdate', 'starttime', 'enddate', 'endtime', 'ma_so_hoc_vien'], 'safe'],
+            [['loai_phieu', 'loai_nop', 'ngay_nop', 'hinh_thuc_thanh_toan', 'bien_lai', 'thoi_gian_tao', 'da_kiem_tra', 'ghi_chu', 'startdate', 'starttime', 'enddate', 'endtime', 'ma_so_hoc_vien', 'id_hang', 'noi_dang_ky'], 'safe'],
             [['so_tien_nop', 'chiet_khau', 'so_tien_con_lai'], 'number'],
             [['startdate', 'enddate'], 'checkDateFormat']
         ];
@@ -155,6 +157,8 @@ class NopHocPhiSearch extends NopHocPhi
                 'nguoi_tao' => $this->nguoi_tao,
                 'thoi_gian_tao' => $this->thoi_gian_tao,
                 'hv.so_cccd' =>$this->ma_so_hoc_vien,
+                'hv.id_hang' => $this->id_hang,
+                'hv.noi_dang_ky' => $this->noi_dang_ky
             ]);
             
             $query->andFilterWhere(['like', 'loai_phieu', 'PHIEUTHU']) //IMPORTANT!!!
@@ -167,8 +171,8 @@ class NopHocPhiSearch extends NopHocPhi
             if($this->startdate && $this->enddate){
                 $start = CustomFunc::convertDMYToYMD($this->startdate) . ' ' . $this->starttime;
                 $end = CustomFunc::convertDMYToYMD($this->enddate) . ' ' . $this->endtime;
-                $query->andFilterWhere(['>=', 'thoi_gian_tao', new Expression("STR_TO_DATE('".$start."','%Y-%m-%d %H:%i:%s')")])
-                ->andFilterWhere(['<=', 'thoi_gian_tao', new Expression("STR_TO_DATE('".$end."','%Y-%m-%d %H:%i:%s')")]);
+                $query->andFilterWhere(['>=', 't.thoi_gian_tao', new Expression("STR_TO_DATE('".$start."','%Y-%m-%d %H:%i:%s')")])
+                ->andFilterWhere(['<=', 't.thoi_gian_tao', new Expression("STR_TO_DATE('".$end."','%Y-%m-%d %H:%i:%s')")]);
             }
             
         }
@@ -219,6 +223,8 @@ class NopHocPhiSearch extends NopHocPhi
                 'nguoi_thu' => $this->nguoi_thu,
                 'nguoi_tao' => $this->nguoi_tao,
                 'thoi_gian_tao' => $this->thoi_gian_tao,
+                'hv.id_hang' => $this->id_hang,
+                'hv.noi_dang_ky' => $this->noi_dang_ky
             ]);
             
             $query->andFilterWhere(['like', 'loai_phieu', 'PHIEUCHI']) //IMPORTANT!!!
@@ -231,8 +237,8 @@ class NopHocPhiSearch extends NopHocPhi
             if($this->startdate && $this->enddate){
                 $start = CustomFunc::convertDMYToYMD($this->startdate) . ' ' . $this->starttime;
                 $end = CustomFunc::convertDMYToYMD($this->enddate) . ' ' . $this->endtime;
-                $query->andFilterWhere(['>=', 'thoi_gian_tao', new Expression("STR_TO_DATE('".$start."','%Y-%m-%d %H:%i:%s')")])
-                ->andFilterWhere(['<=', 'thoi_gian_tao', new Expression("STR_TO_DATE('".$end."','%Y-%m-%d %H:%i:%s')")]);
+                $query->andFilterWhere(['>=', 't.thoi_gian_tao', new Expression("STR_TO_DATE('".$start."','%Y-%m-%d %H:%i:%s')")])
+                ->andFilterWhere(['<=', 't.thoi_gian_tao', new Expression("STR_TO_DATE('".$end."','%Y-%m-%d %H:%i:%s')")]);
             }
             
         }

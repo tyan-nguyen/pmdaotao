@@ -325,17 +325,22 @@ class HocVienBase extends \app\models\HvHocVien
         $tt = NopHocPhi::find()
             /* ->andFilterWhere(['<=', 'thoi_gian_tao', new Expression("STR_TO_DATE('".$endtime."','%Y-%m-%d %H:%i:%s')")]) */
         
-            ->where(['id_hoc_vien'=>$this->id])
+            ->where(['id_hoc_vien'=>$this->id]);
+            
 			//->andFilterWhere(['<=', 'thoi_gian_tao', $endtime])
-			->andWhere("thoi_gian_tao <= '".$endtime . "'")
-            ->sum('so_tien_nop');
+            if($endtime != NULL){
+		      $tt = $tt->andWhere("thoi_gian_tao <= '".$endtime . "'");
+            }
+            $tt = $tt->sum('so_tien_nop');
         $ck = NopHocPhi::find()
             /* ->andFilterWhere(['<=', 'thoi_gian_tao', new Expression("STR_TO_DATE('".$endtime."','%Y-%m-%d %H:%i:%s')")]) */
       
-            ->where(['id_hoc_vien'=>$this->id])
+            ->where(['id_hoc_vien'=>$this->id]);
 			//  ->andFilterWhere(['<=', 'thoi_gian_tao', $endtime])
-			->andWhere("thoi_gian_tao <= '".$endtime . "'")
-            ->sum('chiet_khau');
+            if($endtime != NULL){
+                $ck = $ck->andWhere("thoi_gian_tao <= '".$endtime . "'");
+            }
+            $ck = $ck->sum('chiet_khau');
         return $this->hocPhi->hoc_phi - $tt - $ck;
     }
     

@@ -7,6 +7,7 @@ use app\modules\daotao\models\HangMonHoc;
  * This is the model class for table "hv_hang_dao_tao".
  *
  * @property int $id
+ * @property string $ma_hang
  * @property string $ten_hang
  * @property string|null $ghi_chu
  * @property int|null $nguoi_tao
@@ -20,14 +21,6 @@ class HangDaoTao extends \app\models\HvHangDaoTao
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
-    {
-        return 'hv_hang_dao_tao';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function rules()
     {
         return [
@@ -37,6 +30,7 @@ class HangDaoTao extends \app\models\HvHangDaoTao
             [['thoi_gian_tao'], 'safe'],
             [['ten_hang'], 'string', 'max' => 255],
             [['check_phan_hang'],'string','max'=>15],
+            [['ma_hang'], 'string', 'max' => 20],
         ];
     }
 
@@ -47,6 +41,7 @@ class HangDaoTao extends \app\models\HvHangDaoTao
     {
         return [
             'id' => 'ID',
+            'ma_hang' => 'Mã hạng',
             'ten_hang' => 'Tên Hạng',
             'ghi_chu' => 'Ghi chú',
             'nguoi_tao' => 'Người tạo',

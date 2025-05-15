@@ -19,7 +19,7 @@ class HangDaoTaoSearch extends HangDaoTao
     {
         return [
             [['id', 'nguoi_tao'], 'integer'],
-            [['ten_hang', 'ghi_chu', 'thoi_gian_tao'], 'safe'],
+            [['ten_hang', 'ghi_chu', 'thoi_gian_tao', 'ma_hang'], 'safe'],
         ];
     }
 
@@ -59,6 +59,7 @@ class HangDaoTaoSearch extends HangDaoTao
             'id' => $this->id,
             'nguoi_tao' => $this->nguoi_tao,
             'thoi_gian_tao' => $this->thoi_gian_tao,
+            'ma_hang' => $this->ma_hang
         ]);
 
         $query->andFilterWhere(['like', 'ten_hang', $this->ten_hang])

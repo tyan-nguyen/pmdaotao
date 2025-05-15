@@ -2,6 +2,7 @@
 use yii\helpers\Url;
 use yii\bootstrap5\Html;
 use app\custom\CustomFunc;
+use app\modules\hocvien\models\DangKyHv;
 return [
     [
         'class' => 'kartik\grid\CheckboxColumn',
@@ -70,7 +71,17 @@ return [
         'width' => '30px',
     ],
     
-    
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'noi_dang_ky',
+        'label'=>'NĐK',
+        'value'=>function($model){
+            return DangKyHv::getLabelNoiDangKyBadge($model->noi_dang_ky);
+        },
+        'format'=>'raw',
+        'width' => '50px',
+        'contentOptions' => [ 'style' => 'text-align:center' ],
+        ],
     
     [
         'class'=>'\kartik\grid\DataColumn',
@@ -85,10 +96,11 @@ return [
         },
         'width' => '70px',
     ],
-   // [
-      //  'class'=>'\kartik\grid\DataColumn',
-      //  'attribute'=>'so_dien_thoai',
-   // ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'so_dien_thoai',
+        'width' => '100px',
+    ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'so_cccd',
@@ -182,22 +194,22 @@ return [
         // 'attribute'=>'trang_thai',
     // ],
      
-        [
+        /* [
             'class'=>'\kartik\grid\DataColumn',
             'attribute'=>'noi_dang_ky',
             'width' => '200px',
             'value' => function($model){
                 return $model->getLabelNoiDangKy();
             }
-        ],
-     [
+        ], */
+     /* [
          'class'=>'\kartik\grid\DataColumn',
          'attribute'=>'thoi_gian_tao',
          'value'=>function($model){
             return CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_tao);
          },
          'width' => '100px',
-    ],
+    ], */
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'thoi_gian_hoan_thanh_ho_so',
@@ -205,18 +217,22 @@ return [
         'value'=>function($model){
             return CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_hoan_thanh_ho_so);
         },
-        'width' => '100px',
+        'width' => '80px',
         ],
         
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'nguoi_tao',
         'value'=>function($model){
-            return $model->nguoiTao->ho_ten;
+            return $model->nguoiTao->username;
         },
         'width' => '100px',
     ],
-            
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'ghi_chu',
+        'width' => '200px',
+     ],
     /* [
         'class'=>'\kartik\grid\DataColumn',
         'header'=>'HT hồ sơ',

@@ -56,12 +56,16 @@ class DangKyHvSearch extends DangKyHv
             $this->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertDMYToYMD($this->thoi_gian_hoan_thanh_ho_so);
             $query->where("DATE(thoi_gian_hoan_thanh_ho_so) = '" . $this->thoi_gian_hoan_thanh_ho_so."'");
         }
+        if($this->thoi_gian_tao){
+            $this->thoi_gian_tao = CustomFunc::convertDMYToYMD($this->thoi_gian_tao);
+            $query->where("DATE(thoi_gian_tao) = '" . $this->thoi_gian_tao."'");
+        }
 
         $query->andFilterWhere([
             'id' => $this->id,
             'id_khoa_hoc' => $this->id_khoa_hoc,
             'nguoi_tao' => $this->nguoi_tao,
-            'thoi_gian_tao' => $this->thoi_gian_tao,
+            //'thoi_gian_tao' => $this->thoi_gian_tao,
             'gioi_tinh'=>$this->gioi_tinh,
             'id_hang'=>$this->id_hang,
             'nguoi_tao'=>$this->nguoi_tao,

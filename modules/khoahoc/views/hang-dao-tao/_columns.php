@@ -91,6 +91,11 @@ return [
     // ],
     [
         'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'ma_hang',
+        'width' => '60px',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ten_hang',
         'width' => '100px',
     ],

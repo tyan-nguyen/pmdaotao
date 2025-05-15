@@ -85,9 +85,9 @@ $dash = new Dashboard();
 					</div>
 					<div class="item-box-wrap">						
 						<h5 class="mb-2">
-							<a href="/khoahoc/khoa-hoc?menu=khoahoc1">Quản lý khóa học</a>
+							<a href="/hocvien/thong-ke/cong-no?menu=hv8">Công nợ</a>
 						</h5>				
-						<p class="text-muted mb-0">Quản lý thông tin khóa học</p>
+						<p class="text-muted mb-0">Thống kê số liệu</p>
 					</div>
 				</div>
 			</div>

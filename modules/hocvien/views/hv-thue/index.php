@@ -19,6 +19,11 @@ $this->params['breadcrumbs'][] = $this->title;
 Yii::$app->params['showSearch'] = true;
 Yii::$app->params['showExport'] = true;
 ?>
+<style>
+#crud-datatable-togdata-page{
+    border:0px!important;
+}
+</style>
 
 <div class="card border-default" id="divFilterExtend">
 	<div class="card-header rounded-bottom-0 card-header text-dark" id="simple">
@@ -65,7 +70,6 @@ Yii::$app->params['showExport'] = true;
                     Html::a('<i class="fas fa fa-sync" aria-hidden="true"></i> Tải lại', [''],
                         ['data-pjax'=>1, 'class'=>'dropdown-item', 'title'=>'Tải lại'])
                     
-                    .'{toggleData}'
                     /* .
                     Html::a('<i class="fas fa fa-trash" aria-hidden="true"></i>&nbsp; Xóa danh sách',
                         ["bulkdelete"],
@@ -88,8 +92,8 @@ Yii::$app->params['showExport'] = true;
                     .'
 						</div>
 					</div>
-                    '.
-                    '{export}'
+                    '.'{toggleData}'
+                    .'{export}'
                 ],
             ],          
             'striped' => false,
