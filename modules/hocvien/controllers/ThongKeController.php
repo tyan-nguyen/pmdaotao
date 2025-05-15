@@ -24,7 +24,7 @@ use yii\db\Expression;
 class ThongKeController extends Controller
 {
     public $freeAccessActions = [
-            'rp-tong',
+            'cong-no',
         ];
     /**
      * @inheritdoc
