@@ -56,7 +56,7 @@ use app\modules\hocvien\models\NopHocPhi;
         			<th rowspan="3">Hạng đào tạo</th>
         			
         			<!-- <th colspan="9">Lịch sử TT</th> -->
-        			<th colspan="6">Lịch sử TT</th>
+        			<th colspan="6">Lần thanh toán</th>
         			
         			<th colspan="6">Kỳ thu hiện tại</th>
         			
