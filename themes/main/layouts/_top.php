@@ -11,7 +11,8 @@ use app\modules\user\models\User;
 		</div>
 		<div class="main-header-left horizontal">
 			<a class="main-logo" href="<?= Yii::getAlias('@web/') ?>">
-				<img src="<?= Yii::getAlias('@web') ?>/assets/images/brand/logo.png" class="desktop-logo desktop-logo-dark" alt="Trường lái Nguyễn Trình">
+				<img src="<?= Yii::getAlias('@web') ?>/assets/images/brand/logo.png" class="" alt="Trường lái Nguyễn Trình">
+				<!-- <img src="<?= Yii::getAlias('@web') ?>/assets/images/brand/logo.png" class="desktop-logo desktop-logo-dark" alt="Trường lái Nguyễn Trình"> -->
 				<!-- <img src="<?= Yii::getAlias('@web') ?>/assets/images/brand/logo1.png" class="desktop-logo theme-logo" alt="Trường lái Nguyễn Trình"> -->
 			</a>
 		</div>
