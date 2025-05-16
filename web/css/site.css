@@ -316,9 +316,9 @@ a.desc:after {
 
 /*an add*/
 @media (max-width: 991px){
-	.main-header-left.horizontal .main-logo .desktop-logo {
+	/*.main-header-left.horizontal .main-logo .desktop-logo {
 	    max-width: 150px;
-	}
+	}*/
 	 /*thay doi bg menu left*/
 	.app-sidebar {
 	    background: white !important;
