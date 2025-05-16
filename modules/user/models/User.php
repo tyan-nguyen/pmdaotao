@@ -90,7 +90,7 @@ class User extends UserBase{
         if($endtime==NULL){
             $listHvPhuTrach = HocVien::find()
                 ->where(['nguoi_tao'=>$nhanvienid])
-                ->andWhere("huy_ho_so = 0 OR thoi_gian_huy_ho_so <= '".$endtime . "'")
+                ->andWhere("huy_ho_so = 0")
                 ->all();
         } else {
             $listHvPhuTrach = HocVien::find()
@@ -98,7 +98,7 @@ class User extends UserBase{
                 /* ->andFilterWhere(['<=', 'thoi_gian_tao', new Expression("STR_TO_DATE('".$endtime."','%Y-%m-%d %H:%i:%s')")]) */
 				//->andFilterWhere(['<=', 'thoi_gian_tao', $endtime])
 				->andWhere("thoi_gian_tao <= '".$endtime . "'")
-				->andWhere("huy_ho_so = 0 OR (huy_ho_so = 1 AND thoi_gian_huy_ho_so >= '".$endtime . "')")
+				->andWhere("huy_ho_so = 0 OR (huy_ho_so = 1 AND thoi_gian_huy_ho_so <= '".$endtime . "')")
                 ->all();
         }
         ///////////////////////
@@ -116,14 +116,14 @@ class User extends UserBase{
     public static function getNoConLaiCuaTatCaHocVien($endtime=NULL){
         if($endtime==NULL){
             $listHvPhuTrach = HocVien::find()
-            ->andWhere("huy_ho_so = 0 OR thoi_gian_huy_ho_so <= '".$endtime . "'")
+            ->andWhere("huy_ho_so = 0")
             ->all();
         }else {
             $listHvPhuTrach = HocVien::find()
                 /* ->andFilterWhere(['<=', 'thoi_gian_tao', new Expression("STR_TO_DATE('".$endtime."','%Y-%m-%d %H:%i:%s')")]) */
                 /*->andFilterWhere(['<=', 'thoi_gian_tao', $endtime])*/
 				->where("thoi_gian_tao <= '".$endtime . "'")
-				->andWhere("huy_ho_so = 0 OR (huy_ho_so = 1 AND thoi_gian_huy_ho_so >= '".$endtime . "')")
+				->andWhere("huy_ho_so = 0 OR (huy_ho_so = 1 AND thoi_gian_huy_ho_so <= '".$endtime . "')")
                 ->all();
         }
         //////////////////////////
