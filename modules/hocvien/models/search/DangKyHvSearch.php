@@ -21,7 +21,7 @@ class DangKyHvSearch extends DangKyHv
     {
         return [
             [['id', 'id_khoa_hoc', 'nguoi_tao', 'id_hang','gioi_tinh', 'da_nhan_ao'], 'integer'],
-            [['ho_ten', 'so_dien_thoai', 'so_cccd', 'trang_thai', 'thoi_gian_tao', 'ngay_sinh', 'nguoi_tao', 'thoi_gian_hoan_thanh_ho_so', 'dia_chi', 'size', 'ngay_nhan_ao', 'noi_dang_ky'], 'safe'],
+            [['ho_ten', 'so_dien_thoai', 'so_cccd', 'trang_thai', 'thoi_gian_tao', 'ngay_sinh', 'nguoi_tao', 'thoi_gian_hoan_thanh_ho_so', 'dia_chi', 'size', 'ngay_nhan_ao', 'noi_dang_ky', 'huy_ho_so'], 'safe'],
         ];
     }
 
@@ -72,8 +72,18 @@ class DangKyHvSearch extends DangKyHv
             'da_nhan_ao' => $this->da_nhan_ao,
             'ngay_nhan_ao' => $this->ngay_nhan_ao,
             'size' => $this->size,
-            'noi_dang_ky' => $this->noi_dang_ky
+            'noi_dang_ky' => $this->noi_dang_ky,
         ]);
+        
+        if($this->huy_ho_so){
+            $query->andFilterWhere([
+                'huy_ho_so' => $this->huy_ho_so,
+            ]);
+        } else {
+            $query->andFilterWhere([
+                'huy_ho_so' => 0,
+            ]);
+        }
 
         $query->andFilterWhere(['like', 'ho_ten', $this->ho_ten])
             ->andFilterWhere(['like', 'dia_chi', $this->dia_chi])

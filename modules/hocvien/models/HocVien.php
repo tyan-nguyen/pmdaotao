@@ -87,6 +87,13 @@ class HocVien extends HocVienBase
         $this->ngay_sinh = CustomFunc::convertDMYToYMD($this->ngay_sinh);
         $this->ngay_het_han_cccd = CustomFunc::convertDMYToYMD($this->ngay_het_han_cccd);
         $this->ngay_nhan_ao = CustomFunc::convertDMYToYMD($this->ngay_nhan_ao);
+        if($this->huy_ho_so){
+            if($this->thoi_gian_huy_ho_so == ''){
+                $this->thoi_gian_huy_ho_so = date('Y-m-d H:i:s');
+            } else {
+                $this->thoi_gian_huy_ho_so = CustomFunc::convertDMYHISToYMDHIS($this->thoi_gian_huy_ho_so);
+            }
+        }
         
         
     

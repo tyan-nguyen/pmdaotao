@@ -46,6 +46,9 @@ use app\modules\giaovien\models\GiaoVien;
  * @property string|null $size
  * @property string|null $ngay_nhan_ao
  * @property int|null $id_giao_vien
+ * @property int|null $huy_ho_so
+ * @property string|null $thoi_gian_huy_ho_so
+ * @property string|null $ly_do_huy_ho_so
  */
 class HocVienBase extends \app\models\HvHocVien
 {
@@ -137,8 +140,8 @@ class HocVienBase extends \app\models\HvHocVien
         return [
             /*[['id_hang', 'ho_ten', 'so_cccd','id_hang'], 'required'],*/
             [['id_hang', 'ho_ten', 'noi_dang_ky'], 'required'],
-            [['id_khoa_hoc', 'id_hoc_phi', 'nguoi_tao','gioi_tinh','id_hang','id_nhom','nguoi_duyet','ma_so_phieu','so_lan_in_phieu','co_ho_so_thue', 'da_nhan_ao', 'id_giao_vien'], 'integer'],
-            [['thoi_gian_tao', 'thoi_gian_hoan_thanh_ho_so', 'ngay_sinh','ngay_het_han_cccd'], 'safe'],
+            [['id_khoa_hoc', 'id_hoc_phi', 'nguoi_tao','gioi_tinh','id_hang','id_nhom','nguoi_duyet','ma_so_phieu','so_lan_in_phieu','co_ho_so_thue', 'da_nhan_ao', 'id_giao_vien', 'huy_ho_so'], 'integer'],
+            [['thoi_gian_tao', 'thoi_gian_hoan_thanh_ho_so', 'thoi_gian_huy_ho_so', 'ngay_sinh','ngay_het_han_cccd'], 'safe'],
             [['ho_ten', 'so_dien_thoai', 'so_cccd', 'trang_thai','dia_chi','trang_thai_duyet'], 'string', 'max' => 255],
             [['check_hoc_phi'],'string','max'=>25],
             [['nguoi_lap_phieu'],'string','max'=>55],
@@ -147,7 +150,7 @@ class HocVienBase extends \app\models\HvHocVien
             [['tongtiennop'], 'number'],//virtual attribute select when report
             [['id_khoa_hoc'], 'exist', 'skipOnError' => true, 'targetClass' => KhoaHoc::class, 'targetAttribute' => ['id_khoa_hoc' => 'id']],
             [['id_nhom'], 'exist', 'skipOnError' => true, 'targetClass' => NhomHoc::class, 'targetAttribute' => ['id_nhom' => 'id']],
-            [['ghi_chu', 'ngay_nhan_ao'], 'safe'],
+            [['ghi_chu', 'ngay_nhan_ao', 'ly_do_huy_ho_so'], 'safe'],
             //[['id_giao_vien'], 'required', 'on'=>'phan-cong-giao-vien'], //on phan cong giao vien phu trach cho hoc vien
         ];
     }
@@ -187,7 +190,10 @@ class HocVienBase extends \app\models\HvHocVien
             'da_nhan_ao' => 'Đã nhận áo',
             'size'=>'Size',
             'ngay_nhan_ao' => 'Ngày nhận áo',
-            'id_giao_vien' => 'Giáo viên phụ trách'
+            'id_giao_vien' => 'Giáo viên phụ trách',
+            'huy_ho_so' => 'Hủy hồ sơ',
+            'thoi_gian_huy_ho_so' => 'Thời gian hủy hồ sơ',
+            'ly_do_huy_ho_so' => 'Lý do hủy',
         ];
     }
 

@@ -17,7 +17,7 @@ return [
     [
         'class' => 'kartik\grid\ActionColumn',
         'header'=>'',
-        'template' => '{payment} {view} {update} {delete} ',
+        'template' => '{payment} {view} {huyHoSo} {update} {delete} ',
         'dropdown' => true,
         'dropdownOptions' => ['class' => 'float-right'],
         'dropdownButton'=>[
@@ -30,6 +30,9 @@ return [
             if ($action === 'payment') {
                 return Url::to(['create2', 'id' => $key]);
             }
+            if ($action === 'huyHoSo') {
+                return Url::to(['huy-ho-so', 'id' => $key]);
+            }
             return Url::to([$action, 'id' => $key]);
         },
         'visibleButtons' => [
@@ -38,10 +41,16 @@ return [
                 // only show 'payment' if user chung co so
                 return ($model->noi_dang_ky == $user->noi_dang_ky || $user->superadmin);
             },
+            'huyHoSo' => function ($model, $key, $index) {
+                $user = User::getCurrentUser();
+                // only show 'payment' if user chung co so
+                return ($model->noi_dang_ky == $user->noi_dang_ky || $user->superadmin);
+            },
             'update' => function ($model, $key, $index) {
                 $user = User::getCurrentUser();
                 // only show 'update' if use created
-                return ($model->nguoi_tao == $user->id || $user->superadmin);
+                //return ($model->nguoi_tao == $user->id || $user->superadmin);
+                return ($model->noi_dang_ky == $user->noi_dang_ky || $user->superadmin);//chung co so sua duoc
             },
             'delete' => function ($model, $key, $index) {
                 $user = User::getCurrentUser();
@@ -71,16 +80,25 @@ return [
             'data-bs-toggle' => 'tooltip-success'
         ],
     'buttons' => [
-    'payment' => function ($url, $model, $key) {
-        return Html::a('<i class="fas fa-dollar-sign"></i> Đóng học phí', $url, [
-            'title' => 'Đóng học phí',
-            'role' => 'modal-remote',
-            'class' => 'btn ripple btn-warning dropdown-item', 
-            'data-bs-placement' => 'top',
-            'data-bs-toggle' => 'tooltip',
-        ]);
-    },
-],
+        'payment' => function ($url, $model, $key) {
+            return Html::a('<i class="fas fa-dollar-sign"></i> Đóng học phí', $url, [
+                'title' => 'Đóng học phí',
+                'role' => 'modal-remote',
+                'class' => 'btn ripple btn-warning dropdown-item', 
+                'data-bs-placement' => 'top',
+                'data-bs-toggle' => 'tooltip',
+            ]);
+        },
+        'huyHoSo' => function ($url, $model, $key) {
+            return Html::a('<i class="fas fa-times"></i> Hủy hồ sơ', $url, [
+                'title' => 'Hủy hồ sơ',
+                'role' => 'modal-remote',
+                'class' => 'btn ripple btn-warning dropdown-item',
+                'data-bs-placement' => 'top',
+                'data-bs-toggle' => 'tooltip',
+            ]);
+        },
+    ],
 
     ],
     [
@@ -102,6 +120,13 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ho_ten',
         'width' => '150px',
+        'contentOptions' => function ($model, $key, $index, $column) {
+            return [
+                'style' => $model->huy_ho_so == true
+                ? 'text-decoration: line-through;'
+                : '',
+            ];
+        },
     ],
    // [
       //  'class'=>'\kartik\grid\DataColumn',
@@ -112,7 +137,14 @@ return [
         'attribute'=>'so_cccd',
         'label'=>'CCCD (Mã KH)',
         'width' => '150px',
-        'contentOptions' => [ 'style' => 'text-align:center' ],
+        //'contentOptions' => [ 'style' => 'text-align:center' ],
+        'contentOptions' => function ($model, $key, $index, $column) {
+            return [
+                'style' => $model->huy_ho_so == true
+                ? 'text-align:center;text-decoration: line-through;'
+                : 'text-align:center',
+            ];
+        },
     ],
 
  
@@ -124,6 +156,14 @@ return [
             return $model->hangDaoTao ? $model->hangDaoTao->ten_hang : 'N/A';
         },
         'label' => 'Hạng đào tạo',
+        'contentOptions' => function ($model, $key, $index, $column) {
+            return [
+                'style' => $model->huy_ho_so == true
+                ? 'text-decoration: line-through;'
+                : '',
+            ];
+        },
+        
         'pageSummary' => 'Tổng cộng (E=A-B-C+D)',
         'pageSummaryOptions' => ['class' => 'text-right text-end'],
     ],

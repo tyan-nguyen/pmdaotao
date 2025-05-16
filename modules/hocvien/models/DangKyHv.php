@@ -13,6 +13,14 @@ class DangKyHv extends HocVienBase
           $this->ngay_sinh = CustomFunc::convertDMYToYMD($this->ngay_sinh);
           $this->ngay_het_han_cccd = CustomFunc::convertDMYToYMD($this->ngay_het_han_cccd);
           $this->ngay_nhan_ao = CustomFunc::convertDMYToYMD($this->ngay_nhan_ao);
+          
+          if($this->huy_ho_so){
+              if($this->thoi_gian_huy_ho_so == ''){
+                  $this->thoi_gian_huy_ho_so = date('Y-m-d H:i:s');
+              } else {
+                  $this->thoi_gian_huy_ho_so = CustomFunc::convertDMYHISToYMDHIS($this->thoi_gian_huy_ho_so);
+              }
+          }
         if ($this->isNewRecord) { 
             $this->nguoi_tao = Yii::$app->user->identity->id;
             $this->thoi_gian_tao = date('Y-m-d H:i:s');
@@ -27,6 +35,10 @@ class DangKyHv extends HocVienBase
             if($this->da_nhan_ao==null){
                 $this->da_nhan_ao = 0;
             }
+            if($this->huy_ho_so==null){
+                $this->huy_ho_so = 0;
+            }
+            
         }
         
         if(!$this->id_hoc_phi){
