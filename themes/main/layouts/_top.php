@@ -11,8 +11,8 @@ use app\modules\user\models\User;
 		</div>
 		<div class="main-header-left horizontal">
 			<a class="main-logo" href="<?= Yii::getAlias('@web/') ?>">
-				<img src="<?= Yii::getAlias('@web') ?>/assets/images/brand/logo.png" class="desktop-logo desktop-logo-dark" alt="viboonlogo">
-				<img src="<?= Yii::getAlias('@web') ?>/assets/images/brand/logo1.png" class="desktop-logo theme-logo" alt="viboonlogo">
+				<img src="<?= Yii::getAlias('@web') ?>/assets/images/brand/logo.png" class="desktop-logo desktop-logo-dark" alt="Trường lái Nguyễn Trình">
+				<img src="<?= Yii::getAlias('@web') ?>/assets/images/brand/logo1.png" class="desktop-logo theme-logo" alt="Trường lái Nguyễn Trình">
 			</a>
 		</div>
 		
@@ -102,21 +102,21 @@ use app\modules\user\models\User;
 						
 
 						<!-- FULL SCREEN -->
-						<li class="dropdown d-none d-md-flex mt-1">
+						<li class="dropdown d-md-flex mt-1">
 							<a class="nav-link icon full-screen-link" title="Chế độ toàn màn hình">
 								<i class="fe fe-maximize fullscreen-button floating" id="fullscreen-button"></i>
 							</a>
 						</li>
 						
 						<!-- SETTINGS -->
-						<li class="dropdown d-none d-md-flex mt-1">
+						<li class="dropdown d-md-flex mt-1">
 							<a class="nav-link icon" title="Cấu hình tài khoản">
 								<i class="fe fe-settings floating"></i>
 							</a>
 						</li>
 						
 						<!-- LOGOUT -->
-						<li class="dropdown d-none d-md-flex mt-1">
+						<li class="dropdown d-md-flex mt-1">
 							<a class="nav-link icon" href="/user/auth/logout" title="Đăng xuất">
 								<i class="fe fe-power floating"></i>
 							</a>

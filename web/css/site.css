@@ -118,12 +118,7 @@ form div.required label.control-label:after {
 	height:700px;
 }
 
-/*an add*/
-@media (max-width: 991px){
-.main-header-left.horizontal .main-logo .desktop-logo {
-    max-width: 150px;
-}
-}
+
 
 .main-logo img{
 	max-width: 150px;
@@ -318,6 +313,20 @@ a.desc:after {
         padding: 10px 0;
     }
 }
+
+/*an add*/
+@media (max-width: 991px){
+	.main-header-left.horizontal .main-logo .desktop-logo {
+	    max-width: 150px;
+	}
+	 /*thay doi bg menu left*/
+	.app-sidebar {
+	    background: white !important;
+	    color: black !important;
+	    /* font-weight: bold !important; */
+	}
+}
+
 
 .nav > li > form > button.logout:focus,
 .nav > li > form > button.logout:hover {
