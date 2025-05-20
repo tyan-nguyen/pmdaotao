@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use app\modules\user\models\User;
 use app\modules\hocvien\models\HangDaoTao;
 use app\modules\hocvien\models\DangKyHv;
+use app\modules\khoahoc\models\KhoaHoc;
 ?>
 
 <div class="row">
@@ -46,6 +47,10 @@ use app\modules\hocvien\models\DangKyHv;
         <?= Html::dropDownList('byhangdaotao', null, HangDaoTao::getList(), ['id'=>'byhangdaotao', 'class'=>'form-control  dropdown-with-arrow', 'prompt'=>'-Tất cả-']) ?>
     </div>
     <div class="col-md-2">    
+    	<label class="form-label">Khóa</label>
+        <?= Html::dropDownList('bykhoa', null, KhoaHoc::getList(0), ['id'=>'bykhoa', 'class'=>'form-control  dropdown-with-arrow', 'prompt'=>'-Tất cả-']) ?>
+    </div>
+    <div class="col-md-2">    
     	<label class="form-label">Nhân viên</label>
         <?= Html::dropDownList('byuser', null, User::getList() , ['id'=>'byuser', 'class'=>'form-control', 'prompt'=>'-Tất cả-']) ?>
     </div>
@@ -76,7 +81,7 @@ use app\modules\hocvien\models\DangKyHv;
 function InBaoCao(typereport) {
     $.ajax({
         type: 'POST',
-        url: '/hocvien/bao-cao/rp-bien-ban-ban-giao-print?startdate=' + $('#startdate').val() + '&starttime=' + $('#starttime').val() + '&enddate=' + $('#enddate').val() + '&endtime=' + $('#endtime').val() + '&byuser='+ $('#byuser').val() + '&sortby='+ $('#sort').val() + '&byhangdaotao=' + $('#byhangdaotao').val() + '&typereport=' + typereport + '&byaddress=' + $('#byaddress').val(),
+        url: '/hocvien/bao-cao/rp-bien-ban-ban-giao-print?startdate=' + $('#startdate').val() + '&starttime=' + $('#starttime').val() + '&enddate=' + $('#enddate').val() + '&endtime=' + $('#endtime').val() + '&byuser='+ $('#byuser').val() + '&sortby='+ $('#sort').val() + '&byhangdaotao=' + $('#byhangdaotao').val() + '&typereport=' + typereport + '&byaddress=' + $('#byaddress').val() + '&bykhoa=' + $('#bykhoa').val(),
         success: function (data) {
             if (data.status === 'success') {
                 $('#print').html(data.content);

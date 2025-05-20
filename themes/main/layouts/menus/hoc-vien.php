@@ -4,8 +4,7 @@ use app\modules\hocvien\models\HocVien;
 
 ?>
 <li class="slide">
-	<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);">
-		
+	<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);">		
 		<span class="side-menu__label"><i class="fa fa-folder"></i> Đăng ký - Học phí</span><i class="angle fa fa-caret-right"></i>
 	</a>
 	<ul class="slide-menu" data-menu="hv">
@@ -28,7 +27,7 @@ use app\modules\hocvien\models\HocVien;
 					<div class="tab-pane active" id="side3">
 						<ul class="sidemenu-list">
 							<li class="side-menu__label1"><a href="javascript:void(0)">Danh mục chức năng</a></li>
-							<li><a href="/hocvien/thong-ke/cong-no?menu=hv8" class="slide-item" data-menu="hv8"> <i class="fe fe-file-text"></i> Công nợ</a></li>
+							<li><a href="/hocvien/thong-ke/tong-hop?menu=hv8" class="slide-item" data-menu="hv8"> <i class="fe fe-file-text"></i>Thống kê - Công nợ</a></li>
 							<li><a href="/hocvien/dang-ky-hv?menu=hv1" class="slide-item" data-menu="hv1"> <i class="fe fe-file-text"></i> Học viên đăng ký</a></li>
 							<li><a href="/hocvien/hoc-phi/phieu-thu?menu=hv6" class="slide-item" data-menu="hv6"> <i class="fe fe-file-text"></i> Phiếu thu</a></li>
 							<li><a href="/hocvien/hoc-phi/phieu-chi?menu=hv7" class="slide-item" data-menu="hv7"> <i class="fe fe-file-text"></i> Phiếu chi</a></li>

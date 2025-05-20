@@ -1,9 +1,7 @@
 <?php 
     use app\widgets\CardWidget;
-use app\modules\user\models\User;
-use app\modules\hocvien\models\DangKyHv;
-    
-    $this->title = 'Thống kê tổng hợp';
+    use app\modules\user\models\User;
+    use app\modules\hocvien\models\DangKyHv;
 ?>
 
 <?php CardWidget::begin(['title'=>'Tất cả công nợ (Tính đến ' .date('d/m/Y H:i:s') . ')' ]) ?>

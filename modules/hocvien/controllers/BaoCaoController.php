@@ -145,7 +145,7 @@ class BaoCaoController extends Controller
         }
     }
     
-    public function actionRpBienBanBanGiaoPrint($startdate, $starttime, $enddate, $endtime, $byuser=0, $sortby='ngay', $byhangdaotao=NULL, $typereport=0,$byaddress=NULL)//0 for all
+    public function actionRpBienBanBanGiaoPrint($startdate, $starttime, $enddate, $endtime, $byuser=0, $sortby='ngay', $byhangdaotao=NULL, $typereport=0,$byaddress=NULL,$bykhoa=NULL)//0 for all
     {
         if($byuser==null){
             $byuser = 0;
@@ -173,6 +173,10 @@ class BaoCaoController extends Controller
         if($byaddress!=NULL){
             //$byaddress = strtoupper($byaddress);
             $query = $query->andFilterWhere(['t.noi_dang_ky' => $byaddress]);
+        }
+        if($bykhoa!=NULL){
+            //$byaddress = strtoupper($byaddress);
+            $query = $query->andFilterWhere(['t.id_khoa_hoc' => $bykhoa]);
         }
         
         $model=$query->all();

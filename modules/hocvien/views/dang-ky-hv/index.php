@@ -88,11 +88,9 @@ Yii::$app->params['showExport'] = true;
                     .'<li><hr class="dropdown-divider"></li>'
                     . Html::a('<i class="fas fa-clipboard-list"></i> In DS theo ca', ['report-list'],
                         ['role'=>'modal-remote','title'=> 'In DS theo ca','class'=>'dropdown-item'])
-                    .'<li><hr class="dropdown-divider"></li>'
+                    /* .'<li><hr class="dropdown-divider"></li>'
                     . Html::a('<i class="fas fa-clipboard-list"></i> Báo cáo DS HV', ['/hocvien/bao-cao/rp-danh-sach-dang-ky'],
-                        ['role'=>'modal-remote','title'=> 'Báo cáo danh sách học viên','class'=>'dropdown-item'])
-                   /*  . Html::a('<i class="fas fa-clipboard-list"></i> In Báo cáo theo ca', ['report-sum'],
-                        ['role'=>'modal-remote','title'=> 'In Báo cáo tổng','class'=>'dropdown-item']) */
+                        ['role'=>'modal-remote','title'=> 'Báo cáo danh sách học viên','class'=>'dropdown-item']) */
                     .'<li><hr class="dropdown-divider"></li>'
                     . Html::a('<i class="fas fa-clipboard-list"></i> BB bàn giao hồ sơ', ['/hocvien/bao-cao/rp-bien-ban-ban-giao'],
                         ['role'=>'modal-remote','title'=> 'Biên bản bàn giao hồ sơ','class'=>'dropdown-item'])

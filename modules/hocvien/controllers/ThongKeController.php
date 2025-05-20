@@ -24,7 +24,7 @@ use yii\db\Expression;
 class ThongKeController extends Controller
 {
     public $freeAccessActions = [
-            'cong-no',
+            'tong-hop',
         ];
     /**
      * @inheritdoc
@@ -52,9 +52,9 @@ class ThongKeController extends Controller
     /**
      * in danh sách theo ca
      */
-    public function actionCongNo(){
+    public function actionTongHop(){
        
-        return $this->render('tk-cong-no', [
+        return $this->render('tong-hop', [
             
         ]);
     }

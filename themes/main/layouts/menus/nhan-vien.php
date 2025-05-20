@@ -12,13 +12,16 @@ use app\modules\nhanvien\models\NhanVien;
 			<div class="tab-menu-heading p-0 pb-2 border-0">
 				<div class="tabs-menu ">
 					<ul class="nav panel-tabs">
-						<li><a href="#side7" class="active" data-bs-toggle="tab"><i
+						<li>
+							<a href="#side7" class="active" data-bs-toggle="tab"><i
 									class="bi bi-house"></i>
 								<p>Home</p>
-							</a></li>
+							</a>
+						</li>
 						<li><a href="#side8" data-bs-toggle="tab"><i class="bi bi-box"></i>
 								<p>Activity</p>
-							</a></li>
+							</a>
+						</li>
 					</ul>
 				</div>
 			</div>
@@ -30,11 +33,7 @@ use app\modules\nhanvien\models\NhanVien;
 							</li>
 							<li class=""><a href="<?= Yii::getAlias('@web/nhanvien/nhan-vien?menu=nv1') ?>" class="slide-item" data-menu="nv1"><i class="fe fe-file-text"></i> Danh sách nhân viên</a>
 							</li>
-							<li><a href="/kholuutru/loai-file/index?doiTuong=<?= NhanVien::MODEL_ID ?>&menu=nv2" class="slide-item" data-menu="nv2"><i class="fe fe-file-text"></i> Loại hồ sơ</a></li>
-						
-							
-							</li>
-							
+							<li><a href="/kholuutru/loai-file/index?doiTuong=<?= NhanVien::MODEL_ID ?>&menu=nv2" class="slide-item" data-menu="nv2"><i class="fe fe-file-text"></i> Loại hồ sơ</a></li>							
 						</ul>
 						<div class="menutabs-content px-0">
 							<!-- menu tab here -->
