@@ -155,7 +155,7 @@ class NopHocPhiSearch extends NopHocPhi
                 'so_lan_in_phieu' => $this->so_lan_in_phieu,
                 'nguoi_thu' => $this->nguoi_thu,
                 'nguoi_tao' => $this->nguoi_tao,
-                'thoi_gian_tao' => $this->thoi_gian_tao,
+                //'thoi_gian_tao' => $this->thoi_gian_tao,
                 'hv.so_cccd' =>$this->ma_so_hoc_vien,
                 'hv.id_hang' => $this->id_hang,
                 'hv.noi_dang_ky' => $this->noi_dang_ky
@@ -173,6 +173,10 @@ class NopHocPhiSearch extends NopHocPhi
                 $end = CustomFunc::convertDMYToYMD($this->enddate) . ' ' . $this->endtime;
                 $query->andFilterWhere(['>=', 't.thoi_gian_tao', new Expression("STR_TO_DATE('".$start."','%Y-%m-%d %H:%i:%s')")])
                 ->andFilterWhere(['<=', 't.thoi_gian_tao', new Expression("STR_TO_DATE('".$end."','%Y-%m-%d %H:%i:%s')")]);
+            }
+            if($this->thoi_gian_tao){
+                $this->thoi_gian_tao = CustomFunc::convertDMYToYMD($this->thoi_gian_tao);
+                $query->andWhere("DATE(t.thoi_gian_tao) = '".$this->thoi_gian_tao."'");
             }
             
         }
@@ -222,7 +226,7 @@ class NopHocPhiSearch extends NopHocPhi
                 'so_lan_in_phieu' => $this->so_lan_in_phieu,
                 'nguoi_thu' => $this->nguoi_thu,
                 'nguoi_tao' => $this->nguoi_tao,
-                'thoi_gian_tao' => $this->thoi_gian_tao,
+                //'thoi_gian_tao' => $this->thoi_gian_tao,
                 'hv.id_hang' => $this->id_hang,
                 'hv.noi_dang_ky' => $this->noi_dang_ky
             ]);
@@ -239,6 +243,11 @@ class NopHocPhiSearch extends NopHocPhi
                 $end = CustomFunc::convertDMYToYMD($this->enddate) . ' ' . $this->endtime;
                 $query->andFilterWhere(['>=', 't.thoi_gian_tao', new Expression("STR_TO_DATE('".$start."','%Y-%m-%d %H:%i:%s')")])
                 ->andFilterWhere(['<=', 't.thoi_gian_tao', new Expression("STR_TO_DATE('".$end."','%Y-%m-%d %H:%i:%s')")]);
+            }
+            
+            if($this->thoi_gian_tao){
+                $this->thoi_gian_tao = CustomFunc::convertDMYToYMD($this->thoi_gian_tao);
+                $query->andWhere("DATE(t.thoi_gian_tao) = '".$this->thoi_gian_tao."'");
             }
             
         }

@@ -82,7 +82,7 @@ use app\modules\hocvien\models\HangDaoTao;
 	 		     ['prompt'=>'Tất cả'])->label('NV tiếp nhận') ?>
 	 	</div>
 	 	<div class="col-md-2">
-	 		  <?= $form->field($model, 'ngay_nop')->widget(DatePicker::classname(), [
+	 		  <?= $form->field($model, 'thoi_gian_tao')->widget(DatePicker::classname(), [
                          'options' => ['placeholder' => 'Chọn ngày  ...'],
                          'pluginOptions' => [
                          'autoclose' => true,
