@@ -4,4 +4,6 @@
 
 <?= $this->render('tk-cong-no', []) ?>
 
+<?= $this->render('tk-thu-tien', []) ?>
+
 <?= $this->render('tk-ho-so-moi', []) ?>
