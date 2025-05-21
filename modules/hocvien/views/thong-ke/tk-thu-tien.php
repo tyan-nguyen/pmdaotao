@@ -13,10 +13,11 @@ use app\modules\hocvien\models\NopHocPhi;
             <tr style="font-weight:bold">
                 <td rowspan="2" width="50px" align="center">STT</td>
                 <td rowspan="2" align="center">Ngày</td>
+                <td rowspan="2" align="center">Tổng cộng</td>  
                 <td colspan="2" align="center">Cơ sở 1</td>
                 <td colspan="2" align="center">Cơ sở 2</td>
                 
-                <td rowspan="2" align="center">Tổng cộng</td>               
+                             
             </tr>
             <tr>
             	<td align="center">Tiền mặt</td>
@@ -68,11 +69,12 @@ use app\modules\hocvien\models\NopHocPhi;
     <tr style="<?= $iDate==0?'color:red;font-weight:bold':'' ?>">
     	<td><?= ($iDate+1) ?></td>
     	<td align="center"><strong><?= CustomFunc::convertYMDToDMY($date) ?></strong></td>
+    	<td align="right"><?= $sumTong?number_format($sumTong):0 ?></td>
     	<td align="right"><?= $sumCS1TM?number_format($sumCS1TM):0 ?></td>
     	<td align="right"><?= $sumCS1CK?number_format($sumCS1CK):0 ?></td>
     	<td align="right"><?= $sumCS2TM?number_format($sumCS2TM):0 ?></td>
     	<td align="right"><?= $sumCS2CK?number_format($sumCS2CK):0 ?></td>
-    	<td align="right"><?= $sumTong?number_format($sumTong):0 ?></td>
+    	
     </tr>
     <?php 
     }
@@ -119,11 +121,12 @@ use app\modules\hocvien\models\NopHocPhi;
             <tr style="font-weight:bold;">
                 <td width="50px" align="center"></td>
                 <td align="center">TỔNG CỘNG <br/>(Tất cả thời gian)</td>
+                <td align="right"><?= $sumTong?number_format($sumTong):0 ?></td>
                 <td align="right"><?= $sumCS1TM?number_format($sumCS1TM):0 ?></td>
                 <td align="right"><?= $sumCS1CK?number_format($sumCS1CK):0 ?></td>
                 <td align="right"><?= $sumCS2TM?number_format($sumCS2TM):0 ?></td>
                 <td align="right"><?= $sumCS2CK?number_format($sumCS2CK):0 ?></td>
-                <td align="right"><?= $sumTong?number_format($sumTong):0 ?></td>                
+                                
             </tr>
         </tbody>
     </table>
