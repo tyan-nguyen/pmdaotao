@@ -128,7 +128,7 @@ class KhoaHocBase extends \app\models\HvKhoaHoc
      */
     public function getHvHocViens()
     {
-        return $this->hasMany(HocVien::class, ['id_khoa_hoc' => 'id']);
+        return $this->hasMany(HocVien::class, ['id_khoa_hoc' => 'id'])->where(['huy_ho_so'=>0]);
     }
 
     public function beforeSave($insert)
