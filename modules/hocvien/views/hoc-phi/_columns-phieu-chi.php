@@ -178,7 +178,7 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'so_tien_nop',
-        'label'=>'Tổng TT(A+B+C)',
+        'label'=>'Tổng TT(A+B)',
         'value'=>function($model){
         return $model->so_tien_nop;
         },
