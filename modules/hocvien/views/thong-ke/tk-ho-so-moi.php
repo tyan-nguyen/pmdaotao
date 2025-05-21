@@ -17,8 +17,7 @@ use app\custom\CustomFunc;
                 <td align="center">Hạng B cơ khí</td>
                 <td align="center">Hạng C1</td>
                 <td align="center">Hạng A1</td>
-                <td align="center">Hạng A</td>
-                
+                <td align="center">Hạng A</td>                
             </tr>
         </thead>
         <tbody>
@@ -30,12 +29,12 @@ use app\custom\CustomFunc;
     }
     // Duyệt qua danh sách 7 ngày
     foreach ($dates as $iDate => $date) {
-        $soLuongHV = DangKyHv::find()->where("DATE(thoi_gian_tao) = '$date'")->count();
-        $soLuongBTD = DangKyHv::find()->where("DATE(thoi_gian_tao) = '$date'")->andWhere('id_hang IN (1,2)')->count();
-        $soLuongBCK = DangKyHv::find()->where("DATE(thoi_gian_tao) = '$date'")->andWhere('id_hang IN (3,4)')->count();
-        $soLuongC1 = DangKyHv::find()->where("DATE(thoi_gian_tao) = '$date'")->andWhere('id_hang IN (5,6)')->count();
-        $soLuongA1 = DangKyHv::find()->where("DATE(thoi_gian_tao) = '$date'")->andWhere('id_hang IN (7,8)')->count();
-        $soLuongA = DangKyHv::find()->where("DATE(thoi_gian_tao) = '$date'")->andWhere('id_hang IN (9,10)')->count();
+        $soLuongHV = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere("DATE(thoi_gian_tao) = '$date'")->count();
+        $soLuongBTD = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere("DATE(thoi_gian_tao) = '$date'")->andWhere('id_hang IN (1,2)')->count();
+        $soLuongBCK = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere("DATE(thoi_gian_tao) = '$date'")->andWhere('id_hang IN (3,4)')->count();
+        $soLuongC1 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere("DATE(thoi_gian_tao) = '$date'")->andWhere('id_hang IN (5,6)')->count();
+        $soLuongA1 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere("DATE(thoi_gian_tao) = '$date'")->andWhere('id_hang IN (7,8)')->count();
+        $soLuongA = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere("DATE(thoi_gian_tao) = '$date'")->andWhere('id_hang IN (9,10)')->count();
         
     ?>
     <tr style="<?= $iDate==0?'color:red;font-weight:bold':'' ?>">
@@ -51,6 +50,34 @@ use app\custom\CustomFunc;
     <?php 
     }
 ?>
+			 <tr style="font-weight:bold">
+                <td width="50px" align="center">..</td>
+                <td align="center">...</td>
+                <td align="center">...</td>
+                <td align="center">...</td>
+                <td align="center">...</td>
+                <td align="center">...</td>
+                <td align="center">...</td>
+                <td align="center">...</td>                
+            </tr>
+            <?php 
+            $soLuongHV = DangKyHv::find()->where(['huy_ho_so'=>0])->count();
+            $soLuongBTD = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere('id_hang IN (1,2)')->count();
+            $soLuongBCK = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere('id_hang IN (3,4)')->count();
+            $soLuongC1 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere('id_hang IN (5,6)')->count();
+            $soLuongA1 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere('id_hang IN (7,8)')->count();
+            $soLuongA = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere('id_hang IN (9,10)')->count();
+            ?>
+            <tr style="font-weight:bold">
+                <td width="50px" align="center"></td>
+                <td align="center">TỔNG CỘNG <br/>(Tất cả thời gian)</td>
+                <td align="center"><?= $soLuongHV ?></td>
+                <td align="center"><?= $soLuongBTD ?></td>
+                <td align="center"><?= $soLuongBCK ?></td>
+                <td align="center"><?= $soLuongC1 ?></td>
+                <td align="center"><?= $soLuongA1 ?></td>
+                <td align="center"><?= $soLuongA ?></td>                
+            </tr>
         </tbody>
     </table>
 </div>
