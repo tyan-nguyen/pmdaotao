@@ -118,7 +118,7 @@ use app\modules\hocvien\models\NopHocPhi;
             ?>
             <tr style="font-weight:bold;">
                 <td width="50px" align="center"></td>
-                <td align="right">TỔNG CỘNG <br/>(Tất cả thời gian)</td>
+                <td align="center">TỔNG CỘNG <br/>(Tất cả thời gian)</td>
                 <td align="right"><?= $sumCS1TM?number_format($sumCS1TM):0 ?></td>
                 <td align="right"><?= $sumCS1CK?number_format($sumCS1CK):0 ?></td>
                 <td align="right"><?= $sumCS2TM?number_format($sumCS2TM):0 ?></td>
