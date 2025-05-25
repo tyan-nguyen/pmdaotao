@@ -86,12 +86,12 @@ if($model->isNewRecord){
     <div class ='row'>
     <div class="col-lg-3 col-md-6">
         <?= $form->field($model, 'id_hang')->dropDownList(
-    HangDaoTao::getList(), 
-    [
-        'prompt' => 'Chọn hạng',
-        'class' => 'form-control dropdown-with-arrow',
-    ]
-    ) ?>
+            HangDaoTao::getList(), 
+            [
+                'prompt' => 'Chọn hạng',
+                'class' => 'form-control dropdown-with-arrow',
+            ]
+        ) ?>
     </div>
     <div class="col-lg-3 col-md-6">
          <?= $form->field($model, 'id_khoa_hoc')->widget(Select2::classname(), [

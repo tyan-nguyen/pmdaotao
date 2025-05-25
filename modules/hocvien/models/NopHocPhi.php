@@ -184,11 +184,11 @@ class NopHocPhi extends \app\models\HvNopHocPhi
          if($this->so_tien_con_lai == null){
              $tongDaDong = NopHocPhi::find()->where(['id_hoc_vien'=>$this->id_hoc_vien])->sum('so_tien_nop');
              $tongChietKhau = NopHocPhi::find()->where(['id_hoc_vien'=>$this->id_hoc_vien])->sum('chiet_khau');
-             $this->so_tien_con_lai = $this->hocVien->hocPhi->hoc_phi - $tongChietKhau - $tongDaDong;
+             $this->so_tien_con_lai = $this->hocVien->tienHocPhi - $tongChietKhau - $tongDaDong;
              $this->updateAttributes(['so_tien_con_lai']);
              
              if($this->hocVien->thoi_gian_hoan_thanh_ho_so == null){
-                 if($this->so_tien_con_lai <= $this->hocVien->hocPhi->hoc_phi/2){
+                 if($this->so_tien_con_lai <= $this->hocVien->tienHocPhi/2){
                      ///////////
                      $this->hocVien->thoi_gian_hoan_thanh_ho_so = $this->thoi_gian_tao;
                      $this->hocVien->updateAttributes(['thoi_gian_hoan_thanh_ho_so']);

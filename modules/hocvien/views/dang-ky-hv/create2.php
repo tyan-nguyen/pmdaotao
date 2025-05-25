@@ -13,6 +13,6 @@ use yii\bootstrap5\Html;
         'model' => $model,
         'hoTenHocVien' => $hoTenHocVien,
         'tenHang' => $tenHang,
-        'hocPhi' => $hocPhi,
+        'hocVien' => $hocVien,
     ]) ?>
 </div>

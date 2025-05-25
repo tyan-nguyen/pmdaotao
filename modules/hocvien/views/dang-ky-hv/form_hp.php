@@ -42,7 +42,7 @@ $model->ngay_nop = CustomFunc::convertYMDToDMY($model->ngay_nop);
       <div class="col-md-3">
          <label>Học phí</label>
          <?= $form->field($model, 'id_hoc_vien')->hiddenInput()->label(false) ?>
-         <input style="color: blue;" type="text" class="form-control" value="<?= $hocPhi->hoc_phi; ?>" readonly style="border-color: red; color: red;">
+         <input style="color: blue;" type="text" class="form-control" value="<?= $hocVien->tienHocPhi; ?>" readonly style="border-color: red; color: red;">
       </div>
       
       <div class="col-md-3">
@@ -201,7 +201,7 @@ $model->ngay_nop = CustomFunc::convertYMDToDMY($model->ngay_nop);
 checkFileInput();
 */
 
-var hphi = <?= $hocPhi->hoc_phi; ?>;
+var hphi = <?= $hocVien->tienHocPhi ?>;
 $('#selectLoaiNop').on('change', function() { 
   if(this.value == 'NOP100' ){
   	//$('#txtSoTienNop').val(hphi);

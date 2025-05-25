@@ -17,7 +17,7 @@ return [
     [
         'class' => 'kartik\grid\ActionColumn',
         'header'=>'',
-        'template' => '{payment} {view} {huyHoSo} {update} {delete} ',
+        'template' => '{payment} {view}  {update} {huyHoSo} {doiHangTrongNgay} {doiHangNgayCu} {danhSachDoiHang} {delete} ',
         'dropdown' => true,
         'dropdownOptions' => ['class' => 'float-right'],
         'dropdownButton'=>[
@@ -33,6 +33,15 @@ return [
             if ($action === 'huyHoSo') {
                 return Url::to(['huy-ho-so', 'id' => $key]);
             }
+            if ($action === 'doiHangTrongNgay') {
+                return Url::to(['doi-hang-instant', 'id' => $key]);
+            }
+            if ($action === 'doiHangNgayCu') {
+                return Url::to(['doi-hang-with-history', 'id' => $key]);
+            }
+            if ($action === 'danhSachDoiHang') {
+                return Url::to(['view-thay-doi-hang', 'id' => $key]);
+            }
             return Url::to([$action, 'id' => $key]);
         },
         'visibleButtons' => [
@@ -45,6 +54,21 @@ return [
                 $user = User::getCurrentUser();
                 // only show 'payment' if user chung co so
                 return ($model->noi_dang_ky == $user->noi_dang_ky || $user->superadmin);
+            },
+            'doiHangTrongNgay' => function ($model, $key, $index) {
+                $user = User::getCurrentUser();
+                // only show 'doiHangTrongNgay' if user chung co so
+                return ($model->noi_dang_ky == $user->noi_dang_ky || $user->superadmin);
+            },
+            'doiHangNgayCu' => function ($model, $key, $index) {
+                $user = User::getCurrentUser();
+                // only show 'doiHangNgayCu' if user chung co so
+                return ($model->noi_dang_ky == $user->noi_dang_ky || $user->superadmin);
+            },
+            'danhSachDoiHang' => function ($model, $key, $index) {
+                $user = User::getCurrentUser();
+                // only show 'doiHangNgayCu' if user chung co so
+                return ($model->thayDoiHangs != null);
             },
             'update' => function ($model, $key, $index) {
                 $user = User::getCurrentUser();
@@ -75,9 +99,10 @@ return [
         'deleteOptions' => [
             'role' => 'modal-remote',
             'title' => 'Xóa', 
-            'class' => 'btn ripple btn-success btn-sm',
+            'class' => 'btn ripple btn-danger btn-sm',
             'data-bs-placement' => 'top',
-            'data-bs-toggle' => 'tooltip-success'
+            'data-bs-toggle' => 'tooltip-success',
+            'style'=>'color:red'
         ],
     'buttons' => [
         'payment' => function ($url, $model, $key) {
@@ -96,6 +121,36 @@ return [
                 'class' => 'btn ripple btn-warning dropdown-item',
                 'data-bs-placement' => 'top',
                 'data-bs-toggle' => 'tooltip',
+                'style'=>'color:orange'
+            ]);
+        },
+        'doiHangTrongNgay' => function ($url, $model, $key) {
+            return Html::a('<i class="fas fa-exchange-alt"></i> Đổi hạng (trong ngày)', $url, [
+                'title' => 'Đổi hạng trong ngày',
+                'role' => 'modal-remote',
+                'class' => 'btn ripple btn-warning dropdown-item',
+                'data-bs-placement' => 'top',
+                'data-bs-toggle' => 'tooltip',
+                'style'=>'color:orange'
+            ]);
+        },
+        'doiHangNgayCu' => function ($url, $model, $key) {
+            return Html::a('<i class="fas fa-tools"></i> Đổi hạng (ngày cũ)', $url, [
+                'title' => 'Đổi hạng ngày cũ',
+                'role' => 'modal-remote',
+                'class' => 'btn ripple btn-danger dropdown-item',
+                'data-bs-placement' => 'top',
+                'data-bs-toggle' => 'tooltip',
+                'style'=>'color:red'
+            ]);
+        },
+        'danhSachDoiHang' => function ($url, $model, $key) {
+            return Html::a('<i class="fas fa-list-ol"></i> Lịch sử đổi hạng', $url, [
+                'title' => 'Lịch sử đổi hạng',
+                'role' => 'modal-remote-2',
+                'class' => 'btn ripple btn-primary dropdown-item',
+                'data-bs-placement' => 'top',
+                'data-bs-toggle' => 'tooltip'
             ]);
         },
     ],
@@ -120,13 +175,6 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ho_ten',
         'width' => '150px',
-        'contentOptions' => function ($model, $key, $index, $column) {
-            return [
-                'style' => $model->huy_ho_so == true
-                ? 'text-decoration: line-through;'
-                : '',
-            ];
-        },
     ],
    // [
       //  'class'=>'\kartik\grid\DataColumn',
@@ -137,14 +185,7 @@ return [
         'attribute'=>'so_cccd',
         'label'=>'CCCD (Mã KH)',
         'width' => '150px',
-        //'contentOptions' => [ 'style' => 'text-align:center' ],
-        'contentOptions' => function ($model, $key, $index, $column) {
-            return [
-                'style' => $model->huy_ho_so == true
-                ? 'text-align:center;text-decoration: line-through;'
-                : 'text-align:center',
-            ];
-        },
+        'contentOptions' => [ 'style' => 'text-align:center' ],
     ],
 
  
@@ -156,13 +197,6 @@ return [
             return $model->hangDaoTao ? $model->hangDaoTao->ten_hang : 'N/A';
         },
         'label' => 'Hạng đào tạo',
-        'contentOptions' => function ($model, $key, $index, $column) {
-            return [
-                'style' => $model->huy_ho_so == true
-                ? 'text-decoration: line-through;'
-                : '',
-            ];
-        },
         
         'pageSummary' => 'Tổng cộng (E=A-B-C+D)',
         'pageSummaryOptions' => ['class' => 'text-right text-end'],
@@ -179,7 +213,7 @@ return [
         'label'=>'Học phí(A)',
         'width' => '120px',
         'value' => function($model) {
-            return $model->hocPhi->hoc_phi;
+            return $model->tienHocPhi;
         },
         'contentOptions' => [ 'style' => 'text-align:right' ],
         'format' => ['decimal', 0],

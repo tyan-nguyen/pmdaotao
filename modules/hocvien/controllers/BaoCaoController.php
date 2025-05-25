@@ -18,6 +18,7 @@ use app\modules\hocvien\models\NopHocPhi;
 use yii\web\UploadedFile;
 use app\custom\CustomFunc;
 use yii\db\Expression;
+use app\modules\hocvien\models\ThayDoiHocPhi;
 /**
  * HocVienController implements the CRUD actions for HvHocVien model.
  */
@@ -27,7 +28,9 @@ class BaoCaoController extends Controller
         'rp-danh-sach-dang-ky', 
         'rp-danh-sach-dang-ky-print', 
         'rp-bien-ban-ban-giao', 
-        'rp-bien-ban-ban-giao-print'];
+        'rp-bien-ban-ban-giao-print',
+        'rp-bien-ban-thay-doi-hang-print'
+    ];
     /**
      * @inheritdoc
      */
@@ -50,6 +53,22 @@ class BaoCaoController extends Controller
         Yii::$app->params['modelID'] = 'Đăng ký học';
         //return true;
         return parent::beforeAction($action);
+    }
+    /**
+     * in biên bản thay đổi hạng
+     * @param unknown $idbb
+     * @return \yii\web\Response
+     */
+    public function actionRpBienBanThayDoiHangPrint($idbb){
+        $model = ThayDoiHocPhi::findOne($idbb);
+        $content = $this->renderPartial('rp_bien_ban_ban_thay_doi_hang_print', [
+           'model'=>$model
+        ]);
+
+        return $this->asJson([
+            'status' => 'success',
+            'content' => $content,
+        ]);
     }
     /**
      * in danh sách theo ca

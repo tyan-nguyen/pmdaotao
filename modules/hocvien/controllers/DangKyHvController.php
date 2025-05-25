@@ -18,12 +18,15 @@ use app\modules\hocvien\models\NopHocPhi;
 use yii\web\UploadedFile;
 use app\custom\CustomFunc;
 use yii\db\Expression;
+use app\modules\hocvien\models\HangDaoTao;
+use app\modules\hocvien\models\ThayDoiHocPhi;
+use app\modules\hocvien\models\HocPhi;
 /**
  * HocVienController implements the CRUD actions for HvHocVien model.
  */
 class DangKyHvController extends Controller
 {
-    public $freeAccessActions = ['get-phieu-in-ajax', 'update-print-count', 'report-list', 'get-phieu-in-report-list-ajax'];
+    public $freeAccessActions = ['get-phieu-in-ajax', 'update-print-count', 'report-list', 'get-phieu-in-report-list-ajax', 'view-thay-doi-hang'];
     /**
      * @inheritdoc
      */
@@ -290,6 +293,228 @@ class DangKyHvController extends Controller
             }
         }
     }
+    
+    /**
+     * đổi hạng trong ngày for an existing HvHocVien model.
+     * For ajax request will return json object
+     * and for non-ajax request if update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id //id is id of hocvien
+     * @return mixed
+     */
+    public function actionDoiHangInstant($id)
+    {
+        $request = Yii::$app->request;
+        $model = DangKyHv::findOne($id);
+        
+        if($request->isAjax){
+            /*
+             *   Process for ajax request
+             */
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            if($request->isGet){
+                return [
+                    'title'=> "Đổi hạng đào tạo và đặt lại học phí cho học viên #".$id,
+                    'content'=>$this->renderAjax('doi-hang-instant', [
+                        'model' => $model,
+                    ]),
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                    Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                ];
+            }else if($model->load($request->post())){
+                if($model->id_hang){
+                    $model->id_hoc_phi = HangDaoTao::findOne($model->id_hang)->hocPhi->id;
+                    $model->updateAttributes(['id_hang', 'id_hoc_phi']);//chi update 2 atrribute, khong thuc hien thao tac khac
+                    return [
+                        'forceReload'=>'#crud-datatable-pjax',
+                        'forceClose'=>true,
+                        'title'=> "Đổi hạng đào tạo và đặt lại học phí cho học viên #".$id,
+                        'tcontent'=>'Đổi hạng và đặt lại học phí thành công!',
+                    ];
+                }else{
+                    return [
+                        'title'=> "Đổi hạng đào tạo và đặt lại học phí cho học viên #".$id,
+                        'content'=>$this->renderAjax('doi-hang-instant', [
+                            'model' => $model,
+                        ]),
+                        'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                        Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                    ];
+                }                
+            }else{
+                return [
+                    'title'=> "Đổi hạng đào tạo và đặt lại học phí cho học viên #".$id,
+                    'content'=>$this->renderAjax('doi-hang-instant', [
+                        'model' => $model,
+                    ]),
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                    Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                ];
+            }
+        }else{
+            /*
+             *   Process for non-ajax request
+             */
+            if ($model->load($request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('huy-ho-so', [
+                    'model' => $model,
+                ]);
+            }
+        }
+    }
+    /**
+     * đổi hạng ngày cũ for an existing HvHocVien model.
+     * For ajax request will return json object
+     * and for non-ajax request if update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id //id is id of hocvien
+     * @return mixed
+     */
+    public function actionDoiHangWithHistory($id)
+    {
+        $request = Yii::$app->request;
+        $model = DangKyHv::findOne($id);
+        $oldModel = DangKyHv::findOne($id);
+        //$hangCu = $model->id_hang;
+        //$hocPhiCu = $model->id_hoc_phi;
+        
+        if($request->isAjax){
+            /*
+             *   Process for ajax request
+             */
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            if($request->isGet){
+                return [
+                    'title'=> "Đổi hạng học viên #".$id,
+                    'content'=>$this->renderAjax('doi-hang-with-history', [
+                        'model' => $model,
+                    ]),
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                    Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                ];
+            }else if($model->load($request->post())){
+                if($model->id_hang != $oldModel->id_hang){
+                    $model->updateAttributes(['id_hang']);
+                    //lấy học phí cũ
+                    $hangCu = HangDaoTao::findOne($oldModel->id_hang);
+                    $tienHPCu = $model->tienHocPhi;
+                    //lấy học phí mới
+                    $hangMoi = HangDaoTao::findOne($model->id_hang);
+                    //$soTienThayDoi = $hangMoi->hocPhi->hoc_phi - $hangCu->hocPhi->hoc_phi;
+                    //$soTienThayDoi = $hangMoi->hocPhi->hoc_phi - $hangCu->hocPhi->hoc_phi;
+                    $soTienThayDoi = $hangMoi->hocPhi->hoc_phi - $tienHPCu;
+                    //lý do
+                    //ghi chú học phí tăng hay giảm
+                    $ghiChuHocPhi = '';
+                    if($soTienThayDoi > 0){
+                        $ghiChuHocPhi = 'Học phí tăng ' . number_format(abs($soTienThayDoi));
+                    } else if($soTienThayDoi < 0){
+                        $ghiChuHocPhi = 'Học phí giảm ' . number_format(abs($soTienThayDoi));
+                    } else {
+                        $ghiChuHocPhi = 'Học phí không thay đổi';
+                    }
+                    $thayDoiHocPhiModel = new ThayDoiHocPhi();
+                    $thayDoiHocPhiModel->id_hoc_vien = $model->id;
+                    $thayDoiHocPhiModel->so_tien = $soTienThayDoi;
+                    $thayDoiHocPhiModel->ly_do = 'Thay đổi hạng từ ' . $hangCu->ten_hang . ' sang ' . $hangMoi->ten_hang . '; ' 
+                        . $ghiChuHocPhi;
+                    //set lich su hang
+                    $thayDoiHocPhiModel->id_hang_cu = $oldModel->id_hang;
+                    $thayDoiHocPhiModel->id_hang_moi = $model->id_hang;
+                    //set lich su hoc phi
+                    if($model->thayDoiHangs==null){
+                        $thayDoiHocPhiModel->id_hoc_phi_cu = $oldModel->id_hoc_phi;
+                    }else{
+                       $hpCuFromTDHP = $model->getThayDoiHangs()->orderBy(['id'=>SORT_DESC])->one(); 
+                       $thayDoiHocPhiModel->id_hoc_phi_cu = $hpCuFromTDHP->id_hoc_phi_moi;
+                    }
+                    //tim hoc phi moi
+                    $thayDoiHocPhiModel->id_hoc_phi_moi = $hangMoi->hocPhi->id;
+                    
+                    //thời gian thay đổi
+                    if(isset($_POST['thoi_gian_thay_doi'])){
+                        //chưa check định dạng ngày tháng
+                        $thayDoiHocPhiModel->thoi_gian_thay_doi = $_POST['thoi_gian_thay_doi'];
+                    }
+                    //ghi chú
+                    if(isset($_POST['ghi_chu'])){
+                        $thayDoiHocPhiModel->ghi_chu = $_POST['ghi_chu'];
+                    }
+                    
+                    if($thayDoiHocPhiModel->save()){
+                        return [
+                            'forceReload'=>'#crud-datatable-pjax',
+                            'forceClose'=>true,
+                            'title'=> "Đổi hạng đào tạo cho học viên #".$id,
+                            'tcontent'=>'Đổi hạng thay đổi công nợ thành công! Để chắc chắn, vui lòng kiểm tra thủ công lại thông tin, học phí và công nợ học viên!',
+                        ];
+                    }else{
+                        $model->addError('id_hang', 'Vui lòng chọn hạng mới cần thay đổi!');
+                        return [
+                            'title'=> "Đổi hạng học viên #".$id,
+                            'content'=>$this->renderAjax('doi-hang-with-history', [
+                                'model' => $model,
+                            ]),
+                            'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                            Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                        ];
+                    }
+                }else{
+                    $model->addError('id_hang', 'Vui lòng chọn hạng mới cần thay đổi!');
+                    return [
+                        'title'=> "Đổi hạng học viên #".$id,
+                        'content'=>$this->renderAjax('doi-hang-with-history', [
+                            'model' => $model,
+                        ]),
+                        'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                        Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                    ];
+                }
+            }else{
+                return [
+                    'title'=> "Đổi hạng đào tạo cho học viên #".$id,
+                    'content'=>$this->renderAjax('doi-hang-with-history', [
+                        'model' => $model,
+                    ]),
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                    Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                ];
+            }
+        }else{
+            /*
+             *   Process for non-ajax request
+             */
+            if ($model->load($request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('doi-hang-with-history', [
+                    'model' => $model,
+                ]);
+            }
+        }
+    }
+    
+    /**
+     * Displays thay đổi hạng của học viên.
+     * @param integer $id --> id của học viên
+     * @return mixed
+     */
+    public function actionViewThayDoiHang($id)
+    {
+        $model = HocVien::find()->where(['id' => $id])->one();
+        $request = Yii::$app->request;
+        if ($request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return [
+                'title' => "Lịch sử thay đổi hạng và học phí của học viên  #" . $id,
+                'content' => $this->renderAjax('view-thay-doi-hang', [
+                    'model' => $model,
+                ]),
+                Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"])
+            ];
+        }
+    }
+    
 
 
     public function actionDuyetHv($id)
@@ -435,14 +660,14 @@ public function actionCreate2($id)
          $tenHang = 'Chưa có hạng xe'; 
      }
       
-      $hocPhi = null;
-      if ($hocVien) {
-          $hocPhi = $hocVien->hocPhi;
+     // $hocPhi = null;
+     // if ($hocVien) {
+     //     $hocPhi = $hocVien->hocPhi;
           /* $hangDaoTao = $hocVien->hangDaoTao;  
           if ($hangDaoTao) {
               $hocPhi = $hangDaoTao->hocPhi;  
           } */
-      }
+     // }
  
     if($request->isAjax){
         /*
@@ -456,7 +681,7 @@ public function actionCreate2($id)
                     'model' => $model,
                     'hoTenHocVien' => $hoTenHocVien,
                     'tenHang' => $tenHang,
-                    'hocPhi' => $hocPhi,
+                    'hocVien' => $hocVien,
                 ]),
                 'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                             Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
@@ -488,6 +713,7 @@ public function actionCreate2($id)
                 'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"])         
             ];  */     
             return [
+                'forceReload'=>'#crud-datatable-pjax',
                 'title' => "Học viên  #" . $model->hocVien->id,
                 'content' => $this->renderAjax('view', [
                     'model' => $hocVien,
@@ -502,7 +728,7 @@ public function actionCreate2($id)
                     'model' => $model,
                     'hoTenHocVien' => $hoTenHocVien,
                     'tenHang' => $tenHang,
-                    'hocPhi' => $hocPhi,
+                    'hocVien' => $hocVien,
                 ]),
                 'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                             Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])

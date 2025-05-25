@@ -48,7 +48,7 @@ use app\modules\hocvien\models\HocVien;
                             <?php endif; ?>
                         </p>
                         <p><strong>Hạng đào tạo:</strong> <?= $model->hangDaoTao->ten_hang ?></p>
-        				<p><strong>HỌC PHÍ:</strong> <strong><?= number_format($model->hocPhi->hoc_phi) ?></strong></p>
+        				<p><strong>HỌC PHÍ:</strong> <strong><?= number_format($model->tienHocPhi) ?></strong></p>
         				<p><strong>CHIẾT KHẤU:</strong> <strong><?= number_format($model->tienChietKhau) ?></strong></p>
         				<p><strong><strong>ĐÃ NỘP:</strong> <?= number_format($model->tienDaNop) ?></strong></p>
         				<p>- Thu tiền: <?= number_format($model->tienDaNopDuong) ?></p>

@@ -41,7 +41,20 @@ function printPhieu(){
 		 //printDelay: 333,
     });
 }
-
+/**
+ * in html tu 1 div
+ * [them id #printDoiHang cho div parent]
+ */
+function printPhieuDoiHang(){
+	$('#printDoiHang').printThis({
+		 //debug: false,               // show the iframe for debugging
+		 importCSS: false,            // import parent page css
+		 loadCSS: ['/css/print-phieu.css?v=3',
+		 	'/assets/fontawesome-free-6.4.0-web/css/all.min.css',
+		 ],
+		 //printDelay: 333,
+    });
+}
 
 /**
  * xu ly user khong co hanh dong nao trong khoang thoi gian

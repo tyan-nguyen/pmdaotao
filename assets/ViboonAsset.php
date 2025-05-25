@@ -58,7 +58,7 @@ class ViboonAsset extends AssetBundle
         'https://cdn.jsdelivr.net/npm/flatpickr',
         //fancybox
         'js/fancybox/fancybox.umd.js',
-        'js/custom.js?v=1',
+        'js/custom.js?v=2.1',
         //'assets/plugins/tabs/jquery.multipurpose_tabcontent.js',
         //'assets/plugins/tabs/tab-content.js'
     ];

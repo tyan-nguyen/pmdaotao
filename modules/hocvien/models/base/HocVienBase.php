@@ -12,6 +12,7 @@ use app\modules\user\models\User;
 use app\modules\hocvien\models\HocPhi;
 use yii\db\Expression;
 use app\modules\giaovien\models\GiaoVien;
+use app\modules\hocvien\models\ThayDoiHocPhi;
 
 /**
  * This is the model class for table "hv_hoc_vien".
@@ -277,6 +278,39 @@ class HocVienBase extends \app\models\HvHocVien
     
         return $newMaSoPhieu;
     }
+    
+    /**
+     * phần chỉnh sửa học phí - hạng đào tạo
+     */
+    //get học phí thực tế theo bảng thay đổi học phí, học phí thực tế = học phí ban đầu + sum tất cả thay đổi học phí của học viên
+    public function getTienHocPhi(){
+        if($this->thayDoiHangs!=null){
+            return $this->hocPhi->hoc_phi + $this->getThayDoiHangs()->sum('so_tien');
+        } else {
+            return $this->hocPhi->hoc_phi;
+        }
+        
+    }
+    //get học phí thực tế theo bảng thay đổi học phí tìm theo thời gian,
+    //học phí thực tế = học phí ban đầu + sum tất cả thay đổi học phí trong khoảng thời gian của học viên (<= mốc thời gian)
+    public function getTienHocPhiTheoThoiGian($endTime){
+        $thayDoiHangs = $this->getThayDoiHangs()->andWhere("thoi_gian_thay_doi <= '".$endTime."' ");
+       // $thayDoiHangs = ThayDoiHocPhi::find()->where(['id_hoc_vien'=>$this->id])->andWhere("thoi _gian_tao >= '".$endTime."' ");
+        if($thayDoiHangs!=null){
+            return $this->hocPhi->hoc_phi + $thayDoiHangs->sum('so_tien');
+        } else {
+            return $this->hocPhi->hoc_phi;
+        }
+    }
+    //get list thay doi
+    public function getThayDoiHangs()
+    {
+        return $this->hasMany(ThayDoiHocPhi::class, ['id_hoc_vien' => 'id']);
+    }
+    /**
+     * kết thúc phần chỉnh sửa học phí - hạng đào tạo
+     */
+    
     //lấy ngày hoàn thành hồ sơ, query lấy ngày nộp tiền 50% hoặc 100% đầu tiên
     public function getNgayHoanThanhHoSo(){
         $nopTien = NopHocPhi::find()->alias('t2')
@@ -318,7 +352,8 @@ class HocVienBase extends \app\models\HvHocVien
     public function getTienChuaThanhToan(){ //chua thanh toan hoc phi - so tien nop - chiet khau
         $tt = NopHocPhi::find()->where(['id_hoc_vien'=>$this->id])->sum('so_tien_nop');
         $ck = NopHocPhi::find()->where(['id_hoc_vien'=>$this->id])->sum('chiet_khau');
-        return $this->hocPhi->hoc_phi - $tt - $ck;
+        //return $this->hocPhi->hoc_phi - $tt - $ck;
+        return $this->tienHocPhi - $tt - $ck;
     }
     
     /**
@@ -347,7 +382,13 @@ class HocVienBase extends \app\models\HvHocVien
                 $ck = $ck->andWhere("thoi_gian_tao <= '".$endtime . "'");
             }
             $ck = $ck->sum('chiet_khau');
-        return $this->hocPhi->hoc_phi - $tt - $ck;
+        //return $this->hocPhi->hoc_phi - $tt - $ck;
+        
+            $tienHocPhi = $this->tienHocPhi;
+            if($endtime != NULL){
+                $tienHocPhi = $this->getTienHocPhiTheoThoiGian($endtime);
+            }
+            return $tienHocPhi - $tt - $ck;
     }
     
 }

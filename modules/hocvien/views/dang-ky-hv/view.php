@@ -54,7 +54,20 @@ use app\modules\user\models\User;
                         </p>
                         <p><strong>Hạng đào tạo:</strong> <?= $model->hangDaoTao->ten_hang ?></p>
                          
-        				<p><strong>HỌC PHÍ:</strong> <strong><?= number_format($model->hocPhi->hoc_phi) ?></strong></p>
+        				<!-- <p><strong>HỌC PHÍ:</strong> <strong><?= number_format($model->hocPhi->hoc_phi) ?></strong></p> -->
+        				<p>
+        					<strong>HỌC PHÍ:</strong> <strong><?= number_format($model->tienHocPhi) ?></strong>
+        					<?=  $model->thayDoiHangs ? Html::a('<i class="fas fa-external-link-alt"></i>', '/hocvien/dang-ky-hv/view-thay-doi-hang?id='.$model->id, ['role'=>'modal-remote-2', 'title'=>'Xem quá trình thay đổi hạng', 'style'=>'float:none'])  : '' ?> 
+        				</p>
+        				
+        				<!-- 
+        				<p>Học phí thực tế: <?= number_format($model->tienHocPhi) ?></p>
+        				<p>Học phí thực tế endtime: <?= number_format($model->getTienHocPhiTheoThoiGian('2025-05-23 15:49:45')) ?></p>
+        				
+        				 -->
+        				 
+        				 
+        				
         				<p><strong>CHIẾT KHẤU:</strong> <strong><?= number_format($model->tienChietKhau) ?></strong></p>
         				<p><strong><strong>ĐÃ NỘP:</strong> <?= number_format($model->tienDaNop) ?></strong></p>
         				<p>- Thu tiền: <?= number_format($model->tienDaNopDuong) ?></p>

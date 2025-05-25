@@ -29,6 +29,13 @@ Yii::$app->params['showExport'] = true;
 #crud-datatable-togdata-page{
     border:0px!important;
 }
+.thay-doi-hang td{
+    color:blue !important;
+}
+.ho-so-da-huy td{
+    color:blue !important;
+    text-decoration: line-through;
+}
 </style>
 <div class="card border-default" id="divFilterExtend">
 	<div class="card-header rounded-bottom-0 card-header text-dark" id="simple">
@@ -60,6 +67,14 @@ Yii::$app->params['showExport'] = true;
             'pjax'=>true,
             'showPageSummary' => true,
             'columns' => require(__DIR__.'/_columns.php'),
+            'rowOptions' => function ($model, $key, $index, $grid) {
+                if($model->thayDoiHangs != null){
+                    return ['class' => 'thay-doi-hang'];
+                }
+                if($model->huy_ho_so){
+                    return ['class' => 'ho-so-da-huy'];
+                }
+            },
             'toolbar'=> [
                 ['content'=>
                     '
@@ -149,7 +164,7 @@ Yii::$app->params['showExport'] = true;
    'closeButton'=>['label'=>'<span aria-hidden=\'true\'>×</span>'],
    'id'=>'ajaxCrudModal2',
     'footer'=>'',// always need it for jquery plugin
-    'size'=>Modal::SIZE_LARGE
+    'size'=>Modal::SIZE_EXTRA_LARGE
 ])?>
 
 <?php Modal::end(); ?>

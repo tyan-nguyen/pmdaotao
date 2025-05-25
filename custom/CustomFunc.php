@@ -38,7 +38,7 @@ class CustomFunc
      * @return string
      */
     public static function convertYMDHISToDMYHIS($date_string){
-        return $date_string!=null ? date("Y-m-d H:i:s", strtotime($date_string)) : '';
+        return $date_string!=null ? date("d/m/Y H:i:s", strtotime($date_string)) : '';
     }
     /**
      * chuyen doi ngay chuoi Y-m-d H:i:s -> dd/mm/yyyy H:i:s

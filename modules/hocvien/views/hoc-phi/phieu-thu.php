@@ -25,6 +25,10 @@ Yii::$app->params['showExport'] = true;
 #crud-datatable-togdata-page{
     border:0px!important;
 }
+.phieu-da-huy td{
+    color:blue !important;
+    text-decoration: line-through;
+}
 </style>
 
 <div class="card border-default" id="divFilterExtend">
@@ -57,6 +61,11 @@ Yii::$app->params['showExport'] = true;
             'pjax'=>true,
             'showPageSummary' => true,
             'columns' => require(__DIR__.'/_columns-phieu-thu.php'),
+            'rowOptions' => function ($model, $key, $index, $grid) {
+                if($model->hocVien->huy_ho_so){
+                    return ['class' => 'phieu-da-huy'];
+                }
+            },
             'toolbar'=> [
                 ['content'=>
                     '

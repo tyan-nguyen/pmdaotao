@@ -36,7 +36,7 @@ class FixController extends Controller
         foreach ($hocViens as $iHv=>$hocVien){
             if($hocVien->thoi_gian_hoan_thanh_ho_so == NULL){
                 foreach ($hocVien->hvNopHocPhis as $inhp=>$nhp){
-                    if($nhp->so_tien_con_lai <= $hocVien->hocPhi->hoc_phi/2){
+                    if($nhp->so_tien_con_lai <= $hocVien->tienHocPhi/2){
                         $hocVien->thoi_gian_hoan_thanh_ho_so = $nhp->thoi_gian_tao;
                         $hocVien->updateAttributes(['thoi_gian_hoan_thanh_ho_so']);
                         $sl++;

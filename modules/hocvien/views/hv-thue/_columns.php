@@ -144,7 +144,7 @@ return [
         'label'=>'Học phí(A)',
         'width' => '120px',
         'value' => function($model) {
-            return $model->hocPhi->hoc_phi;
+            return $model->tienHocPhi;
         },
         'contentOptions' => [ 'style' => 'text-align:right' ],
         'format' => ['decimal', 0],
