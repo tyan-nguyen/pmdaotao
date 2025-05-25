@@ -191,7 +191,9 @@ class NopHocPhiSearch extends NopHocPhi
      */
     public function searchPhieuChi($params, $cusomSearch=NULL)
     {
-        $query = NopHocPhi::find();
+        $query = NopHocPhi::find()->alias('t');
+        $query->select(['t.*', 'hv.so_cccd']);
+        $query->joinWith(['hocVien as hv']);
         
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -227,6 +229,7 @@ class NopHocPhiSearch extends NopHocPhi
                 'nguoi_thu' => $this->nguoi_thu,
                 't.nguoi_tao' => $this->nguoi_tao,
                 //'thoi_gian_tao' => $this->thoi_gian_tao,
+                'hv.so_cccd' =>$this->ma_so_hoc_vien,
                 'hv.id_hang' => $this->id_hang,
                 'hv.noi_dang_ky' => $this->noi_dang_ky
             ]);
