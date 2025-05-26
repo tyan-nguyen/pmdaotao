@@ -136,23 +136,23 @@ class NopHocPhiSearch extends NopHocPhi
         }
         
         if($cusomSearch != NULL){
-            $query->andFilterWhere ( [ 'OR' ,['like', 'loai_phieu', $cusomSearch],
-                ['like', 'loai_nop', $cusomSearch],
-                ['like', 'hinh_thuc_thanh_toan', $cusomSearch],
-                ['like', 'bien_lai', $cusomSearch],
-                ['like', 'da_kiem_tra', $cusomSearch],
-                ['like', 'ghi_chu', $cusomSearch]] );            
+            $query->andFilterWhere ( [ 'OR' ,['like', 't.loai_phieu', $cusomSearch],
+                ['like', 't.loai_nop', $cusomSearch],
+                ['like', 't.hinh_thuc_thanh_toan', $cusomSearch],
+                ['like', 't.bien_lai', $cusomSearch],
+                ['like', 't.da_kiem_tra', $cusomSearch],
+                ['like', 't.ghi_chu', $cusomSearch]] );            
         } else {
             $query->andFilterWhere([
-                'id' => $this->id,
-                'id_hoc_vien' => $this->id_hoc_vien,
-                'id_hoc_phi' => $this->id_hoc_phi,
-                'so_tien_nop' => $this->so_tien_nop,
-                'chiet_khau' => $this->chiet_khau,
-                'so_tien_con_lai' => $this->so_tien_con_lai,
-                'ngay_nop' => $this->ngay_nop,
-                'ma_so_phieu' => $this->ma_so_phieu,
-                'so_lan_in_phieu' => $this->so_lan_in_phieu,
+                't.id' => $this->id,
+                't.id_hoc_vien' => $this->id_hoc_vien,
+                't.id_hoc_phi' => $this->id_hoc_phi,
+                't.so_tien_nop' => $this->so_tien_nop,
+                't.chiet_khau' => $this->chiet_khau,
+                't.so_tien_con_lai' => $this->so_tien_con_lai,
+                't.ngay_nop' => $this->ngay_nop,
+                't.ma_so_phieu' => $this->ma_so_phieu,
+                't.so_lan_in_phieu' => $this->so_lan_in_phieu,
                 't.nguoi_thu' => $this->nguoi_thu,
                 't.nguoi_tao' => $this->nguoi_tao,
                 //'thoi_gian_tao' => $this->thoi_gian_tao,
@@ -161,12 +161,12 @@ class NopHocPhiSearch extends NopHocPhi
                 'hv.noi_dang_ky' => $this->noi_dang_ky
             ]);
             
-            $query->andFilterWhere(['like', 'loai_phieu', 'PHIEUTHU']) //IMPORTANT!!!
-            ->andFilterWhere(['like', 'loai_nop', $this->loai_nop])
-            ->andFilterWhere(['like', 'hinh_thuc_thanh_toan', $this->hinh_thuc_thanh_toan])
-            ->andFilterWhere(['like', 'bien_lai', $this->bien_lai])
-            ->andFilterWhere(['like', 'da_kiem_tra', $this->da_kiem_tra])
-            ->andFilterWhere(['like', 'ghi_chu', $this->ghi_chu]);
+            $query->andFilterWhere(['like', 't.loai_phieu', 'PHIEUTHU']) //IMPORTANT!!!
+            ->andFilterWhere(['like', 't.loai_nop', $this->loai_nop])
+            ->andFilterWhere(['like', 't.hinh_thuc_thanh_toan', $this->hinh_thuc_thanh_toan])
+            ->andFilterWhere(['like', 't.bien_lai', $this->bien_lai])
+            ->andFilterWhere(['like', 't.da_kiem_tra', $this->da_kiem_tra])
+            ->andFilterWhere(['like', 't.ghi_chu', $this->ghi_chu]);
             
             if($this->startdate && $this->enddate){
                 $start = CustomFunc::convertDMYToYMD($this->startdate) . ' ' . $this->starttime;
@@ -209,24 +209,24 @@ class NopHocPhiSearch extends NopHocPhi
         }
         
         if($cusomSearch != NULL){
-            $query->andFilterWhere ( [ 'OR' ,['like', 'loai_phieu', $cusomSearch],
-                ['like', 'loai_nop', $cusomSearch],
-                ['like', 'hinh_thuc_thanh_toan', $cusomSearch],
-                ['like', 'bien_lai', $cusomSearch],
-                ['like', 'da_kiem_tra', $cusomSearch],
-                ['like', 'ghi_chu', $cusomSearch]] );
+            $query->andFilterWhere ( [ 'OR' ,['like', 't.loai_phieu', $cusomSearch],
+                ['like', 't.loai_nop', $cusomSearch],
+                ['like', 't.hinh_thuc_thanh_toan', $cusomSearch],
+                ['like', 't.bien_lai', $cusomSearch],
+                ['like', 't.da_kiem_tra', $cusomSearch],
+                ['like', 't.ghi_chu', $cusomSearch]] );
         } else {
             $query->andFilterWhere([
-                'id' => $this->id,
-                'id_hoc_vien' => $this->id_hoc_vien,
-                'id_hoc_phi' => $this->id_hoc_phi,
-                'so_tien_nop' => $this->so_tien_nop,
-                'chiet_khau' => $this->chiet_khau,
-                'so_tien_con_lai' => $this->so_tien_con_lai,
-                'ngay_nop' => $this->ngay_nop,
-                'ma_so_phieu' => $this->ma_so_phieu,
-                'so_lan_in_phieu' => $this->so_lan_in_phieu,
-                'nguoi_thu' => $this->nguoi_thu,
+                't.id' => $this->id,
+                't.id_hoc_vien' => $this->id_hoc_vien,
+                't.id_hoc_phi' => $this->id_hoc_phi,
+                't.so_tien_nop' => $this->so_tien_nop,
+                't.chiet_khau' => $this->chiet_khau,
+                't.so_tien_con_lai' => $this->so_tien_con_lai,
+                't.ngay_nop' => $this->ngay_nop,
+                't.ma_so_phieu' => $this->ma_so_phieu,
+                't.so_lan_in_phieu' => $this->so_lan_in_phieu,
+                't.nguoi_thu' => $this->nguoi_thu,
                 't.nguoi_tao' => $this->nguoi_tao,
                 //'thoi_gian_tao' => $this->thoi_gian_tao,
                 'hv.so_cccd' =>$this->ma_so_hoc_vien,
@@ -234,12 +234,12 @@ class NopHocPhiSearch extends NopHocPhi
                 'hv.noi_dang_ky' => $this->noi_dang_ky
             ]);
             
-            $query->andFilterWhere(['like', 'loai_phieu', 'PHIEUCHI']) //IMPORTANT!!!
-            ->andFilterWhere(['like', 'loai_nop', $this->loai_nop])
-            ->andFilterWhere(['like', 'hinh_thuc_thanh_toan', $this->hinh_thuc_thanh_toan])
-            ->andFilterWhere(['like', 'bien_lai', $this->bien_lai])
-            ->andFilterWhere(['like', 'da_kiem_tra', $this->da_kiem_tra])
-            ->andFilterWhere(['like', 'ghi_chu', $this->ghi_chu]);
+            $query->andFilterWhere(['like', 't.loai_phieu', 'PHIEUCHI']) //IMPORTANT!!!
+            ->andFilterWhere(['like', 't.loai_nop', $this->loai_nop])
+            ->andFilterWhere(['like', 't.hinh_thuc_thanh_toan', $this->hinh_thuc_thanh_toan])
+            ->andFilterWhere(['like', 't.bien_lai', $this->bien_lai])
+            ->andFilterWhere(['like', 't.da_kiem_tra', $this->da_kiem_tra])
+            ->andFilterWhere(['like', 't.ghi_chu', $this->ghi_chu]);
             
             if($this->startdate && $this->enddate){
                 $start = CustomFunc::convertDMYToYMD($this->startdate) . ' ' . $this->starttime;
