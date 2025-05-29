@@ -238,10 +238,6 @@ class GiaoVienController extends Controller
         return $weeksByMonth;
     }
     
-    
-
-
-
     /**
      * Creates a new NhanVien model.
      * For ajax request will return json object
@@ -302,7 +298,6 @@ class GiaoVienController extends Controller
         }
     }
     
-
     /**
      * Updates an existing NhanVien model.
      * For ajax request will return json object
@@ -312,54 +307,54 @@ class GiaoVienController extends Controller
      */
     public function actionUpdate($id)
     {
-    $request = Yii::$app->request;
-    $model = $this->findModel($id);       
-    if($request->isAjax){
-        /*
-        *   Process for ajax request
-        */
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        if($request->isGet){
-            return [
-                'title'=> "Cập nhật Giáo viên #".$id,
-                'content'=>$this->renderAjax('update', [
-                    'model' => $model,
-                ]),
-                'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::button('Sửa',['class'=>'btn btn-primary','type'=>"submit"])
-            ];         
-        }else if ($model->load($request->post()) && $model->save()){
+        $request = Yii::$app->request;
+        $model = $this->findModel($id);       
+        if($request->isAjax){
+            /*
+            *Process for ajax request
+            */
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            if($request->isGet){
                 return [
-                    'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Giáo viên #".$id,
-                    'content'=>$this->renderAjax('view', [
+                    'title'=> "Cập nhật Giáo viên #".$id,
+                    'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                               Html::a('Sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
-                ];    
+                          Html::button('Sửa',['class'=>'btn btn-primary','type'=>"submit"])
+                ];         
+            }else if ($model->load($request->post()) && $model->save()){
+                    return [
+                        'forceReload'=>'#crud-datatable-pjax',
+                        'title'=> "Giáo viên #".$id,
+                        'content'=>$this->renderAjax('view', [
+                            'model' => $model,
+                        ]),
+                        'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                   Html::a('Sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                    ];    
+            }else{
+                 return [
+                    'title'=> "Cập nhật Giáo viên #".$id,
+                    'content'=>$this->renderAjax('update', [
+                        'model' => $model,
+                    ]),
+                    'footer'=> Html::button('Đóng lại ',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                               Html::button('Lưu lại ',['class'=>'btn btn-primary','type'=>"submit"])
+                ];        
+            }
         }else{
-             return [
-                'title'=> "Cập nhật Giáo viên #".$id,
-                'content'=>$this->renderAjax('update', [
+            /*
+            *   Process for non-ajax request
+            */
+            if ($model->load($request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('update', [
                     'model' => $model,
-                ]),
-                'footer'=> Html::button('Đóng lại ',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                           Html::button('Lưu lại ',['class'=>'btn btn-primary','type'=>"submit"])
-            ];        
+                ]);
+            }
         }
-    }else{
-        /*
-        *   Process for non-ajax request
-        */
-        if ($model->load($request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
-        }
-    }
     }
 
 

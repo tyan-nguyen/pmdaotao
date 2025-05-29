@@ -79,12 +79,16 @@ return [
         // 'attribute'=>'id',
     // ],
     [
-        'class'=>'\kartik\grid\DataColumn',
+       'class'=>'\kartik\grid\DataColumn',
        'attribute'=>'id_loai_xe',
        'value' => function($model) {
             $loaiXe = LoaiXe::findOne($model->id_loai_xe);
             return $loaiXe ? $loaiXe->ten_loai_xe : '<span style="color: red;">Trống </span>'; 
-        },
+       },
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'hieu_xe',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
@@ -94,9 +98,9 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'id_giao_vien',
         'value'=>function($model){
-        return $model->giaoVien?$model->giaoVien->ho_ten:'';
+            return $model->giaoVien?$model->giaoVien->ho_ten:'';
         },
-        'width' => '150px',
+        //'width' => '150px',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',

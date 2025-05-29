@@ -10,7 +10,7 @@ return [
     [
         'class' => 'kartik\grid\ActionColumn',
         'header'=>'',
-        'template' => '{adduser} {addusers} {addGroup} {view} {update} {delete} ',
+        'template' => '{phanCongGiangDay} {adduser} {addusers} {addGroup} {view} {update} {delete} ',
         'dropdown' => true,
         'dropdownOptions' => ['class' => 'float-right'],
         'dropdownButton'=>[
@@ -28,6 +28,9 @@ return [
             }
             if ($action === 'addGroup') {
                 return Url::to(['danh-sach-nhom', 'id' => $key]);
+            }
+            if ($action === 'phanCongGiangDay') {
+                return Url::to(['phan-cong-giang-day', 'id' => $key]);
             }
             return Url::to([$action, 'id' => $key]);
         },
@@ -54,6 +57,15 @@ return [
             'addGroup' => function($url, $model, $key) {
                 return Html::a('<i class="fa fa-plus-circle"></i> Quản lí nhóm', $url, [
                     'title' => 'Quản lí nhóm',
+                    'role' => 'modal-remote',
+                    'class' => 'btn ripple btn-success dropdown-item',
+                    'data-bs-placement' => 'top',
+                    'data-bs-toggle' => 'tooltip-warning',
+                ]);
+            },
+            'phanCongGiangDay' => function($url, $model, $key) {
+                return Html::a('<i class="fas fa-users-cog"></i> Phân công G.D.', $url, [
+                    'title' => 'Phân công giảng dạy',
                     'role' => 'modal-remote',
                     'class' => 'btn ripple btn-success dropdown-item',
                     'data-bs-placement' => 'top',

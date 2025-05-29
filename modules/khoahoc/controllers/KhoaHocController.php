@@ -20,6 +20,7 @@ use yii\helpers\ArrayHelper;
 use app\modules\giaovien\models\GiaoVien;
 use app\modules\nhanvien\models\NhanVien;
 use app\modules\lichhoc\models\LichThi;
+use app\modules\hocvien\models\DangKyHv;
 
 /**
  * KhoaHocController implements the CRUD actions for KhoaHoc model.
@@ -41,6 +42,69 @@ class KhoaHocController extends Controller
 				],
 			],
 		];
+	}
+	/**
+	 * phân công giáo viên phụ trách chọn nhiều học viên theo khóa học
+	 * @param unknown $id: id cua khoa hoc
+	 * @return string[]
+	 */
+	public function actionPhanCongGiangDay($id){
+	    $request = Yii::$app->request;
+	    Yii::$app->response->format = Response::FORMAT_JSON;
+	    $model = KhoaHoc::findOne($id);
+	    $model->scenario = 'phan-cong-giang-day';
+	    if($model == null){
+	        return [
+	            'title'=> 'Thông báo',
+	            'content'=>'Khóa học không tồn tại!',
+	            'footer'=> Html::button('Đóng',['data-bs-dismiss'=>'modal'])
+	        ];
+	    }
+	    if($request->isAjax){
+	        if($request->isGet){
+	            return [
+	                'title'=> "Phân công học viên cho giáo viên",
+	                'content'=>$this->renderAjax('_formPhanCong', [
+	                    'model' => $model,
+	                ]),
+	                'footer'=> Html::button('Lưu lại',['type'=>'submit']). '&nbsp;' .
+	                Html::button('Đóng',['data-bs-dismiss'=>'modal'])
+	            ];
+	        }else if($model->load($request->post())){
+	            if($model->validate('idGiaoVien')){
+	                //xu ly them vao khsx
+	                if($model->idGiaoVien != null){
+	                    foreach ($model->listIdHocVien as $indexHocVien=>$idHocVien){
+	                        $modelHocVien = HocVien::findOne($idHocVien);
+	                        //if($modelHocVien!= null && $modelHocVien->id_giao_vien == null){
+	                            $modelHocVien->id_giao_vien = $model->idGiaoVien;
+	                            $modelHocVien->updateAttributes(['id_giao_vien']);
+	                        //}
+	                    }
+	                }
+	            }
+	            
+	            return [	                
+	                'title'=> "Phân công học viên cho giáo viên",
+	                'content'=>$this->renderAjax('_formPhanCong', [
+	                    'model' => $model,
+	                ]),
+	                'tcontent'=>'Phân công học viên cho giáo viên thành công!',
+	                'footer'=> Html::button('Lưu lại',['type'=>'submit']). '&nbsp;' .
+	                Html::button('Đóng',['data-bs-dismiss'=>'modal'])
+	                
+	            ];
+	        }else{
+	            return [
+	                'title'=> "Phân công học viên cho giáo viên",
+	                'content'=>$this->renderAjax('_formPhanCong', [
+	                    'model' => $model,
+	                ]),
+	                'footer'=> Html::button('Save-Popup',['type'=>'submit']). '&nbsp;' .
+	                Html::button('Close-Popup',['data-bs-dismiss'=>'modal'])
+	            ];
+	        }
+	    }//if isAjax
 	}
 
     /**

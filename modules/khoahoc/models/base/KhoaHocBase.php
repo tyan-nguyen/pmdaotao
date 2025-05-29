@@ -29,6 +29,10 @@ class KhoaHocBase extends \app\models\HvKhoaHoc
    CONST TRANGTHAI_CHUAHOANTHANH = 'CHUA_HOAN_THANH';//MỚI TẠO CHƯA ĐỦ HỌC VIÊN
    CONST TRANGTHAI_DAHOANTHANH = 'DA_HOAN_THANH';//ĐÃ KẾT THÚC KHÓA HỌC
    CONST TRANGTHAI_DANGHOC = 'DANG_HOC';//KHÓA HỌC ĐANG HỌC HOẶC ĐÃ ĐỦ HỌC VIÊN
+   
+   public $listIdHocVien;//dung trong form phan cong giang day
+   public $idGiaoVien;//dung trong form phan cong giang day
+   
    //show list trang thai
    public function getListTrangThai(){
        return [
@@ -79,11 +83,13 @@ class KhoaHocBase extends \app\models\HvKhoaHoc
         return [
             //[['id_hang', 'ten_khoa_hoc','so_hoc_vien_khoa_hoc'], 'required'],
             [['ten_khoa_hoc','so_hoc_vien_khoa_hoc'], 'required'],
-            [['id_hang', 'nguoi_tao','id_hoc_phi','so_hoc_vien_khoa_hoc'], 'integer'],
+            [['id_hang', 'nguoi_tao','id_hoc_phi','so_hoc_vien_khoa_hoc', 'idGiaoVien'], 'integer'],
             [['ngay_bat_dau', 'ngay_ket_thuc', 'thoi_gian_tao'], 'safe'],
             [['ghi_chu'], 'string'],
             [['ten_khoa_hoc', 'trang_thai'], 'string', 'max' => 255],
+            [['listIdHocVien'], 'safe'],
             [['id_hang'], 'exist', 'skipOnError' => true, 'targetClass' => HangDaoTao::class, 'targetAttribute' => ['id_hang' => 'id']],
+            [['idGiaoVien'], 'required', 'on'=>'phan-cong-giang-day'], //on add mau cua vao ke hoach
         ];
     }
 
@@ -104,6 +110,8 @@ class KhoaHocBase extends \app\models\HvKhoaHoc
             'thoi_gian_tao' => 'Thời gian tạo',
             'id_hoc_phi'=>'Id học phí',
             'so_hoc_vien_khoa_hoc'=>'Số học viên khóa học',
+            
+            'idGiaoVien'=>'Giáo viên phụ trách',
         ];
     }
 

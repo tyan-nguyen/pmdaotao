@@ -12,10 +12,11 @@ use yii\widgets\Pjax;
 $this->title = 'Loại xe';
 $this->params['breadcrumbs'][] = $this->title;
 //CrudAsset::register($this);
-Yii::$app->params['showSearch'] = true;
-Yii::$app->params['showExport'] = true;
+Yii::$app->params['showSearch'] = false;
+Yii::$app->params['showExport'] = false;
+Yii::$app->params['showView'] = true;
 ?>
-
+<?php if(Yii::$app->params['showSearch']):?>
 <div class="card border-default" id="divFilterExtend">
 	<div class="card-header rounded-bottom-0 card-header text-dark" id="simple">
 		<h5 class="mt-2"><i class="fe fe-search"></i> Tìm kiếm</h5>
@@ -30,6 +31,7 @@ Yii::$app->params['showExport'] = true;
 		</div>
 	</div>
 </div>
+<?php endif; ?>
 
 <?php Pjax::begin([
     'id'=>'myGrid',

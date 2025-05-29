@@ -124,7 +124,7 @@ class NopHocPhiSearch extends NopHocPhi
         
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort'=> ['defaultOrder' => ['id' => SORT_DESC]],
+            'sort'=> ['defaultOrder' => ['ma_so_phieu' => SORT_DESC]],
         ]);
         
         $this->load($params);

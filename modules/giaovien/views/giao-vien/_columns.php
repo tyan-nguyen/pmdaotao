@@ -63,7 +63,6 @@ return [
          },
         'filter'=> [1 => 'Nam', 0 => 'Nữ'],
     ],
-
     [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'id_phong_ban',
@@ -74,8 +73,7 @@ return [
                 : '<span class="badge bg-warning"> Trống </span>';
         },
         'format' => 'raw', 
-    ],
-    
+    ],    
     [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'id_giao_vien',
