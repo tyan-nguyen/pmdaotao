@@ -67,9 +67,9 @@ use app\custom\CustomFunc;
         $soLuongC11 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere("DATE(thoi_gian_tao) = '$date'")->andWhere('id_hang IN (5,6)')->andFilterWhere(['noi_dang_ky'=>'CS1'])->count();
         $soLuongC12 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere("DATE(thoi_gian_tao) = '$date'")->andWhere('id_hang IN (5,6)')->andFilterWhere(['noi_dang_ky'=>'CS2'])->count();
         
-        $soLuongA1 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere("DATE(thoi_gian_tao) = '$date'")->andWhere('id_hang IN (7,8)')->count();
-        $soLuongA11 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere("DATE(thoi_gian_tao) = '$date'")->andWhere('id_hang IN (7,8)')->andFilterWhere(['noi_dang_ky'=>'CS1'])->count();
-        $soLuongA12 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere("DATE(thoi_gian_tao) = '$date'")->andWhere('id_hang IN (7,8)')->andFilterWhere(['noi_dang_ky'=>'CS2'])->count();
+        $soLuongA01 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere("DATE(thoi_gian_tao) = '$date'")->andWhere('id_hang IN (7,8)')->count();
+        $soLuongA011 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere("DATE(thoi_gian_tao) = '$date'")->andWhere('id_hang IN (7,8)')->andFilterWhere(['noi_dang_ky'=>'CS1'])->count();
+        $soLuongA012 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere("DATE(thoi_gian_tao) = '$date'")->andWhere('id_hang IN (7,8)')->andFilterWhere(['noi_dang_ky'=>'CS2'])->count();
         
         $soLuongA = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere("DATE(thoi_gian_tao) = '$date'")->andWhere('id_hang IN (9,10)')->count();
         $soLuongA1 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere("DATE(thoi_gian_tao) = '$date'")->andWhere('id_hang IN (9,10)')->andFilterWhere(['noi_dang_ky'=>'CS1'])->count();
@@ -95,9 +95,9 @@ use app\custom\CustomFunc;
         <td align="center"><?= $soLuongC11 ?></td>
         <td align="center"><?= $soLuongC12 ?></td>
         
-        <td align="center"><?= $soLuongA1 ?></td>
-        <td align="center"><?= $soLuongA11 ?></td>
-        <td align="center"><?= $soLuongA12 ?></td>
+        <td align="center"><?= $soLuongA01 ?></td>
+        <td align="center"><?= $soLuongA011 ?></td>
+        <td align="center"><?= $soLuongA012 ?></td>
         
         <td align="center"><?= $soLuongA ?></td>
         <td align="center"><?= $soLuongA1 ?></td>
@@ -145,9 +145,9 @@ use app\custom\CustomFunc;
             $soLuongC11 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere('id_hang IN (5,6)')->andFilterWhere(['noi_dang_ky'=>'CS1'])->count();
             $soLuongC12 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere('id_hang IN (5,6)')->andFilterWhere(['noi_dang_ky'=>'CS2'])->count();
             
-            $soLuongA1 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere('id_hang IN (7,8)')->count();
-            $soLuongA11 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere('id_hang IN (7,8)')->andFilterWhere(['noi_dang_ky'=>'CS1'])->count();
-            $soLuongA12 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere('id_hang IN (7,8)')->andFilterWhere(['noi_dang_ky'=>'CS2'])->count();
+            $soLuongA01 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere('id_hang IN (7,8)')->count();
+            $soLuongA011 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere('id_hang IN (7,8)')->andFilterWhere(['noi_dang_ky'=>'CS1'])->count();
+            $soLuongA012 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere('id_hang IN (7,8)')->andFilterWhere(['noi_dang_ky'=>'CS2'])->count();
             
             $soLuongA = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere('id_hang IN (9,10)')->count();
             $soLuongA1 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere('id_hang IN (9,10)')->andFilterWhere(['noi_dang_ky'=>'CS1'])->count();
@@ -172,9 +172,9 @@ use app\custom\CustomFunc;
                 <td align="center"><?= $soLuongC11 ?></td>
                 <td align="center"><?= $soLuongC12 ?></td>
                 
-                <td align="center"><?= $soLuongA1 ?></td>
-                <td align="center"><?= $soLuongA11 ?></td>
-                <td align="center"><?= $soLuongA12 ?></td>
+                <td align="center"><?= $soLuongA01 ?></td>
+                <td align="center"><?= $soLuongA011 ?></td>
+                <td align="center"><?= $soLuongA012 ?></td>
                 
                 <td align="center"><?= $soLuongA ?></td>
                 <td align="center"><?= $soLuongA1 ?></td>
