@@ -178,7 +178,6 @@ class NopHocPhiSearch extends NopHocPhi
                 $this->thoi_gian_tao = CustomFunc::convertDMYToYMD($this->thoi_gian_tao);
                 $query->andWhere("DATE(t.thoi_gian_tao) = '".$this->thoi_gian_tao."'");
             }
-            
         }
         return $dataProvider;
     }

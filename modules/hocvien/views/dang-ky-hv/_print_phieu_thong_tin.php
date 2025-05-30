@@ -66,9 +66,11 @@ use app\custom\CustomFunc;
     			Ghi chú:' . $model->ghi_chu) : '' ?>
     			</td>
     		</tr>
+    		<?php if(!in_array($model->hocVien->id_hang, array(7,8,9,10) )):?>
     		<tr>
     			<td colspan="2">Kèm theo: 01 đồng phục, 01 thẻ học viên</td>
     		</tr>
+    		<?php endif;?>
     	</table>
     	
     	<table id="table-ky-ten" style="width: 100%; margin-top:5px;">

@@ -57,7 +57,7 @@ class KhoaHocController extends Controller
 	        return [
 	            'title'=> 'Thông báo',
 	            'content'=>'Khóa học không tồn tại!',
-	            'footer'=> Html::button('Đóng',['data-bs-dismiss'=>'modal'])
+	            'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"])
 	        ];
 	    }
 	    if($request->isAjax){
@@ -67,8 +67,8 @@ class KhoaHocController extends Controller
 	                'content'=>$this->renderAjax('_formPhanCong', [
 	                    'model' => $model,
 	                ]),
-	                'footer'=> Html::button('Lưu lại',['type'=>'submit']). '&nbsp;' .
-	                Html::button('Đóng',['data-bs-dismiss'=>'modal'])
+	                'footer'=> Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"]). '&nbsp;' .
+	                Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"])
 	            ];
 	        }else if($model->load($request->post())){
 	            if($model->validate('idGiaoVien')){
@@ -82,26 +82,35 @@ class KhoaHocController extends Controller
 	                        //}
 	                    }
 	                }
+	                return [
+	                    'title'=> "Phân công học viên cho giáo viên",
+	                    'content'=>$this->renderAjax('_formPhanCong', [
+	                        'model' => $model,
+	                    ]),
+	                    'tcontent'=>'Phân công học viên cho giáo viên thành công!',
+	                    'footer'=> Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"]). '&nbsp;' .
+	                    Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"])
+	                ];
+	            }else {
+	                return [
+	                    'title'=> "Phân công học viên cho giáo viên",
+	                    'content'=>$this->renderAjax('_formPhanCong', [
+	                        'model' => $model,
+	                    ]),
+	                    'footer'=> Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"]). '&nbsp;' .
+	                    Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"])
+	                ];
 	            }
 	            
-	            return [	                
-	                'title'=> "Phân công học viên cho giáo viên",
-	                'content'=>$this->renderAjax('_formPhanCong', [
-	                    'model' => $model,
-	                ]),
-	                'tcontent'=>'Phân công học viên cho giáo viên thành công!',
-	                'footer'=> Html::button('Lưu lại',['type'=>'submit']). '&nbsp;' .
-	                Html::button('Đóng',['data-bs-dismiss'=>'modal'])
-	                
-	            ];
+	            
 	        }else{
 	            return [
 	                'title'=> "Phân công học viên cho giáo viên",
 	                'content'=>$this->renderAjax('_formPhanCong', [
 	                    'model' => $model,
 	                ]),
-	                'footer'=> Html::button('Save-Popup',['type'=>'submit']). '&nbsp;' .
-	                Html::button('Close-Popup',['data-bs-dismiss'=>'modal'])
+	                'footer'=> Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"]). '&nbsp;' .
+	                Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"])
 	            ];
 	        }
 	    }//if isAjax
