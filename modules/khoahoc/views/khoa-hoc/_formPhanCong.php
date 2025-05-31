@@ -29,7 +29,7 @@ use app\modules\giaovien\models\GiaoVien;
             				<input id="txtDiaChi" type="text" class="form-control-sm" placeholder="Địa chỉ" />
             			</td>
             			<td>
-            				<?= Html::dropDownList('GiaoVien', null, GiaoVien::getList(), ['id'=>'ddlGiaoVien', 'class'=>'form-control-sm', 'prompt'=>'-Chọn-']) ?>
+            				<?= Html::dropDownList('GiaoVien', null, GiaoVien::getListName(), ['id'=>'ddlGiaoVien', 'class'=>'form-control-sm', 'prompt'=>'-Chọn-']) ?>
             			</td>
             		</tr>
             	</table>
@@ -42,7 +42,7 @@ use app\modules\giaovien\models\GiaoVien;
 <div class="row">
 	<div class="col-md-2">
 		<?= $form->field($model, 'idGiaoVien')->dropDownList(GiaoVien::getList(), ['prompt'=>'-Chọn giáo viên-']) ?>
-		<button type="submit">Lưu lại</button>
+		
 	</div>
 	<div class="col-md-10">
         <table id="tblDsHocVien" class="table table-bordered table-hover">
@@ -85,7 +85,7 @@ $('#s-all').on('click', function(){
 });
 
 var table = new DataTable('#tblDsHocVien',{
-    pageLength: 20,
+    pageLength: 10,
     "language": {
         "sLengthMenu":    "Hiển thị _MENU_ dòng dữ liệu/trang",
         "sInfo":          "Hiển thị _START_ - _END_ của _TOTAL_ dữ liệu",

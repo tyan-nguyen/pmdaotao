@@ -11,6 +11,7 @@ use app\modules\giaovien\models\GiaoVien;
  *
  * @property int $id
  * @property int $id_loai_xe
+ * @property string|null $phan_loai
  * @property string|null $hieu_xe
  * @property string|null $bien_so_xe
  * @property string|null $tinh_trang_xe
@@ -28,6 +29,9 @@ class Xe extends \app\models\PtxXe
     const XE_HUHONG = 'HUHONG';
     const XE_SUACHUA = 'SUACHUA';
     const XE_BAOTRI = 'BAOTRI';
+    
+    const PHANLOAI_SATHACH = 'SATHACH';
+    const PHANLOAI_TAPLAI = 'TAPLAI';
     
     /**
      * Danh muc hinh thuc chuyen khoan
@@ -124,14 +128,49 @@ class Xe extends \app\models\PtxXe
     }
     
     /**
+     * Danh muc phan loai xe
+     * @return string[]
+     */
+    public static function getDmPhanLoaiXe()
+    {
+        return [
+            self::PHANLOAI_TAPLAI => 'Xe tập lái',
+            self::PHANLOAI_SATHACH => 'Xe sát hạch',
+        ];
+    }
+    /**
+     * Danh muc trang thai label
+     * @param int $val
+     * @return string
+     */
+    public function getLabelPhanLoaiXe($val = NULL)
+    {
+        if ($val == NULL) {
+            $val = $this->phan_loai;
+        }
+        switch ($val) {
+            case self::PHANLOAI_TAPLAI:
+                $label = "Xe tập lái";
+                break;
+            case self::PHANLOAI_SATHACH:
+                $label = "Xe sát hạch";
+                break;
+            default:
+                $label = '';
+        }
+        return $label;
+    }
+    
+    /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['id_loai_xe'], 'required'],
+            [['id_loai_xe', 'phan_loai'], 'required'],
             [['id_loai_xe', 'nguoi_tao', 'id_giao_vien'], 'integer'],
             [['ghi_chu'], 'string'],
+            [['phan_loai'], 'string', 'max' => 20],
             [['tinh_trang_xe'], 'string', 'max' => 20],
             [['thoi_gian_tao'], 'safe'],
             [['hieu_xe', 'bien_so_xe'], 'string', 'max' => 50],
@@ -148,6 +187,8 @@ class Xe extends \app\models\PtxXe
         return [
             'id' => 'ID',
             'id_loai_xe' => 'Tên loại xe',
+            'phan_loai' => 'Phân loại xe',
+            'phan_loai' => 'Phân loại xe',
             'hieu_xe' => 'Hiệu Xe',
             'bien_so_xe' => 'Biển Số Xe',
             'tinh_trang_xe' => 'Tình Trạng Xe',

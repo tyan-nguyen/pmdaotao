@@ -44,6 +44,9 @@ use app\modules\user\models\User;
                  'pluginOptions' => [
                  'autoclose' => true,
                  'format' => 'dd/mm/yyyy',
+                 'zIndexOffset'=>'9999',
+                 'todayHighlight'=>true,
+                 'todayBtn'=>true
           ]
         ]); ?>
     </div>
@@ -62,6 +65,9 @@ use app\modules\user\models\User;
                  'pluginOptions' => [
                  'autoclose' => true,
                  'format' => 'dd/mm/yyyy',
+                 'zIndexOffset'=>'9999',
+                 'todayHighlight'=>true,
+                 'todayBtn'=>true
           ]
         ]);?>
     

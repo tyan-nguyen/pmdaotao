@@ -3,7 +3,7 @@
 	<div>
 		<div class="row">
 			<div class="col-md-12">
-				<span>Bản quyền phần mềm của <a href="javascript:void(0);" class="text-primary">TRUNG TÂM GIÁO DỤC NGHỀ NGHIỆP VÀ SÁT HẠCH LÁI XE NGUYỄN TRÌNH</a>.
+				<span>Bản quyền phần mềm của <a target="_blank" href="https://nguyentrinh.com.vn" class="text-primary">DNTN SX-TM NGUYỄN TRÌNH</a>.
 					</span>
 			</div>
 		</div>

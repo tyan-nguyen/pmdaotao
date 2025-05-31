@@ -74,11 +74,13 @@ class KhoaHocController extends Controller
 	            if($model->validate('idGiaoVien')){
 	                //xu ly them vao khsx
 	                if($model->idGiaoVien != null){
-	                    foreach ($model->listIdHocVien as $indexHocVien=>$idHocVien){
+	                    foreach ($model->listIdHocVien as $idHocVien => $val){
 	                        $modelHocVien = HocVien::findOne($idHocVien);
 	                        //if($modelHocVien!= null && $modelHocVien->id_giao_vien == null){
-	                            $modelHocVien->id_giao_vien = $model->idGiaoVien;
-	                            $modelHocVien->updateAttributes(['id_giao_vien']);
+	                        if($modelHocVien!=null){
+                                $modelHocVien->id_giao_vien = $model->idGiaoVien;
+                                $modelHocVien->updateAttributes(['id_giao_vien']);
+	                        }
 	                        //}
 	                    }
 	                }

@@ -2,6 +2,7 @@
 use app\modules\user\models\Dashboard;
 use yii\bootstrap5\Modal;
 use cangak\ajaxcrud\CrudAsset; 
+use app\modules\user\models\User;
 
 Yii::$app->params['showTopSearch'] = false;
 Yii::$app->params['moduleID'] = 'Home';
@@ -25,6 +26,64 @@ $dash = new Dashboard();
 <?php Modal::end(); ?>
 
 
+
+<?php if (User::hasRole('nGiaoVien',false)):?>
+<div class="row">
+	<div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
+		<div class="card custom-card service">
+			<div class="card-body">
+				<div class="item-box text-center">
+					<div class=" text-center text-success mb-2"><i class="fa fa-users"></i>
+					</div>
+					<div class="item-box-wrap">
+						<h5 class="mb-2">
+							<a href="/daotao/ql-hoc-vien?menu=hv2">Danh sách học viên</a>
+						</h5>
+						<p class="text-muted mb-0">Danh sách học viên phụ trách</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="col-sm-12 col-md-6 col-lg-6 col-xl-3 ">
+		<div class="card custom-card service">
+			<div class="card-body">
+				<div class="item-box text-center">
+					<div class=" text-center mb-2 text-primary"><i class="fa fa-graduation-cap"></i>
+					</div>
+					<div class="item-box-wrap">						
+						<h5 class="mb-2">
+							<a href="/daotao/ke-hoach-giao-vien?menu=hv1">Kế hoạch giảng dạy</a>
+						</h5>				
+						<p class="text-muted mb-0">Sắp xếp lịch học thực hành</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="col-sm-12 col-md-6 col-lg-6 col-xl-3 ">
+		<div class="card custom-card service">
+			<div class="card-body">
+				<div class="item-box text-center">
+					<div class=" text-center mb-2 text-primary"><i class="fa fa-graduation-cap"></i>
+					</div>
+					<div class="item-box-wrap">						
+						<h5 class="mb-2">
+							<a href="/user/auth/change-own-password">Đổi mật khẩu</a>
+						</h5>				
+						<p class="text-muted mb-0">Thay đổi mật khẩu</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</div>
+<?php /*elseif(User::hasRole('nThue',false)): ?>
+<?php elseif (User::hasRole('nDaoTao',false)):*/?>
+<?php else:?>
 <div class="row">
 
 	<div class="col-sm-12 col-md-6 col-lg-6 col-xl-3 ">
@@ -96,6 +155,7 @@ $dash = new Dashboard();
 	</div>
 	
 </div>
+<?php endif;?>
 
 <div class="row">
 	<div class="col-sm-12">

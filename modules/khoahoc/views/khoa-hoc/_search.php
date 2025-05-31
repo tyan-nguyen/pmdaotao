@@ -32,6 +32,9 @@ use kartik\date\DatePicker;
             'pluginOptions' => [
                 'autoclose' => true,
                 'format' => 'dd/mm/yyyy',
+                'zIndexOffset'=>'9999',
+                'todayHighlight'=>true,
+                'todayBtn'=>true
             ]
                ]); ?>
         </div>
@@ -41,6 +44,9 @@ use kartik\date\DatePicker;
             'pluginOptions' => [
                 'autoclose' => true,
                 'format' => 'dd/mm/yyyy',
+                'zIndexOffset'=>'9999',
+                'todayHighlight'=>true,
+                'todayBtn'=>true
             ]
                ]); ?>
         </div>

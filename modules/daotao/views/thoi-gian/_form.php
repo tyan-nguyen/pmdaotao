@@ -34,9 +34,12 @@ if($model->thoi_gian_kt){
         	<?= $form->field($model, 'thoi_gian_kt')->textInput(['id'=>'timekt']) ?>
         </div>
         <div class="col-md-4">
-        	<?= $form->field($model, 'active')->checkbox() ?>
+        	<?= $form->field($model, 'so_gio')->textInput([])->label('Số giờ tính') ?>
         </div>
         <div class="col-md-4">
+        	<?= $form->field($model, 'active')->checkbox() ?>
+        </div>
+        <div class="col-md-12">
         	<?= $form->field($model, 'ghi_chu')->textarea(['rows' => 6]) ?>
         </div>
         

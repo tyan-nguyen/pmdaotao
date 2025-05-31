@@ -2,6 +2,7 @@
 use yii\helpers\Url;
 use app\custom\CustomFunc;
 use app\modules\daotao\models\KeHoach;
+use yii\helpers\Html;
 
 return [
     [
@@ -11,7 +12,7 @@ return [
     [
         'class' => 'kartik\grid\ActionColumn',
         'header'=>'',
-        'template' => '{view} {update} {delete}',
+        'template' => '{duyet} {view} {update} {delete}',
         'dropdown' => true,
         'dropdownOptions' => ['class' => 'float-right'],
         'dropdownButton'=>[
@@ -21,11 +22,28 @@ return [
         'vAlign'=>'middle',
         'width' => '20px',
         'urlCreator' => function($action, $model, $key, $index) {
-        	return Url::to([$action,'id'=>$key]);
+            if ($action === 'duyet') {
+                return Url::to(['duyet', 'id' => $key]);
+            }
+            return Url::to([$action, 'id' => $key]);
         },
         'visibleButtons' => [
             'view' => function ($model, $key, $index) {
                 return Yii::$app->params['showView'];
+            },
+            'duyet' => function ($model, $key, $index) {
+                return $model->trang_thai_duyet == KeHoach::TT_CHODUYET;
+            },
+        ],
+        'buttons' => [
+            'duyet' => function ($url, $model, $key) {
+                return Html::a('<i class="fa-solid fa-list-check"></i> Duyệt', $url, [
+                    'title' => 'Duyệt kế hoạch',
+                    'role' => 'modal-remote',
+                    'class' => 'btn ripple btn-warning dropdown-item',
+                    'data-bs-placement' => 'top',
+                    'data-bs-toggle' => 'tooltip',
+                ]);
             },
         ],
         'viewOptions'=>['role'=>'modal-remote','title'=>'View','title'=>'Xem',
@@ -72,7 +90,7 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'trang_thai_duyet',
         'value'=>function($model){
-            return KeHoach::getLabelTinhTrangXeBadge($model->trang_thai_duyet);
+            return KeHoach::getLabelTrangThaiBadge($model->trang_thai_duyet);
         },
         'format' => 'raw'
     ],
@@ -86,6 +104,9 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'thoi_gian_duyet',
+        'value'=>function($model){
+            return CustomFunc::convertYMDHISToDMYHIS($model->thoi_gian_duyet);
+        }
     ],
     [
         'class'=>'\kartik\grid\DataColumn',

@@ -80,8 +80,8 @@ use app\custom\CustomFunc;
     	<td><?= ($iDate+1) ?></td>
     	<td align="center"><strong><?= CustomFunc::convertYMDToDMY($date) ?></strong></td>
     	<td align="center"><strong><?= $soLuongHV ?></strong></td>
-    	<td align="center"><strong><?= $soLuongHV1 ?></strong></td>
-    	<td align="center"><strong><?= $soLuongHV2 ?></strong></td>
+    	<td align="center"><?= $soLuongHV1 ?></td>
+    	<td align="center"><?= $soLuongHV2 ?></td>
     	
     	<td align="center"><?= $soLuongBTD ?></td>
         <td align="center"><?= $soLuongBTD1 ?></td>

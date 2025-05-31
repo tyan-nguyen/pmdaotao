@@ -88,6 +88,13 @@ return [
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'phan_loai',
+        'value' => function($model) {
+            return $model->getLabelPhanLoaiXe();
+        },
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'hieu_xe',
     ],
     [

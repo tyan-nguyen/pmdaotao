@@ -46,6 +46,9 @@ class CustomFunc
      * @return string
      */
     public static function convertDMYHISToYMDHIS($date_string){
+        if($date_string != null){
+            $date_string = str_replace('/', '-', $date_string);
+        }
         return $date_string!=null ? date("Y-m-d H:i:s", strtotime($date_string)) : '';
     }
     /**

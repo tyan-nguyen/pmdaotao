@@ -52,6 +52,14 @@ return [
         'attribute' => 'ho_ten',
         'width' => '200px',
     ],
+    [
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'tai_khoan',
+        'value'=>function ($model){
+          return $model->taiKhoan?$model->taiKhoan->username:'';  
+        },
+        'width' => '200px',
+    ],
     
     [
         'class'=>'\kartik\grid\DataColumn',

@@ -44,5 +44,20 @@ class GiaoVien extends GiaoVienBase
             return '+ ' . $model->ho_ten;
         });
     }
+    /**
+     * use in datatable
+     * @return array|unknown[]|mixed|unknown
+     */
+    public static function getListName()
+    {
+        $dsnhanVien = GiaoVien::find()
+        ->where(['doi_tuong' => '1'])
+        ->orderBy(['ho_ten' => SORT_ASC])
+        ->all();
+        
+        return ArrayHelper::map($dsnhanVien, 'ho_ten', function ($model) {
+            return '+ ' . $model->ho_ten;
+        });
+    }
     
 }

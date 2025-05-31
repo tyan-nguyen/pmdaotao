@@ -7,6 +7,9 @@ use app\modules\hocvien\models\HocVien;
 use app\modules\thuexe\models\Xe;
 use app\modules\daotao\models\TietHoc;
 use app\modules\daotao\models\KeHoach;
+use yii\helpers\Url;
+use yii\web\JsExpression;
+use app\modules\user\models\User;
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\daotao\models\HangMonHoc */
@@ -29,6 +32,7 @@ $keHoach = KeHoach::findOne($model->id_ke_hoach);
             	        $model->id_hoc_vien => HocVien::findOne($model->id_hoc_vien)->ho_ten
             	    ] : HocVien::getListByGiaoVien($model->id_giao_vien), 
                     'language' => 'vi',
+        	       //'id' => 'hvfrm-dropdown',
                    'options' => [
                        'placeholder' => 'Chọn học viên...',  
                        'class' => 'form-control dropdown-with-arrow',
@@ -53,6 +57,7 @@ $keHoach = KeHoach::findOne($model->id_ke_hoach);
         	           $model->id_mon_hoc => MonHoc::findOne($model->id_mon_hoc)->tenMon
             	    ] : MonHoc::getList(), 
                     'language' => 'vi',
+        	       //'id' => 'mhfrm-dropdown',
                    'options' => [
                        'placeholder' => 'Chọn module...',  
                        'class' => 'form-control dropdown-with-arrow',
@@ -60,8 +65,20 @@ $keHoach = KeHoach::findOne($model->id_ke_hoach);
                    ],
                    'pluginOptions' => [
                       'allowClear' => true,
-                       'width'=>'100%',
+                      'width'=>'100%',
                       'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal2")'),
+                      'ajax' => [
+                            'url' => Url::to(['/daotao/tiet-hoc/get-list-mon-hoc-by-hoc-vien']),
+                            'dataType' => 'json',
+                            'data' => new JsExpression('function(params) {
+                                return {
+                                    hocvien_id: $("#hvfrm-dropdown").val()
+                                };
+                            }'),
+                            'processResults' => new JsExpression('function(data) {
+                                return data;
+                            }' ),
+                       ],
                    ],
             ])->label(false); ?>
         </div>
@@ -91,8 +108,8 @@ $keHoach = KeHoach::findOne($model->id_ke_hoach);
         </div>
         <div class="col-md-4">
         	<?= $form->field($model, 'trang_thai')->dropDownList(
-        	    $keHoach->trang_thai_duyet==KeHoach::TT_NHAP ?TietHoc::getDmTrangThaiChuaDuyet() :TietHoc::getDmTrangThai(), [
-        	    'prompt'=>'-Tất cả-'
+        	    $keHoach->trang_thai_duyet==KeHoach::TT_NHAP ?TietHoc::getDmTrangThaiChuaDuyet() :( User::getCurrentUser()->idGiaoVien?TietHoc::getDmTrangThaiForGiaoVien():TietHoc::getDmTrangThai()), [
+        	    //'prompt'=>'-Tất cả-'
         	]) ?>  
         </div>
          <div class="col-md-8">
@@ -116,14 +133,19 @@ $keHoach = KeHoach::findOne($model->id_ke_hoach);
   	selectOnClose: true,
   	width: '100%'
 }); */
-$('#hvfrm-dropdown').on("select2:select", function(e) { 
+/* $('#hvfrm-dropdown').on("select2:select", function(e) { 
    if(this.value != ''){
-   		getHocVienFromKeHoachAjax(this.value);
+   		//getHocVienFromKeHoachAjax(this.value);
    } else {
-   		$('#tt-hoc-vien').html('');
+   		//$('#tt-hoc-vien').html('');
    }
+}); */
+
+$('#hvfrm-dropdown').on('change', function () {
+    $('#mhfrm-dropdown').val(null).trigger('change'); // reset city khi country thay đổi
 });
-function getHocVienFromKeHoachAjax(idhv){
+
+/* function getHocVienFromKeHoachAjax(idhv){
     $.ajax({
         type: 'post',
         url: '/daotao/tiet-hoc/get-hoc-vien-from-ke-hoach-ajax?idhv=' + idhv,
@@ -134,7 +156,7 @@ function getHocVienFromKeHoachAjax(idhv){
             if(data.status == 'success'){
             	$('#tt-hoc-vien').html(data.content);
             } else {
-            	alert('Thông tin Khách hàng không còn tồn tại trên hệ thống!');
+            	alert('Thông tin học viên không còn tồn tại trên hệ thống!');
             }
         },
         error: function (data) {
@@ -142,5 +164,5 @@ function getHocVienFromKeHoachAjax(idhv){
             console.log(data);
         },
     });
-}
+} */
 </script>

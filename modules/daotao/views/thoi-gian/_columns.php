@@ -71,6 +71,11 @@ return [
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'so_gio',
+        'label'=>'Số giờ tính'
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'active',
     ],
     [

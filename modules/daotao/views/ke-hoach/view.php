@@ -18,7 +18,7 @@ use yii\helpers\Html;
                     <p><strong>Giáo viên:</strong> <?= $model->giaoVien?$model->giaoVien->ho_ten:''?></p>
                     <p><strong>Ngày tạo:</strong> <?= CustomFunc::convertYMDToDMY($model->ngay_thuc_hien)?></p>
                     <p><strong>Ghi chú:</strong> <?= $model->ghi_chu?></p>
-                    <p><strong>Trạng thái:</strong> <?= KeHoach::getLabelTinhTrangXeBadge($model->trang_thai_duyet)?></p>
+                    <p><strong>Trạng thái:</strong> <?= KeHoach::getLabelTrangThaiBadge($model->trang_thai_duyet)?></p>
                     <p><strong>Người duyệt:</strong> <?= $model->nguoiDuyet?($model->nguoiDuyet->ho_ten?$model->nguoiDuyet->ho_ten:$model->nguoiDuyet->username):'' ?></p>
                     <p><strong>Ngày duyệt:</strong> <?= CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_duyet)?></p>
                     <p><strong>Ghi chú duyệt:</strong> <?= $model->noi_dung_duyet ?></p>

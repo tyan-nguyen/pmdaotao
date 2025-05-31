@@ -5,6 +5,7 @@ use Yii;
 use yii\helpers\ArrayHelper;
 use app\modules\hocvien\models\HocVien;
 use yii\db\Expression;
+use app\modules\giaovien\models\GiaoVien;
 
 class User extends UserBase{
     
@@ -17,6 +18,19 @@ class User extends UserBase{
         
        
     }
+    /**
+     * get id giao vien neu tai khoan la giao vien
+     * @return int
+     */
+    public function getIdGiaoVien(){
+        $giaoVien = GiaoVien::find()->where(['tai_khoan'=>Yii::$app->user->id])->one();
+        if($giaoVien != null){
+            return $giaoVien->id;
+        } else {
+            return null;
+        }
+    }
+    
     public function getHoTen(){
         return $this->ho_ten?$this->ho_ten:$this->username;
     }

@@ -15,6 +15,7 @@ use app\modules\daotao\models\TietHoc;
  * @property int $stt
  * @property string $thoi_gian_bd
  * @property string $thoi_gian_kt
+ * @property float $so_gio
  * @property string|null $ghi_chu
  * @property int|null $active
  * @property int|null $nguoi_tao
@@ -34,6 +35,7 @@ class DmThoiGianBase extends GdDmThoiGian
             [['ten_thoi_gian', 'stt', 'thoi_gian_bd', 'thoi_gian_kt'], 'required'],
             [['stt', 'nguoi_tao', 'active'], 'integer'],
             [['thoi_gian_bd', 'thoi_gian_kt', 'thoi_gian_tao'], 'safe'],
+            [['so_gio'], 'number'],
             [['ghi_chu'], 'string'],
             [['ten_thoi_gian'], 'string', 'max' => 200],
         ];
@@ -50,6 +52,7 @@ class DmThoiGianBase extends GdDmThoiGian
             'stt' => 'STT',
             'thoi_gian_bd' => 'Bắt đầu',
             'thoi_gian_kt' => 'Kết thúc',
+            'so_gio' => 'Số giờ',
             'ghi_chu' => 'Ghi chú',
             'active' => 'Hiển thị',
             'nguoi_tao' => 'Người tạo',

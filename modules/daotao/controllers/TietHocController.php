@@ -13,6 +13,9 @@ use yii\helpers\Html;
 use yii\filters\AccessControl;
 use app\modules\daotao\models\KeHoach;
 use app\modules\daotao\models\DmThoiGian;
+use app\modules\daotao\models\HangMonHoc;
+use app\modules\hocvien\models\HocVien;
+use yii\helpers\ArrayHelper;
 
 /**
  * TietHocController implements the CRUD actions for TietHoc model.
@@ -34,6 +37,32 @@ class TietHocController extends Controller
     				],
     			],
 		];
+	}
+	/**
+	 * get list mon hoc cua hoc vien
+	 * @param unknown $country_id
+	 * @return unknown[]
+	 */
+	public function actionGetListMonHocByHocVien($hocvien_id) {
+	    \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+	    $hocVien = HocVien::findOne($hocvien_id);
+	    $query = HangMonHoc::find()->alias('t')
+	    ->andFilterWhere(['t.id_hang' => $hocVien->id_hang])
+	    ->limit(20)
+	    ->all();
+	    
+	    $results = [];
+	    foreach ($query as $item) {
+	        $results[] = [
+	            'id' => $item->id_mon,
+	            'text' => $item->mon->ten_mon . ($item->mon->ten_mon_sub?' ('.$item->mon->ten_mon_sub.')':''),
+	        ];
+	    }
+	    return ['results' => $results];
+	    
+	    /* return ArrayHelper::map($query, 'id_mon', function ($model) {
+	        return '+ ' . $model->mon->ten_mon . ($model->mon->ten_mon_sub?' ('.$model->mon->ten_mon_sub.')':'');
+	    }); */
 	}
 
     /**
@@ -174,7 +203,7 @@ class TietHocController extends Controller
             $model->id_giao_vien = $keHoach->id_giao_vien;
             $model->id_thoi_gian_hoc = $idtime;
             
-            $model->so_gio = 1;
+            $model->so_gio = $time->so_gio;
             $model->thoi_gian_bd = $keHoach->ngay_thuc_hien . ' ' . $time->thoi_gian_bd;
             $model->thoi_gian_kt = $keHoach->ngay_thuc_hien . ' ' . $time->thoi_gian_kt;
         }

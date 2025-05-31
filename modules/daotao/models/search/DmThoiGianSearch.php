@@ -19,7 +19,7 @@ class DmThoiGianSearch extends DmThoiGian
     {
         return [
             [['id', 'stt', 'nguoi_tao', 'active'], 'integer'],
-            [['ten_thoi_gian', 'thoi_gian_bd', 'thoi_gian_kt', 'ghi_chu', 'thoi_gian_tao'], 'safe'],
+            [['ten_thoi_gian', 'thoi_gian_bd', 'thoi_gian_kt', 'ghi_chu', 'thoi_gian_tao', 'so_gio'], 'safe'],
         ];
     }
 
@@ -66,6 +66,7 @@ class DmThoiGianSearch extends DmThoiGian
             'thoi_gian_kt' => $this->thoi_gian_kt,
             'nguoi_tao' => $this->nguoi_tao,
             'thoi_gian_tao' => $this->thoi_gian_tao,
+        	'so_gio' => $this->so_gio,
         	'active' => $this->active,
         ]);
 

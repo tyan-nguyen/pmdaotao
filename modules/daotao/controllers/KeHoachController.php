@@ -11,6 +11,7 @@ use yii\filters\VerbFilter;
 use \yii\web\Response;
 use yii\helpers\Html;
 use yii\filters\AccessControl;
+use app\modules\daotao\models\base\KeHoachBase;
 
 /**
  * KeHoachController implements the CRUD actions for KeHoach model.
@@ -204,6 +205,70 @@ class KeHoachController extends Controller
                 return $this->render('update', [
                     'model' => $model,
                 ]);
+            }
+        }
+    }
+    
+    /**
+     * duyet ke hoach
+     * For ajax request will return json object
+     * and for non-ajax request if update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionDuyet($id)
+    {
+        $request = Yii::$app->request;
+        $model = $this->findModel($id);
+        $model->scenario = 'duyet-kh';
+        
+        if($request->isAjax){
+            /*
+             *   Process for ajax request
+             */
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            if($request->isGet){
+                return [
+                    'title'=> "Duyệt Kế hoạch",
+                    'content'=>$this->renderAjax('_formDuyet', [
+                        'model' => $model,
+                    ]),
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                    Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                ];
+            }else if($model->load($request->post())){
+                $model->thoi_gian_duyet = date('Y-m-d H:i:s');
+                $model->id_nguoi_duyet = Yii::$app->user->id;
+                /* if($model->trang_thai_duyet != KeHoach::TT_DADUYET || $model->trang_thai_duyet != KeHoach::TT_KHONGDUYET){
+                    $model->addError('trang_thai_duyet', 'Vui lòng chọn Duyệt hoặc Không duyệt');
+                    return [
+                        'title'=> "Duyệt Kế hoạch",
+                        'content'=>$this->renderAjax('_formDuyet', [
+                            'model' => $model,
+                        ]),
+                        'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                        Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                    ];
+                } else { */
+                    if($model->save()){
+                        return [
+                            'forceReload'=>'#crud-datatable-pjax',
+                            'forceClose'=>true,
+                            'tcontent'=>'Đã thực hiện ' . KeHoachBase::getLabelTrangThaiOther($model->trang_thai_duyet) . ' kế hoạch!'
+                        ];
+                    }else{
+                        return ['forceClose'=>true,'forceReload'=>'#crud-datatable-pjax','tcontent'=>'Cập nhật thành công!',];
+                    }
+                //}
+            }else{
+                return [
+                    'title'=> "Duyệt Kế hoạch",
+                    'content'=>$this->renderAjax('_formDuyet', [
+                        'model' => $model,
+                    ]),
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                    Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                ];
             }
         }
     }

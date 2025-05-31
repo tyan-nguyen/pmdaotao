@@ -33,7 +33,7 @@ class KeHoachBase extends \app\models\GdKeHoach
     const TT_HOANTHANH = 'HOANTHANH';
     
     /**
-     * Danh muc hinh thuc chuyen khoan
+     * Danh muc trang thai all
      * @return string[]
      */
     public static function getDmTrangThai()
@@ -48,11 +48,36 @@ class KeHoachBase extends \app\models\GdKeHoach
     }
     
     /**
+     * Danh muc trang thai for giao vien
+     * @return string[]
+     */
+    public static function getDmTrangThaiForGiaoVien()
+    {
+        return [
+            self::TT_NHAP => 'Nháp',
+            self::TT_CHODUYET => 'Chờ duyệt',
+            self::TT_HOANTHANH => 'Hoàn thành',
+        ];
+    }
+    
+    /**
+     * Danh muc trang thai for duyet
+     * @return string[]
+     */
+    public static function getDmTrangThaiDuyet()
+    {
+        return [
+            self::TT_DADUYET => 'Đã duyệt',
+            self::TT_KHONGDUYET => 'Không duyệt',
+        ];
+    }
+    
+    /**
      * Danh muc trang thai label
      * @param int $val
      * @return string
      */
-    public static function getLabelTinhTrangXeOther($val=NULL)
+    public static function getLabelTrangThaiOther($val=NULL)
     {
         switch ($val) {
             case self::TT_NHAP:
@@ -81,7 +106,7 @@ class KeHoachBase extends \app\models\GdKeHoach
      * @param int $val
      * @return string
      */
-    public static function getLabelTinhTrangXeBadge($val=NULL)
+    public static function getLabelTrangThaiBadge($val=NULL)
     {
         switch ($val) {
             case self::TT_NHAP:
@@ -116,6 +141,7 @@ class KeHoachBase extends \app\models\GdKeHoach
             [['ngay_thuc_hien', 'thoi_gian_duyet', 'thoi_gian_tao'], 'safe'],
             [['noi_dung_duyet', 'ghi_chu'], 'string'],
             [['trang_thai_duyet'], 'string', 'max' => 20],
+            [['trang_thai_duyet'], 'required', 'on'=>'duyet-kh'], //bat buoc khi duyet
         ];
     }
 
@@ -144,6 +170,8 @@ class KeHoachBase extends \app\models\GdKeHoach
             $this->thoi_gian_tao = date('Y-m-d H:i:s');
             if($this->trang_thai_duyet==null)
                 $this->trang_thai_duyet = self::TT_NHAP;
+            if($this->thoi_gian_duyet!=null)
+                $this->thoi_gian_duyet = CustomFunc::convertDMYHISToYMDHIS($this->thoi_gian_duyet);
         }
         if($this->ngay_thuc_hien!=null)
             $this->ngay_thuc_hien = CustomFunc::convertDMYToYMD($this->ngay_thuc_hien);

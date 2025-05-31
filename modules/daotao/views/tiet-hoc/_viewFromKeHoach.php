@@ -64,13 +64,13 @@ use app\modules\daotao\models\KeHoach;
      	<td><?= $tietHoc->xe->bien_so_xe ?></td>
      	<td><?= TietHoc::getLabelTinhTrangXeBadge($tietHoc->trang_thai) ?></td>
      	<td><?= $tietHoc->ghi_chu ?></td>
-     	<td><?= ($model->trang_thai_duyet==KeHoach::TT_NHAP||$model->trang_thai_duyet==KeHoach::TT_DADUYET ) ? ( Html::a( '<i class="fa fa-pencil"> </i> ',
+     	<td><?= ($model->trang_thai_duyet==KeHoach::TT_NHAP || $model->trang_thai_duyet==KeHoach::TT_DADUYET ) ? ( Html::a( '<i class="fa fa-pencil"> </i> ',
             ['/daotao/tiet-hoc/update-from-ke-hoach', 
                'id' => $tietHoc->id
             ],
             [
                 'class'=>'btn btn-warning',
-                'title' => 'Thêm giờ học',
+                'title' => 'Sửa',
                 'style' => 'color: white;',
                 'role'=>'modal-remote-2'
             ]

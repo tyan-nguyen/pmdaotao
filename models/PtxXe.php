@@ -9,6 +9,7 @@ use Yii;
  *
  * @property int $id
  * @property int $id_loai_xe
+ * @property string|null $phan_loai
  * @property string|null $hieu_xe
  * @property string|null $bien_so_xe
  * @property string|null $tinh_trang_xe
@@ -18,7 +19,6 @@ use Yii;
  * @property int|null $nguoi_tao
  * @property string|null $thoi_gian_tao
  *
- * @property GdTietHoc[] $gdTietHocs
  * @property PtxLoaiXe $loaiXe
  * @property PtxPhieuThueXe[] $ptxPhieuThueXes
  */
@@ -40,13 +40,13 @@ class PtxXe extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['hieu_xe', 'bien_so_xe', 'tinh_trang_xe', 'trang_thai', 'ghi_chu', 'id_giao_vien', 'nguoi_tao', 'thoi_gian_tao'], 'default', 'value' => null],
+            [['phan_loai', 'hieu_xe', 'bien_so_xe', 'tinh_trang_xe', 'trang_thai', 'ghi_chu', 'id_giao_vien', 'nguoi_tao', 'thoi_gian_tao'], 'default', 'value' => null],
             [['id_loai_xe'], 'required'],
             [['id_loai_xe', 'id_giao_vien', 'nguoi_tao'], 'integer'],
-            [['ghi_chu'], 'string'],
+            [['tinh_trang_xe', 'ghi_chu'], 'string'],
             [['thoi_gian_tao'], 'safe'],
+            [['phan_loai'], 'string', 'max' => 20],
             [['hieu_xe', 'bien_so_xe'], 'string', 'max' => 50],
-            [['tinh_trang_xe'], 'string', 'max' => 20],
             [['trang_thai'], 'string', 'max' => 25],
             [['id_loai_xe'], 'exist', 'skipOnError' => true, 'targetClass' => PtxLoaiXe::class, 'targetAttribute' => ['id_loai_xe' => 'id']],
         ];
@@ -60,6 +60,7 @@ class PtxXe extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'id_loai_xe' => 'Id Loai Xe',
+            'phan_loai' => 'Phan Loai',
             'hieu_xe' => 'Hieu Xe',
             'bien_so_xe' => 'Bien So Xe',
             'tinh_trang_xe' => 'Tinh Trang Xe',
@@ -69,16 +70,6 @@ class PtxXe extends \yii\db\ActiveRecord
             'nguoi_tao' => 'Nguoi Tao',
             'thoi_gian_tao' => 'Thoi Gian Tao',
         ];
-    }
-
-    /**
-     * Gets query for [[GdTietHocs]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getGdTietHocs()
-    {
-        return $this->hasMany(GdTietHoc::class, ['id_xe' => 'id']);
     }
 
     /**

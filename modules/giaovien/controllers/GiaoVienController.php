@@ -267,10 +267,12 @@ class GiaoVienController extends Controller
             } else if ($model->load($request->post()) && $model->save()) {
                 return [
                     'forceReload' => '#crud-datatable-pjax',
-                    'title' => "Thêm Giáo Viên",
+                    'forceClose'=>true,
+                    'content' => '<span class="text-success">Thêm Giáo viên thành công !</span>',
+                    /* 'title' => "Thêm Giáo Viên",
                     'content' => '<span class="text-success">Thêm Giáo viên thành công !</span>',
                     'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
-                                Html::a('Tiếp tục thêm', ['create'], ['class' => 'btn btn-primary', 'role' => 'modal-remote'])
+                                Html::a('Tiếp tục thêm', ['create'], ['class' => 'btn btn-primary', 'role' => 'modal-remote']) */
                 ];
             } else {
                 return [
@@ -321,17 +323,20 @@ class GiaoVienController extends Controller
                         'model' => $model,
                     ]),
                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                          Html::button('Sửa',['class'=>'btn btn-primary','type'=>"submit"])
+                          Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
             }else if ($model->load($request->post()) && $model->save()){
                     return [
                         'forceReload'=>'#crud-datatable-pjax',
-                        'title'=> "Giáo viên #".$id,
+                        'forceClose'=>true,
+                        'content' => '<span class="text-success">Cập nhật Giáo viên thành công !</span>',
+                        /* 'title'=> "Giáo viên #".$id,
                         'content'=>$this->renderAjax('view', [
                             'model' => $model,
                         ]),
                         'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                                    Html::a('Sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                    */
                     ];    
             }else{
                  return [

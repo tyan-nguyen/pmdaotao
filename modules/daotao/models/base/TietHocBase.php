@@ -45,7 +45,7 @@ class TietHocBase extends GdTietHoc
     const TT_DAHUY = 'DAHUY';
     
     /**
-     * Danh muc hinh thuc chuyen khoan
+     * Danh muc trang thai
      * @return string[]
      */
     public static function getDmTrangThai()
@@ -59,7 +59,20 @@ class TietHocBase extends GdTietHoc
     }
     
     /**
-     * Danh muc hinh thuc chuyen khoan
+     * Danh muc trang thai cho giao vien
+     * @return string[]
+     */
+    public static function getDmTrangThaiForGiaoVien()
+    {
+        return [
+            self::TT_CHUATHUCHIEN => 'Chưa thực hiện',
+            self::TT_DAHOANTHANH => 'Đã hoàn thành',
+            self::TT_HOCVIENHUY => 'Học viên hủy'
+        ];
+    }
+    
+    /**
+     * Danh muc trang thai chua thuc hien
      * @return string[]
      */
     public static function getDmTrangThaiChuaDuyet()

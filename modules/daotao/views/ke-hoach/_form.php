@@ -11,7 +11,7 @@ use app\modules\user\models\User;
 /* @var $this yii\web\View */
 /* @var $model app\modules\daotao\models\KeHoach */
 /* @var $form yii\widgets\ActiveForm */
-
+$oldTGD = $model->thoi_gian_duyet;
 if(!$model->isNewRecord){
     if($model->ngay_thuc_hien!=null)
         $model->ngay_thuc_hien = CustomFunc::convertYMDToDMY($model->ngay_thuc_hien);
@@ -96,5 +96,5 @@ var fp = $("#time").flatpickr({
     time_24hr: true,
     allowInput: true
 });
-fp.setDate(new Date("<?= $model->thoi_gian_duyet ?>"));
+fp.setDate(new Date("<?= $oldTGD ?>"));
 </script>

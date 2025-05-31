@@ -41,6 +41,12 @@ use app\modules\thuexe\models\Xe;
              ['prompt' => 'Chọn trạng thái']  // 
             ) ?>
     </div>
+    <div class="col-md-2">
+            <?= $form->field($model, 'phan_loai')->dropDownList(
+              Xe::getDmPhanLoaiXe(),
+             ['prompt' => '-Tất cả-']  // 
+            ) ?>
+    </div>
     <!-- 
     <div class="col-md-2">
             <?= $form->field($model, 'trang_thai')->dropDownList(
@@ -51,7 +57,7 @@ use app\modules\thuexe\models\Xe;
              ['prompt' => 'Chọn trạng thái']  // 
             ) ?>
     </div> -->
-    <div class="col-md-3">
+    <div class="col-md-2">
             <?= $form->field($model, 'id_giao_vien')->widget(Select2::classname(), [
                    'data' => GiaoVien::getList(),
                    'language' => 'vi',
