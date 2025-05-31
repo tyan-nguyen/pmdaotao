@@ -9,7 +9,7 @@ use app\modules\daotao\models\KeHoach;
     <thead>
         <tr>
         	<th>STT</th>
-            <th>Giờ dạy</th>
+            <!-- <th>Giờ dạy</th>-->
             <th>Từ giờ</th>
             <th>Đến giờ</th>
             <th>Học viên</th>
@@ -36,7 +36,7 @@ use app\modules\daotao\models\KeHoach;
      ?>
      <tr>
      	<td><?= ($iT+1) ?></td>
-     	<td><?= $time->ten_thoi_gian ?></td>
+     	<!-- <td><?= $time->ten_thoi_gian ?></td>-->
      	<td><?= CustomFunc::convertHIStoHI($time->thoi_gian_bd) ?></td>
      	<td><?= CustomFunc::convertHIStoHI($time->thoi_gian_kt) ?></td>
      	<?php if($gioIsExist == false):?>
