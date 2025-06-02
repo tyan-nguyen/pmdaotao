@@ -22,7 +22,7 @@ use app\custom\CustomFunc;
             <tr style="font-weight:bold">
                
                 
-                <!-- <td align="center">Tổng</td> -->
+                <td align="center">Tổng</td>
                 <td align="center">CS1</td>
                 <td align="center">CS2</td>
                 <!-- <td align="center">Tổng</td>-->
