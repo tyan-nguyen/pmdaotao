@@ -77,6 +77,10 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'active',
+        'value'=>function($model){
+            $model->active?'<i class="fas fa-clipboard-check text-success"></i>':'';
+        },
+        'format'=>'raw'
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
