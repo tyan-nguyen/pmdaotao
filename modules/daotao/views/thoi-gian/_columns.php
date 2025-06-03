@@ -92,7 +92,7 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ghi_chu',
-        'width' => '250px',
+        'width' => '400px',
     ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
