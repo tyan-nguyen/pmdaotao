@@ -57,10 +57,7 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ten_thoi_gian',
     ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'stt',
-    ],
+    
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'thoi_gian_bd',
@@ -78,6 +75,12 @@ return [
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'stt',
+        'width' => '80px',
+        'contentOptions' => [ 'style' => 'text-align:center' ]
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'active',
         'value'=>function($model){
             return $model->active?'<i class="fas fa-clipboard-check text-success"></i>':'';
@@ -89,6 +92,7 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ghi_chu',
+        'width' => '250px',
     ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
