@@ -20,7 +20,7 @@ use yii\helpers\Html;
 	<tr>
 		<td><?= ($iM+1) ?></td>
 		<td><?= $m->mon->ma_mon ?></td>
-		<td><?= $m->mon->ten_mon ?></td>
+		<td><?= $m->mon->ten_mon  . ($m->mon->ten_mon_sub?' ('.$m->mon->ten_mon_sub.')':'') ?></td>
 		<td><?= $m->mon->so_gio_qd ?></td>
 		<td><?= $m->mon->so_gio_tt ?></td>
 		<td><?= $m->dang_hieu_luc ? 'Có' : 'Không' ?></td>
