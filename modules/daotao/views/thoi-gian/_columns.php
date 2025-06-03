@@ -80,7 +80,9 @@ return [
         'value'=>function($model){
             return $model->active?'<i class="fas fa-clipboard-check text-success"></i>':'';
         },
-        'format'=>'raw'
+        'format'=>'raw',
+        'width' => '50px',
+        'contentOptions' => [ 'style' => 'text-align:center' ]
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
