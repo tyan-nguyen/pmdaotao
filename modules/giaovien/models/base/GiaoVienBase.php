@@ -50,6 +50,7 @@ class GiaoVienBase extends \app\models\NvNhanVien
             [['kinh_nghiem_lam_viec'], 'string'],
             [['thoi_gian_tao','ngay_sinh'], 'safe'],
             [['ho_ten', 'chuc_vu', 'so_cccd', 'dia_chi', 'dien_thoai', 'email', 'trinh_do', 'chuyen_nganh', 'vi_tri_cong_viec', 'ma_so_thue', 'trang_thai'], 'string', 'max' => 255],
+            [['ho_ten', 'tai_khoan'], 'unique'],
             [['id_phong_ban'], 'exist', 'skipOnError' => true, 'targetClass' => PhongBan::class, 'targetAttribute' => ['id_phong_ban' => 'id']],
             [['id_to'], 'exist', 'skipOnError' => true, 'targetClass' => To::class, 'targetAttribute' => ['id_to' => 'id']],
             [['tai_khoan'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['tai_khoan' => 'id']],

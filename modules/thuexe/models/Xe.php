@@ -175,6 +175,7 @@ class Xe extends \app\models\PtxXe
             [['thoi_gian_tao'], 'safe'],
             [['hieu_xe', 'bien_so_xe'], 'string', 'max' => 50],
             [['trang_thai'], 'string', 'max' => 25],
+            [['bien_so_xe'], 'unique'],
             [['id_loai_xe'], 'exist', 'skipOnError' => true, 'targetClass' =>LoaiXe::class, 'targetAttribute' => ['id_loai_xe' => 'id']],
         ];
     }
