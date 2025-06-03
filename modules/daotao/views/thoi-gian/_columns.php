@@ -72,7 +72,9 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'so_gio',
-        'label'=>'Số giờ tính'
+        'label'=>'Số giờ tính',
+        'width' => '80px',
+        'contentOptions' => [ 'style' => 'text-align:center' ]
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
@@ -81,7 +83,7 @@ return [
             return $model->active?'<i class="fas fa-clipboard-check text-success"></i>':'';
         },
         'format'=>'raw',
-        'width' => '50px',
+        'width' => '80px',
         'contentOptions' => [ 'style' => 'text-align:center' ]
     ],
     [
