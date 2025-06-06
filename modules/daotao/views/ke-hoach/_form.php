@@ -51,6 +51,9 @@ if(!$model->isNewRecord){
                  'pluginOptions' => [
                  'autoclose' => true,
                  'format' => 'dd/mm/yyyy',
+                 'zIndexOffset'=>'9999',
+                 'todayHighlight'=>true,
+                 'todayBtn'=>true
               ]
             ]); ?>
         </div>

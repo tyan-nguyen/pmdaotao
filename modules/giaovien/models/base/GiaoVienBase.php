@@ -8,6 +8,7 @@ use app\modules\user\models\User;
 use app\modules\nhanvien\models\To;
 use app\modules\vanban\models\VanBan;
 use app\custom\CustomFunc;
+use app\modules\daotao\models\GvHv;
 /**
  * This is the model class for table "nv_nhan_vien".
  *
@@ -121,6 +122,15 @@ class GiaoVienBase extends \app\models\NvNhanVien
     public function getTo()
     {
         return $this->hasOne(To::class, ['id' => 'id_to']);
+    }
+    /**
+     * Gets query for [[GdGvHvs]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getHvs()
+    {
+        return $this->hasMany(GvHv::class, ['id_hoc_vien' => 'id']);
     }
 
     /**

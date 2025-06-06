@@ -9,6 +9,7 @@ use app\modules\khoahoc\models\NhomHoc;
 use app\custom\CustomFunc;
 use Yii;
 use yii\helpers\ArrayHelper;
+use app\modules\giaovien\models\GiaoVien;
 
 class HocVien extends HocVienBase
 {
@@ -121,6 +122,7 @@ class HocVien extends HocVienBase
         return ArrayHelper::map($dsHocVien, 'id', function ($model) {
             return '+ ' . $model->ho_ten;
         });
+       
     }
     
   

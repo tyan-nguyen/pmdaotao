@@ -6,6 +6,7 @@ use Yii;
 use app\modules\thuexe\models\LoaiXe;
 use yii\helpers\ArrayHelper;
 use app\modules\giaovien\models\GiaoVien;
+use app\modules\daotao\models\GvXe;
 /**
  * This is the model class for table "ptx_xe".
  *
@@ -199,6 +200,15 @@ class Xe extends \app\models\PtxXe
             'nguoi_tao' => 'Người Tạo',
             'thoi_gian_tao' => 'Thời Gian Tạo',
         ];
+    }
+    /**
+     * Gets query for [[GdGvXes]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGvs()
+    {
+        return $this->hasMany(GvXe::class, ['id_xe' => 'id']);
     }
 
     /**

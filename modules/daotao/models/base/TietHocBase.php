@@ -9,6 +9,7 @@ use app\modules\daotao\models\DmThoiGian;
 use app\modules\thuexe\models\Xe;
 use app\modules\giaovien\models\GiaoVien;
 use app\modules\daotao\models\MonHoc;
+use app\modules\daotao\models\KeHoach;
 
 /**
  * This is the model class for table "gd_tiet_hoc".
@@ -237,5 +238,13 @@ class TietHocBase extends GdTietHoc
     {
         return $this->hasOne(Xe::class, ['id' => 'id_xe']);
     }
-
+    /**
+     * Gets query for [[KeHoach]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getKeHoach()
+    {
+        return $this->hasOne(KeHoach::class, ['id' => 'id_ke_hoach']);
+    }
 }

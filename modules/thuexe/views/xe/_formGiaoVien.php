@@ -25,6 +25,9 @@ use app\custom\CustomFunc;
         	<td style="text-align:center;vertical-align:middle"><?= $model->loaiXe->ten_loai_xe ?></td>
         	<td style="vertical-align:middle"><?= $model->bien_so_xe ?></td>
         	<td style="vertical-align:middle"><?= $model->tinh_trang_xe  ?></td>
+        	<!-- <td style="vertical-align:middle">  -->
+        		<!-- code -->
+        	<!-- </td>  -->
         </tr>
     </tbody>
 </table>

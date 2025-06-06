@@ -19,6 +19,7 @@ use Yii;
  * @property int|null $nguoi_tao
  * @property string|null $thoi_gian_tao
  *
+ * @property GdGvXe[] $gdGvXes
  * @property PtxLoaiXe $loaiXe
  * @property PtxPhieuThueXe[] $ptxPhieuThueXes
  */
@@ -70,6 +71,16 @@ class PtxXe extends \yii\db\ActiveRecord
             'nguoi_tao' => 'Nguoi Tao',
             'thoi_gian_tao' => 'Thoi Gian Tao',
         ];
+    }
+
+    /**
+     * Gets query for [[GdGvXes]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGdGvXes()
+    {
+        return $this->hasMany(GdGvXe::class, ['id_xe' => 'id']);
     }
 
     /**

@@ -16,6 +16,7 @@ use app\modules\daotao\models\DmThoiGian;
 use app\modules\daotao\models\HangMonHoc;
 use app\modules\hocvien\models\HocVien;
 use yii\helpers\ArrayHelper;
+use app\modules\thuexe\models\Xe;
 
 /**
  * TietHocController implements the CRUD actions for TietHoc model.
@@ -206,6 +207,8 @@ class TietHocController extends Controller
             $model->so_gio = $time->so_gio;
             $model->thoi_gian_bd = $keHoach->ngay_thuc_hien . ' ' . $time->thoi_gian_bd;
             $model->thoi_gian_kt = $keHoach->ngay_thuc_hien . ' ' . $time->thoi_gian_kt;
+        }else{
+            throw new NotFoundHttpException('The requested page does not exist.');
         }
         
         if($request->isAjax){
@@ -223,17 +226,87 @@ class TietHocController extends Controller
                     Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
                     
                 ];
-            }else if($model->load($request->post()) && $model->save()){
-                return [
-                    'forceClose'=>true,
-                    'reloadType'=>'gioHoc',
-                    'reloadBlock'=>'#gioHocContent',
-                    'reloadContent'=>$this->renderAjax('_viewFromKeHoach', [
-                        'model' => KeHoach::findOne($idkh),
-                    ]),
-                    
-                    'tcontent'=>'Thêm giờ học thành công!',
-                ];
+            }else if($model->load($request->post())){
+                /**
+                 * check học viên
+                 */
+                if($model->id_hoc_vien){
+                    $tietHoc = TietHoc::find()->alias('t')->joinWith(['keHoach as kh'])->where([
+                        't.id_hoc_vien'=>$model->id_hoc_vien,
+                        'kh.ngay_thuc_hien'=>$keHoach->ngay_thuc_hien
+                    ])->one();
+                    if($tietHoc != null){
+                        $model->addError('id_hoc_vien', 'Lỗi: Học viên đã được chọn theo khung giờ này trong kế hoạch khác!');
+                        return [
+                            'title'=> "Thêm mới giờ học",
+                            'content'=>$this->renderAjax('_formFromKeHoach', [
+                                'model' => $model,
+                            ]),
+                            'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                            Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                            
+                        ];
+                    }
+                }
+                /**
+                 * check xe
+                 */
+                if($model->id_xe){
+                    //check xe có khả dụng không
+                    $xe = Xe::findOne($model->id_xe);
+                    if($xe != null && ($xe->tinh_trang_xe != Xe::XE_BINHTHUONG || $xe->trang_thai != 'Khả dụng') ){
+                        $model->addError('id_xe', 'Lỗi chọn xe: Xe đang hư hỏng, bảo trì hoặc không khả dụng!');
+                        return [
+                            'title'=> "Thêm mới giờ học",
+                            'content'=>$this->renderAjax('_formFromKeHoach', [
+                                'model' => $model,
+                            ]),
+                            'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                            Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                            
+                        ];
+                    }
+                    //check xe có rảnh không
+                    $tietHoc = TietHoc::find()->alias('t')->joinWith(['keHoach as kh'])->where([
+                        't.id_thoi_gian_hoc'=>$idtime, 
+                        't.id_xe'=>$model->id_xe,
+                        'kh.ngay_thuc_hien'=>$keHoach->ngay_thuc_hien
+                    ])->one();
+                    if($tietHoc != null){
+                        $model->addError('id_xe', 'Lỗi chọn xe: Xe đã được lên kế hoạch cho khung giờ này!');
+                        return [
+                            'title'=> "Thêm mới giờ học",
+                            'content'=>$this->renderAjax('_formFromKeHoach', [
+                                'model' => $model,
+                            ]),
+                            'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                            Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                            
+                        ];
+                    }
+                }
+                
+                if($model->save()){
+                    return [
+                        'forceClose'=>true,
+                        'reloadType'=>'gioHoc',
+                        'reloadBlock'=>'#gioHocContent',
+                        'reloadContent'=>$this->renderAjax('_viewFromKeHoach', [
+                            'model' => KeHoach::findOne($idkh),
+                        ]),                    
+                        'tcontent'=>'Thêm giờ học thành công!',
+                    ];
+                }else{
+                    return [
+                        'title'=> "Thêm mới giờ học",
+                        'content'=>$this->renderAjax('_formFromKeHoach', [
+                            'model' => $model,
+                        ]),
+                        'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                        Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                        
+                    ];
+                }
             }else{
                 return [
                     'title'=> "Thêm mới giờ học",
