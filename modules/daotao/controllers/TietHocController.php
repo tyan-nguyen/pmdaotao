@@ -232,6 +232,7 @@ class TietHocController extends Controller
                  */
                 if($model->id_hoc_vien){
                     $tietHoc = TietHoc::find()->alias('t')->joinWith(['keHoach as kh'])->where([
+                        't.id_thoi_gian_hoc'=>$idtime, 
                         't.id_hoc_vien'=>$model->id_hoc_vien,
                         'kh.ngay_thuc_hien'=>$keHoach->ngay_thuc_hien
                     ])->one();
@@ -287,6 +288,23 @@ class TietHocController extends Controller
                 }
                 
                 if($model->save()){
+                    $tietHocOk = TietHoc::getSoTietHocByMonOfHocVien($model->id_hoc_vien, $model->id_mon_hoc);
+                    $soLuongGioHoc = $model->monHoc->so_gio_tt;
+                    $message = 'Thêm giờ học thành công!';
+                    if($tietHocOk>=$soLuongGioHoc){
+                        $message = '<span style="color:red"><strong>Cảnh báo số giờ học của học viên lớn hơn số giờ được cấu hình ('.$tietHocOk.'/'.$soLuongGioHoc.')!</strong></span>';
+                        return [
+                            'title'=> "Thêm mới giờ học",
+                            'content'=>$message,
+                            'reloadType'=>'gioHoc',
+                            'reloadBlock'=>'#gioHocContent',
+                            'reloadContent'=>$this->renderAjax('_viewFromKeHoach', [
+                                'model' => KeHoach::findOne($idkh),
+                            ]),
+                            'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"])
+                            
+                        ];
+                    }
                     return [
                         'forceClose'=>true,
                         'reloadType'=>'gioHoc',
@@ -294,7 +312,7 @@ class TietHocController extends Controller
                         'reloadContent'=>$this->renderAjax('_viewFromKeHoach', [
                             'model' => KeHoach::findOne($idkh),
                         ]),                    
-                        'tcontent'=>'Thêm giờ học thành công!',
+                        'tcontent'=>$message,
                     ];
                 }else{
                     return [

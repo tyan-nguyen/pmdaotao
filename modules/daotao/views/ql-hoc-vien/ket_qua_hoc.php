@@ -20,7 +20,7 @@ $dsMonHoc = HangMonHoc::find()->where(['id_hang' => $model->id_hang])->all();
     <tbody>
         <?php 
         foreach ($dsMonHoc as $iM=>$m){
-            $tietHocOk = TietHoc::find()->where(['id_hoc_vien'=>$model->id, 'id_mon_hoc'=>$m->id_mon, 'trang_thai'=>TietHoc::TT_DAHOANTHANH])->count();
+            $tietHocOk = TietHoc::find()->where(['id_hoc_vien'=>$model->id, 'id_mon_hoc'=>$m->id_mon, 'trang_thai'=>TietHoc::TT_DAHOANTHANH])->sum('so_gio');
             $tietHocHocVienHuy = TietHoc::find()->where(['id_hoc_vien'=>$model->id, 'id_mon_hoc'=>$m->id_mon, 'trang_thai'=>TietHoc::TT_HOCVIENHUY])->count();
         ?>
         <tr>
