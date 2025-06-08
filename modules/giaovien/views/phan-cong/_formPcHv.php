@@ -118,17 +118,17 @@ var table = new DataTable('#tblDsHv',{
     }
 });
 $('#txtHoTen').on( 'keyup click', function () {
-       table.columns(2).search(
+       table.columns(3).search(
        		$('#txtHoTen').val()
        ).draw();
 });
 $('#txtCCCD').on( 'keyup click', function () {
-       table.columns(1).search(
+       table.columns(2).search(
        		$('#txtCCCD').val()
        ).draw();
 }); 
 $('#txtSoDienThoai').on( 'keyup click', function () {
-       table.columns(4).search(
+       table.columns(5).search(
        		$('#txtSoDienThoai').val()
        ).draw();
 });
