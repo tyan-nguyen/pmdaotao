@@ -43,7 +43,7 @@ use yii\helpers\Html;
             <div class="skill-tags">
                 <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade active show" id="add-document" role="tabpanel" aria-labelledby="add-document-tab">
-                <div id="gioHocContent">
+                <div id="gioHocContent" style="max-height:600px;overflow: auto">
                 <?= $this->render('../tiet-hoc/_viewFromKeHoach', ['model'=>$model]) ?>
 				</div>
                  

@@ -59,5 +59,31 @@ class GiaoVien extends GiaoVienBase
             return '+ ' . $model->ho_ten;
         });
     }
+    /*
+     * check lại để bỏ
+     * */
+    /* public function getArrNguoiSuDung(){
+        $arr = [];
+        foreach ($this->xes as $xe){
+            $arr[] = $xe->id;
+        }
+        return $arr;
+    } */
+    
+    public function getArrXeDuocSuDung(){
+        $arr = [];
+        foreach ($this->xes as $xe){
+            $arr[] = $xe->id_xe;
+        }
+        return $arr;
+    }
+    
+    public function getArrHvHuongDan(){
+        $arr = [];
+        foreach ($this->hvs as $hv){
+            $arr[] = $hv->id_hoc_vien;
+        }
+        return $arr;
+    }
     
 }

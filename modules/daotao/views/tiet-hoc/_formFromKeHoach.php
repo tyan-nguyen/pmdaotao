@@ -30,7 +30,7 @@ $keHoach = KeHoach::findOne($model->id_ke_hoach);
         	<?= $form->field($model, 'id_hoc_vien')->widget(Select2::classname(), [
             	    'data' => !empty($model->id_hoc_vien) ? [
             	        $model->id_hoc_vien => HocVien::findOne($model->id_hoc_vien)->ho_ten
-            	    ] : HocVien::getListByGiaoVien($model->id_giao_vien), 
+            	    ] : HocVien::getListByGiaoVienDay($model->id_giao_vien), 
                     'language' => 'vi',
         	       //'id' => 'hvfrm-dropdown',
                    'options' => [
@@ -87,7 +87,7 @@ $keHoach = KeHoach::findOne($model->id_ke_hoach);
         	<?= $form->field($model, 'id_xe')->widget(Select2::classname(), [
         	       'data' => !empty($model->id_xe) ? [
         	           $model->id_xe => Xe::findOne($model->id_xe)->bien_so_xe
-            	    ] : Xe::getListByGiaoVien($model->id_giao_vien), 
+            	    ] : Xe::getListByGiaoVienDay($model->id_giao_vien), 
                     'language' => 'vi',
                    'options' => [
                        'placeholder' => 'Chọn xe...',  
@@ -106,15 +106,27 @@ $keHoach = KeHoach::findOne($model->id_ke_hoach);
         		
         	</div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
         	<?= $form->field($model, 'trang_thai')->dropDownList(
         	    $keHoach->trang_thai_duyet==KeHoach::TT_NHAP ?TietHoc::getDmTrangThaiChuaDuyet() :( User::getCurrentUser()->idGiaoVien?TietHoc::getDmTrangThaiForGiaoVien():TietHoc::getDmTrangThai()), [
         	    //'prompt'=>'-Tất cả-'
         	]) ?>  
         </div>
-         <div class="col-md-8">
+        <?php 
+        if($model->isNewRecord || $model->keHoach->trang_thai_duyet==KeHoach::TT_NHAP){
+        ?>
+         <div class="col-md-9">
         	<?= $form->field($model, 'ghi_chu')->textInput() ?>
         </div>
+        <?php } else { ?>
+        <div class="col-md-2">
+        	 <?= $form->field($model, 'so_km')->textInput() ?>
+        </div>
+         <div class="col-md-7">
+        	<?= $form->field($model, 'ghi_chu')->textInput() ?>
+        </div>
+        
+        <?php } ?>
   
 	</div>
 	<?php if (!Yii::$app->request->isAjax){ ?>

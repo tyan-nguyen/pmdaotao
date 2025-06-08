@@ -2,6 +2,7 @@
 use yii\helpers\Url;
 use app\modules\khoahoc\models\HangDaoTao;
 use app\modules\giaovien\models\Day;
+use yii\helpers\Html;
 $this->registerCssFile('https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css', ['depends' => [\yii\web\YiiAsset::class]]);
 $this->registerJsFile('https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js', ['depends' => [\yii\web\YiiAsset::class]]);
 return [
@@ -13,7 +14,7 @@ return [
     [
         'class' => 'kartik\grid\ActionColumn',
         'header'=>'',
-        'template' => '{view} {update} {delete}',
+        'template' => '{pcXe} {pcHv} {view} {update} {delete}',
         'dropdown' => true,
         'dropdownOptions' => ['class' => 'float-right'],
         'dropdownButton'=>[
@@ -23,8 +24,33 @@ return [
         'vAlign'=>'middle',
         'width' => '20px',
         'urlCreator' => function($action, $model, $key, $index) {
-        return Url::to([$action,'id'=>$key]);
+            if ($action === 'pcXe') {
+                return Url::to(['phan-cong/pc-xe', 'id' => $key]);
+            }else if ($action === 'pcHv') {
+                return Url::to(['phan-cong/chon-khoa-hoc', 'idgv' => $key]);
+            }
+            return Url::to([$action,'id'=>$key]);
         },
+        'buttons' => [
+            'pcXe' => function($url, $model, $key) {
+                return Html::a('<i class="fa fa-user-plus"></i> Phân công xe', $url, [
+                    'title' => 'Phân công xe',
+                    'role' => 'modal-remote',
+                    'class' => 'btn ripple btn-danger dropdown-item',
+                    'data-bs-placement' => 'top',
+                    'data-bs-toggle' => 'tooltip-warning',
+                ]);
+            },
+            'pcHv' => function($url, $model, $key) {
+                return Html::a('<i class="fa fa-user-plus"></i> Phân công học viên', $url, [
+                    'title' => 'Phân công học viên',
+                    'role' => 'modal-remote',
+                    'class' => 'btn ripple btn-danger dropdown-item',
+                    'data-bs-placement' => 'top',
+                    'data-bs-toggle' => 'tooltip-warning',
+                ]);
+            },
+        ],
         'viewOptions'=>['role'=>'modal-remote','title'=>'View','title'=>'Xem',
                'class'=>'btn ripple btn-primary btn-sm',
               'data-bs-placement'=>'top',

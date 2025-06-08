@@ -6,6 +6,7 @@ use Yii;
 use yii\data\ActiveDataProvider;
 use app\modules\hocvien\models\HocVien;
 use app\modules\user\models\User;
+use app\modules\giaovien\models\GiaoVien;
 
 /**
  * DangKyHvSearch represents the model behind the search form about `app\modules\hocvien\models\DangKyHv`.
@@ -49,9 +50,11 @@ class HocVienSearch extends HocVien
         
         $user = User::findOne(Yii::$app->user->id);
         if($user->getIdGiaoVien()!=null){
-            $query->andFilterWhere([
+            /* $query->andFilterWhere([
                 'id_giao_vien' => $user->getIdGiaoVien(),
-            ]);
+            ]); */
+            $giaoVien = GiaoVien::findOne($user->getIdGiaoVien());
+            $query->andWhere('id IN (' . implode(',', $giaoVien->arrHvHuongDan) . ')');
         } else {
             $query->where('0=1');
         }

@@ -13,6 +13,7 @@ use app\modules\hocvien\models\HocPhi;
 use yii\db\Expression;
 use app\modules\giaovien\models\GiaoVien;
 use app\modules\hocvien\models\ThayDoiHocPhi;
+use app\modules\daotao\models\GvHv;
 
 /**
  * This is the model class for table "hv_hoc_vien".
@@ -250,6 +251,10 @@ class HocVienBase extends \app\models\HvHocVien
     public function getGiaoVien()
     {
         return $this->hasOne(GiaoVien::class, ['id' => 'id_giao_vien']);
+    }
+    public function getGiaoVienDay()
+    {
+        return $this->hasMany(GvHv::class, ['id_hoc_vien' => 'id']);
     }
     public function getNhom()
     {

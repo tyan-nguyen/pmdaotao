@@ -10,6 +10,7 @@ use app\custom\CustomFunc;
 use Yii;
 use yii\helpers\ArrayHelper;
 use app\modules\giaovien\models\GiaoVien;
+use app\modules\daotao\models\GvHv;
 
 class HocVien extends HocVienBase
 {
@@ -112,6 +113,11 @@ class HocVien extends HocVienBase
         }
     } */
     
+    /**
+     * for gv in hoc_vien table
+     * @param unknown $idgv
+     * @return array|unknown[]|mixed|unknown
+     */
     public static function getListByGiaoVien($idgv)
     {
         $dsHocVien = HocVien::find()
@@ -123,6 +129,25 @@ class HocVien extends HocVienBase
             return '+ ' . $model->ho_ten;
         });
        
+    }
+    /**
+     * for gv in gv_hv table
+     * @param unknown $idgv
+     * @return array|unknown[]|mixed|unknown
+     */
+    public static function getListByGiaoVienDay($idgv)
+    {
+        $dsHocVien = GvHv::find()->alias('t')->joinWith(['hocVien as hv', 'hocVien.khoaHoc as kh'])
+        ->where(['t.id_giao_vien' => $idgv])
+        ->orderBy(['hv.id_khoa_hoc' => SORT_ASC,'hv.ho_ten' => SORT_ASC])
+        ->all();
+        
+        return ArrayHelper::map($dsHocVien, 'id_hoc_vien', function ($model) {
+            return '+ ' . $model->hocVien->ho_ten;
+        },function ($model) {
+            return $model->hocVien->khoaHoc->ten_khoa_hoc;
+        });
+            
     }
     
   

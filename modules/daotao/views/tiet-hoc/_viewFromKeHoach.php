@@ -16,6 +16,7 @@ use app\modules\daotao\models\KeHoach;
             <th>Module</th>
             <th>Xe</th>
             <th>Trạng thái</th>
+            <th>Km</th>
             <th>Ghi chú</th>
             <th></th>
         </tr>
@@ -45,6 +46,7 @@ use app\modules\daotao\models\KeHoach;
      	<td></td>
      	<td></td>
      	<td></td>
+     	<td></td>
      	<td><?= $model->trang_thai_duyet==KeHoach::TT_NHAP ? ( Html::a( '<i class="fa fa-plus"> </i> ',
             ['/daotao/tiet-hoc/create-from-ke-hoach', 
                 'idkh' => $model->id,
@@ -63,6 +65,7 @@ use app\modules\daotao\models\KeHoach;
      	<td><?= $tietHoc->monHoc->ten_mon . ($tietHoc->monHoc->ten_mon_sub?(' ('.$tietHoc->monHoc->ten_mon_sub.')'):'') ?></td>
      	<td><?= $tietHoc->xe->bien_so_xe ?></td>
      	<td><?= TietHoc::getLabelTinhTrangXeBadge($tietHoc->trang_thai) ?></td>
+     	<td><?= $tietHoc->so_km  ?></td>
      	<td><?= $tietHoc->ghi_chu ?></td>
      	<td><?= ($model->trang_thai_duyet==KeHoach::TT_NHAP || $model->trang_thai_duyet==KeHoach::TT_DADUYET ) ? ( Html::a( '<i class="fa fa-pencil"> </i> ',
             ['/daotao/tiet-hoc/update-from-ke-hoach', 

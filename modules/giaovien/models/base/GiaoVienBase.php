@@ -9,6 +9,7 @@ use app\modules\nhanvien\models\To;
 use app\modules\vanban\models\VanBan;
 use app\custom\CustomFunc;
 use app\modules\daotao\models\GvHv;
+use app\modules\daotao\models\GvXe;
 /**
  * This is the model class for table "nv_nhan_vien".
  *
@@ -40,6 +41,8 @@ use app\modules\daotao\models\GvHv;
  */
 class GiaoVienBase extends \app\models\NvNhanVien
 {  
+    public $listXe;//use in form phân công xe
+    public $listHocVien;//use in form phân công học viên
     /**
      * {@inheritdoc}
      */
@@ -49,7 +52,7 @@ class GiaoVienBase extends \app\models\NvNhanVien
             [['id_phong_ban', 'tai_khoan', 'nguoi_tao', 'id_to', 'gioi_tinh'], 'integer'],
             [['ho_ten'], 'required'],
             [['kinh_nghiem_lam_viec'], 'string'],
-            [['thoi_gian_tao','ngay_sinh'], 'safe'],
+            [['thoi_gian_tao','ngay_sinh', 'listXe', 'listHocVien'], 'safe'],
             [['ho_ten', 'chuc_vu', 'so_cccd', 'dia_chi', 'dien_thoai', 'email', 'trinh_do', 'chuyen_nganh', 'vi_tri_cong_viec', 'ma_so_thue', 'trang_thai'], 'string', 'max' => 255],
             [['ho_ten', 'tai_khoan'], 'unique'],
             [['id_phong_ban'], 'exist', 'skipOnError' => true, 'targetClass' => PhongBan::class, 'targetAttribute' => ['id_phong_ban' => 'id']],
@@ -84,6 +87,8 @@ class GiaoVienBase extends \app\models\NvNhanVien
             'id_to' => 'Tổ',
             'gioi_tinh' => 'Giới tính',
             'ngay_sinh'=>'Ngày sinh',
+            'listXe' => 'Danh sách xe',
+            'listHocVien' => 'Danh sách học viên'
         ];
     }
 
@@ -130,7 +135,17 @@ class GiaoVienBase extends \app\models\NvNhanVien
      */
     public function getHvs()
     {
-        return $this->hasMany(GvHv::class, ['id_hoc_vien' => 'id']);
+        return $this->hasMany(GvHv::class, ['id_giao_vien' => 'id']);
+    }
+    
+    /**
+     * Gets query for [[GdGvHvs]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getXes()
+    {
+        return $this->hasMany(GvXe::class, ['id_giao_vien' => 'id']);
     }
 
     /**

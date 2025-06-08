@@ -25,6 +25,7 @@ use app\modules\daotao\models\KeHoach;
  * @property string $thoi_gian_bd
  * @property string $thoi_gian_kt
  * @property string|null $ghi_chu
+ * @property float|null $so_km
  * @property string|null $trang_thai
  * @property string|null $trang_thai_duyet
  * @property string|null $ngay_duyet
@@ -143,7 +144,7 @@ class TietHocBase extends GdTietHoc
             [['ghi_chu', 'trang_thai', 'trang_thai_duyet', 'ngay_duyet', 'id_nguoi_duyet', 'nguoi_tao', 'thoi_gian_tao'], 'default', 'value' => null],
             [['id_hoc_vien', 'id_giao_vien', 'id_xe', 'id_mon_hoc', 'id_thoi_gian_hoc', 'id_ke_hoach'], 'required'],
             [['id_hoc_vien', 'id_giao_vien', 'id_xe', 'id_mon_hoc', 'id_thoi_gian_hoc', 'id_nguoi_duyet', 'nguoi_tao'], 'integer'],
-            [['so_gio'], 'number'],
+            [['so_gio', 'so_km'], 'number'],
             [['thoi_gian_bd', 'thoi_gian_kt', 'ngay_duyet', 'thoi_gian_tao'], 'safe'],
             [['ghi_chu'], 'string'],
             [['trang_thai', 'trang_thai_duyet'], 'string', 'max' => 20],
@@ -172,6 +173,7 @@ class TietHocBase extends GdTietHoc
             'thoi_gian_bd' => 'Thời gian bắt đầu',
             'thoi_gian_kt' => 'Thời gian kết thúc',
             'ghi_chu' => 'Ghi chú',
+            'so_km' => 'Số Km',
             'trang_thai' => 'Trạng thái',
             'trang_thai_duyet' => 'Trạng thái duyệt',
             'ngay_duyet' => 'Ngày duyệt',

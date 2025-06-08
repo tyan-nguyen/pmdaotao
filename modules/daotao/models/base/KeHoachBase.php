@@ -179,6 +179,20 @@ class KeHoachBase extends \app\models\GdKeHoach
             $this->thoi_gian_duyet = CustomFunc::convertDMYHISToYMDHIS($this->thoi_gian_duyet);
         return parent::beforeSave($insert);
     }
+    
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+        
+        if($this->trang_thai_duyet == self::TT_HOANTHANH){
+            foreach ($this->gdTietHocs as $tietHoc){
+                if($tietHoc->trang_thai == TietHoc::TT_CHUATHUCHIEN){
+                    $tietHoc->trang_thai = TietHoc::TT_DAHOANTHANH;
+                    $tietHoc->save(false);
+                }
+            }
+        }        
+    }
 
     /**
      * Gets query for [[GdTietHocs]].

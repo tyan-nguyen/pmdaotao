@@ -221,7 +221,7 @@ class Xe extends \app\models\PtxXe
         return $this->hasOne(LoaiXe::class, ['id' => 'id_loai_xe']);
     }
     /**
-     * relation for giao vien
+     * relation for giao vien (người quản lý)
      * @return \yii\db\ActiveQuery
      */
     public function getGiaoVien()
@@ -269,6 +269,16 @@ class Xe extends \app\models\PtxXe
         
         return ArrayHelper::map($dsXe, 'id', function($model) {
             return '+ ' . $model->bien_so_xe;
+        });
+    }
+    public static function getListByGiaoVienDay($idgv)
+    {
+        $dsXe = GvXe::find()->where(['id_giao_vien'=>$idgv])->all();
+        
+        return ArrayHelper::map($dsXe, 'id_xe', function($model) {
+            return '+ ' . $model->xe->bien_so_xe;
+        },function($model) {
+            return $model->xe->loaiXe->ten_loai_xe;
         });
     }
     
