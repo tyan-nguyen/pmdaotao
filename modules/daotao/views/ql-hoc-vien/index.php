@@ -53,13 +53,13 @@ Yii::$app->params['showExport'] = true;
 						<div class="dropdown-menu tx-13" style="">
 							<h6 class="dropdown-header tx-uppercase tx-11 tx-bold bg-info tx-spacing-1">
 								Chọn chức năng</h6>'
-                    .
+                   /* .
                     Html::a('<i class="fas fa fa-plus" aria-hiddi="true"></i> Thêm mới', ['create'],
-                        ['role'=>'modal-remote','title'=> 'Thêm mới','class'=>'dropdown-item'])
+                        ['role'=>'modal-remote','title'=> 'Thêm mới','class'=>'dropdown-item'])*/
                     .
                     Html::a('<i class="fas fa fa-sync" aria-hidden="true"></i> Tải lại', [''],
                         ['data-pjax'=>1, 'class'=>'dropdown-item', 'title'=>'Tải lại'])
-                    .
+                    /*.
                     Html::a('<i class="fas fa fa-trash" aria-hidden="true"></i>&nbsp; Xóa danh sách',
                         ["bulkdelete"],
                         [
@@ -69,7 +69,7 @@ Yii::$app->params['showExport'] = true;
                             'data-request-method'=>'post',
                             'data-confirm-title'=>'Xác nhận xóa?',
                             'data-confirm-message'=>'Bạn có chắc muốn xóa?'
-                        ])
+                        ])*/
                     .
                     '
 						</div>
