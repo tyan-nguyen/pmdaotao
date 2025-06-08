@@ -118,7 +118,7 @@ var table = new DataTable('#tblDsHv',{
     }
 });
 $('#txtHoTen').on( 'keyup click', function () {
-       table.columns(0).search(
+       table.columns(2).search(
        		$('#txtHoTen').val()
        ).draw();
 });
@@ -128,7 +128,7 @@ $('#txtCCCD').on( 'keyup click', function () {
        ).draw();
 }); 
 $('#txtSoDienThoai').on( 'keyup click', function () {
-       table.columns(2).search(
+       table.columns(4).search(
        		$('#txtSoDienThoai').val()
        ).draw();
 });
