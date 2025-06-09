@@ -4,6 +4,7 @@ use app\modules\daotao\models\TietHoc;
 
 $dsMonHoc = HangMonHoc::find()->where(['id_hang' => $model->id_hang])->all();
 ?>
+<h4>Tổng thời gian học</h4>
 <table class="table table-bordered">
     <thead>
         <tr>
