@@ -67,7 +67,7 @@ Yii::$app->params['showView'] = true;
                     .
                     Html::a('<i class="fas fa fa-sync" aria-hidden="true"></i> Tải lại', [''],
                         ['data-pjax'=>1, 'class'=>'dropdown-item', 'title'=>'Tải lại'])
-                    .
+                    /* .
                     Html::a('<i class="fas fa fa-trash" aria-hidden="true"></i>&nbsp; Xóa danh sách',
                         ["bulkdelete"],
                         [
@@ -77,7 +77,7 @@ Yii::$app->params['showView'] = true;
                             'data-request-method'=>'post',
                             'data-confirm-title'=>'Xác nhận xóa?',
                             'data-confirm-message'=>'Bạn có chắc muốn xóa?'
-                        ])
+                        ]) */
                     .
                     '
 						</div>
