@@ -16,13 +16,15 @@ $dsMonHoc = HangMonHoc::find()->where(['id_hang' => $model->id_hang])->all();
             <th>Đã học</th>
             <th>Đã hoàn thành</th>
             <th>Học viên hủy</th>
+            <th>Tổng km</th>
         </tr>
     </thead>
     <tbody>
         <?php 
         foreach ($dsMonHoc as $iM=>$m){
-            $tietHocOk = TietHoc::find()->where(['id_hoc_vien'=>$model->id, 'id_mon_hoc'=>$m->id_mon, 'trang_thai'=>TietHoc::TT_DAHOANTHANH])->count();
-            $tietHocHocVienHuy = TietHoc::find()->where(['id_hoc_vien'=>$model->id, 'id_mon_hoc'=>$m->id_mon, 'trang_thai'=>TietHoc::TT_HOCVIENHUY])->count();
+            $tietHocOk = TietHoc::find()->where(['id_hoc_vien'=>$model->id, 'id_mon_hoc'=>$m->id_mon, 'trang_thai'=>TietHoc::TT_DAHOANTHANH])->sum('so_gio');
+            $tietHocHocVienHuy = TietHoc::find()->where(['id_hoc_vien'=>$model->id, 'id_mon_hoc'=>$m->id_mon, 'trang_thai'=>TietHoc::TT_HOCVIENHUY])->sum('so_gio');
+            $tongKm = TietHoc::find()->where(['id_hoc_vien'=>$model->id, 'id_mon_hoc'=>$m->id_mon, 'trang_thai'=>TietHoc::TT_DAHOANTHANH])->sum('so_km');
         ?>
         <tr>
         	<td><?= ($iM+1) ?></td>
@@ -33,6 +35,7 @@ $dsMonHoc = HangMonHoc::find()->where(['id_hang' => $model->id_hang])->all();
         	<td><?= ($tietHocOk+$tietHocHocVienHuy) ?>/<?= $m->mon->so_gio_tt ?></td>
         	<td><?= $tietHocOk ?>/<?= $m->mon->so_gio_tt ?></td>
         	<td><?= $tietHocHocVienHuy ?></td>
+        	<td><?= $tongKm ?></td>
         </tr>
         <?php } ?>
 	</tbody>
