@@ -12,6 +12,7 @@ use \yii\web\Response;
 use yii\helpers\Html;
 use yii\filters\AccessControl;
 use app\modules\user\models\User;
+use app\modules\daotao\models\base\KeHoachBase;
 
 /**
  * KeHoachController implements the CRUD actions for KeHoach model.
@@ -71,6 +72,36 @@ class KeHoachGiaoVienController extends Controller
                 'title'=> "Kế hoạch",
                 'content'=>$this->renderAjax('view', [
                     'model' => $this->findModel($id),
+                ]),
+                'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"])
+                /*  .Html::a('Sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote']) */
+            ];
+        }else{
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }
+    }
+    
+    /**
+     * Trình duyệt kế hoạch
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionTrinhDuyet($id)
+    {
+        $request = Yii::$app->request;
+        $model = $this->findModel($id);
+        if($request->isAjax){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            if($model!=null){
+                $model->trang_thai_duyet = KeHoachBase::TT_CHODUYET;
+                $model->save(false);
+            }
+            return [
+                'title'=> "Kế hoạch",
+                'content'=>$this->renderAjax('view', [
+                    'model' => $model,
                 ]),
                 'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"])
                 /*  .Html::a('Sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote']) */
