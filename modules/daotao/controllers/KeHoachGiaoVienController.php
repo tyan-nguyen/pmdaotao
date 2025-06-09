@@ -103,6 +103,7 @@ class KeHoachGiaoVienController extends Controller
                 'content'=>$this->renderAjax('view', [
                     'model' => $model,
                 ]),
+                'tcontent'=>'Trình duyệt kế hoạch thành công!',
                 'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"])
                 /*  .Html::a('Sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote']) */
             ];
