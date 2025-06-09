@@ -61,9 +61,11 @@ use app\custom\CustomFunc;
                     <li class="nav-item" role="presentation">
                         <a class="nav-link show active " id="add-document-tab" data-bs-toggle="tab" href="#add-document" role="tab" aria-controls="add-student" aria-selected="false" style="color: blue;"><i class="fa fa-file"></i> Hồ sơ học viên</a>
                     </li>
-                    
+                     <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="ketquahoc-tab" data-bs-toggle="tab" href="#ketquahoc" role="tab" aria-controls="ketquahoc" aria-selected="false"style="color: blue;"><i class="fa fa-adjust"></i> Thời gian học</a>
+                    </li>
                  
-                    <li class="nav-item" role="presentation">
+                    <!-- <li class="nav-item" role="presentation">
                         <a class="nav-link " id="add-timetable-tab" data-bs-toggle="tab" href="#add-timetable" role="tab" aria-controls="add-student" aria-selected="false"style="color: blue;"><i class="fa fa-calendar"></i> Lịch học</a>
                     </li>
                     <li class="nav-item" role="presentation">
@@ -71,7 +73,7 @@ use app\custom\CustomFunc;
                     </li>
                     <li class="nav-item" role="presentation">
                         <a class="nav-link" id="list-tab" data-bs-toggle="tab" href="#list" role="tab" aria-controls="list" aria-selected="true"style="color: blue;"><i class="fa fa-address-card"></i>  Kết quả thi</a>
-                    </li>
+                    </li>-->
                    
                 </ul>
 			</div>
@@ -82,6 +84,13 @@ use app\custom\CustomFunc;
                             <div class="tab-pane fade " id="list" role="tabpanel" aria-labelledby="list-tab">
                         <!-- Nội dung hiển thị khi click vào "Kết quả thi" -->
                         <?php // $this->render('ket_qua_thi', ['model' => $model]) ?>
+                            </div>
+                            
+                            <!-- Nội dung thời gian học  -->
+                            <div class="tab-pane fade" id="ketquahoc" role="tabpanel" aria-labelledby="ketquahoc-tab">
+
+                             <?= $this->render('ket_qua_hoc', ['model' => $model]) ?>
+                             
                             </div>
 
                        
