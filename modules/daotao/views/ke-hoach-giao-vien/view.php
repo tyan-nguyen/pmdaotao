@@ -33,7 +33,7 @@ use app\modules\user\models\User;
                     ?>
                     <p>
                     <?= Html::a('Sửa',['update','id'=>$model->id],['class'=>'btn btn-warning','style'=>'color:black','role'=>'modal-remote']) ?>
-                    &nbsp; <?= $model->trang_thai_duyet==KeHoachBase::TT_NHAP ? Html::a('Trình duyệt',['trinh-duyet','id'=>$model->id],['class'=>'btn btn-warning','style'=>'color:black','role'=>'modal-remote']) : '' ?>
+                    &nbsp; <?= $model->trang_thai_duyet==KeHoachBase::TT_NHAP ? Html::a('Trình duyệt',['trinh-duyet','id'=>$model->id],['class'=>'btn btn-warning','style'=>'color:black','role'=>'modal-remote','data-confirm-title'=>'Xác nhận xóa?','data-confirm-message'=>'Bạn có chắc muốn xóa?']) : '' ?>
                     </p>
                     <?php } ?>
 			    </div>
