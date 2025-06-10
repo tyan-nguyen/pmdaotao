@@ -67,7 +67,7 @@ class MonHocController extends Controller
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "MonHoc",
+                    'title'=> "Thông tin Module",
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
                     ]),
@@ -99,7 +99,7 @@ class MonHocController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Thêm mới MonHoc",
+                    'title'=> "Thêm mới Module",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -110,7 +110,7 @@ class MonHocController extends Controller
             }else if($model->load($request->post()) && $model->save()){
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Thêm mới MonHoc",
+                    'title'=> "Thêm mới Module",
                     'content'=>'<span class="text-success">Thêm mới thành công</span>',
                     'tcontent'=>'Thêm mới thành công!',
                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
@@ -119,7 +119,7 @@ class MonHocController extends Controller
                 ];         
             }else{           
                 return [
-                    'title'=> "Thêm mới MonHoc",
+                    'title'=> "Thêm mới Module",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -162,7 +162,7 @@ class MonHocController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Cập nhật MonHoc",
+                    'title'=> "Cập nhật Module",
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
@@ -173,7 +173,7 @@ class MonHocController extends Controller
             	if(Yii::$app->params['showView']){
                     return [
                         'forceReload'=>'#crud-datatable-pjax',
-                        'title'=> "MonHoc",
+                        'title'=> "Thông tin Module",
                         'content'=>$this->renderAjax('view', [
                             'model' => $model,
                         ]),
@@ -186,7 +186,7 @@ class MonHocController extends Controller
                 }
             }else{
                  return [
-                    'title'=> "Cập nhật MonHoc",
+                    'title'=> "Cập nhật Module",
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),

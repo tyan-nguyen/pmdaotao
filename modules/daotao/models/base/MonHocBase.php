@@ -48,9 +48,9 @@ class MonHocBase extends GdMonHoc
     {
         return [
             'id' => 'ID',
-            'ma_mon' => 'Mã môn',
-            'ten_mon' => 'Tên môn',
-            'ten_mon_sub' => 'Tên môn sub',
+            'ma_mon' => 'Mã module',
+            'ten_mon' => 'Tên module',
+            'ten_mon_sub' => 'Tên module sub',
             'so_gio_qd' => 'Số giờ theo QĐ',
             'so_gio_tt' => 'Số giờ thực tế',
             'ghi_chu' => 'Ghi chú',
