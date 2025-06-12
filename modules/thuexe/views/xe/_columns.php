@@ -3,6 +3,7 @@ use yii\helpers\Url;
 use app\modules\thuexe\models\LoaiXe;
 use yii\bootstrap5\Html;
 use app\modules\thuexe\models\Xe;
+use app\custom\CustomFunc;
 return [
     [
         'class' => 'kartik\grid\CheckboxColumn',
@@ -103,7 +104,23 @@ return [
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'mau_sac',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'ngay_dang_kiem',
+        'value'=>function($model){
+            return CustomFunc::convertYMDToDMY($model->ngay_dang_kiem);
+        }
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'so_hop_dong',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'id_giao_vien',
+        'label' => 'Người phụ trách',
         'value'=>function($model){
             return $model->giaoVien?$model->giaoVien->ho_ten:'';
         },

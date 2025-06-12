@@ -1,6 +1,7 @@
 <?php
 
 use app\modules\thuexe\models\HinhXe;
+use app\custom\CustomFunc;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\HvHocVien */
@@ -11,7 +12,7 @@ $hinhXeList = HinhXe::find()->where(['id_xe' => $model->id])->all();
 <div class="hv-hoc-vien-view">
  
 <div class="row">
-    <div class="col-xl-3 col-md-12">
+    <div class="col-xl-4 col-md-12">
     <div class="card custom-card">
 				<div class="card-header custom-card-header rounded-bottom-0">
 					<div>
@@ -20,16 +21,31 @@ $hinhXeList = HinhXe::find()->where(['id_xe' => $model->id])->all();
 			    </div>
 							<div class="card-body">
 									<div class="skill-tags">
+										<p><strong>Loại xe:</strong> <?= $model->loaiXe->ten_loai_xe?></p>
                                         <p><strong>Tên xe:</strong> <?= $model->hieu_xe?></p>
                                         <p><strong>Biển số xe:</strong> <?= $model->bien_so_xe?></p>
+                                        <p><strong>Màu sắc:</strong> <?= $model->mau_sac?></p>
+                                        <p><strong>Số hợp đồng xe:</strong> <?= $model->so_hop_dong?></p>
                                         <p><strong>Tình trạng xe:</strong> <?= $model->tinh_trang_xe ?></p>
                                         <p><strong>Trạng thái:</strong> <?= $model->trang_thai?></p>
+                                        <p><strong>Phân loại:</strong> <?= $model->getLabelPhanLoaiXe() ?></p>
+                                        <p><strong>Người phụ trách:</strong> <?= $model->giaoVien?$model->giaoVien->ho_ten:'' ?></p>
+								    </div>
+								    
+								    <div class="skill-tags">
+                                        <p><strong>Số khung:</strong> <?= $model->so_khung?></p>
+                                        <p><strong>Số máy/Số động cơ:</strong> <?= $model->so_may?></p>
+                                        <p><strong>Ngày đăng kiểm:</strong> <?= CustomFunc::convertYMDToDMY($model->ngay_dang_kiem)?></p>
+                                        <p><strong>Xe mới/Đã qua sử dụng:</strong> <?= $model->la_xe_cu==1?'Xe đã qua sử dụng': 'Xe mới' ?></p>
+                                        <p><strong>Giá trị xe:</strong> <?= $model->so_tien?></p>
+                                        <p><strong>Nhà cung cấp:</strong> <?= $model->nha_cung_cap ?></p>
+                                        <p><strong>Số hóa đơn:</strong> <?= $model->so_hoa_don ?></p>
 								    </div>
 						    </div>
 	</div>
 
     </div>
-    <div class="col-xl-9 col-md-12">
+    <div class="col-xl-8 col-md-12">
     <div class="card custom-card">
         <div class="card-header custom-card-header rounded-bottom-0">
             <ul class="nav nav-tabs" id="myTab" role="tablist">

@@ -15,6 +15,15 @@ use Yii;
  * @property string|null $tinh_trang_xe
  * @property string|null $trang_thai
  * @property string|null $ghi_chu
+ * @property string|null $so_khung
+ * @property string|null $so_may
+ * @property string|null $ngay_dang_kiem
+ * @property string|null $mau_sac
+ * @property int|null $la_xe_cu
+ * @property float|null $so_tien
+ * @property string|null $nha_cung_cap
+ * @property string|null $so_hoa_don
+ * @property string|null $so_hop_dong
  * @property int|null $id_giao_vien
  * @property int|null $nguoi_tao
  * @property string|null $thoi_gian_tao
@@ -41,14 +50,16 @@ class PtxXe extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['phan_loai', 'hieu_xe', 'bien_so_xe', 'tinh_trang_xe', 'trang_thai', 'ghi_chu', 'id_giao_vien', 'nguoi_tao', 'thoi_gian_tao'], 'default', 'value' => null],
+            [['phan_loai', 'hieu_xe', 'bien_so_xe', 'tinh_trang_xe', 'trang_thai', 'ghi_chu', 'so_khung', 'so_may', 'ngay_dang_kiem', 'mau_sac', 'la_xe_cu', 'so_tien', 'nha_cung_cap', 'so_hoa_don', 'so_hop_dong', 'id_giao_vien', 'nguoi_tao', 'thoi_gian_tao'], 'default', 'value' => null],
             [['id_loai_xe'], 'required'],
-            [['id_loai_xe', 'id_giao_vien', 'nguoi_tao'], 'integer'],
+            [['id_loai_xe', 'la_xe_cu', 'id_giao_vien', 'nguoi_tao'], 'integer'],
             [['tinh_trang_xe', 'ghi_chu'], 'string'],
-            [['thoi_gian_tao'], 'safe'],
+            [['ngay_dang_kiem', 'thoi_gian_tao'], 'safe'],
+            [['so_tien'], 'number'],
             [['phan_loai'], 'string', 'max' => 20],
             [['hieu_xe', 'bien_so_xe'], 'string', 'max' => 50],
             [['trang_thai'], 'string', 'max' => 25],
+            [['so_khung', 'so_may', 'mau_sac', 'nha_cung_cap', 'so_hoa_don', 'so_hop_dong'], 'string', 'max' => 250],
             [['id_loai_xe'], 'exist', 'skipOnError' => true, 'targetClass' => PtxLoaiXe::class, 'targetAttribute' => ['id_loai_xe' => 'id']],
         ];
     }
@@ -67,6 +78,15 @@ class PtxXe extends \yii\db\ActiveRecord
             'tinh_trang_xe' => 'Tinh Trang Xe',
             'trang_thai' => 'Trang Thai',
             'ghi_chu' => 'Ghi Chu',
+            'so_khung' => 'So Khung',
+            'so_may' => 'So May',
+            'ngay_dang_kiem' => 'Ngay Dang Kiem',
+            'mau_sac' => 'Mau Sac',
+            'la_xe_cu' => 'La Xe Cu',
+            'so_tien' => 'So Tien',
+            'nha_cung_cap' => 'Nha Cung Cap',
+            'so_hoa_don' => 'So Hoa Don',
+            'so_hop_dong' => 'So Hop Dong',
             'id_giao_vien' => 'Id Giao Vien',
             'nguoi_tao' => 'Nguoi Tao',
             'thoi_gian_tao' => 'Thoi Gian Tao',

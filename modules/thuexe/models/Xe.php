@@ -7,6 +7,7 @@ use app\modules\thuexe\models\LoaiXe;
 use yii\helpers\ArrayHelper;
 use app\modules\giaovien\models\GiaoVien;
 use app\modules\daotao\models\GvXe;
+use app\custom\CustomFunc;
 /**
  * This is the model class for table "ptx_xe".
  *
@@ -17,6 +18,16 @@ use app\modules\daotao\models\GvXe;
  * @property string|null $bien_so_xe
  * @property string|null $tinh_trang_xe
  * @property string|null $trang_thai
+ * @property string|null $ghi_chu
+ * @property string|null $so_khung
+ * @property string|null $so_may
+ * @property string|null $ngay_dang_kiem
+ * @property string|null $mau_sac
+ * @property int|null $la_xe_cu
+ * @property float|null $so_tien
+ * @property string|null $nha_cung_cap
+ * @property string|null $so_hoa_don
+ * @property string|null $so_hop_dong
  * @property int|null $id_giao_vien
  * @property int|null $nguoi_tao
  * @property string|null $thoi_gian_tao
@@ -168,15 +179,16 @@ class Xe extends \app\models\PtxXe
     public function rules()
     {
         return [
-            [['id_loai_xe', 'phan_loai'], 'required'],
-            [['id_loai_xe', 'nguoi_tao', 'id_giao_vien'], 'integer'],
+            [['id_loai_xe', 'bien_so_xe'], 'required'],
+            [['id_loai_xe', 'la_xe_cu', 'nguoi_tao', 'id_giao_vien'], 'integer'],
             [['ghi_chu'], 'string'],
             [['phan_loai'], 'string', 'max' => 20],
             [['tinh_trang_xe'], 'string', 'max' => 20],
-            [['thoi_gian_tao'], 'safe'],
+            [['thoi_gian_tao', 'ngay_dang_kiem'], 'safe'],
             [['hieu_xe', 'bien_so_xe'], 'string', 'max' => 50],
             [['trang_thai'], 'string', 'max' => 25],
             [['bien_so_xe'], 'unique'],
+            [['so_khung', 'so_may', 'mau_sac', 'nha_cung_cap', 'so_hoa_don', 'so_hop_dong'], 'string', 'max' => 250],
             [['id_loai_xe'], 'exist', 'skipOnError' => true, 'targetClass' =>LoaiXe::class, 'targetAttribute' => ['id_loai_xe' => 'id']],
         ];
     }
@@ -190,11 +202,19 @@ class Xe extends \app\models\PtxXe
             'id' => 'ID',
             'id_loai_xe' => 'Tên loại xe',
             'phan_loai' => 'Phân loại xe',
-            'phan_loai' => 'Phân loại xe',
             'hieu_xe' => 'Hiệu Xe',
             'bien_so_xe' => 'Biển Số Xe',
             'tinh_trang_xe' => 'Tình Trạng Xe',
             'ghi_chu' => 'Ghi chú',
+            'so_khung' => 'Số khung',
+            'so_may' => 'Số máy/Số động cơ',
+            'ngay_dang_kiem' => 'Ngày đăng kiểm',
+            'mau_sac' => 'Màu sắc',
+            'la_xe_cu' => 'Xe đã qua sử dụng',
+            'so_tien' => 'Giá trị(VND)',
+            'nha_cung_cap' => 'Nhà cung cấp',
+            'so_hoa_don' => 'Số hóa đơn',
+            'so_hop_dong' => 'Số hợp đồng',
             'trang_thai' => 'Trạng Thái',
             'id_giao_vien' => 'Giáo viên phụ trách',
             'nguoi_tao' => 'Người Tạo',
@@ -287,6 +307,12 @@ class Xe extends \app\models\PtxXe
         if ($this->isNewRecord) {
             $this->nguoi_tao = Yii::$app->user->identity->id;
             $this->thoi_gian_tao = date('Y-m-d H:i:s'); 
+            if($this->la_xe_cu == null){
+                $this->la_xe_cu = 0;
+            }
+        }
+        if($this->ngay_dang_kiem != null){
+            $this->ngay_dang_kiem = CustomFunc::convertDMYToYMD($this->ngay_dang_kiem);
         }
         return parent::beforeSave($insert);
     }
