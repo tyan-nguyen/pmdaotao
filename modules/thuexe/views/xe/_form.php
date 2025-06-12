@@ -80,6 +80,7 @@ if(!$model->isNewRecord){
          </div>
         
         <div class="col-lg-3 col-md-6">
+        	<label>&nbsp;</label>
              <?= $form->field($model, 'la_xe_cu')->checkbox() ?>
          </div>
         
