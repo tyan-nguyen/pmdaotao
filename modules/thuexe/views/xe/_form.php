@@ -94,10 +94,6 @@ if(!$model->isNewRecord){
          <div class="col-lg-3 col-md-6">
              <?= $form->field($model, 'mau_sac')->textInput(['maxlength' => true]) ?>
          </div>
-         
-         <div class="col-lg-3 col-md-6">
-             <?= $form->field($model, 'nha_cung_cap')->textInput(['maxlength' => true]) ?>
-         </div>
         
         <div class="col-lg-3 col-md-6">
              <?= $form->field($model, 'so_hoa_don')->textInput(['maxlength' => true]) ?>
@@ -105,8 +101,11 @@ if(!$model->isNewRecord){
 		<div class="col-lg-3 col-md-6">
              <?= $form->field($model, 'so_hop_dong')->textInput(['maxlength' => true]) ?>
          </div>
-         <div class="col-lg-6 col-md-12">
-             <?= $form->field($model, 'ghi_chu')->textarea(['rows' => 8]) ?>
+         <div class="col-lg-9 col-md-6">
+             <?= $form->field($model, 'nha_cung_cap')->textInput(['maxlength' => true]) ?>
+         </div>
+         <div class="col-lg-12 col-md-12">
+             <?= $form->field($model, 'ghi_chu')->textarea(['rows' => 4]) ?>
          </div>
     </div>
     <?php CardWidget::end() ?>
