@@ -44,6 +44,7 @@ class Xe extends \app\models\PtxXe
     
     const PHANLOAI_SATHACH = 'SATHACH';
     const PHANLOAI_TAPLAI = 'TAPLAI';
+    const PHANLOAI_CHUAPHANLOAI = 'CHUAPHANLOAI';
     
     /**
      * Danh muc hinh thuc chuyen khoan
@@ -146,8 +147,9 @@ class Xe extends \app\models\PtxXe
     public static function getDmPhanLoaiXe()
     {
         return [
-            self::PHANLOAI_TAPLAI => 'Xe tập lái',
+            self::PHANLOAI_TAPLAI => 'Xe đào tạo',
             self::PHANLOAI_SATHACH => 'Xe sát hạch',
+            self::PHANLOAI_CHUAPHANLOAI => 'Chưa phân loại',
         ];
     }
     /**
@@ -166,6 +168,9 @@ class Xe extends \app\models\PtxXe
                 break;
             case self::PHANLOAI_SATHACH:
                 $label = "Xe sát hạch";
+                break;
+            case self::PHANLOAI_CHUAPHANLOAI:
+                $label = "Chưa phân loại";
                 break;
             default:
                 $label = '';
