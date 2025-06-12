@@ -164,7 +164,7 @@ class Xe extends \app\models\PtxXe
         }
         switch ($val) {
             case self::PHANLOAI_TAPLAI:
-                $label = "Xe tập lái";
+                $label = "Xe đào tạo";
                 break;
             case self::PHANLOAI_SATHACH:
                 $label = "Xe sát hạch";
