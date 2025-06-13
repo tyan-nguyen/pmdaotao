@@ -83,7 +83,7 @@ $xes = Xe::find()->all();
                 	<td style="text-align:center;vertical-align:middle"><?= $indexXe+1 ?></td>
                 	<td style="text-align:center;vertical-align:middle"><?= $xe->loaiXe->ten_loai_xe ?></td>
                 	<td style="vertical-align:middle"><?= $xe->bien_so_xe ?></td>
-                	<td style="vertical-align:middle"><?= $xe->giaoVien->ho_ten  ?></td>
+                	<td style="vertical-align:middle"><?= $xe->giaoVien?$xe->giaoVien->ho_ten:''  ?></td>
                 	<td style="vertical-align:middle"></td>
                 	<td><?= $selected?Html::a('<i class="fa-solid fa-circle-minus"></i> Hủy', '/giaovien/phan-cong/xoa-pc-xe?id='.$idGvXe->id, [
                 	    'role'=>'modal-remote',

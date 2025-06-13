@@ -57,9 +57,9 @@ class PtxXe extends \yii\db\ActiveRecord
             [['ngay_dang_kiem', 'thoi_gian_tao'], 'safe'],
             [['so_tien'], 'number'],
             [['phan_loai'], 'string', 'max' => 20],
-            [['hieu_xe', 'bien_so_xe'], 'string', 'max' => 50],
+            [['bien_so_xe'], 'string', 'max' => 50],
             [['trang_thai'], 'string', 'max' => 25],
-            [['so_khung', 'so_may', 'mau_sac', 'nha_cung_cap', 'so_hoa_don', 'so_hop_dong'], 'string', 'max' => 250],
+            [['hieu_xe', 'so_khung', 'so_may', 'mau_sac', 'nha_cung_cap', 'so_hoa_don', 'so_hop_dong'], 'string', 'max' => 250],
             [['id_loai_xe'], 'exist', 'skipOnError' => true, 'targetClass' => PtxLoaiXe::class, 'targetAttribute' => ['id_loai_xe' => 'id']],
         ];
     }

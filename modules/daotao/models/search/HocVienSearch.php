@@ -54,7 +54,11 @@ class HocVienSearch extends HocVien
                 'id_giao_vien' => $user->getIdGiaoVien(),
             ]); */
             $giaoVien = GiaoVien::findOne($user->getIdGiaoVien());
-            $query->andWhere('id IN (' . implode(',', $giaoVien->arrHvHuongDan) . ')');
+            if($giaoVien->arrHvHuongDan != null){
+                $query->andWhere('id IN (' . implode(',', $giaoVien->arrHvHuongDan) . ')');
+            }else {
+                $query->where('0=1');
+            }
         } else {
             $query->where('0=1');
         }

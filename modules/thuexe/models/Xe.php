@@ -43,7 +43,7 @@ class Xe extends \app\models\PtxXe
     const XE_BAOTRI = 'BAOTRI';
     
     const PHANLOAI_SATHACH = 'SATHACH';
-    const PHANLOAI_TAPLAI = 'TAPLAI';
+    const PHANLOAI_TAPLAI = 'DAOTAO';
     const PHANLOAI_CHUAPHANLOAI = 'CHUAPHANLOAI';
     
     /**
@@ -190,10 +190,10 @@ class Xe extends \app\models\PtxXe
             [['phan_loai'], 'string', 'max' => 20],
             [['tinh_trang_xe'], 'string', 'max' => 20],
             [['thoi_gian_tao', 'ngay_dang_kiem'], 'safe'],
-            [['hieu_xe', 'bien_so_xe'], 'string', 'max' => 50],
+            [['bien_so_xe'], 'string', 'max' => 50],
             [['trang_thai'], 'string', 'max' => 25],
             [['bien_so_xe'], 'unique'],
-            [['so_khung', 'so_may', 'mau_sac', 'nha_cung_cap', 'so_hoa_don', 'so_hop_dong'], 'string', 'max' => 250],
+            [['hieu_xe', 'so_khung', 'so_may', 'mau_sac', 'nha_cung_cap', 'so_hoa_don', 'so_hop_dong'], 'string', 'max' => 250],
             [['id_loai_xe'], 'exist', 'skipOnError' => true, 'targetClass' =>LoaiXe::class, 'targetAttribute' => ['id_loai_xe' => 'id']],
         ];
     }
