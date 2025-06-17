@@ -83,7 +83,7 @@ $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gi
                       '4XL'=>'Size 4XL'
                   ], ['prompt'=>'Tất cả'])->label('Size') ?>
             </div>
-            <!-- <div class="col-md-2">
+            <div class="col-md-2">
                   <?= $form->field($model, 'ngay_nhan_ao')->widget(DatePicker::classname(), [
                          'options' => ['placeholder' => 'Chọn ngày nhận  ...'],
                          'pluginOptions' => [
@@ -91,7 +91,7 @@ $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gi
                          'format' => 'dd/mm/yyyy',
                   ]
                   ]); ?>
-            </div> -->
+            </div>
             <div class="col-md-2">
                   <?= $form->field($model, 'thoi_gian_hoan_thanh_ho_so')->widget(DatePicker::classname(), [
                          'options' => ['placeholder' => 'Chọn ngày HTHS  ...'],
