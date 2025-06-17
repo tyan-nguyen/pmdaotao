@@ -41,6 +41,9 @@ $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gi
                          'pluginOptions' => [
                          'autoclose' => true,
                          'format' => 'dd/mm/yyyy',
+                         'zIndexOffset'=>'9999',
+                         'todayHighlight'=>true,
+                         'todayBtn'=>true
                   ]
                   ]); ?>
             </div>
@@ -89,6 +92,9 @@ $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gi
                          'pluginOptions' => [
                          'autoclose' => true,
                          'format' => 'dd/mm/yyyy',
+                         'zIndexOffset'=>'9999',
+                         'todayHighlight'=>true,
+                         'todayBtn'=>true
                   ]
                   ]); ?>
             </div>
@@ -98,7 +104,9 @@ $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gi
                          'pluginOptions' => [
                              'autoclose' => true,
                              'format' => 'dd/mm/yyyy',
-                             'zIndexOffset'=>'9999'
+                             'zIndexOffset'=>'9999',
+                             'todayHighlight'=>true,
+                             'todayBtn'=>true
                         ]
                   ]); ?>
             </div>
