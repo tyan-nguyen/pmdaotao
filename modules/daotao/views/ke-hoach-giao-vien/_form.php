@@ -25,6 +25,8 @@ if(!$model->isNewRecord){
 
     <?php $form = ActiveForm::begin(); ?>
 	
+	<?= $form->errorSummary($model) ?>
+	
 	<div class="row">
         <div class="col-md-4">
         	<?= $form->field($model, 'ngay_thuc_hien')->widget(DatePicker::classname(), [

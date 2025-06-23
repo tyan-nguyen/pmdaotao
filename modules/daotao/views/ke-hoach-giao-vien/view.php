@@ -34,6 +34,11 @@ use app\modules\user\models\User;
                     <p>
                     <?= Html::a('Sửa',['update','id'=>$model->id],['class'=>'btn btn-warning','style'=>'color:black','role'=>'modal-remote']) ?>
                     &nbsp; <?= $model->trang_thai_duyet==KeHoachBase::TT_NHAP ? Html::a('Trình duyệt',['trinh-duyet','id'=>$model->id],['class'=>'btn btn-warning','style'=>'color:black','role'=>'modal-remote','data-confirm-title'=>'Xác nhận gửi duyệt?','data-confirm-message'=>'Sau khi trình duyệt sẽ tạm thời không thể chỉnh sửa, bạn có chắc chắn muốn tiếp tục?']) : '' ?>
+                    &nbsp;
+                	<?= Html::a('<i class="fas fa-print"></i> In', '#', [
+                	    'class' => 'btn btn-warning', 
+                	    'style'=>'color:black', 
+                	    'onclick' => 'InKeHoach('.$model->id.')']) ?> 
                     </p>
                     <?php } ?>
 			    </div>
@@ -70,3 +75,28 @@ use app\modules\user\models\User;
 </div>
 
 </div>
+
+<!-- Phần tử ẩn chứa nội dung phiếu -->
+<div style="display:none">
+  <div id="print"></div>
+</div>
+
+<script>
+function InKeHoach(id) {
+    $.ajax({
+        type: 'POST',
+        url: '/daotao/ke-hoach/print?id=' + id,
+        success: function (data) {
+            if (data.status === 'success') {
+                $('#print').html(data.content);
+				printPhieu();
+            } else {
+                alert('Không thể tải phiếu!');
+            }
+        },
+        error: function () {
+            alert('Đã xảy ra lỗi.');
+        }
+    });
+}
+</script>

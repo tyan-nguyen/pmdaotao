@@ -33,6 +33,14 @@ use app\modules\user\models\User;
                         <p><strong>Đã nhận đồng phục:</strong> <?= $model->da_nhan_ao?'<i class="ion-checkmark-round text-primary"></i> Có':'<i class="ion-close-round" data-bs-toggle="tooltip" aria-label="ion-close-round" data-bs-original-title="ion-close-round"></i> Không' ?><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <strong>Size:</strong> <?= $model->size ?><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <strong>Ngày nhận:</strong> <?= CustomFunc::convertYMDToDMY($model->ngay_nhan_ao) ?></p>
                         <p><strong>Ngày đăng ký:</strong> <?= CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_tao) ?><strong> <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Nhận hồ sơ:</strong> <?= CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_hoan_thanh_ho_so) ?></p>    
                         <p><strong>Ghi chú thêm:</strong> <?= $model->ghi_chu ?></p>
+                        
+                        <?php if($model->huy_ho_so){ ?>
+                        <p><strong>Trạng thái:</strong> Đã hủy hồ sơ
+                        <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <strong>Thời gian hủy:</strong> <?= CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_huy_ho_so) ?></p>
+                        <p><strong>Ghi chú hủy:</strong> <?= $model->ly_do_huy_ho_so ?></p>
+                        <?php } ?>
+                        
                     </div>
                 </div>
             </div>

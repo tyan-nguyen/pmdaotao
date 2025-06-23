@@ -22,7 +22,15 @@ use yii\helpers\Html;
                     <p><strong>Người duyệt:</strong> <?= $model->nguoiDuyet?($model->nguoiDuyet->ho_ten?$model->nguoiDuyet->ho_ten:$model->nguoiDuyet->username):'' ?></p>
                     <p><strong>Ngày duyệt:</strong> <?= CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_duyet)?></p>
                     <p><strong>Ghi chú duyệt:</strong> <?= $model->noi_dung_duyet ?></p>
-                    <p><?= Html::a('Sửa',['update','id'=>$model->id],['class'=>'btn btn-warning','style'=>'color:black','role'=>'modal-remote']) ?></p>
+                    <p>
+                    	<?= Html::a('<i class="fa fa-pencil"></i> Sửa',['update','id'=>$model->id],['class'=>'btn btn-warning','style'=>'color:black','role'=>'modal-remote']) ?>
+                    	&nbsp;
+                    	<?= Html::a('<i class="fas fa-print"></i> In', '#', [
+                    	    'class' => 'btn btn-warning', 
+                    	    'style'=>'color:black', 
+                    	    'onclick' => 'InKeHoach('.$model->id.')']) ?> 
+                    </p>
+                    
 			    </div>
 	    </div>
 	</div>
@@ -57,3 +65,28 @@ use yii\helpers\Html;
 </div>
 
 </div>
+
+<!-- Phần tử ẩn chứa nội dung phiếu -->
+<div style="display:none">
+  <div id="print"></div>
+</div>
+
+<script>
+function InKeHoach(id) {
+    $.ajax({
+        type: 'POST',
+        url: '/daotao/ke-hoach/print?id=' + id,
+        success: function (data) {
+            if (data.status === 'success') {
+                $('#print').html(data.content);
+				printPhieu();
+            } else {
+                alert('Không thể tải phiếu!');
+            }
+        },
+        error: function () {
+            alert('Đã xảy ra lỗi.');
+        }
+    });
+}
+</script>

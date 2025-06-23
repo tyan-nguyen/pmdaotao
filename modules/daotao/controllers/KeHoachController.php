@@ -18,6 +18,7 @@ use app\modules\daotao\models\base\KeHoachBase;
  */
 class KeHoachController extends Controller
 {
+    public $freeAccessActions = ['print'];
     /**
      * @inheritdoc
      */
@@ -53,6 +54,23 @@ class KeHoachController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+        ]);
+    }
+    
+    /**
+     * in bản kế hoạch
+     * @param unknown $id
+     * @return \yii\web\Response
+     */
+    public function actionPrint($id){
+        $model = KeHoach::findOne($id);
+        $content = $this->renderPartial('ke_hoach_print', [
+            'model'=>$model
+        ]);
+        
+        return $this->asJson([
+            'status' => 'success',
+            'content' => $content,
         ]);
     }
 
