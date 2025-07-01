@@ -4,6 +4,8 @@ use yii\widgets\DetailView;
 use app\modules\dungchung\models\History;
 use app\modules\kholuutru\models\KhoLuuTru;
 use app\modules\user\models\User;
+use app\modules\hocvien\models\base\HocVienBase;
+use app\modules\user\models\UserBase;
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\user\models\User */
@@ -33,6 +35,14 @@ use app\modules\user\models\User;
                     //'id',
                     'username',
                     'ho_ten',
+                    [
+                        'attribute'=>'user_type',
+                        'value'=>UserBase::getLabelLoaiTaiKhoan($model->user_type),
+                    ],
+                    [
+                        'attribute'=>'noi_dang_ky',
+                        'value'=>HocVienBase::getLabelNoiDangKyOther($model->noi_dang_ky),
+                    ],
                     'auth_key',
                    // 'password_hash',
                     'confirmation_token',

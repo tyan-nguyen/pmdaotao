@@ -221,7 +221,8 @@ class BaoCaoController extends Controller
                 'byuser' => $byuser,
                 'byhangdaotao' => $byhangdaotao,
                 'sortby'=>$sortby,
-                'byaddress' => $byaddress
+                'byaddress' => $byaddress,
+                'bykhoa' =>$bykhoa
             ]);
         }
         return $this->asJson([

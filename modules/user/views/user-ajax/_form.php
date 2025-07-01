@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
 use app\modules\user\models\User;
 use app\modules\hocvien\models\base\HocVienBase;
+use app\modules\user\models\UserBase;
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\user\models\User */
@@ -42,6 +43,11 @@ use app\modules\hocvien\models\base\HocVienBase;
                             <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
                             
                             <?= $form->field($model, 'ho_ten')->textInput(['maxlength' => true]) ?>
+                            
+                            <?= $form->field($model, 'user_type')->dropDownList(
+                                UserBase::getDmLoaiTaiKhoan(),
+                                ['prompt'=>'-Chọn loại tài khoản-']
+                                ) ?>
                             
                             <?= $form->field($model, 'noi_dang_ky')->dropDownList(
                                 HocVienBase::getDmNoiDangKy(),

@@ -95,6 +95,20 @@ class User extends UserBase{
         });
     }
     
+    public static function getListNvNhanHoSo()
+    {
+        // Lấy danh sách nhân viên  và sắp xếp theo thứ tự bảng chữ cái
+        $dsUser = User::find()
+            ->andFilterWhere(['user_type'=>self::USER_TYPE_NHANHOSO])
+            ->orderBy(['username' => SORT_ASC])
+            ->all();
+        
+        // Thêm dấu + vào trước tên nhân viên
+        return ArrayHelper::map($dsUser, 'id', function($model) {
+            return '+ ' . $model->username; // Thêm dấu + trước tên nhân viên
+        });
+    }
+    
     /**
      * get list nợ của nhân viên tiếp nhận hồ sơ (tất cả thời gian hoặc đến mốc thời gian)
      * $nhanvienid: kieu int, id cua user tiep nhan ho so

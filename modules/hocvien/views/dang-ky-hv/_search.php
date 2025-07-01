@@ -68,7 +68,7 @@ $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gi
                   <?= $form->field($model, 'id_khoa_hoc')->dropDownList(KhoaHoc::getList(), ['prompt'=>'Tất cả']) ?>
             </div>
             <div class="col-md-2">
-                  <?= $form->field($model, 'nguoi_tao')->dropDownList(User::getList(), ['prompt'=>'Tất cả'])->label('NV tiếp nhận') ?>
+                  <?= $form->field($model, 'nguoi_tao')->dropDownList(User::getListNvNhanHoSo(), ['prompt'=>'Tất cả'])->label('NV tiếp nhận') ?>
             </div>
             <div class="col-md-2">
                   <?= $form->field($model, 'da_nhan_ao')->dropDownList([1=>'Đã nhận', 0=>'Chưa nhận', ], ['prompt'=>'Tất cả'])->label('Nhận áo') ?>

@@ -3,6 +3,7 @@ use app\modules\user\models\User;
 use app\custom\CustomFunc;
 use app\modules\hocvien\models\HangDaoTao;
 use app\modules\hocvien\models\base\HocVienBase;
+use app\modules\khoahoc\models\KhoaHoc;
 ?>
 
 <link href="/css/print-display.css" rel="stylesheet">
@@ -54,11 +55,17 @@ use app\modules\hocvien\models\base\HocVienBase;
     			<td style="text-align: left;width: 50%"><span>Nhân viên nhận hồ sơ: <?= $byuser ? User::findOne($byuser)->ho_ten : 'Tất cả' ?></span></td>
     		</tr>
     		<tr>
-    			<td style="text-align: left;width: 50%;padding-bottom:10px"><span>Nơi nhận hồ sơ: <?= $byaddress ? HocVienBase::getLabelNoiDangKyOther($byaddress) : 'Tất cả' ?></span></td>
-    			<td style="text-align: left;width: 50%;padding-bottom:10px"><span>Sắp xếp: </span>
+    			<td style="text-align: left;width: 50%;"><span>Nơi nhận hồ sơ: <?= $byaddress ? HocVienBase::getLabelNoiDangKyOther($byaddress) : 'Tất cả' ?></span></td>
+    			<td style="text-align: left;width: 50%;"><span>Sắp xếp: </span>
     				<?= $sortby=='hang'? 'Theo hạng đào tạo' : 'Theo ngày nhận hồ sơ'  ?>
     			</td>
-    		</tr>    		
+    		</tr>   
+    		<tr>
+    			<td style="text-align: left;width: 50%;padding-bottom:10px"><span>Khóa học: <?= $bykhoa ? KhoaHoc::getNameById($bykhoa) : 'Tất cả' ?></span></td>
+    			<td style="text-align: left;width: 50%;padding-bottom:10px"><span></span>
+    				
+    			</td>
+    		</tr>  		
     	</table>
         
         

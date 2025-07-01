@@ -7,6 +7,45 @@ use webvimark\modules\UserManagement\models\rbacDB\Role;
 
 class UserBase extends \webvimark\modules\UserManagement\models\User{
     const MODEL_ID = 'taikhoan';
+    
+    const USER_TYPE_NORMAL = 'BINHTHUONG';
+    const USER_TYPE_NHANHOSO = 'NHANHOSO';
+    const USER_TYPE_GIAOVIEN = 'GIAOVIEN';
+    
+    /**
+     * Danh muc loai tai khoan
+     * @return string[]
+     */
+    public static function getDmLoaiTaiKhoan()
+    {
+        return [
+            self::USER_TYPE_NORMAL => 'Bình thường',
+            self::USER_TYPE_NHANHOSO => 'Nhận hồ sơ',
+            self::USER_TYPE_GIAOVIEN => 'Giáo viên',
+        ];
+    }
+    /**
+     * Danh muc loai taoi khoan label
+     * @param int $val
+     * @return string
+     */
+    public static function getLabelLoaiTaiKhoan($val=NULL)
+    {
+        switch ($val) {
+            case self::USER_TYPE_NORMAL:
+                $label = 'Bình thường';
+                break;
+            case self::USER_TYPE_NHANHOSO:
+                $label = 'Nhận hồ sơ';
+                break;
+            case self::USER_TYPE_GIAOVIEN:
+                $label = 'Giáo viên';
+                break;
+            default:
+                $label = '';
+        }
+        return $label;
+    }
     /**
      * @inheritdoc
      */
@@ -35,7 +74,7 @@ class UserBase extends \webvimark\modules\UserManagement\models\User{
             ['repeat_password', 'compare', 'compareAttribute'=>'password'],
             //user info
             ['ho_ten', 'string', 'max' => 255],
-            ['noi_dang_ky', 'string', 'max' => 20],
+            [['noi_dang_ky', 'user_type'], 'string', 'max' => 20],
         ];
     }
     /**
@@ -61,6 +100,7 @@ class UserBase extends \webvimark\modules\UserManagement\models\User{
             //user info
             'ho_ten'            => 'Họ tên',
             'noi_dang_ky'       => 'Nơi đăng ký',
+            'user_type'         => 'Loại tài khoản'
         ];
     }
     

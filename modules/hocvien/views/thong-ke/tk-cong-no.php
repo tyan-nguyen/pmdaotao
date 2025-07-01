@@ -19,8 +19,13 @@
         <tbody>
         
         <?php 
-            $userCongNo = User::find()->where('noi_dang_ky IS NOT NULL')->orderBy(['noi_dang_ky'=>SORT_ASC])->all();
-            $userCongNoCount = User::find()->where('noi_dang_ky IS NOT NULL')->count();
+            $userCongNo = User::find()
+                ->where('noi_dang_ky IS NOT NULL')
+                ->andFilterWhere(['user_type'=>User::USER_TYPE_NHANHOSO])
+                ->orderBy(['noi_dang_ky'=>SORT_ASC])->all();
+            $userCongNoCount = User::find()
+                ->where('noi_dang_ky IS NOT NULL')
+                ->andFilterWhere(['user_type'=>User::USER_TYPE_NHANHOSO])->count();
             $cs = null;
             $sumCS = 0;
             foreach ($userCongNo as $iUsr=>$usr){
