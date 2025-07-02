@@ -3,6 +3,7 @@ use yii\helpers\Url;
 use app\modules\khoahoc\models\HangDaoTao;
 use app\modules\giaovien\models\Day;
 use yii\helpers\Html;
+use app\custom\CustomFunc;
 $this->registerCssFile('https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css', ['depends' => [\yii\web\YiiAsset::class]]);
 $this->registerJsFile('https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js', ['depends' => [\yii\web\YiiAsset::class]]);
 return [
@@ -97,6 +98,14 @@ return [
          },
         'filter'=> [1 => 'Nam', 0 => 'Nữ'],
     ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'ngay_sinh',
+        'value'=>function($model){
+            return CustomFunc::convertYMDHISToDMY($model->ngay_sinh);
+        },
+        'width' => '70px',
+        ],
     [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'id_phong_ban',

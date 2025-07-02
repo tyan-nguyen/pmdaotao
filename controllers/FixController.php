@@ -138,6 +138,7 @@ class FixController extends Controller
                 $model->dien_thoai = $row['C'];
                 $model->ngay_sinh = $row['D'];
                 $model->gioi_tinh = 1;
+                $model->trang_thai = 'Đang làm việc';
 
                 if($model->save()){
                     $successCount++;
@@ -146,6 +147,7 @@ class FixController extends Controller
                     $user->password = '123456';
                     $user->status = 1;
                     $user->ho_ten = $model->ho_ten;
+                    $user->user_type = User::USER_TYPE_GIAOVIEN;
                     $user->noi_dang_ky = null;
                     if($user->save()){
                         User::assignRole($user->id, 'nGiaoVien');

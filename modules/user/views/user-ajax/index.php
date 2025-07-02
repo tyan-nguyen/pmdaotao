@@ -54,9 +54,9 @@ Yii::$app->params['showExport'] = true;
             'striped' => false,
             'condensed' => true,
             'responsive' => true,   
-            'panelHeadingTemplate'=>'{title}',
-            'panelFooterTemplate'=>'{summary}',
-            'summary'=>'Hiển thị dữ liệu {count}/{totalCount}, Trang {page}/{pageCount}',
+            //'panelHeadingTemplate'=>'{title}',
+            //'panelFooterTemplate'=>'{summary}',
+            //'summary'=>'Hiển thị dữ liệu {count}/{totalCount}, Trang {page}/{pageCount}',
             'panel' => [
                 //'type' => 'primary', 
                 'heading' => '<i class="fas fa fa-list" aria-hidden="true"></i> Danh sách',
