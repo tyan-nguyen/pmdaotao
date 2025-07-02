@@ -77,7 +77,7 @@ Yii::$app->params['showExport'] = true;
                     '.
                     '{export}'
                 ],
-            ],          
+            ],
             'striped' => false,
             'condensed' => true,
             'responsive' => false,

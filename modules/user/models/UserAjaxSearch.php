@@ -19,7 +19,7 @@ class UserAjaxSearch extends User
     {
         return [
             [['id', 'status', 'superadmin', 'created_at', 'updated_at', 'email_confirmed'], 'integer'],
-            [['username', 'auth_key', 'password_hash', 'confirmation_token', 'registration_ip', 'bind_to_ip', 'email'], 'safe'],
+            [['username', 'auth_key', 'password_hash', 'confirmation_token', 'registration_ip', 'bind_to_ip', 'email', 'ho_ten', 'user_type', 'noi_dang_ky'], 'safe'],
         ];
     }
 
@@ -56,7 +56,8 @@ class UserAjaxSearch extends User
         }
         if($cusomSearch != NULL){
             $query->andFilterWhere ( [ 'OR' ,['like', 'username', $cusomSearch],
-                ['like', 'email', $cusomSearch]                
+                ['like', 'email', $cusomSearch],
+                ['like', 'ho_ten', $cusomSearch]
             ]);
             
         } else {
@@ -67,6 +68,8 @@ class UserAjaxSearch extends User
                 'created_at' => $this->created_at,
                 'updated_at' => $this->updated_at,
                 'email_confirmed' => $this->email_confirmed,
+                'user_type' => $this->user_type,
+                'noi_dang_ky' => $this->noi_dang_ky
             ]);
     
             $query->andFilterWhere(['like', 'username', $this->username])
@@ -75,6 +78,7 @@ class UserAjaxSearch extends User
                 ->andFilterWhere(['like', 'confirmation_token', $this->confirmation_token])
                 ->andFilterWhere(['like', 'registration_ip', $this->registration_ip])
                 ->andFilterWhere(['like', 'bind_to_ip', $this->bind_to_ip])
+                ->andFilterWhere(['like', 'ho_ten', $this->ho_ten])
                 ->andFilterWhere(['like', 'email', $this->email]);
         }
 
