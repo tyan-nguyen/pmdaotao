@@ -37,7 +37,7 @@ $hinhXeList = HinhXe::find()->where(['id_xe' => $model->id])->all();
                                         <p><strong>Số máy/Số động cơ:</strong> <?= $model->so_may?></p>
                                         <p><strong>Ngày đăng kiểm:</strong> <?= CustomFunc::convertYMDToDMY($model->ngay_dang_kiem)?></p>
                                         <p><strong>Xe mới/Đã qua sử dụng:</strong> <?= $model->la_xe_cu==1?'Xe đã qua sử dụng': 'Xe mới' ?></p>
-                                        <p><strong>Giá trị xe:</strong> <?= $model->so_tien?></p>
+                                        <p><strong>Giá trị xe:</strong> <?= number_format($model->so_tien) . ' đ' ?></p>
                                         <p><strong>Nhà cung cấp:</strong> <?= $model->nha_cung_cap ?></p>
                                         <p><strong>Số hóa đơn:</strong> <?= $model->so_hoa_don ?></p>
 								    </div>

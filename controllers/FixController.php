@@ -58,6 +58,7 @@ class FixController extends Controller
         $fxls = Yii::getAlias('@webroot/xe.xlsx');
         $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($fxls);
         $xls_data = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
+        $sheet = $spreadsheet->getActiveSheet();
         $errorByRow = array();
         $errorByRow1 = array();
         $successCount = 0;
@@ -79,7 +80,8 @@ class FixController extends Controller
                // $model->ngay_dang_kiem = null;
                 $model->mau_sac = $row['I'];
                 $model->la_xe_cu = $row['J'];
-                $model->so_tien = $row['K'];
+                //$model->so_tien = $row['K'];
+                $model->so_tien = $sheet->getCell('K'.$index)->getValue();
                 $model->nha_cung_cap = $row['L'];
                 $model->so_hoa_don = $row['M'];
                 $model->so_hop_dong = $row['N'];
