@@ -29,6 +29,7 @@ class BaoCaoController extends Controller
         'rp-danh-sach-dang-ky-print', 
         'rp-bien-ban-ban-giao', 
         'rp-bien-ban-ban-giao-print',
+        'rp-bien-ban-ban-giao-full-print',
         'rp-bien-ban-thay-doi-hang-print'
     ];
     /**
@@ -164,7 +165,7 @@ class BaoCaoController extends Controller
         }
     }
     
-    public function actionRpBienBanBanGiaoPrint($startdate, $starttime, $enddate, $endtime, $byuser=0, $sortby='ngay', $byhangdaotao=NULL, $typereport=0,$byaddress=NULL,$bykhoa=NULL)//0 for all
+    public function actionRpBienBanBanGiaoPrint($startdate, $starttime, $enddate, $endtime, $byuser=0, $sortby='ngay', $byhangdaotao=NULL, $typereport=0, $byaddress=NULL, $bykhoa=NULL)//0 for all
     {
         if($byuser==null){
             $byuser = 0;
@@ -230,6 +231,32 @@ class BaoCaoController extends Controller
             'content' => $content,
         ]);
         
+    }
+    
+    public function actionRpBienBanBanGiaoFullPrint($startdate, $starttime, $enddate, $endtime, $byuser=0, $sortby='ngay', $byhangdaotao=NULL, $typereport=0, $byaddress=NULL, $bykhoa=NULL)//0 for all
+    {
+        if($byuser==null){
+            $byuser = 0;
+        }
+        $start = CustomFunc::convertDMYToYMD($startdate) . ' ' . $starttime;
+        $end = CustomFunc::convertDMYToYMD($enddate) . ' ' . $endtime;        
+     
+        if($typereport==0){
+            $content = $this->renderPartial('rp_bien_ban_ban_giao_full_print', [
+                'start'=>$start,
+                'end'=>$end,
+                'byuser' => $byuser,
+                'byhangdaotao' => $byhangdaotao,
+                'sortby'=>$sortby,
+                'byaddress' => $byaddress,
+                'bykhoa' =>$bykhoa
+            ]);
+        }
+        return $this->asJson([
+            'status' => 'success',
+            'content' => $content,
+        ]);
+            
     }
     
 }

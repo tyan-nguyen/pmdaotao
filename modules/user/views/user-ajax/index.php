@@ -101,8 +101,7 @@ Yii::$app->params['showExport'] = true;
             ],
             'striped' => false,
             'condensed' => true,
-            'responsive' => true,   
-            
+            'responsive' => true,
             'panelHeadingTemplate'=>'<div style="width:100%;"><div class="float-start mt-2 text-primary">{title}</div> <div class="float-end">{toolbar}</div></div>',
             'panelFooterTemplate'=>'<div style="width:100%;"><div class="float-start">{summary}</div><div class="float-end">{pager}</div></div>',
             'summary'=>'Tổng: {totalCount} dòng dữ liệu',
@@ -116,7 +115,6 @@ Yii::$app->params['showExport'] = true;
                     'class' => 'btn'
                 ]
             ]
-            
             //'panelHeadingTemplate'=>'{title}',
             //'panelFooterTemplate'=>'{summary}',
             //'summary'=>'Hiển thị dữ liệu {count}/{totalCount}, Trang {page}/{pageCount}',
@@ -126,18 +124,18 @@ Yii::$app->params['showExport'] = true;
                 'headingOptions' => ['class'=>'card-header'],
                 'before'=>'<em>* Danh sách Users</em>',
                 'after'=>BulkButtonWidget::widget([
-                            'buttons'=>Html::a('<i class="fas fa fa-trash" aria-hidden="true"></i>&nbsp; Xóa đã chọn',
-                                ["bulkdelete"] ,
-                                [
-                                    "class"=>"btn btn-sm btn-outline-danger",
-                                    'role'=>'modal-remote-bulk',
-                                    'data-confirm'=>false, 'data-method'=>false,// for overide yii data api
-                                    'data-request-method'=>'post',
-                                    'data-confirm-title'=>'Xác nhận xóa?',
-                                    'data-confirm-message'=>'Bạn có chắc muốn xóa?'
-                                ]),
-                        ]).                        
-                        '<div class="clearfix"></div>',
+                    'buttons'=>Html::a('<i class="fas fa fa-trash" aria-hidden="true"></i>&nbsp; Xóa đã chọn',
+                        ["bulkdelete"] ,
+                        [
+                            "class"=>"btn btn-sm btn-outline-danger",
+                            'role'=>'modal-remote-bulk',
+                            'data-confirm'=>false, 'data-method'=>false,// for overide yii data api
+                            'data-request-method'=>'post',
+                            'data-confirm-title'=>'Xác nhận xóa?',
+                            'data-confirm-message'=>'Bạn có chắc muốn xóa?'
+                        ]),
+                ]).                        
+                '<div class="clearfix"></div>',
             ], */
             /* 'panelTemplate'=>'<div class="panel {type} card custom-card">
                 {panelHeading}

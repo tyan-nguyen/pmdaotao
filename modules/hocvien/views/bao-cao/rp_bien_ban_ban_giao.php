@@ -86,6 +86,13 @@ use app\modules\khoahoc\models\KhoaHoc;
             'hang'=>'Sắp xếp theo hạng', 
         ] , ['id'=>'sort', 'class'=>'form-control']) ?>
     </div>
+    <div class="col-md-4">    
+    	<label class="form-label">Loại biên bản bàn giao</label>
+        <?= Html::dropDownList('bienbanfull', null, [
+            '0'=>'Biên bản (Single)',
+            '1'=>'Biên bản (Multiple)', 
+        ] , ['id'=>'bienbanfull', 'class'=>'form-control']) ?>
+    </div>
 </div>
 
 <div class="row">    
@@ -104,7 +111,7 @@ use app\modules\khoahoc\models\KhoaHoc;
 function InBaoCao(typereport) {
     $.ajax({
         type: 'POST',
-        url: '/hocvien/bao-cao/rp-bien-ban-ban-giao-print?startdate=' + $('#startdate').val() + '&starttime=' + $('#starttime').val() + '&enddate=' + $('#enddate').val() + '&endtime=' + $('#endtime').val() + '&byuser='+ $('#byuser').val() + '&sortby='+ $('#sort').val() + '&byhangdaotao=' + $('#byhangdaotao').val() + '&typereport=' + typereport + '&byaddress=' + $('#byaddress').val() + '&bykhoa=' + $('#bykhoa').val(),
+        url: $('#bienbanfull').val()==1 ? '/hocvien/bao-cao/rp-bien-ban-ban-giao-full-print?startdate=' + $('#startdate').val() + '&starttime=' + $('#starttime').val() + '&enddate=' + $('#enddate').val() + '&endtime=' + $('#endtime').val() + '&byuser='+ $('#byuser').val() + '&sortby='+ $('#sort').val() + '&byhangdaotao=' + $('#byhangdaotao').val() + '&typereport=' + typereport + '&byaddress=' + $('#byaddress').val() + '&bykhoa=' + $('#bykhoa').val() + '&bienbanfull=' + $('#bienbanfull').val() : '/hocvien/bao-cao/rp-bien-ban-ban-giao-print?startdate=' + $('#startdate').val() + '&starttime=' + $('#starttime').val() + '&enddate=' + $('#enddate').val() + '&endtime=' + $('#endtime').val() + '&byuser='+ $('#byuser').val() + '&sortby='+ $('#sort').val() + '&byhangdaotao=' + $('#byhangdaotao').val() + '&typereport=' + typereport + '&byaddress=' + $('#byaddress').val() + '&bykhoa=' + $('#bykhoa').val() + '&bienbanfull=' + $('#bienbanfull').val(),
         success: function (data) {
             if (data.status === 'success') {
                 $('#print').html(data.content);
