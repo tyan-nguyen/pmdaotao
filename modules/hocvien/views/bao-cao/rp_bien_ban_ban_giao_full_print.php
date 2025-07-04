@@ -45,7 +45,7 @@ use yii\db\Expression;
         <table id="table-tieu-de-1" style="width: 100%">
     		<tr>    		
     			<td colspan="2">
-    				<span class="phieu-h1">DANH SÁCH GIAO NHẬN HỒ SƠ HỌC VIÊN ĐĂNG KÝ HỌC LÁI XE 11111111</span>
+    				<span class="phieu-h1">DANH SÁCH GIAO NHẬN HỒ SƠ HỌC VIÊN ĐĂNG KÝ HỌC LÁI XE</span>
     			</td>    			
     		</tr>
     		<tr>

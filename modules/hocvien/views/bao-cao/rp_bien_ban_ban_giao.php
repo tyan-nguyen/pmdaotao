@@ -10,7 +10,12 @@ use app\modules\khoahoc\models\KhoaHoc;
 <div class="alert alert-outline-success" role="alert">
 	<button aria-label="Close" class="btn-close float-end" data-bs-dismiss="alert" type="button">
 		<span aria-hidden="true">×</span></button>
-	<strong><span class="alert-inner--icon d-inline-block me-1"><i class="fe fe-bell"></i></span> In danh sách bàn giao hồ sơ</strong> <br/> Có thể xuất danh sách kết hợp các điều kiện bên dưới. Đối với biên bản bàn giao hồ sơ theo khóa học cần chọn: Thời gian từ ngày-giờ-phút-giây đến ngày-giờ-phút-giây, khóa học, nơi nhận hồ sơ (nơi đăng ký).
+	<strong><span class="alert-inner--icon d-inline-block me-1"><i class="fe fe-bell"></i></span> In danh sách bàn giao hồ sơ</strong> <br/> Có thể xuất danh sách kết hợp các điều kiện bên dưới. 
+	<ul>
+		<li><i class="fa fa-angle-double-right mb-2 me-2"></i> Đối với biên bản bàn giao hồ sơ theo khóa học cần chọn: Thời gian từ ngày-giờ-phút-giây đến ngày-giờ-phút-giây, khóa học, nơi nhận hồ sơ (nơi đăng ký).</li>
+		<li><i class="fa fa-angle-double-right mb-2 me-2"></i> Biên bản (Single): Xuất tùy chọn theo hạng bằng, khóa học... xuất chung 1 bảng.</li>
+		<li><i class="fa fa-angle-double-right mb-2 me-2"></i> Biên bản (Multiple): Xuất tất cả hồ sơ trong khoảng thời gian, mỗi hạng bằng chung 1 bảng. Lưu ý: Chọn biên bản này thì không cần chọn hạng bằng và khoá học.</li>
+	</ul>
 </div>
 
 <div class="row" style="margin-top:20px">
