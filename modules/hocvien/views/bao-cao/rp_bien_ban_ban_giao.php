@@ -14,7 +14,7 @@ use app\modules\khoahoc\models\KhoaHoc;
 	<ul>
 		<li><i class="fa fa-angle-double-right mb-2 me-2"></i> Đối với biên bản bàn giao hồ sơ theo khóa học cần chọn: Thời gian từ ngày-giờ-phút-giây đến ngày-giờ-phút-giây, khóa học, nơi nhận hồ sơ (nơi đăng ký).</li>
 		<li><i class="fa fa-angle-double-right mb-2 me-2"></i> Biên bản (Single): Xuất tùy chọn theo hạng bằng, khóa học... xuất chung 1 bảng.</li>
-		<li><i class="fa fa-angle-double-right mb-2 me-2"></i> Biên bản (Multiple): Xuất tất cả hồ sơ trong khoảng thời gian, mỗi hạng bằng chung 1 bảng. Lưu ý: Chọn biên bản này thì không cần chọn hạng bằng và khoá học.</li>
+		<li><i class="fa fa-angle-double-right mb-2 me-2"></i> Biên bản (Multiple): Xuất tất cả hồ sơ trong khoảng thời gian, mỗi khóa học chung 1 bảng. Lưu ý: Chọn biên bản này thì không cần chọn hạng bằng và khoá học.</li>
 	</ul>
 </div>
 
