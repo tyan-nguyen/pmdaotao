@@ -176,6 +176,11 @@ return [
         'attribute'=>'ho_ten',
         'width' => '150px',
     ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'dia_chi',
+        'width' => '150px',
+    ],
    // [
       //  'class'=>'\kartik\grid\DataColumn',
       //  'attribute'=>'so_dien_thoai',
