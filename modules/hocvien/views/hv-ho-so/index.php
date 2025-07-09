@@ -20,6 +20,12 @@ Yii::$app->params['showSearch'] = true;
 Yii::$app->params['showExport'] = true;
 ?>
 
+<style>
+#crud-datatable-togdata-page{
+    border:0px!important;
+}
+</style>
+
 <div class="card border-default" id="divFilterExtend">
 	<div class="card-header rounded-bottom-0 card-header text-dark" id="simple">
 		<h5 class="mt-2"><i class="fe fe-search"></i> Tìm kiếm</h5>
@@ -89,7 +95,8 @@ Yii::$app->params['showExport'] = true;
 						</div>
 					</div>
                     '.
-                    '{export}'
+                    '{toggleData}'
+                    .'{export}'
                 ],
             ],          
             'striped' => false,
@@ -104,10 +111,42 @@ Yii::$app->params['showExport'] = true;
                 'before'=>false,
             ],
             'export'=>[
+                'fontAwesome' => true,
+                'showConfirmAlert' => false,
+                'target' => GridView::TARGET_BLANK, // xuất ra tab mới
+                'filename' => 'ds_hoc_vien' . date('Y-m-d'), // tên file export mặc định
                 'options' => [
                     'class' => 'btn'
                 ]
-            ]
+            ],
+            'exportConfig' => [
+                GridView::EXCEL => [
+                    'label' => 'Xuất Excel',
+                    'filename' => 'ds_hoc_vien_' . date('Y-m-d'),
+                    'options' => ['title' => 'Danh sách học viên'],
+                    'config' => [
+                        'worksheet' => 'Học viên',
+                        'cssFile' => '', // nếu cần
+                    ],
+                ],
+                GridView::PDF => [
+                    'label' => 'Xuất PDF',
+                    'filename' => 'ds_hoc_vien_' . date('Y-m-d'),
+                    'options' => ['title' => 'Danh sách học viên'],
+                    'config' => [
+                        'methods' => [
+                            'SetHeader' => ['DANH SÁCH HỌC VIÊN|DANH SÁCH|Xuất ngày: ' . date("d/m/Y")],
+                            'SetFooter' => ['|Trang {PAGENO}|'],
+                        ],
+                        'options' => [
+                            'title' => 'Danh sách học viên',
+                            'subject' => 'Xuất file PDF',
+                            'keywords' => 'export, pdf,',
+                        ],
+                    ],
+                ],
+            ],         
+            
         ])?>
     </div>
     

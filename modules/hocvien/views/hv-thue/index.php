@@ -108,10 +108,41 @@ Yii::$app->params['showExport'] = true;
                 'before'=>false,
             ],
             'export'=>[
+                'fontAwesome' => true,
+                'showConfirmAlert' => false,
+                'target' => GridView::TARGET_BLANK, // xuất ra tab mới
+                'filename' => 'ds_hoc_vien' . date('Y-m-d'), // tên file export mặc định
                 'options' => [
                     'class' => 'btn'
                 ]
-            ]
+            ],
+            'exportConfig' => [
+                GridView::EXCEL => [
+                    'label' => 'Xuất Excel',
+                    'filename' => 'ds_hoc_vien_' . date('Y-m-d'),
+                    'options' => ['title' => 'Danh sách học viên'],
+                    'config' => [
+                        'worksheet' => 'Học viên',
+                        'cssFile' => '', // nếu cần
+                    ],
+                ],
+                GridView::PDF => [
+                    'label' => 'Xuất PDF',
+                    'filename' => 'ds_hoc_vien_' . date('Y-m-d'),
+                    'options' => ['title' => 'Danh sách học viên'],
+                    'config' => [
+                        'methods' => [
+                            'SetHeader' => ['DANH SÁCH HỌC VIÊN|DANH SÁCH|Xuất ngày: ' . date("d/m/Y")],
+                            'SetFooter' => ['|Trang {PAGENO}|'],
+                        ],
+                        'options' => [
+                            'title' => 'Danh sách học viên',
+                            'subject' => 'Xuất file PDF',
+                            'keywords' => 'export, pdf,',
+                        ],
+                    ],
+                ],
+            ], 
         ])?>
     </div>
     
