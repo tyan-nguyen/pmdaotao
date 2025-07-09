@@ -21,7 +21,7 @@ class DangKyHvSearch extends DangKyHv
     {
         return [
             [['id', 'id_khoa_hoc', 'nguoi_tao', 'id_hang','gioi_tinh', 'da_nhan_ao'], 'integer'],
-            [['ho_ten', 'so_dien_thoai', 'so_cccd', 'trang_thai', 'thoi_gian_tao', 'ngay_sinh', 'nguoi_tao', 'thoi_gian_hoan_thanh_ho_so', 'dia_chi', 'size', 'ngay_nhan_ao', 'noi_dang_ky', 'huy_ho_so'], 'safe'],
+            [['ho_ten', 'so_dien_thoai', 'so_cccd', 'trang_thai', 'thoi_gian_tao', 'ngay_sinh', 'nguoi_tao', 'thoi_gian_hoan_thanh_ho_so', 'dia_chi', 'size', 'ngay_nhan_ao', 'noi_dang_ky', 'huy_ho_so', 'ghi_chu'], 'safe'],
         ];
     }
 
@@ -91,7 +91,8 @@ class DangKyHvSearch extends DangKyHv
             ->andFilterWhere(['like', 'so_cccd', $this->so_cccd])
             ->andFilterWhere(['like', 'trang_thai', $this->trang_thai])
            // ->andFilterWhere(['like', 'id_hang', $this->id_hang])
-            ->andFilterWhere(['like', 'ngay_sinh', $this->ngay_sinh]);
+            ->andFilterWhere(['like', 'ngay_sinh', $this->ngay_sinh])
+            ->andFilterWhere(['like', 'ghi_chu', $this->ghi_chu]);
         
        //load danh sách của cơ sở nhân viên nhận hồ sơ 
         /* $user = User::getCurrentUser();

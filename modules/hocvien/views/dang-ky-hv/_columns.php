@@ -287,7 +287,7 @@ return [
          'width' => '80px',
          'contentOptions' => [ 'style' => 'text-align:center'],
      ],
-     [
+     /*[
          'class'=>'\kartik\grid\DataColumn',
          'attribute'=>'thoi_gian_tao',
          'label'=>'Ngày đăng ký',
@@ -296,7 +296,7 @@ return [
          },
          'width' => '70px',
          'contentOptions' => [ 'style' => 'text-align:center'],
-    ],
+    ],*/
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'thoi_gian_hoan_thanh_ho_so',
@@ -306,6 +306,12 @@ return [
         },
         'width' => '70px',
         'contentOptions' => [ 'style' => 'text-align:center'],
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'ghi_chu',
+        'label'=>'Ghi chú',
+        'width' => '70px'
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
