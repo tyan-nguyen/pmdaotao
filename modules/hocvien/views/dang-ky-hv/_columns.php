@@ -45,11 +45,11 @@ return [
             return Url::to([$action, 'id' => $key]);
         },
         'visibleButtons' => [
-            'payment' => function ($model, $key, $index) {
+            /*'payment' => function ($model, $key, $index) {
                 $user = User::getCurrentUser();
                 // only show 'payment' if user chung co so
                 return ($model->noi_dang_ky == $user->noi_dang_ky || $user->superadmin);
-            },
+            },*/
             'huyHoSo' => function ($model, $key, $index) {
                 $user = User::getCurrentUser();
                 // only show 'payment' if user chung co so
