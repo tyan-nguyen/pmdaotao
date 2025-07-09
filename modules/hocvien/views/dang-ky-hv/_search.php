@@ -120,8 +120,12 @@ $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gi
                         ]
                   ])->label('Ngày nhận HV mới'); ?>
             </div>
+            <div class="col-md-4">
+                  <?= $form->field($model, 'ghi_chu')->textInput(['maxlength' => true]) ?>
+            </div>
             <div class="col-md-2">
-                  <?= $form->field($model, 'huy_ho_so')->checkbox() ?>
+            	<label>&nbsp;</label>
+                <?= $form->field($model, 'huy_ho_so')->checkbox() ?>
             </div>
             
     </div>    
