@@ -17,7 +17,8 @@ return [
     [
         'class' => 'kartik\grid\ActionColumn',
         'header'=>'',
-        'template' => '{payment} {view}  {update} {huyHoSo} {doiHangTrongNgay} {doiHangNgayCu} {danhSachDoiHang} {delete} ',
+        //'template' => '{payment} {view}  {update} {huyHoSo} {doiHangTrongNgay} {doiHangNgayCu} {danhSachDoiHang} {delete} ',
+        'template' => '{view} {danhSachDoiHang}',
         'dropdown' => true,
         'dropdownOptions' => ['class' => 'float-right'],
         'dropdownButton'=>[
