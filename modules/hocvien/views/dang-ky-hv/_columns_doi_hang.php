@@ -188,7 +188,7 @@ return [
         'contentOptions' => [ 'style' => 'text-align:right;font-weight:bold'],
     ],
     [
-        //'class'=>'\kartik\grid\DataColumn',
+        'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'thoi_gian_thay_doi',
         'label'=>'Thời gian thay đổi',
         'value'=>function($model){

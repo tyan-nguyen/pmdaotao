@@ -45,7 +45,18 @@ class HocVienDoiHangSearch extends DangKyHv
         
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort'=> ['defaultOrder' => ['id' => SORT_DESC]],
+            'sort'=> [
+                'defaultOrder' => ['hv_hoc_vien_thay_doi_hoc_phi.thoi_gian_thay_doi'=>SORT_DESC, 'id' => SORT_DESC],
+                'attributes' => [
+                    'id',
+                    'thoi_gian_thay_doi' => [
+                        'asc' => ['hv_hoc_vien_thay_doi_hoc_phi.thoi_gian_thay_doi' => SORT_ASC],
+                        'desc' => ['hv_hoc_vien_thay_doi_hoc_phi.thoi_gian_thay_doi' => SORT_DESC],
+                        'default' => SORT_ASC,
+                        'label' => 'Thời gian thay đổi'
+                    ],
+                ]
+            ],
         ]);
         
         $this->load($params);
