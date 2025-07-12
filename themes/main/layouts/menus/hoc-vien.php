@@ -29,7 +29,7 @@ use app\modules\hocvien\models\HocVien;
 							<li class="side-menu__label1"><a href="javascript:void(0)">Danh mục chức năng</a></li>
 							<li><a href="/hocvien/thong-ke/tong-hop?menu=hv8" class="slide-item" data-menu="hv8"> <i class="fe fe-file-text"></i>Thống kê - Công nợ</a></li>
 							<li><a href="/hocvien/dang-ky-hv?menu=hv1" class="slide-item" data-menu="hv1"> <i class="fe fe-file-text"></i> Học viên đăng ký</a></li>
-							<li><a href="/hocvien/dang-ky-hv/hoc-vien-doi-hang?menu=hv9" class="slide-item" data-menu="hv9"> <i class="fe fe-file-text"></i> Học viên đổi hạng</a></li>
+							<li><a href="/hocvien/dang-ky-hv/hoc-vien-doi-hang?menu=hv9&sort=-thoi_gian_thay_doi" class="slide-item" data-menu="hv9"> <i class="fe fe-file-text"></i> Học viên đổi hạng</a></li>
 							<li><a href="/hocvien/hoc-phi/phieu-thu?menu=hv6" class="slide-item" data-menu="hv6"> <i class="fe fe-file-text"></i> Phiếu thu</a></li>
 							<li><a href="/hocvien/hoc-phi/phieu-chi?menu=hv7" class="slide-item" data-menu="hv7"> <i class="fe fe-file-text"></i> Phiếu chi</a></li>
 							<li><a href="/hocvien/hv-ho-so?menu=hv4" class="slide-item" data-menu="hv4"> <i class="fe fe-file-text"></i> Hồ sơ học viên</a></li>
