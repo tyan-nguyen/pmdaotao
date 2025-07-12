@@ -58,6 +58,9 @@ class HocVienBase extends \app\models\HvHocVien
     const NOIDANGKY_CS2 = 'CS2';
     
     public $tongtiennop;//virtual attribute select when report
+    //dành cho thay đổi hạng
+    public $so_tien;
+    public $thoi_gian_thay_doi;
         
     
     /**
@@ -152,7 +155,7 @@ class HocVienBase extends \app\models\HvHocVien
             [['tongtiennop'], 'number'],//virtual attribute select when report
             [['id_khoa_hoc'], 'exist', 'skipOnError' => true, 'targetClass' => KhoaHoc::class, 'targetAttribute' => ['id_khoa_hoc' => 'id']],
             [['id_nhom'], 'exist', 'skipOnError' => true, 'targetClass' => NhomHoc::class, 'targetAttribute' => ['id_nhom' => 'id']],
-            [['ghi_chu', 'ngay_nhan_ao', 'ly_do_huy_ho_so'], 'safe'],
+            [['ghi_chu', 'ngay_nhan_ao', 'ly_do_huy_ho_so', 'so_tien', 'thoi_gian_thay_doi'], 'safe'],
             //[['id_giao_vien'], 'required', 'on'=>'phan-cong-giao-vien'], //on phan cong giao vien phu trach cho hoc vien
         ];
     }

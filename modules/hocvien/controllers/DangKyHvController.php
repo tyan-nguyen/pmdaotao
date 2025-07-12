@@ -21,6 +21,7 @@ use yii\db\Expression;
 use app\modules\hocvien\models\HangDaoTao;
 use app\modules\hocvien\models\ThayDoiHocPhi;
 use app\modules\hocvien\models\HocPhi;
+use app\modules\hocvien\models\search\HocVienDoiHangSearch;
 /**
  * HocVienController implements the CRUD actions for HvHocVien model.
  */
@@ -69,7 +70,26 @@ class DangKyHvController extends Controller
             'pagination' =>$pagination, 
         ]);
     }
-
+    
+    /**
+     * Lists all HvHocVien models.
+     * @return mixed
+     */
+    public function actionHocVienDoiHang()
+    {
+        $searchModel = new HocVienDoiHangSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        //an add
+        //$dataProvider->query->andWhere(['trang_thai' => ['DANG_KY']]);
+        //$dataProvider->query->andWhere('id_khoa_hoc is NULL');
+        $pagination = $dataProvider->getPagination();
+        $pagination->pageSize = 20;
+        return $this->render('index-doi-hang', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'pagination' =>$pagination,
+        ]);
+    }
 
     /**
      * Displays a single HvHocVien model.
