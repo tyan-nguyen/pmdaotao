@@ -96,14 +96,14 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ten_hang_hoa',
     ],
-    [
+    /* [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ngay_san_xuat',
         'value'=>function($model){
             return CustomFunc::convertYMDToDMY($model->ngay_san_xuat);
         },
         'contentOptions' => ['style' => 'text-align:center'],
-    ],
+    ], */
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'so_luong',
