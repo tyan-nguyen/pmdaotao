@@ -43,6 +43,20 @@ function printPhieu(){
 }
 /**
  * in html tu 1 div
+ * [them id #print cho div parent]
+ */
+function printHoaDon(){
+	$('#printHD').printThis({
+		 //debug: false,               // show the iframe for debugging
+		 importCSS: false,            // import parent page css
+		 loadCSS: ['/css/print-hoa-don.css?v=1',
+		 	'/assets/fontawesome-free-6.4.0-web/css/all.min.css',
+		 ],
+		 //printDelay: 333,
+    });
+}
+/**
+ * in html tu 1 div
  * [them id #printDoiHang cho div parent]
  */
 function printPhieuDoiHang(){

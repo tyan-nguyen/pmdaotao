@@ -51,6 +51,7 @@ class ViboonAsset extends AssetBundle
         'assets/plugins/owl-carousel/owl.carousel.js',
         'assets/plugins/multislider/multislider.js',
         'assets/js/carousel.js',
+        'js/vue.js',//vuejs
         'js/print-this/printThis.js',
         'js/ModalRemote.js?v=2',
         'js/ajaxcrud.js?v=2',

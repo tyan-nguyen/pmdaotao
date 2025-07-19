@@ -1,43 +1,31 @@
 <?php
+use yii\helpers\Url;
 use yii\bootstrap5\Html;
 use yii\bootstrap5\Modal;
 use kartik\grid\GridView;
-//use cangak\ajaxcrud\CrudAsset; 
+use cangak\ajaxcrud\CrudAsset; 
 use cangak\ajaxcrud\BulkButtonWidget;
 use yii\widgets\Pjax;
-use app\widgets\FilterFormWidget;
-use app\modules\hocvien\models\HangDaoTao;
-use app\modules\hocvien\models\HocVien;
-use app\modules\user\models\User;
-use app\modules\hocvien\models\base\HocVienBase;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\modules\vanban\models\search\VBDenSearch */
+/* @var $searchModel app\modules\banhang\models\search\NhaCungCapSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-$user = User::getCurrentUser();
-$listTitle = 'Đăng ký học (tại tất cả cơ sở)';
-if(!$user->superadmin && $user->noi_dang_ky){
-    $listTitle = 'Đăng ký học tại ' . HocVienBase::getLabelNoiDangKyOther($user->noi_dang_ky);
-}
-$this->title = $listTitle;
+
+$this->title = 'Nhà cung cấp';
 $this->params['breadcrumbs'][] = $this->title;
-//CrudAsset::register($this);
 Yii::$app->params['showSearch'] = true;
-Yii::$app->params['showExport'] = false;
+Yii::$app->params['showView'] = false;
+//CrudAsset::register($this);
+
 ?>
+
 <style>
 #crud-datatable-togdata-page{
     border:0px!important;
 }
-.thay-doi-hang td{
-    color:blue !important;
-}
-.ho-so-da-huy td{
-    color:blue !important;
-    text-decoration: line-through;
-}
 </style>
-<div class="card border-default" id="divFilterExtend">
+
+<?php if(Yii::$app->params['showSearch']):?><div class="card border-default" id="divFilterExtend">
 	<div class="card-header rounded-bottom-0 card-header text-dark" id="simple">
 		<h5 class="mt-2"><i class="fe fe-search"></i> Tìm kiếm</h5>
 	</div>
@@ -47,34 +35,25 @@ Yii::$app->params['showExport'] = false;
 				<?php 
                     echo $this->render("_search", ["model" => $searchModel]);
                 ?>
-			</div>
+            </div>
 		</div>
 	</div>
 </div>
-
+<?php endif; ?>
 <?php Pjax::begin([
     'id'=>'myGrid',
     'timeout' => 10000,
     'formSelector' => '.myFilterForm'
 ]); ?>
 
-<div class="van-ban-den-index">
+<div class="nha-cung-cap-index">
     <div id="ajaxCrudDatatable">
         <?=GridView::widget([
             'id'=>'crud-datatable',
             'dataProvider' => $dataProvider,
             //'filterModel' => $searchModel,
             'pjax'=>true,
-            'showPageSummary' => true,
             'columns' => require(__DIR__.'/_columns.php'),
-            'rowOptions' => function ($model, $key, $index, $grid) {
-                if($model->thayDoiHangs != null){
-                    return ['class' => 'thay-doi-hang'];
-                }
-                if($model->huy_ho_so){
-                    return ['class' => 'ho-so-da-huy'];
-                }
-            },
             'toolbar'=> [
                 ['content'=>
                     '
@@ -100,24 +79,15 @@ Yii::$app->params['showExport'] = false;
                             'data-confirm-title'=>'Xác nhận xóa?',
                             'data-confirm-message'=>'Bạn có chắc muốn xóa?'
                         ])
-                    .'<li><hr class="dropdown-divider"></li>'
-                    . Html::a('<i class="fas fa-clipboard-list"></i> In DS theo ca', ['report-list'],
-                        ['role'=>'modal-remote','title'=> 'In DS theo ca','class'=>'dropdown-item'])
-                    /* .'<li><hr class="dropdown-divider"></li>'
-                    . Html::a('<i class="fas fa-clipboard-list"></i> Báo cáo DS HV', ['/hocvien/bao-cao/rp-danh-sach-dang-ky'],
-                        ['role'=>'modal-remote','title'=> 'Báo cáo danh sách học viên','class'=>'dropdown-item']) */
-                    .'<li><hr class="dropdown-divider"></li>'
-                    . Html::a('<i class="fas fa-clipboard-list"></i> BB bàn giao hồ sơ', ['/hocvien/bao-cao/rp-bien-ban-ban-giao'],
-                        ['role'=>'modal-remote','title'=> 'Biên bản bàn giao hồ sơ','class'=>'dropdown-item'])
-                    .'<li><hr class="dropdown-divider"></li>'
-                    .'
+                    .
+                    '
 						</div>
 					</div>
                     '.
-                    '{toggleData}'
-                    .'{export}'
+                    '{toggleData}'.
+                    '{export}'
                 ],
-            ],          
+            ],             
             'striped' => false,
             'condensed' => true,
             'responsive' => false,
@@ -126,14 +96,14 @@ Yii::$app->params['showExport'] = false;
             'summary'=>'Tổng: {totalCount} dòng dữ liệu',
             'panel' => [
                 'headingOptions'=>['class'=>'card-header rounded-bottom-0 card-header text-dark'],
-                'heading' => '<i class="typcn typcn-folder-open"></i> DANH SÁCH HỌC VIÊN ĐĂNG KÝ',
+                'heading' => '<i class="typcn typcn-folder-open"></i> DANH SÁCH NHÀ CUNG CẤP',
                 'before'=>false,
             ],
             'export'=>[
                 'fontAwesome' => true,
                 'showConfirmAlert' => false,
                 'target' => GridView::TARGET_BLANK, // xuất ra tab mới
-                'filename' => 'ds_hoc_vien' . date('Y-m-d'), // tên file export mặc định
+                'filename' => 'ds_nha_cung_cap_' . date('Y-m-d'), // tên file export mặc định
                 'options' => [
                     'class' => 'btn'
                 ]
@@ -141,33 +111,32 @@ Yii::$app->params['showExport'] = false;
             'exportConfig' => [
                 GridView::EXCEL => [
                     'label' => 'Xuất Excel',
-                    'filename' => 'ds_hoc_vien_' . date('Y-m-d'),
+                    'filename' => 'ds_nha_cung_cap_' . date('Y-m-d'),
                     'options' => ['title' => 'Danh sách học viên'],
                     'config' => [
-                        'worksheet' => 'Học viên',
+                        'worksheet' => 'Nhà cung cấp',
                         'cssFile' => '', // nếu cần
                     ],
                 ],
                 GridView::PDF => [
                     'label' => 'Xuất PDF',
-                    'filename' => 'ds_hoc_vien_' . date('Y-m-d'),
-                    'options' => ['title' => 'Danh sách học viên'],
+                    'filename' => 'ds_nha_cung_cap_' . date('Y-m-d'),
+                    'options' => ['title' => 'Danh sách nhà cung cấp'],
                     'config' => [
                         'methods' => [
-                            'SetHeader' => ['DANH SÁCH HỌC VIÊN|DANH SÁCH|Xuất ngày: ' . date("d/m/Y")],
+                            'SetHeader' => ['DANH SÁCH NHÀ CUNG CẤP|DANH SÁCH|Xuất ngày: ' . date("d/m/Y")],
                             'SetFooter' => ['|Trang {PAGENO}|'],
                         ],
                         'options' => [
-                            'title' => 'Danh sách học viên',
+                            'title' => 'Danh sách nhà cung cấp',
                             'subject' => 'Xuất file PDF',
                             'keywords' => 'export, pdf,',
                         ],
                     ],
                 ],
-            ], 
+            ],
         ])?>
     </div>
-    
 </div>
 
 <?php Pjax::end(); ?>
@@ -177,30 +146,10 @@ Yii::$app->params['showExport'] = false;
         'id'=>'ajaxCrudModal',
         'tabindex' => false // important for Select2 to work properly
    ],
-   //'dialogOptions'=>['class'=>'modal-lg'],
+   'dialogOptions'=>['class'=>'modal-lg'],
    'closeButton'=>['label'=>'<span aria-hidden=\'true\'>×</span>'],
    'id'=>'ajaxCrudModal',
     'footer'=>'',// always need it for jquery plugin
-    'size'=>Modal::SIZE_EXTRA_LARGE
 ])?>
 
 <?php Modal::end(); ?>
-
-<?php Modal::begin([
-   'options' => [
-        'id'=>'ajaxCrudModal2',
-        'tabindex' => false // important for Select2 to work properly
-   ],
-  // 'dialogOptions'=>['class'=>'modal-lg'],
-   'closeButton'=>['label'=>'<span aria-hidden=\'true\'>×</span>'],
-   'id'=>'ajaxCrudModal2',
-    'footer'=>'',// always need it for jquery plugin
-    'size'=>Modal::SIZE_EXTRA_LARGE
-])?>
-
-<?php Modal::end(); ?>
-
-<?php
-    /* $searchContent = $this->render("_search", ["model" => $searchModel]);
-    echo FilterFormWidget::widget(["content"=>$searchContent, "description"=>"Nhập thông tin tìm kiếm."])  */
-?>

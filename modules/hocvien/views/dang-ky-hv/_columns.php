@@ -201,8 +201,7 @@ return [
         'value' => function($model) {
             return $model->hangDaoTao ? $model->hangDaoTao->ten_hang : 'N/A';
         },
-        'label' => 'Hạng đào tạo',
-        
+        'label' => 'Hạng đào tạo',        
         'pageSummary' => 'Tổng cộng (E=A-B-C+D)',
         'pageSummaryOptions' => ['class' => 'text-right text-end'],
     ],

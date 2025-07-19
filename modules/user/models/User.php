@@ -8,7 +8,15 @@ use yii\db\Expression;
 use app\modules\giaovien\models\GiaoVien;
 
 class User extends UserBase{
-    
+    /**
+     * get list nhan vien
+     */
+    public static function getListUsers(){
+        $users = User::find()->where(['user_type'=>User::USER_TYPE_NHANHOSO])->all();
+        return ArrayHelper::map($users, 'id', function($model) {
+            return $model->ho_ten . ' (' . $model->username . ')';
+        });
+    }
     /**
      * lay danh sach tai khoan chua duoc lien ket voi nhan vien
      * @param string $tenMacDinh
@@ -17,6 +25,18 @@ class User extends UserBase{
     public function getListUnused($tenMacDinh=NULL){
         
        
+    }
+    /**
+     * lay ho ten cua user by id_user
+     * @param id of user $id
+     * @return string
+     */
+    public static function getHoTenByID($id){
+        $model = User::findOne($id);
+        if($model)
+            return $model->ho_ten;
+            else
+                return '';
     }
     /**
      * get id giao vien neu tai khoan la giao vien

@@ -46,6 +46,9 @@ $config = [
         'daotao' => [
             'class' => 'app\modules\daotao\DaoTao',
         ],
+        'banhang' => [
+            'class' => 'app\modules\banhang\Module',
+        ],
 
         /* 'dynamikjs' => [
             'class' => 'dastanaron\dropzone\DynamicJSModule'
