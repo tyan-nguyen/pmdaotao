@@ -17,7 +17,7 @@ return [
     [
         'class' => 'kartik\grid\ActionColumn',
         'header'=>'',
-        'template' => '{payment} {view}  {update} {huyHoSo} {doiHangTrongNgay} {doiHangNgayCu} {danhSachDoiHang} {baoLuu} {danhSachBaoLuu} {delete} ',
+        'template' => '{payment} {view}  {update} {danhSachDoiSatHach} {danhSachDoiHang} {danhSachBaoLuu} {huyHoSo} {doiHangTrongNgay} {doiHangNgayCu}  {doiSatHach}  {baoLuu} {delete} ',
         'dropdown' => true,
         'dropdownOptions' => ['class' => 'float-right'],
         'dropdownButton'=>[
@@ -41,6 +41,12 @@ return [
             }
             if ($action === 'danhSachDoiHang') {
                 return Url::to(['view-thay-doi-hang', 'id' => $key]);
+            }
+            if ($action === 'doiSatHach') {
+                return Url::to(['doi-sat-hach/create', 'idhv' => $key]);
+            }
+            if ($action === 'danhSachDoiSatHach') {
+                return Url::to(['doi-sat-hach/view', 'idhv' => $key]);
             }
             if ($action === 'baoLuu') {
                 return Url::to(['bao-luu/create', 'idhv' => $key]);
@@ -75,6 +81,16 @@ return [
                 $user = User::getCurrentUser();
                 // only show 'doiHangNgayCu' if user chung co so
                 return ($model->thayDoiHangs != null);
+            },
+            'doiSatHach' => function ($model, $key, $index) {
+                $user = User::getCurrentUser();
+                // only show 'doiHangNgayCu' if user chung co so
+                return ($model->noi_dang_ky == $user->noi_dang_ky || $user->superadmin);
+            },
+            'danhSachDoiSatHach' => function ($model, $key, $index) {
+                $user = User::getCurrentUser();
+                // only show 'doiHangNgayCu' if user chung co so
+                return ($model->doiNgaySatHachs != null);
             },
             'baoLuu' => function ($model, $key, $index) {
                 $user = User::getCurrentUser();
@@ -163,6 +179,25 @@ return [
         'danhSachDoiHang' => function ($url, $model, $key) {
             return Html::a('<i class="fas fa-list-ol"></i> Lịch sử đổi hạng', $url, [
                 'title' => 'Lịch sử đổi hạng',
+                'role' => 'modal-remote-2',
+                'class' => 'btn ripple btn-primary dropdown-item',
+                'data-bs-placement' => 'top',
+                'data-bs-toggle' => 'tooltip'
+            ]);
+        },
+        'doiSatHach' => function ($url, $model, $key) {
+            return Html::a('<i class="fas fa-tools"></i> Dời sát hạch', $url, [
+                'title' => 'Dời ngày sát hạch',
+                'role' => 'modal-remote',
+                'class' => 'btn ripple btn-danger dropdown-item',
+                'data-bs-placement' => 'top',
+                'data-bs-toggle' => 'tooltip',
+                'style'=>'color:red'
+            ]);
+        },
+        'danhSachDoiSatHach' => function ($url, $model, $key) {
+            return Html::a('<i class="fas fa-list-ol"></i> Lịch sử dời ngày sát hạch', $url, [
+                'title' => 'Lịch sử dời ngày sát hạch',
                 'role' => 'modal-remote-2',
                 'class' => 'btn ripple btn-primary dropdown-item',
                 'data-bs-placement' => 'top',

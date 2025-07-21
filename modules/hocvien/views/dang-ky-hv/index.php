@@ -36,6 +36,12 @@ Yii::$app->params['showExport'] = false;
     color:blue !important;
     text-decoration: line-through;
 }
+.ho-so-bao-luu td{
+    color:orange !important;
+}
+.doi-ngay-sat-hach td{
+    color:green !important;
+}
 </style>
 <div class="card border-default" id="divFilterExtend">
 	<div class="card-header rounded-bottom-0 card-header text-dark" id="simple">
@@ -73,6 +79,12 @@ Yii::$app->params['showExport'] = false;
                 }
                 if($model->huy_ho_so){
                     return ['class' => 'ho-so-da-huy'];
+                }
+                if($model->baoLuus){
+                    return ['class' => 'ho-so-bao-luu'];
+                }
+                if($model->doiNgaySatHachs){
+                    return ['class' => 'doi-ngay-sat-hach'];
                 }
             },
             'toolbar'=> [

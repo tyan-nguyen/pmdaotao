@@ -22,7 +22,7 @@ use app\custom\CustomFunc;
     	</table>
     	
     	
-    	<p style="font-size: 14pt;margin:20px 0px;font-weight:bold;text-align: center">Kính gửi: - Trung tâm Giáo dục nghề nghiệp và Sát hạch lái xe Nguyễn Trình</p>    	
+    	<p style="font-size: 14pt;margin:20px 0px;font-weight:bold;text-align: center">Kính gửi: Trung tâm Giáo dục nghề nghiệp và Sát hạch lái xe Nguyễn Trình</p>    	
     	<p style="font-size: 14pt;margin:7px 0px;">Tôi tên: <?= $model->hocVien->ho_ten ?></p>
     	<p style="font-size: 14pt;margin:7px 0px;">Ngày sinh: <?= $model->hocVien->getNgaySinh() ?> <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>  Số CCCD: <?= $model->hocVien->so_cccd ?> </p>
     	<p style="font-size: 14pt;margin:7px 0px;">Số điện thoại: <?= $model->hocVien->so_dien_thoai ?></p>    	
