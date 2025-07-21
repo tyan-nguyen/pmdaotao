@@ -50,7 +50,7 @@ use kartik\date\DatePicker;
         
         <div class="col-md-3">
         	<?php 
-        	   $dvtLabel = $model->getAttributeLabel('dvt') . ' <a href="/hanghoa/hang-hoa/create-dvt" role="modal-remote-2" style="padding-left:10px;" title="Thêm đơn vị tính"><i class="fa-solid fa-square-plus"></i></a> <a href="#" onclick="runFunc(0)" style="padding-left:10px;" title="Thêm đơn vị tính"><i class="fa-solid fa-retweet"></i></a>';
+        	   $dvtLabel = $model->getAttributeLabel('dvt') . ' <a href="/banhang/hang-hoa/create-dvt" role="modal-remote-2" style="padding-left:10px;" title="Thêm đơn vị tính"><i class="fa-solid fa-square-plus"></i></a> <a href="#" onclick="runFunc(0)" style="padding-left:10px;" title="Thêm đơn vị tính"><i class="fa-solid fa-retweet"></i></a>';
         	?>
         	<label><?= $dvtLabel ?></label>
             <?= $form->field($model, 'dvt')->widget(Select2::classname(), [
