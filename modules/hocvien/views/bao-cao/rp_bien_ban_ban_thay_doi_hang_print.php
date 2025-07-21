@@ -39,18 +39,18 @@ use app\custom\CustomFunc;
     	</table>
     	
     	
-    	<p style="font-size: 14pt;margin:20px 0px;font-weight:bold">Kính gửi: Trung tâm Giáo dục nghề nghiệp và Sát hạch lái xe Nguyễn Trình</p>    	
-    	<p style="font-size: 14pt;margin:5px 0px;">Tôi tên: <?= $model->hocVien->ho_ten ?> <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>   Sinh ngày: <?= $model->hocVien->getNgaySinh() ?>  <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>  Nam/Nữ: <?= $model->hocVien->gioi_tinh == 1 ? 'Nam' : 'Nữ' ?></p>
-    	<p style="font-size: 14pt;;margin:5px 0px;">Địa chỉ: <?= $model->hocVien->dia_chi ?></p>
-    	<p style="font-size: 14pt;;margin:5px 0px;">Số CCCD: <?= $model->hocVien->so_cccd ?>  <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Ngày cấp:....................    <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Nơi cấp:.................. </p>
+    	<p style="font-size: 14pt;margin:20px 0px;font-weight:bold;text-align: center">Kính gửi: Trung tâm Giáo dục nghề nghiệp và Sát hạch lái xe Nguyễn Trình</p>    	
+    	<p style="font-size: 14pt;margin:7px 0px;">Tôi tên: <?= $model->hocVien->ho_ten ?> <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>   Sinh ngày: <?= $model->hocVien->getNgaySinh() ?>  <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>  Nam/Nữ: <?= $model->hocVien->gioi_tinh == 1 ? 'Nam' : 'Nữ' ?></p>
+    	<p style="font-size: 14pt;margin:7px 0px;">Địa chỉ: <?= $model->hocVien->dia_chi ?></p>
+    	<p style="font-size: 14pt;margin:7px 0px;">Số CCCD: <?= $model->hocVien->so_cccd ?>  <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Ngày cấp:....................    <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Nơi cấp:.................. </p>
     	
-    	<p style="font-size: 14pt;;margin:5px 0px;">Đề nghị cho tôi thay đổi hạng đăng ký học lái xe ban đầu như sau: <?= $model->ly_do ?>.</p>
-    	<p style="font-size: 14pt;;margin:5px 0px;">Tôi cam kết sẽ thực hiện theo sự sắp xếp của Trung tâm và nộp thêm học phí (nếu có phát sinh).</p>
+    	<p style="font-size: 14pt;margin:7px 0px;">Đề nghị cho tôi thay đổi hạng đăng ký học lái xe ban đầu như sau: <?= $model->ly_do ?>.</p>
+    	<p style="font-size: 14pt;;margin:7px 0px;">Tôi cam kết sẽ thực hiện theo sự sắp xếp của Trung tâm và nộp thêm học phí (nếu có phát sinh).</p>
     	
     	
     	<table style="width: 100%; margin-top:5px;">
     		<tr>
-    			<td colspan="3" align="right" style="font-style: italic;font-size:14pt">Trà Vinh, ngày <?= date("d", strtotime($model->thoi_gian_thay_doi))?> tháng <?= date("m", strtotime($model->thoi_gian_thay_doi))?> năm <?= date("Y", strtotime($model->thoi_gian_thay_doi))?></td>
+    			<td colspan="3" align="right" style="font-style: italic;font-size:14pt">Vĩnh Long, ngày <?= date("d", strtotime($model->thoi_gian_thay_doi))?> tháng <?= date("m", strtotime($model->thoi_gian_thay_doi))?> năm <?= date("Y", strtotime($model->thoi_gian_thay_doi))?></td>
     		</tr>
     		<tr>
     			<td width="30%"></td>

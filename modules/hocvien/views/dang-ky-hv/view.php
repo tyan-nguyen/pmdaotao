@@ -4,6 +4,7 @@ use app\widgets\FileDisplayWidget;
 use app\modules\hocvien\models\HocVien;
 use app\custom\CustomFunc;
 use app\modules\user\models\User;
+use app\modules\hocvien\models\DangKyHv;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\HvHocVien */
@@ -38,7 +39,14 @@ use app\modules\user\models\User;
                         <p><strong>Trạng thái:</strong> Đã hủy hồ sơ
                         <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                         <strong>Thời gian hủy:</strong> <?= CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_huy_ho_so) ?></p>
+                         <p><strong>Lý do hủy:</strong> <?= DangKyHv::getDmLyDoHuyLablel($model->loai_ly_do) ?>
+                        <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <strong>Lệ phí:</strong> <?= number_format($model->le_phi) ?></p>
                         <p><strong>Ghi chú hủy:</strong> <?= $model->ly_do_huy_ho_so ?></p>
+                        
+                        <?= Html::button('<i class="fa fa-print"></i> In Phiếu hủy', [
+                        	    'class' => 'btn btn-sm btn-default', 
+                                'onclick' => 'InPhieuHuyHoSo('.$model->id.')']) ?>
                         <?php } ?>
                         
                     </div>
@@ -215,9 +223,13 @@ use app\modules\user\models\User;
        
 
         <!-- Phần tử ẩn chứa nội dung phiếu -->
-          <div style="display:none">
+         <div style="display:none">
               <div id="print"></div>
           </div>
+          <!-- Phần tử ẩn chứa nội dung phiếu -->
+        <div style="display:none">
+          <div id="printDoiHang"></div>
+        </div>
     </div>
     
 </div>
@@ -304,6 +316,24 @@ function printPhieuXuat() {
 
     // Xóa iframe 
     setTimeout(() => document.body.removeChild(iframe), 1000);
+}
+
+function InPhieuHuyHoSo(id) {
+    $.ajax({
+        type: 'POST',
+        url: '/hocvien/bao-cao/rp-bien-ban-huy-ho-so-print?idhv=' + id,
+        success: function (data) {
+            if (data.status === 'success') {
+                $('#printDoiHang').html(data.content);
+				printPhieuDoiHang();
+            } else {
+                alert('Không thể tải phiếu!');
+            }
+        },
+        error: function () {
+            alert('Đã xảy ra lỗi.');
+        }
+    });
 }
 </script>
 

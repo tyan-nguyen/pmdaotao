@@ -51,11 +51,17 @@ use app\modules\daotao\models\GvHv;
  * @property int|null $huy_ho_so
  * @property string|null $thoi_gian_huy_ho_so
  * @property string|null $ly_do_huy_ho_so
+ * @property string|null $loai_ly_do
+ * @property float|null $le_phi
  */
 class HocVienBase extends \app\models\HvHocVien
 {
     const NOIDANGKY_CS1 = 'CS1';
     const NOIDANGKY_CS2 = 'CS2';
+    
+    const HUY_BATKHAKHANG = 'BATKHAKHANG';
+    const HUY_KHACHQUAN = 'KHACHQUAN';
+    const HUY_CHUQUAN = 'CHUQUAN';
     
     public $tongtiennop;//virtual attribute select when report
     //dành cho thay đổi hạng
@@ -136,6 +142,61 @@ class HocVienBase extends \app\models\HvHocVien
         }
         return $label;
     }
+    
+    /**
+     * Danh muc ly do huy ho so
+     * @return string[]
+     */
+    public static function getDmLyDoHuy()
+    {
+        return [
+            self::HUY_BATKHAKHANG => 'Bất khả kháng',
+            self::HUY_KHACHQUAN => 'Khách quan',
+            self::HUY_CHUQUAN => 'Chủ quan',
+        ];
+    }
+    /**
+     * Danh muc ly do huy ho so label
+     * @return string[]
+     */
+    public static function getDmLyDoHuyLablel($val=NULL)
+    {
+        switch ($val) {
+            case self::HUY_BATKHAKHANG:
+                $label = 'Bất khả kháng';
+                break;
+            case self::HUY_KHACHQUAN:
+                $label = 'Khách quan';
+                break;
+            case self::HUY_CHUQUAN:
+                $label = 'Chủ quan';
+                break;
+            default:
+                $label = '';
+        }
+        return $label;
+    }
+    /**
+     * Lấy lệ phí theo lý do
+     * @return string[]
+     */
+    public static function getLePhiHuyHoSo($lydo)
+    {
+        switch ($lydo) {
+            case self::HUY_BATKHAKHANG:
+                $lePhi = 0;
+                break;
+            case self::HUY_KHACHQUAN:
+                $lePhi = 1000000;
+                break;
+            case self::HUY_CHUQUAN:
+                $lePhi = 2000000;
+                break;
+            default:
+                $lePhi = 0;
+        }
+        return $lePhi;
+    }
 
     /**
      * {@inheritdoc}
@@ -151,8 +212,9 @@ class HocVienBase extends \app\models\HvHocVien
             [['check_hoc_phi'],'string','max'=>25],
             [['nguoi_lap_phieu'],'string','max'=>55],
             [['noi_dang_ky', 'size'],'string','max'=>50],
+            [['loai_ly_do'], 'string', 'max' => 20],
             [['loai_dang_ky'],'string','max'=>15],
-            [['tongtiennop'], 'number'],//virtual attribute select when report
+            [['tongtiennop', 'le_phi'], 'number'],//virtual attribute select when report
             [['id_khoa_hoc'], 'exist', 'skipOnError' => true, 'targetClass' => KhoaHoc::class, 'targetAttribute' => ['id_khoa_hoc' => 'id']],
             [['id_nhom'], 'exist', 'skipOnError' => true, 'targetClass' => NhomHoc::class, 'targetAttribute' => ['id_nhom' => 'id']],
             [['ghi_chu', 'ngay_nhan_ao', 'ly_do_huy_ho_so', 'so_tien', 'thoi_gian_thay_doi'], 'safe'],
@@ -199,6 +261,8 @@ class HocVienBase extends \app\models\HvHocVien
             'huy_ho_so' => 'Hủy hồ sơ',
             'thoi_gian_huy_ho_so' => 'Thời gian hủy hồ sơ',
             'ly_do_huy_ho_so' => 'Lý do hủy',
+            'loai_ly_do' => 'Loại lý do',
+            'le_phi' => 'Lệ phí',
         ];
     }
 

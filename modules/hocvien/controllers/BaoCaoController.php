@@ -30,7 +30,8 @@ class BaoCaoController extends Controller
         'rp-bien-ban-ban-giao', 
         'rp-bien-ban-ban-giao-print',
         'rp-bien-ban-ban-giao-full-print',
-        'rp-bien-ban-thay-doi-hang-print'
+        'rp-bien-ban-thay-doi-hang-print',
+        'rp-bien-ban-huy-ho-so-print',
     ];
     /**
      * @inheritdoc
@@ -66,6 +67,22 @@ class BaoCaoController extends Controller
            'model'=>$model
         ]);
 
+        return $this->asJson([
+            'status' => 'success',
+            'content' => $content,
+        ]);
+    }
+    /**
+     * in biên bản hủy hồ sơ
+     * @param unknown $idhv
+     * @return \yii\web\Response
+     */
+    public function actionRpBienBanHuyHoSoPrint($idhv){
+        $model = DangKyHv::findOne($idhv);
+        $content = $this->renderPartial('rp_bien_ban_huy_ho_so_print', [
+            'model'=>$model
+        ]);
+        
         return $this->asJson([
             'status' => 'success',
             'content' => $content,
