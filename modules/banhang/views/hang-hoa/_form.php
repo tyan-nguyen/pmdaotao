@@ -120,7 +120,7 @@ use kartik\date\DatePicker;
 
 <script type="text/javascript">
 function runFunc1(sendVal){
-	var url = '/hanghoa/hang-hoa/refresh-dvt?selected=' + sendVal;
+	var url = '/banhang/hang-hoa/refresh-dvt?selected=' + sendVal;
 	$.ajax({
         url: url,
         method: 'GET',
@@ -134,7 +134,7 @@ function runFunc1(sendVal){
 }
 
 function runFunc(sendVal){
-	var url = '/hanghoa/hang-hoa/refresh-dvt-select2?selected=' + sendVal;
+	var url = '/banhang/hang-hoa/refresh-dvt-select2?selected=' + sendVal;
 	$.ajax({
         url: url,
         method: 'GET',
