@@ -6,7 +6,7 @@ use yii\widgets\ActiveForm;
 <div class="dvt-form">
 
      <?php $form = ActiveForm::begin([
-        'action' => '/hanghoa/hang-hoa/create-dvt',
+        'action' => '/banhang/hang-hoa/create-dvt',
     ]); ?>
 
     <?= $form->field($model, 'ten_dvt')->textInput(['maxlength' => true]) ?>
