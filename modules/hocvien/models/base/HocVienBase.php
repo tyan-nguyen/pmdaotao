@@ -14,6 +14,7 @@ use yii\db\Expression;
 use app\modules\giaovien\models\GiaoVien;
 use app\modules\hocvien\models\ThayDoiHocPhi;
 use app\modules\daotao\models\GvHv;
+use app\modules\hocvien\models\BaoLuu;
 
 /**
  * This is the model class for table "hv_hoc_vien".
@@ -378,6 +379,11 @@ class HocVienBase extends \app\models\HvHocVien
     public function getThayDoiHangs()
     {
         return $this->hasMany(ThayDoiHocPhi::class, ['id_hoc_vien' => 'id']);
+    }
+    //get list bao luu
+    public function getBaoLuus()
+    {
+        return $this->hasMany(BaoLuu::class, ['id_hoc_vien' => 'id']);
     }
     /**
      * kết thúc phần chỉnh sửa học phí - hạng đào tạo

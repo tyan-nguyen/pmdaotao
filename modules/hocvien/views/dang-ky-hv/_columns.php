@@ -17,7 +17,7 @@ return [
     [
         'class' => 'kartik\grid\ActionColumn',
         'header'=>'',
-        'template' => '{payment} {view}  {update} {huyHoSo} {doiHangTrongNgay} {doiHangNgayCu} {danhSachDoiHang} {delete} ',
+        'template' => '{payment} {view}  {update} {huyHoSo} {doiHangTrongNgay} {doiHangNgayCu} {danhSachDoiHang} {baoLuu} {danhSachBaoLuu} {delete} ',
         'dropdown' => true,
         'dropdownOptions' => ['class' => 'float-right'],
         'dropdownButton'=>[
@@ -41,6 +41,12 @@ return [
             }
             if ($action === 'danhSachDoiHang') {
                 return Url::to(['view-thay-doi-hang', 'id' => $key]);
+            }
+            if ($action === 'baoLuu') {
+                return Url::to(['bao-luu/create', 'idhv' => $key]);
+            }
+            if ($action === 'danhSachBaoLuu') {
+                return Url::to(['bao-luu/view', 'idhv' => $key]);
             }
             return Url::to([$action, 'id' => $key]);
         },
@@ -69,6 +75,16 @@ return [
                 $user = User::getCurrentUser();
                 // only show 'doiHangNgayCu' if user chung co so
                 return ($model->thayDoiHangs != null);
+            },
+            'baoLuu' => function ($model, $key, $index) {
+                $user = User::getCurrentUser();
+                // only show 'doiHangNgayCu' if user chung co so
+                return ($model->noi_dang_ky == $user->noi_dang_ky || $user->superadmin);
+            },
+            'danhSachBaoLuu' => function ($model, $key, $index) {
+                $user = User::getCurrentUser();
+                // only show 'doiHangNgayCu' if user chung co so
+                return ($model->baoLuus != null);
             },
             'update' => function ($model, $key, $index) {
                 $user = User::getCurrentUser();
@@ -147,6 +163,25 @@ return [
         'danhSachDoiHang' => function ($url, $model, $key) {
             return Html::a('<i class="fas fa-list-ol"></i> Lịch sử đổi hạng', $url, [
                 'title' => 'Lịch sử đổi hạng',
+                'role' => 'modal-remote-2',
+                'class' => 'btn ripple btn-primary dropdown-item',
+                'data-bs-placement' => 'top',
+                'data-bs-toggle' => 'tooltip'
+            ]);
+        },
+        'baoLuu' => function ($url, $model, $key) {
+            return Html::a('<i class="fas fa-tools"></i> Bảo lưu', $url, [
+                'title' => 'Bảo lưu',
+                'role' => 'modal-remote',
+                'class' => 'btn ripple btn-danger dropdown-item',
+                'data-bs-placement' => 'top',
+                'data-bs-toggle' => 'tooltip',
+                'style'=>'color:red'
+            ]);
+        },
+        'danhSachBaoLuu' => function ($url, $model, $key) {
+            return Html::a('<i class="fas fa-list-ol"></i> Lịch sử bảo lưu', $url, [
+                'title' => 'Lịch sử bảo lưu',
                 'role' => 'modal-remote-2',
                 'class' => 'btn ripple btn-primary dropdown-item',
                 'data-bs-placement' => 'top',
