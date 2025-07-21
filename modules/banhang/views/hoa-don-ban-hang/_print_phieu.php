@@ -27,9 +27,9 @@ $custom = new CustomFunc();
     			<td>
     				<span style="font-weight: bold; font-size:10pt;color:red">TRUNG TÂM GDNN & SHLX NGUYỄN TRÌNH</span>
     				<br/>
-    				<span style="font-size:9pt"><i class="fas fa-map-marker-alt" style="color:red;margin-right:2px"></i>  Địa chỉ đăng ký: Nguyễn Đáng, Khóm 10, Phường 9, TP Trà Vinh</span>
+    				<span style="font-size:9pt"><i class="fas fa-map-marker-alt" style="color:red;margin-right:2px"></i>  Địa chỉ đăng ký: Nguyễn Đáng, Khóm 10, Phường Trà Vinh, Vĩnh Long</span>
     				<br/>
-    				<span style="font-size:9pt"><i class="fas fa-home" style="color:red"></i> Địa chỉ TT: Ấp Giồng Trôm, X. Mỹ Chánh, H. Châu Thành, T. Trà Vinh</span>
+    				<span style="font-size:9pt"><i class="fas fa-home" style="color:red"></i> Địa chỉ TT: Ấp Giồng Trôm, Xã Châu Thành, Tỉnh Vĩnh Long</span>
     				<br/>
     				<span style="font-size:9pt"><i class="fas fa-globe" style="color:red"></i> Website: nguyentrinh.com.vn</span> - <span style="font-size:9pt"><i class="fas fa-phone" style="color:red"></i> ĐT: 0903 336 470</span>
     				<!-- <br/>
