@@ -371,7 +371,7 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'thoi_gian_hoan_thanh_ho_so',
-        'label'=>'Hoàn thành HS',
+        'label'=>'H.Thành HS',
         'value'=>function($model){
             return CustomFunc::convertYMDHISToDMY($model->thoi_gian_hoan_thanh_ho_so);
         },
