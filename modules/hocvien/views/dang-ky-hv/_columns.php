@@ -255,13 +255,13 @@ return [
       //  'class'=>'\kartik\grid\DataColumn',
       //  'attribute'=>'so_dien_thoai',
    // ],
-    [
+    /* [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'so_cccd',
         'label'=>'CCCD (Mã KH)',
         'width' => '150px',
         'contentOptions' => [ 'style' => 'text-align:center' ],
-    ],
+    ], */
 
  
     [
