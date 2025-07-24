@@ -5,10 +5,10 @@ use app\custom\CustomFunc;
 use app\modules\user\models\User;
 use app\modules\hocvien\models\DangKyHv;
 return [
-    [
+    /* [
         'class' => 'kartik\grid\CheckboxColumn',
         'width' => '20px',
-    ],
+    ], */
 
         // [
         // 'class'=>'\kartik\grid\DataColumn',
