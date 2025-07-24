@@ -280,8 +280,11 @@ return [
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'khoaHoc.ten_khoa_hoc',
+        'attribute'=>'id_khoa_hoc',
         'label'=>'Khóa học',
+        'value' => function($model) {
+            return $model->khoaHoc ? $model->khoaHoc->ten_khoa_hoc : '';
+        },
         'width' => '100px',
         'contentOptions' => [ 'style' => 'text-align:center' ],
     ],
