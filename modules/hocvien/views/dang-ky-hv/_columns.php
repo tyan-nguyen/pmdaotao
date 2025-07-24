@@ -378,23 +378,18 @@ return [
         'width' => '70px',
         'contentOptions' => [ 'style' => 'text-align:center'],
     ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'ghi_chu',
-        'label'=>'Ghi chú',
-        'width' => '200px'
-    ],
+    
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'da_nhan_ao',
         'label'=>'Áo',
         'format'=>'html',
         'value'=>function($model){
-            return $model->da_nhan_ao==1?'<i class="ion-checkmark-round text-primary"></i>':'';
+        return $model->da_nhan_ao==1?'<i class="ion-checkmark-round text-primary"></i>':'';
         },
         'width' => '30px',
         'contentOptions' => [ 'style' => 'text-align:center'],
-    ],
+   ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'size',
@@ -402,7 +397,15 @@ return [
         'format'=>'html',
         'width' => '30px',
         'contentOptions' => [ 'style' => 'text-align:center'],
-     ],
+    ],
+        
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'ghi_chu',
+        'label'=>'Ghi chú',
+        'width' => '200px'
+    ],
+    
      /* [
          'class'=>'\kartik\grid\DataColumn',
          'attribute'=>'ngay_nhan_ao',
