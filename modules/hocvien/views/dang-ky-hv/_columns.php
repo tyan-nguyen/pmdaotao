@@ -269,7 +269,7 @@ return [
     [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'id_hang',
-        'width' => '150px',
+        'width' => '175px',
         'value' => function($model) {
             return $model->hangDaoTao ? $model->hangDaoTao->ten_hang : 'N/A';
         },
