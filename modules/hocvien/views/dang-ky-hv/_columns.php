@@ -285,7 +285,7 @@ return [
     [
         'class' => '\kartik\grid\DataColumn',
         'label'=>'Học phí(A)',
-        'width' => '120px',
+        'width' => '100px',
         'value' => function($model) {
             return $model->tienHocPhi;
         },
@@ -298,7 +298,7 @@ return [
     [
         'class' => '\kartik\grid\DataColumn',
         'label'=>'Đã TT(B)',
-        'width' => '120px',
+        'width' => '100px',
         'value' => function($model) {
             return $model->tienDaNopDuong;
         },
@@ -310,7 +310,7 @@ return [
      [
          'class' => '\kartik\grid\DataColumn',
          'label'=>'C.Khấu(C)',
-         'width' => '120px',
+         'width' => '100px',
          'value' => function($model) {
             return $model->tienChietKhau;
          },
@@ -334,7 +334,7 @@ return [
       [
           'class' => '\kartik\grid\DataColumn',
           'label'=>'Còn lại(E)',
-          'width' => '120px',
+          'width' => '100px',
           'value' => function($model) {
             return $model->tienChuaThanhToan;
           },
