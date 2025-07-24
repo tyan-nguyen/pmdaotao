@@ -251,10 +251,11 @@ return [
         'attribute'=>'dia_chi',
         'width' => '150px',
     ], */
-   // [
-      //  'class'=>'\kartik\grid\DataColumn',
-      //  'attribute'=>'so_dien_thoai',
-   // ],
+    [
+       'class'=>'\kartik\grid\DataColumn',
+       'attribute'=>'so_dien_thoai',
+        'width' => '100px',
+    ],
     /* [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'so_cccd',
