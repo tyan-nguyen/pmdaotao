@@ -380,7 +380,7 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ghi_chu',
         'label'=>'Ghi chú',
-        'width' => '70px'
+        'width' => '200px'
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
