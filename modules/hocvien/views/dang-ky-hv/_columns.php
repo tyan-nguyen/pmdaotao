@@ -254,7 +254,8 @@ return [
     [
        'class'=>'\kartik\grid\DataColumn',
        'attribute'=>'so_dien_thoai',
-        'width' => '100px',
+        'width' => '90px',
+        'contentOptions' => [ 'style' => 'text-align:center' ],
     ],
     /* [
         'class'=>'\kartik\grid\DataColumn',
