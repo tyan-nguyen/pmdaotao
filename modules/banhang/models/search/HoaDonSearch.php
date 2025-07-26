@@ -68,6 +68,7 @@ class HoaDonSearch extends HoaDon
 		    }
 		    if($this->ngay_xuat){
 		        $this->ngay_xuat = CustomFunc::convertDMYToYMD($this->ngay_xuat);
+		        $query->where("DATE(ngay_xuat) = '" . $this->ngay_xuat."'");
 		    }
 		    if($this->ngay_giao_hang){
 		        $this->ngay_giao_hang = CustomFunc::convertDMYToYMD($this->ngay_giao_hang);
@@ -80,7 +81,7 @@ class HoaDonSearch extends HoaDon
                 'so_vao_so' => $this->so_vao_so,
                 'nam' => $this->nam,
                 'ngay_dat_hang' => $this->ngay_dat_hang,
-                'ngay_xuat' => $this->ngay_xuat,
+                //'ngay_xuat' => $this->ngay_xuat,
                 'so_lan_in' => $this->so_lan_in,
                 'da_giao_hang' => $this->da_giao_hang,
                 'ngay_giao_hang' => $this->ngay_giao_hang,
