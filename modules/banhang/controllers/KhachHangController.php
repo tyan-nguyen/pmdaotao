@@ -19,6 +19,22 @@ use app\modules\banhang\models\search\KhachHangSearch;
  */
 class KhachHangController extends Controller
 {
+    /**
+     * @inheritdoc
+     */
+    public function behaviors() {
+        return [
+            'ghost-access'=> [
+                'class' => 'webvimark\modules\UserManagement\components\GhostAccessControl',
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ];
+    }
     public function actionSearch($q = null, $loai = null)
     {
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;

@@ -18,6 +18,22 @@ use yii\filters\AccessControl;
 class LoaiKhachHangController extends Controller
 {
     /**
+     * @inheritdoc
+     */
+    public function behaviors() {
+        return [
+            'ghost-access'=> [
+                'class' => 'webvimark\modules\UserManagement\components\GhostAccessControl',
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ];
+    }
+    /**
      * Lists all LoaiKhachHang models.
      * @return mixed
      */
