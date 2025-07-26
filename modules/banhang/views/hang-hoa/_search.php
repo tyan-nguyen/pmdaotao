@@ -12,7 +12,7 @@ use app\modules\banhang\models\LoaiHangHoa;
 <div class="hang-hoa-search">
     <?php $form = ActiveForm::begin([
         	'id'=>'myFilterForm',
-            'method' => 'post',
+            'method' => 'get',
             'options' => [
                 'class' => 'myFilterForm'
             ]

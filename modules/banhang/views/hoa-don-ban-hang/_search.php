@@ -17,7 +17,7 @@ use app\modules\user\models\User;
 
     <?php $form = ActiveForm::begin([
         	'id'=>'myFilterForm',
-            'method' => 'post',
+            'method' => 'get',
             'options' => [
                 'class' => 'myFilterForm'
             ]
