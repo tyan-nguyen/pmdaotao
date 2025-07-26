@@ -1,29 +1,27 @@
 <?php
-use yii\helpers\Url;
 use yii\bootstrap5\Html;
 use yii\bootstrap5\Modal;
 use kartik\grid\GridView;
-use cangak\ajaxcrud\CrudAsset; 
-use cangak\ajaxcrud\BulkButtonWidget;
 use yii\widgets\Pjax;
-use app\modules\banhang\models\HoaDon;
 
-$this->title = 'Hóa đơn bán hàng';
+
+/* @var $this yii\web\View */
+/* @var $searchModel app\modules\vanban\models\search\VBDenSearch */
+/* @var $dataProvider yii\data\ActiveDataProvider */
+
+$this->title = 'Danh sách khách hàng';
 $this->params['breadcrumbs'][] = $this->title;
-Yii::$app->params['showSearch'] = true;
-Yii::$app->params['showView'] = true;
 //CrudAsset::register($this);
-
+Yii::$app->params['showSearch'] = true;
+Yii::$app->params['showExport'] = true;
 ?>
+
 <style>
 #crud-datatable-togdata-page{
     border:0px!important;
 }
-.khach-ngoai td{
-    background-color: #f6f6f5 !important;
-}
 </style>
-<?php if(Yii::$app->params['showSearch']):?>
+
 <div class="card border-default" id="divFilterExtend">
 	<div class="card-header rounded-bottom-0 card-header text-dark" id="simple">
 		<h5 class="mt-2"><i class="fe fe-search"></i> Tìm kiếm</h5>
@@ -34,31 +32,25 @@ Yii::$app->params['showView'] = true;
 				<?php 
                     echo $this->render("_search", ["model" => $searchModel]);
                 ?>
-            </div>
+			</div>
 		</div>
 	</div>
 </div>
-<?php endif; ?>
+
 <?php Pjax::begin([
     'id'=>'myGrid',
     'timeout' => 10000,
     'formSelector' => '.myFilterForm'
 ]); ?>
 
-<div class="hoa-don-index">
+<div class="nhan-vien-index">
     <div id="ajaxCrudDatatable">
         <?=GridView::widget([
             'id'=>'crud-datatable',
             'dataProvider' => $dataProvider,
             //'filterModel' => $searchModel,
             'pjax'=>true,
-            'showPageSummary' => true,
             'columns' => require(__DIR__.'/_columns.php'),
-            'rowOptions' => function ($model, $key, $index, $grid) {
-                if($model->loai_khach_hang == HoaDon::LOAI_KHACHLE){
-                    return ['class' => 'khach-ngoai'];
-                }
-            },
             'toolbar'=> [
                 ['content'=>
                     '
@@ -67,9 +59,8 @@ Yii::$app->params['showView'] = true;
 						<div class="dropdown-menu tx-13" style="">
 							<h6 class="dropdown-header tx-uppercase tx-11 tx-bold bg-info tx-spacing-1">
 								Chọn chức năng</h6>'
-                    . Html::a('<i class="fas fa fa-plus" aria-hiddi="true"></i> THÊM (Học viên)', ['create?loai='.HoaDon::LOAI_HOCVIEN],
-                        ['role'=>'modal-remote','title'=> 'Thêm mới','class'=>'dropdown-item'])
-                    . Html::a('<i class="fas fa fa-plus" aria-hiddi="true"></i> THÊM (Khách ngoài)', ['create?loai='.HoaDon::LOAI_KHACHLE],
+                    .
+                    Html::a('<i class="fas fa fa-plus" aria-hiddi="true"></i> Thêm mới', ['create'],
                         ['role'=>'modal-remote','title'=> 'Thêm mới','class'=>'dropdown-item'])
                     .
                     Html::a('<i class="fas fa fa-sync" aria-hidden="true"></i> Tải lại', [''],
@@ -85,9 +76,6 @@ Yii::$app->params['showView'] = true;
                             'data-confirm-title'=>'Xác nhận xóa?',
                             'data-confirm-message'=>'Bạn có chắc muốn xóa?'
                         ])
-                    .'<li><hr class="dropdown-divider"></li>'
-                    . Html::a('<i class="fas fa-clipboard-list"></i> In DS theo ca', ['report/rp-theo-ca'],
-                        ['role'=>'modal-remote','title'=> 'In DS theo ca','class'=>'dropdown-item'])
                     .
                     '
 						</div>
@@ -96,7 +84,7 @@ Yii::$app->params['showView'] = true;
                     '{toggleData}'.
                     '{export}'
                 ],
-            ],             
+            ],          
             'striped' => false,
             'condensed' => true,
             'responsive' => false,
@@ -105,47 +93,48 @@ Yii::$app->params['showView'] = true;
             'summary'=>'Tổng: {totalCount} dòng dữ liệu',
             'panel' => [
                 'headingOptions'=>['class'=>'card-header rounded-bottom-0 card-header text-dark'],
-                'heading' => '<i class="typcn typcn-folder-open"></i> DANH SÁCH HÓA ĐƠN',
+                'heading' => '<i class="typcn typcn-folder-open"></i> DANH SÁCH KHÁCH HÀNG ',
                 'before'=>false,
             ],
             'export'=>[
                 'fontAwesome' => true,
                 'showConfirmAlert' => false,
                 'target' => GridView::TARGET_BLANK, // xuất ra tab mới
-                'filename' => 'ds_hoa_don_' . date('Y-m-d'), // tên file export mặc định
+                'filename' => 'ds_khach_hang_' . date('Y-m-d'), // tên file export mặc định
                 'options' => [
                     'class' => 'btn'
                 ]
-            ],
+            ] ,
             'exportConfig' => [
                 GridView::EXCEL => [
                     'label' => 'Xuất Excel',
-                    'filename' => 'ds_hoa_don_' . date('Y-m-d'),
-                    'options' => ['title' => 'Danh sách hóa đơn'],
+                    'filename' => 'ds_khach_hang' . date('Y-m-d'),
+                    'options' => ['title' => 'Danh sách khách hàng'],
                     'config' => [
-                        'worksheet' => 'Hóa đơn',
+                        'worksheet' => 'Khách hàng',
                         'cssFile' => '', // nếu cần
                     ],
                 ],
                 GridView::PDF => [
                     'label' => 'Xuất PDF',
-                    'filename' => 'ds_hoa_don_' . date('Y-m-d'),
-                    'options' => ['title' => 'Danh sách hóa đơn'],
+                    'filename' => 'ds_khach_hang_' . date('Y-m-d'),
+                    'options' => ['title' => 'Danh sách khách hàng'],
                     'config' => [
                         'methods' => [
-                            'SetHeader' => ['DANH SÁCH HÓA ĐƠN|DANH SÁCH|Xuất ngày: ' . date("d/m/Y")],
+                            'SetHeader' => ['DANH SÁCH KHÁCH HÀNG  |DANH SÁCH|Xuất ngày: ' . date("d/m/Y")],
                             'SetFooter' => ['|Trang {PAGENO}|'],
                         ],
                         'options' => [
-                            'title' => 'Danh sách hóa đơn',
+                            'title' => 'Danh sách khách hàng',
                             'subject' => 'Xuất file PDF',
                             'keywords' => 'export, pdf,',
                         ],
                     ],
                 ],
-            ],         
+            ],
         ])?>
     </div>
+    
 </div>
 
 <?php Pjax::end(); ?>
@@ -155,10 +144,11 @@ Yii::$app->params['showView'] = true;
         'id'=>'ajaxCrudModal',
         'tabindex' => false // important for Select2 to work properly
    ],
-   'dialogOptions'=>['class'=>'modal-xl modal-xxl'],
+   //'dialogOptions'=>['class'=>'modal-lg'],
    'closeButton'=>['label'=>'<span aria-hidden=\'true\'>×</span>'],
    'id'=>'ajaxCrudModal',
     'footer'=>'',// always need it for jquery plugin
+    'size'=>Modal::SIZE_EXTRA_LARGE
 ])?>
 
 <?php Modal::end(); ?>
@@ -168,10 +158,32 @@ Yii::$app->params['showView'] = true;
         'id'=>'ajaxCrudModal2',
         'tabindex' => false // important for Select2 to work properly
    ],
-   'dialogOptions'=>['class'=>'modal-xs modal-dialog-centered'],
+  // 'dialogOptions'=>['class'=>'modal-lg'],
    'closeButton'=>['label'=>'<span aria-hidden=\'true\'>×</span>'],
    'id'=>'ajaxCrudModal2',
-   'footer'=>'',// always need it for jquery plugin
-]) ?>
+    'footer'=>'',// always need it for jquery plugin
+    'size'=>Modal::SIZE_EXTRA_LARGE
+   // 'size'=>Modal::SIZE_EXTRA_LARGE
+])?>
 
 <?php Modal::end(); ?>
+
+<?php
+    /* $searchContent = $this->render("_search", ["model" => $searchModel]);
+    echo FilterFormWidget::widget(["content"=>$searchContent, "description"=>"Nhập thông tin tìm kiếm."])  */
+?>
+<script>
+    $(document).ready(function () {
+    $('#ajaxCrudModal2').on('hidden.bs.modal', function () {
+        if ($('.modal.show').length) {
+            $('body').addClass('modal-open'); 
+        }
+    });
+    $('#ajaxCrudModal2').on('show.bs.modal', function () {
+        $('.modal-backdrop').not(':last').css('z-index', -1); 
+    }).on('hidden.bs.modal', function () {
+        $('.modal-backdrop').not(':last').css('z-index', ''); 
+    });
+    $('#ajaxCrudModal2').appendTo('body');
+});
+</script>

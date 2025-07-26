@@ -23,6 +23,9 @@ use app\modules\user\models\User;
             ]
     ]); ?>
 	<div class="row">
+		<div class="col-md-2">
+			<?= $form->field($model, 'loai_khach_hang')->dropDownList(HoaDon::getDmLoaiKhachHang(), ['prompt'=>'-Tất cả-']) ?>  
+		</div>
         <div class="col-md-3">
 			<?php // $form->field($model, 'id_khach_hang')->textInput() ?>
 			<?php /* 
@@ -52,15 +55,15 @@ use app\modules\user\models\User;
     			    ]
     			]); */
 			?>
-			<label>Khách hàng</label>
-			<?= $form->field($model, 'id_khach_hang')->widget(Select2::classname(), [
+			<label>Khách hàng (Khách ngoài)</label>
+			<?= $form->field($model, 'idKhachNgoai')->widget(Select2::classname(), [
                 //'data' => KhachHang::getList(),
                 //'initValueText' => $initValue, // This shows selected text on form load
                 'language' => 'vi',
                 'options' => [
                     'placeholder' => 'Chọn khách hàng...',  
                     'class' => 'form-control dropdown-with-arrow',
-                    'id' => 'idKhachHangSearch'
+                    'id' => 'idKhachHangKhachNgoaiSearch'
                 ],
                 'pluginOptions' => [
                     'allowClear' => true,
@@ -77,6 +80,7 @@ use app\modules\user\models\User;
                         'data' => new JsExpression('function(params) {
                             return {
                                 q: params.term || "", // if empty input, send empty string
+                                loai: "'.HoaDon::LOAI_KHACHLE.'"
                             };
                         }'),
                         'processResults' => new JsExpression('function(data) {
@@ -86,7 +90,44 @@ use app\modules\user\models\User;
                     ],
                 ],
             ])->label(false); ?>
-            
+
+        </div>
+        <div class="col-md-3">
+        	<label>Khách hàng (Học viên)</label>
+			<?= $form->field($model, 'idHocVien')->widget(Select2::classname(), [
+                //'data' => KhachHang::getList(),
+                //'initValueText' => $initValue, // This shows selected text on form load
+                'language' => 'vi',
+                'options' => [
+                    'placeholder' => 'Chọn khách hàng...',  
+                    'class' => 'form-control dropdown-with-arrow',
+                    'id' => 'idKhachHangHocVienSearch'
+                ],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                    //'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
+                    'width'=>'100%',
+                    'minimumInputLength' => 0, // ← allow fetch without typing
+                    'ajax' => [
+                        'url' => '/banhang/khach-hang/search',
+                        'dataType' => 'json',
+                        'delay' => 250,
+                        /* 'data' => new JsExpression('function(params) {
+                            return {q:params.term};
+                        }'), */
+                        'data' => new JsExpression('function(params) {
+                            return {
+                                q: params.term || "", // if empty input, send empty string
+                                loai: "'.HoaDon::LOAI_HOCVIEN.'"
+                            };
+                        }'),
+                        'processResults' => new JsExpression('function(data) {
+                            return {results:data};
+                        }'),
+                        'cache' => true
+                    ],
+                ],
+            ])->label(false); ?>
         </div>
         <!--  <div class="col-md-4">
 			<?= $form->field($model, 'so_don_hang')->textInput() ?>        

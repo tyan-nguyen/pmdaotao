@@ -6,11 +6,13 @@ use app\modules\banhang\models\KhachHang;
 use app\modules\banhang\models\HoaDonChiTiet;
 use app\custom\CustomFunc;
 use app\modules\user\models\User;
+use app\modules\hocvien\models\DangKyHv;
 
 /**
  * This is the model class for table "kh_don_hang".
  *
  * @property int $id
+ * @property string|null $loai_khach_hang
  * @property int $id_khach_hang
  * @property int $so_don_hang
  * @property int|null $so_vao_so
@@ -39,6 +41,12 @@ class HoaDonBase extends \app\models\BanleDonHang
     
     CONST THANHTOAN_TM = 'TM';
     CONST THANHTOAN_CK = 'CK';
+    
+    CONST LOAI_HOCVIEN = 'HOCVIEN';
+    CONST LOAI_KHACHLE = 'KHACHLE';
+    
+    public $idHocVien;//for search
+    public $idKhachNgoai;//for search
     /**
      * Danh muc trang thai hoa don
      * @return string[]
@@ -74,9 +82,9 @@ class HoaDonBase extends \app\models\BanleDonHang
     public static function getDmTrangThaiLabelWithBadge($val){
         $label = '';
         if($val == self::TRANGTHAI_NHAP){
-            $label = '<span class="badge bg-primary">Bản nháp</span>';
+            $label = '<span class="badge bg-warning">Bản nháp</span>';
         }else if($val == self::TRANGTHAI_CHUA_TT){
-            $label = '<span class="badge bg-warning">Chưa thanh toán</span>';
+            $label = '<span class="badge bg-info">Chưa thanh toán</span>';
         }else if($val == self::TRANGTHAI_DA_TT){
             $label = '<span class="badge bg-success">Đã xuất</span>';
         }
@@ -114,7 +122,31 @@ class HoaDonBase extends \app\models\BanleDonHang
             $label = 'Chuyển khoản';
         }
         return $label;
-    }    
+    }  
+    /**
+     * Danh muc loai hoc vien
+     * @return string[]
+     */
+    public static function getDmLoaiKhachHang(){
+        return [
+            self::LOAI_HOCVIEN => 'Học viên',
+            self::LOAI_KHACHLE => 'Khách ngoài',
+        ];
+    }
+    
+    /**
+     * Danh muc loai hoc vien
+     * @return string[]
+     */
+    public static function getDmLoaiKhachHangLabel($val){
+        $label = '';
+        if($val == self::LOAI_HOCVIEN){
+            $label = 'Học viên';
+        }else if($val == self::LOAI_KHACHLE){
+            $label = 'Khách ngoài';
+        }
+        return $label;
+    }
     
     public static function getDmNamHoaDon(){
         $start = 2025;
@@ -132,14 +164,14 @@ class HoaDonBase extends \app\models\BanleDonHang
     public function rules()
     {
         return [
-            [['so_vao_so', 'nam', 'trang_thai', 'ngay_xuat', 'so_lan_in','da_giao_hang', 'ngay_giao_hang', 'chi_phi_van_chuyen',  'ghi_chu', 'nguoi_tao', 'thoi_gian_tao'], 'default', 'value' => null],
+            [['so_vao_so', 'nam', 'trang_thai', 'ngay_xuat', 'so_lan_in','da_giao_hang', 'ngay_giao_hang', 'chi_phi_van_chuyen',  'ghi_chu', 'nguoi_tao', 'thoi_gian_tao', 'loai_khach_hang'], 'default', 'value' => null],
             [['id_khach_hang'], 'required'],
-            [['id_khach_hang', 'so_don_hang', 'so_vao_so', 'nam', 'so_lan_in', 'da_giao_hang', 'nguoi_tao', 'edit_mode'], 'integer'],
+            [['id_khach_hang', 'so_don_hang', 'so_vao_so', 'nam', 'so_lan_in', 'da_giao_hang', 'nguoi_tao', 'edit_mode', 'idHocVien', 'idKhachNgoai'], 'integer'],
             [['ngay_dat_hang', 'ngay_xuat', 'ngay_giao_hang', 'thoi_gian_tao'], 'safe'],
             [['chi_phi_van_chuyen'], 'number'],
             [['ghi_chu'], 'string'],
-            [['trang_thai', 'hinh_thuc_thanh_toan'], 'string', 'max' => 20],
-            [['id_khach_hang'], 'exist', 'skipOnError' => true, 'targetClass' => KhachHang::class, 'targetAttribute' => ['id_khach_hang' => 'id']],
+            [['trang_thai', 'hinh_thuc_thanh_toan', 'loai_khach_hang'], 'string', 'max' => 20],
+           /*  [['id_khach_hang'], 'exist', 'skipOnError' => true, 'targetClass' => KhachHang::class, 'targetAttribute' => ['id_khach_hang' => 'id']], */
         ];
     }
 
@@ -150,6 +182,7 @@ class HoaDonBase extends \app\models\BanleDonHang
     {
         return [
             'id' => 'ID',
+            'loai_khach_hang' => 'Loại khách hàng',
             'id_khach_hang' => 'Khách hàng',
             'so_don_hang' => 'Số đơn hàng',
             'so_vao_so' => 'Số vào sổ',
@@ -274,7 +307,11 @@ class HoaDonBase extends \app\models\BanleDonHang
      */
     public function getKhachHang()
     {
-        return $this->hasOne(KhachHang::class, ['id' => 'id_khach_hang']);
+        if($this->loai_khach_hang == self::LOAI_HOCVIEN){
+            return $this->hasOne(DangKyHv::class, ['id' => 'id_khach_hang']);
+        } else if ($this->loai_khach_hang == self::LOAI_KHACHLE){
+            return $this->hasOne(KhachHang::class, ['id' => 'id_khach_hang']);
+        }
     }
     
     public function getNguoiTao(){

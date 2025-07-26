@@ -8,6 +8,8 @@ use app\modules\banhang\models\HoaDon;
 use kartik\date\DatePicker;
 use app\custom\CustomFunc;
 use app\modules\user\models\User;
+use app\modules\hocvien\models\HocVien;
+use app\widgets\CardWidget;
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\banhang\models\HoaDon */
@@ -27,16 +29,22 @@ $model->ngay_giao_hang = CustomFunc::convertYMDToDMY($model->ngay_giao_hang);
 
 <div class="hoa-don-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['action' => $model->isNewRecord?'':['/banhang/hoa-don-ban-hang/update', 'id'=>$model->id]]); ?>
+	
+	<?php CardWidget::begin(['title'=>'THÔNG TIN PHIẾU THU']) ?>
 	
 	<div class="row">
+	
+		<div class="col-md-2" style="display:none">
+			<?= $form->field($model, 'loai_khach_hang')->dropDownList(HoaDon::getDmLoaiKhachHang(), ['prompt'=>'-Chọn-', 'id'=>'ddlLoaiKhachHang', 'disabled' => true]) ?>
+		</div>
         <div class="col-md-3">
             <?php // $form->field($model, 'id_khach_hang')->textInput() ?>
             <?php 
-        	   //$khachHangLabel = $model->getAttributeLabel('id_khach_hang') . ' <a href="/khachhang/khach-hang/create-popup" role="modal-remote-2" style="padding-left:10px;" title="Thêm khách hàng"><i class="fa-solid fa-square-plus"></i></a>';
+        	   $khachHangLabel = $model->getAttributeLabel('id_khach_hang') . ' <a href="/banhang/khach-hang/create-popup" role="modal-remote-2" style="padding-left:10px;" title="Thêm khách hàng"><i class="fa-solid fa-square-plus"></i></a>';
         	   //'<a href="#" onclick="runFunc(0)" style="padding-left:10px;" title="Tải lại danh sách"><i class="fa-solid fa-retweet"></i></a>';
         	?>
-        	<label>Khách hàng<?php // $khachHangLabel ?></label>
+        	<label><?= $model->loai_khach_hang == HoaDon::LOAI_KHACHLE ? $khachHangLabel : 'Khách hàng' ?></label>
             <?= $form->field($model, 'id_khach_hang')->widget(Select2::classname(), [
                 //'data' => KhachHang::getList(),
                 'initValueText' => $initValue, // This shows selected text on form load
@@ -61,6 +69,7 @@ $model->ngay_giao_hang = CustomFunc::convertYMDToDMY($model->ngay_giao_hang);
                         'data' => new JsExpression('function(params) {
                             return {
                                 q: params.term || "", // if empty input, send empty string
+                                loai: "'.($model->loai_khach_hang?$model->loai_khach_hang:'').'",
                             };
                         }'),
                         'processResults' => new JsExpression('function(data) {
@@ -168,19 +177,24 @@ $model->ngay_giao_hang = CustomFunc::convertYMDToDMY($model->ngay_giao_hang);
 	        <?= Html::submitButton($model->isNewRecord ? 'Thêm mới' : 'Cập nhật', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
 	    </div>
 	<?php } ?>
+	
+	
+	<?php CardWidget::end() ?>
 
     <?php ActiveForm::end(); ?>
     
     
 <?php if(!$model->isNewRecord){?>
+
+<?php CardWidget::begin(['title'=>'CHI TIẾT PHIẾU THU']) ?>
     
 <div id="objHoaDonChiTiet" style="margin-top:10px;">
     <div class="row">
     	<div class="col-xs-12 table-responsive">
         	<div class="box">
-        		<div class="box-header">
+        		<!-- <div class="box-header">
         			<h3 class="box-title">CHI TIẾT HÓA ĐƠN</h3>
-        		</div>
+        		</div> -->
         		<div class="box-body no-padding">
         			<!-- <button type="button" onClick="AddVatTu()">Thêm vật tư</button> -->
         			
@@ -252,7 +266,16 @@ $model->ngay_giao_hang = CustomFunc::convertYMDToDMY($model->ngay_giao_hang);
 <a class="btn btn-primary btn-sm" href="/banhang/hoa-don-ban-hang/xuat-va-thanh-toan?id=<?= $model->id ?>" role="modal-remote"><i class="fa-solid fa-file-export"></i> Xuất và thanh toán</a>
 <?php } ?>
 
-<?php } //end if isNewRecord ?>
+
+<?php CardWidget::end() ?>
+
+<?php } else { //end if isNewRecord ?>
+
+<?php CardWidget::begin(['title'=>'CHI TIẾT PHIẾU THU']) ?>
+<span class="text-success">Vui lòng lưu thông tin KHÁCH HÀNG trước để nhập chi tiết hàng hóa!</span>
+<?php CardWidget::end() ?>
+
+<?php }//end else if isNewRecord?>
 
 <div style="display:none">
     <div id="printHD">
@@ -570,7 +593,7 @@ function InHoaDon(){
 function getKhachHangAjax(idkh){
     $.ajax({
         type: 'post',
-        url: '/banhang/khach-hang/get-khach-hang-ajax?idkh=' + idkh,
+        url: '/banhang/khach-hang/get-khach-hang-ajax?idkh=' + idkh + '&loai=' + $('#ddlLoaiKhachHang').val(),
         //data: frm.serialize(),
         success: function (data) {
             console.log('Submission was successful.');

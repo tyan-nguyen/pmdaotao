@@ -20,7 +20,7 @@ class HoaDonSearch extends HoaDon
     {
         return [
             [['id', 'id_khach_hang', 'so_don_hang', 'so_vao_so', 'nam', 'so_lan_in', 'da_giao_hang', 'nguoi_tao', 'edit_mode'], 'integer'],
-            [['trang_thai', 'ngay_dat_hang', 'ngay_xuat', 'hinh_thuc_thanh_toan', 'ngay_giao_hang', 'ghi_chu', 'thoi_gian_tao'], 'safe'],
+            [['trang_thai', 'ngay_dat_hang', 'ngay_xuat', 'hinh_thuc_thanh_toan', 'ngay_giao_hang', 'ghi_chu', 'thoi_gian_tao', 'idHocVien', 'idKhachNgoai', 'loai_khach_hang'], 'safe'],
             [['chi_phi_van_chuyen'], 'number'],
         ];
     }
@@ -72,21 +72,33 @@ class HoaDonSearch extends HoaDon
 		        $this->ngay_giao_hang = CustomFunc::convertDMYToYMD($this->ngay_giao_hang);
 		    }
         	$query->andFilterWhere([
-            'id' => $this->id,
-            'id_khach_hang' => $this->id_khach_hang,
-            'so_don_hang' => $this->so_don_hang,
-            'so_vao_so' => $this->so_vao_so,
-            'nam' => $this->nam,
-            'ngay_dat_hang' => $this->ngay_dat_hang,
-            'ngay_xuat' => $this->ngay_xuat,
-            'so_lan_in' => $this->so_lan_in,
-            'da_giao_hang' => $this->da_giao_hang,
-            'ngay_giao_hang' => $this->ngay_giao_hang,
-            'chi_phi_van_chuyen' => $this->chi_phi_van_chuyen,
-            'nguoi_tao' => $this->nguoi_tao,
-            'thoi_gian_tao' => $this->thoi_gian_tao,
-        	'edit_mode' => $this->edit_mode
-        ]);
+                'id' => $this->id,
+                //'id_khach_hang' => $this->id_khach_hang,
+        	    'loai_khach_hang' => $this->loai_khach_hang,
+                'so_don_hang' => $this->so_don_hang,
+                'so_vao_so' => $this->so_vao_so,
+                'nam' => $this->nam,
+                'ngay_dat_hang' => $this->ngay_dat_hang,
+                'ngay_xuat' => $this->ngay_xuat,
+                'so_lan_in' => $this->so_lan_in,
+                'da_giao_hang' => $this->da_giao_hang,
+                'ngay_giao_hang' => $this->ngay_giao_hang,
+                'chi_phi_van_chuyen' => $this->chi_phi_van_chuyen,
+                'nguoi_tao' => $this->nguoi_tao,
+                'thoi_gian_tao' => $this->thoi_gian_tao,
+            	'edit_mode' => $this->edit_mode
+            ]);
+        	
+        	if($this->idHocVien){
+        	    $query->andFilterWhere([
+        	        'id_khach_hang' => $this->idHocVien,
+        	    ]);
+        	}
+        	if($this->idKhachNgoai){
+        	    $query->andFilterWhere([
+        	        'id_khach_hang' => $this->idKhachNgoai,
+        	    ]);
+        	}
 
         $query->andFilterWhere(['like', 'trang_thai', $this->trang_thai])
             ->andFilterWhere(['like', 'hinh_thuc_thanh_toan', $this->hinh_thuc_thanh_toan])

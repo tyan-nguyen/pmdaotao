@@ -294,6 +294,17 @@ function ModalRemote(modalId) {
          if(typeof response.reloadType !== 'undefined'){
             $(response.reloadBlock).html(response.reloadContent);
 		}
+		
+		if(response.runFunc == true){
+			if(response.runFuncVal1 != undefined && response.runFuncVal2 != undefined){
+				runFunc(response.runFuncVal1, response.runFuncVal2);
+			} else if(response.runFuncVal1 != undefined && response.runFuncVal2 == undefined){
+				runFunc(response.runFuncVal1);
+			} else {
+				runFunc();
+			}
+			//return;
+		}
         
 		/** process excute function after forceReload */
 		// Close modal if response contains forceClose field

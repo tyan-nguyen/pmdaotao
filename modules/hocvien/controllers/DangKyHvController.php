@@ -879,7 +879,7 @@ public function actionReportList(){
     }
 }
 
-public function actionGetPhieuInReportListAjax($startdate, $starttime, $enddate, $endtime, $byuser=0,$typereport,$byaddress)//0 for all
+public function actionGetPhieuInReportListAjax($startdate, $starttime, $enddate, $endtime, $byuser, $typereport,$byaddress)//0 for all
 {
     if($byuser==null){
         $byuser = 0;

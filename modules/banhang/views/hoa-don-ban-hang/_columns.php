@@ -3,6 +3,7 @@ use yii\helpers\Url;
 use app\custom\CustomFunc;
 use app\modules\user\models\User;
 use yii\helpers\Html;
+use app\modules\banhang\models\HoaDon;
 
 return [
     [
@@ -42,6 +43,11 @@ return [
             'view' => function ($model, $key, $index) {
                 return Yii::$app->params['showView'];
             },
+            'delete' => function ($model, $key, $index) {
+                $user = User::getCurrentUser();
+                // Only show delete button if user is admin
+                return $user->superadmin;
+            },
         ],
         'viewOptions'=>['role'=>'modal-remote','title'=>'View','title'=>'Xem',
                'class'=>'btn ripple btn-primary btn-sm',
@@ -70,6 +76,14 @@ return [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'id',
     // ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'loai_khach_hang',
+        'value'=>function($model){
+            return HoaDon::getDmLoaiKhachHangLabel($model->loai_khach_hang);
+        },
+        'width' => '50px',
+    ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'id_khach_hang',

@@ -30,6 +30,8 @@
 							<li><a href="<?= Yii::getAlias('@web/banhang/nha-cung-cap?menu=bh1') ?>" class="slide-item" data-menu="bh1"><i class="fe fe-file-text"></i> Nhà cung cấp</a></li>
 							<li><a href="<?= Yii::getAlias('@web/banhang/loai-hang-hoa?menu=bh2') ?>" class="slide-item" data-menu="bh2"><i class="fe fe-file-text"></i> Loại hàng hóa</a></li>
 							<li><a href="<?= Yii::getAlias('@web/banhang/dvt?menu=bh4') ?>" class="slide-item" data-menu="bh4"><i class="fe fe-file-text"></i> Đơn vị tính</a></li>
+							<li><a href="<?= Yii::getAlias('@web/banhang/khach-hang?menu=bh6') ?>" class="slide-item" data-menu="bh6"><i class="fe fe-file-text"></i> Khách hàng</a></li>
+							<li><a href="<?= Yii::getAlias('@web/banhang/loai-khach-hang?menu=bh7') ?>" class="slide-item" data-menu="bh7"><i class="fe fe-file-text"></i> Loại khách hàng</a></li>
 						</ul>
 						<div class="menutabs-content px-0">
 							<!-- menu tab here -->

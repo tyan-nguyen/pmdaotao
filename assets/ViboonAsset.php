@@ -53,7 +53,7 @@ class ViboonAsset extends AssetBundle
         'assets/js/carousel.js',
         'js/vue.js',//vuejs
         'js/print-this/printThis.js',
-        'js/ModalRemote.js?v=2',
+        'js/ModalRemote.js?v=3',
         'js/ajaxcrud.js?v=2',
         'js/tinymce/tinymce_5.10.7.min.js',
         'https://cdn.jsdelivr.net/npm/flatpickr',

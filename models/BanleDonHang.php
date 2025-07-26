@@ -9,6 +9,7 @@ use app\modules\banhang\models\KhachHang;
  * This is the model class for table "kh_don_hang".
  *
  * @property int $id
+ * @property string|null $loai_khach_hang
  * @property int $id_khach_hang
  * @property int $so_don_hang
  * @property int|null $so_vao_so
@@ -45,13 +46,13 @@ class BanleDonHang extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['so_vao_so', 'nam', 'trang_thai', 'ngay_xuat', 'so_lan_in', 'da_giao_hang', 'ngay_giao_hang', 'chi_phi_van_chuyen', 'ghi_chu', 'nguoi_tao', 'thoi_gian_tao'], 'default', 'value' => null],
+            [['so_vao_so', 'nam', 'trang_thai', 'ngay_xuat', 'so_lan_in', 'da_giao_hang', 'ngay_giao_hang', 'chi_phi_van_chuyen', 'ghi_chu', 'nguoi_tao', 'thoi_gian_tao', 'loai_khach_hang'], 'default', 'value' => null],
             [['id_khach_hang', 'so_don_hang', 'ngay_dat_hang', 'hinh_thuc_thanh_toan'], 'required'],
             [['id_khach_hang', 'so_don_hang', 'so_vao_so', 'nam', 'so_lan_in', 'da_giao_hang', 'nguoi_tao', 'edit_mode'], 'integer'],
             [['ngay_dat_hang', 'ngay_xuat', 'ngay_giao_hang', 'thoi_gian_tao'], 'safe'],
             [['chi_phi_van_chuyen'], 'number'],
             [['ghi_chu'], 'string'],
-            [['trang_thai', 'hinh_thuc_thanh_toan'], 'string', 'max' => 20],
+            [['trang_thai', 'hinh_thuc_thanh_toan', 'loai_khach_hang'], 'string', 'max' => 20],
             [['id_khach_hang'], 'exist', 'skipOnError' => true, 'targetClass' => KhKhachHang::class, 'targetAttribute' => ['id_khach_hang' => 'id']],
         ];
     }
@@ -63,6 +64,7 @@ class BanleDonHang extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'loai_khach_hang' => 'Loại khách hàng',
             'id_khach_hang' => 'Id Khach Hang',
             'so_don_hang' => 'So Don Hang',
             'so_vao_so' => 'So Vao So',
