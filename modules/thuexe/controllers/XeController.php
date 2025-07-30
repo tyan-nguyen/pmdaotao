@@ -44,7 +44,7 @@ class XeController extends Controller
 	{
 	    Yii::$app->params['moduleID'] = 'Module Quản lý thuê xe';
 	    Yii::$app->params['modelID'] = 'Danh sách Xe';
-	    return true;
+	    return parent::beforeAction($action);
 	}
 
     public function actionIndex()
