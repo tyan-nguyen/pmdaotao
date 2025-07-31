@@ -1,3 +1,18 @@
+/** custom modal */
+/*an add*/
+@media(min-width:767px) and (max-width: 1300px){
+	.modal-xxl {
+	    max-width: 98%; /* hoặc giá trị tùy ý */
+	}
+}
+/*an add*/
+@media(min-width:1300px){
+	.modal-xxl {
+	    max-width: 1298px; /* hoặc giá trị tùy ý */
+	}
+}
+
+
 .tr-red, .tr-red td{
 	color: red !important;
 }
