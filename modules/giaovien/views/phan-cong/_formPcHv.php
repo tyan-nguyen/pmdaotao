@@ -58,6 +58,7 @@ use app\modules\daotao\models\GvHv;
                 	<td style="width:12%">Mã học viên</td>
                 	<td style="width:12%">Họ và tên</td>
                 	<td style="width:20%">Hạng đăng ký</td>
+                	<td style="width:15%">Khóa học</td>
                 	<td style="width:17%">Số điện thoại</td>
                 	<td style="width:30%">Giáo viên</td>
                 	<td></td>
@@ -81,6 +82,7 @@ use app\modules\daotao\models\GvHv;
                 	<td style="text-align:center;vertical-align:middle"><?= $hv->so_cccd ?></td>
                 	<td style="vertical-align:middle"><?= $hv->ho_ten ?></td>
                 	<td style="vertical-align:middle"><?= $hv->hangDaoTao->ten_hang  ?></td>
+                	<td style="vertical-align:middle"><?= $hv->khoaHoc->ten_khoa_hoc  ?></td>
                 	<td style="vertical-align:middle"><?= $hv->so_dien_thoai  ?></td>
                 	<td style="vertical-align:middle"></td>
                 	<td><?= $selected?Html::a('<i class="fa-solid fa-circle-minus"></i> Hủy', '/giaovien/phan-cong/xoa-pc-hv?id='.$idGvHv->id.'&idKh='.$modelKhoaHoc->id, [
