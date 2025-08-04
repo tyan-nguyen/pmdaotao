@@ -12,7 +12,6 @@
 	}
 }
 
-
 .tr-red, .tr-red td{
 	color: red !important;
 }
@@ -156,12 +155,13 @@ form div.required label.control-label:after {
 	text-transform: uppercase;
 }
 /*custom*/
-body .modal-dialog .select2-container {
+/*fixed select2 overflow*/
+/* body .modal-dialog .select2-container {
   z-index: 9999 !important;
 }
 #ajaxCrudDatatable table .select2-container {
     z-index: 0 !important;
-}
+} */
 .kv-table-header a{
     text-decoration: none;
 }

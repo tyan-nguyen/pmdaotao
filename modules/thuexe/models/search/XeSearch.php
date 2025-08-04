@@ -62,4 +62,45 @@ class XeSearch extends Xe
 
         return $dataProvider;
     }
+    
+    /**
+     * Search xe danh cho controller xe cam ung
+     *
+     * @param array $params
+     *
+     * @return ActiveDataProvider
+     */
+    public function searchXeCamUng($params)
+    {
+        $query = Xe::find();
+        
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+        
+        $this->load($params);
+        
+        if (!$this->validate()) {
+            // Uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+        
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'id_loai_xe' => $this->id_loai_xe,
+            'nguoi_tao' => $this->nguoi_tao,
+            'thoi_gian_tao' => $this->thoi_gian_tao,
+            'id_giao_vien' => $this->id_giao_vien,
+            'tinh_trang_xe' => $this->tinh_trang_xe,
+            'phan_loai' => Xe::PHANLOAI_SATHACH //important
+        ]);
+        
+        $query->andFilterWhere(['like', 'hieu_xe', $this->hieu_xe])
+        ->andFilterWhere(['like', 'bien_so_xe', $this->bien_so_xe])
+        ->andFilterWhere(['like', 'ghi_chu', $this->ghi_chu])
+        ->andFilterWhere(['like', 'trang_thai', $this->trang_thai]);
+        
+        return $dataProvider;
+    }
 }

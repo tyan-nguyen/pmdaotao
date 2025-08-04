@@ -50,11 +50,8 @@ if(!$model->isNewRecord){
          <div class="col-lg-3 col-md-6">
              <?= $form->field($model, 'hieu_xe')->textInput(['maxlength' => true]) ?>
          </div>
-         <div class="col-lg-2 col-md-6">
+         <div class="col-lg-3 col-md-6">
              <?= $form->field($model, 'bien_so_xe')->textInput(['maxlength' => true]) ?>
-         </div>
-          <div class="col-lg-2 col-md-6">
-             <?= $form->field($model, 'ma_so')->textInput(['maxlength' => true]) ?>
          </div>
          <div class="col-lg-3 col-md-6">
             <?= $form->field($model, 'tinh_trang_xe')->dropDownList(

@@ -25,11 +25,12 @@
 						<ul class="sidemenu-list">
 							<li class="side-menu__label1"><a href="javascript:void(0)">Danh mục chức năng</a></li>
 
-							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/phieu-thue-xe?menu=dc4') ?>" class="slide-item" data-menu="dc4"><i class="fe fe-file-text"></i> Phiếu thuê xe</a>
-							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/muon-xe?menu=dc5') ?>" class="slide-item" data-menu="dc5"><i class="fe fe-file-text"></i> Mượn xe</a>
-							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/xe?menu=dc1') ?>" class="slide-item" data-menu="dc1"><i class="fe fe-file-text"></i> Danh sách Xe</a>
-							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/loai-hinh-thue?menu=dc2') ?>" class="slide-item" data-menu="dc2"><i class="fe fe-file-text"></i> Loại hình thuê</a>
-							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/loai-xe?menu=dc3') ?>" class="slide-item" data-menu="dc3"><i class="fe fe-file-text"></i> Loại Xe</a>
+							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/lich-thue?menu=dc6') ?>" class="slide-item" data-menu="dc6"><i class="fe fe-file-text"></i> Lịch thuê xe</a></li>
+							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/phieu-thue-xe?menu=dc4') ?>" class="slide-item" data-menu="dc4"><i class="fe fe-file-text"></i> Phiếu thuê xe</a></li>
+							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/muon-xe?menu=dc5') ?>" class="slide-item" data-menu="dc5"><i class="fe fe-file-text"></i> Mượn xe</a></li>
+							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/xe?menu=dc1') ?>" class="slide-item" data-menu="dc1"><i class="fe fe-file-text"></i> Danh sách Xe</a></li>
+							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/loai-hinh-thue?menu=dc2') ?>" class="slide-item" data-menu="dc2"><i class="fe fe-file-text"></i> Loại hình thuê</a></li>
+							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/loai-xe?menu=dc3') ?>" class="slide-item" data-menu="dc3"><i class="fe fe-file-text"></i> Loại Xe</a></li>
 
 							
 						</ul>

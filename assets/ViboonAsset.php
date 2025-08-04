@@ -24,7 +24,7 @@ class ViboonAsset extends AssetBundle
         'assets/css/icons.css',
         'assets/switcher/css/switcher.css',
         'assets/switcher/demo.css',
-        'css/site.css?v=1.7',
+        'css/site.css?v=1.8',
         'assets/fontawesome-free-6.4.0-web/css/all.min.css',
         'js/fancybox/fancybox.css',
         'https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css'
@@ -53,7 +53,7 @@ class ViboonAsset extends AssetBundle
         'assets/js/carousel.js',
         'js/vue.js',//vuejs
         'js/print-this/printThis.js',
-        'js/ModalRemote.js?v=3',
+        'js/ModalRemote.js?v=4',
         'js/ajaxcrud.js?v=2',
         'js/tinymce/tinymce_5.10.7.min.js',
         'https://cdn.jsdelivr.net/npm/flatpickr',

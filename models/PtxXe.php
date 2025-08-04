@@ -8,6 +8,7 @@ use Yii;
  * This is the model class for table "ptx_xe".
  *
  * @property int $id
+ * @property string|null $ma_so
  * @property int $id_loai_xe
  * @property string|null $phan_loai
  * @property string|null $hieu_xe
@@ -56,7 +57,7 @@ class PtxXe extends \yii\db\ActiveRecord
             [['tinh_trang_xe', 'ghi_chu'], 'string'],
             [['ngay_dang_kiem', 'thoi_gian_tao'], 'safe'],
             [['so_tien'], 'number'],
-            [['phan_loai'], 'string', 'max' => 20],
+            [['phan_loai', 'ma_so'], 'string', 'max' => 20],
             [['bien_so_xe'], 'string', 'max' => 50],
             [['trang_thai'], 'string', 'max' => 25],
             [['hieu_xe', 'so_khung', 'so_may', 'mau_sac', 'nha_cung_cap', 'so_hoa_don', 'so_hop_dong'], 'string', 'max' => 250],
@@ -71,6 +72,7 @@ class PtxXe extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'ma_so' => 'Ma so',
             'id_loai_xe' => 'Id Loai Xe',
             'phan_loai' => 'Phan Loai',
             'hieu_xe' => 'Hieu Xe',

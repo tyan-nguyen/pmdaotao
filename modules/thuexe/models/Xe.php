@@ -8,10 +8,12 @@ use yii\helpers\ArrayHelper;
 use app\modules\giaovien\models\GiaoVien;
 use app\modules\daotao\models\GvXe;
 use app\custom\CustomFunc;
+use app\modules\banhang\models\HangHoa;
 /**
  * This is the model class for table "ptx_xe".
  *
  * @property int $id
+ * @property string|null $ma_so
  * @property int $id_loai_xe
  * @property string|null $phan_loai
  * @property string|null $hieu_xe
@@ -187,7 +189,7 @@ class Xe extends \app\models\PtxXe
             [['id_loai_xe', 'bien_so_xe'], 'required'],
             [['id_loai_xe', 'la_xe_cu', 'nguoi_tao', 'id_giao_vien'], 'integer'],
             [['ghi_chu'], 'string'],
-            [['phan_loai'], 'string', 'max' => 20],
+            [['phan_loai', 'ma_so'], 'string', 'max' => 20],
             [['tinh_trang_xe'], 'string', 'max' => 20],
             [['thoi_gian_tao', 'ngay_dang_kiem'], 'safe'],
             [['bien_so_xe'], 'string', 'max' => 50],
@@ -205,6 +207,7 @@ class Xe extends \app\models\PtxXe
     {
         return [
             'id' => 'ID',
+            'ma_so' => 'Mã số',
             'id_loai_xe' => 'Tên loại xe',
             'phan_loai' => 'Phân loại xe',
             'hieu_xe' => 'Hiệu Xe',
@@ -320,5 +323,28 @@ class Xe extends \app\models\PtxXe
             $this->ngay_dang_kiem = CustomFunc::convertDMYToYMD($this->ngay_dang_kiem);
         }
         return parent::beforeSave($insert);
+    }
+    
+    /**
+     * hien thi ten xe
+     */
+    public function getTenXeShort(){
+        return $this->bien_so_xe . ($this->ma_so?(' (Số '.$this->ma_so.')'):'');
+    }
+    public function getTenXeLong(){
+        return $this->bien_so_xe
+        . ($this->ma_so ? (' - Ký hiệu xe: ' . $this->ma_so) : '' )
+        . ($this->loaiXe ? (' - ' . $this->loaiXe->ten_loai_xe) : '' );
+    }
+    /**
+     * lấy giá xe thuê theo mã
+     */
+    public function getGiaXeThue(){
+        $ma = $this->phan_loai . $this->id_loai_xe;
+        $hangHoa = HangHoa::find()->where(['ma_hang_hoa'=>$ma])->one();
+        if($hangHoa){
+            return $hangHoa->don_gia;
+        } else 
+            return 0;
     }
 }

@@ -1,22 +1,22 @@
 <?php
 
-namespace app\modules\banhang\controllers;
+namespace app\modules\thuexe\controllers;
 
 use Yii;
-use app\modules\banhang\models\HoaDon;
-use app\modules\banhang\models\search\HoaDonSearch;
+use app\modules\thuexe\models\LichThue;
+use app\modules\thuexe\models\search\LichThueSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use \yii\web\Response;
 use yii\helpers\Html;
 use yii\filters\AccessControl;
-use app\modules\user\models\User;
+use app\modules\thuexe\models\Xe;
 
 /**
- * HoaDonBanHangController implements the CRUD actions for HoaDon model.
+ * LichThueController implements the CRUD actions for LichThue model.
  */
-class HoaDonBanHangController extends Controller
+class LichThueController extends Controller
 {
     /**
      * @inheritdoc
@@ -35,73 +35,27 @@ class HoaDonBanHangController extends Controller
 		];
 	}
 	
-	/**
-	 * load hoa don in
-	 * @return mixed
-	 */
-	public function actionGetPhieuXuatKhoInAjax($idHoaDon)
+	// Xem lịch thuê của xe
+	//$id: id cua xe
+	public function actionXeSchedule($id)
 	{
-	    Yii::$app->response->format = Response::FORMAT_JSON;
-	    $model = HoaDon::findOne($idHoaDon);
-	    if($model !=null){
-	        return [
-	            'status'=>'success',
-	            'content' => $this->renderAjax('_print_phieu', [
-	                'model' => $model
-	            ])
-	        ];
-	    } else {
-	        return [
-	            'status'=>'failed',
-	            'content' => 'Phiếu xuất kho không tồn tại!'
-	        ];
-	    }
-	}
-	
-	/**
-	 * xuat hoa don va thanh toan
-	 */
-	public function actionXuatVaThanhToan($id){
-	    $request = Yii::$app->request;
-	    $model = $this->findModel($id);
-	    $trangThaiHienTai = $model->trang_thai;
-	    Yii::$app->response->format = Response::FORMAT_JSON;
-	    $model->trang_thai = HoaDon::TRANGTHAI_DA_TT;
-	    $model->so_vao_so = $model->getSoHoaDonCuoi($model->nam) + 1;
-	    $model->so_don_hang = $model->getSoDonHangCuoi() + 1;
-	    $model->ngay_xuat = date('Y-m-d H:i:s');
-	    if($model->save()){
-	        $model->refresh();
-	        if($trangThaiHienTai == HoaDon::TRANGTHAI_NHAP){
-	            $model->xuatHang();
-	        }
-	        
-	        return [
-	            'forceReload'=>'#crud-datatable-pjax',
-	            'title'=> "Cập nhật Hóa đơn",
-	            'content'=>$this->renderAjax('update', [
-	                'model' => $model,
-	            ]),
-	            'tcontent'=>'Xuất và thanh toán thành công!',
-	            'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-	            Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
-	        ];
-	    }
-	    
-	    
+	    $model = Xe::findOne($id);
+	    return $this->render('xe_schedule', [
+	        'model' => $model
+	    ]);
 	}
 
     /**
-     * Lists all HoaDon models.
+     * Lists all LichThue models.
      * @return mixed
      */
     public function actionIndex()
     {    
-        $searchModel = new HoaDonSearch();
+        $searchModel = new LichThueSearch();
   		if(isset($_POST['search']) && $_POST['search'] != null){
             $dataProvider = $searchModel->search(Yii::$app->request->post(), $_POST['search']);
         } else if ($searchModel->load(Yii::$app->request->post())) {
-            $searchModel = new HoaDonSearch(); // "reset"
+            $searchModel = new LichThueSearch(); // "reset"
             $dataProvider = $searchModel->search(Yii::$app->request->post());
         } else {
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -114,7 +68,7 @@ class HoaDonBanHangController extends Controller
 
 
     /**
-     * Displays a single HoaDon model.
+     * Displays a single LichThue model.
      * @param integer $id
      * @return mixed
      */
@@ -124,7 +78,7 @@ class HoaDonBanHangController extends Controller
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "Hóa đơn",
+                    'title'=> "Lịch thuê xe",
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
                     ]),
@@ -139,31 +93,38 @@ class HoaDonBanHangController extends Controller
     }
 
     /**
-     * Creates a new HoaDon model.
-     * $loai is loai khach hang
+     * Creates a new LichThue model.
      * For ajax request will return json object
      * and for non-ajax request if creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($loai=NULL)
+    public function actionCreate($type)
     {
+        if($type != 'hocvien' && $type != 'khachngoai' && $type != 'lienket'){
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
         $request = Yii::$app->request;
-        $model = new HoaDon();  
-        $model->loai_khach_hang = $loai;
-        $tieuDe = '';
-        if($loai == HoaDon::LOAI_HOCVIEN)
-            $tieuDe = ' (Học viên của Trung tâm)';
-        if($loai == HoaDon::LOAI_KHACHLE)
-            $tieuDe = ' (Khách ngoài Trung tâm)';
-
+        $model = new LichThue();  
+        
+        if($type == 'hocvien'){
+            $model->loai_giao_vien = LichThue::GV_GIAOVIEN;
+            $model->loai_khach_hang = LichThue::KH_HOCVIEN;
+        } else if($type == 'khachngoai'){
+            $model->loai_giao_vien = LichThue::GV_GIAOVIEN;
+            $model->loai_khach_hang = LichThue::KH_KHACHNGOAI;
+        }else if($type == 'lienket'){
+            $model->loai_giao_vien = LichThue::GV_KHACHNGOAI;
+            $model->loai_khach_hang = LichThue::KH_KHACHNGOAI;
+        }
+        
         if($request->isAjax){
             /*
-            *   Process for ajax request
+            * Process for ajax request
             */
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Thêm mới hóa đơn" .$tieuDe,
+                    'title'=> "Thêm mới Lịch thuê xe",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -172,27 +133,20 @@ class HoaDonBanHangController extends Controller
         
                 ];         
             }else if($model->load($request->post()) && $model->save()){
-                /* return [
-                    'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Thêm mới hóa đơn".$tieuDe,
-                    'content'=>'<span class="text-success">Thêm mới thành công</span>',
-                    'tcontent'=>'Thêm mới thành công!',
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::a('Tiếp tục thêm',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
-        
-                ];  */
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Cập nhật hóa đơn".$tieuDe,
+                    'title'=> "Lịch thuê xe " . $model->xe->bien_so_xe,
+                    'tcontent'=>'Thêm mới thành công!',
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
-                    'tcontent'=>'Thêm mới thành công!',
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]) . Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
-                ];      
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                    Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+        
+                ];         
             }else{           
                 return [
-                    'title'=> "Thêm mới hóa đơn".$tieuDe,
+                    'title'=> "Thêm mới Lịch thuê xe",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -215,9 +169,9 @@ class HoaDonBanHangController extends Controller
         }
        
     }
-    
+
     /**
-     * Updates an existing HoaDon model.
+     * Updates an existing LichThue model.
      * For ajax request will return json object
      * and for non-ajax request if update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
@@ -226,11 +180,7 @@ class HoaDonBanHangController extends Controller
     public function actionUpdate($id)
     {
         $request = Yii::$app->request;
-        $model = $this->findModel($id);  
-        if($model->loai_khach_hang == HoaDon::LOAI_HOCVIEN)
-            $tieuDe = ' (Học viên của Trung tâm)';
-        if($model->loai_khach_hang == HoaDon::LOAI_KHACHLE)
-            $tieuDe = ' (Khách ngoài Trung tâm)';
+        $model = $this->findModel($id);       
 
         if($request->isAjax){
             /*
@@ -239,46 +189,32 @@ class HoaDonBanHangController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Cập nhật hóa đơn".$tieuDe,
+                    'title'=> "Lịch thuê xe " . $model->xe->bien_so_xe,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                (($model->trang_thai==HoaDon::TRANGTHAI_NHAP || User::hasRole('Admin'))?Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"]):'')
+                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
             }else if($model->load($request->post()) && $model->save()){
-            	/* if(Yii::$app->params['showView']){
-                    return [
-                        'forceReload'=>'#crud-datatable-pjax',
-                        'title'=> "Hóa đơn",
-                        'content'=>$this->renderAjax('view', [
-                            'model' => $model,
-                        ]),
-                        'tcontent'=>'Cập nhật thành công!',
-                        'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::a('Sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
-                    ];    
-                }else{
-                	return ['forceClose'=>true,'forceReload'=>'#crud-datatable-pjax','tcontent'=>'Cập nhật thành công!',];
-                } */
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'tcontent'=>'Cập nhật thành công!',
-                    'title'=> "Cập nhật hóa đơn".$tieuDe,
+                    'title'=> "Lịch thuê xe " . $model->xe->bien_so_xe,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
+                    'tcontent'=>'Cập nhật thành công!',
                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                    ($model->trang_thai==HoaDon::TRANGTHAI_NHAP?Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"]):'')
-                ];   
+                    Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                ];    
             }else{
                  return [
-                    'title'=> "Cập nhật hóa đơn".$tieuDe,
+                    'title'=> "Lịch thuê xe " . $model->xe->bien_so_xe,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                     ($model->trang_thai==HoaDon::TRANGTHAI_NHAP?Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"]):'')
+                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
                 ];        
             }
         }else{
@@ -296,7 +232,7 @@ class HoaDonBanHangController extends Controller
     }
 
     /**
-     * Delete an existing HoaDon model.
+     * Delete an existing LichThue model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -319,12 +255,10 @@ class HoaDonBanHangController extends Controller
             */
             return $this->redirect(['index']);
         }
-
-
     }
 
      /**
-     * Delete multiple existing HoaDon model.
+     * Delete multiple existing LichThue model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -347,32 +281,26 @@ class HoaDonBanHangController extends Controller
         }
 
         if($request->isAjax){
-            /*
-            *   Process for ajax request
-            */
             Yii::$app->response->format = Response::FORMAT_JSON;
             return ['forceClose'=>true,'forceReload'=>'#crud-datatable-pjax',
             			'tcontent'=>$delOk==true?'Xóa thành công!':('Không thể xóa:'.implode('</br>', $fList)),
             ];
         }else{
-            /*
-            *   Process for non-ajax request
-            */
             return $this->redirect(['index']);
         }
        
     }
 
     /**
-     * Finds the HoaDon model based on its primary key value.
+     * Finds the LichThue model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return HoaDon the loaded model
+     * @return LichThue the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = HoaDon::findOne($id)) !== null) {
+        if (($model = LichThue::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

@@ -26,6 +26,8 @@
 							<li class="side-menu__label1"><a href="javascript:void(0)">Danh mục chức năng</a>
 							</li>
 							<li><a href="<?= Yii::getAlias('@web/banhang/hoa-don-ban-hang?menu=bh5') ?>" class="slide-item" data-menu="bh5"><i class="fe fe-file-text"></i> Bán hàng</a></li>
+								<li class=""><a href="<?= Yii::getAlias('@web/thuexe/lich-thue?menu=bh8') ?>" class="slide-item" data-menu="bh8"><i class="fe fe-file-text"></i> Thuê xe cảm ứng</a></li>
+								<li class=""><a href="<?= Yii::getAlias('@web/thuexe/xe-cam-ung?menu=bh9') ?>" class="slide-item" data-menu="bh9"><i class="fe fe-file-text"></i> Kiểm tra lịch xe</a></li>
 							<li><a href="<?= Yii::getAlias('@web/banhang/hang-hoa?menu=bh3') ?>" class="slide-item" data-menu="bh3"><i class="fe fe-file-text"></i> Hàng hóa</a></li>
 							<li><a href="<?= Yii::getAlias('@web/banhang/nha-cung-cap?menu=bh1') ?>" class="slide-item" data-menu="bh1"><i class="fe fe-file-text"></i> Nhà cung cấp</a></li>
 							<li><a href="<?= Yii::getAlias('@web/banhang/loai-hang-hoa?menu=bh2') ?>" class="slide-item" data-menu="bh2"><i class="fe fe-file-text"></i> Loại hàng hóa</a></li>

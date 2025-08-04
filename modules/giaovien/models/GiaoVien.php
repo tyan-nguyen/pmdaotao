@@ -15,6 +15,11 @@ class GiaoVien extends GiaoVienBase
     public function getPubName(){
         return $this->ho_ten;
     } 
+    //get số điện thoại trong phần thuê xe do tên attribute không giống bảng khách hàng (dien_thoai vs so_dien_thoai)
+    //sét tạm nên chỉnh lại so_dien_thoai cho đồng bộ
+    public function getSo_dien_thoai(){
+        return $this->dien_thoai;
+    }
 
     public function afterDelete()
     {

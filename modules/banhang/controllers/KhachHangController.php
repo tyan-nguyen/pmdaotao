@@ -13,6 +13,8 @@ use yii\filters\AccessControl;
 use app\modules\banhang\models\HoaDon;
 use app\modules\hocvien\models\DangKyHv;
 use app\modules\banhang\models\search\KhachHangSearch;
+use app\modules\thuexe\models\LichThue;
+use app\modules\giaovien\models\GiaoVien;
 
 /**
  * KhachHangController implements the CRUD actions for KhachHang model.
@@ -35,6 +37,12 @@ class KhachHangController extends Controller
             ],
         ];
     }
+    /**
+     * use in bán hàng
+     * @param unknown $q
+     * @param unknown $loai
+     * @return array|\yii\db\ActiveRecord[]
+     */
     public function actionSearch($q = null, $loai = null)
     {
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
@@ -52,6 +60,39 @@ class KhachHangController extends Controller
                 ['like', 'so_dien_thoai', $q]
             ]);
         }
+        $results = $query->orderBy(['id'=>SORT_DESC])->limit(10)->asArray()->all();
+        return $results;
+    }
+    /**
+     * use in lịch thuê xe
+     * @param unknown $q
+     * @param unknown $loai
+     * @return array|\yii\db\ActiveRecord[]
+     */
+    public function actionSearchGiaoVien($q = null, $loai = null)
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        
+        if($loai == LichThue::GV_KHACHNGOAI){
+            $query = KhachHang::find()
+            ->select(['id', "CONCAT(ho_ten, ' (', so_dien_thoai , ')') AS text"]);
+            if (!empty($q)) {
+                $query->andFilterWhere( [ 'OR',
+                    ['like', 'ho_ten', $q],
+                    ['like', 'so_dien_thoai', $q]
+                ]);
+            }
+        } else if ($loai == LichThue::GV_GIAOVIEN){
+            $query = GiaoVien::find()
+            ->select(['id', "CONCAT(ho_ten, ' (', dien_thoai , ')') AS text"]);
+            if (!empty($q)) {
+                $query->andFilterWhere( [ 'OR',
+                    ['like', 'ho_ten', $q],
+                    ['like', 'dien_thoai', $q]
+                ]);
+            }
+        }
+        
         $results = $query->orderBy(['id'=>SORT_DESC])->limit(10)->asArray()->all();
         return $results;
     }
@@ -96,6 +137,42 @@ class KhachHangController extends Controller
             return ['status'=>'failed'];
         }
     }  
+    
+    /**
+     * lấy thông tin giáo viên/khách hàng để tự động điền thông tin
+     * @param int $idkh
+     * @return string[]|NULL[]|string[]
+     */
+    public function actionGetGiaoVienAjax($idkh, $loai){
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        if($loai == LichThue::GV_KHACHNGOAI){
+            $kh = KhachHang::findOne($idkh);
+            if($kh != null){
+                return [
+                    'status'=>'success',
+                    'gvHoTen' => $kh->ho_ten,
+                    'gvSDT' => $kh->so_dien_thoai,
+                    'gvDiaChi' => $kh->dia_chi
+                ];
+            } else {
+                return ['status'=>'failed'];
+            }
+        } else if($loai == LichThue::GV_GIAOVIEN){
+            $kh = GiaoVien::findOne($idkh);
+            if($kh != null){
+                return [
+                    'status'=>'success',
+                    'gvHoTen' => $kh->ho_ten,
+                    'gvSDT' => $kh->so_dien_thoai,
+                    'gvDiaChi' => $kh->dia_chi
+                ];
+            } else {
+                return ['status'=>'failed'];
+            }
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }  
     /**
      * Creates a new KhachHang model in popup.
      * For ajax request will return json object
@@ -123,6 +200,51 @@ class KhachHangController extends Controller
                     'forceClose'=>true,
                     //'title'=> "Thêm mới Khách hàng",
                     'runFunc' => true,
+                    'runFuncVal1' => $model->id,
+                    //'content'=>'<span class="text-success">Thêm dữ liệu thành công!</span>',
+                    //'footer'=> Html::a('Create More',['create'],['role'=>'modal-remote']) . '&nbsp;' .
+                    //Html::button('Close',['data-bs-dismiss'=>"modal"])
+                ];
+            }else{
+                return [
+                    'title'=> "Thêm mới khách hàng",
+                    'content'=>$this->renderAjax('_form', [
+                        'model' => $model,
+                    ]),
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                    Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                ];
+            }
+        }
+    }
+    /**
+     * Creates a new KhachHang model in popup.
+     * //giống create popup chỉ khác chạy runFunc khác
+     * For ajax request will return json object
+     * and for non-ajax request if creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionCreatePopup2()
+    {
+        $request = Yii::$app->request;
+        $model = new KhachHang();
+        if($request->isAjax){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            if($request->isGet){
+                return [
+                    'title'=> "Thêm mới khách hàng",
+                    'content'=>$this->renderAjax('_form', [
+                        'model' => $model,
+                    ]),
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                    Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                ];
+            }else if($model->load($request->post()) && $model->save()){
+                return [
+                    //'forceReload'=>'#crud-datatable-pjax',
+                    'forceClose'=>true,
+                    //'title'=> "Thêm mới Khách hàng",
+                    'runFunc2' => true,
                     'runFuncVal1' => $model->id,
                     //'content'=>'<span class="text-success">Thêm dữ liệu thành công!</span>',
                     //'footer'=> Html::a('Create More',['create'],['role'=>'modal-remote']) . '&nbsp;' .

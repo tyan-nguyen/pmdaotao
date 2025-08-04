@@ -8,6 +8,23 @@ use webvimark\modules\UserManagement\models\User;
 class CustomFunc 
 {  
     /**
+     * nối string ngày tháng năm, giờ, phút giây thành thời gian bắt đầu
+     */
+    public static function createCustomStartDate($ngay, $gio, $phut){
+        $ngay = CustomFunc::convertDMYToYMD($ngay);
+        $date_string = $ngay . ' ' . $gio . ':' . $phut . ':' . '00';
+        return $date_string!=null ? date('Y-m-d H:i:s', strtotime($date_string)) : '';
+    }
+    /**
+     * nối string ngày tháng năm, giờ, phút giây thành thời gian kết thúc
+     */
+    public static function createCustomEndDate($ngay, $gio, $phut){
+        $ngay = CustomFunc::convertDMYToYMD($ngay);
+        //$date_string = $ngay . ' ' . $gio . ':' . $phut . ':' . '59';
+        $date_string = $ngay . ' ' . $gio . ':' . $phut . ':' . '00';
+        return $date_string!=null ? date('Y-m-d H:i:s', strtotime($date_string)) : '';
+    }
+    /**
      * fill number 000.. cho so hoa don neu so tu 1->9999 
      * @param unknown $number
      * @return string|unknown
@@ -31,6 +48,22 @@ class CustomFunc
      */
     public static function convertYMDHISToDMY($date_string){
         return $date_string!=null ? date("d/m/Y", strtotime($date_string)) : '';
+    }
+    /**
+     * chuyen doi ngay chuoi Y-m-d H:i:s -> H
+     * @param string $date_string
+     * @return string
+     */
+    public static function convertYMDHISToH($date_string){
+        return $date_string!=null ? date("H", strtotime($date_string)) : '';
+    }
+    /**
+     * chuyen doi ngay chuoi Y-m-d H:i:s -> i
+     * @param string $date_string
+     * @return string
+     */
+    public static function convertYMDHISToI($date_string){
+        return $date_string!=null ? date("i", strtotime($date_string)) : '';
     }
     /**
      * chuyen doi ngay chuoi Y-m-d H:i:s -> dd/mm/yyyy H:i:s

@@ -24,7 +24,6 @@ $hinhXeList = HinhXe::find()->where(['id_xe' => $model->id])->all();
 										<p><strong>Loại xe:</strong> <?= $model->loaiXe->ten_loai_xe?></p>
                                         <p><strong>Tên xe:</strong> <?= $model->hieu_xe?></p>
                                         <p><strong>Biển số xe:</strong> <?= $model->bien_so_xe?></p>
-                                        <p><strong>Mã số (ký hiệu xe sát hạch):</strong> <?= $model->ma_so?></p>
                                         <p><strong>Màu sắc:</strong> <?= $model->mau_sac?></p>
                                         <p><strong>Số hợp đồng xe:</strong> <?= $model->so_hop_dong?></p>
                                         <p><strong>Tình trạng xe:</strong> <?= $model->tinh_trang_xe ?></p>

@@ -305,6 +305,17 @@ function ModalRemote(modalId) {
 			}
 			//return;
 		}
+		
+		if(response.runFunc2 == true){
+			if(response.runFuncVal1 != undefined && response.runFuncVal2 != undefined){
+				runFunc2(response.runFuncVal1, response.runFuncVal2);
+			} else if(response.runFuncVal1 != undefined && response.runFuncVal2 == undefined){
+				runFunc2(response.runFuncVal1);
+			} else {
+				runFunc2();
+			}
+			//return;
+		}
         
 		/** process excute function after forceReload */
 		// Close modal if response contains forceClose field
