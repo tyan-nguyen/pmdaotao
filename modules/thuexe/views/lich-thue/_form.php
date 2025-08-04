@@ -104,6 +104,7 @@ if ($model->id_khach_hang) {
                     'id' => 'khach-hang-dropdown'
                 ],
                 'pluginOptions' => [
+                    'width'=>'100%',
                     'allowClear' => true,
                     'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
                     'width'=>'100%',
