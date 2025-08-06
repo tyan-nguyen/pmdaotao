@@ -78,6 +78,16 @@ return [
     // ],
     [
         'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'trang_thai',
+        'label'=>'TR.THÁI',
+        'format'=>'html',
+        'value'=>function($model){
+            return $model->getDmTrangThaiLabelWithBadge($model->trang_thai);
+        },
+        'contentOptions' => ['style' => 'text-align:center;width:80px;'],
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'so_vao_so',
         'label'=>'Số hóa đơn',
         'value'=>function($model){
@@ -127,15 +137,7 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'nam',
     ], */
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'trang_thai',
-        'format'=>'html',
-        'value'=>function($model){
-            return $model->getDmTrangThaiLabelWithBadge($model->trang_thai);
-        },
-        'contentOptions' => ['style' => 'text-align:center;'],
-    ],
+    
     /* [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ngay_dat_hang',
@@ -166,7 +168,7 @@ return [
         'value'=>function($model){
           return $model->tongTien;  
         },
-        'contentOptions' => ['style' => 'text-align:right'],
+        'contentOptions' => ['style' => 'text-align:right;font-weight:bold'],
         'format' => ['decimal', 0],
         'pageSummary' => true,
         'pageSummaryOptions' => ['class' => 'text-right text-end'],
