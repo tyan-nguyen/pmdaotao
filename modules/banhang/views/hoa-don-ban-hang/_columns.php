@@ -146,22 +146,16 @@ return [
         },
         'contentOptions' => ['style' => 'text-align:center'],
     ], */
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'ngay_xuat',
-        'value'=>function($model){
-            return CustomFunc::convertYMDToDMY($model->ngay_xuat);
-        },
-        'contentOptions' => ['style' => 'text-align:center'],
-    ],
+        
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'hinh_thuc_thanh_toan',
         'label'=>'HTTT',
-        'contentOptions' => ['style' => 'text-align:center'],
+        'contentOptions' => ['style' => 'text-align:center;width:75px;'],
         'pageSummary' => 'Tổng cộng',
         'pageSummaryOptions' => ['class' => 'text-right text-end'],
     ],
+       
     [
         'class'=>'\kartik\grid\DataColumn',
         'label'=>'Số tiền',
@@ -173,6 +167,15 @@ return [
         'pageSummary' => true,
         'pageSummaryOptions' => ['class' => 'text-right text-end'],
     ],
+    
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'ngay_xuat',
+        'value'=>function($model){
+        return CustomFunc::convertYMDHISToDMYHI($model->ngay_xuat);
+        },
+        'contentOptions' => ['style' => 'text-align:center'],
+        ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'so_lan_in',
