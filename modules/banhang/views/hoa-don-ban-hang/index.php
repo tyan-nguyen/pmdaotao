@@ -8,7 +8,7 @@ use cangak\ajaxcrud\BulkButtonWidget;
 use yii\widgets\Pjax;
 use app\modules\banhang\models\HoaDon;
 
-$this->title = 'Hóa đơn bán hàng';
+$this->title = 'Sổ bán hàng';
 $this->params['breadcrumbs'][] = $this->title;
 Yii::$app->params['showSearch'] = true;
 Yii::$app->params['showView'] = true;
@@ -105,7 +105,7 @@ Yii::$app->params['showView'] = true;
             'summary'=>'Tổng: {totalCount} dòng dữ liệu',
             'panel' => [
                 'headingOptions'=>['class'=>'card-header rounded-bottom-0 card-header text-dark'],
-                'heading' => '<i class="typcn typcn-folder-open"></i> DANH SÁCH HÓA ĐƠN',
+                'heading' => '<i class="typcn typcn-folder-open"></i> DANH SÁCH PHIẾU BÁN HÀNG',
                 'before'=>false,
             ],
             'export'=>[
