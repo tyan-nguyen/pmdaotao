@@ -13,6 +13,7 @@ use app\modules\banhang\models\LoaiKhachHang;
  * @property int|null $id_loai_khach_hang
  * @property string $ho_ten
  * @property string|null $so_dien_thoai
+ * @property string $so_cccd
  * @property string|null $dia_chi
  * @property string|null $thoi_gian_tao
  * @property int|null $nguoi_tao
@@ -29,7 +30,7 @@ class KhachHangBase extends BanleKhachHang
             [['ho_ten', 'so_dien_thoai'], 'required'],
             [['thoi_gian_tao'], 'safe'],
             [['nguoi_tao', 'id_loai_khach_hang'], 'integer'],
-            [['ho_ten'], 'string', 'max' => 200],
+            [['ho_ten', 'so_cccd'], 'string', 'max' => 200],
             [['so_dien_thoai'], 'string', 'max' => 50],
             [['dia_chi'], 'string', 'max' => 250],
         ];
@@ -44,6 +45,7 @@ class KhachHangBase extends BanleKhachHang
             'id' => 'ID',
             'id_loai_khach_hang' => 'Loại khách hàng',
             'ho_ten' => 'Họ tên',
+            'so_cccd' => 'Số CCCD',
             'so_dien_thoai' => 'Số điện thoại',
             'dia_chi' => 'Địa chỉ',
             'thoi_gian_tao' => 'Thời gian tạo',

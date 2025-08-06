@@ -18,6 +18,7 @@ use app\modules\user\models\User;
  */
 class HoaDonBanHangController extends Controller
 {
+    public $freeAccessActions = ['update-print-count'];
     /**
      * @inheritdoc
      */
@@ -86,8 +87,7 @@ class HoaDonBanHangController extends Controller
 	            'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
 	            Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
 	        ];
-	    }
-	    
+	    }    
 	    
 	}
 
@@ -361,6 +361,25 @@ class HoaDonBanHangController extends Controller
             return $this->redirect(['index']);
         }
        
+    }
+    
+    /**
+     * update print count
+     * @param unknown $id
+     * @return boolean[]|NULL[]|boolean[]
+     */
+    public function actionUpdatePrintCount($id)
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        
+        $model = $this->findModel($id);
+        if ($model !== null) {
+            $model->so_lan_in = ($model->so_lan_in ?? 0) + 1;
+            if ($model->save(false)) {
+                return ['success' => true, 'so_lan_in' => $model->so_lan_in];
+            }
+        }
+        return ['success' => false];
     }
 
     /**

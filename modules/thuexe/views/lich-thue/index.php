@@ -11,7 +11,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\modules\thuexe\models\search\LichThueSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Lịch thuê xe';
+$this->title = 'Lịch thuê xe (có thiết bị)';
 $this->params['breadcrumbs'][] = $this->title;
 Yii::$app->params['showSearch'] = true;
 Yii::$app->params['showView'] = true;
@@ -109,7 +109,7 @@ Yii::$app->params['showView'] = true;
             'summary'=>'Tổng: {totalCount} dòng dữ liệu',
             'panel' => [
                 'headingOptions'=>['class'=>'card-header rounded-bottom-0 card-header text-dark'],
-                'heading' => '<i class="typcn typcn-folder-open"></i> LỊCH THUÊ XE',
+                'heading' => '<i class="typcn typcn-folder-open"></i> LỊCH THUÊ XE (CÓ THIẾT BỊ)',
                 'before'=>false,
             ],
             'export'=>[

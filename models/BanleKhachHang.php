@@ -11,6 +11,7 @@ use Yii;
  * @property int|null $id_loai_khach_hang
  * @property string $ho_ten
  * @property string|null $so_dien_thoai
+ * @property string $so_cccd
  * @property string|null $dia_chi
  * @property string|null $thoi_gian_tao
  * @property int|null $nguoi_tao
@@ -39,7 +40,7 @@ class BanleKhachHang extends \yii\db\ActiveRecord
             [['id_loai_khach_hang', 'nguoi_tao'], 'integer'],
             [['ho_ten'], 'required'],
             [['thoi_gian_tao'], 'safe'],
-            [['ho_ten'], 'string', 'max' => 200],
+            [['ho_ten', 'so_cccd'], 'string', 'max' => 200],
             [['so_dien_thoai'], 'string', 'max' => 50],
             [['dia_chi'], 'string', 'max' => 250],
             [['id_loai_khach_hang'], 'exist', 'skipOnError' => true, 'targetClass' => BanleLoaiKhachHang::class, 'targetAttribute' => ['id_loai_khach_hang' => 'id']],
@@ -56,6 +57,7 @@ class BanleKhachHang extends \yii\db\ActiveRecord
             'id_loai_khach_hang' => 'Id Loai Khach Hang',
             'ho_ten' => 'Ho Ten',
             'so_dien_thoai' => 'So Dien Thoai',
+            'so_cccd' => 'So CCCD',
             'dia_chi' => 'Dia Chi',
             'thoi_gian_tao' => 'Thoi Gian Tao',
             'nguoi_tao' => 'Nguoi Tao',

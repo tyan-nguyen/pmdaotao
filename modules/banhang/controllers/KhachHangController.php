@@ -131,7 +131,8 @@ class KhachHangController extends Controller
                 'status'=>'success',
                 'khHoTen' => $kh->ho_ten,
                 'khSDT' => $kh->so_dien_thoai,
-                'khDiaChi' => $kh->dia_chi
+                'khDiaChi' => $kh->dia_chi,
+                'khCCCD' => $kh->so_cccd??''
             ];
         } else {
             return ['status'=>'failed'];

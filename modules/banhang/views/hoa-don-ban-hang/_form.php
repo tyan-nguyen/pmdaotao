@@ -80,17 +80,32 @@ $model->ngay_giao_hang = CustomFunc::convertYMDToDMY($model->ngay_giao_hang);
                 ],
             ])->label(false); ?>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <label>Họ tên</label> <br/>
-            <span id="khHoTen" style="font-weight:bold"><?= $model->khachHang ? $model->khachHang->ho_ten : '' ?></span>
+            <!-- <span id="khHoTen" style="font-weight:bold"><?= $model->khachHang ? $model->khachHang->ho_ten : '' ?></span> -->
+            <?= Html::textInput('ho_ten', 
+                ($model->khachHang ? $model->khachHang->ho_ten : ''), 
+                ['id'=>'khHoTen', 'class'=>'form-control', 'disabled'=>true]) ?>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <label>Số điện thoại</label><br/>
-            <span id="khSDT" style="font-weight:bold"><?= $model->khachHang ? $model->khachHang->so_dien_thoai : '' ?></span>
+            <!-- <span id="khSDT" style="font-weight:bold"><?= $model->khachHang ? $model->khachHang->so_dien_thoai : '' ?></span> -->
+            <?= Html::textInput('sdt', 
+                ($model->khachHang ? $model->khachHang->so_dien_thoai : ''), 
+                ['id'=>'khSDT', 'class'=>'form-control', 'disabled'=>true]) ?>
+        </div>
+        <div class="col-md-2">
+            <label>Số CCCD</label><br/>
+            <?= Html::textInput('so_cccd', 
+                ($model->khachHang ? $model->khachHang->so_cccd : ''), 
+                ['id'=>'khCCCD', 'class'=>'form-control', 'disabled'=>true]) ?>
         </div>
         <div class="col-md-3">
             <label>Địa chỉ</label><br/>
-            <span id="khDiaChi" style="font-weight:bold"><?= $model->khachHang ? $model->khachHang->dia_chi : '' ?></span>
+            <!-- <span id="khDiaChi" style="font-weight:bold"><?= $model->khachHang ? $model->khachHang->dia_chi : '' ?></span>-->
+            <?= Html::textInput('khDiaChi', 
+                ($model->khachHang ? $model->khachHang->dia_chi : ''), 
+                ['id'=>'khDiaChi', 'class'=>'form-control', 'disabled'=>true]) ?>
         </div>
         <!-- <div class="col-md-1">
             <?= $form->field($model, 'so_don_hang')->textInput()->label('SĐH') ?>
@@ -117,6 +132,7 @@ $model->ngay_giao_hang = CustomFunc::convertYMDToDMY($model->ngay_giao_hang);
                 ]
             ]); ?>
         </div>
+        <!-- 
         <div class="col-md-2">
            <?= $form->field($model, 'ngay_giao_hang')->widget(DatePicker::classname(), [
                 'options' => ['placeholder' => 'Chọn ngày  ...'],
@@ -128,6 +144,8 @@ $model->ngay_giao_hang = CustomFunc::convertYMDToDMY($model->ngay_giao_hang);
                 ]
             ]); ?>
         </div>
+        -->
+        
         <!-- 
         <div class="col-md-4">
             <?= $form->field($model, 'ngay_xuat')->textInput() ?>
@@ -136,7 +154,7 @@ $model->ngay_giao_hang = CustomFunc::convertYMDToDMY($model->ngay_giao_hang);
         <div class="col-md-2">
             <?= $form->field($model, 'hinh_thuc_thanh_toan')->dropDownList(
                 HoaDon::getDmHinhThucThanhToan(),
-                ['prompt'=>'-Chưa chọn-']
+                //['prompt'=>'-Chưa chọn-']
             ) ?>
         </div>
          <!-- 
@@ -153,7 +171,7 @@ $model->ngay_giao_hang = CustomFunc::convertYMDToDMY($model->ngay_giao_hang);
         <!-- <div class="col-md-2">
             <?= $form->field($model, 'chi_phi_van_chuyen')->textInput() ?>
         </div> -->
-        <div class="col-md-3">
+        <div class="col-md-<?= (User::hasRole('Admin',true)?5:6) ?>">
             <?= $form->field($model, 'ghi_chu')->textInput() ?>
         </div>
          <?php if(User::hasRole('Admin',true)){?>
@@ -261,7 +279,7 @@ $model->ngay_giao_hang = CustomFunc::convertYMDToDMY($model->ngay_giao_hang);
 <?php if($model->trang_thai=='BAN_NHAP' || $model->edit_mode){ ?>
 <a href="#" onClick="AddVatTu()" class="btn btn-primary btn-sm"><i class="fa-solid fa-plus"></i> Thêm hàng hóa</a>
 <?php } ?>
-<a href="#" onClick="InHoaDon()" class="btn btn-primary btn-sm"><i class="fa fa-print"></i> In Hóa đơn</a>
+<a href="#" onClick="InHoaDon()" class="btn btn-primary btn-sm"><i class="fa fa-print"></i> In Phiếu thu (<span id="soLanIn"><?= $model->so_lan_in ?? 0 ?></span>)</a>
 <?php if($model->trang_thai == 'BAN_NHAP') { ?>
 <a class="btn btn-primary btn-sm" href="/banhang/hoa-don-ban-hang/xuat-va-thanh-toan?id=<?= $model->id ?>" role="modal-remote"><i class="fa-solid fa-file-export"></i> Xuất và thanh toán</a>
 <?php } ?>
@@ -573,6 +591,9 @@ function InHoaDon(){
             if(data.status == 'success'){
             	$('#printHD').html(data.content);
             	printHoaDon();//call from script.js
+            	setTimeout(function() {
+                    updatePrintCount(<?= $model->id?$model->id:"''" ?>);
+                }, 1000); // Đợi 1 giây sau khi in để cập nhật
             } else {
             	alert('Vật tư không còn tồn tại trên hệ thống!');
             }
@@ -582,6 +603,23 @@ function InHoaDon(){
             console.log(data);
         },
     });	
+}
+// Hàm cập nhật số lần in
+function updatePrintCount(id) {
+    $.ajax({
+        type: 'POST',
+        url: '/banhang/hoa-don-ban-hang/update-print-count?id='+id,
+        success: function (response) {
+            if (response.success) {
+                $('#soLanIn').text(response.so_lan_in); // Cập nhật số lần in
+            } else {
+                alert('Cập nhật số lần in thất bại!');
+            }
+        },
+        error: function () {
+            alert('Lỗi kết nối server!');
+        }
+    });
 }
 
 
@@ -599,9 +637,10 @@ function getKhachHangAjax(idkh){
             console.log('Submission was successful.');
             console.log(data);            
             if(data.status == 'success'){
-            	$('#khHoTen').text(data.khHoTen);
-            	$('#khSDT').text(data.khSDT);
-            	$('#khDiaChi').text(data.khDiaChi);
+            	$('#khHoTen').val(data.khHoTen);
+            	$('#khSDT').val(data.khSDT);
+            	$('#khDiaChi').val(data.khDiaChi);
+            	$('#khCCCD').val(data.khCCCD);
             } else {
             	alert('Thông tin Khách hàng không còn tồn tại trên hệ thống!');
             }
@@ -614,9 +653,10 @@ function getKhachHangAjax(idkh){
 }
 
 function clearInfoKhachHang(){
-	$('#khHoTen').text('');
-	$('#khSDT').text('');
-	$('#khDiaChi').text('');
+	$('#khHoTen').val('');
+	$('#khSDT').val('');
+	$('#khDiaChi').val('');
+	$('#khCCCD').val('');
 }
     	
 $('#khach-hang-dropdown').on("select2:select", function(e) { 

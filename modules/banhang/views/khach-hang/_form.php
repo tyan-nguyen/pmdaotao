@@ -6,6 +6,9 @@ use app\modules\banhang\models\LoaiKhachHang;
 /* @var $this yii\web\View */
 /* @var $model app\modules\banhang\models\KhachHang */
 /* @var $form yii\widgets\ActiveForm */
+
+if($model->id_loai_khach_hang == NULL)
+    $model->id_loai_khach_hang = 2;
 ?>
 
 <div class="khach-hang-form">
@@ -16,11 +19,14 @@ use app\modules\banhang\models\LoaiKhachHang;
     	<div class="col-md-4">
     	 	<?= $form->field($model, 'id_loai_khach_hang')->dropDownList(LoaiKhachHang::getList()) ?>
     	 </div>
-         <div class="col-md-4">
+         <div class="col-md-8">
             <?= $form->field($model, 'ho_ten')->textInput(['maxlength' => true]) ?>
          </div>
-         <div class="col-md-4">
+         <div class="col-md-6">
             <?= $form->field($model, 'so_dien_thoai')->textInput(['maxlength' => true]) ?>
+         </div>
+         <div class="col-md-6">
+            <?= $form->field($model, 'so_cccd')->textInput(['maxlength' => true]) ?>
          </div>
          <div class="col-md-12">
             <?= $form->field($model, 'dia_chi')->textarea(['rows' => 3]) ?>

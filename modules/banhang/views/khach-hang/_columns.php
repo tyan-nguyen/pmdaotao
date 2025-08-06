@@ -54,19 +54,30 @@ return [
         'attribute'=>'id_loai_khach_hang',
         'value'=>function($model){
             return $model->loaiKhachHang?$model->loaiKhachHang->ten_loai_khach_hang:'';
-        }
+        },
+        'width' => '80px',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ho_ten',
+        'width' => '120px',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'so_dien_thoai',
+        'width' => '120px',
+        'contentOptions' => ['style' => 'text-align:center'],
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'so_cccd',
+        'width' => '120px',
+        'contentOptions' => ['style' => 'text-align:center'],
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'dia_chi',
+        'width' => '250px',
     ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
