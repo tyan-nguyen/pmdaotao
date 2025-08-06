@@ -91,8 +91,12 @@ return [
         'attribute'=>'so_vao_so',
         'label'=>'Số hóa đơn',
         'value'=>function($model){
-            return $model->soHoaDon;
+            return Html::a($model->soHoaDon, ['/banhang/hoa-don-ban-hang/update', 'id'=>$model->id], [
+                'role'=>'modal-remote',
+                'class'=>'btn-in-grid'
+            ]);
         },
+        'format'=>'raw',
         'contentOptions' => ['style' => 'text-align:center;font-weight:bold'],
     ],
     [

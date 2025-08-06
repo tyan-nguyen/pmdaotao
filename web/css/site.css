@@ -253,6 +253,36 @@ textarea.form-control {
 	color: #17b794;
 }
 
+.btn-in-grid {
+    /* Optional: Add some padding to make space for the icon */
+    padding-left: 0; 
+    transition: padding-left 0.3s ease; /* Smooth transition for padding */
+    position: relative; /* Needed for absolute positioning of the icon if desired */
+}
+
+.btn-in-grid::before {
+    font-family: 'Font Awesome 6 Free'; /* Or 'Font Awesome 5 Free', 'Font Awesome 6 Pro', etc. */
+    font-weight: 900; /* Or 400 for regular, 100 for thin, etc., depending on the icon style */
+    content: '\f08e'; /* Unicode for the desired icon (e.g., fa-chevron-right) */
+    margin-right: 0; /* Initially no margin */
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0.3s ease, margin-right 0.3s ease; /* Smooth transitions */
+    position: absolute; /* Optional: for precise positioning */
+    left: 0; /* Optional: for precise positioning */
+}
+
+.btn-in-grid:hover::before {
+    opacity: 1; /* Show icon on hover */
+    margin-right: 5px; /* Add some space between icon and text */
+    /* Optional: Adjust position if using absolute positioning */
+    /* left: -20px; */ 
+}
+
+.btn-in-grid:hover {
+    padding-left: 20px; /* Adjust padding to accommodate the icon */
+    color: red;
+}
+
 /*gridview*/
 main > .container {
     padding: 70px 15px 20px;
