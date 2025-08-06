@@ -78,11 +78,22 @@ return [
     // ],
     [
         'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'so_vao_so',
+        'label'=>'Số hóa đơn',
+        'value'=>function($model){
+            return $model->soHoaDon;
+        },
+        'contentOptions' => ['style' => 'text-align:center;font-weight:bold'],
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'loai_khach_hang',
+        'label'=>'Loại KH',
         'value'=>function($model){
             return HoaDon::getDmLoaiKhachHangLabel($model->loai_khach_hang);
         },
-        'width' => '50px',
+        'headerOptions' => ['style' => 'width:100px;'],
+        'contentOptions' => ['style' => 'width:100px;'],
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
@@ -91,19 +102,27 @@ return [
             return $model->khachHang->ho_ten;
         }
     ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'label'=>'Số CCCD',
+        'value'=>function($model){
+            return $model->khachHang?$model->khachHang->so_cccd:'';
+        },
+        'contentOptions' => ['style' => 'text-align:center;'],
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'label'=>'Số ĐT',
+        'value'=>function($model){
+            return $model->khachHang?$model->khachHang->so_dien_thoai:'';
+        },
+        'contentOptions' => ['style' => 'text-align:center;'],
+     ],
     /* [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'so_don_hang',
     ], */
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'so_vao_so',
-        'label'=>'Số hóa đơn',
-        'value'=>function($model){
-            return $model->soHoaDon;
-        },
-        'contentOptions' => ['style' => 'text-align:center'],
-    ],
+    
     /* [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'nam',
@@ -114,16 +133,17 @@ return [
         'format'=>'html',
         'value'=>function($model){
             return $model->getDmTrangThaiLabelWithBadge($model->trang_thai);
-        }
+        },
+        'contentOptions' => ['style' => 'text-align:center;'],
     ],
-    [
+    /* [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ngay_dat_hang',
         'value'=>function($model){
             return CustomFunc::convertYMDToDMY($model->ngay_dat_hang);
         },
         'contentOptions' => ['style' => 'text-align:center'],
-    ],
+    ], */
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ngay_xuat',

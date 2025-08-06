@@ -34,6 +34,20 @@ $model->ngay_giao_hang = CustomFunc::convertYMDToDMY($model->ngay_giao_hang);
 	<?php CardWidget::begin(['title'=>'THÔNG TIN PHIẾU THU']) ?>
 	
 	<div class="row">
+		<?php if($model->isNewRecord){?>
+		<div class="col-md-12">
+			<div class="alert alert-outline-success" role="alert">
+        	<button aria-label="Close" class="btn-close float-end" data-bs-dismiss="alert" type="button">
+        		<span aria-hidden="true">×</span></button>
+        	<strong><span class="alert-inner--icon d-inline-block me-1"><i class="fe fe-bell"></i></span> Thêm phiếu bán hàng</strong>: 
+        	<ul>
+        		<li><i class="fa fa-angle-double-right mb-2 me-2"></i> Chọn khách hàng.</li>
+        		<li><i class="fa fa-angle-double-right mb-2 me-2"></i> Chọn hình thức thanh toán.</li>
+        		<li><i class="fa fa-angle-double-right mb-2 me-2"></i> Bấm lưu lại để xuất hiện danh sách hàng hóa.</li>
+        	</ul>
+        </div>
+		</div>
+		<?php } ?>
 	
 		<div class="col-md-2" style="display:none">
 			<?= $form->field($model, 'loai_khach_hang')->dropDownList(HoaDon::getDmLoaiKhachHang(), ['prompt'=>'-Chọn-', 'id'=>'ddlLoaiKhachHang', 'disabled' => true]) ?>
