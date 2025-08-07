@@ -25,22 +25,22 @@ use app\modules\user\models\User;
                     <p><strong>Ngày duyệt:</strong> <?= CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_duyet)?></p>
                     <p><strong>Ghi chú duyệt:</strong> <?= $model->noi_dung_duyet ?></p>
                     
+                     <p>
+                     <?= $model->trang_thai_duyet==KeHoachBase::TT_NHAP?Html::a('Sửa',['update','id'=>$model->id],['class'=>'btn btn-warning','style'=>'color:black','role'=>'modal-remote']):'' ?>
                     <?php 
-                    $user = User::getCurrentUser();
-                    // only show 'payment' if user chung co so
+                    $user = User::getCurrentUser();                    
+                    // chi hien thi nut trinh duyet theo 1 so trang thai
                     $checkPermission =  ($model->trang_thai_duyet==KeHoachBase::TT_NHAP || $model->trang_thai_duyet==KeHoachBase::TT_KHONGDUYET || $model->trang_thai_duyet==KeHoachBase::TT_DADUYET || $user->superadmin);
                     if($checkPermission){
                     ?>
-                    <p>
-                    <?= Html::a('Sửa',['update','id'=>$model->id],['class'=>'btn btn-warning','style'=>'color:black','role'=>'modal-remote']) ?>
                     &nbsp; <?= $model->trang_thai_duyet==KeHoachBase::TT_NHAP ? Html::a('Trình duyệt',['trinh-duyet','id'=>$model->id],['class'=>'btn btn-warning','style'=>'color:black','role'=>'modal-remote','data-confirm-title'=>'Xác nhận gửi duyệt?','data-confirm-message'=>'Sau khi trình duyệt sẽ tạm thời không thể chỉnh sửa, bạn có chắc chắn muốn tiếp tục?']) : '' ?>
-                    &nbsp;
-                	<?= Html::a('<i class="fas fa-print"></i> In', '#', [
+                    &nbsp;                	
+                    <?php } ?>
+                    <?= Html::a('<i class="fas fa-print"></i> In', '#', [
                 	    'class' => 'btn btn-warning', 
                 	    'style'=>'color:black', 
                 	    'onclick' => 'InKeHoach('.$model->id.')']) ?> 
                     </p>
-                    <?php } ?>
 			    </div>
 	    </div>
 	</div>

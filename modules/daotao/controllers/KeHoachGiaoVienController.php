@@ -13,6 +13,7 @@ use yii\helpers\Html;
 use yii\filters\AccessControl;
 use app\modules\user\models\User;
 use app\modules\daotao\models\base\KeHoachBase;
+use app\custom\CustomFunc;
 
 /**
  * KeHoachController implements the CRUD actions for KeHoach model.
@@ -113,18 +114,31 @@ class KeHoachGiaoVienController extends Controller
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($model!=null){
-                $model->trang_thai_duyet = KeHoachBase::TT_CHODUYET;
-                $model->save(false);
+                if($model->gdTietHocs!=null){
+                    $model->trang_thai_duyet = KeHoachBase::TT_CHODUYET;
+                    $model->save(false);
+                    return [
+                        'forceReload'=>'#crud-datatable-pjax',
+                        'title'=> "Kế hoạch",
+                        'content'=>$this->renderAjax('view', [
+                            'model' => $model,
+                        ]),
+                        'tcontent'=>'Trình duyệt kế hoạch thành công!',
+                        'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"])
+                        /*  .Html::a('Sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote']) */
+                    ];
+                } else {
+                    return [
+                        'title'=> "Kế hoạch",
+                        'content'=>$this->renderAjax('_trinh_duyet_failed', [
+                            'model' => $model,
+                        ]),
+                        'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"])
+                        /*  .Html::a('Sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote']) */
+                    ];
+                }
             }
-            return [
-                'title'=> "Kế hoạch",
-                'content'=>$this->renderAjax('view', [
-                    'model' => $model,
-                ]),
-                'tcontent'=>'Trình duyệt kế hoạch thành công!',
-                'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"])
-                /*  .Html::a('Sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote']) */
-            ];
+            
         }else{
             return $this->render('view', [
                 'model' => $this->findModel($id),
@@ -148,9 +162,7 @@ class KeHoachGiaoVienController extends Controller
         }
         
         if($request->isAjax){
-            /*
-             *   Process for ajax request
-             */
+
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
@@ -162,16 +174,49 @@ class KeHoachGiaoVienController extends Controller
                     Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
                     
                 ];
-            }else if($model->load($request->post()) && $model->save()){
-                return [
-                    'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Thêm mới Kế Hoạch",
-                    'content'=>'<span class="text-success">Thêm mới thành công</span>',
-                    'tcontent'=>'Thêm mới thành công!',
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                    Html::a('Tiếp tục thêm',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
-                    
-                ];
+            }else if($model->load($request->post())){
+                //check kế hoạch ngày của giáo viên có chưa
+                if($model->ngay_thuc_hien){
+                    $checkNgay = KeHoach::find()->where([
+                        'id_giao_vien' => $model->id_giao_vien,
+                        'ngay_thuc_hien' => CustomFunc::convertDMYToYMD($model->ngay_thuc_hien)
+                    ])->exists();
+                    if($checkNgay){
+                        $model->addError('ngay_thuc_hien', 'Kế hoạch '. 
+                            $model->ngay_thuc_hien .' đã tồn tại, vui lòng kiểm tra lại!');
+                        return [
+                            'title'=> "Thêm mới Kế Hoạch",
+                            'content'=>$this->renderAjax('create', [
+                                'model' => $model,
+                            ]),
+                            'tcontent'=> 'Kế hoạch '.
+                                $model->ngay_thuc_hien .' đã tồn tại, vui lòng kiểm tra lại!',
+                            'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                            Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])                        
+                        ];
+                    }
+                }
+                
+                if($model->save()){
+                    return [
+                        'forceReload'=>'#crud-datatable-pjax',
+                        'title'=> "Thêm mới Kế Hoạch",
+                        'content'=>'<span class="text-success">Thêm mới thành công</span>',
+                        'tcontent'=>'Thêm mới thành công!',
+                        'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                        Html::a('Tiếp tục thêm',['create'],['class'=>'btn btn-primary','role'=>'modal-remote']) 
+                    ];
+                }else{
+                    return [
+                        'title'=> "Thêm mới Kế Hoạch",
+                        'content'=>$this->renderAjax('create', [
+                            'model' => $model,
+                        ]),
+                        'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                        Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                        
+                    ];
+                }
             }else{
                 return [
                     'title'=> "Thêm mới Kế Hoạch",
@@ -209,6 +254,7 @@ class KeHoachGiaoVienController extends Controller
     {
         $request = Yii::$app->request;
         $model = $this->findModel($id);
+        $oldModel = $this->findModel($id);
         
         if($request->isAjax){
             /*
@@ -224,20 +270,52 @@ class KeHoachGiaoVienController extends Controller
                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                     Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
                 ];
-            }else if($model->load($request->post()) && $model->save()){
-                if(Yii::$app->params['showView']){
+            }else if($model->load($request->post())){
+                //check kế hoạch ngày của giáo viên có chưa
+                if($model->ngay_thuc_hien != CustomFunc::convertYMDHISToDMY($oldModel->ngay_thuc_hien)){
+                    $checkNgay = KeHoach::find()->where([
+                        'id_giao_vien' => $model->id_giao_vien,
+                        'ngay_thuc_hien' => CustomFunc::convertDMYToYMD($model->ngay_thuc_hien)
+                    ])->exists();
+                    if($checkNgay){
+                        $model->addError('ngay_thuc_hien', 'Kế hoạch '.
+                            $model->ngay_thuc_hien .' đã tồn tại, vui lòng kiểm tra lại!');
+                        return [
+                            'title'=> "Thêm mới Kế Hoạch",
+                            'content'=>$this->renderAjax('create', [
+                                'model' => $model,
+                            ]),
+                            'tcontent'=> 'Kế hoạch '.
+                            $model->ngay_thuc_hien .' đã tồn tại, vui lòng kiểm tra lại!',
+                            'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                            Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                        ];
+                    }
+                }
+                if($model->save()){
+                    if(Yii::$app->params['showView']){
+                        return [
+                            'forceReload'=>'#crud-datatable-pjax',
+                            'title'=> "Kế Hoạch",
+                            'content'=>$this->renderAjax('view', [
+                                'model' => $model,
+                            ]),
+                            'tcontent'=>'Cập nhật thành công!',
+                            'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                            Html::a('Sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                        ];
+                    }else{
+                        return ['forceClose'=>true,'forceReload'=>'#crud-datatable-pjax','tcontent'=>'Cập nhật thành công!',];
+                    }
+                }else{
                     return [
-                        'forceReload'=>'#crud-datatable-pjax',
-                        'title'=> "Kế Hoạch",
-                        'content'=>$this->renderAjax('view', [
+                        'title'=> "Cập nhật Kế Hoạch",
+                        'content'=>$this->renderAjax('update', [
                             'model' => $model,
                         ]),
-                        'tcontent'=>'Cập nhật thành công!',
                         'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                        Html::a('Sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                        Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
                     ];
-                }else{
-                    return ['forceClose'=>true,'forceReload'=>'#crud-datatable-pjax','tcontent'=>'Cập nhật thành công!',];
                 }
             }else{
                 return [
@@ -253,13 +331,13 @@ class KeHoachGiaoVienController extends Controller
             /*
              *   Process for non-ajax request
              */
-            if ($model->load($request->post()) && $model->save()) {
+           /*  if ($model->load($request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
                 return $this->render('update', [
                     'model' => $model,
                 ]);
-            }
+            } */
         }
     }
     

@@ -56,7 +56,7 @@ class KeHoachBase extends \app\models\GdKeHoach
         return [
             self::TT_NHAP => 'Nháp',
             self::TT_CHODUYET => 'Chờ duyệt',
-            self::TT_HOANTHANH => 'Hoàn thành',
+           // self::TT_HOANTHANH => 'Hoàn thành',
         ];
     }
     
