@@ -26,13 +26,14 @@ use app\modules\user\models\User;
                     <p><strong>Ghi chú duyệt:</strong> <?= $model->noi_dung_duyet ?></p>
                     
                      <p>
-                     <?= $model->trang_thai_duyet==KeHoachBase::TT_NHAP?Html::a('Sửa',['update','id'=>$model->id],['class'=>'btn btn-warning','style'=>'color:black','role'=>'modal-remote']):'' ?>
+                     <?php /*$model->trang_thai_duyet==KeHoachBase::TT_NHAP?Html::a('Sửa',['update','id'=>$model->id],['class'=>'btn btn-warning','style'=>'color:black','role'=>'modal-remote']):''*/ ?>
                     <?php 
                     $user = User::getCurrentUser();                    
                     // chi hien thi nut trinh duyet theo 1 so trang thai
                     $checkPermission =  ($model->trang_thai_duyet==KeHoachBase::TT_NHAP || $model->trang_thai_duyet==KeHoachBase::TT_KHONGDUYET || $model->trang_thai_duyet==KeHoachBase::TT_DADUYET || $user->superadmin);
                     if($checkPermission){
                     ?>
+                    <?= Html::a('Sửa',['update','id'=>$model->id],['class'=>'btn btn-warning','style'=>'color:black','role'=>'modal-remote']) ?>
                     &nbsp; <?= $model->trang_thai_duyet==KeHoachBase::TT_NHAP ? Html::a('Trình duyệt',['trinh-duyet','id'=>$model->id],['class'=>'btn btn-warning','style'=>'color:black','role'=>'modal-remote','data-confirm-title'=>'Xác nhận gửi duyệt?','data-confirm-message'=>'Sau khi trình duyệt sẽ tạm thời không thể chỉnh sửa, bạn có chắc chắn muốn tiếp tục?']) : '' ?>
                     &nbsp;                	
                     <?php } ?>
