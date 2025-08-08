@@ -129,18 +129,18 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'mau_sac',
     ],
-    [
+    /* [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ngay_dang_kiem',
         'value'=>function($model){
             return CustomFunc::convertYMDToDMY($model->ngay_dang_kiem);
         }
-    ],
-    [
+    ], */
+    /* [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'so_hop_dong',
-    ],
-    [
+    ], */
+    /* [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'id_giao_vien',
         'label' => 'Người phụ trách',
@@ -148,7 +148,7 @@ return [
             return $model->giaoVien?$model->giaoVien->ho_ten:'';
         },
         //'width' => '150px',
-    ],
+    ], */
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'tinh_trang_xe',

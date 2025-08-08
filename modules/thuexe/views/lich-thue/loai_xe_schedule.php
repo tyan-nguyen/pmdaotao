@@ -8,13 +8,17 @@ use kartik\select2\Select2;
 use yii\web\JsExpression;
 use app\custom\CustomFunc;
 
-$this->title = 'Lịch thuê của xe ' . $model->bien_so_xe;
+$this->title = 'Lịch thuê xe hạng ' . $model->ten_loai_xe;
 Yii::$app->params['showSearch'] = false;
 Yii::$app->params['showView'] = true;
 
 //$contactLog = ContactLogPolicy::getContactLogByStaff();
-$contactLog = LichThue::find()->orderBy(['thoi_gian_tao' => SORT_DESC])
-    ->andWhere(['id_xe'=>$model->id])->all();
+$contactLog = LichThue::find()->alias('t')
+    ->joinWith(['xe as x'])
+    ->orderBy(['thoi_gian_tao' => SORT_DESC])
+    ->andWhere(['x.id_loai_xe'=>$model->id])
+    ->all();
+
 //$colorList = ContactLogForm::getStatusColorHexList();
 $colorList = LichThue::getTrangThaiColor();
 $eventData = [];
@@ -39,8 +43,8 @@ foreach ($contactLog as $item) {
     $eventData[] = [
         'title' => 'Xe số ' . $item->xe->ma_so . ' - ' . $item->xe->bien_so_xe,
         'description' => 'GV: '. ($item->giaoVien ? $item->giaoVien->ho_ten : '') . ' - HV: '
-        . ($item->khachHang ? $item->khachHang->ho_ten : '') . ' thuê từ ' . CustomFunc::convertYMDHISToDMYHI($startTime)
-        . ' đến ' . CustomFunc::convertYMDHISToDMYHI($endTime),
+        . ($item->khachHang ? $item->khachHang->ho_ten : '') . ' thuê từ ' . CustomFunc::convertYMDHISToDMYHI($startTime) 
+                . ' đến ' . CustomFunc::convertYMDHISToDMYHI($endTime),
         'start' => $startTime,
         'end' => $endTime,
         'url' => Url::to(['/thuexe/lich-thue/update', 'id' => $item->id, 'force_close' => 'true']),
@@ -64,6 +68,10 @@ foreach ($contactLog as $item) {
     }
 </style>
 
+<link rel="stylesheet" href="/js/tippy6.3.7/tippy.css" />
+<script src="/js/tippy6.3.7/popper.min.js"></script>
+<script src="/js/tippy6.3.7/tippy-bundle.umd.min.js"></script>
+
 <div class="card border-default p-4">
     <div class="row mb-3">
         <div class="col-md-3">
@@ -74,13 +82,13 @@ foreach ($contactLog as $item) {
                     'id' => 'xe-select',
                     'placeholder' => 'Chọn xe...'
                 ],
-                'data' => LichThue::getDsXeCamUng(),
+                'data' => LichThue::getDsLoaiXeCamUng(),
                 'value' => $model->id,
                 'pluginEvents' => [
                     "select2:select" => new JsExpression('function(e) {
                         var data = e.params.data;
                         if(data && data.id) {
-                            var url = "/thuexe/lich-thue/xe-schedule?menu=bh9&id=" + data.id;
+                            var url = "/thuexe/lich-thue/loai-xe-schedule?menu=bh9&id=" + data.id;
                             window.location.href = url; // chuyển hướng sang trang chi tiết
                         }
                     }')
@@ -99,10 +107,6 @@ foreach ($contactLog as $item) {
 
     <div id="calendar2" class="calendar"></div>
 </div>
-
-<link rel="stylesheet" href="/js/tippy6.3.7/tippy.css" />
-<script src="/js/tippy6.3.7/popper.min.js"></script>
-<script src="/js/tippy6.3.7/tippy-bundle.umd.min.js"></script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -164,6 +168,7 @@ foreach ($contactLog as $item) {
                 if (info.event.extendedProps.role) {
                     info.el.setAttribute('role', info.event.extendedProps.role);
                 }
+                //info.el.setAttribute('title', info.event.extendedProps.description);
                 tippy(info.el, {
                   content: info.event.title + ' (' + info.event.extendedProps.description + ')',
                   placement: 'top',
@@ -171,6 +176,9 @@ foreach ($contactLog as $item) {
                 });
             },
             events: <?= json_encode($eventData); ?>,
+            /* eventMouseEnter: function(info) {
+                 
+            } */
         });
 
         calendar.render();

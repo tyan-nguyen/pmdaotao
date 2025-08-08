@@ -56,6 +56,8 @@ use app\modules\user\models\User;
 				
 				<?= $this->render('menus/ban-hang') ?>
 				
+				<?= $this->render('menus/thue-xe') ?>
+				
 				<?= $this->render('menus/dao-tao') ?>
 
 				<?= $this->render('menus/nhan-vien')?>
@@ -65,8 +67,6 @@ use app\modules\user\models\User;
 				<?= $this->render('menus/kho-luu-tru') ?>
 				
 				<?= $this->render('menus/khoa-hoc') ?>
-				
-				<?= $this->render('menus/thue-xe') ?>
 
 				<?= $this->render('menus/lich-hoc') ?>
 

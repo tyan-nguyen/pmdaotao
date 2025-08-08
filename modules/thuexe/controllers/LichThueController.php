@@ -12,6 +12,7 @@ use \yii\web\Response;
 use yii\helpers\Html;
 use yii\filters\AccessControl;
 use app\modules\thuexe\models\Xe;
+use app\modules\thuexe\models\LoaiXe;
 
 /**
  * LichThueController implements the CRUD actions for LichThue model.
@@ -41,6 +42,16 @@ class LichThueController extends Controller
 	{
 	    $model = Xe::findOne($id);
 	    return $this->render('xe_schedule', [
+	        'model' => $model
+	    ]);
+	}
+	
+	// Xem lịch thuê của loại xe
+	//$id: id cua loai xe
+	public function actionLoaiXeSchedule($id)
+	{
+	    $model = LoaiXe::findOne($id);
+	    return $this->render('loai_xe_schedule', [
 	        'model' => $model
 	    ]);
 	}

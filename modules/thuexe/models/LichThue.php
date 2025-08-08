@@ -55,6 +55,18 @@ class LichThue extends LichThueBase
     }
     
     /**
+     * get danh muc loai xe cam ung
+     * su dung trong lich thu xe cam ung
+     */
+    public static function getDsLoaiXeCamUng(){
+        $dsXe = LoaiXe::find()->where('id IN (2,3,4,6,7,8,9)')->all();
+        // Thêm dấu + vào trước tên nhân viên
+        return ArrayHelper::map($dsXe, 'id', function($model) {
+            return '+ Hạng ' . $model->ten_loai_xe;
+        });
+    }
+    
+    /**
      * Danh muc trang thai xe đang sử dụng, sắp sử dụng hay rảnh label
      * @param int $val
      * @return string
