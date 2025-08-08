@@ -150,7 +150,7 @@ foreach ($contactLog as $item) {
                     force_close: true
                 });
 
-                const url = '<?= Url::to(['/thuexe/lich-thue/create?type=hocvien']) ?>' + '&' + params.toString();
+                /*const url = '<?= Url::to(['/thuexe/lich-thue/create?type=hocvien']) ?>' + '&' + params.toString();
 
                 if (modal) {
                     modal.open({
@@ -158,17 +158,19 @@ foreach ($contactLog as $item) {
                     });
                 }
 
-                calendar.unselect()
+                calendar.unselect()*/
             },
             eventDidMount: function(info) {
                 if (info.event.extendedProps.role) {
                     info.el.setAttribute('role', info.event.extendedProps.role);
                 }
-                tippy(info.el, {
-                  content: info.event.title + ' (' + info.event.extendedProps.description + ')',
-                  placement: 'top',
-                  theme: 'light-border',
-                });
+                if(info.event.title){
+                    tippy(info.el, {
+                      content: info.event.title + ' (' + info.event.extendedProps.description + ')',
+                      placement: 'top',
+                      theme: 'light-border',
+                    });
+                }
             },
             events: <?= json_encode($eventData); ?>,
         });
