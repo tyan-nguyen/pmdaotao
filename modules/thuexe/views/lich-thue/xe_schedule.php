@@ -80,7 +80,7 @@ foreach ($contactLog as $item) {
                     "select2:select" => new JsExpression('function(e) {
                         var data = e.params.data;
                         if(data && data.id) {
-                            var url = "/thuexe/lich-thue/xe-schedule?menu=bh9&id=" + data.id;
+                            var url = "/thuexe/lich-thue/xe-schedule?menu=dc8&id=" + data.id;
                             window.location.href = url; // chuyển hướng sang trang chi tiết
                         }
                     }')
