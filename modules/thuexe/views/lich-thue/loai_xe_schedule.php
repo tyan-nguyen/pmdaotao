@@ -8,7 +8,7 @@ use kartik\select2\Select2;
 use yii\web\JsExpression;
 use app\custom\CustomFunc;
 
-$this->title = 'Lịch thuê xe hạng ' . $model->ten_loai_xe;
+$this->title = 'Lịch thuê xe của các xe thuộc hạng ' . $model->ten_loai_xe;
 Yii::$app->params['showSearch'] = false;
 Yii::$app->params['showView'] = true;
 
