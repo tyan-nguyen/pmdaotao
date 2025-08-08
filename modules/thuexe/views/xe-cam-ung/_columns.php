@@ -27,7 +27,7 @@ return [
    
         'urlCreator' => function($action, $model, $key, $index) { 
             if ($action === 'xemLich') {
-                return Url::to(['lich-thue/xe-schedule', 'menu'=>'bh9', 'id' => $key]);
+                return Url::to(['lich-thue/xe-schedule', 'menu'=>'dc8', 'id' => $key]);
             }
             if ($action === 'capNhapGiaoVien') {
                 return Url::to(['phan-cong-giao-vien', 'id' => $key]);
