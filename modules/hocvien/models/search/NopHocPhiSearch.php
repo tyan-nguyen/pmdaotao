@@ -169,6 +169,10 @@ class NopHocPhiSearch extends NopHocPhi
             ->andFilterWhere(['like', 't.ghi_chu', $this->ghi_chu]);
             
             if($this->startdate && $this->enddate){
+                if($this->starttime == null)
+                    $this->starttime = '00:00:00';
+                if($this->endtime == null)
+                    $this->endtime = '23:59:59';
                 $start = CustomFunc::convertDMYToYMD($this->startdate) . ' ' . $this->starttime;
                 $end = CustomFunc::convertDMYToYMD($this->enddate) . ' ' . $this->endtime;
                 $query->andFilterWhere(['>=', 't.thoi_gian_tao', new Expression("STR_TO_DATE('".$start."','%Y-%m-%d %H:%i:%s')")])

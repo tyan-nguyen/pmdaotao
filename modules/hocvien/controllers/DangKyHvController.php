@@ -886,6 +886,10 @@ public function actionGetPhieuInReportListAjax($startdate, $starttime, $enddate,
     }
    // $startStr = $startdate . ' ' .$starttime;//add second
    // $endStr = $enddate . ' ' .$endtime;//add second
+    if($starttime == null)
+        $starttime = '00:00:00';
+    if($endtime == null)
+        $endtime = '23:59:59';
     $start = CustomFunc::convertDMYToYMD($startdate) . ' ' . $starttime;
     $end = CustomFunc::convertDMYToYMD($enddate) . ' ' . $endtime;;
     

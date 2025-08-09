@@ -32,6 +32,9 @@ use app\modules\hocvien\models\DangKyHv;
             'pluginOptions' => [
                 'autoclose' => true,
                 'format' => 'dd/mm/yyyy',
+                'zIndexOffset'=>'9999',
+                'todayHighlight'=>true,
+                'todayBtn'=>true
             ]
         ])?>
     </div>
@@ -48,7 +51,10 @@ use app\modules\hocvien\models\DangKyHv;
             'value' => date('d/m/Y'),
             'pluginOptions' => [
                 'autoclose' => true,
-                'format' => 'dd/mm/yyyy'
+                'format' => 'dd/mm/yyyy',
+                'zIndexOffset'=>'9999',
+                'todayHighlight'=>true,
+                'todayBtn'=>true
             ]
         ])?>
     </div>

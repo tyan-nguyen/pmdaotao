@@ -37,7 +37,9 @@ use app\modules\hocvien\models\HangDaoTao;
                          'pluginOptions' => [
                              'autoclose' => true,
                              'format' => 'dd/mm/yyyy',
-                             'zIndexOffset'=>'9999'
+                             'zIndexOffset'=>'9999',
+                             'todayHighlight'=>true,
+                             'todayBtn'=>true
                         ]
               ])->label('Từ ngày, giờ, phút') ?>
 	 	</div>
@@ -50,7 +52,9 @@ use app\modules\hocvien\models\HangDaoTao;
                          'pluginOptions' => [
                              'autoclose' => true,
                              'format' => 'dd/mm/yyyy',
-                             'zIndexOffset'=>'9999'
+                             'zIndexOffset'=>'9999',
+                             'todayHighlight'=>true,
+                             'todayBtn'=>true
                             ]
               ])->label('Đến ngày, giờ, phút') ?>
 	 	</div>
@@ -87,6 +91,9 @@ use app\modules\hocvien\models\HangDaoTao;
                          'pluginOptions' => [
                          'autoclose' => true,
                          'format' => 'dd/mm/yyyy',
+                         'zIndexOffset'=>'9999',
+                         'todayHighlight'=>true,
+                         'todayBtn'=>true
                   ]
               ]); ?>
 	 	</div>
