@@ -15,7 +15,7 @@ use yii\web\JsExpression;
 
     <?php $form = ActiveForm::begin([
         	'id'=>'myFilterForm',
-            'method' => 'post',
+            'method' => 'get',
             'options' => [
                 'class' => 'myFilterForm'
             ]
