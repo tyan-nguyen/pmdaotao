@@ -20,6 +20,9 @@ Yii::$app->params['showView'] = true;
 ?>
 
 <style>
+#crud-datatable-togdata-page{
+    border:0px!important;
+}
 /*an add xử lý 2 select bị đè lên nhau khi open*/
 /* .select2-container {
     z-index: 9999 !important;
@@ -98,6 +101,7 @@ Yii::$app->params['showView'] = true;
 						</div>
 					</div>
                     '.
+                    '{toggleData}'.
                     '{export}'
                 ],
             ],             
@@ -113,10 +117,41 @@ Yii::$app->params['showView'] = true;
                 'before'=>false,
             ],
             'export'=>[
+                'fontAwesome' => true,
+                'showConfirmAlert' => false,
+                'target' => GridView::TARGET_BLANK, // xuất ra tab mới
+                'filename' => 'ds_hoc_vien' . date('Y-m-d'), // tên file export mặc định
                 'options' => [
                     'class' => 'btn'
                 ]
-            ]          
+            ],
+            'exportConfig' => [
+                GridView::EXCEL => [
+                    'label' => 'Xuất Excel',
+                    'filename' => 'ds_thue_xe_cam_bien_' . date('Y-m-d'),
+                    'options' => ['title' => 'Danh sách thuê xe cảm biến'],
+                    'config' => [
+                        'worksheet' => 'Danh sách',
+                        'cssFile' => '', // nếu cần
+                    ],
+                ],
+                GridView::PDF => [
+                    'label' => 'Xuất PDF',
+                    'filename' => 'ds_thue_xe_cam_bien_' . date('Y-m-d'),
+                    'options' => ['title' => 'Danh sách thuê xe cảm biến'],
+                    'config' => [
+                        'methods' => [
+                            'SetHeader' => ['DANH SÁCH THUÊ XE|DANH SÁCH|Xuất ngày: ' . date("d/m/Y")],
+                            'SetFooter' => ['|Trang {PAGENO}|'],
+                        ],
+                        'options' => [
+                            'title' => 'Danh sách thuê xe cảm biến',
+                            'subject' => 'Xuất file PDF',
+                            'keywords' => 'export, pdf,',
+                        ],
+                    ],
+                ],
+            ], 
         ])?>
     </div>
 </div>

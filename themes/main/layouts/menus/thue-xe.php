@@ -25,10 +25,10 @@
 						<ul class="sidemenu-list">
 							<li class="side-menu__label1"><a href="javascript:void(0)">Danh mục chức năng</a></li>
 							
-							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/lich-thue?menu=dc6') ?>" class="slide-item" data-menu="dc6"><i class="fe fe-file-text"></i> Lên lịch thuê xe (C.ứng)</a></li>
-							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/xe-cam-ung?menu=dc7') ?>" class="slide-item" data-menu="dc7"><i class="fe fe-file-text"></i> K.T tình trạng xe (C.ứng)</a></li>
-							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/lich-thue/xe-schedule?menu=dc8&id=4') ?>" class="slide-item" data-menu="dc8"><i class="fe fe-file-text"></i> Xem lịch theo xe (C.ứng)</a></li>
-							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/lich-thue/loai-xe-schedule?menu=dc9&id=2') ?>" class="slide-item" data-menu="dc9"><i class="fe fe-file-text"></i> Xem lịch hạng xe (C.ứng)</a></li>
+							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/lich-thue?menu=dc6') ?>" class="slide-item" data-menu="dc6"><i class="fe fe-file-text"></i> Lên lịch thuê xe (C.Biến)</a></li>
+							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/xe-cam-ung?menu=dc7') ?>" class="slide-item" data-menu="dc7"><i class="fe fe-file-text"></i> K.T tình trạng xe (C.Biến)</a></li>
+							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/lich-thue/xe-schedule?menu=dc8&id=4') ?>" class="slide-item" data-menu="dc8"><i class="fe fe-file-text"></i> Xem lịch theo xe (C.Biến)</a></li>
+							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/lich-thue/loai-xe-schedule?menu=dc9&id=2') ?>" class="slide-item" data-menu="dc9"><i class="fe fe-file-text"></i> Xem lịch hạng xe (C.Biến)</a></li>
 							
 							<!--  <li class=""><a href="<?= Yii::getAlias('@web/thuexe/phieu-thue-xe?menu=dc4') ?>" class="slide-item" data-menu="dc4"><i class="fe fe-file-text"></i> Phiếu thuê xe</a></li>
 							 -->
