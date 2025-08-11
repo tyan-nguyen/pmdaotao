@@ -113,7 +113,7 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'dia_chi',
-        'width' => '300px',
+        'width' => '350px',
     ],
    // [
       //  'class'=>'\kartik\grid\DataColumn',
@@ -256,6 +256,13 @@ return [
          },
          'width' => '50px',
          'contentOptions' => [ 'style' => 'text-align:center' ],
+     ],
+     
+     [
+         'class'=>'\kartik\grid\DataColumn',
+         'attribute'=>'ghi_chu',
+         'label'=>'Ghi chú',
+         'width' => '200px'
      ],
     
     
