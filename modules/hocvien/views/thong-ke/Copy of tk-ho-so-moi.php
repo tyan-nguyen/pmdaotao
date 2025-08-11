@@ -18,11 +18,7 @@ use app\custom\CustomFunc;
                 <td align="center" colspan="2">Hạng C1</td>
                 <td align="center" colspan="2">Hạng A1</td>
                 <td align="center" colspan="2">Hạng A</td>     
-                <!-- <td align="center" colspan="2">Nâng hạng (C, D, D2, CE)</td>   -->
-                <td align="center" colspan="2">Nâng hạng C</td> 
-                <td align="center" colspan="2">Nâng hạng D</td>          
-                <td align="center" colspan="2">Nâng hạng D2</td>   
-                <td align="center" colspan="2">Nâng hạng CE</td>
+                <td align="center" colspan="2">Nâng hạng (C, D, D2, CE)</td>                
             </tr>
             <tr style="font-weight:bold">
                
@@ -51,20 +47,8 @@ use app\custom\CustomFunc;
                 <td align="center">CS1</td>
                 <td align="center">CS2</td>   
                  <!-- Nâng hạng -->
-                <!-- <td align="center">CS1</td>
-                <td align="center">CS2</td>  -->      
-                 <!-- Nâng hạng C -->
                 <td align="center">CS1</td>
-                <td align="center">CS2</td>     
-                 <!-- Nâng hạng D -->
-                <td align="center">CS1</td>
-                <td align="center">CS2</td>   
-                 <!-- Nâng hạngD2 -->
-                <td align="center">CS1</td>
-                <td align="center">CS2</td>    
-                 <!-- Nâng hạng CE -->
-                <td align="center">CS1</td>
-                <td align="center">CS2</td>        
+                <td align="center">CS2</td>         
             </tr>
         </thead>
         <tbody>
@@ -100,19 +84,8 @@ use app\custom\CustomFunc;
         $soLuongA1 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere("DATE(thoi_gian_tao) = '$date'")->andWhere('id_hang IN (9,10)')->andFilterWhere(['noi_dang_ky'=>'CS1'])->count();
         $soLuongA2 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere("DATE(thoi_gian_tao) = '$date'")->andWhere('id_hang IN (9,10)')->andFilterWhere(['noi_dang_ky'=>'CS2'])->count();
         
-        //$soLuongNH1 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere("DATE(thoi_gian_tao) = '$date'")->andWhere('id_hang IN (11,12,13,14,15,16,17,18,19,20,21,22,23,24,25)')->andFilterWhere(['noi_dang_ky'=>'CS1'])->count();
-        //$soLuongNH2 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere("DATE(thoi_gian_tao) = '$date'")->andWhere('id_hang IN (11,12,13,14,15,16,17,18,19,20,21,22,23,24,25)')->andFilterWhere(['noi_dang_ky'=>'CS2'])->count();
-        $soLuongNHC1 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere("DATE(thoi_gian_tao) = '$date'")->andWhere('id_hang IN (11,12,15,16)')->andFilterWhere(['noi_dang_ky'=>'CS1'])->count();
-        $soLuongNHC2 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere("DATE(thoi_gian_tao) = '$date'")->andWhere('id_hang IN (11,12,15,16)')->andFilterWhere(['noi_dang_ky'=>'CS2'])->count();
-        
-        $soLuongNHD1 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere("DATE(thoi_gian_tao) = '$date'")->andWhere('id_hang IN (21,22,25,26)')->andFilterWhere(['noi_dang_ky'=>'CS1'])->count();
-        $soLuongNHD2 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere("DATE(thoi_gian_tao) = '$date'")->andWhere('id_hang IN (21,22,25,26)')->andFilterWhere(['noi_dang_ky'=>'CS2'])->count();
-        
-        $soLuongNHD21 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere("DATE(thoi_gian_tao) = '$date'")->andWhere('id_hang IN (13,14,17,18,19,20)')->andFilterWhere(['noi_dang_ky'=>'CS1'])->count();
-        $soLuongNHD22 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere("DATE(thoi_gian_tao) = '$date'")->andWhere('id_hang IN (13,14,17,18,19,20)')->andFilterWhere(['noi_dang_ky'=>'CS2'])->count();
-        
-        $soLuongNHCE1 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere("DATE(thoi_gian_tao) = '$date'")->andWhere('id_hang IN (23,24)')->andFilterWhere(['noi_dang_ky'=>'CS1'])->count();
-        $soLuongNHCE2 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere("DATE(thoi_gian_tao) = '$date'")->andWhere('id_hang IN (23,24)')->andFilterWhere(['noi_dang_ky'=>'CS2'])->count();
+        $soLuongNH1 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere("DATE(thoi_gian_tao) = '$date'")->andWhere('id_hang IN (11,12,13,14,15,16,17,18,19,20,21,22,23,24,25)')->andFilterWhere(['noi_dang_ky'=>'CS1'])->count();
+        $soLuongNH2 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere("DATE(thoi_gian_tao) = '$date'")->andWhere('id_hang IN (11,12,13,14,15,16,17,18,19,20,21,22,23,24,25)')->andFilterWhere(['noi_dang_ky'=>'CS2'])->count();
         
     ?>
     <tr style="<?= $iDate==0?'color:red;font-weight:bold':'' ?>">
@@ -137,20 +110,8 @@ use app\custom\CustomFunc;
         <td align="center"><?= $soLuongA1 ?></td>
         <td align="center"><?= $soLuongA2 ?></td>    
         
-        <?php /*?><td align="center"><?= $soLuongNH1 ?></td>
-        <td align="center"><?= $soLuongNH2 ?></td>    <?php */ ?>
-        
-        <td align="center"><?= $soLuongNHC1 ?></td>
-        <td align="center"><?= $soLuongNHC2 ?></td>
-        
-        <td align="center"><?= $soLuongNHD1 ?></td>
-        <td align="center"><?= $soLuongNHD2 ?></td>
-        
-        <td align="center"><?= $soLuongNHD21 ?></td>
-        <td align="center"><?= $soLuongNHD22 ?></td>
-        
-        <td align="center"><?= $soLuongNHCE1 ?></td>
-        <td align="center"><?= $soLuongNHCE2 ?></td>
+        <td align="center"><?= $soLuongNH1 ?></td>
+        <td align="center"><?= $soLuongNH2 ?></td>    
     </tr>
     <?php 
     }
@@ -171,18 +132,8 @@ use app\custom\CustomFunc;
                 <td align="center">...</td>
                 <td align="center">...</td>
                 <td align="center">...</td> 
-                
-                
-               <!--   <td align="center">...</td> -->
-                <!-- <td align="center">...</td>   -->
                 <td align="center">...</td>
-                <td align="center">...</td>   
-                 <td align="center">...</td>
-                <td align="center">...</td>  
-                 <td align="center">...</td>
-                <td align="center">...</td>  
-                 <td align="center">...</td>
-                <td align="center">...</td>            
+                <td align="center">...</td>             
             </tr>
             <?php 
             $soLuongHV = DangKyHv::find()->where(['huy_ho_so'=>0])->count();
@@ -209,21 +160,8 @@ use app\custom\CustomFunc;
             $soLuongA1 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere('id_hang IN (9,10)')->andFilterWhere(['noi_dang_ky'=>'CS1'])->count();
             $soLuongA2 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere('id_hang IN (9,10)')->andFilterWhere(['noi_dang_ky'=>'CS2'])->count();
             
-           /*  $soLuongNH1 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere('id_hang IN (11,12,13,14,15,16,17,18,19,20,21,22,23,24,25)')->andFilterWhere(['noi_dang_ky'=>'CS1'])->count();
-            $soLuongNH2 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere('id_hang IN (11,12,13,14,15,16,17,18,19,20,21,22,23,24,25)')->andFilterWhere(['noi_dang_ky'=>'CS2'])->count(); */
-            
-            $soLuongNHC1 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere('id_hang IN (11,12,15,16)')->andFilterWhere(['noi_dang_ky'=>'CS1'])->count();
-            $soLuongNHC2 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere('id_hang IN (11,12,15,16)')->andFilterWhere(['noi_dang_ky'=>'CS2'])->count();
-            
-            $soLuongNHD1 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere('id_hang IN (21,22,25,26)')->andFilterWhere(['noi_dang_ky'=>'CS1'])->count();
-            $soLuongNHD2 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere('id_hang IN (21,22,25,26)')->andFilterWhere(['noi_dang_ky'=>'CS2'])->count();
-            
-            $soLuongNHD21 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere('id_hang IN (13,14,17,18,19,20)')->andFilterWhere(['noi_dang_ky'=>'CS1'])->count();
-            $soLuongNHD22 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere('id_hang IN (13,14,17,18,19,20)')->andFilterWhere(['noi_dang_ky'=>'CS2'])->count();
-            
-            $soLuongNHCE1 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere('id_hang IN (23,24)')->andFilterWhere(['noi_dang_ky'=>'CS1'])->count();
-            $soLuongNHCE2 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere('id_hang IN (23,24)')->andFilterWhere(['noi_dang_ky'=>'CS2'])->count();
-            
+            $soLuongNH1 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere('id_hang IN (11,12,13,14,15,16,17,18,19,20,21,22,23,24,25)')->andFilterWhere(['noi_dang_ky'=>'CS1'])->count();
+            $soLuongNH2 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere('id_hang IN (11,12,13,14,15,16,17,18,19,20,21,22,23,24,25)')->andFilterWhere(['noi_dang_ky'=>'CS2'])->count();
             ?>
             <tr style="font-weight:bold">
                 <td width="50px" align="center"></td>
@@ -247,21 +185,8 @@ use app\custom\CustomFunc;
                 <td align="center"><?= $soLuongA1 ?></td>
                 <td align="center"><?= $soLuongA2 ?></td>  
                 
-                <?php /*?><td align="center"><?= $soLuongNH1 ?></td>
-                <td align="center"><?= $soLuongNH2 ?></td> <?php */ ?>    
-                
-                <td align="center"><?= $soLuongNHC1 ?></td>
-                <td align="center"><?= $soLuongNHC2 ?></td>
-                
-                <td align="center"><?= $soLuongNHD1 ?></td>
-                <td align="center"><?= $soLuongNHD2 ?></td>
-                
-                <td align="center"><?= $soLuongNHD21 ?></td>
-                <td align="center"><?= $soLuongNHD22 ?></td>
-                
-                <td align="center"><?= $soLuongNHCE1 ?></td>
-                <td align="center"><?= $soLuongNHCE2 ?></td>
-            
+                <td align="center"><?= $soLuongNH1 ?></td>
+                <td align="center"><?= $soLuongNH2 ?></td>                 
             </tr>
         </tbody>
     </table>
