@@ -228,9 +228,9 @@ use app\custom\CustomFunc;
             <tr style="font-weight:bold">
                 <td width="50px" align="center"></td>
                 <td align="center">TỔNG CỘNG <br/>(Tất cả thời gian)</td>
-                <td align="center"><?= $soLuongHV ?></td>
-                <td align="center"><?= $soLuongHV1 ?></td>
-                <td align="center"><?= $soLuongHV2 ?></td>
+                <td align="center"><?= number_format($soLuongHV) ?></td>
+                <td align="center"><?= number_format($soLuongHV1) ?></td>
+                <td align="center"><?= number_format($soLuongHV2) ?></td>
                 
                 <td align="center"><?= $soLuongBTD1 ?></td>
                 <td align="center"><?= $soLuongBTD2 ?></td>
