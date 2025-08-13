@@ -103,8 +103,18 @@ return [
         'format'=>'raw',
     ],
     [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'ma_so',
+        'contentOptions' => [ 'style' => 'text-align:center' ],
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'bien_so_xe',
+    ],
+    [
        'class'=>'\kartik\grid\DataColumn',
        'attribute'=>'id_loai_xe',
+        'label'=>'Hạng xe',
        'value' => function($model) {
             $loaiXe = LoaiXe::findOne($model->id_loai_xe);
             return $loaiXe ? $loaiXe->ten_loai_xe : '<span style="color: red;">Trống </span>'; 
@@ -112,22 +122,19 @@ return [
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'hieu_xe',
+    ],
+    
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'mau_sac',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'phan_loai',
         'value' => function($model) {
             return $model->getLabelPhanLoaiXe();
         },
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'hieu_xe',
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'bien_so_xe',
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'mau_sac',
     ],
     /* [
         'class'=>'\kartik\grid\DataColumn',

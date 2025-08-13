@@ -27,7 +27,7 @@ use app\modules\thuexe\models\Xe;
                     'pluginOptions' => [
                         'allowClear' => true,
                     ],
-             ]);?>
+             ])->label('Hạng xe');?>
     </div>
     <div class="col-md-2">
          <?= $form->field($model, 'hieu_xe')->textInput(['maxlength' => true]) ?>
