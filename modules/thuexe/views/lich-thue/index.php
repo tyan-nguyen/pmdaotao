@@ -64,6 +64,7 @@ Yii::$app->params['showView'] = true;
             'dataProvider' => $dataProvider,
             //'filterModel' => $searchModel,
             'pjax'=>true,
+            'showPageSummary' => true,
             'columns' => require(__DIR__.'/_columns.php'),
             'toolbar'=> [
                 ['content'=>

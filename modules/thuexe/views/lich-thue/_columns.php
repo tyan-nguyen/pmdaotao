@@ -136,11 +136,7 @@ return [
             return CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_ket_thuc);
         }
     ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'so_gio',
-        'contentOptions' => ['style' => 'text-align:right'],
-    ],
+    
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'don_gia',
@@ -148,14 +144,28 @@ return [
         'value'=>function($model){
             return number_format($model->don_gia);
         },
+        'pageSummary' => 'Tổng cộng',
+        'pageSummaryOptions' => ['class' => 'text-right text-end'],
     ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'so_gio',
+        'contentOptions' => ['style' => 'text-align:right'],
+        'format' => ['decimal', 0],
+        'pageSummary' => true,
+        'pageSummaryOptions' => ['class' => 'text-right text-end'],
+    ],
+    
     [
         'class'=>'\kartik\grid\DataColumn',
         'label'=>'Thành tiền',
         'value'=>function($model){
-            return number_format($model->so_gio*$model->don_gia);
+            return $model->so_gio*$model->don_gia;
         },
         'contentOptions' => ['style' => 'text-align:right'],
+        'format' => ['decimal', 0],
+        'pageSummary' => true,
+        'pageSummaryOptions' => ['class' => 'text-right text-end'],
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
