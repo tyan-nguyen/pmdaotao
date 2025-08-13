@@ -12,6 +12,7 @@ use \yii\web\Response;
 use yii\helpers\Html;
 use yii\filters\AccessControl;
 use app\modules\user\models\User;
+use app\custom\CustomFunc;
 
 /**
  * HoaDonBanHangController implements the CRUD actions for HoaDon model.
@@ -236,6 +237,12 @@ class HoaDonBanHangController extends Controller
             /*
             *   Process for ajax request
             */
+            $canEdit = false;
+            $cruser = User::getCurrentUser();
+            if ($model->nguoiTao && ($model->nguoiTao->noi_dang_ky == $cruser->noi_dang_ky) && CustomFunc::convertYMDHISToDMY($model->thoi_gian_tao) == date('d/m/Y')){
+                $canEdit = true;
+            }
+            
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
@@ -244,7 +251,7 @@ class HoaDonBanHangController extends Controller
                         'model' => $model,
                     ]),
                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                (($model->trang_thai==HoaDon::TRANGTHAI_NHAP || User::hasRole('Admin'))?Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"]):'')
+                                (($model->trang_thai==HoaDon::TRANGTHAI_NHAP || User::hasRole('Admin') || $canEdit)?Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"]):'')
                 ];         
             }else if($model->load($request->post()) && $model->save()){
             	/* if(Yii::$app->params['showView']){
