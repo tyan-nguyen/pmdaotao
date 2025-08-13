@@ -101,6 +101,8 @@ return [
             return LichThue::getLabelTrangThaiSuDungXeBadge($model->id);
         },
         'format'=>'raw',
+        'width' => '100px',
+        'contentOptions' => [ 'style' => 'text-align:center' ],
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
@@ -110,6 +112,7 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'bien_so_xe',
+        'contentOptions' => [ 'style' => 'text-align:center' ],
     ],
     [
        'class'=>'\kartik\grid\DataColumn',
@@ -119,6 +122,7 @@ return [
             $loaiXe = LoaiXe::findOne($model->id_loai_xe);
             return $loaiXe ? $loaiXe->ten_loai_xe : '<span style="color: red;">Trống </span>'; 
        },
+       'contentOptions' => [ 'style' => 'text-align:center' ],
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
@@ -135,6 +139,7 @@ return [
         'value' => function($model) {
             return $model->getLabelPhanLoaiXe();
         },
+        'contentOptions' => [ 'style' => 'text-align:center' ],
     ],
     /* [
         'class'=>'\kartik\grid\DataColumn',
