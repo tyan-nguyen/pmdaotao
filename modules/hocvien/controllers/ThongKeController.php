@@ -24,8 +24,9 @@ use yii\db\Expression;
 class ThongKeController extends Controller
 {
     public $freeAccessActions = [
-            'tong-hop',
-        ];
+        'tong-hop', 
+        'ban-hang'
+    ];
     /**
      * @inheritdoc
      */
@@ -50,11 +51,21 @@ class ThongKeController extends Controller
         return parent::beforeAction($action);
     }
     /**
-     * in danh sách theo ca
+     * thống kê học viên - học phí
      */
     public function actionTongHop(){
        
         return $this->render('tong-hop', [
+            
+        ]);
+    }
+    
+    /**
+     * thống kê bán hàng
+     */
+    public function actionBanHang(){
+        
+        return $this->render('ban-hang', [
             
         ]);
     }

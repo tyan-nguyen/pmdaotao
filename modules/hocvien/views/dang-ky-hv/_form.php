@@ -46,12 +46,12 @@ if($model->isNewRecord){
         </div>
  
             <div class="col-lg-3 col-md-6">
-            <?= $form->field($model, 'ngay_sinh')->widget(DatePicker::classname(), [
-            'options' => ['placeholder' => 'Chọn ngày sinh  ...'],
-            'pluginOptions' => [
-                'autoclose' => true,
-                'format' => 'dd/mm/yyyy',
-            ]
+            	<?= $form->field($model, 'ngay_sinh')->widget(DatePicker::classname(), [
+                    'options' => ['placeholder' => 'Chọn ngày sinh  ...'],
+                    'pluginOptions' => [
+                        'autoclose' => true,
+                        'format' => 'dd/mm/yyyy',
+                    ]
                ]); ?>
             </div>
             <div class="col-lg-3 col-md-6">

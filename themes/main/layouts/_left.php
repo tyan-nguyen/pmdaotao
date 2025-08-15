@@ -70,7 +70,7 @@ use app\modules\user\models\User;
 
 				<?= $this->render('menus/lich-hoc') ?>
 
-				<?php //$this->render('menus/tai-khoan') ?>				
+				<?= $this->render('menus/tai-khoan') ?>				
 				<?php endif;?>
 				<!-- 
 				<li class="side-item side-item-category">Tùy chỉnh</li>

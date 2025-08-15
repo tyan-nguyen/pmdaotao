@@ -9,6 +9,8 @@ use app\modules\giaovien\models\GiaoVien;
 use app\modules\banhang\models\KhachHang;
 use app\modules\hocvien\models\DangKyHv;
 use app\custom\CustomFunc;
+use app\modules\thuexe\models\PhieuThu;
+use yii\helpers\Html;
 
 /**
  * This is the model class for table "ptx_lich_thue".
@@ -359,6 +361,16 @@ class LichThueBase extends PtxLichThue
     }
     
     /**
+     * Gets query for [[PhieuThu]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPhieuThus()
+    {
+        return $this->hasMany(PhieuThu::class, ['id_lich_thue' => 'id']);
+    }
+    
+    /**
      * Gets query for [[Xe]].
      *
      * @return \yii\db\ActiveQuery
@@ -366,6 +378,82 @@ class LichThueBase extends PtxLichThue
     public function getXe()
     {
         return $this->hasOne(Xe::class, ['id' => 'id_xe']);
+    }
+    
+    /**
+     * get tong tien cua 1 lich thue xe
+     */
+    public function getTongTien(){
+        return $this->don_gia*$this->so_gio;
+    }
+    
+    public function getTienDaNop(){//bao gom tong so tien nop am + duong
+        return PhieuThu::find()->where(['id_lich_thue'=>$this->id])->sum('so_tien');
+    }
+    public function getTienDaNopDuong(){//bao gom tong so tien nop > 0
+        return PhieuThu::find()->where(['id_lich_thue'=>$this->id])->andWhere('so_tien > 0')->sum('so_tien');
+    }
+    public function getTienDaNopDuongTM(){//bao gom tong so tien nop > 0
+        return PhieuThu::find()->where(['id_lich_thue'=>$this->id, 'hinh_thuc_thanh_toan'=>'TM'])->andWhere('so_tien > 0')->sum('so_tien');
+    }
+    public function getTienDaNopDuongCK(){//bao gom tong so tien nop > 0
+        return PhieuThu::find()->where(['id_lich_thue'=>$this->id, 'hinh_thuc_thanh_toan'=>'CK'])->andWhere('so_tien > 0')->sum('so_tien');
+    }
+    public function getTienDaNopAm(){//bao gom tong so tien nop > 0
+        return PhieuThu::find()->where(['id_lich_thue'=>$this->id])->andWhere('so_tien < 0')->sum('so_tien');
+    }
+    public function getTienChietKhau(){//bao gom tong so tien da chiet khau
+        return PhieuThu::find()->where(['id_lich_thue'=>$this->id])->sum('chiet_khau');
+    }
+    public function getTienDaThanhToan(){//bao gom so tien nop va chiet khau
+        $tt = PhieuThu::find()->where(['id_lich_thue'=>$this->id])->sum('so_tien');
+        $ck = PhieuThu::find()->where(['id_lich_thue'=>$this->id])->sum('chiet_khau');
+        return $tt + $ck;
+    }
+    /**
+     * tính tiền chưa thanh toán toàn thời gian
+     * @return number
+     */
+    public function getTienChuaThanhToan(){ //chua thanh toan hoc phi - so tien nop - chiet khau
+        $tt = PhieuThu::find()->where(['id_lich_thue'=>$this->id])->sum('so_tien');
+        $ck = PhieuThu::find()->where(['id_lich_thue'=>$this->id])->sum('chiet_khau');
+        return $this->tongTien - $tt - $ck;
+    }
+    /**
+     * hiển thị trạng thái thanh toán dựa trên số tiền đã thanh toán
+     */
+    public function getTrangThaiThanhToan(){
+        $trangThaiLabel = '';
+        $tienChuaThanhToan = $this->tienChuaThanhToan;
+        if($tienChuaThanhToan == 0)
+            $trangThaiLabel = 'Đã thanh toán';
+        else if($tienChuaThanhToan == $this->tongTien)
+            $trangThaiLabel = 'Chưa thanh toán';
+        else if($tienChuaThanhToan > 0 && $tienChuaThanhToan < $this->tongTien)
+            $trangThaiLabel = 'Đã cọc';
+        else if($tienChuaThanhToan  > $this->tongTien || $tienChuaThanhToan < 0)
+            $trangThaiLabel = 'Thừa tiền';
+        return $trangThaiLabel;
+    }
+    /**
+     * hiển thị trạng thái thanh toán dựa trên số tiền đã thanh toán
+     */
+    public function getTrangThaiThanhToanWithBadge(){
+        $trangThaiLabel = '';
+        $tienChuaThanhToan = $this->tienChuaThanhToan;
+        if($tienChuaThanhToan == 0)
+            $trangThaiLabel = '<span class="badge bg-primary"> Đã thanh toán</span>&nbsp;' 
+                . Html::img('/uploads/icons/smile.png', ['width'=>30]);
+        else if($tienChuaThanhToan > 0 && $tienChuaThanhToan < $this->tongTien)
+            $trangThaiLabel = '<span class="badge bg-info">Đã cọc</span>&nbsp;' 
+                . Html::img('/uploads/icons/smile_1.png', ['width'=>30]);
+        else if($tienChuaThanhToan == $this->tongTien)
+            $trangThaiLabel = '<span class="badge bg-warning">Chưa thanh toán</span>&nbsp;'
+                . Html::img('/uploads/icons/angry.png', ['width'=>30]);
+       else if($tienChuaThanhToan  > $this->tongTien || $tienChuaThanhToan < 0)
+            $trangThaiLabel = '<span class="badge bg-danger">Thừa tiền</span>&nbsp;'
+                . Html::img('/uploads/icons/sad.png', ['width'=>30]);
+        return $trangThaiLabel;
     }
     
 }

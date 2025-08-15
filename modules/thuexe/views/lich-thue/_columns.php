@@ -125,6 +125,7 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'thoi_gian_bat_dau',
+        'label'=>'Thời gian BĐ',
         'value'=>function($model){
             return CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_bat_dau);
         }
@@ -132,6 +133,7 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'thoi_gian_ket_thuc',
+        'label'=>'Thời gian KT',
         'value'=>function($model){
             return CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_ket_thuc);
         }
@@ -144,14 +146,16 @@ return [
         'value'=>function($model){
             return number_format($model->don_gia);
         },
+        'width'=>'70',
         'pageSummary' => 'Tổng cộng',
         'pageSummaryOptions' => ['class' => 'text-right text-end'],
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'so_gio',
+        'width'=>'70',
         'contentOptions' => ['style' => 'text-align:right'],
-        'format' => ['decimal', 0],
+        'format' => ['decimal', 1],
         'pageSummary' => true,
         'pageSummaryOptions' => ['class' => 'text-right text-end'],
     ],
@@ -159,14 +163,27 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'label'=>'Thành tiền',
+        'width'=>'70',
         'value'=>function($model){
-            return $model->so_gio*$model->don_gia;
+            return $model->tongTien;
         },
         'contentOptions' => ['style' => 'text-align:right'],
         'format' => ['decimal', 0],
         'pageSummary' => true,
         'pageSummaryOptions' => ['class' => 'text-right text-end'],
     ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'label'=>'Đã TT',
+        'width'=>'70',
+        'value'=>function($model){
+            return $model->tienDaThanhToan;
+        },
+        'contentOptions' => ['style' => 'text-align:right'],
+        'format' => ['decimal', 0],
+        'pageSummary' => true,
+        'pageSummaryOptions' => ['class' => 'text-right text-end'],
+        ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'trang_thai',

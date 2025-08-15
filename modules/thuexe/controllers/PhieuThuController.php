@@ -1,64 +1,187 @@
 <?php
 
-namespace app\modules\user\controllers;
+namespace app\modules\thuexe\controllers;
 
-use app\modules\user\models\User;
-use app\modules\user\models\UserAjaxSearch;
 use Yii;
-use webvimark\modules\UserManagement\models\rbacDB\Role;
-use yii\filters\VerbFilter;
-use yii\helpers\Html;
+use app\modules\thuexe\models\PhieuThu;
+use app\modules\thuexe\models\search\PhieuThuSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\web\Response;
+use yii\filters\VerbFilter;
+use \yii\web\Response;
+use yii\helpers\Html;
+use yii\filters\AccessControl;
+use app\modules\thuexe\models\LichThue;
 
 /**
- * UserAjaxController implements the CRUD actions for User model.
+ * PhieuThuController implements the CRUD actions for PhieuThu model.
  */
-class UserAjaxController extends Controller
+class PhieuThuController extends Controller
 {
     /**
      * @inheritdoc
      */
     public function behaviors() {
-		return [
-			'ghost-access'=> [
-			    'class' => 'webvimark\modules\UserManagement\components\GhostAccessControl',
-            ],
-			'verbs' => [
-				'class' => VerbFilter::className(),
-				'actions' => [
-					'delete' => ['POST'],
-				],
-			],
+    		return [
+    			'ghost-access'=> [
+    			'class' => 'webvimark\modules\UserManagement\components\GhostAccessControl',
+        		],
+    			'verbs' => [
+    				'class' => VerbFilter::className(),
+    				'actions' => [
+    					'delete' => ['POST'],
+    				],
+    			],
 		];
 	}
 	
-	public function beforeAction($action)
+	/**
+	 * action thu tien (co the thu toan bo hoac tien coc)
+	 * For ajax request will return json object
+	 * and for non-ajax request if creation is successful, the browser will be redirected to the 'view' page.
+	 * @return mixed
+	 */
+	public function actionThanhToan($type, $idlich)
 	{
-	    Yii::$app->params['moduleID'] = 'Module Quản lý người dùng';
-	    Yii::$app->params['modelID'] = 'Quản lý tài khoản';
-	    return parent::beforeAction($action);
+	    $request = Yii::$app->request;
+	    $modelLichThue = LichThue::findOne($idlich);
+	    $model = new PhieuThu();
+	    $model->id_lich_thue = $idlich;
+
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        if($request->isGet){
+            return [
+                'title'=> "Phiếu thu",
+                'content'=>$this->renderAjax('_form_nop_tien', [
+                    'modelLichThue'=>$modelLichThue,
+                    'model' => $model,
+                    'type'=>$type
+                ]),
+                'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                
+            ];
+        }else if($model->load($request->post()) && $model->save()){
+            return [
+                'title'=> "Lịch thuê xe " . $modelLichThue->xe->bien_so_xe,
+                'content'=>$this->renderAjax('../lich-thue/update', [
+                    'model' => $modelLichThue,
+                ]),
+                'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+            ];   
+        }else{
+            return [
+                'title'=> "Phiếu thu",
+                'content'=>$this->renderAjax('_form_nop_tien', [
+                    'modelLichThue'=>$modelLichThue,
+                    'model' => $model,
+                    'type'=>$type
+                ]),
+                'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                
+            ];
+        }
+	    
 	}
+	
+	public function actionGetPhieuInAjax($id, $nhap)//$nhap in nhap hay in that
+	{
+	    $model = PhieuThu::findOne($id);
+	        
+        if($model->loai_phieu==PhieuThu::PHIEUTHULABEL){
+            $content = $this->renderPartial('_print_phieu_thong_tin', [
+                'model' => $model,
+                'nhap'=>$nhap
+            ]);
+        } else if($model->loai_phieu==PhieuThu::PHIEUCHILABEL){
+            $content = $this->renderPartial('_print_phieu_thong_tin_chi', [
+                'model' => $model,
+                'nhap'=>$nhap
+            ]);
+        }
+        return $this->asJson([
+            'status' => 'success',
+            'content' => $content,
+        ]);
+	}
+	
+	public function actionUpdatePrintCount($id)
+	{
+	    Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+	    
+	    $model = PhieuThu::findOne($id);
+	    if ($model !== null) {
+	        $model->so_lan_in_phieu = ($model->so_lan_in_phieu ?? 0) + 1;
+	        if ($model->save(false)) {
+	            return ['success' => true, 'so_lan_in' => $model->so_lan_in_phieu];
+	        }
+	    }
+	    return ['success' => false];
+	}
+	
+	
+	/*********** chưa sử dụng ***************/
 
     /**
-     * Lists all User models.
+     * Lists all PhieuThu models.
      * @return mixed
      */
     public function actionIndex()
     {    
-        $searchModel = new UserAjaxSearch();
-        
-        if(isset($_POST['search']) && $_POST['search'] != null){
+        $searchModel = new PhieuThuSearch();
+  		if(isset($_POST['search']) && $_POST['search'] != null){
             $dataProvider = $searchModel->search(Yii::$app->request->post(), $_POST['search']);
         } else if ($searchModel->load(Yii::$app->request->post())) {
-            $searchModel = new UserAjaxSearch(); // "reset"
+            $searchModel = new PhieuThuSearch(); // "reset"
             $dataProvider = $searchModel->search(Yii::$app->request->post());
         } else {
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         }    
-
         return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+    
+    /**
+     * Lists all PhieuThu models.
+     * @return mixed
+     */
+    public function actionPhieuThu()
+    {
+        $searchModel = new PhieuThuSearch();
+        if(isset($_POST['search']) && $_POST['search'] != null){
+            $dataProvider = $searchModel->searchPhieuThu(Yii::$app->request->post(), $_POST['search']);
+        } else if ($searchModel->load(Yii::$app->request->post())) {
+            $searchModel = new PhieuThuSearch(); // "reset"
+            $dataProvider = $searchModel->searchPhieuThu(Yii::$app->request->post());
+        } else {
+            $dataProvider = $searchModel->searchPhieuThu(Yii::$app->request->queryParams);
+        }
+        return $this->render('phieu-thu', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+    
+    /**
+     * Lists all PhieuThu models.
+     * @return mixed
+     */
+    public function actionPhieuChi()
+    {
+        $searchModel = new PhieuThuSearch();
+        if(isset($_POST['search']) && $_POST['search'] != null){
+            $dataProvider = $searchModel->searchPhieuChi(Yii::$app->request->post(), $_POST['search']);
+        } else if ($searchModel->load(Yii::$app->request->post())) {
+            $searchModel = new PhieuThuSearch(); // "reset"
+            $dataProvider = $searchModel->searchPhieuChi(Yii::$app->request->post());
+        } else {
+            $dataProvider = $searchModel->searchPhieuChi(Yii::$app->request->queryParams);
+        }
+        return $this->render('phieu-chi', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -66,7 +189,7 @@ class UserAjaxController extends Controller
 
 
     /**
-     * Displays a single User model.
+     * Displays a single PhieuThu model.
      * @param integer $id
      * @return mixed
      */
@@ -76,7 +199,7 @@ class UserAjaxController extends Controller
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "User",
+                    'title'=> "PhieuThu",
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
                     ]),
@@ -91,7 +214,7 @@ class UserAjaxController extends Controller
     }
 
     /**
-     * Creates a new User model.
+     * Creates a new PhieuThu model.
      * For ajax request will return json object
      * and for non-ajax request if creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
@@ -99,7 +222,7 @@ class UserAjaxController extends Controller
     public function actionCreate()
     {
         $request = Yii::$app->request;
-        $model = new User(['scenario'=>'newUser']);  
+        $model = new PhieuThu();  
 
         if($request->isAjax){
             /*
@@ -108,7 +231,7 @@ class UserAjaxController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Thêm mới User",
+                    'title'=> "Thêm mới PhieuThu",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -117,20 +240,9 @@ class UserAjaxController extends Controller
         
                 ];         
             }else if($model->load($request->post()) && $model->save()){
-                //add default role macDinh cho tai khoan moi
-                User::assignRole($model->id, 'macDinh');
-                //create role for user
-                $rol = new Role();
-                $rol->type = 1;
-                $rol->name = $model->userRoleName;// dang user_9_
-                $rol->description = 'Quyền tùy chỉnh cho user '. $model->username;
-                if($rol->save()){
-                    User::assignRole($model->id, $rol->name);
-                }
-
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Thêm mới User",
+                    'title'=> "Thêm mới PhieuThu",
                     'content'=>'<span class="text-success">Thêm mới thành công</span>',
                     'tcontent'=>'Thêm mới thành công!',
                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
@@ -139,7 +251,7 @@ class UserAjaxController extends Controller
                 ];         
             }else{           
                 return [
-                    'title'=> "Thêm mới User",
+                    'title'=> "Thêm mới PhieuThu",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -162,59 +274,9 @@ class UserAjaxController extends Controller
         }
        
     }
-    
-    /**
-     * @param int $id User ID
-     *
-     * @throws \yii\web\NotFoundHttpException
-     * @return string
-     */
-    public function actionChangePassword($id)
-    {
-        $request = Yii::$app->request;
-        if($request->isAjax){
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            $model = User::findOne($id);
-            
-            if ( !$model )
-            {
-                throw new NotFoundHttpException('User not found');
-            }
-            
-            $model->scenario = 'changePassword';
-            
-            if($request->isGet){
-                return [
-                    'title'=> "Thay đổi mật khẩu",
-                    'content'=>$this->renderAjax('change-password', compact('model')),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                    Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
-                    
-                ];
-            }else if($model->load($request->post()) && $model->save()){
-                return [
-                    'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Thay đổi mật khẩu",
-                    'content'=>'<span class="text-success">Thay đổi mật khẩu thành công!</span>',
-                    'tcontent'=>'Thêm mới thành công!',
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"])
-                    
-                ];
-            }else{
-                return [
-                    'title'=> "Thay đổi mật khẩu",
-                    'content'=>$this->renderAjax('change-password', compact('model')),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                    Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
-                    
-                ];
-            }
-         
-        }
-    }
 
     /**
-     * Updates an existing User model.
+     * Updates an existing PhieuThu model.
      * For ajax request will return json object
      * and for non-ajax request if update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
@@ -232,7 +294,7 @@ class UserAjaxController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Cập nhật User",
+                    'title'=> "Cập nhật PhieuThu",
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
@@ -240,21 +302,23 @@ class UserAjaxController extends Controller
                                 Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
             }else if($model->load($request->post()) && $model->save()){
-                //create role for this user
-                
-                return [
-                    'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "User",
-                    'content'=>$this->renderAjax('view', [
-                        'model' => $model,
-                    ]),
-                    'tcontent'=>'Cập nhật thành công!',
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::a('Sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
-                ];    
+            	if(Yii::$app->params['showView']){
+                    return [
+                        'forceReload'=>'#crud-datatable-pjax',
+                        'title'=> "PhieuThu",
+                        'content'=>$this->renderAjax('view', [
+                            'model' => $model,
+                        ]),
+                        'tcontent'=>'Cập nhật thành công!',
+                        'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::a('Sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                    ];    
+                }else{
+                	return ['forceClose'=>true,'forceReload'=>'#crud-datatable-pjax','tcontent'=>'Cập nhật thành công!',];
+                }
             }else{
                  return [
-                    'title'=> "Cập nhật User",
+                    'title'=> "Cập nhật PhieuThu",
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
@@ -277,7 +341,7 @@ class UserAjaxController extends Controller
     }
 
     /**
-     * Delete an existing User model.
+     * Delete an existing PhieuThu model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -286,13 +350,7 @@ class UserAjaxController extends Controller
     public function actionDelete($id)
     {
         $request = Yii::$app->request;
-        $model = $this->findModel($id);
-        if($model->delete()){
-            $rol = Role::find()->where(['name'=>$model->userRoleName])->one();
-            if($rol != NULL){
-                $rol->delete();
-            }
-        }
+        $this->findModel($id)->delete();
 
         if($request->isAjax){
             /*
@@ -311,7 +369,7 @@ class UserAjaxController extends Controller
     }
 
      /**
-     * Delete multiple existing User model.
+     * Delete multiple existing PhieuThu model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -326,12 +384,7 @@ class UserAjaxController extends Controller
         foreach ( $pks as $pk ) {
             $model = $this->findModel($pk);
             try{
-                if($model->delete()){
-                    $rol = Role::find()->where(['name'=>$model->userRoleName])->one();
-                    if($rol != NULL){
-                        $rol->delete();
-                    }
-                }
+            	$model->delete();
             }catch(\Exception $e) {
             	$delOk = false;
             	$fList[] = $model->id;
@@ -356,15 +409,15 @@ class UserAjaxController extends Controller
     }
 
     /**
-     * Finds the User model based on its primary key value.
+     * Finds the PhieuThu model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return User the loaded model
+     * @return PhieuThu the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = User::findOne($id)) !== null) {
+        if (($model = PhieuThu::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

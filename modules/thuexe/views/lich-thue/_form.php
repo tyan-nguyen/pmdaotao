@@ -71,17 +71,32 @@ if ($model->id_khach_hang) {
                 ],
             ])->label(false); ?>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <label>Họ tên</label> <br/>
-            <span id="gvHoTen" style="font-weight:bold"><?= $model->giaoVien ? $model->giaoVien->ho_ten : '' ?></span>
+            <!-- <span id="gvHoTen" style="font-weight:bold"><?= $model->giaoVien ? $model->giaoVien->ho_ten : '' ?></span>-->
+            <?= Html::textInput('ho_ten', 
+                ($model->giaoVien ? $model->giaoVien->ho_ten : ''), 
+                ['id'=>'gvHoTen', 'class'=>'form-control', 'disabled'=>true]) ?>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <label>Số điện thoại</label><br/>
-            <span id="gvSDT" style="font-weight:bold"><?= $model->giaoVien ? $model->giaoVien->so_dien_thoai : '' ?></span>
+            <!--  <span id="gvSDT" style="font-weight:bold"><?= $model->giaoVien ? $model->giaoVien->so_dien_thoai : '' ?></span>-->
+            <?= Html::textInput('sdt', 
+                ($model->giaoVien ? $model->giaoVien->so_dien_thoai : ''), 
+                ['id'=>'gvSDT', 'class'=>'form-control', 'disabled'=>true]) ?>
+        </div>
+        <div class="col-md-2">
+            <label>Số CCCD</label><br/>
+            <?= Html::textInput('so_cccd', 
+                ($model->giaoVien ? $model->giaoVien->so_cccd : ''), 
+                ['id'=>'gvCCCD', 'class'=>'form-control', 'disabled'=>true]) ?>
         </div>
         <div class="col-md-3">
             <label>Địa chỉ</label><br/>
-            <span id="gvDiaChi" style="font-weight:bold"><?= $model->giaoVien ? $model->giaoVien->dia_chi : '' ?></span>
+            <!-- <span id="gvDiaChi" style="font-weight:bold"><?= $model->giaoVien ? $model->giaoVien->dia_chi : '' ?></span>-->
+            <?= Html::textInput('dia_chi', 
+                ($model->giaoVien ? $model->giaoVien->dia_chi : ''), 
+                ['id'=>'gvDiaChi', 'class'=>'form-control', 'disabled'=>true]) ?>
         </div>
    </div>
 
@@ -129,17 +144,32 @@ if ($model->id_khach_hang) {
                 ],
             ])->label(false); ?>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <label>Họ tên</label> <br/>
-            <span id="khHoTen" style="font-weight:bold"><?= $model->khachHang ? $model->khachHang->ho_ten : '' ?></span>
+            <!-- <span id="khHoTen" style="font-weight:bold"><?= $model->khachHang ? $model->khachHang->ho_ten : '' ?></span>-->
+            <?= Html::textInput('ho_ten', 
+                ($model->khachHang ? $model->khachHang->ho_ten : ''), 
+                ['id'=>'khHoTen', 'class'=>'form-control', 'disabled'=>true]) ?>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <label>Số điện thoại</label><br/>
-            <span id="khSDT" style="font-weight:bold"><?= $model->khachHang ? $model->khachHang->so_dien_thoai : '' ?></span>
+            <!-- <span id="khSDT" style="font-weight:bold"><?= $model->khachHang ? $model->khachHang->so_dien_thoai : '' ?></span>-->
+            <?= Html::textInput('sdt', 
+                ($model->khachHang ? $model->khachHang->so_dien_thoai : ''), 
+                ['id'=>'khSDT', 'class'=>'form-control', 'disabled'=>true]) ?>
+        </div>
+        <div class="col-md-2">
+            <label>Số CCCD</label><br/>
+            <?= Html::textInput('so_cccd', 
+                ($model->khachHang ? $model->khachHang->so_cccd : ''), 
+                ['id'=>'khCCCD', 'class'=>'form-control', 'disabled'=>true]) ?>
         </div>
         <div class="col-md-3">
             <label>Địa chỉ</label><br/>
-            <span id="khDiaChi" style="font-weight:bold"><?= $model->khachHang ? $model->khachHang->dia_chi : '' ?></span>
+            <!-- <span id="khDiaChi" style="font-weight:bold"><?= $model->khachHang ? $model->khachHang->dia_chi : '' ?></span>-->
+            <?= Html::textInput('khDiaChi', 
+                ($model->khachHang ? $model->khachHang->dia_chi : ''), 
+                ['id'=>'khDiaChi', 'class'=>'form-control', 'disabled'=>true]) ?>
         </div>
    </div>
    <?php CardWidget::end() ?>
@@ -251,30 +281,67 @@ if ($model->id_khach_hang) {
    <?php CardWidget::end() ?>
    
    <?php CardWidget::begin(['title'=>'THÔNG TIN PHIẾU THU (Tổng tiền: ' . number_format($model->so_gio*$model->don_gia) . ' đồng)']) ?>
-   <div class="row">
+   <div class="row" style="padding: 0 50px; font-weight: bold;">
         <div class="col-md-2">
-        	<?= $form->field($model, 'so_gio')->textInput() ?>
+        	<?= $form->field($model, 'so_gio')->textInput(['disabled'=>true]) ?>
         </div>
         <div class="col-md-2">
-        	<?= $form->field($model, 'don_gia')->textInput() ?>
+        	<?= $form->field($model, 'don_gia')->textInput(['value'=>number_format($model->don_gia) . ' đồng', 'disabled'=>true]) ?>
         </div>
+        <!-- 
         <div class="col-md-2">
         	<?= $form->field($model, 'hinh_thuc_thanh_toan')->dropDownList(
                 HoaDon::getDmHinhThucThanhToan(),
                 ['prompt'=>'-Chưa chọn-']
             ) ?>
         </div>
+         -->
         <div class="col-md-2">
         	<?= $form->field($model, 'trang_thai')->dropDownList(LichThue::getDmTrangThai()) ?>
         </div>
         
-        <div class="col-md-4">
+        <?php if($model->isNewRecord){?>
+         <div class="col-md-6">
         	<?= $form->field($model, 'ghi_chu')->textInput() ?>
-        	<?php // $form->field($model, 'ghi_chu')->textarea(['rows' => 6]) ?>
         </div>
-  </div>
-  <?php CardWidget::end() ?>
+        <?php } else { ?>
+        <div class="col-md-3">
+        	<?= $form->field($model, 'ghi_chu')->textInput() ?>
+        </div>
         
+        <div class="col-md-3">
+        	<label>Trạng thái: <?= $model->trangThaiThanhToanWithBadge ?></label><br/>
+        	<?= Html::a('<i class="fas fa-dollar-sign"></i> T.T tất cả', '/thuexe/phieu-thu/thanh-toan?type=all&idlich='.$model->id, [
+                'title' => 'Thanh toán 100%',
+                'role' => 'modal-remote',
+                'class' => 'btn btn-warning', 
+                'data-bs-placement' => 'top',
+                'data-bs-toggle' => 'tooltip',
+                'style'=>'color:white'
+            ])?> 
+            <?= Html::a('<i class="fas fa-dollar-sign"></i> T.T tùy chọn', '/thuexe/phieu-thu/thanh-toan?type=normal&idlich='.$model->id, [
+                'title' => 'Đặt cọc',
+                'role' => 'modal-remote',
+                'class' => 'btn btn-danger', 
+                'data-bs-placement' => 'top',
+                'data-bs-toggle' => 'tooltip',
+                'style'=>'color:white'
+            ])?>
+        </div>
+        <?php } ?>
+  </div>
+  <?= (!$model->isNewRecord && $model->phieuThus!=null) ? $this->render('_phieu_thu', ['model'=>$model]) : '' ?>
+  <?php if(!$model->isNewRecord && $model->phieuThus!=null){ ?>
+  	<span><?= Html::img('/uploads/icons/info.png', ['width'=>30]) ?></span>
+  	Tổng tiền: <strong><?= $model->tongTien?number_format($model->tongTien):0 ?> đồng</strong> 
+  	&nbsp;-&nbsp; Đã nộp: <strong><?= $model->tienDaNopDuong?number_format($model->tienDaNopDuong):0 ?> đồng</strong> 
+  	&nbsp;-&nbsp; Chiết khấu: <strong><?= $model->tienChietKhau?number_format($model->tienChietKhau):0 ?> đồng</strong> 
+  	&nbsp;-&nbsp; Chi lại: <span style="font-weight: bold;color:red"><?= $model->tienDaNopAm?number_format($model->tienDaNopAm):0 ?> đồng</span>
+  	&nbsp;-&nbsp; Còn lại: <strong><?= $model->tienChuaThanhToan?number_format($model->tienChuaThanhToan):0 ?> đồng</strong>
+  <?php } ?>
+  	
+  <?php CardWidget::end() ?>
+  
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">
 	        <?= Html::submitButton($model->isNewRecord ? 'Thêm mới' : 'Cập nhật', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
@@ -283,6 +350,11 @@ if ($model->id_khach_hang) {
 
     <?php ActiveForm::end(); ?>
     
+</div>
+
+<!-- Phần tử ẩn chứa nội dung phiếu -->
+<div style="display:none">
+  <div id="print"></div>
 </div>
 
 <script>
@@ -296,9 +368,10 @@ function getGiaoVienAjax(idkh){
             console.log('Submission was successful.');
             console.log(data);            
             if(data.status == 'success'){
-            	$('#gvHoTen').text(data.gvHoTen);
-            	$('#gvSDT').text(data.gvSDT);
-            	$('#gvDiaChi').text(data.gvDiaChi);
+            	$('#gvHoTen').val(data.gvHoTen);
+            	$('#gvSDT').val(data.gvSDT);
+            	$('#gvCCCD').val(data.gvCCCD);
+            	$('#gvDiaChi').val(data.gvDiaChi);
             } else {
             	alert('Thông tin Giáo viên không còn tồn tại trên hệ thống!');
             }
@@ -311,9 +384,10 @@ function getGiaoVienAjax(idkh){
 }
 
 function clearInfoGiaoVien(){
-	$('#gvHoTen').text('');
-	$('#gvSDT').text('');
-	$('#gvDiaChi').text('');
+	$('#gvHoTen').val('');
+	$('#gvSDT').val('');
+	$('#gvCCCD').val('');
+	$('#gvDiaChi').val('');
 }
 
 $('#giao-vien-dropdown').on("select2:select", function(e) { 
@@ -337,9 +411,10 @@ function getKhachHangAjax(idkh){
             console.log('Submission was successful.');
             console.log(data);            
             if(data.status == 'success'){
-            	$('#khHoTen').text(data.khHoTen);
-            	$('#khSDT').text(data.khSDT);
-            	$('#khDiaChi').text(data.khDiaChi);
+            	$('#khHoTen').val(data.khHoTen);
+            	$('#khSDT').val(data.khSDT);
+            	$('#khCCCD').val(data.khCCCD);
+            	$('#khDiaChi').val(data.khDiaChi);
             } else {
             	alert('Thông tin Khách hàng không còn tồn tại trên hệ thống!');
             }
@@ -352,9 +427,10 @@ function getKhachHangAjax(idkh){
 }
 
 function clearInfoKhachHang(){
-	$('#khHoTen').text('');
-	$('#khSDT').text('');
-	$('#khDiaChi').text('');
+	$('#khHoTen').val('');
+	$('#khSDT').val('');
+	$('#khCCCD').val('');
+	$('#khDiaChi').val('');
 }
     	
 $('#khach-hang-dropdown').on("select2:select", function(e) { 
@@ -438,5 +514,51 @@ function runFunc(sendVal){
         processData: false
    });
 }
+
 $.fn.modal.Constructor.prototype.enforceFocus = function() {};
+
+/********** xu ly in ***************/
+
+function InPhieuThu(id,nhap) {
+    $.ajax({
+        type: 'POST',
+        url: '/thuexe/phieu-thu/get-phieu-in-ajax?id=' + id + '&nhap=' + nhap,
+        success: function (data) {
+            if (data.status === 'success') {
+                $('#print').html(data.content);
+                //printPhieuXuat(); // Gọi hàm in phiếu
+				printPhieu();
+                // Khi in xong, cập nhật số lần in
+                if(nhap == 0){//in thật
+                    setTimeout(function() {
+                        updatePrintCount(id);
+                    }, 1000); // Đợi 1 giây sau khi in để cập nhật
+                }
+            } else {
+                alert('Không thể tải phiếu!');
+            }
+        },
+        error: function () {
+            alert('Đã xảy ra lỗi.');
+        }
+    });
+}
+
+// Hàm cập nhật số lần in
+function updatePrintCount(id) {
+    $.ajax({
+        type: 'POST',
+        url: '/thuexe/phieu-thu/update-print-count?id='+id,
+        success: function (response) {
+            if (response.success) {
+                $('#soLanIn'+id).text(response.so_lan_in); // Cập nhật số lần in
+            } else {
+                alert('Cập nhật số lần in thất bại!');
+            }
+        },
+        error: function () {
+            alert('Lỗi kết nối server!');
+        }
+    });
+}
 </script>

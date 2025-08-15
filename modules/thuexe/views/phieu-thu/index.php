@@ -8,34 +8,16 @@ use cangak\ajaxcrud\BulkButtonWidget;
 use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\modules\thuexe\models\search\LichThueSearch */
+/* @var $searchModel app\modules\thuexe\models\search\PhieuThuSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Lịch thuê xe (có thiết bị)';
+$this->title = 'Phieu Thus';
 $this->params['breadcrumbs'][] = $this->title;
 Yii::$app->params['showSearch'] = true;
 Yii::$app->params['showView'] = true;
 //CrudAsset::register($this);
 
 ?>
-
-<style>
-#crud-datatable-togdata-page{
-    border:0px!important;
-}
-/*an add xử lý 2 select bị đè lên nhau khi open*/
-/* .select2-container {
-    z-index: 9999 !important;
-}
-.select2-dropdown {
-    z-index: 9999 !important;
-}*/
-/*end -- an add xử lý 2 select bị đè lên nhau khi open*/
-.trang-thai-khachle{
-    color: blue !important;
-}
-</style>
-
 <?php if(Yii::$app->params['showSearch']):?><div class="card border-default" id="divFilterExtend">
 	<div class="card-header rounded-bottom-0 card-header text-dark" id="simple">
 		<h5 class="mt-2"><i class="fe fe-search"></i> Tìm kiếm</h5>
@@ -45,8 +27,7 @@ Yii::$app->params['showView'] = true;
 			<div class="expanel-body">
 				<?php 
                     echo $this->render("_search", ["model" => $searchModel]);
-                ?>
-			</div>
+                ?>			</div>
 		</div>
 	</div>
 </div>
@@ -57,14 +38,13 @@ Yii::$app->params['showView'] = true;
     'formSelector' => '.myFilterForm'
 ]); ?>
 
-<div class="lich-thue-index">
+<div class="phieu-thu-index">
     <div id="ajaxCrudDatatable">
         <?=GridView::widget([
             'id'=>'crud-datatable',
             'dataProvider' => $dataProvider,
             //'filterModel' => $searchModel,
             'pjax'=>true,
-            'showPageSummary' => true,
             'columns' => require(__DIR__.'/_columns.php'),
             'toolbar'=> [
                 ['content'=>
@@ -75,14 +55,8 @@ Yii::$app->params['showView'] = true;
 							<h6 class="dropdown-header tx-uppercase tx-11 tx-bold bg-info tx-spacing-1">
 								Chọn chức năng</h6>'
                     .
-                    Html::a('<i class="fas fa fa-plus" aria-hiddi="true"></i> Thêm (Học viên trường)', ['create?type=hocvien'],
-                        ['role'=>'modal-remote','title'=> 'Thêm mới (Học viên trường)','class'=>'dropdown-item'])
-                    .
-                    Html::a('<i class="fas fa fa-plus" aria-hiddi="true"></i> Thêm (Khách ngoài)', ['create?type=khachngoai'],
-                        ['role'=>'modal-remote','title'=> 'Thêm mới (Khách ngoài)','class'=>'dropdown-item'])
-                    .
-                    Html::a('<i class="fas fa fa-plus" aria-hiddi="true"></i> Thêm (Liên kết)', ['create?type=lienket'],
-                        ['role'=>'modal-remote','title'=> 'Thêm mới (Liên kết)','class'=>'dropdown-item'])
+                    Html::a('<i class="fas fa fa-plus" aria-hiddi="true"></i> Thêm mới', ['create'],
+                        ['role'=>'modal-remote','title'=> 'Thêm mới','class'=>'dropdown-item'])
                     .
                     Html::a('<i class="fas fa fa-sync" aria-hidden="true"></i> Tải lại', [''],
                         ['data-pjax'=>1, 'class'=>'dropdown-item', 'title'=>'Tải lại'])
@@ -97,16 +71,11 @@ Yii::$app->params['showView'] = true;
                             'data-confirm-title'=>'Xác nhận xóa?',
                             'data-confirm-message'=>'Bạn có chắc muốn xóa?'
                         ])
-                    
-                    .'<li><hr class="dropdown-divider"></li>'
-                    . Html::a('<i class="fas fa-clipboard-list"></i> In DS theo ca', ['report/rp-theo-ca'],
-                        ['role'=>'modal-remote','title'=> 'In DS theo ca','class'=>'dropdown-item'])
                     .
                     '
 						</div>
 					</div>
                     '.
-                    '{toggleData}'.
                     '{export}'
                 ],
             ],             
@@ -118,45 +87,14 @@ Yii::$app->params['showView'] = true;
             'summary'=>'Tổng: {totalCount} dòng dữ liệu',
             'panel' => [
                 'headingOptions'=>['class'=>'card-header rounded-bottom-0 card-header text-dark'],
-                'heading' => '<i class="typcn typcn-folder-open"></i> LỊCH THUÊ XE (CÓ THIẾT BỊ)',
+                'heading' => '<i class="typcn typcn-folder-open"></i> DANH SÁCH Phieu Thus',
                 'before'=>false,
             ],
             'export'=>[
-                'fontAwesome' => true,
-                'showConfirmAlert' => false,
-                'target' => GridView::TARGET_BLANK, // xuất ra tab mới
-                'filename' => 'ds_hoc_vien' . date('Y-m-d'), // tên file export mặc định
                 'options' => [
                     'class' => 'btn'
                 ]
-            ],
-            'exportConfig' => [
-                GridView::EXCEL => [
-                    'label' => 'Xuất Excel',
-                    'filename' => 'ds_thue_xe_cam_bien_' . date('Y-m-d'),
-                    'options' => ['title' => 'Danh sách thuê xe cảm biến'],
-                    'config' => [
-                        'worksheet' => 'Danh sách',
-                        'cssFile' => '', // nếu cần
-                    ],
-                ],
-                GridView::PDF => [
-                    'label' => 'Xuất PDF',
-                    'filename' => 'ds_thue_xe_cam_bien_' . date('Y-m-d'),
-                    'options' => ['title' => 'Danh sách thuê xe cảm biến'],
-                    'config' => [
-                        'methods' => [
-                            'SetHeader' => ['DANH SÁCH THUÊ XE|DANH SÁCH|Xuất ngày: ' . date("d/m/Y")],
-                            'SetFooter' => ['|Trang {PAGENO}|'],
-                        ],
-                        'options' => [
-                            'title' => 'Danh sách thuê xe cảm biến',
-                            'subject' => 'Xuất file PDF',
-                            'keywords' => 'export, pdf,',
-                        ],
-                    ],
-                ],
-            ], 
+            ]          
         ])?>
     </div>
 </div>
@@ -168,23 +106,10 @@ Yii::$app->params['showView'] = true;
         'id'=>'ajaxCrudModal',
         'tabindex' => false // important for Select2 to work properly
    ],
-   'dialogOptions'=>['class'=>'modal-xl modal-xxl'],
+   'dialogOptions'=>['class'=>'modal-xl  modal-xxl'],
    'closeButton'=>['label'=>'<span aria-hidden=\'true\'>×</span>'],
    'id'=>'ajaxCrudModal',
     'footer'=>'',// always need it for jquery plugin
 ])?>
-
-<?php Modal::end(); ?>
-
-<?php Modal::begin([
-   'options' => [
-        'id'=>'ajaxCrudModal2',
-        'tabindex' => false // important for Select2 to work properly
-   ],
-   'dialogOptions'=>['class'=>'modal-xs modal-dialog-centered'],
-   'closeButton'=>['label'=>'<span aria-hidden=\'true\'>×</span>'],
-   'id'=>'ajaxCrudModal2',
-   'footer'=>'',// always need it for jquery plugin
-]) ?>
 
 <?php Modal::end(); ?>

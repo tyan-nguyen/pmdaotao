@@ -5,6 +5,8 @@ use yii\helpers\ArrayHelper;
 use app\modules\banhang\models\base\HoaDonBase;
 use app\modules\banhang\models\HangHoa;
 use app\modules\banhang\models\HangHoaLichSu;
+use yii\db\Expression;
+use yii\db\Query;
 
 class HoaDon extends HoaDonBase{
     public function getTongTien(){
@@ -61,5 +63,80 @@ class HoaDon extends HoaDonBase{
                 }
             } 
         }
+    }
+    /**
+     * tính tổng tiền thu theo ngày
+     * dùng trong thống kê
+     * @param unknown $ngay
+     * @return mixed|number|boolean|string|NULL
+     */
+    public static function tongTienNgay($date,$all=true)
+    {
+        $start = $date . ' 00:00:00';
+        $end   = $date . ' 23:59:59';
+        
+        $q = (new Query())
+        ->from(['dh' => 'banle_don_hang'])
+        ->innerJoin(['ct' => 'banle_don_hang_chi_tiet'], 'ct.id_don_hang = dh.id');
+        
+        if ($all !== true) {
+            $q->andWhere(['between', 'dh.ngay_xuat', $start, $end]);
+        }
+        $q->andFilterWhere([
+            'trang_thai'=>HoaDon::TRANGTHAI_DA_TT
+        ]);
+        
+        $sum = (float) $q->sum(new Expression('COALESCE(COALESCE(ct.so_luong,0) * COALESCE(ct.don_gia,0) - COALESCE(ct.chiet_khau,0),0)'));
+        return $sum;
+    }
+    /**
+     * tính tổng tiền mặt theo ngày
+     * dùng trong thống kê
+     * @param unknown $ngay
+     * @return mixed|number|boolean|string|NULL
+     */
+    public static function tongTienNgayTM($date,$all=true)
+    {
+        $start = $date . ' 00:00:00';
+        $end   = $date . ' 23:59:59';
+        
+        $q = (new Query())
+        ->from(['dh' => 'banle_don_hang'])
+        ->innerJoin(['ct' => 'banle_don_hang_chi_tiet'], 'ct.id_don_hang = dh.id');
+        
+        if ($all !== true) {
+            $q->andWhere(['between', 'dh.ngay_xuat', $start, $end]);
+        }
+        $q->andFilterWhere([
+            'hinh_thuc_thanh_toan'=>HoaDon::THANHTOAN_TM,
+            'trang_thai'=>HoaDon::TRANGTHAI_DA_TT
+        ]);
+        $sum = (float) $q->sum(new Expression('COALESCE(COALESCE(ct.so_luong,0) * COALESCE(ct.don_gia,0) - COALESCE(ct.chiet_khau,0),0)'));
+        return $sum;
+    }
+    /**
+     * tính tổng tiền chuyển khoản theo ngày
+     * dùng trong thống kê
+     * @param unknown $ngay
+     * @return mixed|number|boolean|string|NULL
+     */
+    public static function tongTienNgayCK($date,$all=true)
+    {        
+        $start = $date . ' 00:00:00';
+        $end   = $date . ' 23:59:59';
+        
+        $q = (new Query())
+        ->from(['dh' => 'banle_don_hang'])
+        ->innerJoin(['ct' => 'banle_don_hang_chi_tiet'], 'ct.id_don_hang = dh.id');
+        
+        if ($all !== true) {
+            $q->andWhere(['between', 'dh.ngay_xuat', $start, $end]);
+        }
+        $q->andFilterWhere([
+            'hinh_thuc_thanh_toan'=>HoaDon::THANHTOAN_CK,
+            'trang_thai'=>HoaDon::TRANGTHAI_DA_TT
+        ]);
+        $sum = (float) $q->sum(new Expression('COALESCE(COALESCE(ct.so_luong,0) * COALESCE(ct.don_gia,0) - COALESCE(ct.chiet_khau,0),0)'));
+        return $sum;
     }
 }
