@@ -29,7 +29,7 @@ use app\modules\hocvien\models\HangDaoTao;
 	 		<?= $form->field($model, 'hinh_thuc_thanh_toan')->dropDownList(
 	 		    NopHocPhi::getDmHinhThucThanhToan(),
 	 		    ['prompt'=>'-Chọn-']
-	 		)->label('Hình thức TT') ?>
+	 		)->label('HTTT') ?>
 	 	</div>
 	 	<div class="col-md-2">
 	 		 <?= $form->field($model, 'nguoi_tao')->dropDownList(User::getList(), 
