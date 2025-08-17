@@ -63,6 +63,7 @@ class PhieuThuController extends Controller
             ];
         }else if($model->load($request->post()) && $model->save()){
             return [
+                'forceReload'=>'#crud-datatable-pjax',
                 'title'=> "Lịch thuê xe " . $modelLichThue->xe->bien_so_xe,
                 'content'=>$this->renderAjax('../lich-thue/update', [
                     'model' => $modelLichThue,
