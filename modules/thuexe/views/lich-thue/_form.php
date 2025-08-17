@@ -11,6 +11,7 @@ use kartik\date\DatePicker;
 /* @var $this yii\web\View */
 /* @var $model app\modules\thuexe\models\LichThue */
 /* @var $form yii\widgets\ActiveForm */
+
 $giaoVienValue = '';
 if ($model->id_giao_vien) {
     $giaoVienValue = $model->giaoVien ? $model->giaoVien->ho_ten : '';

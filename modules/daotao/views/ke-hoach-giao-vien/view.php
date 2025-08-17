@@ -8,7 +8,7 @@ use app\modules\daotao\models\base\KeHoachBase;
 use app\modules\user\models\User;
 ?>
 <div class="row">
-    <div class="col-xl-3 col-md-12">
+    <div class="col-xl-2 col-md-12">
     <div class="card custom-card">
 		<div class="card-header custom-card-header rounded-bottom-0">
 			<div>
@@ -30,13 +30,18 @@ use app\modules\user\models\User;
                     <?php 
                     $user = User::getCurrentUser();                    
                     // chi hien thi nut trinh duyet theo 1 so trang thai
-                    $checkPermission =  ($model->trang_thai_duyet==KeHoachBase::TT_NHAP || $model->trang_thai_duyet==KeHoachBase::TT_KHONGDUYET || $model->trang_thai_duyet==KeHoachBase::TT_DADUYET || $user->superadmin);
+                    $checkPermission =  ($model->trang_thai_duyet==KeHoachBase::TT_NHAP || $model->trang_thai_duyet==KeHoachBase::TT_KHONGDUYET || $user->superadmin);
                     if($checkPermission){
                     ?>
                     <?= Html::a('Sửa',['update','id'=>$model->id],['class'=>'btn btn-warning','style'=>'color:black','role'=>'modal-remote']) ?>
                     &nbsp; <?= $model->trang_thai_duyet==KeHoachBase::TT_NHAP ? Html::a('Trình duyệt',['trinh-duyet','id'=>$model->id],['class'=>'btn btn-warning','style'=>'color:black','role'=>'modal-remote','data-confirm-title'=>'Xác nhận gửi duyệt?','data-confirm-message'=>'Sau khi trình duyệt sẽ tạm thời không thể chỉnh sửa, bạn có chắc chắn muốn tiếp tục?']) : '' ?>
                     &nbsp;                	
                     <?php } ?>
+                    
+                   
+                    &nbsp; <?= $model->trang_thai_duyet==KeHoachBase::TT_DADUYET ? Html::a('Hoàn thành',['hoan-thanh','id'=>$model->id],['class'=>'btn btn-warning','style'=>'color:black','role'=>'modal-remote','data-confirm-title'=>'Xác nhận hoàn thành kế hoạch?','data-confirm-message'=>'Sau khi hoàn thành Kế hoạch chỉ có thể xem không thể thay đổi, bạn có chắc chắn muốn tiếp tục?']) : '' ?>
+                    &nbsp;                	
+                    
                     <?= Html::a('<i class="fas fa-print"></i> In', '#', [
                 	    'class' => 'btn btn-warning', 
                 	    'style'=>'color:black', 
@@ -47,7 +52,7 @@ use app\modules\user\models\User;
 	</div>
 
     </div>
-    <div class="col-xl-9 col-md-12">
+    <div class="col-xl-10 col-md-12">
     <div class="card custom-card">
         <div class="card-header custom-card-header rounded-bottom-0">
             <ul class="nav nav-tabs" id="myTab" role="tablist">

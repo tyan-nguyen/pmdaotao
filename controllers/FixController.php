@@ -13,6 +13,7 @@ use app\modules\hocvien\models\DangKyHv;
 use app\modules\thuexe\models\Xe;
 use app\modules\giaovien\models\GiaoVien;
 use app\modules\user\models\User;
+use app\modules\daotao\models\TietHoc;
 
 class FixController extends Controller
 {
@@ -174,6 +175,19 @@ class FixController extends Controller
         print_r($errorByRow1);
         echo '<br/>usererrorCount: ' .$userErrorCount;
         print_r($errorByRowUser);
+    }
+    
+    /**
+     * fixed tiết học không thuộc KH (các kế hoạch đã xóa)
+     */
+    public function actionXoaThungRacCuaKhgd(){
+        /*************************************/
+        $tietHocs = TietHoc::find()->where('id_ke_hoach NOT IN (SELECT id FROM gd_ke_hoach)')->count();
+        echo $tietHocs;
+       /*  $tietHocs = TietHoc::find()->where('id_ke_hoach NOT IN (SELECT id FROM gd_ke_hoach)')->all();
+        foreach ($tietHocs as $th){
+            $th->delete();
+        } */
     }
     
 }

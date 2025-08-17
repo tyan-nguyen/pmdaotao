@@ -17,6 +17,7 @@ use app\modules\daotao\models\HangMonHoc;
 use app\modules\hocvien\models\HocVien;
 use yii\helpers\ArrayHelper;
 use app\modules\thuexe\models\Xe;
+use app\modules\user\models\User;
 
 /**
  * TietHocController implements the CRUD actions for TietHoc model.
@@ -185,6 +186,99 @@ class TietHocController extends Controller
         }
        
     }
+    
+    /**
+     * copy an existing TietHoc model FROM KEHOACH.
+     * For ajax request will return json object
+     * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionCopyFromKeHoach($id)
+    {
+        $request = Yii::$app->request;
+        $model = $this->findModel($id);
+        if($request->isAjax){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            if($model &&
+                ($model->keHoach->trang_thai_duyet==KeHoach::TT_NHAP || $model->keHoach->trang_thai_duyet==KeHoach::TT_KHONGDUYET)
+                && ($model->nguoi_tao == Yii::$app->user->id /* || User::getCurrentUser()->superadmin */)
+                ){
+                    //kiem tra gio tiếp theo có chưa
+                    $tietHoc = TietHoc::find()->where([
+                        'id_thoi_gian_hoc'=>($model->id_thoi_gian_hoc+1),
+                        'id_hoc_vien'=>$model->id_hoc_vien,
+                        'id_ke_hoach'=>$model->id_ke_hoach
+                    ])->exists();
+                    if(!$tietHoc){
+                        $tietHocNew = new TietHoc();
+                        $time = DmThoiGian::findOne($model->id_thoi_gian_hoc+1);
+                        if($time){
+                            $tietHocNew->id_ke_hoach = $model->id_ke_hoach;
+                            $tietHocNew->id_giao_vien = $model->id_giao_vien;
+                            $tietHocNew->id_thoi_gian_hoc = $time->id;
+                            $tietHocNew->id_xe = $model->id_xe;
+                            $tietHocNew->id_hoc_vien = $model->id_hoc_vien;
+                            $tietHocNew->id_mon_hoc = $model->id_mon_hoc;
+                            $tietHocNew->trang_thai = TietHoc::TT_CHUATHUCHIEN;
+                            $tietHocNew->so_gio = $time->so_gio;
+                            $tietHocNew->thoi_gian_bd = $model->keHoach->ngay_thuc_hien . ' ' . $time->thoi_gian_bd;
+                            $tietHocNew->thoi_gian_kt = $model->keHoach->ngay_thuc_hien . ' ' . $time->thoi_gian_kt;
+                            if($tietHocNew->save()){
+                                return [
+                                    'forceClose'=>true,
+                                    'title'=> "Sao chép giờ học",
+                                    'content'=>'<span class="text-success">Sao chép thành công!</span>',
+                                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]),
+                                    'reloadType'=>'gioHoc',
+                                    'reloadBlock'=>'#gioHocContent',
+                                    'reloadContent'=>$this->renderAjax('_viewFromKeHoach', [
+                                        'model' => KeHoach::findOne($model->id_ke_hoach),
+                                    ]),
+                                    'tcontent'=>'Sao chép giờ học thành công!',
+                                ];
+                            } else {
+                                return [
+                                    'forceClose'=>true,
+                                    'title'=> "Sao chép giờ học",
+                                    'content'=>'<span class="text-warning">Không thể sao chép giờ học!</span>',
+                                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]),
+                                    'tcontent'=>'Không thể sao chép giờ học!',
+                                ];
+                            }
+                        } else {
+                            return [
+                                'forceClose'=>true,
+                                'title'=> "Sao chép giờ học",
+                                'content'=>'<span class="text-warning">Thời gian không hợp lệ!</span>',
+                                'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]),
+                                'tcontent'=>'Thời gian không hợp lệ!',
+                                'forceClose'=>true,
+                            ];
+                        }
+                        
+                    }else {
+                        return [
+                            'forceClose'=>true,
+                            'title'=> "Sao chép giờ học",
+                            'content'=>'<span class="text-warning">Thời gian tiếp theo đã tồn tại!</span>',
+                            'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]),
+                            'tcontent'=>'Thời gian tiếp theo đã tồn tại, không thể sao chép tiếp',
+                        ];
+                    }
+            } else {
+                return [
+                    'forceClose'=>true,
+                    'title'=> "Sao chép giờ học",
+                    'content'=>'<span class="text-warning">Không thể sao chép!</span>',
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]),
+                    'tcontent'=>'Không thể sao chép! Vui lòng kiểm tra lại!',
+                    
+                ];
+            }
+        }
+    }
+    
     
     /**
      * Creates a new Tiet hoc model.
@@ -442,17 +536,44 @@ class TietHocController extends Controller
                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                     Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
                 ];
-            }else if($model->load($request->post()) && $model->save()){
-                return [
-                    'forceClose'=>true,
-                    'reloadType'=>'gioHoc',
-                    'reloadBlock'=>'#gioHocContent',
-                    'reloadContent'=>$this->renderAjax('_viewFromKeHoach', [
-                        'model' => KeHoach::findOne($model->id_ke_hoach),
-                    ]),
-                    
-                    'tcontent'=>'Cập nhật giờ học thành công!',
-                ];
+            }else if($model->load($request->post())){
+                //check time
+                if($model->trang_thai == TietHoc::TT_DAHOANTHANH || $model->trang_thai == TietHoc::TT_HOCVIENHUY){
+                    $mocTime = $model->thoi_gian_kt;
+                    if(date('Y-m-d H:i:s') < $mocTime){
+                        $model->addError('trang_thai', 'Không thể cập nhật trạng thái do thời gian chưa đến!');
+                        return [
+                            'title'=> "Cập nhật giờ học",
+                            'content'=>$this->renderAjax('_formFromKeHoach', [
+                                'model' => $model,
+                            ]),
+                            'tcontent'=>'Giờ học chưa hoàn thành do thời gian chưa đến!',
+                            'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                            Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                        ];
+                    }
+                }
+                if($model->save()){
+                    return [
+                        'forceClose'=>true,
+                        'reloadType'=>'gioHoc',
+                        'reloadBlock'=>'#gioHocContent',
+                        'reloadContent'=>$this->renderAjax('_viewFromKeHoach', [
+                            'model' => KeHoach::findOne($model->id_ke_hoach),
+                        ]),
+                        
+                        'tcontent'=>'Cập nhật giờ học thành công!',
+                    ];
+                }else{
+                    return [
+                        'title'=> "Cập nhật giờ học",
+                        'content'=>$this->renderAjax('_formFromKeHoach', [
+                            'model' => $model,
+                        ]),
+                        'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                        Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                    ];
+                }
             }else{
                 return [
                     'title'=> "Cập nhật giờ học",
@@ -476,7 +597,7 @@ class TietHocController extends Controller
             }
         }
     }
-
+    
     /**
      * Delete an existing TietHoc model.
      * For ajax request will return json object
@@ -503,6 +624,43 @@ class TietHocController extends Controller
         }
 
 
+    }
+    
+    /**
+     * Delete an existing TietHoc model FROM KEHOACH.
+     * For ajax request will return json object
+     * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionDeleteFromKeHoach($id)
+    {
+        $request = Yii::$app->request;
+        $model = $this->findModel($id);        
+        if($request->isAjax){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            if($model &&
+                ($model->keHoach->trang_thai_duyet==KeHoach::TT_NHAP || $model->keHoach->trang_thai_duyet==KeHoach::TT_KHONGDUYET)
+                && ($model->nguoi_tao == Yii::$app->user->id /* || User::getCurrentUser()->superadmin */)
+             ){
+                $model->delete();
+                return [
+                    'forceClose'=>true,
+                    'reloadType'=>'gioHoc',
+                    'reloadBlock'=>'#gioHocContent',
+                    'reloadContent'=>$this->renderAjax('_viewFromKeHoach', [
+                        'model' => KeHoach::findOne($model->id_ke_hoach),
+                    ]),
+                    'tcontent'=>'Xóa giờ học thành công!',
+                ];
+                              
+            } else {                
+                return [
+                    'forceClose'=>true,
+                    'tcontent'=>'Không thể xóa',
+                ];  
+            }
+        }
     }
 
      /**

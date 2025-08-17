@@ -45,6 +45,8 @@ class LichThueBase extends PtxLichThue
     public $idKhachNgoai;//for search
     public $idGiaoVien;//for search
     public $idGiaoVienNgoai;//for search
+    public $tongGio;//use in report
+    public $tongTienGio;//use in report
     
     //giá trị phải giống bán hàng  HOCVIEN, KHACHLE
     CONST KH_HOCVIEN = 'HOCVIEN';
@@ -167,7 +169,9 @@ class LichThueBase extends PtxLichThue
             [['id_giao_vien', 'id_khach_hang', 'id_xe', 'nguoi_tao', 'idHocVien', 'idKhachNgoai', 'idGiaoVien', 'idGiaoVienNgoai'], 'integer'],
             //[['id_xe', 'thoi_gian_bat_dau', 'thoi_gian_ket_thuc'], 'required'],
             [['ngay_bat_dau', 'gio_bat_dau', 'phut_bat_dau', 'ngay_ket_thuc', 'gio_ket_thuc', 'phut_ket_thuc','id_xe'], 'required'],
-            [['thoi_gian_bat_dau', 'thoi_gian_ket_thuc', 'thoi_gian_tao', 'ngay_bat_dau', 'gio_bat_dau', 'phut_bat_dau', 'ngay_ket_thuc', 'gio_ket_thuc', 'phut_ket_thuc'], 'safe'],
+            [['thoi_gian_bat_dau', 'thoi_gian_ket_thuc', 'thoi_gian_tao', 'ngay_bat_dau', 'gio_bat_dau', 'phut_bat_dau', 'ngay_ket_thuc', 'gio_ket_thuc', 'phut_ket_thuc',
+                'tongGio', 'tongTienGio'
+            ], 'safe'],
             [['so_gio', 'don_gia'], 'number'],
             [['ghi_chu'], 'string'],
             [['loai_giao_vien', 'loai_khach_hang', 'trang_thai', 'hinh_thuc_thanh_toan'], 'string', 'max' => 20],

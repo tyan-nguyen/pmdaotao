@@ -113,7 +113,7 @@ Yii::$app->params['showView'] = true;
         'id'=>'ajaxCrudModal',
         'tabindex' => false // important for Select2 to work properly
    ],
-   'dialogOptions'=>['class'=>'modal-xl modal-custom'],
+   'dialogOptions'=>['class'=>'modal-xl modal-xxl'],
    'closeButton'=>['label'=>'<span aria-hidden=\'true\'>×</span>'],
    'id'=>'ajaxCrudModal',
     'footer'=>'',// always need it for jquery plugin

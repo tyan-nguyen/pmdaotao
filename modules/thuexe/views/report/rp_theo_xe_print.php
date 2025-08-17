@@ -43,38 +43,42 @@ use app\modules\khoahoc\models\KhoaHoc;
         <table id="table-tieu-de-1" style="width: 100%">
     		<tr>    		
     			<td colspan="2">
-    				<span class="phieu-h1">DOANH THU BÁN HÀNG THEO HÀNG HÓA</span>
+    				<span class="phieu-h1">BÁO CÁO DOANH THU THUÊ XE</span>
     			</td>    			
     		</tr>
     		<tr>
-    			<td style="text-align: left;width: 50%;padding-top:10px"><span>Thời gian từ <?= CustomFunc::convertYMDHISToDMYHI($start) ?> đến <?= CustomFunc::convertYMDHISToDMYHI($end) ?></span></td>
-    			<td style="text-align: left;width: 50%;padding-top:10px"><span>Nhân viên xuất báo cáo: <?= User::getCurrentUser()->getHoTen() ?></span></td>
-    		</tr>
-    		<tr>    			
-    			<td style="text-align: left;width: 50%"><span>Nhân viên nhận hồ sơ: <?= $byuser ? User::findOne($byuser)->ho_ten : 'Tất cả' ?></span></td>
-    			<td style="text-align: left;width: 50%;"><span>Sắp xếp: </span>
-    				<?= $sortby=='hang'? 'Theo hạng đào tạo' : 'Theo ngày nhận hồ sơ'  ?>
+    			<td style="text-align: left;width: 50%;padding-top:10px">
+    			<?php if($loaibaocao==0){?>
+    			<span>- Thời gian từ <?= CustomFunc::convertYMDHISToDMYHI($start) ?> đến <?= CustomFunc::convertYMDHISToDMYHI($end) ?></span>
+    			<br/><span>- Nhân viên xuất báo cáo: <?= User::getCurrentUser()->getHoTen() ?></span>
+    			<?php } else {?>
+    			Thời gian: Tất cả thời gian
+    			<?php } ?>
     			</td>
-    		</tr> 		
+    			<td style="text-align: left;width: 50%;padding-top:10px"></td>
+    		</tr>
+    			
     	</table>
         
         
         <table class="table-content" style="width: 100%; margin-top:5px;">
         	<thead>
         		<tr>
-        			<th width="20">STT</th>
-        			<th width="60">Mã số xe</th>
-        			<th width="120">Biển số xe</th>
-        			<th width="70">Chiết khấu</th>
-        			<th width="70">Tổng tiền</th>       			
+        			<th width="40">STT</th>
+        			<th width="80">Xe số</th>
+        			<th width="80">Hạng xe</th>
+        			<th width="150">Biển số</th>
+        			<th width="80">Số giờ</th>
+        			<th width="80">Đơn giá</th>
+        			<th width="80">Tổng tiền</th>
         		</tr> 
         		  
         	</thead> 
         	<tbody>
         
         	<?php 
-        	$tongTien = 0;
-        	$tongCK =0;
+        	$tongGio = 0;
+        	$tongTienGio =0;
         	if($model==null){
         	?>
         	<tr>
@@ -83,44 +87,47 @@ use app\modules\khoahoc\models\KhoaHoc;
         	<?php 
         	} else {
         	    foreach ($model as $indexCt => $item){
-        	        $tongTien += $item->tongTienNop;
-        	        $tongCK += $item->tongChietKhau; 
+        	       $tongGio += $item->tongGio;
+        	       $tongTienGio += $item->tongTienGio;
             ?>
             <tr>
             	<td style="text-align:center"><?= ($indexCt+1) ?></td>
-            	<td style="text-align:center"><?= $item->lichThue->xe->ma_so ?></td>
-            	<td style="text-align:center"><?= $item->lichThue->xe->bien_so_xe ?></td>
-				<td style="text-align:right"><?= number_format($item->tongChietKhau) ?></td>
-            	<td style="text-align:right"><?= number_format($item->tongTienNop) ?></td>
-            	
-
+            	<td style="text-align:center"><?= $item->xe->ma_so ?></td>
+            	<td style="text-align:center"><?= $item->xe->loaiXe->ten_loai_xe ?></td>
+            	<td style="text-align:center"><?= $item->xe->bien_so_xe ?></td>
+            	<td style="text-align:right"><?= $item->tongGio ?></td>
+            	<td style="text-align:right"><?= number_format($item->xe->giaXeThue) ?></td>
+            	<td style="text-align:right"><?= number_format($item->tongTienGio) ?></td>
             </tr>
             <?php }} ?>	
             <tr style="font-weight: bold">
-            	<td colspan="3" align="right">TỔNG CỘNG</td>
-            	<td align="right"><?= number_format($tongCK) ?></td>
-            	<td align="right"><?= number_format($tongTien) ?></td>
+            	<td colspan="4" align="right">TỔNG CỘNG</td>
+            	<td align="right"><?= $tongGio ?></td>
+            	<td></td>
+            	<td align="right"><?= number_format($tongTienGio) ?></td>
             </tr>
             </tbody>
         </table>
         
         <table id="table-ky-ten" style="width: 100%; margin-top:5px;">
     		<tr>
-    			<td>KẾ TOÁN</td>
     			<td></td>
-    			<td>NGƯỜI NỘP</td>
+    			<td></td>
+    			<td>NGƯỜI LẬP BÁO CÁO</td>
     		</tr>
     		<tr>
-    			<td><span class="text-13">(Ký, Họ tên)</span></td>
+    			<td></td>
     			<td></td>
     			<td><span class="text-13">(Ký, Họ tên)</span></td>
     		</tr>
     		<tr>
         		<td></td>
         		<td></td>
-    			<td style="padding-top:40px;font-size:13pt"><?= $byuser ? User::findOne($byuser)->ho_ten : '' ?></td>
+    			<td style="padding-top:40px;font-size:13pt"><?= User::getCurrentUser()->getHoTen() ?></td>
     		</tr>
     	</table>
+        
+        
     	
     </div>
 </div>

@@ -58,7 +58,7 @@ $model->ngay_giao_hang = CustomFunc::convertYMDToDMY($model->ngay_giao_hang);
         	   $khachHangLabel = $model->getAttributeLabel('id_khach_hang') . ' <a href="/banhang/khach-hang/create-popup" role="modal-remote-2" style="padding-left:10px;" title="Thêm khách hàng"><i class="fa-solid fa-square-plus"></i></a>';
         	   //'<a href="#" onclick="runFunc(0)" style="padding-left:10px;" title="Tải lại danh sách"><i class="fa-solid fa-retweet"></i></a>';
         	?>
-        	<label><?= $model->loai_khach_hang == HoaDon::LOAI_KHACHLE ? $khachHangLabel : 'Khách hàng' ?></label>
+        	<label><?= $model->loai_khach_hang == HoaDon::LOAI_KHACHLE ? $khachHangLabel : 'Khách hàng' ?> <span style="color:red">*</span></label>
             <?= $form->field($model, 'id_khach_hang')->widget(Select2::classname(), [
                 //'data' => KhachHang::getList(),
                 'initValueText' => $initValue, // This shows selected text on form load
@@ -166,10 +166,11 @@ $model->ngay_giao_hang = CustomFunc::convertYMDToDMY($model->ngay_giao_hang);
         </div>
          -->
         <div class="col-md-2">
+        	<label>HT. Thanh toán <span style="color:red">*</span></label>
             <?= $form->field($model, 'hinh_thuc_thanh_toan')->dropDownList(
                 HoaDon::getDmHinhThucThanhToan(),
                 //['prompt'=>'-Chưa chọn-']
-            ) ?>
+            )->label(false) ?>
         </div>
          <!-- 
         <div class="col-md-4">

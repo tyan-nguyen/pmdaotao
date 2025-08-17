@@ -98,8 +98,8 @@ use app\modules\khoahoc\models\KhoaHoc;
             	<td style="text-align:center"><?= ($indexCt+1) ?></td>
             	<td style="text-align:center"><?= CustomFunc::fillNumber($item->ma_so_phieu) ?></td>
             	<td style="text-align:center"><?= CustomFunc::convertYMDHISToDMYHI($item->thoi_gian_tao) ?></td>
-            	<td style="text-align:left"><?= $item->lichThue->khachHang->ho_ten ?></td>
-            	<td style="text-align:left"><?= $item->lichThue->khachHang->so_dien_thoai ?></td>
+            	<td style="text-align:left"><?= $item->lichThue->khachHang?$item->lichThue->khachHang->ho_ten:'' ?></td>
+            	<td style="text-align:left"><?= $item->lichThue->khachHang?$item->lichThue->khachHang->so_dien_thoai:'' ?></td>
             	<td style="text-align:right"><?= $item->hinh_thuc_thanh_toan == 'TM'?number_format($item->so_tien):'' ?></td>
             	<td style="text-align:right"><?= $item->hinh_thuc_thanh_toan == 'CK'?number_format($item->so_tien):'' ?></td>
             	<td style="text-align:left"><?= $item->ghi_chu ?></td>

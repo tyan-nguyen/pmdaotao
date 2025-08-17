@@ -8,17 +8,17 @@ use app\modules\daotao\models\KeHoach;
 <table class="table table-bordered">
     <thead>
         <tr>
-        	<th>STT</th>
+        	<th width="5">STT</th>
             <!-- <th>Giờ dạy</th>-->
-            <th>Từ giờ</th>
-            <th>Đến giờ</th>
-            <th>Học viên</th>
-            <th>Module</th>
-            <th>Xe</th>
-            <th>Trạng thái</th>
-            <th>Km</th>
-            <th>Ghi chú</th>
-            <th></th>
+            <th width="10">Từ giờ</th>
+            <th width="10">Đến giờ</th>
+            <th width="25">Học viên</th>
+            <th width="25">Module</th>
+            <th width="10">Xe</th>
+            <th width="10">Trạng thái</th>
+            <th width="10">Km</th>
+            <th width="10">Ghi chú</th>
+            <th width="50"></th>
         </tr>
     </thead>
     <tbody>
@@ -55,7 +55,7 @@ use app\modules\daotao\models\KeHoach;
             [
                 'class'=>'btn btn-primary',
                 'title' => 'Thêm giờ học',
-                'style' => 'color: white;',
+                'style' => 'color: white;font-size:9px',
                 'role'=>'modal-remote-2'
             ]
         )):'' ?></td>
@@ -67,17 +67,42 @@ use app\modules\daotao\models\KeHoach;
      	<td><?= TietHoc::getLabelTinhTrangXeBadge($tietHoc->trang_thai) ?></td>
      	<td><?= $tietHoc->so_km  ?></td>
      	<td><?= $tietHoc->ghi_chu ?></td>
-     	<td><?= ($model->trang_thai_duyet==KeHoach::TT_NHAP || $model->trang_thai_duyet==KeHoach::TT_DADUYET ) ? ( Html::a( '<i class="fa fa-pencil"> </i> ',
+     	<td width="75px"><?= ($model->trang_thai_duyet==KeHoach::TT_NHAP || $model->trang_thai_duyet==KeHoach::TT_DADUYET ) ? ( Html::a( '<i class="fa fa-pencil"></i> ',
             ['/daotao/tiet-hoc/update-from-ke-hoach', 
                'id' => $tietHoc->id
             ],
             [
                 'class'=>'btn btn-warning',
                 'title' => 'Sửa',
-                'style' => 'color: white;',
+                'style' => 'color: white;font-size:9px',
                 'role'=>'modal-remote-2'
             ]
-        )):'' ?></td>
+        )):'' ?>
+        <?= /**********************************/($model->trang_thai_duyet==KeHoach::TT_NHAP || $model->trang_thai_duyet==KeHoach::TT_KHONGDUYET ) ? ( Html::a( '<i class="ion-close"> </i> ',
+            ['/daotao/tiet-hoc/delete-from-ke-hoach', 
+               'id' => $tietHoc->id
+            ],
+            [
+                'class'=>'btn btn-danger',
+                'title' => 'Xóa giờ học',
+                'style' => 'color: white;font-size:9px',
+                'role'=>'modal-remote-2',
+                'data-confirm-title'=>'Xác nhận xóa giờ?',
+                'data-confirm-message'=>'Giờ dạy sẽ được xóa và không thể phục hồi, bạn có chắc chắn muốn tiếp tục?'
+            ]
+        )):'' ?>
+        <?= /**********************************/($model->trang_thai_duyet==KeHoach::TT_NHAP || $model->trang_thai_duyet==KeHoach::TT_KHONGDUYET ) ? ( Html::a( '<i class="fa fa-clone"> </i> ',
+            ['/daotao/tiet-hoc/copy-from-ke-hoach', 
+               'id' => $tietHoc->id
+            ],
+            [
+                'class'=>'btn btn-primary',
+                'title' => 'Sao chép giờ học xuống giờ tiếp theo',
+                'style' => 'color: white;font-size:9px',
+                'role'=>'modal-remote-2'
+            ]
+        )):'' ?>
+        </td>
      	<?php endif;?>
      </tr>
      

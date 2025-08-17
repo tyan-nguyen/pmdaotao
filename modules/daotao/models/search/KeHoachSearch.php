@@ -48,6 +48,7 @@ class KeHoachSearch extends KeHoach
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort'=> ['defaultOrder' => ['ngay_thuc_hien' => SORT_DESC, 'trang_thai_duyet'=>SORT_ASC]],
         ]);
 
         $this->load($params);
@@ -80,6 +81,9 @@ class KeHoachSearch extends KeHoach
 
         $query->andFilterWhere(['like', 'trang_thai_duyet', $this->trang_thai_duyet])
             ->andFilterWhere(['like', 'noi_dung_duyet', $this->noi_dung_duyet]);
+        
+          //khong load trang thai nhap
+          $query->andFilterWhere(['<>', 'trang_thai_duyet', KeHoach::TT_NHAP]);
 		}
         return $dataProvider;
     }
@@ -97,6 +101,7 @@ class KeHoachSearch extends KeHoach
         
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort'=> ['defaultOrder' => ['ngay_thuc_hien' => SORT_DESC]],
         ]);
         
         $this->load($params);

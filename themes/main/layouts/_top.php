@@ -109,9 +109,11 @@ use app\modules\user\models\User;
 							</a>
 						</li>
 						
+						
+						
 						<!-- SETTINGS -->
 						<li class="dropdown d-md-flex mt-1">
-							<a class="nav-link icon" title="Cấu hình tài khoản">
+							<a class="nav-link icon" title="Thay đổi mật khẩu" href="<?= Yii::getAlias('@web/user/auth/change-own-password?menu=tk2') ?>">
 								<i class="fe fe-settings floating"></i>
 							</a>
 						</li>

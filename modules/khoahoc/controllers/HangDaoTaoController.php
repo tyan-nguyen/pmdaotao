@@ -24,16 +24,9 @@ class HangDaoTaoController extends Controller
      */
     public function behaviors() {
 		return [
-			'access' => [
-				'class' => AccessControl::className(),
-				'rules' => [
-					[
-						'actions' => ['index', 'view', 'update','create','delete','bulkdelete','tuition','update2'],
-						'allow' => true,
-						'roles' => ['@'],
-					],
-				],
-			],
+		    'ghost-access'=> [
+		        'class' => 'webvimark\modules\UserManagement\components\GhostAccessControl',
+		    ],
 			'verbs' => [
 				'class' => VerbFilter::className(),
 				'actions' => [
@@ -62,7 +55,8 @@ class HangDaoTaoController extends Controller
 	{
 	    Yii::$app->params['moduleID'] = 'Module Quản lý Khóa học';
 	    Yii::$app->params['modelID'] = 'Quản lý Hạng đào tạo';
-	    return true;
+	    //return true;
+	    return parent::beforeAction($action);
 	}
     /**
      * Displays a single HangDaoTao model.

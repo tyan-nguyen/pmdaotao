@@ -101,6 +101,9 @@ Yii::$app->params['showView'] = true;
                     .'<li><hr class="dropdown-divider"></li>'
                     . Html::a('<i class="fas fa-clipboard-list"></i> In DS theo ca', ['report/rp-theo-ca'],
                         ['role'=>'modal-remote','title'=> 'In DS theo ca','class'=>'dropdown-item'])
+                    .'<li><hr class="dropdown-divider"></li>'
+                    . Html::a('<i class="fas fa-clipboard-list"></i> In Doanh thu theo xe', ['report/rp-theo-xe'],
+                        ['role'=>'modal-remote','title'=> 'In DS theo ca','class'=>'dropdown-item'])
                     .
                     '
 						</div>

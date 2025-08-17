@@ -29,6 +29,9 @@ use app\modules\thuexe\models\PhieuThu;
  */
 class PhieuThuBase extends PtxPhieuThu
 {
+    public $tongTienNop;//su dung trong report
+    public $tongChietKhau;//su dung trong report
+    
     const PHIEUTHULABEL = 'PHIEUTHU';
     const PHIEUCHILABEL = 'PHIEUCHI';
     
@@ -42,7 +45,7 @@ class PhieuThuBase extends PtxPhieuThu
             [['id_lich_thue', 'so_tien', 'hinh_thuc_thanh_toan'], 'required'],
             [['id_lich_thue', 'ma_so_phieu', 'so_lan_in_phieu', 'nguoi_tao'], 'integer'],
             [['so_tien', 'chiet_khau', 'so_tien_con_lai'], 'number'],
-            [['thoi_gian_tao'], 'safe'],
+            [['thoi_gian_tao', 'tongTienNop', 'tongChietKhau', 'tongGioThue'], 'safe'],
             [['ghi_chu'], 'string'],
             [['loai_phieu', 'hinh_thuc_thanh_toan'], 'string', 'max' => 20],
             [['id_lich_thue'], 'exist', 'skipOnError' => true, 'targetClass' => LichThue::class, 'targetAttribute' => ['id_lich_thue' => 'id']],

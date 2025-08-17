@@ -14,6 +14,7 @@ use yii\filters\AccessControl;
 use app\modules\user\models\User;
 use app\modules\daotao\models\base\KeHoachBase;
 use app\custom\CustomFunc;
+use app\modules\daotao\models\TietHoc;
 
 /**
  * KeHoachController implements the CRUD actions for KeHoach model.
@@ -114,7 +115,7 @@ class KeHoachGiaoVienController extends Controller
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($model!=null){
-                if($model->gdTietHocs!=null){
+                if($model->gdTietHocs!=null && $model->nguoi_tao == Yii::$app->user->id){
                     $model->trang_thai_duyet = KeHoachBase::TT_CHODUYET;
                     $model->save(false);
                     return [
@@ -133,6 +134,65 @@ class KeHoachGiaoVienController extends Controller
                         'content'=>$this->renderAjax('_trinh_duyet_failed', [
                             'model' => $model,
                         ]),
+                        'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"])
+                        /*  .Html::a('Sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote']) */
+                    ];
+                }
+            }
+            
+        }else{
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }
+    }
+    
+    /**
+     * Hoàn thành kế hoạch
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionHoanThanh($id)
+    {
+        $request = Yii::$app->request;
+        $model = $this->findModel($id);
+        if($request->isAjax){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            if($model!=null){
+                if($model->nguoi_tao == Yii::$app->user->id  /* || User::getCurrentUser()->superadmin */ ){
+                    
+                    //check thời gian đến chưa
+                    $tietHocLast = TietHoc::find()->where([
+                        'id_ke_hoach'=>$model->id,
+                    ])->orderBy(['id_thoi_gian_hoc'=>SORT_DESC])->one();
+                    if($tietHocLast){
+                        $mocTime = $tietHocLast->thoi_gian_kt;
+                        if(date('Y-m-d H:i:s') < $mocTime){
+                            return [
+                                'title'=> "Thông báo",
+                                'content'=>'<span class="text-danger">Chưa thể chọn hoàn thành kế hoạch do thời gian chưa đến!</span>',
+                                'tcontent'=>'Chưa thể chọn hoàn thành kế hoạch do thời gian chưa đến!',
+                                'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"])
+                            ];
+                        }
+                    }
+                    
+                    $model->trang_thai_duyet = KeHoachBase::TT_HOANTHANH;
+                    $model->save(false);
+                    return [
+                        'forceReload'=>'#crud-datatable-pjax',
+                        'title'=> "Kế hoạch",
+                        'content'=>$this->renderAjax('view', [
+                            'model' => $model,
+                        ]),
+                        'tcontent'=>'Xác nhận hoàn thành kế hoạch thành công!',
+                        'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"])
+                        /*  .Html::a('Sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote']) */
+                    ];
+                } else {
+                    return [
+                        'title'=> "Kế hoạch",
+                        'content'=>'Có lỗi xảy ra!',
                         'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"])
                         /*  .Html::a('Sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote']) */
                     ];

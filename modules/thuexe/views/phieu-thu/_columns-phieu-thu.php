@@ -111,7 +111,7 @@ return [
         'attribute'=>'id_lich_thue',
         'label'=>'Khách hàng',
         'value'=>function($model){
-            return $model->lichThue->khachHang->ho_ten;
+            return $model->lichThue->khachHang?$model->lichThue->khachHang->ho_ten:'';
         },
     ],
     [
@@ -119,7 +119,7 @@ return [
         'attribute'=>'id_lich_thue',
         'label'=>'Giáo viên',
         'value'=>function($model){
-            return $model->lichThue->giaoVien->ho_ten;
+            return $model->lichThue->giaoVien?$model->lichThue->giaoVien->ho_ten:'';
         },
     ],
     [
@@ -127,7 +127,7 @@ return [
         'attribute'=>'id_lich_thue',
         'label'=>'Xe',
         'value'=>function($model){
-            return $model->lichThue->xe->tenXeShort;
+            return $model->lichThue->xe?$model->lichThue->xe->tenXeShort:'';
         },
         'pageSummary' => 'Tổng cộng',
         'pageSummaryOptions' => ['class' => 'text-right text-end'],

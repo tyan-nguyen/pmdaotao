@@ -285,6 +285,8 @@ function ModalRemote(modalId) {
             }            
         }
         
+       
+        
         /* send notify */
 		if(typeof response.tcontent !== 'undefined'){
 			showNotif(response.tcontent);
@@ -329,10 +331,10 @@ function ModalRemote(modalId) {
        // if (response.excuteFunctionDay !== undefined && response.excuteFunctionDay) {
          //   funcUploadDay(response.functionResponseDay);
       //  }
-        // Close modal if response contains forceClose field
+         // Close modal if response contains forceClose field
         if (response.forceClose !== undefined && response.forceClose) {
             this.hide();
-            return;
+            //return;
         }
 
         if (response.size !== undefined)
