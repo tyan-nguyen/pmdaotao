@@ -184,10 +184,10 @@ class FixController extends Controller
         /*************************************/
         $tietHocs = TietHoc::find()->where('id_ke_hoach NOT IN (SELECT id FROM gd_ke_hoach)')->count();
         echo $tietHocs;
-       /*  $tietHocs = TietHoc::find()->where('id_ke_hoach NOT IN (SELECT id FROM gd_ke_hoach)')->all();
+       $tietHocs = TietHoc::find()->where('id_ke_hoach NOT IN (SELECT id FROM gd_ke_hoach)')->all();
         foreach ($tietHocs as $th){
             $th->delete();
-        } */
+        }
     }
     
 }
