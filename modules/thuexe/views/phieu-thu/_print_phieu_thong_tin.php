@@ -73,7 +73,12 @@ use app\custom\CustomFunc;
     		<tbody>
     			<tr>
         			<td style="text-align:center">1</td>
-        			<td>Thuê xe tập lái <?= $model->lichThue->xe?$model->lichThue->xe->tenXeShort:'' ?></td>        			
+        			<td>
+        			Thuê xe tập lái <?= $model->lichThue->xe?$model->lichThue->xe->tenXeShort:'' ?>
+        			<br/>
+        			(<span style="font-size:10pt;font-style:italic;">từ <?= $model->lichThue?CustomFunc::convertYMDHISToDMYHI($model->lichThue->thoi_gian_bat_dau):'' ?>
+        			đến <?= $model->lichThue?CustomFunc::convertYMDHISToDMYHI($model->lichThue->thoi_gian_ket_thuc):'' ?></span>)
+        			</td>        			
         			<td style="text-align:center">Giờ</td>
         			<td style="text-align:right"><?= $model->lichThue?$model->lichThue->so_gio:'' ?></td>
         			<td style="text-align:right"><?= $model->lichThue?number_format($model->lichThue->don_gia):'' ?></td>
