@@ -7,6 +7,7 @@ use kartik\select2\Select2;
 use yii\web\JsExpression;
 use app\modules\thuexe\models\LichThue;
 use kartik\date\DatePicker;
+use app\modules\user\models\User;
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\thuexe\models\LichThue */
@@ -20,7 +21,20 @@ $khachHangValue = '';
 if ($model->id_khach_hang) {
     $khachHangValue = $model->khachHang ? $model->khachHang->ho_ten : '';
 }
+$checkDaThanh = $model->trang_thai==LichThue::TT_XUATHOADON?true:false;
+$isAdmin = User::getCurrentUser()->superadmin;
+$disallowEdit = true;//mac dinh la disallow
+if(!$checkDaThanh || $isAdmin){
+    $disallowEdit = false;
+}
 ?>
+
+<?php if($checkDaThanh && $isAdmin){ ?>
+<div class="alert alert-danger mb-0" role="alert">
+            <span class="alert-inner--icon d-inline-block me-1"><i class="fe fe-slash"></i></span>
+            <span class="alert-inner--text"><strong>Thông báo!</strong> Bạn đang ở chế độ sửa dữ liệu khóa!</span>
+        </div>
+<?php } ?>
 
 <div class="lich-thue-form">
     <?php $form = ActiveForm::begin([
@@ -44,7 +58,8 @@ if ($model->id_khach_hang) {
                 'options' => [
                     'placeholder' => 'Chọn giáo viên...',  
                     'class' => 'form-control dropdown-with-arrow',
-                    'id' => 'giao-vien-dropdown'
+                    'id' => 'giao-vien-dropdown',
+                    'disabled'=>$disallowEdit
                 ],
                 'pluginOptions' => [
                     'allowClear' => true,
@@ -107,8 +122,8 @@ if ($model->id_khach_hang) {
 		</div>
         <div class="col-md-3">
         <?php 
-        	   $khachHangLabel = 'Khách hàng <a href="/banhang/khach-hang/create-popup" role="modal-remote-2" style="padding-left:10px;" title="Thêm khách hàng"><i class="fa-solid fa-square-plus"></i></a>';
-        	?>
+        	$khachHangLabel = 'Khách hàng <a href="/banhang/khach-hang/create-popup" role="modal-remote-2" style="padding-left:10px;" title="Thêm khách hàng"><i class="fa-solid fa-square-plus"></i></a>';
+        ?>
         	<label><?= $model->loai_khach_hang == LichThue::KH_KHACHNGOAI ? $khachHangLabel : 'Học viên' ?></label>
         	<?= $form->field($model, 'id_khach_hang')->widget(Select2::classname(), [
                 //'data' => KhachHang::getList(),
@@ -117,7 +132,8 @@ if ($model->id_khach_hang) {
                 'options' => [
                     'placeholder' => 'Chọn khách hàng...',  
                     'class' => 'form-control dropdown-with-arrow',
-                    'id' => 'khach-hang-dropdown'
+                    'id' => 'khach-hang-dropdown',
+                    'disabled'=>$disallowEdit
                 ],
                 'pluginOptions' => [
                     'allowClear' => true,
@@ -196,7 +212,7 @@ if ($model->id_khach_hang) {
         	<?= $form->field($model, 'id_xe')->widget(Select2::classname(), [
        		       'data' => LichThue::getDsXeCamUng(),
                     'language' => 'vi',
-                    'options' => ['placeholder' => 'Chọn xe...'],
+        	        'options' => ['placeholder' => 'Chọn xe...', 'disabled'=>$disallowEdit],
                     'pluginOptions' => [
                         'width'=>'100%',
                         'allowClear' => true,
@@ -206,12 +222,13 @@ if ($model->id_khach_hang) {
         </div>      
         <div class="col-md-2">
         	<?= $form->field($model, 'ngay_bat_dau')->widget(DatePicker::classname(), [
-        	    'options' => ['id' => 'start-date', 'placeholder' => 'Chọn ngày  ...'],
+        	    'options' => ['id' => 'start-date', 'placeholder' => 'Chọn ngày  ...', 'disabled'=>$disallowEdit],
+        	    'removeButton'=>$disallowEdit?false:[],
                 'pluginOptions' => [
                     'autoclose' => true,
                     'format' => 'dd/mm/yyyy',
                     'todayHighlight'=>true,
-                    'todayBtn'=>true
+                    'todayBtn'=>true,
                 ],
         	    'pluginEvents' => [
         	        "changeDate" => "function(e) {
@@ -240,14 +257,19 @@ if ($model->id_khach_hang) {
             ]); ?>
         </div>
         <div class="col-md-1">
-        	<?= $form->field($model, 'gio_bat_dau')->dropDownList(LichThue::getListHoursOfDay()) ?>
+        	<?= $form->field($model, 'gio_bat_dau')->dropDownList(LichThue::getListHoursOfDay(), [
+        	    'disabled'=>$disallowEdit
+        	]) ?>
         </div>
         <div class="col-md-1">
-        	<?= $form->field($model, 'phut_bat_dau')->dropDownList(LichThue::getList15MinutesOfHour()) ?>
+        	<?= $form->field($model, 'phut_bat_dau')->dropDownList(LichThue::getList15MinutesOfHour(), [
+        	    'disabled'=>$disallowEdit
+        	]) ?>
         </div>
         <div class="col-md-2">
         	<?= $form->field($model, 'ngay_ket_thuc')->widget(DatePicker::classname(), [
-        	    'options' => ['id' => 'end-date', 'placeholder' => 'Chọn ngày  ...'],
+        	    'options' => ['id' => 'end-date', 'placeholder' => 'Chọn ngày  ...', 'disabled'=>$disallowEdit],
+        	    'removeButton'=>$disallowEdit?false:[],
                 'pluginOptions' => [
                     'autoclose' => true,
                     'format' => 'dd/mm/yyyy',
@@ -273,10 +295,14 @@ if ($model->id_khach_hang) {
             ]); ?>
         </div>
          <div class="col-md-1">
-        	<?= $form->field($model, 'gio_ket_thuc')->dropDownList(LichThue::getListHoursOfDay()) ?>
+        	<?= $form->field($model, 'gio_ket_thuc')->dropDownList(LichThue::getListHoursOfDay(), [
+        	    'disabled'=>$disallowEdit
+        	]) ?>
         </div>
          <div class="col-md-1">
-        	<?= $form->field($model, 'phut_ket_thuc')->dropDownList(LichThue::getList15MinutesOfHour()) ?>
+        	<?= $form->field($model, 'phut_ket_thuc')->dropDownList(LichThue::getList15MinutesOfHour(), [
+        	    'disabled'=>$disallowEdit
+        	]) ?>
         </div>
    </div>
    <?php CardWidget::end() ?>
@@ -298,7 +324,9 @@ if ($model->id_khach_hang) {
         </div>
          -->
         <div class="col-md-2">
-        	<?= $form->field($model, 'trang_thai')->dropDownList(LichThue::getDmTrangThai()) ?>
+        	<?= $form->field($model, 'trang_thai')->dropDownList(LichThue::getDmTrangThai(), [
+        	    'disabled'=>$disallowEdit
+        	]) ?>
         </div>
         
         <?php if($model->isNewRecord){?>
