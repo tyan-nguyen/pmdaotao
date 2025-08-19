@@ -218,6 +218,11 @@ if(!$checkDaThanh || $isAdmin){
                         'allowClear' => true,
                         'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
                     ],
+        	    'pluginEvents' => [
+        	        "change" => "function(e) {
+                        $('#txtDonGia').val('');
+                    }",
+        	    ]
              ]);?>
         </div>      
         <div class="col-md-2">
@@ -313,7 +318,7 @@ if(!$checkDaThanh || $isAdmin){
         	<?= $form->field($model, 'so_gio')->textInput(['disabled'=>true]) ?>
         </div>
         <div class="col-md-2">
-        	<?= $form->field($model, 'don_gia')->textInput(['value'=>number_format($model->don_gia) . ' đồng', 'disabled'=>true]) ?>
+        	<?= $form->field($model, 'don_gia')->textInput([/* 'value'=>number_format($model->don_gia) . ' đồng', */ 'disabled'=>$disallowEdit, 'id'=>'txtDonGia']) ?>
         </div>
         <!-- 
         <div class="col-md-2">

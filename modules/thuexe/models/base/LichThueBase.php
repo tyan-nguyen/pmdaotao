@@ -273,7 +273,9 @@ class LichThueBase extends PtxLichThue
         
         $xe = Xe::findOne($this->id_xe);
         if($xe){
-            $this->don_gia = $xe->getGiaXeThue();
+            if($this->don_gia == null){
+                $this->don_gia = $xe->getGiaXeThue();
+            }
         }
         
         return parent::beforeSave($insert);
