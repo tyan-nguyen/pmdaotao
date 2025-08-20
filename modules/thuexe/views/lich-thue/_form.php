@@ -8,6 +8,7 @@ use yii\web\JsExpression;
 use app\modules\thuexe\models\LichThue;
 use kartik\date\DatePicker;
 use app\modules\user\models\User;
+use app\custom\CustomFunc;
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\thuexe\models\LichThue */
@@ -24,7 +25,8 @@ if ($model->id_khach_hang) {
 $checkDaThanh = $model->trang_thai==LichThue::TT_XUATHOADON?true:false;
 $isAdmin = User::getCurrentUser()->superadmin;
 $disallowEdit = true;//mac dinh la disallow
-if(!$checkDaThanh || $isAdmin){
+$laNgayCu = date('Y-m-d H:i:s') > $model->thoi_gian_ket_thuc ? true : false;
+if(!$checkDaThanh || ($checkDaThanh && !$laNgayCu) || $isAdmin){
     $disallowEdit = false;
 }
 ?>
