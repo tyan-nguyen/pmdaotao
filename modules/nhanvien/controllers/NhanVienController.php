@@ -30,7 +30,7 @@ class NhanVienController extends Controller
 	{
 	    Yii::$app->params['moduleID'] = 'Module Quản lý Nhân viên';
 	    Yii::$app->params['modelID'] = 'Quản lý Nhân viên';
-	    return true;
+	    return parent::beforeAction($action);
 	}
     
     public function actionIndex()
