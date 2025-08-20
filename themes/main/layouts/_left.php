@@ -47,6 +47,8 @@ use app\modules\user\models\User;
 				<?= $this->render('menus/_menu-thue') ?>
 				<?php elseif (User::hasRole('nDaoTao',false)):?>
 				<?= $this->render('menus/_menu-dao-tao') ?>
+				<?php elseif (User::hasRole('nToThueXe',false)):?>
+				<?= $this->render('menus/_menu-to-thue-xe') ?>
 				<?php elseif (User::hasRole('nGiaoVien',false)):?>
 				<?= $this->render('menus/_menu-giao-vien') ?>
 				<?php else:?>
