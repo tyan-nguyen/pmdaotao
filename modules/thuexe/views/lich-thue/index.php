@@ -34,6 +34,13 @@ Yii::$app->params['showView'] = true;
 .trang-thai-khachle{
     color: blue !important;
 }
+.tien-thua{
+    color: red !important;
+}
+.tien-du{
+    color: blue !important;
+}
+
 </style>
 
 <?php if(Yii::$app->params['showSearch']):?><div class="card border-default" id="divFilterExtend">

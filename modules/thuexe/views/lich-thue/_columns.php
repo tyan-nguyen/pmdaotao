@@ -183,6 +183,15 @@ return [
         'format' => ['decimal', 0],
         'pageSummary' => true,
         'pageSummaryOptions' => ['class' => 'text-right text-end'],
+        'contentOptions' => function ($model) {
+            $cls = '';
+            if($model->tienDaThanhToan > $model->tongTien){
+                $cls = 'tien-thua';
+            }else if($model->tienDaThanhToan == $model->tongTien){
+                $cls = 'tien-du';
+            }
+            return ['class' => $cls];
+        }
         ],
     [
         'class'=>'\kartik\grid\DataColumn',
