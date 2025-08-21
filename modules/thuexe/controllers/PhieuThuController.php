@@ -200,7 +200,7 @@ class PhieuThuController extends Controller
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "PhieuThu",
+                    'title'=> "Phiếu thu (Thuê xe cảm biến)",
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
                     ]),
@@ -295,7 +295,7 @@ class PhieuThuController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Cập nhật PhieuThu",
+                    'title'=> "Cập nhật Phiếu thu (cảm biến)",
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
@@ -319,7 +319,7 @@ class PhieuThuController extends Controller
                 }
             }else{
                  return [
-                    'title'=> "Cập nhật PhieuThu",
+                    'title'=> "Cập nhật Phiếu thu",
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
