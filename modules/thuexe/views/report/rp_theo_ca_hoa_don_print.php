@@ -43,7 +43,7 @@ use app\modules\khoahoc\models\KhoaHoc;
         <table id="table-tieu-de-1" style="width: 100%">
     		<tr>    		
     			<td colspan="2">
-    				<span class="phieu-h1">DOANH THU THUÊ XE</span>
+    				<span class="phieu-h1">BÁO CÁO DOANH THU THUÊ XE THEO PHIẾU THU</span>
     			</td>    			
     		</tr>
     		<tr>
