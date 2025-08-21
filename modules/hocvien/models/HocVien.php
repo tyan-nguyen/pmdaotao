@@ -49,7 +49,7 @@ class HocVien extends HocVienBase
     public function beforeSave($insert)
     {
        
-        
+        /*        
         if ($this->id_khoa_hoc) { // Kiểm tra nếu có id_khoa_hoc
             // Truy vấn số học viên tối đa cho phép của khóa học
             $khoaHoc = KhoaHoc::findOne($this->id_khoa_hoc);
@@ -70,6 +70,7 @@ class HocVien extends HocVienBase
                 }
             }
         }
+        */
     
         if ($this->isNewRecord) {
             $this->nguoi_tao = Yii::$app->user->identity->id;
