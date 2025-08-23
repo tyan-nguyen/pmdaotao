@@ -195,6 +195,40 @@ use app\modules\hocvien\models\NopHocPhi;
             	           
             	        }
             	        //echo '<td></td><td></td><td></td>';
+            	    } else if($numHis == 4){
+            	        foreach ($itemHis as $indexHis=>$iHis){
+            	            if($indexHis==0 || $indexHis==1){
+            	                continue;
+            	            }
+            	            $ckHtml = '<td></td>';
+            	            if($iHis->chiet_khau > 0){
+            	                $ckHtml = '<td><strong>'.number_format($iHis->chiet_khau).'</strong></td>';
+            	            }
+            	            if($iHis->hinh_thuc_thanh_toan == 'TM'){
+            	                echo '<td><strong>'.number_format($iHis->so_tien_nop).'</strong></td><td></td>'.$ckHtml;
+            	            } else if($iHis->hinh_thuc_thanh_toan == 'CK'){
+            	                echo '<td></td><td><strong>'.number_format($iHis->so_tien_nop).'</strong></td>'.$ckHtml;
+            	            }
+            	            
+            	        }
+            	        //echo '<td></td><td></td><td></td>';
+            	    } else if($numHis == 5){
+            	        foreach ($itemHis as $indexHis=>$iHis){
+            	            if($indexHis==0 || $indexHis==1 || $indexHis==2){
+            	                continue;
+            	            }
+            	            $ckHtml = '<td></td>';
+            	            if($iHis->chiet_khau > 0){
+            	                $ckHtml = '<td><strong>'.number_format($iHis->chiet_khau).'</strong></td>';
+            	            }
+            	            if($iHis->hinh_thuc_thanh_toan == 'TM'){
+            	                echo '<td><strong>'.number_format($iHis->so_tien_nop).'</strong></td><td></td>'.$ckHtml;
+            	            } else if($iHis->hinh_thuc_thanh_toan == 'CK'){
+            	                echo '<td></td><td><strong>'.number_format($iHis->so_tien_nop).'</strong></td>'.$ckHtml;
+            	            }
+            	            
+            	        }
+            	        //echo '<td></td><td></td><td></td>';
             	    }
             	}
             	    
