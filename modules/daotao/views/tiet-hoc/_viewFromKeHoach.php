@@ -68,7 +68,7 @@ use app\modules\user\models\User;
      	<td><?= TietHoc::getLabelTinhTrangXeBadge($tietHoc->trang_thai) ?></td>
      	<td><?= $tietHoc->so_km  ?></td>
      	<td><?= $tietHoc->ghi_chu ?></td>
-     	<td width="75px"><?= ($model->trang_thai_duyet==KeHoach::TT_NHAP || $model->trang_thai_duyet==KeHoach::TT_DADUYET ) ? ( Html::a( '<i class="fa fa-pencil"></i> ',
+     	<td width="75px"><?= ($model->trang_thai_duyet==KeHoach::TT_NHAP || $model->trang_thai_duyet==KeHoach::TT_DADUYET || User::hasRole('Admin')) ? ( Html::a( '<i class="fa fa-pencil"></i> ',
             ['/daotao/tiet-hoc/update-from-ke-hoach', 
                'id' => $tietHoc->id
             ],
