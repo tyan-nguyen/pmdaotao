@@ -42,7 +42,8 @@ if(!$model->isNewRecord){
         </div>
        
         <div class="col-md-4">
-        	<?= $form->field($model, 'trang_thai_duyet')->dropDownList($model->trang_thai_duyet!=KeHoach::TT_DADUYET?KeHoach::getDmTrangThaiForGiaoVien():[KeHoach::TT_HOANTHANH=>KeHoach::getLabelTrangThaiOther(KeHoach::TT_HOANTHANH)], [
+        	<?= $form->field($model, 'trang_thai_duyet')->dropDownList(
+        	    $model->trang_thai_duyet!=KeHoach::TT_DADUYET?KeHoach::getDmTrangThaiForGiaoVien():                    [KeHoach::TT_HOANTHANH=>KeHoach::getLabelTrangThaiOther(KeHoach::TT_HOANTHANH)], [
         	    //'prompt'=>'-Tất cả-'
         	]) ?>  
         </div>
