@@ -55,6 +55,17 @@ class LichThueController extends Controller
 	        'model' => $model
 	    ]);
 	}
+	
+	// Xem lịch thuê của loại xe
+	//$id: id cua loai xe
+	public function actionLoaiXeScheduleByColumns($id)
+	{
+	    $this->layout = '/mainFullTrial';
+	    $model = LoaiXe::findOne($id);
+	    return $this->render('loai_xe_schedule_by_columns', [
+	        'model' => $model
+	    ]);
+	}
 
     /**
      * Lists all LichThue models.
