@@ -18,7 +18,6 @@ if(!$model->isNewRecord){
     if($model->thoi_gian_duyet!=null)
         $model->thoi_gian_duyet = CustomFunc::convertYMDHISToDMYHIS($model->thoi_gian_duyet);
 }
-
 ?>
 
 <div class="ke-hoach-form">
@@ -67,7 +66,8 @@ if(!$model->isNewRecord){
         </div>
         <div class="col-md-4">
         	<?= $form->field($model, 'id_nguoi_duyet')->dropDownList(
-        	    [Yii::$app->user->id => User::getCurrentUser()->username],
+        	    //[Yii::$app->user->id => User::getCurrentUser()->username],
+        	    User::getListUserDuyetKeHoach(),
         	    ['prompt'=>'-Chọn-']
         	    ) ?>
         </div>
@@ -95,7 +95,8 @@ if(!$model->isNewRecord){
 //var fp = flatpickr.localize(flatpickr.l10ns.vn);
 var fp = $("#time").flatpickr({
 	enableTime: true,
-    dateFormat: "d/m/Y H:i:ss",
+	enableSeconds: true, // This enables the seconds input
+    dateFormat: "d/m/Y H:i:s",
     time_24hr: true,
     allowInput: true
 });

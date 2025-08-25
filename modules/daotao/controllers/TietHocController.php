@@ -201,8 +201,8 @@ class TietHocController extends Controller
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($model &&
-                ($model->keHoach->trang_thai_duyet==KeHoach::TT_NHAP || $model->keHoach->trang_thai_duyet==KeHoach::TT_KHONGDUYET)
-                && ($model->nguoi_tao == Yii::$app->user->id /* || User::getCurrentUser()->superadmin */)
+                (($model->keHoach->trang_thai_duyet==KeHoach::TT_NHAP || $model->keHoach->trang_thai_duyet==KeHoach::TT_KHONGDUYET)
+                    && ($model->nguoi_tao == Yii::$app->user->id))  || User::hasRole('Admin')
                 ){
                     //kiem tra gio tiếp theo có chưa
                     $tietHoc = TietHoc::find()->where([
@@ -640,8 +640,8 @@ class TietHocController extends Controller
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($model &&
-                ($model->keHoach->trang_thai_duyet==KeHoach::TT_NHAP || $model->keHoach->trang_thai_duyet==KeHoach::TT_KHONGDUYET)
-                && ($model->nguoi_tao == Yii::$app->user->id /* || User::getCurrentUser()->superadmin */)
+                (($model->keHoach->trang_thai_duyet==KeHoach::TT_NHAP || $model->keHoach->trang_thai_duyet==KeHoach::TT_KHONGDUYET)
+                    && ($model->nguoi_tao == Yii::$app->user->id)) || User::hasRole('Admin') 
              ){
                 $model->delete();
                 return [

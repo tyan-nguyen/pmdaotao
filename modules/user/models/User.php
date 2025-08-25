@@ -18,6 +18,15 @@ class User extends UserBase{
         });
     }
     /**
+     * get list tai khoan duyet ke hoach giao vien
+     */
+    public static function getListUserDuyetKeHoach(){
+        $users = User::find()->where('id IN (19,7,4)')->orderBy(['id'=>SORT_DESC])->all();
+        return ArrayHelper::map($users, 'id', function($model) {
+            return $model->ho_ten . ' (' . $model->username . ')';
+        });
+    }
+    /**
      * lay danh sach tai khoan chua duoc lien ket voi nhan vien
      * @param string $tenMacDinh
      * @return array

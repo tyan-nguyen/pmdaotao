@@ -4,6 +4,7 @@ use app\custom\CustomFunc;
 use app\modules\daotao\models\TietHoc;
 use app\modules\daotao\models\DmThoiGian;
 use app\modules\daotao\models\KeHoach;
+use app\modules\user\models\User;
 ?>
 <table class="table table-bordered">
     <thead>
@@ -47,7 +48,7 @@ use app\modules\daotao\models\KeHoach;
      	<td></td>
      	<td></td>
      	<td></td>
-     	<td><?= $model->trang_thai_duyet==KeHoach::TT_NHAP ? ( Html::a( '<i class="fa fa-plus"> </i> ',
+     	<td><?= ($model->trang_thai_duyet==KeHoach::TT_NHAP || User::hasRole('Admin') ) ? ( Html::a( '<i class="fa fa-plus"> </i> ',
             ['/daotao/tiet-hoc/create-from-ke-hoach', 
                 'idkh' => $model->id,
                 'idtime'=>$time->id
@@ -78,7 +79,7 @@ use app\modules\daotao\models\KeHoach;
                 'role'=>'modal-remote-2'
             ]
         )):'' ?>
-        <?= /**********************************/($model->trang_thai_duyet==KeHoach::TT_NHAP || $model->trang_thai_duyet==KeHoach::TT_KHONGDUYET ) ? ( Html::a( '<i class="ion-close"> </i> ',
+        <?= /**********************************/($model->trang_thai_duyet==KeHoach::TT_NHAP || $model->trang_thai_duyet==KeHoach::TT_KHONGDUYET || User::hasRole('Admin') ) ? ( Html::a( '<i class="ion-close"> </i> ',
             ['/daotao/tiet-hoc/delete-from-ke-hoach', 
                'id' => $tietHoc->id
             ],
@@ -91,7 +92,7 @@ use app\modules\daotao\models\KeHoach;
                 'data-confirm-message'=>'Giờ dạy sẽ được xóa và không thể phục hồi, bạn có chắc chắn muốn tiếp tục?'
             ]
         )):'' ?>
-        <?= /**********************************/($model->trang_thai_duyet==KeHoach::TT_NHAP || $model->trang_thai_duyet==KeHoach::TT_KHONGDUYET ) ? ( Html::a( '<i class="fa fa-clone"> </i> ',
+        <?= /**********************************/($model->trang_thai_duyet==KeHoach::TT_NHAP || $model->trang_thai_duyet==KeHoach::TT_KHONGDUYET || User::hasRole('Admin') ) ? ( Html::a( '<i class="fa fa-clone"> </i> ',
             ['/daotao/tiet-hoc/copy-from-ke-hoach', 
                'id' => $tietHoc->id
             ],

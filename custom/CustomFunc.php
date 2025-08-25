@@ -50,6 +50,14 @@ class CustomFunc
         return $date_string!=null ? date("d/m/Y", strtotime($date_string)) : '';
     }
     /**
+     * chuyen doi ngay chuoi Y-m-d H:i:s -> Y-m-d
+     * @param string $date_string
+     * @return string
+     */
+    public static function convertYMDHISToYMD($date_string){
+        return $date_string!=null ? date("Y-m-d", strtotime($date_string)) : '';
+    }
+    /**
      * chuyen doi ngay chuoi Y-m-d H:i:s -> H
      * @param string $date_string
      * @return string
