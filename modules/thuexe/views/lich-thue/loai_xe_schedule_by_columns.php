@@ -99,6 +99,17 @@ $eventData[] = [
     .fc-col-header thead th{
         padding: 15px 0px;
     }
+
+    td[data-resource-id="<?= $listXeData[0]['id']?$listXeData[0]['id']:'' ?>"], th[data-resource-id="<?= $listXeData[0]['id']?$listXeData[0]['id']:'' ?>"] {
+      border-left: 3px solid pink; /* Ví dụ: thêm viền */
+    }
+    th[data-resource-id^="col"] {
+      border-top: 3px solid pink; /* Ví dụ: thêm viền */
+    }
+    th[data-resource-id^="col"] {
+      border-bottom: 3px solid pink; /* Ví dụ: thêm viền */
+    }
+    
     <?php 
     //xuất css tô đậm cho cột 2,4,6 trong tuần
     $soCotTrongNgay = count($listXeData);
@@ -182,11 +193,14 @@ $eventData[] = [
             ?>
         </div>
         <div class="col-md-9">
-        	<span style="background-color:#45aaf2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Đã lên lịch 
+        	Sự kiện: &nbsp;&nbsp;<span style="background-color:#45aaf2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Đã lên lịch 
         	&nbsp;&nbsp;<span style="background-color:#fca13a">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Đang thuê (chưa HĐ)
         	&nbsp;&nbsp;<span style="background-color:#54b75c">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Đang thuê (có HĐ)
         	&nbsp;&nbsp;<span style="background-color:#ff0000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 30 phút nữa tới
         	&nbsp;&nbsp;<span style="background-color:#02587b">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Đã hoàn thành 
+        	<br/>
+        	Màu nền: <span style="background-color:#ddd">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Hôm nay 
+        	&nbsp;&nbsp; &nbsp;<span style="background-color:yellow">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Ngày thi
         </div>
     </div>
 
