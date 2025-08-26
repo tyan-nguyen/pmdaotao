@@ -34,6 +34,10 @@ $model->ngay_giao_hang = CustomFunc::convertYMDToDMY($model->ngay_giao_hang);
 	<?php CardWidget::begin(['title'=>'THÔNG TIN PHIẾU THU']) ?>
 	
 	<div class="row">
+		<div class="col-md-12">
+			<?= $form->errorSummary($model); ?>
+		</div>
+		
 		<?php if($model->isNewRecord){?>
 		<div class="col-md-12">
 			<div class="alert alert-outline-success" role="alert">

@@ -66,12 +66,31 @@ class HoaDonBanHangController extends Controller
 	public function actionXuatVaThanhToan($id){
 	    $request = Yii::$app->request;
 	    $model = $this->findModel($id);
-	    $trangThaiHienTai = $model->trang_thai;
+	    
 	    Yii::$app->response->format = Response::FORMAT_JSON;
+	    
+	    //check đơn hàng null
+	    if(!$model->hoaDonChiTiets){
+	        $model->addError('id', 'Không thể xuất hóa đơn trống, vui lòng thêm sản phẩm vào hóa đơn!');
+	        return [
+	            'forceReload'=>'#crud-datatable-pjax',
+	            'title'=> "Cập nhật Hóa đơn",
+	            'content'=>$this->renderAjax('update', [
+	                'model' => $model,
+	            ]),
+	            'tcontent'=>'Không thể xuất hóa đơn trống, vui lòng thêm sản phẩm vào hóa đơn!',
+	            'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+	            Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+	        ];
+	    }
+	    
+	    $trangThaiHienTai = $model->trang_thai;	    
 	    $model->trang_thai = HoaDon::TRANGTHAI_DA_TT;
 	    $model->so_vao_so = $model->getSoHoaDonCuoi($model->nam) + 1;
 	    $model->so_don_hang = $model->getSoDonHangCuoi() + 1;
 	    $model->ngay_xuat = date('Y-m-d H:i:s');
+	    
+	    
 	    if($model->save()){
 	        $model->refresh();
 	        if($trangThaiHienTai == HoaDon::TRANGTHAI_NHAP){
