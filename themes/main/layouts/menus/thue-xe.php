@@ -1,3 +1,6 @@
+<?php
+use app\modules\user\models\User;
+?>
 <li class="slide">
 	<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);">
 		<!-- <span class="side-menu__icon"><i class="bi bi-arrow-left-right side_menu_img"></i></span>
@@ -30,6 +33,9 @@
 							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/lich-thue/xe-schedule?menu=dc8&id=4') ?>" class="slide-item" data-menu="dc8"><i class="fe fe-file-text"></i> Xem lịch theo xe (C.Biến)</a></li>
 							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/lich-thue/loai-xe-schedule?menu=dc9&id=2') ?>" class="slide-item" data-menu="dc9"><i class="fe fe-file-text"></i> Xem lịch hạng xe (C.Biến)</a></li>
 							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/lich-thue/loai-xe-schedule-by-columns?menu=dc5&id=2') ?>" class="slide-item" data-menu="dc5"><i class="fe fe-file-text"></i> Lịch hạng xe theo cột <span class="badge bg-warning">New</span></a></li>
+							
+							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/lich-thi?menu=dc3') ?>" class="slide-item" data-menu="dc3"><i class="fe fe-file-text"></i> Lịch thi</a></li>
+							
 							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/phieu-thu/phieu-thu?menu=dc2') ?>" class="slide-item" data-menu="dc2"><i class="fe fe-file-text"></i> Phiếu thu tiền</a></li>
 							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/phieu-thu/phieu-chi?menu=dc4') ?>" class="slide-item" data-menu="dc4"><i class="fe fe-file-text"></i> Phiếu chi tiền</a></li>
 							
@@ -38,8 +44,9 @@
 							<!--  <li class=""><a href="<?= Yii::getAlias('@web/thuexe/muon-xe?menu=dc5') ?>" class="slide-item" data-menu="dc5"><i class="fe fe-file-text"></i> Mượn xe</a></li> -->
 							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/xe?menu=dc1') ?>" class="slide-item" data-menu="dc1"><i class="fe fe-file-text"></i> Quản lý tất cả xe</a></li>
 							<!--   <li class=""><a href="<?= Yii::getAlias('@web/thuexe/loai-hinh-thue?menu=dc2') ?>" class="slide-item" data-menu="dc2"><i class="fe fe-file-text"></i> Loại hình thuê</a></li> -->
+							<?php if(User::getCurrentUser()->superadmin){?>
 							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/loai-xe?menu=dc3') ?>" class="slide-item" data-menu="dc3"><i class="fe fe-file-text"></i> Loại Xe</a></li>
-
+							<?php } ?>
 							
 						</ul>
 						<div class="menutabs-content px-0">

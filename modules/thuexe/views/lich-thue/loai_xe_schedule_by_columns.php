@@ -6,6 +6,7 @@ use yii\helpers\Url;
 use kartik\select2\Select2;
 use yii\web\JsExpression;
 use app\modules\thuexe\models\Xe;
+use app\modules\thuexe\models\LichThi;
 
 $this->title = 'Lịch thuê xe của các xe thuộc hạng ' . $model->ten_loai_xe;
 
@@ -68,20 +69,20 @@ foreach ($contactLog as $item) {
     ];
 }
 
-/* $eventData[] = [
-    'groupId' => 'highlight',
-    'start' => '2025-08-26T00:00:00',
-    'end' => '2025-08-26T09:00:00',
-    'display' => 'background',
-    'backgroundColor' => 'yellow'
-];
-$eventData[] = [
-    'groupId' => 'highlight',
-    'start' => '2025-08-14T00:00:00',
-    'end' => '2025-08-14T13:00:00',
-    'display' => 'background',
-    'backgroundColor' => 'yellow'
-]; */
+//add background cho lich thi
+/***** thêm khoảng thời gian sau để phòng load hết chậm load trang ***/
+$lichThi = LichThi::find()->all();
+if($lichThi){
+    foreach ($lichThi as $iLichThi=>$lich){
+        $eventData[] = [
+            'groupId' => 'highlight',
+            'start' => $lich->thoi_gian_bd,
+            'end' => $lich->thoi_gian_kt,
+            'display' => 'background',
+            'backgroundColor' => 'yellow'
+        ];
+    }
+}
 ?>
 
 <style>
@@ -103,12 +104,14 @@ $eventData[] = [
     td[data-resource-id="<?= $listXeData[0]['id']?$listXeData[0]['id']:'' ?>"], th[data-resource-id="<?= $listXeData[0]['id']?$listXeData[0]['id']:'' ?>"] {
       border-left: 3px solid orange; /* Ví dụ: thêm viền */
     }
+    
     th[data-resource-id^="col"] {
       border-top: 3px solid orange; /* Ví dụ: thêm viền */
     }
     th[data-resource-id^="col"] {
       border-bottom: 3px solid orange; /* Ví dụ: thêm viền */
     }
+    
     
     <?php 
     //xuất css tô đậm cho cột 2,4,6 trong tuần
