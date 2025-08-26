@@ -132,6 +132,7 @@ foreach ($contactLog as $item) {
             selectable: true,
             selectMirror: true,
             initialView: 'timeGridWeek',
+            allDaySlot: false,
             locale: 'vi',
             timeZone: 'local',
             slotLabelFormat: {

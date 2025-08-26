@@ -203,6 +203,7 @@ document.addEventListener('DOMContentLoaded', function() {
         locale: 'vi',
         timeZone: 'local',
         initialView: 'resourceTimeGridWeek',
+        allDaySlot: false,
         //slotMinTime: "08:00:00",
         //slotMaxTime: "22:00:00",
         datesAboveResources: true,
