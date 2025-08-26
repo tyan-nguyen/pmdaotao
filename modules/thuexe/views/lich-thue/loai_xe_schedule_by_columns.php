@@ -101,13 +101,13 @@ $eventData[] = [
     }
 
     td[data-resource-id="<?= $listXeData[0]['id']?$listXeData[0]['id']:'' ?>"], th[data-resource-id="<?= $listXeData[0]['id']?$listXeData[0]['id']:'' ?>"] {
-      border-left: 3px solid pink; /* Ví dụ: thêm viền */
+      border-left: 3px solid orange; /* Ví dụ: thêm viền */
     }
     th[data-resource-id^="col"] {
-      border-top: 3px solid pink; /* Ví dụ: thêm viền */
+      border-top: 3px solid orange; /* Ví dụ: thêm viền */
     }
     th[data-resource-id^="col"] {
-      border-bottom: 3px solid pink; /* Ví dụ: thêm viền */
+      border-bottom: 3px solid orange; /* Ví dụ: thêm viền */
     }
     
     <?php 
