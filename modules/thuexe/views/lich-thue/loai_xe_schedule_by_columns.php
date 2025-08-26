@@ -236,6 +236,12 @@ document.addEventListener('DOMContentLoaded', function() {
         timeZone: 'local',
         initialView: 'resourceTimeGridWeek',
         allDaySlot: false,
+        slotLabelFormat: {
+          hour: '2-digit',
+          minute: '2-digit',
+          meridiem: false, // Tắt hiển thị AM/PM
+          hour12: false // Đảm bảo hiển thị định dạng 24 giờ
+        },
         //slotMinTime: "08:00:00",
         //slotMaxTime: "22:00:00",
         datesAboveResources: true,
