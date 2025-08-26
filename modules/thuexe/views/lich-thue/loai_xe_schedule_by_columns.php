@@ -67,9 +67,27 @@ foreach ($contactLog as $item) {
         // 'textColor' => 'black'
     ];
 }
+
+/* $eventData[] = [
+    'groupId' => 'highlight',
+    'start' => '2025-08-26T00:00:00',
+    'end' => '2025-08-26T09:00:00',
+    'display' => 'background',
+    'backgroundColor' => 'yellow'
+];
+$eventData[] = [
+    'groupId' => 'highlight',
+    'start' => '2025-08-14T00:00:00',
+    'end' => '2025-08-14T13:00:00',
+    'display' => 'background',
+    'backgroundColor' => 'yellow'
+]; */
 ?>
 
 <style>
+    .fc-day-today {
+        background-color: #ddd !important;
+    }
     .fc-timegrid-event {
         background-color: #ffc107;
     }
@@ -172,11 +190,11 @@ foreach ($contactLog as $item) {
         </div>
     </div>
 
-    <div id="calendar2" class="calendar"></div>
+    <div id="calendar"></div>
 </div>
 
 
-<div id="calendar"></div>
+
  
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -238,6 +256,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
             calendar.unselect()
             */
+        },
+        slotLaneDidMount: function(arg) {
+          // Lấy ngày, giờ từ cell
+          const cellDate = arg.date;  
+          const dateStr = cellDate.toISOString().split('T')[0]; // YYYY-MM-DD
+          const hour = cellDate.getHours();
+        
+          // Ví dụ: highlight ngày 2025-08-25 từ 12h đến 14h
+          if (dateStr === "2025-08-25" && hour >= 6 && hour < 8) {
+            arg.el.style.backgroundColor = "#ff0000"; // màu nền
+          }
         },
      	eventDidMount: function(info) {
             if (info.event.extendedProps.role) {
