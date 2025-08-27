@@ -115,7 +115,7 @@ if($lichThi){
     
     <?php 
     //xuất css tô đậm cho cột 2,4,6 trong tuần
-    $soCotTrongNgay = count($listXeData);
+    /* $soCotTrongNgay = count($listXeData);
     
     $firstColColor = $soCotTrongNgay+2;
     for($i=0;$i<$soCotTrongNgay;$i++){
@@ -137,7 +137,7 @@ if($lichThi){
         if($i<$soCotTrongNgay){
             $firstColColor++;
         }
-    }
+    } */
     ?>
     <?php /* ?>
     .fc-timegrid-col:nth-child(7) { background-color: #fef2f2; } 
