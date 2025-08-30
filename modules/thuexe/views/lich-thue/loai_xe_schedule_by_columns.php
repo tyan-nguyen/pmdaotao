@@ -173,7 +173,7 @@ if($lichThi){
 
 <div class="card border-default p-4">
     <div class="row mb-3">
-        <div class="col-md-3">
+        <div class="col-md-4">
             <?=
             Select2::widget([
                 'name' => 'search-xe',
@@ -195,7 +195,7 @@ if($lichThi){
             ]);
             ?>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-8">
         	Sự kiện: &nbsp;&nbsp;<span style="background-color:#45aaf2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Đã lên lịch 
         	&nbsp;&nbsp;<span style="background-color:#fca13a">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Đang thuê (chưa HĐ)
         	&nbsp;&nbsp;<span style="background-color:#54b75c">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Đang thuê (có HĐ)

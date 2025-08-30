@@ -7,6 +7,7 @@ use app\modules\thuexe\models\LichThue;
 use kartik\select2\Select2;
 use yii\web\JsExpression;
 use app\custom\CustomFunc;
+use app\modules\thuexe\models\LichThi;
 
 $this->title = 'Lịch thuê của xe ' . $model->bien_so_xe;
 Yii::$app->params['showSearch'] = false;
@@ -51,6 +52,22 @@ foreach ($contactLog as $item) {
         // 'textColor' => 'black'
     ];
 }
+
+//add background cho lich thi
+/***** thêm khoảng thời gian sau để phòng load hết chậm load trang ***/
+$lichThi = LichThi::find()->all();
+if($lichThi){
+    foreach ($lichThi as $iLichThi=>$lich){
+        $eventData[] = [
+            'groupId' => 'highlight',
+            'start' => $lich->thoi_gian_bd,
+            'end' => $lich->thoi_gian_kt,
+            'display' => 'background',
+            'backgroundColor' => 'yellow'
+        ];
+    }
+}
+
 ?>
 <style>
     .fc-timegrid-event {
@@ -66,7 +83,7 @@ foreach ($contactLog as $item) {
 
 <div class="card border-default p-4">
     <div class="row mb-3">
-        <div class="col-md-3">
+        <div class="col-md-4">
             <?=
             Select2::widget([
                 'name' => 'search-xe',
@@ -88,12 +105,15 @@ foreach ($contactLog as $item) {
             ]);
             ?>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-8">
         	<span style="background-color:#45aaf2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Đã lên lịch 
         	&nbsp;&nbsp;<span style="background-color:#fca13a">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Đang thuê (chưa HĐ)
         	&nbsp;&nbsp;<span style="background-color:#54b75c">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Đang thuê (có HĐ)
         	&nbsp;&nbsp;<span style="background-color:#ff0000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 30 phút nữa tới
-        	&nbsp;&nbsp;<span style="background-color:#02587b">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Đã hoàn thành 
+        	&nbsp;&nbsp;<span style="background-color:#02587b">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Đã hoàn thành
+        	<br/>
+        	Màu nền: <span style="background-color:#ddd">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Hôm nay 
+        	&nbsp;&nbsp; &nbsp;<span style="background-color:yellow">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Ngày thi 
         </div>
     </div>
 
