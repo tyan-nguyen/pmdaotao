@@ -280,7 +280,7 @@ document.addEventListener('DOMContentLoaded', function() {
             calendar.unselect()
             */
         },
-        slotLaneDidMount: function(arg) {
+        /* slotLaneDidMount: function(arg) {
           // Lấy ngày, giờ từ cell
           const cellDate = arg.date;  
           const dateStr = cellDate.toISOString().split('T')[0]; // YYYY-MM-DD
@@ -290,7 +290,7 @@ document.addEventListener('DOMContentLoaded', function() {
           if (dateStr === "2025-08-25" && hour >= 6 && hour < 8) {
             arg.el.style.backgroundColor = "#ff0000"; // màu nền
           }
-        },
+        }, */
      	eventDidMount: function(info) {
             if (info.event.extendedProps.role) {
                 info.el.setAttribute('role', info.event.extendedProps.role);

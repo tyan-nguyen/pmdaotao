@@ -70,6 +70,9 @@ if($lichThi){
 
 ?>
 <style>
+    .fc-day-today {
+        background-color: #ddd !important;
+    }
     .fc-timegrid-event {
         background-color: #ffc107;
     }
