@@ -45,6 +45,7 @@ class LichThiSearch extends LichThi
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort'=> ['defaultOrder' => ['thoi_gian_bd' => SORT_DESC]],
         ]);
 
         $this->load($params);
