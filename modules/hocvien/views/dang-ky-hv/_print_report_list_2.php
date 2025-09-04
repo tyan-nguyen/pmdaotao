@@ -35,7 +35,7 @@ use app\modules\hocvien\models\NopHocPhi;
     				<span class="phieu-h1">BÁO CÁO TIẾP NHẬN HỒ SƠ</span>
     				<br/><span>Thời gian từ <?= CustomFunc::convertYMDHISToDMYHI($start) ?> đến <?= CustomFunc::convertYMDHISToDMYHI($end) ?></span>
     				<br/><span>Nhân viên lập báo cáo: <?= User::getCurrentUser()->getHoTen() ?></span>
-    				<br/><span>Nhân viên nhận hồ sơ: <?= $byuser ? User::findOne($byuser)->ho_ten : 'Tất cả' ?></span>
+    				<br/><span>Nhân viên nhận hồ sơ: <?= $byuser ? User::findOne($byuser)->getHoTen() : 'Tất cả' ?></span>
     			</td>
     			
     		</tr>
@@ -234,7 +234,6 @@ use app\modules\hocvien\models\NopHocPhi;
             	    
             	?>
             
-            	
             	<td style="text-align:center"><?= $item->loaiNop ?></td>
             	<td style="text-align:right"><?= $item->hinh_thuc_thanh_toan=='TM' ? number_format($item->so_tien_nop) : '' ?></td>
             	<td style="text-align:right"><?= $item->hinh_thuc_thanh_toan=='CK' ? number_format($item->so_tien_nop) : '' ?></td>
