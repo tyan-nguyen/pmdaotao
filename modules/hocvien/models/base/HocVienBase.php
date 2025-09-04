@@ -61,6 +61,10 @@ class HocVienBase extends \app\models\HvHocVien
     const NOIDANGKY_CS1 = 'CS1';
     const NOIDANGKY_CS2 = 'CS2';
     
+    const NOIDANGKY_CS3 = 'CS3';
+    const NOIDANGKY_CS4 = 'CS4';
+    const NOIDANGKY_CS5 = 'CS5';
+    
     const HUY_BATKHAKHANG = 'BATKHAKHANG';
     const HUY_KHACHQUAN = 'KHACHQUAN';
     const HUY_CHUQUAN = 'CHUQUAN';
@@ -78,8 +82,11 @@ class HocVienBase extends \app\models\HvHocVien
     public static function getDmNoiDangKy()
     {
         return [
-            self::NOIDANGKY_CS1 => 'Cơ sở 1 (Cửa hàng Nguyễn Trình)',
-            self::NOIDANGKY_CS2 => 'Cơ sở 2 (Trường lái Nguyễn Trình)',
+            self::NOIDANGKY_CS1 => 'VP Nguyễn Trình',
+            self::NOIDANGKY_CS2 => 'TL Nguyễn Trình',
+            self::NOIDANGKY_CS3 => 'CN Càng Long',
+            self::NOIDANGKY_CS4 => 'CN Duyên Hải',
+            self::NOIDANGKY_CS5 => 'CN Chợ Lách',
         ];
     }
     /**
@@ -94,10 +101,19 @@ class HocVienBase extends \app\models\HvHocVien
         }
         switch ($val) {
             case self::NOIDANGKY_CS1:
-                $label = "Cơ sở 1 (Cửa hàng Nguyễn Trình)";
+                $label = "VP Nguyễn Trình";
                 break;
             case self::NOIDANGKY_CS2:
-                $label = "Cơ sở 2 (Trường lái Nguyễn Trình)";
+                $label = "TL Nguyễn Trình";
+                break;
+            case self::NOIDANGKY_CS3:
+                $label = "CN Càng Long";
+                break;
+            case self::NOIDANGKY_CS4:
+                $label = "CN Duyên Hải";
+                break;
+            case self::NOIDANGKY_CS5:
+                $label = "CN Chợ Lách";
                 break;
             default:
                 $label = '';
@@ -114,10 +130,19 @@ class HocVienBase extends \app\models\HvHocVien
     {
         switch ($val) {
             case self::NOIDANGKY_CS1:
-                $label = "Cơ sở 1 (Cửa hàng Nguyễn Trình)";
+                $label = "VP Nguyễn Trình";
                 break;
             case self::NOIDANGKY_CS2:
-                $label = "Cơ sở 2 (Trường lái Nguyễn Trình)";
+                $label = "TL Nguyễn Trình";
+                break;
+            case self::NOIDANGKY_CS3:
+                $label = "CN Càng Long";
+                break;
+            case self::NOIDANGKY_CS4:
+                $label = "CN Duyên Hải";
+                break;
+            case self::NOIDANGKY_CS5:
+                $label = "CN Chợ Lách";
                 break;
             default:
                 $label = '';
@@ -138,6 +163,15 @@ class HocVienBase extends \app\models\HvHocVien
                 break;
             case self::NOIDANGKY_CS2:
                 $label = '<span class="badge bg-info">'.$val.'</span> ';
+                break;
+            case self::NOIDANGKY_CS3:
+                $label = '<span class="badge bg-warning">'.$val.'</span> ';
+                break;
+            case self::NOIDANGKY_CS4:
+                $label = '<span class="badge bg-warning">'.$val.'</span> ';
+                break;
+            case self::NOIDANGKY_CS5:
+                $label = '<span class="badge bg-warning">'.$val.'</span> ';
                 break;
             default:
                 $label = '';
