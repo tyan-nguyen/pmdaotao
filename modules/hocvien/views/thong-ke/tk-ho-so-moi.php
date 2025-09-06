@@ -12,7 +12,7 @@ use app\custom\CustomFunc;
             <tr style="font-weight:bold">
                 <td width="50px" rowspan="2" align="center">STT</td>
                 <td align="center" rowspan="2">Ngày</td>
-                <td align="center" colspan="3">Tổng học viên mới</td>
+                <td align="center" colspan="6">Tổng học viên mới</td>
                 <td align="center" colspan="2">Hạng B tự động</td>
                 <td align="center" colspan="2">Hạng B cơ khí</td>
                 <td align="center" colspan="2">Hạng C1</td>
@@ -30,6 +30,9 @@ use app\custom\CustomFunc;
                 <td align="center">Tổng</td>
                 <td align="center">CS1</td>
                 <td align="center">CS2</td>
+                <td align="center"><?= DangKyHv::getLabelNoiDangKyOther(DangKyHv::NOIDANGKY_CS3) ?></td>
+                <td align="center"><?= DangKyHv::getLabelNoiDangKyOther(DangKyHv::NOIDANGKY_CS4) ?></td>
+                <td align="center"><?= DangKyHv::getLabelNoiDangKyOther(DangKyHv::NOIDANGKY_CS5) ?></td>
                 <!-- <td align="center">Tổng</td>-->
                 <!-- Hạng B tự động -->
                 <td align="center">CS1</td>
@@ -79,6 +82,9 @@ use app\custom\CustomFunc;
         $soLuongHV = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere("DATE(thoi_gian_tao) = '$date'")->count();
         $soLuongHV1 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere("DATE(thoi_gian_tao) = '$date'")->andFilterWhere(['noi_dang_ky'=>'CS1'])->count();
         $soLuongHV2 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere("DATE(thoi_gian_tao) = '$date'")->andFilterWhere(['noi_dang_ky'=>'CS2'])->count();
+        $soLuongHV3 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere("DATE(thoi_gian_tao) = '$date'")->andFilterWhere(['noi_dang_ky'=>DangKyHv::NOIDANGKY_CS3])->count();
+        $soLuongHV4 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere("DATE(thoi_gian_tao) = '$date'")->andFilterWhere(['noi_dang_ky'=>DangKyHv::NOIDANGKY_CS4])->count();
+        $soLuongHV5 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere("DATE(thoi_gian_tao) = '$date'")->andFilterWhere(['noi_dang_ky'=>DangKyHv::NOIDANGKY_CS5])->count();
         
         /* $soLuongBTD = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere("DATE(thoi_gian_tao) = '$date'")->andWhere('id_hang IN (1,2)')->count(); */
         $soLuongBTD1 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere("DATE(thoi_gian_tao) = '$date'")->andWhere('id_hang IN (1,2)')->andFilterWhere(['noi_dang_ky'=>'CS1'])->count();
@@ -121,6 +127,9 @@ use app\custom\CustomFunc;
     	<td align="center"><strong><?= $soLuongHV ?></strong></td>
     	<td align="center"><?= $soLuongHV1 ?></td>
     	<td align="center"><?= $soLuongHV2 ?></td>
+    	<td align="center"><?= $soLuongHV3 ?></td>
+    	<td align="center"><?= $soLuongHV4 ?></td>
+    	<td align="center"><?= $soLuongHV5 ?></td>
     	
         <td align="center"><?= $soLuongBTD1 ?></td>
         <td align="center"><?= $soLuongBTD2 ?></td>
@@ -172,6 +181,10 @@ use app\custom\CustomFunc;
                 <td align="center">...</td>
                 <td align="center">...</td> 
                 
+                <td align="center">...</td>
+                <td align="center">...</td>
+                <td align="center">...</td> 
+                
                 
                <!--   <td align="center">...</td> -->
                 <!-- <td align="center">...</td>   -->
@@ -188,6 +201,9 @@ use app\custom\CustomFunc;
             $soLuongHV = DangKyHv::find()->where(['huy_ho_so'=>0])->count();
             $soLuongHV1 = DangKyHv::find()->where(['huy_ho_so'=>0])->andFilterWhere(['noi_dang_ky'=>'CS1'])->count();
             $soLuongHV2 = DangKyHv::find()->where(['huy_ho_so'=>0])->andFilterWhere(['noi_dang_ky'=>'CS2'])->count();
+            $soLuongHV3 = DangKyHv::find()->where(['huy_ho_so'=>0])->andFilterWhere(['noi_dang_ky'=>DangKyHv::NOIDANGKY_CS3])->count();
+            $soLuongHV4 = DangKyHv::find()->where(['huy_ho_so'=>0])->andFilterWhere(['noi_dang_ky'=>DangKyHv::NOIDANGKY_CS4])->count();
+            $soLuongHV5 = DangKyHv::find()->where(['huy_ho_so'=>0])->andFilterWhere(['noi_dang_ky'=>DangKyHv::NOIDANGKY_CS5])->count();
             
             //$soLuongBTD = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere('id_hang IN (1,2)')->count();
             $soLuongBTD1 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere('id_hang IN (1,2)')->andFilterWhere(['noi_dang_ky'=>'CS1'])->count();
@@ -231,6 +247,9 @@ use app\custom\CustomFunc;
                 <td align="center"><?= number_format($soLuongHV) ?></td>
                 <td align="center"><?= number_format($soLuongHV1) ?></td>
                 <td align="center"><?= number_format($soLuongHV2) ?></td>
+                <td align="center"><?= number_format($soLuongHV3) ?></td>
+                <td align="center"><?= number_format($soLuongHV4) ?></td>
+                <td align="center"><?= number_format($soLuongHV5) ?></td>
                 
                 <td align="center"><?= $soLuongBTD1 ?></td>
                 <td align="center"><?= $soLuongBTD2 ?></td>
