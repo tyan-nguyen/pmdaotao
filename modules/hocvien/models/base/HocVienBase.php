@@ -64,6 +64,7 @@ class HocVienBase extends \app\models\HvHocVien
     const NOIDANGKY_CS3 = 'CS3';
     const NOIDANGKY_CS4 = 'CS4';
     const NOIDANGKY_CS5 = 'CS5';
+    const NOIDANGKY_CS6 = 'CS6';
     
     const HUY_BATKHAKHANG = 'BATKHAKHANG';
     const HUY_KHACHQUAN = 'KHACHQUAN';
@@ -87,6 +88,7 @@ class HocVienBase extends \app\models\HvHocVien
             self::NOIDANGKY_CS3 => 'CS3 - CN Càng Long',
             self::NOIDANGKY_CS4 => 'CS4 - CN Duyên Hải',
             self::NOIDANGKY_CS5 => 'CS5 - CN Chợ Lách',
+            self::NOIDANGKY_CS6 => 'CS6 - CN Trà Cú',
         ];
     }
     /**
@@ -114,6 +116,9 @@ class HocVienBase extends \app\models\HvHocVien
                 break;
             case self::NOIDANGKY_CS5:
                 $label = "CN Chợ Lách";
+                break;
+            case self::NOIDANGKY_CS6:
+                $label = "CN Trà Cú";
                 break;
             default:
                 $label = '';
@@ -144,6 +149,9 @@ class HocVienBase extends \app\models\HvHocVien
             case self::NOIDANGKY_CS5:
                 $label = "CN Chợ Lách";
                 break;
+            case self::NOIDANGKY_CS6:
+                $label = "CN Trà Cú";
+                break;
             default:
                 $label = '';
         }
@@ -171,6 +179,9 @@ class HocVienBase extends \app\models\HvHocVien
                 $label = '<span class="badge bg-warning">'.$val.'</span> ';
                 break;
             case self::NOIDANGKY_CS5:
+                $label = '<span class="badge bg-warning">'.$val.'</span> ';
+                break;
+            case self::NOIDANGKY_CS6:
                 $label = '<span class="badge bg-warning">'.$val.'</span> ';
                 break;
             default:
