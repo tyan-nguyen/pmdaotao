@@ -317,7 +317,7 @@ class BaoCaoController extends Controller
         ]);
         
         // Auto size
-        foreach (range('A','P') as $col) {
+        foreach (range('A','Q') as $col) {
             $sheet->getColumnDimension($col)->setAutoSize(true);
         }
         
