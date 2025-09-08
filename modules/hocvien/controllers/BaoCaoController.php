@@ -133,8 +133,8 @@ class BaoCaoController extends Controller
         $spreadsheet = IOFactory::load($template);
         $sheet = $spreadsheet->getActiveSheet();
         $thoiGianLabel = 'Thời gian từ ' .CustomFunc::convertYMDHISToDMYHI($start). ' đến ' .CustomFunc::convertYMDHISToDMYHI($end);
-        $thoiGianLabel .= 'Nhân viên nhận hồ sơ: ' . ($byuser>0 ? User::findOne($byuser)->getHoTen() : 'Tất cả');
-        $nhanVienBaoCaoLabel = ' - Nhân viên lập báo cáo: ' . User::getCurrentUser()->getHoTen();
+        $thoiGianLabel .= ' - Nhân viên nhận hồ sơ: ' . ($byuser>0 ? User::findOne($byuser)->getHoTen() : 'Tất cả');
+        $nhanVienBaoCaoLabel = 'Nhân viên lập báo cáo: ' . User::getCurrentUser()->getHoTen();
         //ghi dòng tổng nợ còn lại
         $tongNoLabel = 'TỔNG NỢ CÒN LẠI (tính đến ' . CustomFunc::convertYMDHISToDMYHI($end) . '): ';
         $tongNoLabel .= ($byuser && User::findOne($byuser)!=null) ? number_format(User::getNoConLaiCuaNhanVien($byuser,$end)) : number_format(User::getNoConLaiCuaTatCaHocVien($end));
