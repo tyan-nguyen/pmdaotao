@@ -28,7 +28,7 @@ use app\modules\user\models\User;
 						<ul class="sidemenu-list">
 							<li class="side-menu__label1"><a href="javascript:void(0)">Danh mục chức năng</a>
 							</li>
-							<?php if (User::getCurrentUser()->superadmin){ ?><li><a href="<?= Yii::getAlias('@web/user/user-ajax?menu=tk1') ?>" class="slide-item" data-menu="tk1"><i class="fe fe-file-text"></i> Quản lý tài khoản</a>
+							<?php if (User::getCurrentUser()&& User::getCurrentUser()->superadmin){ ?><li><a href="<?= Yii::getAlias('@web/user/user-ajax?menu=tk1') ?>" class="slide-item" data-menu="tk1"><i class="fe fe-file-text"></i> Quản lý tài khoản</a>
 							</li><?php } ?>
 							<li><a href="<?= Yii::getAlias('@web/user/auth/change-own-password?menu=tk2') ?>" class="slide-item" data-menu="tk2"><i class="fe fe-file-text"></i> Thay đổi mật khẩu</a>
 							</li>
