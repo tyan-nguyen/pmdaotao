@@ -87,6 +87,12 @@ use app\modules\hocvien\models\DangKyHv;
      <div class="col-md-3" style="padding-top:20px">    
     	<?= Html::button('<i class="fa fa-print"> </i> In Phiếu mẫu 2 (>3 lần TT)', ['class' => 'btn btn-success', 'style'=>'width:100%', 'onclick' => 'InBaoCao(0,2)']) ?>
     </div>
+     <div class="col-md-3" style="padding-top:20px">    
+    	<?= Html::button('<i class="fa fa-print"> </i> In Phiếu mẫu 3 (Có hạng ĐT)', ['class' => 'btn btn-success', 'style'=>'width:100%', 'onclick' => 'InBaoCao(0,3)']) ?>
+    </div>
+    <div class="col-md-3" style="padding-top:20px">    
+    	<?= Html::button('<i class="fas fa-file-excel"></i> Xuất Excel', ['class' => 'btn btn-success', 'style'=>'width:100%', 'onclick' => 'XuatExcel(0,2)']) ?>
+    </div>
 </div>
 
 
@@ -119,6 +125,11 @@ function InBaoCao(nhap, typereport) {
             alert('Đã xảy ra lỗi.');
         }
     });
+}
+
+function XuatExcel(nhap, typereport) {
+   var url = '/hocvien/bao-cao/xuat-danh-sach-ca-excel?startdate=' + $('#startdate').val() + '&starttime=' + $('#starttime').val() + '&enddate=' + $('#enddate').val() + '&endtime=' + $('#endtime').val() + '&byuser='+ $('#byuser').val() + '&typereport=' + typereport + '&byaddress=' + $('#byaddress').val();
+   window.open(url, '_blank', 'noopener,noreferrer');
 }
 
 // Hàm cập nhật số lần in
