@@ -322,7 +322,7 @@ class BaoCaoController extends Controller
         
         // Gửi header thủ công để ép download
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="xuat_file.xlsx"');
+        header('Content-Disposition: attachment;filename="bao_cao_thu_chi_hoc_phi.xlsx"');
         header('Cache-Control: max-age=0');
         header('Pragma: public');
         
