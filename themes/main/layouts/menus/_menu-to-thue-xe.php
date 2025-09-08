@@ -24,7 +24,8 @@
 					<div class="tab-pane active" id="side3">
 						<ul class="sidemenu-list">
 							<li><a href="/thuexe/lich-thue/xe-schedule?menu=ttx1&id=4" class="slide-item" data-menu="ttx1"> <i class="fe fe-file-text"></i> Xem lịch theo xe</a></li>
-							<li><a href="/thuexe/lich-thue/loai-xe-schedule?menu=ttx2&id=2" class="slide-item" data-menu="ttx2"> <i class="fe fe-file-text"></i> Xem lịch theo hạng xe</a></li>
+							<!-- <li><a href="/thuexe/lich-thue/loai-xe-schedule?menu=ttx2&id=2" class="slide-item" data-menu="ttx2"> <i class="fe fe-file-text"></i> Xem lịch theo hạng xe</a></li>-->
+							<li><a href="/thuexe/lich-thue/loai-xe-schedule-by-columns?menu=ttx2&id=2" class="slide-item" data-menu="ttx2"> <i class="fe fe-file-text"></i> Xem lịch theo hạng xe</a></li>
 						</ul>
 						<div class="menutabs-content px-0">
 							<!-- menu tab here -->
