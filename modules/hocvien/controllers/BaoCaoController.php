@@ -132,9 +132,15 @@ class BaoCaoController extends Controller
         $template = \Yii::getAlias('@app/templates/bb_theo_ca.xlsx');
         $spreadsheet = IOFactory::load($template);
         $sheet = $spreadsheet->getActiveSheet();
+        $thoiGianLabel = 'Thời gian từ ' .CustomFunc::convertYMDHISToDMYHI($start). ' đến ' .CustomFunc::convertYMDHISToDMYHI($end);
+        $thoiGianLabel .= 'Nhân viên nhận hồ sơ: ' . $byuser ? User::findOne($byuser)->getHoTen() : 'Tất cả';
+        $nhanVienBaoCaoLabel = ' - Nhân viên lập báo cáo: ' . User::getCurrentUser()->getHoTen();
         //ghi dòng tổng nợ còn lại
         $tongNoLabel = 'TỔNG NỢ CÒN LẠI (tính đến ' . CustomFunc::convertYMDHISToDMYHI($end) . '): ';
         $tongNoLabel .= ($byuser && User::findOne($byuser)!=null) ? number_format(User::getNoConLaiCuaNhanVien($byuser,$end)) : number_format(User::getNoConLaiCuaTatCaHocVien($end));
+        
+        $sheet->setCellValue('A2', $thoiGianLabel);
+        $sheet->setCellValue('A3', $nhanVienBaoCaoLabel);
         $sheet->setCellValue('A4', $tongNoLabel);
         
         // Ví dụ: ghi dữ liệu từ dòng 7
