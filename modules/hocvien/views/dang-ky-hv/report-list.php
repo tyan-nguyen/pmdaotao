@@ -88,7 +88,7 @@ use app\modules\hocvien\models\DangKyHv;
     	<?= Html::button('<i class="fa fa-print"> </i> In Phiếu mẫu 2 (>3 lần TT)', ['class' => 'btn btn-success', 'style'=>'width:100%', 'onclick' => 'InBaoCao(0,2)']) ?>
     </div>
      <div class="col-md-3" style="padding-top:20px">    
-    	<?= Html::button('<i class="fa fa-print"> </i> In Phiếu mẫu 3 (Có hạng ĐT)', ['class' => 'btn btn-success', 'style'=>'width:100%', 'onclick' => 'InBaoCao(0,3)']) ?>
+    	<?= Html::button('<i class="fa fa-print"> </i> In Phiếu mẫu 3 (Có khóa học)', ['class' => 'btn btn-success', 'style'=>'width:100%', 'onclick' => 'InBaoCao(0,3)']) ?>
     </div>
     <div class="col-md-3" style="padding-top:20px">    
     	<?= Html::button('<i class="fas fa-file-excel"></i> Xuất Excel', ['class' => 'btn btn-success', 'style'=>'width:100%', 'onclick' => 'XuatExcel(0,2)']) ?>
