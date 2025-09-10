@@ -38,6 +38,7 @@ class BaoCaoController extends Controller
         'rp-bien-ban-ban-giao-full-print',
         'rp-bien-ban-thay-doi-hang-print',
         'rp-bien-ban-huy-ho-so-print',
+        'xuat-danh-sach-ca-excel',
     ];
     /**
      * @inheritdoc
