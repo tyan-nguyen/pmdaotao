@@ -6,7 +6,7 @@ use app\modules\daotao\models\TietHoc;
 use yii\helpers\Html;
 ?>
 <div class="row">
-    <div class="col-xl-3 col-md-12">
+    <div class="col-xl-2 col-md-12">
     <div class="card custom-card">
 		<div class="card-header custom-card-header rounded-bottom-0">
 			<div>
@@ -36,7 +36,7 @@ use yii\helpers\Html;
 	</div>
 
     </div>
-    <div class="col-xl-9 col-md-12">
+    <div class="col-xl-10 col-md-12">
     <div class="card custom-card">
         <div class="card-header custom-card-header rounded-bottom-0">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
