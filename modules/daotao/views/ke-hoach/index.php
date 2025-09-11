@@ -19,14 +19,6 @@ Yii::$app->params['showView'] = true;
 
 ?>
 
-<style>
-.modal-custom .modal-dialog {
-    max-width: 100%!important;
-    margin: 0 auto;
-}
-</style>
-
-
 <?php if(Yii::$app->params['showSearch']):?><div class="card border-default" id="divFilterExtend">
 	<div class="card-header rounded-bottom-0 card-header text-dark" id="simple">
 		<h5 class="mt-2"><i class="fe fe-search"></i> Tìm kiếm</h5>
@@ -115,7 +107,7 @@ Yii::$app->params['showView'] = true;
         'id'=>'ajaxCrudModal',
         'tabindex' => false // important for Select2 to work properly
    ],
-   'dialogOptions'=>['class'=>'modal-xl'],
+   'dialogOptions'=>['class'=>'modal-xl modal-xxl'],
    'closeButton'=>['label'=>'<span aria-hidden=\'true\'>×</span>'],
    'id'=>'ajaxCrudModal',
     'footer'=>'',// always need it for jquery plugin
