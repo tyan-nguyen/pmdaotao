@@ -24,7 +24,7 @@ use app\modules\user\models\User;
             <th width="10%" align="center">Xe</th>
             <th width="8%">TT</th>
             <th width="7%" align="center">Km</th>
-            <th width="7%" align="center">Ghi chú</th>
+            <th width="7%" align="center">G.Chú</th>
             <th width="19%" align="center"></th>
         </tr>
     </thead>
