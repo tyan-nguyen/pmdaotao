@@ -90,7 +90,7 @@ class HocVienBase extends \app\models\HvHocVien
             self::NOIDANGKY_CS4 => 'CS4 - CN Duyên Hải',
             self::NOIDANGKY_CS5 => 'CS5 - CN Chợ Lách',
             self::NOIDANGKY_CS6 => 'CS6 - CN Trà Cú',
-            self::NOIDANGKY_CS7 => 'CS6 - CN Cầu Kè',
+            self::NOIDANGKY_CS7 => 'CS7 - CN Cầu Kè',
         ];
     }
     /**
