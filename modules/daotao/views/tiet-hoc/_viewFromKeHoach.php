@@ -8,7 +8,7 @@ use app\modules\user\models\User;
 ?>
 <style>
 .tbl-time tr td{
-    padding: 7px 7px;
+    padding: 7px 7px !important;
 }
 </style>
 <table class="table table-bordered tbl-time">
