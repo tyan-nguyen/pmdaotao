@@ -6,20 +6,26 @@ use app\modules\daotao\models\DmThoiGian;
 use app\modules\daotao\models\KeHoach;
 use app\modules\user\models\User;
 ?>
-<table class="table table-bordered">
+<style>
+.tbl-time tr td{
+    padding: 7px 7px;
+}
+</style>
+<table class="table table-bordered tbl-time">
     <thead>
         <tr>
-        	<th width="5">STT</th>
+        	<th width="3%" align="center">TT</th>
             <!-- <th>Giờ dạy</th>-->
-            <th width="10">Từ giờ</th>
-            <th width="10">Đến giờ</th>
-            <th width="25">Học viên</th>
-            <th width="25">Module</th>
-            <th width="10">Xe</th>
-            <th width="10">Trạng thái</th>
-            <th width="10">Km</th>
-            <th width="10">Ghi chú</th>
-            <th width="50"></th>
+            <th width="11%" align="center">Giờ</th>
+            <!-- <th width="10">Đến giờ</th> -->
+            <th width="15%">Học viên</th>
+            <th width="10%">Khóa</th>
+            <th width="15%">Module</th>
+            <th width="10%" align="center">Xe</th>
+            <th width="8%">TT</th>
+            <th width="7%" align="center">Km</th>
+            <th width="7%" align="center">Ghi chú</th>
+            <th width="19%" align="center"></th>
         </tr>
     </thead>
     <tbody>
@@ -37,11 +43,12 @@ use app\modules\user\models\User;
         }
      ?>
      <tr>
-     	<td><?= ($iT+1) ?></td>
+     	<td align="center"><?= ($iT+1) ?></td>
      	<!-- <td><?= $time->ten_thoi_gian ?></td>-->
-     	<td><?= CustomFunc::convertHIStoHI($time->thoi_gian_bd) ?></td>
-     	<td><?= CustomFunc::convertHIStoHI($time->thoi_gian_kt) ?></td>
+     	<td align="center"><?= CustomFunc::convertHIStoHI($time->thoi_gian_bd) ?> - <?= CustomFunc::convertHIStoHI($time->thoi_gian_kt) ?></td>
+     	<!-- <td><?= CustomFunc::convertHIStoHI($time->thoi_gian_kt) ?></td>-->
      	<?php if($gioIsExist == false):?>
+     	<td></td>
      	<td></td>
      	<td></td>
      	<td></td>
@@ -63,10 +70,11 @@ use app\modules\user\models\User;
      	<?php endif;?>
      	<?php if($gioIsExist == true):?>
      	<td><?= $tietHoc->hocVien->ho_ten ?></td>
-     	<td><?= $tietHoc->monHoc->ten_mon . ($tietHoc->monHoc->ten_mon_sub?(' ('.$tietHoc->monHoc->ten_mon_sub.')'):'') ?></td>
-     	<td><?= $tietHoc->xe->bien_so_xe ?></td>
-     	<td><?= TietHoc::getLabelTinhTrangXeBadge($tietHoc->trang_thai) ?></td>
-     	<td><?= $tietHoc->so_km  ?></td>
+     	<td><?= $tietHoc->hocVien->khoaHoc->ten_khoa_hoc ?></td>
+     	<td><?= $tietHoc->monHoc->ten_mon /*. ($tietHoc->monHoc->ten_mon_sub?(' ('.$tietHoc->monHoc->ten_mon_sub.')'):'')*/ ?></td>
+     	<td align="center"><?= $tietHoc->xe->bien_so_xe ?></td>
+     	<td align="center"><?= TietHoc::getLabelTinhTrangXeBadge($tietHoc->trang_thai) ?></td>
+     	<td align="center"><?= $tietHoc->so_km  ?></td>
      	<td><?= $tietHoc->ghi_chu ?></td>
      	<td width="75px"><?= ($model->trang_thai_duyet==KeHoach::TT_NHAP || $model->trang_thai_duyet==KeHoach::TT_DADUYET || User::hasRole('Admin')) ? ( Html::a( '<i class="fa fa-pencil"></i> ',
             ['/daotao/tiet-hoc/update-from-ke-hoach', 

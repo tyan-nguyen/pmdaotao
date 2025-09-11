@@ -119,16 +119,16 @@ class TietHocBase extends GdTietHoc
     {
         switch ($val) {
             case self::TT_CHUATHUCHIEN:
-                $label = '<span class="badge bg-info">Chưa thực hiện</span> ';
+                $label = '<span class="badge bg-info" title="Chưa thực hiện">Chưa TH</span> ';
                 break;
             case self::TT_DAHOANTHANH:
-                $label = '<span class="badge bg-primary">Đã hoàn thành</span> ';
+                $label = '<span class="badge bg-primary" title="Hoàn thành">H.Thành</span> ';
                 break;
             case self::TT_HOCVIENHUY:
-                $label = '<span class="badge bg-danger">Học viên hủy</span> ';
+                $label = '<span class="badge bg-danger" title="Học viên hủy">HV hủy</span> ';
                 break;
             case self::TT_DAHUY:
-                $label = '<span class="badge bg-warning">Đã hủy</span> ';
+                $label = '<span class="badge bg-warning" title="Đã hủy">Hủy</span> ';
                 break;
             default:
                 $label = '';

@@ -144,7 +144,7 @@ class HocVien extends HocVienBase
         ->all();
         
         return ArrayHelper::map($dsHocVien, 'id_hoc_vien', function ($model) {
-            return '+ ' . $model->hocVien->ho_ten;
+            return '+ ' . $model->hocVien->ho_ten . ' (' . $model->hocVien->khoaHoc->ten_khoa_hoc . ')';
         },function ($model) {
             return $model->hocVien->khoaHoc->ten_khoa_hoc;
         });
