@@ -18,6 +18,15 @@ Yii::$app->params['showView'] = true;
 //CrudAsset::register($this);
 
 ?>
+
+<style>
+.modal-custom .modal-dialog {
+    max-width: 100%!important;
+    margin: 0 auto;
+}
+</style>
+
+
 <?php if(Yii::$app->params['showSearch']):?><div class="card border-default" id="divFilterExtend">
 	<div class="card-header rounded-bottom-0 card-header text-dark" id="simple">
 		<h5 class="mt-2"><i class="fe fe-search"></i> Tìm kiếm</h5>
