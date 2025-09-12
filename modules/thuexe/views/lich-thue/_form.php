@@ -367,9 +367,11 @@ if(!$checkDaThanh || ($checkDaThanh && !$laNgayCu) || $isAdmin){
         <?php } ?>
   </div>
   <?= (!$model->isNewRecord && $model->phieuThus!=null) ? $this->render('_phieu_thu', ['model'=>$model]) : '' ?>
-  <?php if(!$model->isNewRecord && $model->phieuThus!=null){ ?>
+ 
   	<span><?= Html::img('/uploads/icons/info.png', ['width'=>30]) ?></span>
-  	Tổng tiền: <strong><?= $model->tongTien?number_format($model->tongTien):0 ?> đồng</strong> 
+  	Người tạo lịch: <strong><?= $model->nguoiTao?($model->nguoiTao->hoTen. ' (' .$model->nguoiTao->username . ')'):'-'?></strong> 
+  	 <?php if(!$model->isNewRecord && $model->phieuThus!=null){ ?>
+  	&nbsp;-&nbsp; Tổng tiền: <strong><?= $model->tongTien?number_format($model->tongTien):0 ?> đồng</strong> 
   	&nbsp;-&nbsp; Đã nộp: <strong><?= $model->tienDaNopDuong?number_format($model->tienDaNopDuong):0 ?> đồng</strong> 
   	&nbsp;-&nbsp; Chiết khấu: <strong><?= $model->tienChietKhau?number_format($model->tienChietKhau):0 ?> đồng</strong> 
   	&nbsp;-&nbsp; Chi lại: <span style="font-weight: bold;color:red"><?= $model->tienDaNopAm?number_format($model->tienDaNopAm):0 ?> đồng</span>

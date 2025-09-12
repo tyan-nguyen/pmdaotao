@@ -201,6 +201,15 @@ return [
         },
         'format'=>'html',
     ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'nguoi_tao',
+        'value'=>function($model){
+        return $model->nguoiTao?$model->nguoiTao->username:'';
+        },
+        'width' => '80px',
+        'contentOptions' => [ 'style' => 'text-align:center'],
+    ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'ghi_chu',

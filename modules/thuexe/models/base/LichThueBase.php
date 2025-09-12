@@ -11,6 +11,7 @@ use app\modules\hocvien\models\DangKyHv;
 use app\custom\CustomFunc;
 use app\modules\thuexe\models\PhieuThu;
 use yii\helpers\Html;
+use app\modules\user\models\User;
 
 /**
  * This is the model class for table "ptx_lich_thue".
@@ -460,6 +461,10 @@ class LichThueBase extends PtxLichThue
             $trangThaiLabel = '<span class="badge bg-danger">Thừa tiền</span>&nbsp;'
                 . Html::img('/uploads/icons/sad.png', ['width'=>30]);
         return $trangThaiLabel;
+    }
+    
+    public function getNguoiTao(){
+        return $this->hasOne(User::class, ['id' => 'nguoi_tao']);
     }
     
 }
