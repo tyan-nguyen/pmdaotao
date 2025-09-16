@@ -17,7 +17,7 @@ return [
     [
         'class' => 'kartik\grid\ActionColumn',
         'header'=>'',
-        'template' => '{payment} {view}  {update} {danhSachDoiSatHach} {danhSachDoiHang} {danhSachBaoLuu} {huyHoSo} {doiHangTrongNgay} {doiHangNgayCu}  {doiSatHach}  {baoLuu} {delete} ',
+        'template' => '{payment} {view} {update} {danhSachDoiSatHach} {danhSachDoiHang} {danhSachBaoLuu} {huyHoSo} {doiHangTrongNgay} {doiHangNgayCu} {doiSatHach} {baoLuu} {delete} ',
         'dropdown' => true,
         'dropdownOptions' => ['class' => 'float-right'],
         'dropdownButton'=>[
@@ -270,13 +270,15 @@ return [
     [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'id_hang',
-        'width' => '175px',
+        'width' => '125px',
         'value' => function($model) {
-            return $model->hangDaoTao ? $model->hangDaoTao->ten_hang : 'N/A';
+        return '<span title="'. ($model->hangDaoTao ? $model->hangDaoTao->ten_hang : 'N/A') .'">' . ($model->hangDaoTao ? $model->hangDaoTao->ma_hang : 'N/A') . '</span>';
         },
+        'format'=>'html',
         'label' => 'Hạng đào tạo',        
         'pageSummary' => 'Tổng cộng (E=A-B-C+D)',
         'pageSummaryOptions' => ['class' => 'text-right text-end'],
+        //'contentOptions' => [ 'style' => 'text-align:center' ],
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
