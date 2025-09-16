@@ -36,6 +36,8 @@ use Yii;
  * @property int|null $da_nhan_ao
  * @property string|null $size
  * @property string|null $ngay_nhan_ao
+ * @property int|null $da_nhan_tai_lieu
+ * @property string|null $ngay_nhan_tai_lieu
  * @property int|null $id_giao_vien
  * @property int|null $huy_ho_so
  * @property string|null $thoi_gian_huy_ho_so
@@ -70,9 +72,9 @@ class HvHocVien extends \yii\db\ActiveRecord
     {
         return [
             [['id_khoa_hoc', 'id_hoc_phi', 'so_cccd', 'ngay_het_han_cccd', 'nguoi_tao', 'thoi_gian_tao', 'gioi_tinh', 'dia_chi', 'ngay_sinh', 'nguoi_lap_phieu', 'ma_so_phieu', 'so_lan_in_phieu', 'check_hoc_phi', 'id_nhom', 'loai_dang_ky', 'noi_dang_ky', 'nguoi_duyet', 'trang_thai_duyet', 'ghi_chu', 'thoi_gian_hoan_thanh_ho_so', 'co_ho_so_thue', 'da_nhan_ao', 'size', 'ngay_nhan_ao', 'id_giao_vien', 'huy_ho_so', 'thoi_gian_huy_ho_so', 'ly_do_huy_ho_so', 'loai_ly_do', 'le_phi'], 'default', 'value' => null],
-            [['id_khoa_hoc', 'id_hoc_phi', 'nguoi_tao', 'gioi_tinh', 'ma_so_phieu', 'so_lan_in_phieu', 'id_hang', 'id_nhom', 'nguoi_duyet', 'co_ho_so_thue', 'da_nhan_ao', 'id_giao_vien', 'huy_ho_so'], 'integer'],
+            [['id_khoa_hoc', 'id_hoc_phi', 'nguoi_tao', 'gioi_tinh', 'ma_so_phieu', 'so_lan_in_phieu', 'id_hang', 'id_nhom', 'nguoi_duyet', 'co_ho_so_thue', 'da_nhan_ao', 'id_giao_vien', 'huy_ho_so', 'da_nhan_tai_lieu'], 'integer'],
             [['ho_ten', 'so_dien_thoai', 'trang_thai', 'id_hang'], 'required'],
-            [['ngay_het_han_cccd', 'thoi_gian_tao', 'ngay_sinh', 'thoi_gian_hoan_thanh_ho_so', 'ngay_nhan_ao', 'thoi_gian_huy_ho_so'], 'safe'],
+            [['ngay_het_han_cccd', 'thoi_gian_tao', 'ngay_sinh', 'thoi_gian_hoan_thanh_ho_so', 'ngay_nhan_ao', 'ngay_nhan_tai_lieu', 'thoi_gian_huy_ho_so'], 'safe'],
             [['ghi_chu', 'ly_do_huy_ho_so'], 'string'],
             [['le_phi'], 'number'],
             [['ho_ten', 'so_dien_thoai', 'so_cccd', 'trang_thai', 'dia_chi'], 'string', 'max' => 255],
@@ -123,6 +125,8 @@ class HvHocVien extends \yii\db\ActiveRecord
             'da_nhan_ao' => 'Da Nhan Ao',
             'size' => 'Size',
             'ngay_nhan_ao' => 'Ngay Nhan Ao',
+            'da_nhan_tai_lieu' => 'Da Nhan Tai Lieu',
+            'ngay_nhan_tai_lieu' => 'Ngay Nhan Tai Lieu',
             'id_giao_vien' => 'Id Giao Vien',
             'huy_ho_so' => 'Huy Ho So',
             'thoi_gian_huy_ho_so' => 'Thoi Gian Huy Ho So',

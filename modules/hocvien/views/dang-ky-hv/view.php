@@ -20,19 +20,26 @@ use app\modules\hocvien\models\DangKyHv;
                 </div>
                 <div class="card-body">
                     <div class="skill-tags">
-                        <p><strong>Tên học viên:</strong> <?= $model->ho_ten ?><strong>
+                        <p><strong>Tên học viên:</strong> <?= $model->ho_ten ?>
                         <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                        Số ĐT:</strong> <?= $model->so_dien_thoai ?></p>                        
+                        <strong>Nơi đăng ký:</strong> <?= $model->getLabelNoiDangKy() ?>
+                        </p>                        
                         <p><strong>Giới tính:</strong> <?= $model->gioi_tinh == 1 ? 'Nam' : 'Nữ' ?>
                         <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                        <strong>Ngày sinh:</strong> <?= $model->getNgaySinh() ?></p>
+                        <strong>Ngày sinh:</strong> <?= $model->getNgaySinh() ?>
+                        <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <strong>Số ĐT:</strong> <?= $model->so_dien_thoai ?>
+                        </p>
                         <p><strong>Địa chỉ:</strong> <?= $model->dia_chi ?></p>
                         <p><strong>Số CCCD:</strong> <?= $model->so_cccd ?>
                         <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                         <strong>Ngày hết hạn CCCD:</strong> <?= $model->getNgayHetHanCccd()?></p>
-                        <p><strong>Nơi đăng ký:</strong> <?= $model->getLabelNoiDangKy() ?></p>
+                        
+                         <p><strong>Ngày đăng ký:</strong> <?= CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_tao) ?><strong> <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Nhận hồ sơ:</strong> <?= CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_hoan_thanh_ho_so) ?></p> 
+                         
                         <p><strong>Đã nhận đồng phục:</strong> <?= $model->da_nhan_ao?'<i class="ion-checkmark-round text-primary"></i> Có':'<i class="ion-close-round" data-bs-toggle="tooltip" aria-label="ion-close-round" data-bs-original-title="ion-close-round"></i> Không' ?><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <strong>Size:</strong> <?= $model->size ?><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <strong>Ngày nhận:</strong> <?= CustomFunc::convertYMDToDMY($model->ngay_nhan_ao) ?></p>
-                        <p><strong>Ngày đăng ký:</strong> <?= CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_tao) ?><strong> <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Nhận hồ sơ:</strong> <?= CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_hoan_thanh_ho_so) ?></p>    
+                        <p><strong>Đã nhận tài liệu:</strong> <?= $model->da_nhan_tai_lieu?'<i class="ion-checkmark-round text-primary"></i> Có':'<i class="ion-close-round" data-bs-toggle="tooltip" aria-label="ion-close-round" data-bs-original-title="ion-close-round"></i> Không' ?><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <strong>Ngày nhận:</strong> <?= CustomFunc::convertYMDToDMY($model->ngay_nhan_tai_lieu) ?></p>
+                          
                         <p><strong>Ghi chú thêm:</strong> <?= $model->ghi_chu ?></p>
                         
                         <?php if($model->huy_ho_so){ ?>

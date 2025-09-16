@@ -19,6 +19,7 @@ $this->registerCssFile('@web/css/dkHocVien.css', [
 $model->ngay_sinh = CustomFunc::convertYMDToDMY($model->ngay_sinh);
 $model->ngay_het_han_cccd = CustomFunc::convertYMDToDMY($model->ngay_het_han_cccd);
 $model->ngay_nhan_ao = CustomFunc::convertYMDToDMY($model->ngay_nhan_ao);
+$model->ngay_nhan_tai_lieu = CustomFunc::convertYMDToDMY($model->ngay_nhan_tai_lieu);
 
 if($model->isNewRecord){
     $user = User::getCurrentUser();
@@ -117,12 +118,12 @@ if($model->isNewRecord){
     </div>
     <?php CardWidget::end() ?>
     
-    <?php CardWidget::begin(['title'=>'Thông tin nhận đồng phục']) ?>
+    <?php CardWidget::begin(['title'=>'Thông tin nhận đồng phục/tài liệu']) ?>
     <div class ='row'>
-     <div class="col-lg-3 col-md-6">
+     <div class="col-lg-2 col-md-6">
     	<?= $form->field($model, 'da_nhan_ao')->checkbox() ?>
     </div>
-    <div class="col-lg-3 col-md-6">
+    <div class="col-lg-2 col-md-6">
         <?= $form->field($model, 'size')->dropDownList(
             [
                 'S'=>'Size S', 
@@ -140,24 +141,40 @@ if($model->isNewRecord){
     ) ?>
     </div>
     <div class="col-lg-3 col-md-6">
-    <?= $form->field($model, 'ngay_nhan_ao')->widget(DatePicker::classname(), [
-    'options' => ['placeholder' => 'Chọn ngày  ...'],
-    'pluginOptions' => [
-        'autoclose' => true,
-        'format' => 'dd/mm/yyyy',
-        'todayHighlight'=>true,
-        'todayBtn'=>true
-    ]
+        <?= $form->field($model, 'ngay_nhan_ao')->widget(DatePicker::classname(), [
+        'options' => ['placeholder' => 'Chọn ngày  ...'],
+        'pluginOptions' => [
+            'autoclose' => true,
+            'format' => 'dd/mm/yyyy',
+            'todayHighlight'=>true,
+            'todayBtn'=>true
+        ]
        ]); ?>
     </div>
-   
+    
+    <div class="col-lg-2 col-md-6">
+    	<?= $form->field($model, 'da_nhan_tai_lieu')->checkbox() ?>
+    </div>
+    
+    <div class="col-lg-3 col-md-6">
+        <?= $form->field($model, 'ngay_nhan_tai_lieu')->widget(DatePicker::classname(), [
+        'options' => ['placeholder' => 'Chọn ngày  ...'],
+        'pluginOptions' => [
+            'autoclose' => true,
+            'format' => 'dd/mm/yyyy',
+            'todayHighlight'=>true,
+            'todayBtn'=>true
+        ]
+       ]); ?>
+    </div>   
         
     </div>
     <?php CardWidget::end() ?>
 
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">
-	        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+	        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', 
+	            ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
 	    </div>
 	<?php } ?>
 
