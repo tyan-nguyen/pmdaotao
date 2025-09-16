@@ -275,7 +275,7 @@ return [
         return '<span title="'. ($model->hangDaoTao ? $model->hangDaoTao->ten_hang : 'N/A') .'">' . ($model->hangDaoTao ? $model->hangDaoTao->ma_hang : 'N/A') . '</span>';
         },
         'format'=>'html',
-        'label' => 'Hạng đào tạo',        
+        'label' => 'H.Đào tạo',        
         'pageSummary' => 'Tổng cộng (E=A-B-C+D)',
         'pageSummaryOptions' => ['class' => 'text-right text-end'],
         //'contentOptions' => [ 'style' => 'text-align:center' ],
