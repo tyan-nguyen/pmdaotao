@@ -4,6 +4,7 @@ namespace app\modules\hocvien\models;
 use yii\helpers\ArrayHelper;
 use Yii;
 use app\modules\hocvien\models\KhoaHoc;
+use app\modules\user\models\User;
 /**
  * This is the model class for table "hv_hang_dao_tao".
  *
@@ -65,7 +66,16 @@ class HangDaoTao extends \app\models\HvHangDaoTao
     }
     public function getHocPhi()
     {
-        return $this->hasOne(HocPhi::class, ['id_hang' => 'id'])->orderBy(['id'=>SORT_DESC]);
+        //neu user la chi nhanh cho lach va hang dao tao hang a, a1 se lay theo hoc phi cung
+        // con lai thi lay hoc phi moi nhat
+        $user = User::getCurrentUser();
+        if($user->noi_dang_ky == DangKyHv::NOIDANGKY_CS5 && $this->id==9){//hạng A
+            return HocPhi::findOne(1);//học phí cho hạng A (cho CN chợ lách)
+        } else if($user->noi_dang_ky == DangKyHv::NOIDANGKY_CS5 && $this->id==10){//hạng A (có GPLX)
+            return HocPhi::findOne(2);//học phí cho hạng A - có GPLX (cho CN chợ lách)
+        } else {
+            return $this->hasOne(HocPhi::class, ['id_hang' => 'id'])->orderBy(['id'=>SORT_DESC]);
+        }
     }
 
 
