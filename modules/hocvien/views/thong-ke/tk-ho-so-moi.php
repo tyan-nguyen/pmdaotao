@@ -12,7 +12,7 @@ use app\custom\CustomFunc;
             <tr style="font-weight:bold">
                 <td width="50px" rowspan="2" align="center">STT</td>
                 <td align="center" rowspan="2">Ngày</td>
-                <td align="center" colspan="8">Tổng học viên mới</td>
+                <td align="center" colspan="9">Tổng học viên mới</td>
                 <td align="center" colspan="2">Hạng B tự động</td>
                 <td align="center" colspan="2">Hạng B cơ khí</td>
                 <td align="center" colspan="2">Hạng C1</td>
@@ -35,6 +35,7 @@ use app\custom\CustomFunc;
                 <td align="center"><?= DangKyHv::getLabelNoiDangKyOther(DangKyHv::NOIDANGKY_CS5) ?></td>
                 <td align="center"><?= DangKyHv::getLabelNoiDangKyOther(DangKyHv::NOIDANGKY_CS6) ?></td>
                 <td align="center"><?= DangKyHv::getLabelNoiDangKyOther(DangKyHv::NOIDANGKY_CS7) ?></td>
+                <td align="center"><?= DangKyHv::getLabelNoiDangKyOther(DangKyHv::NOIDANGKY_CS8) ?></td>
                 <!-- <td align="center">Tổng</td>-->
                 <!-- Hạng B tự động -->
                 <td align="center">CS1</td>
@@ -89,6 +90,7 @@ use app\custom\CustomFunc;
         $soLuongHV5 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere("DATE(thoi_gian_tao) = '$date'")->andFilterWhere(['noi_dang_ky'=>DangKyHv::NOIDANGKY_CS5])->count();
         $soLuongHV6 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere("DATE(thoi_gian_tao) = '$date'")->andFilterWhere(['noi_dang_ky'=>DangKyHv::NOIDANGKY_CS6])->count();
         $soLuongHV7 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere("DATE(thoi_gian_tao) = '$date'")->andFilterWhere(['noi_dang_ky'=>DangKyHv::NOIDANGKY_CS7])->count();
+        $soLuongHV8 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere("DATE(thoi_gian_tao) = '$date'")->andFilterWhere(['noi_dang_ky'=>DangKyHv::NOIDANGKY_CS8])->count();
         
         /* $soLuongBTD = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere("DATE(thoi_gian_tao) = '$date'")->andWhere('id_hang IN (1,2)')->count(); */
         $soLuongBTD1 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere("DATE(thoi_gian_tao) = '$date'")->andWhere('id_hang IN (1,2)')->andFilterWhere(['noi_dang_ky'=>'CS1'])->count();
@@ -136,6 +138,7 @@ use app\custom\CustomFunc;
     	<td align="center"><?= $soLuongHV5 ?></td>
     	<td align="center"><?= $soLuongHV6 ?></td>
     	<td align="center"><?= $soLuongHV7 ?></td>
+    	<td align="center"><?= $soLuongHV8 ?></td>
     	
         <td align="center"><?= $soLuongBTD1 ?></td>
         <td align="center"><?= $soLuongBTD2 ?></td>
@@ -188,6 +191,7 @@ use app\custom\CustomFunc;
                 <td align="center">...</td> 
                 <td align="center">...</td> 
                 <td align="center">...</td> 
+                <td align="center">...</td> 
                 
                 <td align="center">...</td>
                 <td align="center">...</td>
@@ -214,6 +218,7 @@ use app\custom\CustomFunc;
             $soLuongHV5 = DangKyHv::find()->where(['huy_ho_so'=>0])->andFilterWhere(['noi_dang_ky'=>DangKyHv::NOIDANGKY_CS5])->count();
             $soLuongHV6 = DangKyHv::find()->where(['huy_ho_so'=>0])->andFilterWhere(['noi_dang_ky'=>DangKyHv::NOIDANGKY_CS6])->count();
             $soLuongHV7 = DangKyHv::find()->where(['huy_ho_so'=>0])->andFilterWhere(['noi_dang_ky'=>DangKyHv::NOIDANGKY_CS7])->count();
+            $soLuongHV8 = DangKyHv::find()->where(['huy_ho_so'=>0])->andFilterWhere(['noi_dang_ky'=>DangKyHv::NOIDANGKY_CS8])->count();
             
             //$soLuongBTD = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere('id_hang IN (1,2)')->count();
             $soLuongBTD1 = DangKyHv::find()->where(['huy_ho_so'=>0])->andWhere('id_hang IN (1,2)')->andFilterWhere(['noi_dang_ky'=>'CS1'])->count();
@@ -262,6 +267,7 @@ use app\custom\CustomFunc;
                 <td align="center"><?= number_format($soLuongHV5) ?></td>
                 <td align="center"><?= number_format($soLuongHV6) ?></td>
                 <td align="center"><?= number_format($soLuongHV7) ?></td>
+                <td align="center"><?= number_format($soLuongHV8) ?></td>
                 
                 <td align="center"><?= $soLuongBTD1 ?></td>
                 <td align="center"><?= $soLuongBTD2 ?></td>
