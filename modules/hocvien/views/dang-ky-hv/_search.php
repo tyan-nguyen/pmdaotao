@@ -70,10 +70,10 @@ $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gi
             <div class="col-md-2">
                   <?= $form->field($model, 'nguoi_tao')->dropDownList(User::getListNvNhanHoSo(), ['prompt'=>'Tất cả'])->label('NV tiếp nhận') ?>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
                   <?= $form->field($model, 'da_nhan_ao')->dropDownList([1=>'Đã nhận', 0=>'Chưa nhận', ], ['prompt'=>'Tất cả'])->label('Nhận áo') ?>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
                   <?= $form->field($model, 'size')->dropDownList([
                       'S'=>'Size S',
                       'M'=>'Size M',
@@ -86,7 +86,22 @@ $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gi
             </div>
             <div class="col-md-2">
                   <?= $form->field($model, 'ngay_nhan_ao')->widget(DatePicker::classname(), [
-                         'options' => ['placeholder' => 'Chọn ngày nhận  ...'],
+                         'options' => ['placeholder' => 'Chọn ngày nhận ...'],
+                         'pluginOptions' => [
+                         'autoclose' => true,
+                         'format' => 'dd/mm/yyyy',
+                         'zIndexOffset'=>'9999',
+                         'todayHighlight'=>true,
+                         'todayBtn'=>true
+                  ]
+                  ]); ?>
+            </div>
+            <div class="col-md-1">
+                  <?= $form->field($model, 'da_nhan_tai_lieu')->dropDownList([1=>'Đã nhận', 0=>'Chưa nhận', ], ['prompt'=>'Tất cả'])->label('Nhận tài liệu') ?>
+            </div>
+             <div class="col-md-2">
+                  <?= $form->field($model, 'ngay_nhan_tai_lieu')->widget(DatePicker::classname(), [
+                         'options' => ['placeholder' => 'Chọn ngày nhận ...'],
                          'pluginOptions' => [
                          'autoclose' => true,
                          'format' => 'dd/mm/yyyy',
@@ -98,7 +113,7 @@ $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gi
             </div>
             <div class="col-md-2">
                   <?= $form->field($model, 'thoi_gian_hoan_thanh_ho_so')->widget(DatePicker::classname(), [
-                         'options' => ['placeholder' => 'Chọn ngày HTHS  ...'],
+                         'options' => ['placeholder' => 'Chọn ngày HTHS ...'],
                          'pluginOptions' => [
                              'autoclose' => true,
                              'format' => 'dd/mm/yyyy',
@@ -108,6 +123,7 @@ $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gi
                         ]
                   ]); ?>
             </div>
+           
             <div class="col-md-2">
                   <?= $form->field($model, 'thoi_gian_tao')->widget(DatePicker::classname(), [
                          'options' => ['placeholder' => 'Chọn ngày tiếp nhận đăng ký  ...'],
@@ -120,7 +136,7 @@ $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gi
                         ]
                   ])->label('Ngày nhận HV mới'); ?>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                   <?= $form->field($model, 'ghi_chu')->textInput(['maxlength' => true]) ?>
             </div>
             <div class="col-md-2">

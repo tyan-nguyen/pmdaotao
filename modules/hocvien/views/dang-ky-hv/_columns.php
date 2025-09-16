@@ -404,6 +404,18 @@ return [
         'width' => '30px',
         'contentOptions' => [ 'style' => 'text-align:center'],
     ],
+    
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'da_nhan_tai_lieu',
+        'label'=>'TLiệu',
+        'format'=>'html',
+        'value'=>function($model){
+            return $model->da_nhan_tai_lieu==1?'<i class="ion-checkmark-round text-primary"></i>':'';
+        },
+        'width' => '30px',
+        'contentOptions' => [ 'style' => 'text-align:center'],
+        ],
         
     [
         'class'=>'\kartik\grid\DataColumn',

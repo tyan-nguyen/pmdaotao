@@ -29,6 +29,9 @@ class DangKyHv extends HocVienBase
             if($this->da_nhan_ao==null){
                 $this->da_nhan_ao = 0;
             }
+            if($this->da_nhan_tai_lieu==null){
+                $this->da_nhan_tai_lieu = 0;
+            }
             if($this->huy_ho_so==null){
                 $this->huy_ho_so = 0;
             }
