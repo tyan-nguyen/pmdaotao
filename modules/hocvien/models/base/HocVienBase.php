@@ -81,7 +81,7 @@ class HocVienBase extends \app\models\HvHocVien
         
     
     /**
-     * Danh muc hinh thuc chuyen khoan
+     * Danh muc noi dang ky
      * @return string[]
      */
     public static function getDmNoiDangKy()
@@ -95,6 +95,23 @@ class HocVienBase extends \app\models\HvHocVien
             self::NOIDANGKY_CS6 => 'CS6 - CN Trà Cú',
             self::NOIDANGKY_CS7 => 'CS7 - CN Cầu Kè',
             self::NOIDANGKY_CS8 => 'CS7 - CN Tiểu Cần',
+        ];
+    }
+    /**
+     * Danh muc noi dang ky short
+     * @return string[]
+     */
+    public static function getDmNoiDangKyShort()
+    {
+        return [
+            self::NOIDANGKY_CS1 => 'CS1',
+            self::NOIDANGKY_CS2 => 'CS2',
+            self::NOIDANGKY_CS3 => 'CN Càng Long',
+            self::NOIDANGKY_CS4 => 'CN Duyên Hải',
+            self::NOIDANGKY_CS5 => 'CN Chợ Lách',
+            self::NOIDANGKY_CS6 => 'CN Trà Cú',
+            self::NOIDANGKY_CS7 => 'CN Cầu Kè',
+            self::NOIDANGKY_CS8 => 'CN Tiểu Cần',
         ];
     }
     /**
