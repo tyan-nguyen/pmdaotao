@@ -196,4 +196,64 @@ class User extends UserBase{
         return $tongConNo;
     }
     
+    /**
+     * get list nợ của nhân viên tiếp nhận hồ sơ (tất cả thời gian hoặc đến mốc thời gian)
+     * chỉ lấy học viên có trường da_nop_du = 0 ***
+     * $nhanvienid: kieu int, id cua user tiep nhan ho so
+     * $endtime: Y-m-d H:i:s
+     */
+    public static function getNoConLaiCuaNhanVien2($nhanvienid, $endtime=NULL){
+        if($endtime==NULL){
+            $listHvPhuTrach = HocVien::find()
+            ->where(['nguoi_tao'=>$nhanvienid])
+            ->andWhere("huy_ho_so = 0")
+            ->andWhere("da_nop_du = 0")
+            ->all();
+        } else {
+            $listHvPhuTrach = HocVien::find()
+            ->where(['nguoi_tao'=>$nhanvienid])
+            /* ->andFilterWhere(['<=', 'thoi_gian_tao', new Expression("STR_TO_DATE('".$endtime."','%Y-%m-%d %H:%i:%s')")]) */
+            //->andFilterWhere(['<=', 'thoi_gian_tao', $endtime])
+            ->andWhere("thoi_gian_tao <= '".$endtime . "'")
+            ->andWhere("da_nop_du = 0")
+            ->andWhere("huy_ho_so = 0 OR (huy_ho_so = 1 AND thoi_gian_huy_ho_so > '".$endtime . "')")
+            ->all();
+        }
+        ///////////////////////
+        //$listHvPhuTrach = HocVien::find()->where(['nguoi_tao'=>$nhanvienid])->all();
+        $tongConNo = 0;
+        foreach ($listHvPhuTrach as $indexHvPhuTrach=>$hv){
+            $tongConNo += $hv->getTienChuaThanhToanByEndTime($endtime);
+        }
+        return $tongConNo;
+    }
+    
+    /**
+     * get tổng nợ còn lại của tất cả học viên (tất cả thời gian hoặc đến mốc thời gian)
+     * chỉ lấy học viên có trường da_nop_du = 0 ***
+     */
+    public static function getNoConLaiCuaTatCaHocVien2($endtime=NULL){
+        if($endtime==NULL){
+            $listHvPhuTrach = HocVien::find()
+            ->andWhere("huy_ho_so = 0")
+            ->andWhere("da_nop_du = 0")
+            ->all();
+        }else {
+            $listHvPhuTrach = HocVien::find()
+            /* ->andFilterWhere(['<=', 'thoi_gian_tao', new Expression("STR_TO_DATE('".$endtime."','%Y-%m-%d %H:%i:%s')")]) */
+            /*->andFilterWhere(['<=', 'thoi_gian_tao', $endtime])*/
+            ->where("thoi_gian_tao <= '".$endtime . "'")
+            ->andWhere("da_nop_du = 0")
+            ->andWhere("huy_ho_so = 0 OR (huy_ho_so = 1 AND thoi_gian_huy_ho_so > '".$endtime . "')")
+            ->all();
+        }
+        //////////////////////////
+        //$listHvPhuTrach = HocVien::find()->all();
+        $tongConNo = 0;
+        foreach ($listHvPhuTrach as $indexHvPhuTrach=>$hv){
+            $tongConNo += $hv->getTienChuaThanhToanByEndTime($endtime);
+        }
+        return $tongConNo;
+    }
+    
 }

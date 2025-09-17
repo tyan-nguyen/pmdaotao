@@ -54,7 +54,7 @@
                 <th scope="row"><?= $iUsr+1 ?></th>
                 <td><?= $usr->hoTen ?></td>
                 <td><?= $usr->noi_dang_ky . ' - ' .DangKyHv::getLabelNoiDangKyOther($usr->noi_dang_ky) ?></td>
-                <td align="right"><?= number_format(User::getNoConLaiCuaNhanVien($usr->id,NULL)) ?></td>
+                <td align="right"><?= number_format(User::getNoConLaiCuaNhanVien2($usr->id,NULL)) ?></td>
             </tr>
             
             <?php 
