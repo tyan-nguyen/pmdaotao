@@ -44,7 +44,8 @@ use Yii;
  * @property string|null $ly_do_huy_ho_so
  * @property string|null $loai_ly_do
  * @property float|null $le_phi
- *
+ * @property int|null $da_nop_du
+ * 
  * @property GdGvHv[] $gdGvHvs
  * @property HvHangDaoTao $hang
  * @property HvHocPhi $hocPhi
@@ -71,8 +72,8 @@ class HvHocVien extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_khoa_hoc', 'id_hoc_phi', 'so_cccd', 'ngay_het_han_cccd', 'nguoi_tao', 'thoi_gian_tao', 'gioi_tinh', 'dia_chi', 'ngay_sinh', 'nguoi_lap_phieu', 'ma_so_phieu', 'so_lan_in_phieu', 'check_hoc_phi', 'id_nhom', 'loai_dang_ky', 'noi_dang_ky', 'nguoi_duyet', 'trang_thai_duyet', 'ghi_chu', 'thoi_gian_hoan_thanh_ho_so', 'co_ho_so_thue', 'da_nhan_ao', 'size', 'ngay_nhan_ao', 'id_giao_vien', 'huy_ho_so', 'thoi_gian_huy_ho_so', 'ly_do_huy_ho_so', 'loai_ly_do', 'le_phi'], 'default', 'value' => null],
-            [['id_khoa_hoc', 'id_hoc_phi', 'nguoi_tao', 'gioi_tinh', 'ma_so_phieu', 'so_lan_in_phieu', 'id_hang', 'id_nhom', 'nguoi_duyet', 'co_ho_so_thue', 'da_nhan_ao', 'id_giao_vien', 'huy_ho_so', 'da_nhan_tai_lieu'], 'integer'],
+            [['id_khoa_hoc', 'id_hoc_phi', 'so_cccd', 'ngay_het_han_cccd', 'nguoi_tao', 'thoi_gian_tao', 'gioi_tinh', 'dia_chi', 'ngay_sinh', 'nguoi_lap_phieu', 'ma_so_phieu', 'so_lan_in_phieu', 'check_hoc_phi', 'id_nhom', 'loai_dang_ky', 'noi_dang_ky', 'nguoi_duyet', 'trang_thai_duyet', 'ghi_chu', 'thoi_gian_hoan_thanh_ho_so', 'co_ho_so_thue', 'da_nhan_ao', 'size', 'ngay_nhan_ao', 'id_giao_vien', 'huy_ho_so', 'thoi_gian_huy_ho_so', 'ly_do_huy_ho_so', 'loai_ly_do', 'le_phi', 'da_nop_du'], 'default', 'value' => null],
+            [['id_khoa_hoc', 'id_hoc_phi', 'nguoi_tao', 'gioi_tinh', 'ma_so_phieu', 'so_lan_in_phieu', 'id_hang', 'id_nhom', 'nguoi_duyet', 'co_ho_so_thue', 'da_nhan_ao', 'id_giao_vien', 'huy_ho_so', 'da_nhan_tai_lieu', 'da_nop_du'], 'integer'],
             [['ho_ten', 'so_dien_thoai', 'trang_thai', 'id_hang'], 'required'],
             [['ngay_het_han_cccd', 'thoi_gian_tao', 'ngay_sinh', 'thoi_gian_hoan_thanh_ho_so', 'ngay_nhan_ao', 'ngay_nhan_tai_lieu', 'thoi_gian_huy_ho_so'], 'safe'],
             [['ghi_chu', 'ly_do_huy_ho_so'], 'string'],
@@ -133,6 +134,7 @@ class HvHocVien extends \yii\db\ActiveRecord
             'ly_do_huy_ho_so' => 'Ly Do Huy Ho So',
             'loai_ly_do' => 'Loai Ly Do',
             'le_phi' => 'Le Phi',
+            'da_nop_du' => 'Da Nop Du'
         ];
     }
 

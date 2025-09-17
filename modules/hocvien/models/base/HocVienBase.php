@@ -57,6 +57,7 @@ use app\modules\hocvien\models\DoiSatHach;
  * @property string|null $ly_do_huy_ho_so
  * @property string|null $loai_ly_do
  * @property float|null $le_phi
+ * @property int|null $da_nop_du
  */
 class HocVienBase extends \app\models\HvHocVien
 {
@@ -294,7 +295,7 @@ class HocVienBase extends \app\models\HvHocVien
         return [
             /*[['id_hang', 'ho_ten', 'so_cccd','id_hang'], 'required'],*/
             [['id_hang', 'ho_ten', 'noi_dang_ky'], 'required'],
-            [['id_khoa_hoc', 'id_hoc_phi', 'nguoi_tao','gioi_tinh','id_hang','id_nhom','nguoi_duyet','ma_so_phieu','so_lan_in_phieu','co_ho_so_thue', 'da_nhan_ao', 'id_giao_vien', 'huy_ho_so', 'da_nhan_tai_lieu'], 'integer'],
+            [['id_khoa_hoc', 'id_hoc_phi', 'nguoi_tao','gioi_tinh','id_hang','id_nhom','nguoi_duyet','ma_so_phieu','so_lan_in_phieu','co_ho_so_thue', 'da_nhan_ao', 'id_giao_vien', 'huy_ho_so', 'da_nhan_tai_lieu', 'da_nop_du'], 'integer'],
             [['thoi_gian_tao', 'thoi_gian_hoan_thanh_ho_so', 'thoi_gian_huy_ho_so', 'ngay_sinh','ngay_het_han_cccd'], 'safe'],
             [['ho_ten', 'so_dien_thoai', 'so_cccd', 'trang_thai','dia_chi','trang_thai_duyet'], 'string', 'max' => 255],
             [['check_hoc_phi'],'string','max'=>25],
@@ -353,6 +354,7 @@ class HocVienBase extends \app\models\HvHocVien
             'ly_do_huy_ho_so' => 'Lý do hủy',
             'loai_ly_do' => 'Loại lý do',
             'le_phi' => 'Lệ phí',
+            'da_nop_du' => 'Đã nộp đủ',
         ];
     }
 

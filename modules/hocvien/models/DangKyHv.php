@@ -35,6 +35,9 @@ class DangKyHv extends HocVienBase
             if($this->huy_ho_so==null){
                 $this->huy_ho_so = 0;
             }
+            if($this->da_nop_du==null){
+                $this->da_nop_du = 0;
+            }
             
         }
         
