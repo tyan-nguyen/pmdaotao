@@ -47,7 +47,7 @@
                     $sumCS = 0;//
                     $cs = $usr->noi_dang_ky;//important
                 }
-                $sumCS += User::getNoConLaiCuaNhanVien($usr->id,NULL);
+                $sumCS += User::getNoConLaiCuaNhanVien2($usr->id,NULL);
              ?>
 
             <tr>
@@ -73,7 +73,7 @@
         
         <tr>
                 <td colspan="3" align="right"><strong>TỔNG CỘNG CÔNG NỢ</strong></td>
-                <td align="right"><strong><?= number_format(User::getNoConLaiCuaTatCaHocVien(NULL)) ?></strong></td>
+                <td align="right"><strong><?= number_format(User::getNoConLaiCuaTatCaHocVien2(NULL)) ?></strong></td>
             </tr>
         
         </tbody>
