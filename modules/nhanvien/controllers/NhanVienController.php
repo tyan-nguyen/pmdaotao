@@ -20,7 +20,16 @@ use \yii\web\Response;
  */
 class NhanVienController extends Controller
 {
-   
+    /**
+     * @inheritdoc
+     */
+    public function behaviors() {
+        return [
+            'ghost-access'=> [
+                'class' => 'webvimark\modules\UserManagement\components\GhostAccessControl',
+            ],
+        ];
+    }
 
     /**
      * Lists all NhanVien models.
