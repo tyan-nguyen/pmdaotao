@@ -9,6 +9,7 @@ use app\modules\khoahoc\models\KhoaHoc;
 use app\custom\CustomFunc;
 use app\modules\hocvien\models\DangKyHv;
 use app\modules\hocvien\models\HangDaoTao;
+use kartik\select2\Select2;
 /* @var $this yii\web\View */
 /* @var $model app\modules\vanban\models\VanBanDen */
 /* @var $form yii\widgets\ActiveForm */
@@ -59,13 +60,55 @@ $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gi
                   <?= $form->field($model, 'so_dien_thoai')->textInput(['maxlength' => true]) ?>
             </div>
             <div class="col-md-2">
-                  <?= $form->field($model, 'noi_dang_ky')->dropDownList(DangKyHv::getDmNoiDangKy(), ['prompt'=>'Tất cả'])->label('Nơi ĐK') ?>
+                  <?php // $form->field($model, 'noi_dang_ky')->dropDownList(DangKyHv::getDmNoiDangKy(), ['prompt'=>'Tất cả'])->label('Nơi ĐK') ?>
+                   <label><?= $model->getAttributeLabel('noi_dang_ky') ?></label>
+                <?= $form->field($model, 'noi_dang_ky')->widget(Select2::classname(), [
+                    'data' => DangKyHv::getDmNoiDangKy(),
+                    'language' => 'vi',
+                    'options' => [
+                        'placeholder' => 'Chọn hạng...',  
+                        'class' => 'form-control dropdown-with-arrow',
+                        'id' => 'noi-dang-ky-search-dropdown'
+                    ],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                        'width'=>'100%'
+                    ],
+                ])->label(false); ?>
             </div>
             <div class="col-md-2">
-                  <?= $form->field($model, 'id_hang')->dropDownList(HangDaoTao::getList(), ['prompt'=>'Tất cả']) ?>
+                  <?php // $form->field($model, 'id_hang')->dropDownList(HangDaoTao::getList(), ['prompt'=>'Tất cả']) ?>
+                   <label><?= $model->getAttributeLabel('id_hang') ?></label>
+                <?= $form->field($model, 'id_hang')->widget(Select2::classname(), [
+                    'data' => HangDaoTao::getList(),
+                    'language' => 'vi',
+                    'options' => [
+                        'placeholder' => 'Chọn hạng...',  
+                        'class' => 'form-control dropdown-with-arrow',
+                        'id' => 'hang-search-dropdown'
+                    ],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                        'width'=>'100%'
+                    ],
+                ])->label(false); ?>
             </div>
             <div class="col-md-2">
-                  <?= $form->field($model, 'id_khoa_hoc')->dropDownList(KhoaHoc::getList(), ['prompt'=>'Tất cả']) ?>
+                  <?php // $form->field($model, 'id_khoa_hoc')->dropDownList(KhoaHoc::getList(), ['prompt'=>'Tất cả']) ?>
+                  <label><?= $model->getAttributeLabel('id_khoa_hoc') ?></label>
+                <?= $form->field($model, 'id_khoa_hoc')->widget(Select2::classname(), [
+                    'data' => KhoaHoc::getList(),
+                    'language' => 'vi',
+                    'options' => [
+                        'placeholder' => 'Chọn khóa...',  
+                        'class' => 'form-control dropdown-with-arrow',
+                        'id' => 'khoa-hoc-search-dropdown'
+                    ],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                        'width'=>'100%'
+                    ],
+                ])->label(false); ?>
             </div>
             <div class="col-md-2">
                   <?= $form->field($model, 'nguoi_tao')->dropDownList(User::getListNvNhanHoSo(), ['prompt'=>'Tất cả'])->label('NV tiếp nhận') ?>
