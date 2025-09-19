@@ -29,10 +29,10 @@ class GiaoVien extends GiaoVienBase
     }
 
     public function beforeSave($insert) {
+        $this->ngay_sinh = CustomFunc::convertDMYToYMD($this->ngay_sinh);
         if ($this->isNewRecord) {
             $this->nguoi_tao = Yii::$app->user->identity->id;
             $this->thoi_gian_tao = date('Y-m-d H:i:s');
-            $this->ngay_sinh = CustomFunc::convertDMYToYMD($this->ngay_sinh);
             $this->doi_tuong = 1;
         }
         return parent::beforeSave($insert);

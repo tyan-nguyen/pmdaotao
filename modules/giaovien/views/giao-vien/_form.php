@@ -7,6 +7,7 @@ use yii\helpers\ArrayHelper;
 use kartik\date\DatePicker;
 use app\widgets\CardWidget;
 use kartik\select2\Select2;
+use app\custom\CustomFunc;
 /* @var $this yii\web\View */
 /* @var $model app\modules\nhanvien\models\NhanVien */
 /* @var $form yii\widgets\ActiveForm */
@@ -19,6 +20,9 @@ $listPhongBan = ArrayHelper::map($phongBans, 'id', 'ten_phong_ban');
 
 $taiKhoans = User::find()->all();
 $listTaiKhoan = ArrayHelper::map($taiKhoans, 'id', 'username');
+if(!$model->isNewRecord){
+    $model->ngay_sinh = CustomFunc::convertYMDToDMY($model->ngay_sinh);
+}
 ?>
 
 <div class="giao-vien-form"  id ="pbContent">
