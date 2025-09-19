@@ -6,6 +6,7 @@ use app\modules\user\models\User;
 use yii\helpers\ArrayHelper;
 use kartik\date\DatePicker;
 use app\widgets\CardWidget;
+use kartik\select2\Select2;
 /* @var $this yii\web\View */
 /* @var $model app\modules\nhanvien\models\NhanVien */
 /* @var $form yii\widgets\ActiveForm */
@@ -58,10 +59,25 @@ $listTaiKhoan = ArrayHelper::map($taiKhoans, 'id', 'username');
                <?= $form->field($model, 'ma_so_thue')->textInput(['maxlength' => true]) ?>
            </div>
            <div class="col-lg-3 col-md-6">
-               <?= $form->field($model, 'tai_khoan')->dropDownList(
+               <?php /* $form->field($model, 'tai_khoan')->dropDownList(
                  $listTaiKhoan,
                  ['prompt' => 'Chọn tài khoản...']
-               ) ?>
+               ) */ ?>
+                 <label><?= $model->getAttributeLabel('tai_khoan') ?></label>
+                <?= $form->field($model, 'tai_khoan')->widget(Select2::classname(), [
+                    'data' => $listTaiKhoan,
+                    'language' => 'vi',
+                    'options' => [
+                        'placeholder' => 'Chọn tài khoản...',  
+                        'class' => 'form-control dropdown-with-arrow',
+                        'id' => 'tai-khoan-search-dropdown'
+                    ],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                        'width'=>'100%',
+                        'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
+                    ],
+                ])->label(false); ?>
            </div>
       </div>
         <?php CardWidget::end([]) ?>

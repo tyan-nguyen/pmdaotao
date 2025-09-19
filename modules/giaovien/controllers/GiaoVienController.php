@@ -46,12 +46,12 @@ class GiaoVienController extends Controller
      * Lists all NhanVien models.
      * @return mixed
      */
-    public function beforeAction($action)
+    /* public function beforeAction($action)
 	{
 	    Yii::$app->params['moduleID'] = 'Module Quản lý Giáo viên';
 	    Yii::$app->params['modelID'] = 'Quản lý Giáo viên';
 	    return parent::beforeAction($action);
-	}
+	} */
     
     public function actionIndex()
     {    
