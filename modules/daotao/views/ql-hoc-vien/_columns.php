@@ -6,6 +6,7 @@ use app\modules\hocvien\models\HocVien;
 use app\modules\hocvien\models\HocPhi;
 use app\modules\hocvien\models\KhoaHoc;
 use app\custom\CustomFunc;
+use app\modules\daotao\models\TietHoc;
 return [
     [
         'class' => 'kartik\grid\CheckboxColumn',
@@ -60,7 +61,7 @@ return [
             : '<span class="badge bg-warning"> Chưa sắp khóa học </span>';
         },
         'format' => 'raw',
-        'width' => '200px',
+        'width' => '150px',
     ],
    
     [
@@ -79,7 +80,7 @@ return [
     [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'gioi_tinh',
-        'width' => '150px',
+        'width' => '100px',
         'value' => function ($model) {
             return $model->gioi_tinh == 1 ? 'Nam' : 'Nữ';
         },
@@ -106,22 +107,32 @@ return [
     [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'id_hang',
-        'width' => '250px',
+        'width' => '120px',
         'value' => function($model) {
-            return $model->hangDaoTao ? $model->hangDaoTao->ten_hang : 'N/A';
+            return $model->hangDaoTao ? $model->hangDaoTao->ma_hang : 'N/A';
         },
         'label' => 'Hạng đào tạo',
-        ],
-    
+    ],
     
     [
+        'class' => '\kartik\grid\DataColumn',
+        'label' => 'Đã học',
+        'width' => '400px',
+        'value' => function($model) {
+            return TietHoc::getSoTietDaHocByMonOfHocVien($model->id);
+        },
+        'format'=>'html'   
+     ],
+    
+    
+    /* [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'id_giao_vien',
         'value'=>function($model){
             return $model->giaoVien?$model->giaoVien->ho_ten:'';
         },
         'width' => '150px',
-    ],
+    ], */
 
      /* [
         'class'=>'\kartik\grid\DataColumn',

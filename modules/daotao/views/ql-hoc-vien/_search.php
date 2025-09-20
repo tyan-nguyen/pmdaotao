@@ -51,17 +51,36 @@ use app\modules\giaovien\models\GiaoVien;
                   <?= $form->field($model, 'so_dien_thoai')->textInput(['maxlength' => true]) ?>
             </div>
             <div class="col-md-3">
-                <?= $form->field($model, 'id_hang')->dropDownList(
-                   HangDaoTao::getList(), 
-                     [
-                       'prompt' => 'Chọn hạng',
-                       'class' => 'form-control dropdown-with-arrow',
-                       'id' => 'hangs-dropdown',
-                     ]
-                ) ?>
+                <label><?= $model->getAttributeLabel('id_hang') ?></label>
+                <?= $form->field($model, 'id_hang')->widget(Select2::classname(), [
+                    'data' => HangDaoTao::getList(),
+                    'language' => 'vi',
+                    'options' => [
+                        'placeholder' => 'Chọn hạng...',  
+                        'class' => 'form-control dropdown-with-arrow',
+                        'id' => 'hang-search-dropdown'
+                    ],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                        'width'=>'100%'
+                    ],
+                ])->label(false); ?>
             </div>
             <div class="col-md-2">
-                  <?= $form->field($model, 'id_khoa_hoc')->dropDownList(KhoaHoc::getList(), ['prompt'=>'Tất cả']) ?>
+                  <label><?= $model->getAttributeLabel('id_khoa_hoc') ?></label>
+                <?= $form->field($model, 'id_khoa_hoc')->widget(Select2::classname(), [
+                    'data' => KhoaHoc::getList(),
+                    'language' => 'vi',
+                    'options' => [
+                        'placeholder' => 'Chọn khóa...',  
+                        'class' => 'form-control dropdown-with-arrow',
+                        'id' => 'khoa-hoc-search-dropdown'
+                    ],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                        'width'=>'100%'
+                    ],
+                ])->label(false); ?>
             </div>
             <!-- 
             <div class="col-md-2">

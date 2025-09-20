@@ -71,8 +71,7 @@ class HocVienSearch extends HocVien
             'id_giao_vien'=>$this->id_giao_vien
         ]);
 
-        $query->andFilterWhere(['like', 'ho_ten', $this->ho_ten])
-           
+        $query->andFilterWhere(['like', 'ho_ten', $this->ho_ten])           
             ->andFilterWhere(['like', 'so_dien_thoai', $this->so_dien_thoai])
             ->andFilterWhere(['like', 'so_cccd', $this->so_cccd])
             ->andFilterWhere(['like', 'trang_thai', $this->trang_thai])

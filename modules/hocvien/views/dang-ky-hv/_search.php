@@ -78,7 +78,7 @@ $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gi
             </div>
             <div class="col-md-2">
                   <?php // $form->field($model, 'id_hang')->dropDownList(HangDaoTao::getList(), ['prompt'=>'Tất cả']) ?>
-                   <label><?= $model->getAttributeLabel('id_hang') ?></label>
+                <label><?= $model->getAttributeLabel('id_hang') ?></label>
                 <?= $form->field($model, 'id_hang')->widget(Select2::classname(), [
                     'data' => HangDaoTao::getList(),
                     'language' => 'vi',
@@ -95,7 +95,7 @@ $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gi
             </div>
             <div class="col-md-2">
                   <?php // $form->field($model, 'id_khoa_hoc')->dropDownList(KhoaHoc::getList(), ['prompt'=>'Tất cả']) ?>
-                  <label><?= $model->getAttributeLabel('id_khoa_hoc') ?></label>
+                <label><?= $model->getAttributeLabel('id_khoa_hoc') ?></label>
                 <?= $form->field($model, 'id_khoa_hoc')->widget(Select2::classname(), [
                     'data' => KhoaHoc::getList(),
                     'language' => 'vi',
