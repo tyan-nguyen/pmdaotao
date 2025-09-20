@@ -12,4 +12,12 @@ class LoaiHangHoa extends LoaiHangHoaBase{
             return '+ ' . $model->ten_loai_hang_hoa;
         });
     }
+    
+    //get dm loại hàng hóa trong bán hàng
+    public static function getDmLoaiHangHoaBanHang(){
+        $ds = LoaiHangHoa::find()->where('id NOT IN (1,10)')->all();
+        return ArrayHelper::map($ds, 'id', function($model) {
+            return '+ ' . $model->ten_loai_hang_hoa;
+        });
+    }
 }

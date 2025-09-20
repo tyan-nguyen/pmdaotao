@@ -101,6 +101,16 @@ return [
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'loai_hang_hoa',
+        'label'=>'Loại HH',
+        'value'=>function($model){
+            return $model->loaiHangHoa?$model->loaiHangHoa->ten_loai_hang_hoa:'';
+        },
+        'headerOptions' => ['style' => 'width:150px;'],
+        'contentOptions' => ['style' => 'width:150px;'],
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'loai_khach_hang',
         'label'=>'Loại KH',
         'value'=>function($model){

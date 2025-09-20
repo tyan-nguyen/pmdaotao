@@ -20,7 +20,7 @@ class HoaDonSearch extends HoaDon
     {
         return [
             [['id', 'id_khach_hang', 'so_don_hang', 'so_vao_so', 'nam', 'so_lan_in', 'da_giao_hang', 'nguoi_tao', 'edit_mode'], 'integer'],
-            [['trang_thai', 'ngay_dat_hang', 'ngay_xuat', 'hinh_thuc_thanh_toan', 'ngay_giao_hang', 'ghi_chu', 'thoi_gian_tao', 'idHocVien', 'idKhachNgoai', 'loai_khach_hang'], 'safe'],
+            [['trang_thai', 'ngay_dat_hang', 'ngay_xuat', 'hinh_thuc_thanh_toan', 'ngay_giao_hang', 'ghi_chu', 'thoi_gian_tao', 'idHocVien', 'idKhachNgoai', 'loai_khach_hang', 'loai_hang_hoa'], 'safe'],
             [['chi_phi_van_chuyen'], 'number'],
         ];
     }
@@ -76,6 +76,7 @@ class HoaDonSearch extends HoaDon
         	$query->andFilterWhere([
                 'id' => $this->id,
                 //'id_khach_hang' => $this->id_khach_hang,
+        	    'loai_hang_hoa' => $this->loai_hang_hoa,
         	    'loai_khach_hang' => $this->loai_khach_hang,
                 'so_don_hang' => $this->so_don_hang,
                 'so_vao_so' => $this->so_vao_so,

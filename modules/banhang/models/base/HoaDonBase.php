@@ -7,11 +7,13 @@ use app\modules\banhang\models\HoaDonChiTiet;
 use app\custom\CustomFunc;
 use app\modules\user\models\User;
 use app\modules\hocvien\models\DangKyHv;
+use app\modules\banhang\models\LoaiHangHoa;
 
 /**
  * This is the model class for table "kh_don_hang".
  *
  * @property int $id
+ * @property int $loai_hang_hoa
  * @property string|null $loai_khach_hang
  * @property int $id_khach_hang
  * @property int $so_don_hang
@@ -165,8 +167,8 @@ class HoaDonBase extends \app\models\BanleDonHang
     {
         return [
             [['so_vao_so', 'nam', 'trang_thai', 'ngay_xuat', 'so_lan_in','da_giao_hang', 'ngay_giao_hang', 'chi_phi_van_chuyen',  'ghi_chu', 'nguoi_tao', 'thoi_gian_tao', 'loai_khach_hang'], 'default', 'value' => null],
-            [['id_khach_hang'], 'required'],
-            [['id_khach_hang', 'so_don_hang', 'so_vao_so', 'nam', 'so_lan_in', 'da_giao_hang', 'nguoi_tao', 'edit_mode', 'idHocVien', 'idKhachNgoai'], 'integer'],
+            [['loai_hang_hoa', 'id_khach_hang'], 'required'],
+            [['loai_hang_hoa', 'id_khach_hang', 'so_don_hang', 'so_vao_so', 'nam', 'so_lan_in', 'da_giao_hang', 'nguoi_tao', 'edit_mode', 'idHocVien', 'idKhachNgoai'], 'integer'],
             [['ngay_dat_hang', 'ngay_xuat', 'ngay_giao_hang', 'thoi_gian_tao'], 'safe'],
             [['chi_phi_van_chuyen'], 'number'],
             [['ghi_chu'], 'string'],
@@ -182,6 +184,7 @@ class HoaDonBase extends \app\models\BanleDonHang
     {
         return [
             'id' => 'ID',
+            'loai_hang_hoa' => 'Loại hàng hóa',
             'loai_khach_hang' => 'Loại khách hàng',
             'id_khach_hang' => 'Khách hàng',
             'so_don_hang' => 'Số đơn hàng',
@@ -312,6 +315,10 @@ class HoaDonBase extends \app\models\BanleDonHang
         } else if ($this->loai_khach_hang == self::LOAI_KHACHLE){
             return $this->hasOne(KhachHang::class, ['id' => 'id_khach_hang']);
         }
+    }
+    
+    public function getLoaiHangHoa(){
+        return $this->hasOne(LoaiHangHoa::class, ['id' => 'loai_hang_hoa']);
     }
     
     public function getNguoiTao(){

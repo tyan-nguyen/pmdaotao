@@ -10,6 +10,7 @@ use app\custom\CustomFunc;
 use app\modules\user\models\User;
 use app\modules\hocvien\models\HocVien;
 use app\widgets\CardWidget;
+use app\modules\banhang\models\LoaiHangHoa;
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\banhang\models\HoaDon */
@@ -45,6 +46,7 @@ $model->ngay_giao_hang = CustomFunc::convertYMDToDMY($model->ngay_giao_hang);
         		<span aria-hidden="true">×</span></button>
         	<strong><span class="alert-inner--icon d-inline-block me-1"><i class="fe fe-bell"></i></span> Thêm phiếu bán hàng</strong>: 
         	<ul>
+        		<li><i class="fa fa-angle-double-right mb-2 me-2"></i> Chọn loại hàng hóa.</li>
         		<li><i class="fa fa-angle-double-right mb-2 me-2"></i> Chọn khách hàng.</li>
         		<li><i class="fa fa-angle-double-right mb-2 me-2"></i> Chọn hình thức thanh toán.</li>
         		<li><i class="fa fa-angle-double-right mb-2 me-2"></i> Bấm lưu lại để xuất hiện danh sách hàng hóa.</li>
@@ -52,7 +54,11 @@ $model->ngay_giao_hang = CustomFunc::convertYMDToDMY($model->ngay_giao_hang);
         </div>
 		</div>
 		<?php } ?>
-	
+		
+		<div class="col-md-2">
+			<?= $form->field($model, 'loai_hang_hoa')->dropDownList(LoaiHangHoa::getDmLoaiHangHoaBanHang(), ['prompt'=>'-Chọn-', 'id'=>'ddlLoaiHangHoa']) ?>
+		</div>
+		
 		<div class="col-md-2" style="display:none">
 			<?= $form->field($model, 'loai_khach_hang')->dropDownList(HoaDon::getDmLoaiKhachHang(), ['prompt'=>'-Chọn-', 'id'=>'ddlLoaiKhachHang', 'disabled' => true]) ?>
 		</div>
@@ -98,7 +104,7 @@ $model->ngay_giao_hang = CustomFunc::convertYMDToDMY($model->ngay_giao_hang);
                 ],
             ])->label(false); ?>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-2" style="display:none">
             <label>Họ tên</label> <br/>
             <!-- <span id="khHoTen" style="font-weight:bold"><?= $model->khachHang ? $model->khachHang->ho_ten : '' ?></span> -->
             <?= Html::textInput('ho_ten', 
@@ -514,7 +520,7 @@ function fillVatTuDropDown(dropdownId, selected){
 
     $.ajax({
         type: 'post',
-        url: '/banhang/hoa-don-chi-tiet/get-list-vat-tu?selected=' + selected,
+        url: '/banhang/hoa-don-chi-tiet/get-list-vat-tu?selected=' + selected + '&loai=<?= $model->loai_hang_hoa ?>',
         //data: frm.serialize(),
         success: function (data) {
             console.log('Submission was successful.');

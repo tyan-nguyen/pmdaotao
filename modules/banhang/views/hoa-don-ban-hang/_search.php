@@ -7,6 +7,7 @@ use yii\web\JsExpression;
 use app\modules\banhang\models\HoaDon;
 use kartik\date\DatePicker;
 use app\modules\user\models\User;
+use app\modules\banhang\models\LoaiHangHoa;
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\banhang\models\HoaDon */
@@ -23,6 +24,9 @@ use app\modules\user\models\User;
             ]
     ]); ?>
 	<div class="row">
+		<div class="col-md-2">
+			<?= $form->field($model, 'loai_hang_hoa')->dropDownList(LoaiHangHoa::getDmLoaiHangHoaBanHang(), ['prompt'=>'-Chọn-', 'id'=>'ddlLoaiHangHoa']) ?>
+		</div>
 		<div class="col-md-2">
 			<?= $form->field($model, 'loai_khach_hang')->dropDownList(HoaDon::getDmLoaiKhachHang(), ['prompt'=>'-Tất cả-']) ?>  
 		</div>

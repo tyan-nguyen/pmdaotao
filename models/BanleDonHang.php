@@ -9,6 +9,7 @@ use app\modules\banhang\models\KhachHang;
  * This is the model class for table "kh_don_hang".
  *
  * @property int $id
+ * @property int $loai_hang_hoa
  * @property string|null $loai_khach_hang
  * @property int $id_khach_hang
  * @property int $so_don_hang
@@ -47,7 +48,7 @@ class BanleDonHang extends \yii\db\ActiveRecord
     {
         return [
             [['so_vao_so', 'nam', 'trang_thai', 'ngay_xuat', 'so_lan_in', 'da_giao_hang', 'ngay_giao_hang', 'chi_phi_van_chuyen', 'ghi_chu', 'nguoi_tao', 'thoi_gian_tao', 'loai_khach_hang'], 'default', 'value' => null],
-            [['id_khach_hang', 'so_don_hang', 'ngay_dat_hang', 'hinh_thuc_thanh_toan'], 'required'],
+            [['loai_hang_hoa', 'id_khach_hang', 'so_don_hang', 'ngay_dat_hang', 'hinh_thuc_thanh_toan'], 'required'],
             [['id_khach_hang', 'so_don_hang', 'so_vao_so', 'nam', 'so_lan_in', 'da_giao_hang', 'nguoi_tao', 'edit_mode'], 'integer'],
             [['ngay_dat_hang', 'ngay_xuat', 'ngay_giao_hang', 'thoi_gian_tao'], 'safe'],
             [['chi_phi_van_chuyen'], 'number'],
@@ -64,6 +65,7 @@ class BanleDonHang extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'loai_hang_hoa' => 'Loại hàng hóa',
             'loai_khach_hang' => 'Loại khách hàng',
             'id_khach_hang' => 'Id Khach Hang',
             'so_don_hang' => 'So Don Hang',

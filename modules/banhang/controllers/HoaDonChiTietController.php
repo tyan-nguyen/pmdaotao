@@ -24,11 +24,14 @@ class HoaDonChiTietController extends Controller
      * @param int $selected: nếu thêm mới thì là null, còn sửa vật tư thì truyền vào id của vật tư đang chọn
      * @return string[]
      */
-    public function actionGetListVatTu($selected){
+    public function actionGetListVatTu($selected, $loai=NULL){
         Yii::$app->response->format = Response::FORMAT_JSON;
         //lay list vat tu
         $options = '<option>--Select--</option>';
-        $lvts = LoaiHangHoa::find()->all();
+        if($loai == NULL)
+            $lvts = LoaiHangHoa::find()->all();
+        else 
+            $lvts = LoaiHangHoa::find()->where(['id'=>$loai])->all();
         foreach ($lvts as $indexLVT => $lvt){
             $vts = HangHoa::find()->where(['id_loai_hang_hoa'=>$lvt->id])->all();
             if($vts != null){
