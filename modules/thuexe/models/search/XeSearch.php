@@ -77,7 +77,7 @@ class XeSearch extends Xe
         
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort'=> ['defaultOrder' => ['id_loai_xe'=>SORT_ASC, 'ma_so' => SORT_ASC]],
+            'sort'=> ['defaultOrder' => ['id_loai_xe'=>SORT_ASC, 'ma_so' => SORT_ASC, 'id' => SORT_ASC]],
             'pagination' => [
                 'pageSize' => 40,   //Set số dòng mỗi trang
             ],
