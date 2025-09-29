@@ -77,7 +77,7 @@ class XeSearch extends Xe
         
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort'=> ['defaultOrder' => ['ma_so' => SORT_ASC, 'id_loai_xe'=>SORT_DESC]],
+            'sort'=> ['defaultOrder' => ['id_loai_xe'=>SORT_ASC, 'ma_so' => SORT_ASC]],
         ]);
         
         $this->load($params);
