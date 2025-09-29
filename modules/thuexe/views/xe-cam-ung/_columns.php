@@ -106,6 +106,17 @@ return [
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'id_loai_xe',
+        'label'=>'Hạng xe',
+        'value' => function($model) {
+        $loaiXe = LoaiXe::findOne($model->id_loai_xe);
+            return $loaiXe ? $loaiXe->ten_loai_xe : '<span style="color: red;">Trống </span>';
+        },
+        'contentOptions' => [ 'style' => 'text-align:center' ],
+   ],
+        
+    [
+        'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ma_so',
         'contentOptions' => [ 'style' => 'text-align:center' ],
     ],
@@ -114,16 +125,7 @@ return [
         'attribute'=>'bien_so_xe',
         'contentOptions' => [ 'style' => 'text-align:center' ],
     ],
-    [
-       'class'=>'\kartik\grid\DataColumn',
-       'attribute'=>'id_loai_xe',
-        'label'=>'Hạng xe',
-       'value' => function($model) {
-            $loaiXe = LoaiXe::findOne($model->id_loai_xe);
-            return $loaiXe ? $loaiXe->ten_loai_xe : '<span style="color: red;">Trống </span>'; 
-       },
-       'contentOptions' => [ 'style' => 'text-align:center' ],
-    ],
+    
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'hieu_xe',
