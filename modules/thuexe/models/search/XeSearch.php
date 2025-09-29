@@ -17,8 +17,8 @@ class XeSearch extends Xe
     public function rules()
     {
         return [
-            [['id', 'id_loai_xe', 'nguoi_tao', 'id_giao_vien'], 'integer'],
-            [['hieu_xe', 'bien_so_xe', 'tinh_trang_xe', 'trang_thai', 'thoi_gian_tao', 'ghi_chu', 'phan_loai', 'ma_so'], 'safe'],
+            [['id', 'id_loai_xe', 'nguoi_tao', 'id_giao_vien', 'ma_so'], 'integer'],
+            [['hieu_xe', 'bien_so_xe', 'tinh_trang_xe', 'trang_thai', 'thoi_gian_tao', 'ghi_chu', 'phan_loai'], 'safe'],
         ];
     }
 
