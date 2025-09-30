@@ -38,15 +38,15 @@ class LoaiXeController extends Controller
      * Lists all LoaiXe models.
      * @return mixed
      */
-    public function beforeAction($action)
+   /*  public function beforeAction($action)
 	{
 	    Yii::$app->params['moduleID'] = 'Module Quản lý thuê xe';
 	    Yii::$app->params['modelID'] = 'Loại Xe';
-	    return true;
-	}
+	    //return true;
+	} */
 
     public function actionIndex()
-    {    
+    {
         $searchModel = new LoaiXeSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
