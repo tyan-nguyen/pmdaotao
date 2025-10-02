@@ -21,7 +21,8 @@ use app\modules\hocvien\models\NopHocPhi;
                 <td colspan="2" align="center"><?= DangKyHv::getLabelNoiDangKyOther(DangKyHv::NOIDANGKY_CS5) ?></td>                
       			<td colspan="2" align="center"><?= DangKyHv::getLabelNoiDangKyOther(DangKyHv::NOIDANGKY_CS6) ?></td>
       			<td colspan="2" align="center"><?= DangKyHv::getLabelNoiDangKyOther(DangKyHv::NOIDANGKY_CS7) ?></td>  
-      			<td colspan="2" align="center"><?= DangKyHv::getLabelNoiDangKyOther(DangKyHv::NOIDANGKY_CS8) ?></td>                       
+      			<td colspan="2" align="center"><?= DangKyHv::getLabelNoiDangKyOther(DangKyHv::NOIDANGKY_CS8) ?></td>
+      			<td colspan="2" align="center"><?= DangKyHv::getLabelNoiDangKyOther(DangKyHv::NOIDANGKY_CS9) ?></td>                       
             </tr>
             <tr>
             	<td align="center">Tiền mặt</td>
@@ -29,6 +30,8 @@ use app\modules\hocvien\models\NopHocPhi;
                 <td align="center">Tiền mặt</td>
                 <td align="center">Chuyển khoản</td>
                 
+                <td align="center">Tiền mặt</td>
+                <td align="center">Chuyển khoản</td>
                 <td align="center">Tiền mặt</td>
                 <td align="center">Chuyển khoản</td>
                 <td align="center">Tiền mặt</td>
@@ -155,6 +158,19 @@ use app\modules\hocvien\models\NopHocPhi;
             'hinh_thuc_thanh_toan'=>'CK'
         ])->andWhere("DATE(t.thoi_gian_tao) = '$date'")->sum('so_tien_nop');
         
+        $sumCS9TM = NopHocPhi::find()->alias('t')->joinWith(['nguoiTao as nt', 'hocVien as hv'])
+        ->where([
+            'hv.huy_ho_so' => 0,
+            'nt.noi_dang_ky'=>DangKyHv::NOIDANGKY_CS9,
+            'hinh_thuc_thanh_toan'=>'TM'
+        ]) ->andWhere("DATE(t.thoi_gian_tao) = '$date'")->sum('so_tien_nop');
+        $sumCS9CK = NopHocPhi::find()->alias('t')->joinWith(['nguoiTao as nt', 'hocVien as hv'])
+        ->where([
+            'hv.huy_ho_so' => 0,
+            'nt.noi_dang_ky'=>DangKyHv::NOIDANGKY_CS9,
+            'hinh_thuc_thanh_toan'=>'CK'
+        ])->andWhere("DATE(t.thoi_gian_tao) = '$date'")->sum('so_tien_nop');
+        
         $sumTong = NopHocPhi::find()->alias('t')->joinWith(['nguoiTao as nt', 'hocVien as hv'])
             ->where([
                 'hv.huy_ho_so' => 0,
@@ -171,18 +187,20 @@ use app\modules\hocvien\models\NopHocPhi;
     	<td align="right"><?= $sumCS2TM?number_format($sumCS2TM):0 ?></td>
     	<td align="right"><?= $sumCS2CK?number_format($sumCS2CK):0 ?></td>
     	
-    	<td align="right"><?= $sumCS2TM?number_format($sumCS3TM):0 ?></td>
-    	<td align="right"><?= $sumCS2CK?number_format($sumCS3CK):0 ?></td>
-    	<td align="right"><?= $sumCS2TM?number_format($sumCS4TM):0 ?></td>
-    	<td align="right"><?= $sumCS2CK?number_format($sumCS4CK):0 ?></td>
-    	<td align="right"><?= $sumCS2TM?number_format($sumCS5TM):0 ?></td>
-    	<td align="right"><?= $sumCS2CK?number_format($sumCS5CK):0 ?></td>
-    	<td align="right"><?= $sumCS2TM?number_format($sumCS6TM):0 ?></td>
-    	<td align="right"><?= $sumCS2CK?number_format($sumCS6CK):0 ?></td>
-    	<td align="right"><?= $sumCS2TM?number_format($sumCS7TM):0 ?></td>
-    	<td align="right"><?= $sumCS2CK?number_format($sumCS7CK):0 ?></td>
-    	<td align="right"><?= $sumCS2TM?number_format($sumCS8TM):0 ?></td>
-    	<td align="right"><?= $sumCS2CK?number_format($sumCS8CK):0 ?></td>
+    	<td align="right"><?= $sumCS3TM?number_format($sumCS3TM):0 ?></td>
+    	<td align="right"><?= $sumCS3CK?number_format($sumCS3CK):0 ?></td>
+    	<td align="right"><?= $sumCS4TM?number_format($sumCS4TM):0 ?></td>
+    	<td align="right"><?= $sumCS4CK?number_format($sumCS4CK):0 ?></td>
+    	<td align="right"><?= $sumCS5TM?number_format($sumCS5TM):0 ?></td>
+    	<td align="right"><?= $sumCS5CK?number_format($sumCS5CK):0 ?></td>
+    	<td align="right"><?= $sumCS6TM?number_format($sumCS6TM):0 ?></td>
+    	<td align="right"><?= $sumCS6CK?number_format($sumCS6CK):0 ?></td>
+    	<td align="right"><?= $sumCS7TM?number_format($sumCS7TM):0 ?></td>
+    	<td align="right"><?= $sumCS7CK?number_format($sumCS7CK):0 ?></td>
+    	<td align="right"><?= $sumCS8TM?number_format($sumCS8TM):0 ?></td>
+    	<td align="right"><?= $sumCS8CK?number_format($sumCS8CK):0 ?></td>
+    	<td align="right"><?= $sumCS9TM?number_format($sumCS9TM):0 ?></td>
+    	<td align="right"><?= $sumCS9CK?number_format($sumCS9CK):0 ?></td>
     	
     </tr>
     <?php 
@@ -208,7 +226,9 @@ use app\modules\hocvien\models\NopHocPhi;
                 <td align="center">...</td>
                 <td align="center">...</td>
                 <td align="center">...</td>
-                <td align="center">...</td>            
+                <td align="center">...</td>    
+                <td align="center">...</td>
+                <td align="center">...</td>         
             </tr>
             <?php 
             $sumCS1TM = NopHocPhi::find()->alias('t')->joinWith(['nguoiTao as nt', 'hocVien as hv'])
@@ -314,6 +334,19 @@ use app\modules\hocvien\models\NopHocPhi;
                 'hinh_thuc_thanh_toan'=>'CK'
             ])->sum('so_tien_nop');
             
+            $sumCS9TM = NopHocPhi::find()->alias('t')->joinWith(['nguoiTao as nt', 'hocVien as hv'])
+            ->where([
+                'hv.huy_ho_so' => 0,
+                'nt.noi_dang_ky'=>DangKyHv::NOIDANGKY_CS9,
+                'hinh_thuc_thanh_toan'=>'TM'
+            ])->sum('so_tien_nop');
+            $sumCS9CK = NopHocPhi::find()->alias('t')->joinWith(['nguoiTao as nt', 'hocVien as hv'])
+            ->where([
+                'hv.huy_ho_so' => 0,
+                'nt.noi_dang_ky'=>DangKyHv::NOIDANGKY_CS9,
+                'hinh_thuc_thanh_toan'=>'CK'
+            ])->sum('so_tien_nop');
+            
             $sumTong = NopHocPhi::find()->alias('t')->joinWith(['nguoiTao as nt', 'hocVien as hv'])
             ->where([
                 'hv.huy_ho_so' => 0,
@@ -339,6 +372,8 @@ use app\modules\hocvien\models\NopHocPhi;
                 <td align="right"><?= $sumCS7CK?number_format($sumCS7CK):0 ?></td>
                 <td align="right"><?= $sumCS8TM?number_format($sumCS8TM):0 ?></td>
                 <td align="right"><?= $sumCS8CK?number_format($sumCS8CK):0 ?></td>
+                <td align="right"><?= $sumCS9TM?number_format($sumCS9TM):0 ?></td>
+                <td align="right"><?= $sumCS9CK?number_format($sumCS9CK):0 ?></td>
                                 
             </tr>
         </tbody>
