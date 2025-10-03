@@ -95,6 +95,7 @@ if($model->isNewRecord){
         ) ?>
     </div>
     <div class="col-lg-3 col-md-6">
+    	<label><?= $model->getAttributeLabel('id_khoa_hoc') ?></label>
          <?= $form->field($model, 'id_khoa_hoc')->widget(Select2::classname(), [
             'data' => !empty($model->id_khoa_hoc) ? [
              $model->id_khoa_hoc => \app\modules\khoahoc\models\KhoaHoc::findOne($model->id_khoa_hoc)->ten_khoa_hoc
@@ -109,7 +110,7 @@ if($model->isNewRecord){
               'allowClear' => true,
               'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
          ],
-          ]); ?>
+          ])->label(false); ?>
     </div>
     <div class="col-lg-6 col-md-6">
     	<?= $form->field($model, 'ghi_chu')->textarea(['rows' => 3, 'style'=>'width:100%']) ?>

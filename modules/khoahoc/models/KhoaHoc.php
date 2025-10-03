@@ -35,9 +35,9 @@ class KhoaHoc extends KhoaHocBase
         //$dsKH = KhoaHoc::find()->orderBy(['ten_khoa_hoc' => SORT_ASC])->all();
         if($anKhoaHocFull){
             $dsKH = KhoaHoc::find()->where(['trang_thai'=>self::TRANGTHAI_CHUAHOANTHANH])
-                ->orderBy(['id' => SORT_ASC])->all();
+                ->orderBy(['id' => SORT_DESC])->all();
         } else {
-            $dsKH = KhoaHoc::find()->orderBy(['id' => SORT_ASC])->all();
+            $dsKH = KhoaHoc::find()->orderBy(['id' => SORT_DESC])->all();
         }
     
         return ArrayHelper::map($dsKH, 'id', function($model) {
