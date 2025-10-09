@@ -52,6 +52,8 @@ if($model->isNewRecord){
                     'pluginOptions' => [
                         'autoclose' => true,
                         'format' => 'dd/mm/yyyy',
+						'todayHighlight'=>true,
+						'todayBtn'=>true
                     ]
                ]); ?>
             </div>
@@ -64,6 +66,8 @@ if($model->isNewRecord){
             'pluginOptions' => [
                 'autoclose' => true,
                 'format' => 'dd/mm/yyyy',
+				'todayHighlight'=>true,
+				'todayBtn'=>true
             ]
                ]); ?>
             </div>
