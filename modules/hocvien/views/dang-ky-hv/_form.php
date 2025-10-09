@@ -48,7 +48,7 @@ if($model->isNewRecord){
  
             <div class="col-lg-3 col-md-6">
             	<?= $form->field($model, 'ngay_sinh')->widget(DatePicker::classname(), [
-                    'options' => ['placeholder' => 'Chọn ngày sinh  ...'],
+                    'options' => ['placeholder' => 'Chọn ngày sinh  ...', 'autocomplete'=>'off'],
                     'pluginOptions' => [
                         'autoclose' => true,
                         'format' => 'dd/mm/yyyy',
@@ -60,7 +60,7 @@ if($model->isNewRecord){
             </div>
             <div class="col-lg-3 col-md-6">
             <?= $form->field($model, 'ngay_het_han_cccd')->widget(DatePicker::classname(), [
-            'options' => ['placeholder' => 'Chọn ngày  ...'],
+            'options' => ['placeholder' => 'Chọn ngày  ...', 'autocomplete'=>'off'],
             'pluginOptions' => [
                 'autoclose' => true,
                 'format' => 'dd/mm/yyyy',
@@ -159,7 +159,7 @@ if($model->isNewRecord){
     
     <div class="col-lg-3 col-md-6">
         <?= $form->field($model, 'ngay_nhan_tai_lieu')->widget(DatePicker::classname(), [
-        'options' => ['placeholder' => 'Chọn ngày  ...'],
+        'options' => ['placeholder' => 'Chọn ngày  ...', 'autocomplete'=>'off'],
         'pluginOptions' => [
             'autoclose' => true,
             'format' => 'dd/mm/yyyy',
