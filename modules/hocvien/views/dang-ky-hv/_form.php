@@ -126,7 +126,9 @@ if($model->isNewRecord){
     <?php CardWidget::begin(['title'=>'Thông tin nhận đồng phục/tài liệu']) ?>
     <div class ='row'>
      <div class="col-lg-2 col-md-6">
-    	<?= $form->field($model, 'da_nhan_ao')->checkbox() ?>
+    	<?= $form->field($model, 'da_nhan_ao')->checkbox([
+            'disabled' => (bool)$model->da_nhan_ao,
+        ]) ?>
     </div>
     <div class="col-lg-2 col-md-6">
         <?= $form->field($model, 'size')->dropDownList(
@@ -139,15 +141,20 @@ if($model->isNewRecord){
                 '3XL'=>'Size 3XL', 
                 '4XL'=>'Size 4XL'
             ],
-    [
-        'prompt' => 'Chọn size áo',
-        'class' => 'form-control dropdown-with-arrow',
-    ]
-    ) ?>
+            [
+                'prompt' => 'Chọn size áo',
+                'class' => 'form-control dropdown-with-arrow',
+                'disabled' => (bool)$model->da_nhan_ao,
+            ]
+        ) ?>
     </div>
     <div class="col-lg-3 col-md-6">
         <?= $form->field($model, 'ngay_nhan_ao')->widget(DatePicker::classname(), [
-        'options' => ['placeholder' => 'Chọn ngày  ...', 'autocomplete'=>'off'],
+        'options' => [
+            'placeholder' => 'Chọn ngày  ...', 
+            'autocomplete'=>'off',
+            'disabled' => (bool)$model->da_nhan_ao
+        ],
         'pluginOptions' => [
             'autoclose' => true,
             'format' => 'dd/mm/yyyy',
@@ -158,12 +165,18 @@ if($model->isNewRecord){
     </div>
     
     <div class="col-lg-2 col-md-6">
-    	<?= $form->field($model, 'da_nhan_tai_lieu')->checkbox() ?>
+    	<?= $form->field($model, 'da_nhan_tai_lieu')->checkbox([
+    	    'disabled' => (bool)$model->da_nhan_tai_lieu,
+        ]) ?>
     </div>
     
     <div class="col-lg-3 col-md-6">
         <?= $form->field($model, 'ngay_nhan_tai_lieu')->widget(DatePicker::classname(), [
-        'options' => ['placeholder' => 'Chọn ngày  ...', 'autocomplete'=>'off'],
+        'options' => [
+            'placeholder' => 'Chọn ngày  ...', 
+            'autocomplete'=>'off',
+            'disabled' => (bool)$model->da_nhan_tai_lieu,
+        ],
         'pluginOptions' => [
             'autoclose' => true,
             'format' => 'dd/mm/yyyy',

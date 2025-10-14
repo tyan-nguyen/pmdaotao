@@ -22,7 +22,7 @@
             $userCongNo = User::find()
                 ->where('noi_dang_ky IS NOT NULL')
                 ->andFilterWhere(['user_type'=>User::USER_TYPE_NHANHOSO])
-                ->orderBy(['noi_dang_ky'=>SORT_ASC])->all();
+                /* ->orderBy(['noi_dang_ky'=>SORT_ASC]) */->all();
             $userCongNoCount = User::find()
                 ->where('noi_dang_ky IS NOT NULL')
                 ->andFilterWhere(['user_type'=>User::USER_TYPE_NHANHOSO])->count();

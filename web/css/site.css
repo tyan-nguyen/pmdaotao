@@ -415,3 +415,10 @@ a.desc:after {
 	min-height: 3rem;
     padding: .5rem 1rem;
 }
+
+/**
+style for all grid
+*/
+.crud-datatable .float-right .dropdown-toggle {
+	padding: 2px 3px 0px 3px !important;
+}

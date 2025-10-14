@@ -13,7 +13,7 @@ use app\modules\hocvien\models\DangKyHv;
 
     <div class="row">
         <!-- Thông tin học viên -->
-        <div class="col-xl-6 col-md-12">
+        <div class="col-xl-7 col-md-12">
             <div class="card custom-card">
                 <div class="card-header custom-card-header rounded-bottom-0">
                     <h6 class="card-title mb-0 text-center" style="color: red;">Thông tin học viên</h6>
@@ -37,8 +37,8 @@ use app\modules\hocvien\models\DangKyHv;
                         
                          <p><strong>Ngày đăng ký:</strong> <?= CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_tao) ?><strong> <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Nhận hồ sơ:</strong> <?= CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_hoan_thanh_ho_so) ?></p> 
                          
-                        <p><strong>Đã nhận đồng phục:</strong> <?= $model->da_nhan_ao?'<i class="ion-checkmark-round text-primary"></i> Có':'<i class="ion-close-round" data-bs-toggle="tooltip" aria-label="ion-close-round" data-bs-original-title="ion-close-round"></i> Không' ?><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <strong>Size:</strong> <?= $model->size ?><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <strong>Ngày nhận:</strong> <?= CustomFunc::convertYMDToDMY($model->ngay_nhan_ao) ?></p>
-                        <p><strong>Đã nhận tài liệu:</strong> <?= $model->da_nhan_tai_lieu?'<i class="ion-checkmark-round text-primary"></i> Có':'<i class="ion-close-round" data-bs-toggle="tooltip" aria-label="ion-close-round" data-bs-original-title="ion-close-round"></i> Không' ?><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <strong>Ngày nhận:</strong> <?= CustomFunc::convertYMDToDMY($model->ngay_nhan_tai_lieu) ?></p>
+                        <p><strong>Đã nhận áo:</strong> <?= $model->da_nhan_ao?'<i class="ion-checkmark-round text-primary"></i> Có':'<i class="ion-close-round" data-bs-toggle="tooltip" aria-label="ion-close-round" data-bs-original-title="ion-close-round"></i> Không' ?><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <strong>Size:</strong> <?= $model->size ?><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <strong>Ngày nhận:</strong> <?= CustomFunc::convertYMDToDMY($model->ngay_nhan_ao) ?> <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <strong>Nhân viên giao:</strong> <?= $model->nguoiGiaoAo?$model->nguoiGiaoAo->username:'' ?></p>
+                        <p><strong>Đã nhận tài liệu:</strong> <?= $model->da_nhan_tai_lieu?'<i class="ion-checkmark-round text-primary"></i> Có':'<i class="ion-close-round" data-bs-toggle="tooltip" aria-label="ion-close-round" data-bs-original-title="ion-close-round"></i> Không' ?><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <strong>Ngày nhận:</strong> <?= CustomFunc::convertYMDToDMY($model->ngay_nhan_tai_lieu) ?> <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <strong>Nhân viên giao:</strong> <?= $model->nguoiGiaoTaiLieu?$model->nguoiGiaoTaiLieu->username:'' ?></p>
                           
                         <p><strong>Ghi chú thêm:</strong> <?= $model->ghi_chu ?></p>
                         
@@ -60,7 +60,7 @@ use app\modules\hocvien\models\DangKyHv;
                 </div>
             </div>
          </div>
-         <div class="col-xl-6 col-md-12">
+         <div class="col-xl-5 col-md-12">
             
             <div class="card custom-card">
                 <div class="card-header custom-card-header rounded-bottom-0">

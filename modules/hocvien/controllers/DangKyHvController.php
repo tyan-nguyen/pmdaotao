@@ -22,12 +22,16 @@ use app\modules\hocvien\models\HangDaoTao;
 use app\modules\hocvien\models\ThayDoiHocPhi;
 use app\modules\hocvien\models\HocPhi;
 use app\modules\hocvien\models\search\HocVienDoiHangSearch;
+use app\modules\user\models\User;
 /**
  * HocVienController implements the CRUD actions for HvHocVien model.
  */
 class DangKyHvController extends Controller
 {
-    public $freeAccessActions = ['get-phieu-in-ajax', 'update-print-count', 'report-list', 'get-phieu-in-report-list-ajax', 'view-thay-doi-hang'];
+    public $freeAccessActions = ['get-phieu-in-ajax', 'update-print-count', 'report-list', 
+        'get-phieu-in-report-list-ajax', 'view-thay-doi-hang',
+        'bien-tap-dia-chi'
+    ];
     /**
      * @inheritdoc
      */
@@ -160,14 +164,20 @@ class DangKyHvController extends Controller
                 $model->loai_dang_ky = 'Nhập trực tiếp'; 
                 $model->trang_thai_duyet = 'DA_DUYET';
                 if ($model->save()) {
-                return [
-                    'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Thêm học viên",
-                    'content'=>'<span class="text-success">Đăng ký học viên thành công !</span>',
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::a('Xem thông tin',['view', 'id'=>$model->id],['class'=>'btn btn-primary','role'=>'modal-remote']).
-                               Html::a('Tiếp tục thêm mới',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
-                ];         
+                    if($model->da_nhan_ao){
+                        $model->nguoi_giao_ao = Yii::$app->user->id;
+                    }
+                    if($model->da_nhan_tai_lieu){
+                        $model->nguoi_giao_tai_lieu = Yii::$app->user->id;
+                    }
+                    return [
+                        'forceReload'=>'#crud-datatable-pjax',
+                        'title'=> "Thêm học viên",
+                        'content'=>'<span class="text-success">Đăng ký học viên thành công !</span>',
+                        'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::a('Xem thông tin',['view', 'id'=>$model->id],['class'=>'btn btn-primary','role'=>'modal-remote']).
+                                   Html::a('Tiếp tục thêm mới',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                    ];         
             }else{           
                 return [
                     'title'=> "Thêm học viên",
@@ -205,6 +215,7 @@ class DangKyHvController extends Controller
     {
         $request = Yii::$app->request;
         $model = $this->findModel($id);       
+        $oldModel = $this->findModel($id);
 
         if($request->isAjax){
             /*
@@ -213,32 +224,49 @@ class DangKyHvController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Cập nhật thông tin học viên #".$id,
-                    'content'=>$this->renderAjax('update', [
-                        'model' => $model,
-                    ]),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
-                ];         
-            }else if($model->load($request->post()) && $model->save()){
-                return [
-                    'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Học viên #".$id,
-                    'content'=>$this->renderAjax('view', [
-                        'model' => $model,
-                    ]),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::a('Chỉnh sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
-                ];    
-            }else{
-                 return [
                     'title'=> "Cập nhật học viên #".$id,
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
-                ];        
+                    Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                ];  
+            }else if($model->load($request->post())){
+                if($oldModel->da_nhan_ao==false && $model->da_nhan_ao==true){
+                    $model->nguoi_giao_ao = Yii::$app->user->id;
+                }
+                if($oldModel->da_nhan_tai_lieu==false && $model->da_nhan_tai_lieu==true){
+                    $model->nguoi_giao_tai_lieu = Yii::$app->user->id;
+                }
+                if($model->save()){
+                    return [
+                        'forceReload'=>'#crud-datatable-pjax',
+                        'title'=> "Học viên #".$id,
+                        'content'=>$this->renderAjax('view', [
+                            'model' => $model,
+                        ]),
+                        'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                                Html::a('Chỉnh sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                    ];    
+                } else {
+                    return [
+                        'title'=> "Cập nhật học viên #".$id,
+                        'content'=>$this->renderAjax('update', [
+                            'model' => $model,
+                        ]),
+                        'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                        Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                    ];  
+                }
+            }else{
+                return [
+                    'title'=> "Cập nhật học viên #".$id,
+                    'content'=>$this->renderAjax('update', [
+                        'model' => $model,
+                    ]),
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                    Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                ];  
             }
         }else{
             /*
@@ -1018,4 +1046,207 @@ public function actionReportSum(){
     }
 }
 
+/**
+ * nhận tài liệu - nếu có thì mở view, nếu chưa có thì mở form, nếu admin thì cho sửa
+ * @param integer $id
+ * @return mixed
+ */
+public function actionNhanTaiLieu($idhv)
+{
+    $request = Yii::$app->request;
+    $model = DangKyHv::findOne($idhv);
+    $model->scenario = 'nhantailieu';
+    
+    if($request->isAjax){
+        /*
+         *   Process for ajax request
+         */
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        if($request->isGet){
+            if(!$model->da_nhan_tai_lieu || User::getCurrentUser()->superadmin)
+                return [
+                    'title'=> "Giao tài liệu cho học viên #".$idhv,
+                    'content'=>$this->renderAjax('nhan-tai-lieu_form', [
+                        'model' => $model,
+                    ]),
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                    Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                ];
+             else
+                 return [
+                     'title'=> "Giao tài liệu cho học viên #".$idhv,
+                     'content'=>$this->renderAjax('nhan-tai-lieu_view', [
+                         'model' => $model,
+                     ]),
+                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"])
+                 ];
+        }else if($model->load($request->post())){
+            if(!$model->nguoi_giao_tai_lieu){
+                $model->nguoi_giao_tai_lieu = Yii::$app->user->id;
+            }
+            if($model->save()){
+                return [
+                    'forceReload'=>'#crud-datatable-pjax',
+                    'title'=> "Giao tài liệu cho học viên #".$idhv,
+                    'content'=>$this->renderAjax('nhan-tai-lieu_view', [
+                        'model' => $model,
+                    ]),
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"])
+                ];
+            }else{
+               //format lại ngày tránh lỗi 01/01/1970
+                if($model->ngay_nhan_tai_lieu){
+                    $model->ngay_nhan_tai_lieu = CustomFunc::convertDMYToYMD($model->ngay_nhan_tai_lieu);
+                }
+                return [
+                    'title'=> "Giao tài liệu cho học viên #".$idhv,
+                    'content'=>$this->renderAjax('nhan-tai-lieu_form', [
+                        'model' => $model,
+                    ]),
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                    Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                ];
+            }
+        }else{
+            return [
+                'title'=> "Giao tài liệu cho học viên #".$idhv,
+                'content'=>$this->renderAjax('nhan-tai-lieu_form', [
+                    'model' => $model,
+                ]),
+                'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+            ];
+        }
+    }
 }
+
+/**
+ * nhận áo - nếu có thì mở view, nếu chưa có thì mở form, nếu admin thì cho sửa
+ * @param integer $id
+ * @return mixed
+ */
+public function actionNhanAo($idhv)
+{
+    $request = Yii::$app->request;
+    $model = DangKyHv::findOne($idhv);
+    $model->scenario = 'nhanao';
+    
+    if($request->isAjax){
+        /*
+         *   Process for ajax request
+         */
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        if($request->isGet){
+            if(!$model->da_nhan_ao || User::getCurrentUser()->superadmin)
+                return [
+                    'title'=> "Giao áo cho học viên #".$idhv,
+                    'content'=>$this->renderAjax('nhan-ao_form', [
+                        'model' => $model,
+                    ]),
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                    Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                ];
+                else
+                    return [
+                        'title'=> "Giao áo cho học viên #".$idhv,
+                        'content'=>$this->renderAjax('nhan-ao_view', [
+                            'model' => $model,
+                        ]),
+                        'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"])
+                    ];
+        }else if($model->load($request->post())){
+            if(!$model->nguoi_giao_ao){
+                $model->nguoi_giao_ao = Yii::$app->user->id;
+            }
+            if($model->save()){
+                return [
+                    'forceReload'=>'#crud-datatable-pjax',
+                    'title'=> "Giao áo cho học viên #".$idhv,
+                    'content'=>$this->renderAjax('nhan-ao_view', [
+                        'model' => $model,
+                    ]),
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"])
+                ];
+            }else{
+                //format lại ngày tránh lỗi 01/01/1970
+                if($model->ngay_nhan_ao){
+                    $model->ngay_nhan_ao = CustomFunc::convertDMYToYMD($model->ngay_nhan_ao);
+                }
+                return [
+                    'title'=> "Giao áo cho học viên #".$idhv,
+                    'content'=>$this->renderAjax('nhan-ao_form', [
+                        'model' => $model,
+                    ]),
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                    Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                ];
+            }
+        }else{
+            return [
+                'title'=> "Giao áo cho học viên #".$idhv,
+                'content'=>$this->renderAjax('nhan-ao_form', [
+                    'model' => $model,
+                ]),
+                'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+            ];
+        }
+    }
+}
+
+/**
+ * biên tập lại địa chỉ
+ * @param integer $id
+ * @return mixed
+ */
+public function actionBienTapDiaChi($idhv)
+{
+    $request = Yii::$app->request;
+    $model = DangKyHv::findOne($idhv);
+    $model->scenario = 'chuanhoadiachi';
+    
+    Yii::$app->response->format = Response::FORMAT_JSON;
+    if($request->isGet){
+        return [
+            'title'=> "Tool chuẩn hóa lại địa chỉ học viên #".$idhv,
+            'content'=>$this->renderAjax('tool-bien-tap-dia-chi_form', [
+                'model' => $model,
+            ]),
+            'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+            Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+        ];
+    }else if($model->load($request->post())){
+        if($model->save()){
+            return [
+                'title'=> "Tool chuẩn hóa lại lại địa chỉ học viên #".$idhv,
+                'content'=>$this->renderAjax('tool-bien-tap-dia-chi_form', [
+                    'model' => $model,
+                ]),
+                'tcontent'=>'Cập nhật địa chỉ theo danh mục đơn vị hành chính mới thành công!',
+                'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+            ];
+        }else{
+            return [
+                'title'=> "Tool chuẩn hóa lại địa chỉ học viên #".$idhv,
+                'content'=>$this->renderAjax('tool-bien-tap-dia-chi_form', [
+                    'model' => $model,
+                ]),
+                'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+            ];
+        }
+    }else{
+        return [
+            'title'=> "Tool chuẩn hóa lại địa chỉ học viên #".$idhv,
+            'content'=>$this->renderAjax('tool-bien-tap-dia-chi_form', [
+                'model' => $model,
+            ]),
+            'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+            Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+        ];
+    }
+}
+
+
+}//class

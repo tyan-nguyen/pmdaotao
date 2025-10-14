@@ -17,7 +17,7 @@ return [
     [
         'class' => 'kartik\grid\ActionColumn',
         'header'=>'',
-        'template' => '{payment} {view} {update} {danhSachDoiSatHach} {danhSachDoiHang} {danhSachBaoLuu} {huyHoSo} {doiHangTrongNgay} {doiHangNgayCu} {doiSatHach} {baoLuu} {delete} ',
+        'template' => '{payment} {update} <li><hr class="dropdown-divider"></li> {view} {nhanAo} {nhanTaiLieu} <li><hr class="dropdown-divider"></li> {danhSachDoiSatHach} {danhSachDoiHang} {danhSachBaoLuu} {huyHoSo} {doiHangTrongNgay} {doiHangNgayCu} {doiSatHach} {baoLuu} <li><hr class="dropdown-divider"></li> {delete}',
         'dropdown' => true,
         'dropdownOptions' => ['class' => 'float-right'],
         'dropdownButton'=>[
@@ -54,6 +54,12 @@ return [
             if ($action === 'danhSachBaoLuu') {
                 return Url::to(['bao-luu/view', 'idhv' => $key]);
             }
+            if ($action === 'nhanAo') {
+                return Url::to(['dang-ky-hv/nhan-ao', 'idhv' => $key]);
+            }
+            if ($action === 'nhanTaiLieu') {
+                return Url::to(['dang-ky-hv/nhan-tai-lieu', 'idhv' => $key]);
+            }
             return Url::to([$action, 'id' => $key]);
         },
         'visibleButtons' => [
@@ -85,7 +91,8 @@ return [
             'doiSatHach' => function ($model, $key, $index) {
                 $user = User::getCurrentUser();
                 // only show 'doiHangNgayCu' if user chung co so
-                return ($model->noi_dang_ky == $user->noi_dang_ky || $user->superadmin);
+                //return ($model->noi_dang_ky == $user->noi_dang_ky || $user->superadmin);
+                return true;
             },
             'danhSachDoiSatHach' => function ($model, $key, $index) {
                 $user = User::getCurrentUser();
@@ -95,7 +102,8 @@ return [
             'baoLuu' => function ($model, $key, $index) {
                 $user = User::getCurrentUser();
                 // only show 'doiHangNgayCu' if user chung co so
-                return ($model->noi_dang_ky == $user->noi_dang_ky || $user->superadmin);
+                //return ($model->noi_dang_ky == $user->noi_dang_ky || $user->superadmin);
+                return true;
             },
             'danhSachBaoLuu' => function ($model, $key, $index) {
                 $user = User::getCurrentUser();
@@ -112,7 +120,7 @@ return [
                 $user = User::getCurrentUser();
                 // Only show delete button if user is admin
                 return $user->superadmin;
-            },
+            }
         ],
         'viewOptions' => [
             'role' => 'modal-remote',
@@ -223,6 +231,25 @@ return [
                 'data-bs-toggle' => 'tooltip'
             ]);
         },
+        'nhanAo' => function ($url, $model, $key) {
+            return Html::a('<i class="fa fa-reply-all"></i> Giao áo/đồng phục', $url, [
+                'title' => 'Giao áo/đồng phục cho HV',
+                'role' => 'modal-remote',
+                'class' => 'btn ripple btn-primary dropdown-item',
+                'data-bs-placement' => 'top',
+                'data-bs-toggle' => 'tooltip'
+            ]);
+        },
+        'nhanTaiLieu' => function ($url, $model, $key) {
+            return Html::a('<i class="fa fa-file-o"></i> Giao tài liệu', $url, [
+                'title' => 'Giao tài liệu cho HV',
+                'role' => 'modal-remote',
+                'class' => 'btn ripple btn-primary dropdown-item',
+                'data-bs-placement' => 'top',
+                'data-bs-toggle' => 'tooltip'
+            ]);
+        }
+        
     ],
 
     ],

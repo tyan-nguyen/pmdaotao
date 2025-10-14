@@ -19,6 +19,9 @@ use Yii;
  * @property string|null $thoi_gian_tao
  * @property int|null $gioi_tinh
  * @property string|null $dia_chi
+ * @property string|null $dia_chi_chi_tiet
+ * @property int|null $id_xa
+ * @property int|null $id_tinh
  * @property string|null $ngay_sinh
  * @property string|null $nguoi_lap_phieu
  * @property int|null $ma_so_phieu
@@ -36,8 +39,10 @@ use Yii;
  * @property int|null $da_nhan_ao
  * @property string|null $size
  * @property string|null $ngay_nhan_ao
+ * @property int|null $nguoi_giao_ao
  * @property int|null $da_nhan_tai_lieu
  * @property string|null $ngay_nhan_tai_lieu
+ * @property int|null $nguoi_giao_tai_lieu
  * @property int|null $id_giao_vien
  * @property int|null $huy_ho_so
  * @property string|null $thoi_gian_huy_ho_so
@@ -45,10 +50,12 @@ use Yii;
  * @property string|null $loai_ly_do
  * @property float|null $le_phi
  * @property int|null $da_nop_du
- * 
+ *
  * @property GdGvHv[] $gdGvHvs
  * @property HvHangDaoTao $hang
  * @property HvHocPhi $hocPhi
+ * @property HvHocVienBaoLuu[] $hvHocVienBaoLuus
+ * @property HvHocVienDoiSatHach[] $hvHocVienDoiSatHaches
  * @property HvHocVienThayDoiHocPhi[] $hvHocVienThayDoiHocPhis
  * @property HvNopHocPhi[] $hvNopHocPhis
  * @property HvKhoaHoc $khoaHoc
@@ -72,13 +79,14 @@ class HvHocVien extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_khoa_hoc', 'id_hoc_phi', 'so_cccd', 'ngay_het_han_cccd', 'nguoi_tao', 'thoi_gian_tao', 'gioi_tinh', 'dia_chi', 'ngay_sinh', 'nguoi_lap_phieu', 'ma_so_phieu', 'so_lan_in_phieu', 'check_hoc_phi', 'id_nhom', 'loai_dang_ky', 'noi_dang_ky', 'nguoi_duyet', 'trang_thai_duyet', 'ghi_chu', 'thoi_gian_hoan_thanh_ho_so', 'co_ho_so_thue', 'da_nhan_ao', 'size', 'ngay_nhan_ao', 'id_giao_vien', 'huy_ho_so', 'thoi_gian_huy_ho_so', 'ly_do_huy_ho_so', 'loai_ly_do', 'le_phi', 'da_nop_du'], 'default', 'value' => null],
-            [['id_khoa_hoc', 'id_hoc_phi', 'nguoi_tao', 'gioi_tinh', 'ma_so_phieu', 'so_lan_in_phieu', 'id_hang', 'id_nhom', 'nguoi_duyet', 'co_ho_so_thue', 'da_nhan_ao', 'id_giao_vien', 'huy_ho_so', 'da_nhan_tai_lieu', 'da_nop_du'], 'integer'],
+            [['id_khoa_hoc', 'id_hoc_phi', 'so_cccd', 'ngay_het_han_cccd', 'nguoi_tao', 'thoi_gian_tao', 'gioi_tinh', 'dia_chi', 'dia_chi_chi_tiet', 'id_xa', 'id_tinh', 'ngay_sinh', 'nguoi_lap_phieu', 'ma_so_phieu', 'so_lan_in_phieu', 'check_hoc_phi', 'id_nhom', 'loai_dang_ky', 'noi_dang_ky', 'nguoi_duyet', 'trang_thai_duyet', 'ghi_chu', 'thoi_gian_hoan_thanh_ho_so', 'co_ho_so_thue', 'da_nhan_ao', 'size', 'ngay_nhan_ao', 'nguoi_giao_ao', 'da_nhan_tai_lieu', 'ngay_nhan_tai_lieu', 'nguoi_giao_tai_lieu', 'id_giao_vien', 'huy_ho_so', 'thoi_gian_huy_ho_so', 'ly_do_huy_ho_so', 'loai_ly_do', 'le_phi', 'da_nop_du'], 'default', 'value' => null],
+            [['id_khoa_hoc', 'id_hoc_phi', 'nguoi_tao', 'gioi_tinh', 'id_xa', 'id_tinh', 'ma_so_phieu', 'so_lan_in_phieu', 'id_hang', 'id_nhom', 'nguoi_duyet', 'co_ho_so_thue', 'da_nhan_ao', 'nguoi_giao_ao', 'da_nhan_tai_lieu', 'nguoi_giao_tai_lieu', 'id_giao_vien', 'huy_ho_so', 'da_nop_du'], 'integer'],
             [['ho_ten', 'so_dien_thoai', 'trang_thai', 'id_hang'], 'required'],
             [['ngay_het_han_cccd', 'thoi_gian_tao', 'ngay_sinh', 'thoi_gian_hoan_thanh_ho_so', 'ngay_nhan_ao', 'ngay_nhan_tai_lieu', 'thoi_gian_huy_ho_so'], 'safe'],
             [['ghi_chu', 'ly_do_huy_ho_so'], 'string'],
             [['le_phi'], 'number'],
             [['ho_ten', 'so_dien_thoai', 'so_cccd', 'trang_thai', 'dia_chi'], 'string', 'max' => 255],
+            [['dia_chi_chi_tiet'], 'string', 'max' => 250],
             [['nguoi_lap_phieu'], 'string', 'max' => 55],
             [['check_hoc_phi'], 'string', 'max' => 25],
             [['loai_dang_ky', 'trang_thai_duyet'], 'string', 'max' => 15],
@@ -109,6 +117,9 @@ class HvHocVien extends \yii\db\ActiveRecord
             'thoi_gian_tao' => 'Thoi Gian Tao',
             'gioi_tinh' => 'Gioi Tinh',
             'dia_chi' => 'Dia Chi',
+            'dia_chi_chi_tiet' => 'Dia Chi Chi Tiet',
+            'id_xa' => 'Id Xa',
+            'id_tinh' => 'Id Tinh',
             'ngay_sinh' => 'Ngay Sinh',
             'nguoi_lap_phieu' => 'Nguoi Lap Phieu',
             'ma_so_phieu' => 'Ma So Phieu',
@@ -126,15 +137,17 @@ class HvHocVien extends \yii\db\ActiveRecord
             'da_nhan_ao' => 'Da Nhan Ao',
             'size' => 'Size',
             'ngay_nhan_ao' => 'Ngay Nhan Ao',
+            'nguoi_giao_ao' => 'Nguoi Giao Ao',
             'da_nhan_tai_lieu' => 'Da Nhan Tai Lieu',
             'ngay_nhan_tai_lieu' => 'Ngay Nhan Tai Lieu',
+            'nguoi_giao_tai_lieu' => 'Nguoi Giao Tai Lieu',
             'id_giao_vien' => 'Id Giao Vien',
             'huy_ho_so' => 'Huy Ho So',
             'thoi_gian_huy_ho_so' => 'Thoi Gian Huy Ho So',
             'ly_do_huy_ho_so' => 'Ly Do Huy Ho So',
             'loai_ly_do' => 'Loai Ly Do',
             'le_phi' => 'Le Phi',
-            'da_nop_du' => 'Da Nop Du'
+            'da_nop_du' => 'Da Nop Du',
         ];
     }
 
@@ -166,6 +179,26 @@ class HvHocVien extends \yii\db\ActiveRecord
     public function getHocPhi()
     {
         return $this->hasOne(HvHocPhi::class, ['id' => 'id_hoc_phi']);
+    }
+
+    /**
+     * Gets query for [[HvHocVienBaoLuus]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getHvHocVienBaoLuus()
+    {
+        return $this->hasMany(HvHocVienBaoLuu::class, ['id_hoc_vien' => 'id']);
+    }
+
+    /**
+     * Gets query for [[HvHocVienDoiSatHaches]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getHvHocVienDoiSatHaches()
+    {
+        return $this->hasMany(HvHocVienDoiSatHach::class, ['id_hoc_vien' => 'id']);
     }
 
     /**

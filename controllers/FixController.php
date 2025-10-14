@@ -14,6 +14,8 @@ use app\modules\thuexe\models\Xe;
 use app\modules\giaovien\models\GiaoVien;
 use app\modules\user\models\User;
 use app\modules\daotao\models\TietHoc;
+use app\models\DmTinh;
+use app\models\DmXa;
 
 class FixController extends Controller
 {
@@ -189,5 +191,96 @@ class FixController extends Controller
             $th->delete();
         } */
     }
+    
+    /**
+     * import file dm tỉnh
+     */
+    public function actionImportTinh(){
+        $fxls = Yii::getAlias('@webroot/import_tinh.xlsx');
+        $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($fxls);
+        $xls_data = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
+        $sheet = $spreadsheet->getActiveSheet();
+        $errorByRow = array();
+        $errorByRow1 = array();
+        $successCount = 0;
+        $errorCount = 0;
+        
+        $startRow = 2;
+        foreach ($xls_data as $index=>$row){
+            if($index>=$startRow){
+                $model = new DmTinh();
+                $model->ma_tinh = $row['B'];
+                $model->loai = $row['C'];
+                $model->ten_tinh = $row['D'];
+                $model->ten_tinh_full = $row['C'] . ' ' . $row['D'];
+                $model->ghi_chu = '';
+                $model->stt = $row['E'];
+                
+                if($model->save()){
+                    $successCount++;
+                } else {
+                    $errorCount++;
+                    $errorByRow[$index] = 'Dòng '. $index . ' bị lỗi!';
+                    $errorByRow1[$index] = $model->errors;
+                }
+            }
+        }
+        echo '<br/>successCount: ' .$successCount;
+        echo '<br/>errorCount: ' .$errorCount;
+        echo '<br/>errorByRow: ';
+        print_r($errorByRow);
+        print_r($errorByRow1);
+    }
+    
+    /**
+     * import file dm xã
+     */
+    public function actionImportXa(){
+        $fxls = Yii::getAlias('@webroot/import_xa.xlsx');
+        $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($fxls);
+        $xls_data = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
+        $sheet = $spreadsheet->getActiveSheet();
+        $errorByRow = array();
+        $errorByRow1 = array();
+        $successCount = 0;
+        $errorCount = 0;
+        
+        $startRow = 2;
+        foreach ($xls_data as $index=>$row){
+            if($index>=$startRow){
+                $model = new DmXa();
+
+                $tinh = DmTinh::find()->where(['ma_tinh'=>$row['E']])->one();
+                if($tinh){
+                    $model->id_tinh = $tinh->id;
+                }
+                $model->ma_tinh = $row['E'];
+                $model->ma_xa = $row['B'];
+                $model->loai = $row['C'];
+                $model->ten_xa = $row['D'];
+                $model->ten_xa_full = $row['C'] . ' ' . $row['D'];
+                $model->ghi_chu = '';
+                if($row['E'] == 86)
+                    $model->stt = 10;
+                else 
+                    $model->stt = 1;
+                
+                if($model->save()){
+                    $successCount++;
+                } else {
+                    $errorCount++;
+                    $errorByRow[$index] = 'Dòng '. $index . ' bị lỗi!';
+                    $errorByRow1[$index] = $model->errors;
+                }
+            }
+        }
+        echo '<br/>successCount: ' .$successCount;
+        echo '<br/>errorCount: ' .$errorCount;
+        echo '<br/>errorByRow: ';
+        print_r($errorByRow);
+        print_r($errorByRow1);
+    }
+    
+    
     
 }

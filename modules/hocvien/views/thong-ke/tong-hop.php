@@ -2,8 +2,8 @@
  $this->title = 'Thống kê tổng hợp';
 ?>
 
-<?= $this->render('tk-cong-no', []) ?>
+<?= $this->render('tong-hop/tk-cong-no', []) ?>
 
-<?= $this->render('tk-thu-tien', []) ?>
+<?= $this->render('tong-hop/tk-thu-tien', []) ?>
 
-<?= $this->render('tk-ho-so-moi', []) ?>
+<?= $this->render('tong-hop/tk-ho-so-moi', []) ?>

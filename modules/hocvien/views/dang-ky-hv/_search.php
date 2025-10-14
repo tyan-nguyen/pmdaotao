@@ -45,7 +45,7 @@ $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gi
                          'zIndexOffset'=>'9999',
                          'todayHighlight'=>true,
                          'todayBtn'=>true
-                  ]
+                    ]
                   ]); ?>
             </div>
             <div class="col-md-2">
@@ -139,6 +139,22 @@ $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gi
                   ]
                   ]); ?>
             </div>
+            <div class="col-md-2">
+            	<label>Nơi nhận áo</label>
+            	<?= $form->field($model, 'noiNhanAo')->widget(Select2::classname(), [
+                    'data' => DangKyHv::getDmNoiDangKy(),
+                    'language' => 'vi',
+                    'options' => [
+                        'placeholder' => 'Nơi nhận áo...',  
+                        'class' => 'form-control dropdown-with-arrow',
+                        'id' => 'noi-nhan-ao-search-dropdown'
+                    ],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                        'width'=>'100%'
+                    ],
+                ])->label(false); ?>
+            </div>
             <div class="col-md-1">
                   <?= $form->field($model, 'da_nhan_tai_lieu')->dropDownList([1=>'Đã nhận', 0=>'Chưa nhận', ], ['prompt'=>'Tất cả'])->label('Nhận tài liệu') ?>
             </div>
@@ -153,6 +169,22 @@ $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gi
                          'todayBtn'=>true
                   ]
                   ]); ?>
+            </div>
+            <div class="col-md-2">
+            	<label>Nơi nhận tài liệu</label>
+            	<?= $form->field($model, 'noiNhanTaiLieu')->widget(Select2::classname(), [
+                    'data' => DangKyHv::getDmNoiDangKy(),
+                    'language' => 'vi',
+                    'options' => [
+                        'placeholder' => 'Nơi nhận tài liệu...',  
+                        'class' => 'form-control dropdown-with-arrow',
+                        'id' => 'noi-nhan-tai-lieu-search-dropdown'
+                    ],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                        'width'=>'100%'
+                    ],
+                ])->label(false); ?>
             </div>
             <div class="col-md-2">
                   <?= $form->field($model, 'thoi_gian_hoan_thanh_ho_so')->widget(DatePicker::classname(), [

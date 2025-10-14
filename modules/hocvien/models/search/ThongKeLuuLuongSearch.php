@@ -12,7 +12,7 @@ use app\modules\user\models\User;
 /**
  * DangKyHvSearch represents the model behind the search form about `app\modules\hocvien\models\DangKyHv`.
  */
-class DangKyHvSearch extends DangKyHv
+class ThongKeLuuLuongSearch extends DangKyHv
 {
     public $noiNhanAo;//search noi nhan ao
     public $noiNhanTaiLieu;//search noi nhan ho so
@@ -127,54 +127,4 @@ class DangKyHvSearch extends DangKyHv
         return $dataProvider;
     }
     
-    /* Creates data provider instance with search query applied
-     * search hồ sơ đã nộp 50% học phí
-    *
-    * @param array $params
-    *
-    * @return ActiveDataProvider
-    */
-    public function searchHoSo($params)
-    {
-        $query = DangKyHv::find()->alias('t');
-        $query->joinWith(['hocPhi as hp']);
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-            'sort'=> ['defaultOrder' => ['thoi_gian_hoan_thanh_ho_so'=>SORT_DESC, 'id' => SORT_DESC]],
-        ]);
-        
-        $this->load($params);
-        
-        if (!$this->validate()) {
-            // Uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
-            return $dataProvider;
-        }
-        //'(SELECT thoi_gian_tao as ngayhoanthanhhoso FROM hv_nop_hoc_phi AS i, hv_hoc_phi as h WHERE t.id = i.id_hoc_vien AND h.id=t._id_hoc_phi AND i.so_tien_con_lai <= h.hoc_phi/2)'
-        /* $query=$query->andFilterWhere(['>', '(SELECT SUM(i.so_tien_nop) FROM hv_nop_hoc_phi AS i WHERE t.id = i.id_hoc_vien)', 2000000]); */ //tạm sét > 2tr là đóng 50% học phí
-        //$query->andFilterWhere([]);
-       
-        /* 
-        $query->andWhere('(SELECT i.so_tien_con_lai FROM hv_nop_hoc_phi AS i WHERE t.id = i.id_hoc_vien) <= hp.hoc_phi'); */
-        $query->andWhere('t.thoi_gian_hoan_thanh_ho_so IS NOT NULL');
-        $query->andFilterWhere([
-            't.id' => $this->id,
-            't.id_khoa_hoc' => $this->id_khoa_hoc,
-            't.nguoi_tao' => $this->nguoi_tao,
-            't.thoi_gian_tao' => $this->thoi_gian_tao,
-            't.gioi_tinh'=>$this->gioi_tinh,
-            't.id_hang'=>$this->id_hang,
-            //'t.nguoi_tao'=>$this->nguoi_tao,
-        ]);
-        
-        $query->andFilterWhere(['like', 't.ho_ten', $this->ho_ten])
-        ->andFilterWhere(['like', 'dia_chi', $this->dia_chi])
-        ->andFilterWhere(['like', 't.so_dien_thoai', $this->so_dien_thoai])
-        ->andFilterWhere(['like', 't.so_cccd', $this->so_cccd])
-        ->andFilterWhere(['like', 't.trang_thai', $this->trang_thai])
-        // ->andFilterWhere(['like', 'id_hang', $this->id_hang])
-        ->andFilterWhere(['like', 't.ngay_sinh', $this->ngay_sinh]);
-        
-        return $dataProvider;
-    }
 }

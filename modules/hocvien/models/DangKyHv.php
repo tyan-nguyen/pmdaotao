@@ -4,6 +4,7 @@ namespace app\modules\hocvien\models;
 use Yii;
 use app\modules\hocvien\models\base\HocVienBase;
 use app\custom\CustomFunc;
+use app\modules\user\models\User;
 /**
  * HocVienSearch represents the model behind the search form about `app\models\HvHocVien`.
  */
@@ -37,8 +38,7 @@ class DangKyHv extends HocVienBase
             }
             if($this->da_nop_du==null){
                 $this->da_nop_du = 0;
-            }
-            
+            }            
         }
         
         if($this->huy_ho_so){

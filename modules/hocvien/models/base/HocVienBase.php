@@ -16,41 +16,48 @@ use app\modules\hocvien\models\ThayDoiHocPhi;
 use app\modules\daotao\models\GvHv;
 use app\modules\hocvien\models\BaoLuu;
 use app\modules\hocvien\models\DoiSatHach;
+use app\modules\danhmuc\models\DmXa;
+use app\modules\danhmuc\models\DmTinh;
 
 /**
  * This is the model class for table "hv_hoc_vien".
  *
  * @property int $id
- * @property int $id_khoa_hoc
- * @property int $id_hoc_phi
+ * @property int|null $id_khoa_hoc
+ * @property int|null $id_hoc_phi
  * @property string $ho_ten
  * @property string $so_dien_thoai
- * @property string $so_cccd
- * @property string $ngay_sinh
+ * @property string|null $so_cccd
+ * @property string|null $ngay_het_han_cccd
  * @property string $trang_thai
  * @property int|null $nguoi_tao
  * @property string|null $thoi_gian_tao
- * @property string $ngay_sinh
- * @property string $check_hoc_phi
- * @property int|null $id_nhom
-  * @property string|null $ngay_het_han_cccd 
- * @property string|null $noi_dang_ky
- * @property int|null $ma_so_phieu 
+ * @property int|null $gioi_tinh
+ * @property string|null $dia_chi
+ * @property string|null $dia_chi_chi_tiet
+ * @property int|null $id_xa
+ * @property int|null $id_tinh
+ * @property string|null $ngay_sinh
+ * @property string|null $nguoi_lap_phieu
+ * @property int|null $ma_so_phieu
  * @property int|null $so_lan_in_phieu
- * @property string|null $trang_thai_duyet 
- * @property HvHoSoHocVien[] $hvHoSoHocViens
- * @property HvNopHocPhi[] $hvNopHocPhis
- * @property HvKhoaHoc $khoaHoc
- * @property int|null $nguoi_duyet
+ * @property int $id_hang
+ * @property string|null $check_hoc_phi
+ * @property int|null $id_nhom
  * @property string|null $loai_dang_ky
+ * @property string|null $noi_dang_ky
+ * @property int|null $nguoi_duyet
+ * @property string|null $trang_thai_duyet
  * @property string|null $ghi_chu
- * @property string|null thoi_gian_hoan_thanh_ho_so
+ * @property string|null $thoi_gian_hoan_thanh_ho_so
  * @property int|null $co_ho_so_thue
  * @property int|null $da_nhan_ao
  * @property string|null $size
  * @property string|null $ngay_nhan_ao
+ * @property int|null $nguoi_giao_ao
  * @property int|null $da_nhan_tai_lieu
  * @property string|null $ngay_nhan_tai_lieu
+ * @property int|null $nguoi_giao_tai_lieu
  * @property int|null $id_giao_vien
  * @property int|null $huy_ho_so
  * @property string|null $thoi_gian_huy_ho_so
@@ -58,6 +65,16 @@ use app\modules\hocvien\models\DoiSatHach;
  * @property string|null $loai_ly_do
  * @property float|null $le_phi
  * @property int|null $da_nop_du
+ *
+ * @property GdGvHv[] $gdGvHvs
+ * @property HvHangDaoTao $hang
+ * @property HvHocPhi $hocPhi
+ * @property HvHocVienBaoLuu[] $hvHocVienBaoLuus
+ * @property HvHocVienDoiSatHach[] $hvHocVienDoiSatHaches
+ * @property HvHocVienThayDoiHocPhi[] $hvHocVienThayDoiHocPhis
+ * @property HvNopHocPhi[] $hvNopHocPhis
+ * @property HvKhoaHoc $khoaHoc
+ * @property HvNhom $nhom
  */
 class HocVienBase extends \app\models\HvHocVien
 {
@@ -71,6 +88,7 @@ class HocVienBase extends \app\models\HvHocVien
     const NOIDANGKY_CS7 = 'CS7';
     const NOIDANGKY_CS8 = 'CS8';
     const NOIDANGKY_CS9 = 'CS9';
+    const NOIDANGKY_CS10 = 'CS10';
     
     const HUY_BATKHAKHANG = 'BATKHAKHANG';
     const HUY_KHACHQUAN = 'KHACHQUAN';
@@ -97,6 +115,7 @@ class HocVienBase extends \app\models\HvHocVien
             self::NOIDANGKY_CS7 => 'CS7 - CN Cầu Kè',
             self::NOIDANGKY_CS8 => 'CS8 - CN Tiểu Cần',
             self::NOIDANGKY_CS9 => 'CS9 - CN Mỏ Cày Nam',
+            self::NOIDANGKY_CS10 => 'CS10 - CN Mỏ Cày Bắc',
         ];
     }
     /**
@@ -115,6 +134,7 @@ class HocVienBase extends \app\models\HvHocVien
             self::NOIDANGKY_CS7 => 'CN Cầu Kè',
             self::NOIDANGKY_CS8 => 'CN Tiểu Cần',
             self::NOIDANGKY_CS9 => 'CN Mỏ Cày Nam',
+            self::NOIDANGKY_CS10 => 'CN Mỏ Cày Bắc',
         ];
     }
     /**
@@ -154,6 +174,9 @@ class HocVienBase extends \app\models\HvHocVien
                 break;
             case self::NOIDANGKY_CS9:
                 $label = "CN Mỏ Cày Nam";
+                break;
+            case self::NOIDANGKY_CS10:
+                $label = "CN Mỏ Cày Bắc";
                 break;
             default:
                 $label = '';
@@ -196,6 +219,9 @@ class HocVienBase extends \app\models\HvHocVien
             case self::NOIDANGKY_CS9:
                 $label = "CN Mỏ Cày Nam";
                 break;
+            case self::NOIDANGKY_CS10:
+                $label = "CN Mỏ Cày Bắc";
+                break;
             default:
                 $label = '';
         }
@@ -235,6 +261,9 @@ class HocVienBase extends \app\models\HvHocVien
                 $label = '<span class="badge bg-warning">'.$val.'</span> ';
                 break;
             case self::NOIDANGKY_CS9:
+                $label = '<span class="badge bg-warning">'.$val.'</span> ';
+                break;
+            case self::NOIDANGKY_CS10:
                 $label = '<span class="badge bg-warning">'.$val.'</span> ';
                 break;
             default:
@@ -306,9 +335,9 @@ class HocVienBase extends \app\models\HvHocVien
         return [
             /*[['id_hang', 'ho_ten', 'so_cccd','id_hang'], 'required'],*/
             [['id_hang', 'ho_ten', 'noi_dang_ky'], 'required'],
-            [['id_khoa_hoc', 'id_hoc_phi', 'nguoi_tao','gioi_tinh','id_hang','id_nhom','nguoi_duyet','ma_so_phieu','so_lan_in_phieu','co_ho_so_thue', 'da_nhan_ao', 'id_giao_vien', 'huy_ho_so', 'da_nhan_tai_lieu', 'da_nop_du'], 'integer'],
+            [['id_khoa_hoc', 'id_hoc_phi', 'nguoi_tao','gioi_tinh','id_hang','id_nhom','nguoi_duyet','ma_so_phieu','so_lan_in_phieu','co_ho_so_thue', 'da_nhan_ao', 'id_giao_vien', 'huy_ho_so', 'da_nhan_tai_lieu', 'da_nop_du', 'nguoi_giao_ao', 'nguoi_giao_tai_lieu', 'id_xa', 'id_tinh'], 'integer'],
             [['thoi_gian_tao', 'thoi_gian_hoan_thanh_ho_so', 'thoi_gian_huy_ho_so', 'ngay_sinh','ngay_het_han_cccd'], 'safe'],
-            [['ho_ten', 'so_dien_thoai', 'so_cccd', 'trang_thai','dia_chi','trang_thai_duyet'], 'string', 'max' => 255],
+            [['ho_ten', 'so_dien_thoai', 'so_cccd', 'trang_thai','dia_chi', 'dia_chi_chi_tiet', 'trang_thai_duyet'], 'string', 'max' => 255],
             [['check_hoc_phi'],'string','max'=>25],
             [['nguoi_lap_phieu'],'string','max'=>55],
             [['noi_dang_ky', 'size'],'string','max'=>50],
@@ -318,6 +347,9 @@ class HocVienBase extends \app\models\HvHocVien
             [['id_khoa_hoc'], 'exist', 'skipOnError' => true, 'targetClass' => KhoaHoc::class, 'targetAttribute' => ['id_khoa_hoc' => 'id']],
             [['id_nhom'], 'exist', 'skipOnError' => true, 'targetClass' => NhomHoc::class, 'targetAttribute' => ['id_nhom' => 'id']],
             [['ghi_chu', 'ngay_nhan_ao', 'ngay_nhan_tai_lieu', 'ly_do_huy_ho_so', 'so_tien', 'thoi_gian_thay_doi'], 'safe'],
+            [['da_nhan_tai_lieu'], 'required', 'requiredValue' => 1, 'message' => 'Bạn phải chọn đã nhận tài liệu', 'on' => 'nhantailieu'],
+            [['da_nhan_ao'], 'required', 'requiredValue' => 1, 'message' => 'Bạn phải chọn đã nhận áo', 'on' => 'nhanao'],
+            [['id_xa'], 'required', 'requiredValue' => 1, 'message' => 'Bạn phải chọn xã/phường', 'on' => 'chuanhoadiachi'],
             //[['id_giao_vien'], 'required', 'on'=>'phan-cong-giao-vien'], //on phan cong giao vien phu trach cho hoc vien
         ];
     }
@@ -338,6 +370,9 @@ class HocVienBase extends \app\models\HvHocVien
             'so_cccd' => 'Số Căn cước công dân',
             'gioi_tinh'=>'Giới tính',
             'dia_chi'=>'Địa chỉ',
+            'dia_chi_chi_tiet'=>'Địa chỉ',
+            'id_xa' => 'Xã/Phường',
+            'id_tinh' => 'Tỉnh/Thành',
             'trang_thai' => 'Trạng thái',
             'nguoi_tao' => 'Người tạo',
             'thoi_gian_tao' => 'Thời gian tạo',
@@ -357,8 +392,10 @@ class HocVienBase extends \app\models\HvHocVien
             'da_nhan_ao' => 'Đã nhận áo',
             'size'=>'Size',
             'ngay_nhan_ao' => 'Ngày nhận áo',
+            'nguoi_giao_ao' => 'Người giao áo',
             'da_nhan_tai_lieu' => 'Đã nhận tài liệu',
             'ngay_nhan_tai_lieu' => 'Ngày nhận tài liệu',
+            'nguoi_giao_tai_lieu' => 'Người giao tài liệu',
             'id_giao_vien' => 'Giáo viên phụ trách',
             'huy_ho_so' => 'Hủy hồ sơ',
             'thoi_gian_huy_ho_so' => 'Thời gian hủy hồ sơ',
@@ -406,6 +443,14 @@ class HocVienBase extends \app\models\HvHocVien
      *
      * @return \yii\db\ActiveQuery
      */
+    public function getNguoiGiaoAo()
+    {
+        return $this->hasOne(User::class, ['id' => 'nguoi_giao_ao']);
+    }
+    public function getNguoiGiaoTaiLieu()
+    {
+        return $this->hasOne(User::class, ['id' => 'nguoi_giao_tai_lieu']);
+    }
     public function getKhoaHoc()
     {
         return $this->hasOne(KhoaHoc::class, ['id' => 'id_khoa_hoc']);
@@ -430,12 +475,32 @@ class HocVienBase extends \app\models\HvHocVien
     {
         return $this->hasOne(NhomHoc::class, ['id' => 'id_nhom']);
     }
+    public function getXa()
+    {
+        return $this->hasOne(DmXa::class, ['id' => 'id_xa']);
+    }
+    public function getTinh()
+    {
+        return $this->hasOne(DmTinh::class, ['id' => 'id_tinh']);
+    }
     public function getNgaySinh(){
         return CustomFunc::convertYMDToDMY($this->ngay_sinh);
     }
     public function getNgayHetHanCccd(){
         return CustomFunc::convertYMDToDMY($this->ngay_het_han_cccd);
     } 
+    /**
+     * lấy địa chỉ động theo dia_chi_chi_tiet, id_xa va id_tinh
+     */
+    public function getDiaChiText(){
+        if($this->id_tinh!=null && $this->id_xa !=null){
+            return ($this->dia_chi_chi_tiet?($this->dia_chi_chi_tiet . ', '):'') .
+                ($this->xa?($this->xa->ten_xa_full . ', '):'') .
+                ($this->tinh?$this->tinh->ten_tinh_full:'');
+        } else {
+            return '';
+        }
+    }
     public function getMaSoPhieu()
     {
         $hocVien = self::findOne($this->id);

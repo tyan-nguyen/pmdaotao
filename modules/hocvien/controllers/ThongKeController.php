@@ -18,6 +18,7 @@ use app\modules\hocvien\models\NopHocPhi;
 use yii\web\UploadedFile;
 use app\custom\CustomFunc;
 use yii\db\Expression;
+use app\modules\hocvien\models\search\ThongKeLuuLuongSearch;
 /**
  * HocVienController implements the CRUD actions for HvHocVien model.
  */
@@ -25,7 +26,8 @@ class ThongKeController extends Controller
 {
     public $freeAccessActions = [
         'tong-hop', 
-        'ban-hang'
+        'ban-hang',
+        'luu-luong'
     ];
     /**
      * @inheritdoc
@@ -53,13 +55,27 @@ class ThongKeController extends Controller
     /**
      * thống kê học viên - học phí
      */
-    public function actionTongHop(){
-       
-        return $this->render('tong-hop', [
-            
+    public function actionTongHop(){       
+        return $this->render('tong-hop', [            
         ]);
-    }
-    
+    }    
+    /**
+     * thống kê lưu lượng
+     */
+    public function actionLuuLuong(){        
+        $searchModel = new ThongKeLuuLuongSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        //an add
+        //$dataProvider->query->andWhere(['trang_thai' => ['DANG_KY']]);
+        //$dataProvider->query->andWhere('id_khoa_hoc is NULL');
+        $pagination = $dataProvider->getPagination();
+        $pagination->pageSize = 20;
+        return $this->render('luu-luong', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'pagination' =>$pagination,
+        ]);
+    }    
     /**
      * thống kê bán hàng
      */

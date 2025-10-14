@@ -49,7 +49,9 @@ $config = [
         'banhang' => [
             'class' => 'app\modules\banhang\Module',
         ],
-
+        'danhmuc' => [
+            'class' => 'app\modules\danhmuc\DanhMucModule',
+        ],
         /* 'dynamikjs' => [
             'class' => 'dastanaron\dropzone\DynamicJSModule'
         ], */
