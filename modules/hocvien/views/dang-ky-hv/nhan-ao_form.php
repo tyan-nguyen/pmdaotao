@@ -88,7 +88,12 @@ $isAdmin = User::getCurrentUser()->superadmin?true:false;
                     echo Html::hiddenInput('DangKyHv[ngay_nhan_ao]', $model->ngay_nhan_ao);
                 }
            ?>           
-           <?= !$isAdmin?'':$form->field($model, 'nguoi_giao_ao')->widget(Select2::classname(), [
+          
+        
+        </div> 
+        
+        <div class="col-lg-3 col-md-6">
+        	 <?= !$isAdmin?'':$form->field($model, 'nguoi_giao_ao')->widget(Select2::classname(), [
                'data' => User::getListNvNhanHoSo(),
                     'language' => 'vi',
                     'options' => ['placeholder' => 'Chọn NV thực hiện...'],
@@ -96,9 +101,8 @@ $isAdmin = User::getCurrentUser()->superadmin?true:false;
                         'allowClear' => true,
                         'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
                     ],
-        ])->label(false);?>
-        
-        </div>  
+            ]);?>
+        </div> 
         
     </div>
     <?php CardWidget::end() ?>
