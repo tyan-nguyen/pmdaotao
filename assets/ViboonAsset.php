@@ -24,7 +24,7 @@ class ViboonAsset extends AssetBundle
         'assets/css/icons.css',
         'assets/switcher/css/switcher.css',
         'assets/switcher/demo.css',
-        'css/site.css?v=1.11',
+        'css/site.css?v=1.12',
         'assets/fontawesome-free-6.4.0-web/css/all.min.css',
         'js/fancybox/fancybox.css',
         'https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css'
