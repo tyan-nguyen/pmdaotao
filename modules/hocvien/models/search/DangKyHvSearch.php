@@ -36,7 +36,7 @@ class DangKyHvSearch extends DangKyHv
      */
     public function search($params)
     {
-        $query = DangKyHv::find();
+        $query = DangKyHv::find()->alias('t');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -74,47 +74,47 @@ class DangKyHvSearch extends DangKyHv
         }
         if($this->thoi_gian_hoan_thanh_ho_so){
             $this->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertDMYToYMD($this->thoi_gian_hoan_thanh_ho_so);
-            $query->where("DATE(thoi_gian_hoan_thanh_ho_so) = '" . $this->thoi_gian_hoan_thanh_ho_so."'");
+            $query->where("DATE(t.thoi_gian_hoan_thanh_ho_so) = '" . $this->thoi_gian_hoan_thanh_ho_so."'");
         }
         if($this->thoi_gian_tao){
             $this->thoi_gian_tao = CustomFunc::convertDMYToYMD($this->thoi_gian_tao);
-            $query->where("DATE(thoi_gian_tao) = '" . $this->thoi_gian_tao."'");
+            $query->where("DATE(t.thoi_gian_tao) = '" . $this->thoi_gian_tao."'");
         }
 
         $query->andFilterWhere([
-            'id' => $this->id,
-            'id_khoa_hoc' => $this->id_khoa_hoc,
-            'nguoi_tao' => $this->nguoi_tao,
+            't.id' => $this->id,
+            't.id_khoa_hoc' => $this->id_khoa_hoc,
+            't.nguoi_tao' => $this->nguoi_tao,
             //'thoi_gian_tao' => $this->thoi_gian_tao,
-            'gioi_tinh'=>$this->gioi_tinh,
-            'id_hang'=>$this->id_hang,
-            'nguoi_tao'=>$this->nguoi_tao,
-            'da_nhan_ao' => $this->da_nhan_ao,
-            'ngay_nhan_ao' => $this->ngay_nhan_ao,
-            'ngay_nhan_tai_lieu' => $this->ngay_nhan_tai_lieu,
-            'size' => $this->size,
-            'da_nhan_tai_lieu' => $this->da_nhan_tai_lieu,
-            'noi_dang_ky' => $this->noi_dang_ky,
+            't.gioi_tinh'=>$this->gioi_tinh,
+            't.id_hang'=>$this->id_hang,
+            //'nguoi_tao'=>$this->nguoi_tao,
+            't.da_nhan_ao' => $this->da_nhan_ao,
+            't.ngay_nhan_ao' => $this->ngay_nhan_ao,
+            't.ngay_nhan_tai_lieu' => $this->ngay_nhan_tai_lieu,
+            't.size' => $this->size,
+            't.da_nhan_tai_lieu' => $this->da_nhan_tai_lieu,
+            't.noi_dang_ky' => $this->noi_dang_ky,
         ]);
         
         if($this->huy_ho_so){
             $query->andFilterWhere([
-                'huy_ho_so' => $this->huy_ho_so,
+                't.huy_ho_so' => $this->huy_ho_so,
             ]);
         } else {
             $query->andFilterWhere([
-                'huy_ho_so' => 0,
+                't.huy_ho_so' => 0,
             ]);
         }
 
-        $query->andFilterWhere(['like', 'ho_ten', $this->ho_ten])
-            ->andFilterWhere(['like', 'dia_chi', $this->dia_chi])
-            ->andFilterWhere(['like', 'so_dien_thoai', $this->so_dien_thoai])
-            ->andFilterWhere(['like', 'so_cccd', $this->so_cccd])
-            ->andFilterWhere(['like', 'trang_thai', $this->trang_thai])
+        $query->andFilterWhere(['like', 't.ho_ten', $this->ho_ten])
+            ->andFilterWhere(['like', 't.dia_chi', $this->dia_chi])
+            ->andFilterWhere(['like', 't.so_dien_thoai', $this->so_dien_thoai])
+            ->andFilterWhere(['like', 't.so_cccd', $this->so_cccd])
+            ->andFilterWhere(['like', 't.trang_thai', $this->trang_thai])
            // ->andFilterWhere(['like', 'id_hang', $this->id_hang])
-            ->andFilterWhere(['like', 'ngay_sinh', $this->ngay_sinh])
-            ->andFilterWhere(['like', 'ghi_chu', $this->ghi_chu]);
+            ->andFilterWhere(['like', 't.ngay_sinh', $this->ngay_sinh])
+            ->andFilterWhere(['like', 't.ghi_chu', $this->ghi_chu]);
         
        //load danh sách của cơ sở nhân viên nhận hồ sơ 
         /* $user = User::getCurrentUser();
