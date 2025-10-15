@@ -26,7 +26,7 @@ $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gi
                 'class' => 'myFilterForm'
             ]
       	]); ?>
-    <div class="row">
+    	<div class="row">
            <div class="col-md-3">
                   <?= $form->field($model, 'ho_ten')->textInput(['maxlength' => true]) ?>
            </div>
@@ -36,6 +36,7 @@ $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gi
                           0 => 'Nữ',
                           ], ['prompt' => 'Tất cả', 'class' => 'form-control dropdown-with-arrow']) ?>
             </div>
+            <?php /* ?>
             <div class="col-md-2">
                   <?= $form->field($model, 'ngay_sinh')->widget(DatePicker::classname(), [
                          'options' => ['placeholder' => 'Chọn ngày sinh  ...'],
@@ -48,6 +49,8 @@ $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gi
                     ]
                   ]); ?>
             </div>
+            <?php */ ?>
+            
             <div class="col-md-2">
                   <?= $form->field($model, 'so_cccd')->textInput(['maxlength' => true]) ?>
             </div>
@@ -59,6 +62,7 @@ $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gi
             <div class="col-md-2">
                   <?= $form->field($model, 'so_dien_thoai')->textInput(['maxlength' => true]) ?>
             </div>
+            
             <div class="col-md-2">
                   <?php // $form->field($model, 'noi_dang_ky')->dropDownList(DangKyHv::getDmNoiDangKy(), ['prompt'=>'Tất cả'])->label('Nơi ĐK') ?>
                    <label><?= $model->getAttributeLabel('noi_dang_ky') ?></label>
@@ -76,6 +80,7 @@ $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gi
                     ],
                 ])->label(false); ?>
             </div>
+            
             <div class="col-md-2">
                   <?php // $form->field($model, 'id_hang')->dropDownList(HangDaoTao::getList(), ['prompt'=>'Tất cả']) ?>
                 <label><?= $model->getAttributeLabel('id_hang') ?></label>
@@ -211,10 +216,12 @@ $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gi
                         ]
                   ])->label('Ngày nhận HV mới'); ?>
             </div>
-            <div class="col-md-3">
+            
+            <div class="col-md-2">
                   <?= $form->field($model, 'ghi_chu')->textInput(['maxlength' => true]) ?>
             </div>
-            <div class="col-md-2">
+            
+            <div class="col-md-1">
             	<label>&nbsp;</label>
                 <?= $form->field($model, 'huy_ho_so')->checkbox() ?>
             </div>
