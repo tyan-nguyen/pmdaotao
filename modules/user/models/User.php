@@ -134,7 +134,8 @@ class User extends UserBase{
         
         // Thêm dấu + vào trước tên nhân viên
         return ArrayHelper::map($dsUser, 'id', function($model) {
-            return '+ ' . $model->ho_ten . ' (' . $model->username . ')'; // Thêm dấu + trước tên nhân viên
+            return '+ ' . $model->ho_ten . ' (' . $model->username . ')' 
+                . ($model->status==self::STATUS_INACTIVE?(' - KHÓA'):'') ; // Thêm dấu + trước tên nhân viên
         });
     }
     
