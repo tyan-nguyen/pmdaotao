@@ -16,6 +16,7 @@ $user = User::findOne($model->nguoi_giao_ao);
             <tr style="font-weight:bold">
                 <td width="50px" align="center">STT</td>
                 <td align="center">Học viên</td>
+                <td align="center">Size</td>
                 <td align="center">Ngày nhận</td>
                 <td align="center">Nơi nhận</td>
                 <td align="center">Người giao</td> 
@@ -25,7 +26,8 @@ $user = User::findOne($model->nguoi_giao_ao);
         <tbody>
         <tr>
         	<td>1</td>
-        	<td align="center"><?= $model->ho_ten ?></td>        	
+        	<td align="center"><?= $model->ho_ten ?></td>     
+        	<td align="center"><?= $model->size ?></td>   	
         	<td align="center"><?= CustomFunc::convertYMDToDMY($model->ngay_nhan_ao) ?></td>
         	<td align="center"><?= (isset($user->noi_dang_ky))?DangKyHv::getLabelNoiDangKyOther($user->noi_dang_ky):'' ?></td>
         	<td align="center"><?= $user?$user->username:'' ?></td>
