@@ -163,6 +163,14 @@ class DangKyHvController extends Controller
             }if ($model->load($request->post())) { 
                 $model->loai_dang_ky = 'Nhập trực tiếp'; 
                 $model->trang_thai_duyet = 'DA_DUYET';
+                
+                if($model->da_nhan_ao==true){
+                    $model->nguoi_giao_ao = Yii::$app->user->id;
+                }
+                if($model->da_nhan_tai_lieu==true){
+                    $model->nguoi_giao_tai_lieu = Yii::$app->user->id;
+                }
+                
                 if ($model->save()) {
                     if($model->da_nhan_ao){
                         $model->nguoi_giao_ao = Yii::$app->user->id;
