@@ -49,39 +49,39 @@ $isAdmin = User::getCurrentUser()->superadmin?true:false;
         </div>
         
         <div class="col-lg-2 col-md-6">
-        <?= $form->field($model, 'size')->dropDownList(
-            [
-                'S'=>'Size S', 
-                'M'=>'Size M', 
-                'L'=>'Size L', 
-                'XL'=>'Size XL', 
-                '2XL'=>'Size 2XL', 
-                '3XL'=>'Size 3XL', 
-                '4XL'=>'Size 4XL'
-            ],
-            [
-                'prompt' => 'Chọn size áo',
-                'class' => 'form-control dropdown-with-arrow',
-                'disabled' => (bool)$model->da_nhan_ao,
-            ]
-        ) ?>
-    </div>
+            <?= $form->field($model, 'size')->dropDownList(
+                [
+                    'S'=>'Size S',
+                    'M'=>'Size M',
+                    'L'=>'Size L',
+                    'XL'=>'Size XL',
+                    '2XL'=>'Size 2XL',
+                    '3XL'=>'Size 3XL',
+                    '4XL'=>'Size 4XL'
+                ],
+                [
+                    'prompt' => 'Chọn size áo',
+                    'class' => 'form-control dropdown-with-arrow',
+                    'disabled' => (bool) ($model->da_nhan_ao && !$isAdmin),
+                ]
+            ) ?>
+        </div>
         
         <div class="col-lg-3 col-md-6">
             <?= $form->field($model, 'ngay_nhan_ao')->widget(DatePicker::classname(), [
-            'options' => [
-                'placeholder' => 'Chọn ngày  ...', 
-                'autocomplete'=>'off',
-                'disabled' => !$isAdmin,
-            ],
-            'removeButton' => $isAdmin?['icon'=>'remove', 'title'=>'Xóa ngày']:false,
-            'pluginOptions' => [
-                'autoclose' => true,
-                'format' => 'dd/mm/yyyy',
-                'todayHighlight'=>true,
-                'todayBtn'=>true,
-            ]
-           ]); ?>
+                'options' => [
+                    'placeholder' => 'Chọn ngày  ...', 
+                    'autocomplete'=>'off',
+                    'disabled' => !$isAdmin,
+                ],
+                'removeButton' => $isAdmin?['icon'=>'remove', 'title'=>'Xóa ngày']:false,
+                'pluginOptions' => [
+                    'autoclose' => true,
+                    'format' => 'dd/mm/yyyy',
+                    'todayHighlight'=>true,
+                    'todayBtn'=>true,
+                ]
+               ]); ?>
            <?php 
                 //nhận giá trị khi disable cho nhân viên nhận hồ sơ
                 if(!$isAdmin){
