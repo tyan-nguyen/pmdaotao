@@ -214,7 +214,7 @@ form div.required label.control-label:after {
 .select2-container--krajee-bs5 .select2-results__option.select2-results__option--selected,
 .select2-container--krajee-bs5 .select2-results__option[aria-selected=true] {
     color: #fff !important;
-    background-color: #17b794 !important;
+    background-color: #0d6efd !important;
 }
 .select2-container--krajee-bs5 .select2-results__group {
     color: #17b794 !important;

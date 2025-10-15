@@ -24,6 +24,9 @@ $this->params['breadcrumbs'][] = $this->title;
 //CrudAsset::register($this);
 Yii::$app->params['showSearch'] = true;
 Yii::$app->params['showExport'] = false;
+
+//format total count of dataprovider
+$totalFmt = number_format($dataProvider->getTotalCount(), 0, ',', '.');
 ?>
 <style>
 #crud-datatable-togdata-page{
@@ -135,7 +138,7 @@ Yii::$app->params['showExport'] = false;
             'responsive' => false,
             'panelHeadingTemplate'=>'<div style="width:100%;"><div class="float-start mt-2 text-primary">{title}</div> <div class="float-end">{toolbar}</div></div>',
             'panelFooterTemplate'=>'<div style="width:100%;"><div class="float-start">{summary}</div><div class="float-end">{pager}</div></div>',
-            'summary'=>'Tổng: {totalCount} dòng dữ liệu',
+            'summary'=>'Tổng: <strong>' . $totalFmt . '</strong> dòng dữ liệu',
             'panel' => [
                 'headingOptions'=>['class'=>'card-header rounded-bottom-0 card-header text-dark'],
                 'heading' => '<i class="typcn typcn-folder-open"></i> DANH SÁCH HỌC VIÊN ĐĂNG KÝ',
