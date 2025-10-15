@@ -121,7 +121,7 @@ $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gi
             
             <div class="col-md-2">
                   <?= $form->field($model, 'thoi_gian_hoan_thanh_ho_so')->widget(DatePicker::classname(), [
-                         'options' => ['placeholder' => 'Chọn ngày HTHS ...'],
+                         'options' => ['placeholder' => 'Chọn ngày HTHS ...', 'autocomplete'=>'off'],
                          'pluginOptions' => [
                              'autoclose' => true,
                              'format' => 'dd/mm/yyyy',
@@ -134,7 +134,7 @@ $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gi
            
             <div class="col-md-2">
                   <?= $form->field($model, 'thoi_gian_tao')->widget(DatePicker::classname(), [
-                         'options' => ['placeholder' => 'Chọn ngày tiếp nhận đăng ký  ...'],
+                        'options' => ['placeholder' => 'Chọn ngày tiếp nhận đăng ký  ...', 'autocomplete'=>'off'],
                          'pluginOptions' => [
                              'autoclose' => true,
                              'format' => 'dd/mm/yyyy',
@@ -170,7 +170,7 @@ $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gi
             </div>
             <div class="col-md-2">
                   <?= $form->field($model, 'ngay_nhan_ao')->widget(DatePicker::classname(), [
-                         'options' => ['placeholder' => 'Chọn ngày nhận ...'],
+                         'options' => ['placeholder' => 'Chọn ngày nhận ...', 'autocomplete'=>'off'],
                          'pluginOptions' => [
                          'autoclose' => true,
                          'format' => 'dd/mm/yyyy',
@@ -201,7 +201,7 @@ $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gi
             </div>
              <div class="col-md-2">
                   <?= $form->field($model, 'ngay_nhan_tai_lieu')->widget(DatePicker::classname(), [
-                         'options' => ['placeholder' => 'Chọn ngày nhận ...'],
+                        'options' => ['placeholder' => 'Chọn ngày nhận ...', 'autocomplete'=>'off'],
                          'pluginOptions' => [
                          'autoclose' => true,
                          'format' => 'dd/mm/yyyy',
