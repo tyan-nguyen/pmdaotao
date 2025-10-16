@@ -29,8 +29,8 @@ $user = User::findOne($model->nguoi_tao);
         	<td align="center"><?= CustomFunc::convertYMDToDMY($model->ngay_sinh) ?></td>
         	<td align="center"><?= $model->hang->ten_hang ?></td>
         	<td align="left">
-        		Địa chỉ cũ: <?= $model->dia_chi ?> <br/>
-        		Địa chỉ sau cập nhật: <?= $model->diaChiText ?>
+        		<strong>Địa chỉ cũ:</strong> <br/><?= $model->dia_chi?$model->dia_chi:'-' ?> <br/>
+        		<strong>Địa chỉ sau cập nhật:</strong> <br/><?= $model->diaChiText?$model->diaChiText:'-' ?>
         	</td>
         	<td align="center"><?= $user?$user->username:'' ?></td>
         </tr>
