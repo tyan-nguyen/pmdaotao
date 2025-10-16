@@ -1064,6 +1064,7 @@ public function actionNhanTaiLieu($idhv)
     $request = Yii::$app->request;
     $model = DangKyHv::findOne($idhv);
     $model->scenario = 'nhantailieu';
+    $user = User::getCurrentUser();
     
     if($request->isAjax){
         /*
@@ -1078,16 +1079,28 @@ public function actionNhanTaiLieu($idhv)
                         'model' => $model,
                     ]),
                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                    Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                    Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"]).
+                    ($user->superadmin?Html::a('Xóa nhận tài liệu', ['dang-ky-hv/xoa-nhan-tai-lieu', 'idhv'=>$idhv] ,['class'=>'btn btn-warning',
+                        'role'=>'modal-remote',
+                        'data-confirm-title'=>'Xác nhận xóa?',
+                        'data-confirm-message'=>'Bạn có chắc muốn xóa?'
+                    ]):'')
                 ];
-             else
+             else{
+                 $allowDel = ($model->nguoi_giao_tai_lieu == Yii::$app->user->id && $model->ngay_nhan_tai_lieu == date('Y-m-d'));
                  return [
                      'title'=> "Giao tài liệu cho học viên #".$idhv,
                      'content'=>$this->renderAjax('nhan-tai-lieu_view', [
                          'model' => $model,
                      ]),
-                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"])
+                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                     ($allowDel?Html::a('Xóa nhận tài liệu', ['dang-ky-hv/xoa-nhan-tai-lieu', 'idhv'=>$idhv] ,['class'=>'btn btn-warning',
+                         'role'=>'modal-remote',
+                         'data-confirm-title'=>'Xác nhận xóa?',
+                         'data-confirm-message'=>'Bạn có chắc muốn xóa?'
+                     ]):'')
                  ];
+             }
         }else if($model->load($request->post())){
             if(!$model->nguoi_giao_tai_lieu){
                 $model->nguoi_giao_tai_lieu = Yii::$app->user->id;
@@ -1127,6 +1140,23 @@ public function actionNhanTaiLieu($idhv)
         }
     }
 }
+public function actionXoaNhanTaiLieu($idhv)
+{
+    $request = Yii::$app->request;
+    if($request->isAjax){
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $model = DangKyHv::findOne($idhv);
+        $model->da_nhan_tai_lieu = 0;
+        $model->ngay_nhan_tai_lieu = null;
+        $model->nguoi_giao_tai_lieu = null;
+        if($model->save()){
+            return ['forceClose'=>true,'forceReload'=>'#crud-datatable-pjax','tcontent'=>'Đã xóa nhận tài liệu!'];
+        }else {
+            return ['forceClose'=>true,'forceReload'=>'#crud-datatable-pjax','tcontent'=>'Có lỗi xảy ra!'];
+        }
+    }
+    
+}
 
 /**
  * nhận áo - nếu có thì mở view, nếu chưa có thì mở form, nếu admin thì cho sửa
@@ -1138,6 +1168,7 @@ public function actionNhanAo($idhv)
     $request = Yii::$app->request;
     $model = DangKyHv::findOne($idhv);
     $model->scenario = 'nhanao';
+    $user=User::getCurrentUser();
     
     if($request->isAjax){
         /*
@@ -1152,16 +1183,28 @@ public function actionNhanAo($idhv)
                         'model' => $model,
                     ]),
                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                    Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                    Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"]).
+                    ($user->superadmin?Html::a('Xóa nhận áo', ['dang-ky-hv/xoa-nhan-ao', 'idhv'=>$idhv] ,['class'=>'btn btn-warning',
+                        'role'=>'modal-remote',
+                        'data-confirm-title'=>'Xác nhận xóa?',
+                        'data-confirm-message'=>'Bạn có chắc muốn xóa?'
+                    ]):'')
                 ];
-                else
+                else{
+                    $allowDel = ($model->nguoi_giao_ao == Yii::$app->user->id && $model->ngay_nhan_ao == date('Y-m-d'));
                     return [
                         'title'=> "Giao áo cho học viên #".$idhv,
                         'content'=>$this->renderAjax('nhan-ao_view', [
                             'model' => $model,
                         ]),
-                        'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"])
+                        'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
+                        ($allowDel?Html::a('Xóa nhận áo', ['dang-ky-hv/xoa-nhan-ao', 'idhv'=>$idhv] ,['class'=>'btn btn-warning',
+                            'role'=>'modal-remote',
+                            'data-confirm-title'=>'Xác nhận xóa?',
+                            'data-confirm-message'=>'Bạn có chắc muốn xóa?'
+                        ]):'')
                     ];
+                }
         }else if($model->load($request->post())){
             if(!$model->nguoi_giao_ao){
                 $model->nguoi_giao_ao = Yii::$app->user->id;
@@ -1200,6 +1243,24 @@ public function actionNhanAo($idhv)
             ];
         }
     }
+}
+public function actionXoaNhanAo($idhv)
+{
+    $request = Yii::$app->request;    
+    if($request->isAjax){
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $model = DangKyHv::findOne($idhv);
+        $model->da_nhan_ao = 0;
+        $model->size = '';
+        $model->ngay_nhan_ao = null;
+        $model->nguoi_giao_ao = null;
+        if($model->save()){
+            return ['forceClose'=>true,'forceReload'=>'#crud-datatable-pjax','tcontent'=>'Đã xóa nhận áo!'];
+        }else {
+            return ['forceClose'=>true,'forceReload'=>'#crud-datatable-pjax','tcontent'=>'Có lỗi xảy ra!'];
+        }
+    }   
+    
 }
 
 /**

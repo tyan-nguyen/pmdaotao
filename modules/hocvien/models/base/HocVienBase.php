@@ -348,7 +348,9 @@ class HocVienBase extends \app\models\HvHocVien
             [['id_nhom'], 'exist', 'skipOnError' => true, 'targetClass' => NhomHoc::class, 'targetAttribute' => ['id_nhom' => 'id']],
             [['ghi_chu', 'ngay_nhan_ao', 'ngay_nhan_tai_lieu', 'ly_do_huy_ho_so', 'so_tien', 'thoi_gian_thay_doi'], 'safe'],
             [['da_nhan_tai_lieu'], 'required', 'requiredValue' => 1, 'message' => 'Bạn phải chọn đã nhận tài liệu', 'on' => 'nhantailieu'],
+            [['ngay_nhan_tai_lieu'], 'required', 'on' => 'nhantailieu'],
             [['da_nhan_ao'], 'required', 'requiredValue' => 1, 'message' => 'Bạn phải chọn đã nhận áo', 'on' => 'nhanao'],
+            [['size', 'ngay_nhan_ao'], 'required', 'on' => 'nhanao'],
             [['id_xa'], 'required', 'requiredValue' => 1, 'message' => 'Bạn phải chọn xã/phường', 'on' => 'chuanhoadiachi'],
             //[['id_giao_vien'], 'required', 'on'=>'phan-cong-giao-vien'], //on phan cong giao vien phu trach cho hoc vien
         ];

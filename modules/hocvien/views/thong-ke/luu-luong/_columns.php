@@ -75,6 +75,15 @@ return [
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'ngay_sinh',
+        'value'=>function($model){
+            return $model->getNgaySinh();
+        },
+        'width' => '40px',
+        'contentOptions' => [ 'style' => 'text-align:center' ],
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'dia_chi',
         'width' => '200px',
     ],

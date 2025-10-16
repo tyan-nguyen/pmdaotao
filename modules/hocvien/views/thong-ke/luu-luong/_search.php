@@ -38,6 +38,32 @@ $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gi
             <div class="col-md-2">
                   <?= $form->field($model, 'dia_chi')->textInput(['maxlength' => true]) ?>
             </div>
+            
+            <div class="col-md-2">
+                  <?= $form->field($model, 'ngay_sinh_tu')->widget(DatePicker::classname(), [
+                         'options' => ['placeholder' => 'Chọn ngày sinh  ...'],
+                         'pluginOptions' => [
+                         'autoclose' => true,
+                         'format' => 'dd/mm/yyyy',
+                         'zIndexOffset'=>'9999',
+                         'todayHighlight'=>true,
+                         'todayBtn'=>true
+                    ]
+                  ]); ?>
+            </div>
+            
+            <div class="col-md-2">
+                  <?= $form->field($model, 'ngay_sinh_den')->widget(DatePicker::classname(), [
+                         'options' => ['placeholder' => 'Chọn ngày sinh  ...'],
+                         'pluginOptions' => [
+                         'autoclose' => true,
+                         'format' => 'dd/mm/yyyy',
+                         'zIndexOffset'=>'9999',
+                         'todayHighlight'=>true,
+                         'todayBtn'=>true
+                    ]
+                  ]); ?>
+            </div>
              
             
             <div class="col-md-2">

@@ -62,7 +62,7 @@ $isAdmin = User::getCurrentUser()->superadmin?true:false;
                 [
                     'prompt' => 'Chọn size áo',
                     'class' => 'form-control dropdown-with-arrow',
-                    'disabled' => (bool) ($model->da_nhan_ao && !$isAdmin),
+                   // 'disabled' => (bool) ($model->da_nhan_ao && !$isAdmin),
                 ]
             ) ?>
         </div>
@@ -72,9 +72,9 @@ $isAdmin = User::getCurrentUser()->superadmin?true:false;
                 'options' => [
                     'placeholder' => 'Chọn ngày  ...', 
                     'autocomplete'=>'off',
-                    'disabled' => !$isAdmin,
+                    //'disabled' => !$isAdmin,
                 ],
-                'removeButton' => $isAdmin?['icon'=>'remove', 'title'=>'Xóa ngày']:false,
+                //'removeButton' => $isAdmin?['icon'=>'remove', 'title'=>'Xóa ngày']:false,
                 'pluginOptions' => [
                     'autoclose' => true,
                     'format' => 'dd/mm/yyyy',
@@ -84,9 +84,9 @@ $isAdmin = User::getCurrentUser()->superadmin?true:false;
                ]); ?>
            <?php 
                 //nhận giá trị khi disable cho nhân viên nhận hồ sơ
-                if(!$isAdmin){
+                /* if(!$isAdmin){
                     echo Html::hiddenInput('DangKyHv[ngay_nhan_ao]', $model->ngay_nhan_ao);
-                }
+                } */
            ?>           
           
         

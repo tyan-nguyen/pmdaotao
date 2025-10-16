@@ -21,6 +21,9 @@ $this->params['breadcrumbs'][] = $this->title;
 //CrudAsset::register($this);
 Yii::$app->params['showSearch'] = true;
 Yii::$app->params['showExport'] = false;
+
+//format total count of dataprovider
+$totalFmt = number_format($dataProvider->getTotalCount(), 0, ',', '.');
 ?>
 <style>
 #crud-datatable-togdata-page{
@@ -63,6 +66,36 @@ Yii::$app->params['showExport'] = false;
 
 <div class="van-ban-den-index">
     <div id="ajaxCrudDatatable">
+    
+    	<?php if (!empty($searchModel->gioi_tinh) || !empty($searchModel->noi_dang_ky) || !empty($searchModel->id_hang)
+            	    || !empty($searchModel->id_khoa_hoc) ): ?>
+        	<div class="card custom-card">
+                <div class="card-body">
+                	
+                        <div>
+                            <h3>Kết quả tìm kiếm</h3>
+                            Các tiêu chí tìm kiếm:
+                            <ul>
+                            <?php if ($searchModel->gioi_tinh): ?>
+                                <li><i class="fa fa-angle-double-right mb-2 me-2"></i> <strong>Giới tính:</strong> <?= $searchModel->gioi_tinh == 1 ? 'Nam' : 'Nữ' ?></li>
+                            <?php endif; ?>
+                            <?php if ($searchModel->noi_dang_ky): ?>
+                                <li><i class="fa fa-angle-double-right mb-2 me-2"></i> <strong>Cơ sở đăng ký:</strong> <?= $searchModel->getLabelNoiDangKy() ?></li>
+                            <?php endif; ?>
+                             <?php if ($searchModel->id_hang): ?>
+                                <li><i class="fa fa-angle-double-right mb-2 me-2"></i> <strong>Hạng đào tạo:</strong> <?= $searchModel->hangDaoTao->ten_hang ?></li>
+                            <?php endif; ?>
+                             <?php if ($searchModel->id_khoa_hoc): ?>
+                                <li><i class="fa fa-angle-double-right mb-2 me-2"></i> <strong>Khóa học:</strong> <?= $searchModel->khoaHoc->ten_khoa_hoc ?></li>
+                            <?php endif; ?>
+                            </ul>
+                        </div>             
+    				
+                	<h4 style="margin-top:10px"><strong>Tổng cộng: </strong><?php echo $totalFmt ?> kết quả.</h4>
+                </div>
+            </div>  
+        <?php endif; ?>
+    
         <?=GridView::widget([
             'id'=>'crud-datatable',
             'dataProvider' => $dataProvider,
@@ -129,11 +162,11 @@ Yii::$app->params['showExport'] = false;
             'responsive' => false,
             'panelHeadingTemplate'=>'<div style="width:100%;"><div class="float-start mt-2 text-primary">{title}</div> <div class="float-end">{toolbar}</div></div>',
             'panelFooterTemplate'=>'<div style="width:100%;"><div class="float-start">{summary}</div><div class="float-end">{pager}</div></div>',
-            'summary'=>'Tổng: {totalCount} dòng dữ liệu',
+            'summary'=>'Tổng: <strong>' . $totalFmt . '</strong> dòng dữ liệu',
             'panel' => [
                 'headingOptions'=>['class'=>'card-header rounded-bottom-0 card-header text-dark'],
-                'heading' => '<i class="typcn typcn-folder-open"></i> DANH SÁCH HỌC VIÊN ĐĂNG KÝ',
-                'before'=>false,
+                'heading' => '<i class="typcn typcn-folder-open"></i> DANH SÁCH HỌC VIÊN',
+                'before' => false,
             ],
             'export'=>[
                 'fontAwesome' => true,
