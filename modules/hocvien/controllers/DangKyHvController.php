@@ -1080,9 +1080,9 @@ public function actionNhanTaiLieu($idhv)
                     ]),
                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                     Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"]).
-                    ($user->superadmin?Html::a('Xóa nhận tài liệu', ['dang-ky-hv/xoa-nhan-tai-lieu', 'idhv'=>$idhv] ,['class'=>'btn btn-warning',
+                    ($user->superadmin?Html::a('<i class="fas fa-trash-alt"></i> Xóa nhận tài liệu', ['dang-ky-hv/xoa-nhan-tai-lieu', 'idhv'=>$idhv] ,['class'=>'btn btn-warning',
                         'role'=>'modal-remote',
-                        'data-confirm-title'=>'Xác nhận xóa?',
+                        'data-confirm-title'=>'Xác nhận xóa thông tin nhận tài liệu?',
                         'data-confirm-message'=>'Bạn có chắc muốn xóa?'
                     ]):'')
                 ];
@@ -1094,9 +1094,9 @@ public function actionNhanTaiLieu($idhv)
                          'model' => $model,
                      ]),
                      'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                     ($allowDel?Html::a('Xóa nhận tài liệu', ['dang-ky-hv/xoa-nhan-tai-lieu', 'idhv'=>$idhv] ,['class'=>'btn btn-warning',
+                     ($allowDel?Html::a('<i class="fas fa-trash-alt"></i> Xóa nhận tài liệu', ['dang-ky-hv/xoa-nhan-tai-lieu', 'idhv'=>$idhv] ,['class'=>'btn btn-warning',
                          'role'=>'modal-remote',
-                         'data-confirm-title'=>'Xác nhận xóa?',
+                         'data-confirm-title'=>'Xác nhận xóa thông tin nhận tài liệu?',
                          'data-confirm-message'=>'Bạn có chắc muốn xóa?'
                      ]):'')
                  ];
@@ -1184,9 +1184,9 @@ public function actionNhanAo($idhv)
                     ]),
                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                     Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"]).
-                    ($user->superadmin?Html::a('Xóa nhận áo', ['dang-ky-hv/xoa-nhan-ao', 'idhv'=>$idhv] ,['class'=>'btn btn-warning',
+                    ($user->superadmin?Html::a('<i class="fas fa-trash-alt"></i> Xóa nhận áo', ['dang-ky-hv/xoa-nhan-ao', 'idhv'=>$idhv] ,['class'=>'btn btn-warning',
                         'role'=>'modal-remote',
-                        'data-confirm-title'=>'Xác nhận xóa?',
+                        'data-confirm-title'=>'Xác nhận xóa thông tin nhận áo?',
                         'data-confirm-message'=>'Bạn có chắc muốn xóa?'
                     ]):'')
                 ];
@@ -1198,9 +1198,9 @@ public function actionNhanAo($idhv)
                             'model' => $model,
                         ]),
                         'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                        ($allowDel?Html::a('Xóa nhận áo', ['dang-ky-hv/xoa-nhan-ao', 'idhv'=>$idhv] ,['class'=>'btn btn-warning',
+                        ($allowDel?Html::a('<i class="fas fa-trash-alt"></i> Xóa nhận áo', ['dang-ky-hv/xoa-nhan-ao', 'idhv'=>$idhv] ,['class'=>'btn btn-warning',
                             'role'=>'modal-remote',
-                            'data-confirm-title'=>'Xác nhận xóa?',
+                            'data-confirm-title'=>'Xác nhận xóa thông tin nhận áo?',
                             'data-confirm-message'=>'Bạn có chắc muốn xóa?'
                         ]):'')
                     ];
