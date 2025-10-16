@@ -21,4 +21,9 @@ class DmXa extends \app\models\DmXa
             return $model->tinh->ten_tinh_full;
         });
     }
+    
+    public static function getTenXa($id){
+        $model = self::findOne($id);
+        return $model?$model->ten_xa_full:'';
+    }
 }

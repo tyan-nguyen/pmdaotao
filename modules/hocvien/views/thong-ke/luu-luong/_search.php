@@ -9,6 +9,8 @@ use app\custom\CustomFunc;
 use app\modules\hocvien\models\DangKyHv;
 use app\modules\hocvien\models\HangDaoTao;
 use kartik\select2\Select2;
+use app\modules\danhmuc\models\DmXa;
+use app\modules\danhmuc\models\DmTinh;
 /* @var $this yii\web\View */
 /* @var $model app\modules\vanban\models\VanBanDen */
 /* @var $form yii\widgets\ActiveForm */
@@ -129,7 +131,32 @@ $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gi
                     ],
                 ])->label(false); ?>
             </div>
-            
+            <div class="col-md-2">
+               <label>Xã/phường</label>
+               <?= $form->field($model, 'id_xa')->widget(Select2::classname(), [
+                   'data' => DmXa::getList(),
+                        'language' => 'vi',
+                        'options' => ['placeholder' => 'Chọn xã/phường...'],
+                        'pluginOptions' => [
+                            'allowClear' => true,
+                            //'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
+                            'width' => '100%'
+                        ],
+                ])->label(false);?>
+            </div>
+            <div class="col-md-2">  
+            	<label>Tỉnh/thành</label>     
+               <?= $form->field($model, 'id_tinh')->widget(Select2::classname(), [
+                   'data' => DmTinh::getList(),
+                        'language' => 'vi',
+                        'options' => ['placeholder' => 'Chọn tỉnh/thành...'],
+                        'pluginOptions' => [
+                            'allowClear' => true,
+                            //'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
+                            'width' => '100%'
+                        ],
+                ])->label(false);?>        
+            </div>
            
     </div>    
 

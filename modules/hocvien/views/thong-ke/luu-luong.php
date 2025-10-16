@@ -11,6 +11,8 @@ use app\modules\hocvien\models\HocVien;
 use app\modules\user\models\User;
 use app\modules\hocvien\models\base\HocVienBase;
 use app\custom\CustomFunc;
+use app\modules\danhmuc\models\DmTinh;
+use app\modules\danhmuc\models\DmXa;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\modules\vanban\models\search\VBDenSearch */
@@ -78,7 +80,8 @@ if(!empty($searchModel->ngay_sinh_den)){
     
     	<?php if (!empty($searchModel->gioi_tinh) || !empty($searchModel->noi_dang_ky) || !empty($searchModel->id_hang) || !empty($searchModel->ngay_sinh_tu) || !empty($searchModel->ngay_sinh_den
     	    || !empty($searchModel->tuoi_tu) || !empty($searchModel->tuoi_den) )
-            	    || !empty($searchModel->id_khoa_hoc) ): ?>
+    	    || !empty($searchModel->id_khoa_hoc) || !empty($searchModel->id_xa)
+    	    || !empty($searchModel->id_tinh) ): ?>
         	<div class="card custom-card">
                 <div class="card-body">
                 	
@@ -109,6 +112,12 @@ if(!empty($searchModel->ngay_sinh_den)){
                             <?php endif; ?>
                             <?php if ($searchModel->tuoi_den): ?>
                                 <li><i class="fa fa-angle-double-right mb-2 me-2"></i> <strong>Tuổi đến:</strong> <?= $searchModel->tuoi_den ?></li>
+                            <?php endif; ?>
+                            <?php if ($searchModel->id_xa): ?>
+                                <li><i class="fa fa-angle-double-right mb-2 me-2"></i> <strong>Xã/Phường:</strong> <?= DmXa::getTenXa($searchModel->id_xa) ?></li>
+                            <?php endif; ?>
+                            <?php if ($searchModel->id_tinh): ?>
+                                <li><i class="fa fa-angle-double-right mb-2 me-2"></i> <strong>Tỉnh/Thành:</strong> <?= DmTinh::getTenTinh($searchModel->id_tinh) ?></li>
                             <?php endif; ?>
                             </ul>
                         </div>             

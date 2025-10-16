@@ -47,7 +47,7 @@ $canEdit = ($model->noi_dang_ky == $user->noi_dang_ky || $user->superadmin)?true
         	<?= $form->field($model, 'dia_chi_chi_tiet')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-lg-4 col-md-6">       
-        	<label>Xã/phường</label>
+           <label>Xã/phường</label>
            <?= $form->field($model, 'id_xa')->widget(Select2::classname(), [
                'data' => DmXa::getList(),
                     'language' => 'vi',

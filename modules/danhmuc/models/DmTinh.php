@@ -28,4 +28,9 @@ class DmTinh extends \app\models\DmTinh
             return '+ ' . $model->ten_tinh_full;
         });
     }
+    
+    public static function getTenTinh($id){
+        $model = self::findOne($id);
+        return $model?$model->ten_tinh_full:'';
+    }
 }

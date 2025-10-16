@@ -34,7 +34,7 @@ class ThongKeLuuLuongSearch extends DangKyHv
                 'ngay_sinh', 'nguoi_tao', 'thoi_gian_hoan_thanh_ho_so', 'dia_chi', 'size', 
                 'ngay_nhan_ao', 'noi_dang_ky', 'huy_ho_so', 'ghi_chu', 'ngay_nhan_tai_lieu', 
                 'noiNhanAo', 'noiNhanTaiLieu',
-                'ngay_sinh_tu', 'ngay_sinh_den', 'tuoi_tu', 'tuoi_den'], 'safe'],
+                'ngay_sinh_tu', 'ngay_sinh_den', 'tuoi_tu', 'tuoi_den', 'id_xa', 'id_tinh'], 'safe'],
         ];
     }
 
@@ -157,6 +157,9 @@ class ThongKeLuuLuongSearch extends DangKyHv
             'size' => $this->size,
             'da_nhan_tai_lieu' => $this->da_nhan_tai_lieu,
             'noi_dang_ky' => $this->noi_dang_ky,
+            
+            'id_xa'=>$this->id_xa,
+            'id_tinh'=>$this->id_tinh,
         ]);
         
         if($this->huy_ho_so){

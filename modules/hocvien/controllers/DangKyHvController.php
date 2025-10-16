@@ -1287,6 +1287,7 @@ public function actionBienTapDiaChi($idhv)
     }else if($model->load($request->post())){
         if($model->save()){
             return [
+                'forceReload'=>'#crud-datatable-pjax',
                 'title'=> "Tool chuẩn hóa lại lại địa chỉ học viên #".$idhv,
                 'content'=>$this->renderAjax('tool-bien-tap-dia-chi_form', [
                     'model' => $model,
