@@ -27,7 +27,7 @@ $user = User::findOne($model->nguoi_giao_tai_lieu);
         	<td align="center"><?= $model->ho_ten ?></td>        	
         	<td align="center"><?= CustomFunc::convertYMDToDMY($model->ngay_nhan_tai_lieu) ?></td>
         	<td align="center"><?= (isset($user->noi_dang_ky))?DangKyHv::getLabelNoiDangKyOther($user->noi_dang_ky):'' ?></td>
-        	<td align="center"><?= $user?$user->username:'' ?></td>
+        	<td align="center"><?= $user?$user->ho_ten:'' ?></td>
         </tr>
         </tbody>
     </table>
