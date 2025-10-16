@@ -16,14 +16,25 @@ class ThongKeLuuLuongSearch extends DangKyHv
 {
     public $noiNhanAo;//search noi nhan ao
     public $noiNhanTaiLieu;//search noi nhan ho so
+    
+    public $ngay_sinh_tu;
+    public $ngay_sinh_den;
+    public $tuoi_tu;
+    public $tuoi_den;
+    
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id', 'id_khoa_hoc', 'nguoi_tao', 'id_hang','gioi_tinh', 'da_nhan_ao', 'da_nhan_tai_lieu'], 'integer'],
-            [['ho_ten', 'so_dien_thoai', 'so_cccd', 'trang_thai', 'thoi_gian_tao', 'ngay_sinh', 'nguoi_tao', 'thoi_gian_hoan_thanh_ho_so', 'dia_chi', 'size', 'ngay_nhan_ao', 'noi_dang_ky', 'huy_ho_so', 'ghi_chu', 'ngay_nhan_tai_lieu', 'noiNhanAo', 'noiNhanTaiLieu'], 'safe'],
+            [['id', 'id_khoa_hoc', 'nguoi_tao', 'id_hang','gioi_tinh', 'da_nhan_ao', 
+                'da_nhan_tai_lieu'], 'integer'],
+            [['ho_ten', 'so_dien_thoai', 'so_cccd', 'trang_thai', 'thoi_gian_tao', 
+                'ngay_sinh', 'nguoi_tao', 'thoi_gian_hoan_thanh_ho_so', 'dia_chi', 'size', 
+                'ngay_nhan_ao', 'noi_dang_ky', 'huy_ho_so', 'ghi_chu', 'ngay_nhan_tai_lieu', 
+                'noiNhanAo', 'noiNhanTaiLieu',
+                'ngay_sinh_tu', 'ngay_sinh_den', 'tuoi_tu', 'tuoi_den'], 'safe'],
         ];
     }
 
@@ -79,6 +90,57 @@ class ThongKeLuuLuongSearch extends DangKyHv
         if($this->thoi_gian_tao){
             $this->thoi_gian_tao = CustomFunc::convertDMYToYMD($this->thoi_gian_tao);
             $query->where("DATE(thoi_gian_tao) = '" . $this->thoi_gian_tao."'");
+        }
+        
+        //có cả từ ngày & đến ngày
+        if(!empty($this->ngay_sinh_tu) && !empty($this->ngay_sinh_den) ){
+            $this->ngay_sinh_tu = CustomFunc::convertDMYToYMD($this->ngay_sinh_tu);
+            $this->ngay_sinh_den = CustomFunc::convertDMYToYMD($this->ngay_sinh_den);
+            $query->andFilterWhere(['between', 'ngay_sinh', $this->ngay_sinh_tu, $this->ngay_sinh_den]);
+        }
+        
+        // Nếu chỉ có từ ngày
+        if (!empty($this->ngay_sinh_tu) && empty($this->ngay_sinh_den)) {
+            $this->ngay_sinh_tu = CustomFunc::convertDMYToYMD($this->ngay_sinh_tu);
+            $query->andFilterWhere(['>=', 'ngay_sinh', $this->ngay_sinh_tu]);
+        }
+        
+        // Nếu chỉ có đến ngày
+        if (empty($this->ngay_sinh_tu) && !empty($this->ngay_sinh_den)) {
+            $this->ngay_sinh_den = CustomFunc::convertDMYToYMD($this->ngay_sinh_den);
+            $query->andFilterWhere(['<=', 'ngay_sinh', $this->ngay_sinh_den]);
+        }
+        
+        // có cả tuổi từ, tuổi đến
+        if (!empty($this->tuoi_tu) && !empty($this->tuoi_den)) {
+            if ($this->tuoi_tu == $this->tuoi_den) {
+                $from = date('Y-m-d', strtotime('-' . $this->tuoi_tu . ' years'));
+                $to   = date('Y-m-d', strtotime('-' .  ($this->tuoi_tu + 1) . ' years +1 day'));
+                
+                $query->andFilterWhere([
+                    'between',
+                    'ngay_sinh',
+                    $to,
+                    $from,
+                ]);
+                
+            } else {
+                $query->andFilterWhere([
+                    'between',
+                    'ngay_sinh',
+                    date('Y-m-d', strtotime('-'.$this->tuoi_den.' years')),
+                    date('Y-m-d', strtotime('-'.$this->tuoi_tu.' years')),
+                ]);
+            }
+        }elseif (!empty($this->tuoi_tu)) {
+            // --- CHỈ CÓ tuoi_tu (tìm lớn hơn hoặc bằng) ---
+            $to = date('Y-m-d', strtotime('-' . $this->tuoi_tu . ' years'));
+            $query->andFilterWhere(['<=', 'ngay_sinh', $to]);
+            
+        } elseif (!empty($this->tuoi_den)) {
+            // --- CHỈ CÓ tuoi_den (tìm nhỏ hơn hoặc bằng) ---
+            $from = date('Y-m-d', strtotime('-' . $this->tuoi_den . ' years'));
+            $query->andFilterWhere(['>=', 'ngay_sinh', $from]);
         }
 
         $query->andFilterWhere([

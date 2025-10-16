@@ -40,6 +40,7 @@ $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gi
             </div>
             
             <div class="col-md-2">
+            	<label>Ngày sinh từ</label>
                   <?= $form->field($model, 'ngay_sinh_tu')->widget(DatePicker::classname(), [
                          'options' => ['placeholder' => 'Chọn ngày sinh  ...'],
                          'pluginOptions' => [
@@ -49,10 +50,11 @@ $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gi
                          'todayHighlight'=>true,
                          'todayBtn'=>true
                     ]
-                  ]); ?>
+                  ])->label(false); ?>
             </div>
             
             <div class="col-md-2">
+            	<label>Ngày sinh đến</label>
                   <?= $form->field($model, 'ngay_sinh_den')->widget(DatePicker::classname(), [
                          'options' => ['placeholder' => 'Chọn ngày sinh  ...'],
                          'pluginOptions' => [
@@ -62,7 +64,17 @@ $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gi
                          'todayHighlight'=>true,
                          'todayBtn'=>true
                     ]
-                  ]); ?>
+                  ])->label(false); ?>
+            </div>
+            
+            <div class="col-md-2">
+            	<label>Tuổi từ</label>
+                  <?= $form->field($model, 'tuoi_tu')->textInput(['maxlength' => true])->label(false) ?>
+            </div>
+            
+             <div class="col-md-2">
+             	<label>Tuổi đến</label>
+                  <?= $form->field($model, 'tuoi_den')->textInput(['maxlength' => true])->label(false) ?>
             </div>
              
             

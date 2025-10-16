@@ -10,6 +10,7 @@ use app\modules\hocvien\models\HangDaoTao;
 use app\modules\hocvien\models\HocVien;
 use app\modules\user\models\User;
 use app\modules\hocvien\models\base\HocVienBase;
+use app\custom\CustomFunc;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\modules\vanban\models\search\VBDenSearch */
@@ -24,6 +25,14 @@ Yii::$app->params['showExport'] = false;
 
 //format total count of dataprovider
 $totalFmt = number_format($dataProvider->getTotalCount(), 0, ',', '.');
+
+if(!empty($searchModel->ngay_sinh_tu)){
+    $searchModel->ngay_sinh_tu = CustomFunc::convertYMDToDMY($searchModel->ngay_sinh_tu);
+}
+if(!empty($searchModel->ngay_sinh_den)){
+    $searchModel->ngay_sinh_den = CustomFunc::convertYMDToDMY($searchModel->ngay_sinh_den);
+}
+
 ?>
 <style>
 #crud-datatable-togdata-page{
@@ -67,7 +76,8 @@ $totalFmt = number_format($dataProvider->getTotalCount(), 0, ',', '.');
 <div class="van-ban-den-index">
     <div id="ajaxCrudDatatable">
     
-    	<?php if (!empty($searchModel->gioi_tinh) || !empty($searchModel->noi_dang_ky) || !empty($searchModel->id_hang)
+    	<?php if (!empty($searchModel->gioi_tinh) || !empty($searchModel->noi_dang_ky) || !empty($searchModel->id_hang) || !empty($searchModel->ngay_sinh_tu) || !empty($searchModel->ngay_sinh_den
+    	    || !empty($searchModel->tuoi_tu) || !empty($searchModel->tuoi_den) )
             	    || !empty($searchModel->id_khoa_hoc) ): ?>
         	<div class="card custom-card">
                 <div class="card-body">
@@ -87,6 +97,18 @@ $totalFmt = number_format($dataProvider->getTotalCount(), 0, ',', '.');
                             <?php endif; ?>
                              <?php if ($searchModel->id_khoa_hoc): ?>
                                 <li><i class="fa fa-angle-double-right mb-2 me-2"></i> <strong>Khóa học:</strong> <?= $searchModel->khoaHoc->ten_khoa_hoc ?></li>
+                            <?php endif; ?>
+                             <?php if ($searchModel->ngay_sinh_tu): ?>
+                                <li><i class="fa fa-angle-double-right mb-2 me-2"></i> <strong>Ngày sinh từ:</strong> <?= $searchModel->ngay_sinh_tu ?></li>
+                            <?php endif; ?>
+                             <?php if ($searchModel->ngay_sinh_den): ?>
+                                <li><i class="fa fa-angle-double-right mb-2 me-2"></i> <strong>Ngày sinh đến:</strong> <?= $searchModel->ngay_sinh_den ?></li>
+                            <?php endif; ?>
+                            <?php if ($searchModel->tuoi_tu): ?>
+                                <li><i class="fa fa-angle-double-right mb-2 me-2"></i> <strong>Tuổi từ:</strong> <?= $searchModel->tuoi_tu ?></li>
+                            <?php endif; ?>
+                            <?php if ($searchModel->tuoi_den): ?>
+                                <li><i class="fa fa-angle-double-right mb-2 me-2"></i> <strong>Tuổi đến:</strong> <?= $searchModel->tuoi_den ?></li>
                             <?php endif; ?>
                             </ul>
                         </div>             
