@@ -19,7 +19,6 @@ $user = User::findOne($model->nguoi_giao_tai_lieu);
                 <td align="center">Ngày nhận</td>
                 <td align="center">Nơi nhận</td>
                 <td align="center">Người giao</td> 
-                <td></td>  
             </tr>
         </thead>
         <tbody>
