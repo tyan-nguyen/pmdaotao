@@ -35,7 +35,7 @@ use app\custom\CustomFunc;
     				<span class="phieu-h1">BIÊN LAI THU TIỀN</span>
     				<br/><span>Ngày <?= date('d') ?> tháng <?= date('m') ?> năm <?= date('Y') ?></span>
     			</td>
-    			<td>Số: <?= ($nhap && $model->ma_so_phieu==null) ? '' : CustomFunc::fillNumber($model->ma_so_phieu) ?></td>
+    			<td>Số: <?= ( ($nhap && $model->ma_so_phieu==null) ? '' : CustomFunc::fillNumber($model->ma_so_phieu) ) ?> <br/><span style="font-size:9pt">(<?= ($model->hocVien&&$model->nguoiTao)?$model->hocVien->getLabelNoiDangKy($model->nguoiTao->noi_dang_ky):'' ?>)</span> </td>
     		</tr>
     	</table>
     	

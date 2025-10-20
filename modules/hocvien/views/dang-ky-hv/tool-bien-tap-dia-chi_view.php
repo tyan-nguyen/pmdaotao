@@ -19,21 +19,21 @@ $user = User::findOne($model->nguoi_tao);
                 <td align="center">Ngày sinh</td>
                 <td align="center">Hạng đào tạo</td>
                 <td align="center">Địa chỉ</td>
-                <td align="center">Nhân viên phụ trách</td> 
+                <td align="center">Nhân viên phụ trách</td>
             </tr>
         </thead>
         <tbody>
-        <tr>
-        	<td>1</td>
-        	<td align="center"><?= $model->ho_ten ?></td>
-        	<td align="center"><?= CustomFunc::convertYMDToDMY($model->ngay_sinh) ?></td>
-        	<td align="center"><?= $model->hang->ten_hang ?></td>
-        	<td align="left">
-        		<strong>Địa chỉ cũ:</strong> <br/><?= $model->dia_chi?$model->dia_chi:'-' ?> <br/>
-        		<strong>Địa chỉ sau cập nhật:</strong> <br/><?= $model->diaChiText?$model->diaChiText:'-' ?>
-        	</td>
-        	<td align="center"><?= $user?$user->username:'' ?></td>
-        </tr>
+            <tr>
+            	<td>1</td>
+            	<td align="center"><?= $model->ho_ten ?></td>
+            	<td align="center"><?= CustomFunc::convertYMDToDMY($model->ngay_sinh) ?></td>
+            	<td align="center"><?= $model->hang->ten_hang ?></td>
+            	<td align="left">
+            		<strong>Địa chỉ cũ:</strong> <br/><?= $model->dia_chi?$model->dia_chi:'-' ?> <br/>
+            		<strong>Địa chỉ sau cập nhật:</strong> <br/><?= $model->diaChiText?$model->diaChiText:'-' ?>
+            	</td>
+            	<td align="center"><?= $user?$user->username:'' ?></td>
+            </tr>
         </tbody>
     </table>
 </div>

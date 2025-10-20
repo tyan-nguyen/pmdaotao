@@ -44,7 +44,10 @@ $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gi
             <div class="col-md-2">
             	<label>Ngày sinh từ</label>
                   <?= $form->field($model, 'ngay_sinh_tu')->widget(DatePicker::classname(), [
-                         'options' => ['placeholder' => 'Chọn ngày sinh  ...'],
+                         'options' => [
+                             'placeholder' => 'Chọn ngày sinh  ...',
+                             'autocomplete' => 'off'
+                         ],
                          'pluginOptions' => [
                          'autoclose' => true,
                          'format' => 'dd/mm/yyyy',
@@ -58,7 +61,10 @@ $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gi
             <div class="col-md-2">
             	<label>Ngày sinh đến</label>
                   <?= $form->field($model, 'ngay_sinh_den')->widget(DatePicker::classname(), [
-                         'options' => ['placeholder' => 'Chọn ngày sinh  ...'],
+                         'options' => [
+                             'placeholder' => 'Chọn ngày sinh  ...',
+                             'autocomplete' => 'off'
+                         ],
                          'pluginOptions' => [
                          'autoclose' => true,
                          'format' => 'dd/mm/yyyy',

@@ -126,8 +126,8 @@ use app\modules\user\models\User;
 						</li>
 					
 						<!-- SHORTCUTS -->
-						<!-- 
-						<li class="dropdown main-header-notification shortcuts d-flex">
+						
+						<!-- <li class="dropdown main-header-notification shortcuts d-flex">
 							<a class="nav-link icon" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside">
 								<i class="bi bi-card-heading"></i>
 							</a>

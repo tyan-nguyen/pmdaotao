@@ -351,7 +351,7 @@ class HocVienBase extends \app\models\HvHocVien
             [['ngay_nhan_tai_lieu'], 'required', 'on' => 'nhantailieu'],
             [['da_nhan_ao'], 'required', 'requiredValue' => 1, 'message' => 'Bạn phải chọn đã nhận áo', 'on' => 'nhanao'],
             [['size', 'ngay_nhan_ao'], 'required', 'on' => 'nhanao'],
-            [['id_xa'], 'required', 'on' => 'chuanhoadiachi'],
+            [['id_xa', 'id_tinh'], 'required', 'on' => 'chuanhoadiachi'],
             //[['id_giao_vien'], 'required', 'on'=>'phan-cong-giao-vien'], //on phan cong giao vien phu trach cho hoc vien
         ];
     }

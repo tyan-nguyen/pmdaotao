@@ -7,6 +7,9 @@ use yii\helpers\ArrayHelper;
 
 class DmXa extends \app\models\DmXa
 {
+    public function getTenXaWithTinh(){
+        return $this->ten_xa_full . ' (' . $this->tinh->ten_tinh . ')';
+    }
     //lấy danh sách fill dropdown
     public static function getList($idtinh=NULL)
     {
@@ -16,7 +19,8 @@ class DmXa extends \app\models\DmXa
             $ds = DmXa::find()->orderBy(['stt' => SORT_ASC])->all();
         }
         return ArrayHelper::map($ds, 'id', function($model) {
-            return '+ ' . $model->ten_xa_full . ' (' . $model->tinh->ten_tinh . ')';
+            //return '+ ' . $model->ten_xa_full . ' (' . $model->tinh->ten_tinh . ')';
+            return $model->tenXaWithTinh;
         }, function($model) {
             return $model->tinh->ten_tinh_full;
         });
