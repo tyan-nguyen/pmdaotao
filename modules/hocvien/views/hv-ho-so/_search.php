@@ -7,6 +7,7 @@ use app\modules\hocvien\models\HangDaoTao;
 use kartik\date\DatePicker;
 use app\modules\user\models\User;
 use app\modules\khoahoc\models\KhoaHoc;
+use kartik\select2\Select2;
 /* @var $this yii\web\View */
 /* @var $model app\modules\vanban\models\VanBanDen */
 /* @var $form yii\widgets\ActiveForm */
@@ -40,24 +41,47 @@ use app\modules\khoahoc\models\KhoaHoc;
                   ]
                   ]); ?>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                   <?= $form->field($model, 'so_cccd')->textInput(['maxlength' => true]) ?>
             </div>
             <div class="col-md-3">
                   <?= $form->field($model, 'dia_chi')->textInput(['maxlength' => true]) ?>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                   <?= $form->field($model, 'so_dien_thoai')->textInput(['maxlength' => true]) ?>
             </div>
             <div class="col-md-3">
                   <?= $form->field($model, 'id_hang')->dropDownList(HangDaoTao::getList(), ['prompt'=>'Tất cả']) ?>
             </div>
-            <div class="col-md-2">
-                  <?= $form->field($model, 'id_khoa_hoc')->dropDownList(KhoaHoc::getList(), ['prompt'=>'Tất cả']) ?>
+            <!-- <div class="col-md-2">
+                  <?php // $form->field($model, 'id_khoa_hoc')->dropDownList(KhoaHoc::getList(), ['prompt'=>'Tất cả']) ?>
+            </div> -->
+            
+            <div class="col-md-3">
+                <?php // $form->field($model, 'id_khoa_hoc')->dropDownList(KhoaHoc::getList(), ['prompt'=>'Tất cả']) ?>
+                <label><?= $model->getAttributeLabel('id_khoa_hoc') ?></label>
+                <?= $form->field($model, 'id_khoa_hoc')->widget(Select2::classname(), [
+                    'data' => KhoaHoc::getList(),
+                    'language' => 'vi',
+                    'options' => [
+                        'placeholder' => 'Chọn khóa...',  
+                        'class' => 'form-control dropdown-with-arrow',
+                        'id' => 'khoa-hoc-search-dropdown'
+                    ],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                        'width'=>'100%'
+                    ],
+                ])->label(false); ?>
             </div>
+            
             <!-- <div class="col-md-3">
                   <?= $form->field($model, 'nguoi_tao')->dropDownList(User::getList(), ['prompt'=>'Tất cả'])->label('NV tiếp nhận') ?>
             </div> -->
+            <div class="col-md-1">
+            	<label>&nbsp;</label>
+                <?= $form->field($model, 'huy_ho_so')->checkbox() ?>
+            </div>
     </div>    
 
     <?php if (!Yii::$app->request->isAjax){ ?>

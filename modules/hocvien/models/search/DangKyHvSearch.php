@@ -167,6 +167,16 @@ class DangKyHvSearch extends DangKyHv
             //'t.nguoi_tao'=>$this->nguoi_tao,
         ]);
         
+        if($this->huy_ho_so){
+            $query->andFilterWhere([
+                't.huy_ho_so' => $this->huy_ho_so,
+            ]);
+        } else {
+            $query->andFilterWhere([
+                't.huy_ho_so' => 0,
+            ]);
+        }
+        
         $query->andFilterWhere(['like', 't.ho_ten', $this->ho_ten])
         ->andFilterWhere(['like', 'dia_chi', $this->dia_chi])
         ->andFilterWhere(['like', 't.so_dien_thoai', $this->so_dien_thoai])
