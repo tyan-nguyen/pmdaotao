@@ -156,7 +156,7 @@ class DangKyHvSearch extends DangKyHv
        
         /* 
         $query->andWhere('(SELECT i.so_tien_con_lai FROM hv_nop_hoc_phi AS i WHERE t.id = i.id_hoc_vien) <= hp.hoc_phi'); */
-        $query->andWhere('t.thoi_gian_hoan_thanh_ho_so IS NOT NULL');
+       // $query->andWhere('t.thoi_gian_hoan_thanh_ho_so IS NOT NULL'); //an theo yeu cau phong dao tao
         $query->andFilterWhere([
             't.id' => $this->id,
             't.id_khoa_hoc' => $this->id_khoa_hoc,
