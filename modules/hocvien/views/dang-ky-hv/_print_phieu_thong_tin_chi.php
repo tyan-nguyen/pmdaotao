@@ -20,7 +20,7 @@ use app\custom\CustomFunc;
     				<br/>
     				<span style="font-size:10pt"><i class="fas fa-globe" style="color:red"></i> Website: nguyentrinh.com.vn</span> - <span style="font-size:10pt"><i class="fas fa-phone" style="color:red"></i> ĐT: 0903 336 470</span>
     				<br/>
-    				<span style="font-size:10pt"><i class="fas fa-envelope" style="color:red"></i> Email: nguyentrinh@nguyentrinhtravinh.com.vn</span>
+    				<span style="font-size:10pt"><i class="fas fa-envelope" style="color:red"></i> Email: doanhnghiep@nguyentrinh.com.vn</span>
     						
     				<?= $nhap ? '<span class="span-status">Bản nháp</span>' : '' ?>
     			</td>

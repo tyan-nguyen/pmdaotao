@@ -16,9 +16,6 @@ use app\modules\user\models\User;
 			</a>
 		</div>
 		
-		
-		
-		
 		<div class="main-sidemenu">
 			<!-- <div class="slide-left disabled" id="slide-left">
 				<svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24" height="24"
@@ -53,7 +50,7 @@ use app\modules\user\models\User;
 				<?= $this->render('menus/_menu-giao-vien') ?>
 				<?php else:?>
 				
-				<?= $this->render('menus/van-ban') ?>
+				
 				
 				<?= $this->render('menus/hoc-vien') ?>
 				
@@ -72,6 +69,8 @@ use app\modules\user\models\User;
 				<?= $this->render('menus/khoa-hoc') ?>
 
 				<?= $this->render('menus/lich-hoc') ?>
+				
+				<?= $this->render('menus/van-ban') ?>
 
 				<?= $this->render('menus/tai-khoan') ?>				
 				<?php endif;?>

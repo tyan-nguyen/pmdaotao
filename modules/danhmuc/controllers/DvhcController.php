@@ -23,6 +23,7 @@ class DvhcController extends Controller
         $query = DmXa::find()->alias('t')
             ->joinWith(['tinh as ti'])    
             ->select(['t.id', "CONCAT(t.ten_xa_full, ' (', ti.ten_tinh , ')') AS text"]);
+        
         if (!empty($q)) {
             $query->andFilterWhere( [ 'OR',
                 ['like', 't.ten_xa_full', $q],
