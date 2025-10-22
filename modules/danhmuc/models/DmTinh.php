@@ -25,7 +25,7 @@ class DmTinh extends \app\models\DmTinh
     {
         $ds = DmTinh::find()->orderBy(['stt' => SORT_ASC])->all();
         return ArrayHelper::map($ds, 'id', function($model) {
-            return '+ ' . $model->ten_tinh_full;
+            return $model->ten_tinh_full;
         });
     }
     

@@ -11,11 +11,16 @@ use app\modules\hocvien\models\HangDaoTao;
 use kartik\select2\Select2;
 use app\modules\danhmuc\models\DmXa;
 use app\modules\danhmuc\models\DmTinh;
+use yii\web\JsExpression;
 /* @var $this yii\web\View */
 /* @var $model app\modules\vanban\models\VanBanDen */
 /* @var $form yii\widgets\ActiveForm */
 
 $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gian_hoan_thanh_ho_so);
+$initValue = '';
+if ($model->id_xa) {
+    $initValue = $model->xa ? $model->xa->tenXaWithTinh : '';
+}
 ?>
 
 <div class="hoc-vien-search">
@@ -139,7 +144,7 @@ $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gi
             </div>
             <div class="col-md-2">
                <label>Xã/phường</label>
-               <?= $form->field($model, 'id_xa')->widget(Select2::classname(), [
+               <?php /* $form->field($model, 'id_xa')->widget(Select2::classname(), [
                    'data' => DmXa::getList(),
                         'language' => 'vi',
                         'options' => ['placeholder' => 'Chọn xã/phường...'],
@@ -148,11 +153,43 @@ $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gi
                             //'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
                             'width' => '100%'
                         ],
-                ])->label(false);?>
+                ])->label(false); */ ?>
+                <?= $form->field($model, 'id_xa')->widget(Select2::classname(), [
+                    'initValueText' => $initValue, // This shows selected text on form load
+                    'language' => 'vi',
+                    'options' => [
+                        'placeholder' => 'Chọn xã/phường...',
+                        'class' => 'form-control dropdown-with-arrow',
+                        'id' => 'xa-search-dropdown'
+                    ],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                        //'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
+                        'width'=>'100%',
+                        'minimumInputLength' => 0, // ← allow fetch without typing
+                        'ajax' => [
+                            'url' => '/danhmuc/dvhc/search-xa',
+                            'dataType' => 'json',
+                            'delay' => 250,
+                            /* 'data' => new JsExpression('function(params) {
+                                return {q:params.term};
+                            }'), */
+                            'data' => new JsExpression('function(params) {
+                                return {
+                                    q: params.term || "", // if empty input, send empty string
+                                };
+                            }'),
+                            'processResults' => new JsExpression('function(data) {
+                                return {results:data};
+                            }'),
+                            'cache' => true
+                        ],
+                    ],
+                ])->label(false); ?>
             </div>
             <div class="col-md-2">  
             	<label>Tỉnh/thành</label>     
-               <?= $form->field($model, 'id_tinh')->widget(Select2::classname(), [
+               <?php /* $form->field($model, 'id_tinh')->widget(Select2::classname(), [
                    'data' => DmTinh::getList(),
                         'language' => 'vi',
                         'options' => ['placeholder' => 'Chọn tỉnh/thành...'],
@@ -161,7 +198,20 @@ $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gi
                             //'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
                             'width' => '100%'
                         ],
-                ])->label(false);?>        
+                ])->label(false); */?>
+                 <?= $form->field($model, 'id_tinh')->widget(Select2::classname(), [
+                   'data' => DmTinh::getList(),
+                        'language' => 'vi',
+                        'options' => [
+                            'placeholder' => 'Chọn tỉnh/thành...',
+                            'id' => 'tinh-search-dropdown'
+                        ],
+                        'pluginOptions' => [
+                            'allowClear' => true,
+                            //'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
+                            'width' => '100%'
+                        ],
+                ])->label(false);?>         
             </div>
            
     </div>    
@@ -184,3 +234,25 @@ $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gi
     font-weight: bold;
 }
 </style>
+
+<script>
+$('#xa-search-dropdown').on("select2:select", function(e) { 
+   if(this.value != ''){
+        $.ajax({
+            url: '/danhmuc/dvhc/get-tinh-by-xa',
+            type: 'POST',
+            data: { idxa: this.value },
+            success: function(response) {
+                var newValue = response.value; // giá trị trả về để gán vào select2
+                var option = new Option(response.text, newValue, true, true);
+                $('#tinh-search-dropdown').append(option).trigger('change');
+            }
+        });
+   } else {
+   		$('#tinh-search-dropdown').val(null).trigger('change');
+   }
+});
+$('#xa-search-dropdown').on('select2:clear', function(e) {
+    $('#tinh-search-dropdown').val(null).trigger('change');
+});
+</script>
