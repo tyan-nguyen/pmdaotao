@@ -28,7 +28,7 @@ use app\custom\CustomFunc;
     		</tr>
     	</table>
     	
-    	<table id="table-tieu-de" style="width: 100%">
+    	<table id="table-tieu-de" style="width: 100%;margin-top:-10px">
     		<tr>
     			<td></td>
     			<td>
@@ -39,7 +39,7 @@ use app\custom\CustomFunc;
     		</tr>
     	</table>
     	
-    	<table id="table-noi-dung" style="width: 100%">
+    	<table id="table-noi-dung" style="width: 100%; margin-top:5px;font-size:11pt;">
     		<tr>
     			<td>Họ tên học viên: <?= $model->lichThue->khachHang->ho_ten ?></td>
     			<td>Mã KH: <?= CustomFunc::fillNumber($model->lichThue->khachHang->so_cccd) ?></td>

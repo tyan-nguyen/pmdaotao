@@ -6,7 +6,7 @@ use app\custom\CustomFunc;
 
 <div class="row text-center" style="width: 100%">
     <div class="col-md-12" style="width: 100%"> 
-    	<table id="table-top" style="width: 100%">
+    	<table id="table-top" style="width: 100%;">
     		<tr>
     			<td>
     				<img src="/libs/images/logo.png" width="150px" />
@@ -28,7 +28,7 @@ use app\custom\CustomFunc;
     		</tr>
     	</table>
     	
-    	<table id="table-tieu-de" style="width: 100%">
+    	<table id="table-tieu-de" style="width: 100%;margin-top:-10px">
     		<tr>
     			<td></td>
     			<td>
@@ -59,12 +59,12 @@ use app\custom\CustomFunc;
 
     	</table>
     	
-    	<table id="table-content" style="width: 100%; margin-top:5px;font-size:12pt;">
+    	<table id="table-content" style="width: 100%; margin-top:5px;font-size:11pt;">
     		<thead>
     			<tr style="font-weight:bold">
         			<td style="width:5%">TT</td>
-        			<td style="width:48%">Tên hàng</td>        			
-        			<td style="width:10%">ĐVT</td>
+        			<td style="width:50%">Tên hàng</td>        			
+        			<td style="width:8%">ĐVT</td>
         			<td style="width:10%">SL</td>
         			<td style="width:12%">Đơn giá</td>
         			<td style="width:15%">Thành tiền</td>
@@ -73,10 +73,11 @@ use app\custom\CustomFunc;
     		<tbody>
     			<tr>
         			<td style="text-align:center">1</td>
-        			<td>
+        			<td style="text-align:center">
         			Thuê xe tập lái <?= $model->lichThue->xe?$model->lichThue->xe->tenXeShort:'' ?>
-        			<br/>
-        			(<span style="font-size:10pt;font-style:italic;">từ <?= $model->lichThue?CustomFunc::convertYMDHISToDMYHI($model->lichThue->thoi_gian_bat_dau):'' ?>
+        			<?= $model->lichThue->xe->loaiXe?(' - Hạng '.$model->lichThue->xe->loaiXe->ten_loai_xe):'' ?>
+        			
+        			(<span style="font-style:italic;">từ <?= $model->lichThue?CustomFunc::convertYMDHISToDMYHI($model->lichThue->thoi_gian_bat_dau):'' ?>
         			đến <?= $model->lichThue?CustomFunc::convertYMDHISToDMYHI($model->lichThue->thoi_gian_ket_thuc):'' ?></span>)
         			</td>        			
         			<td style="text-align:center">Giờ</td>
@@ -96,7 +97,7 @@ use app\custom\CustomFunc;
     	<table id="table-noi-dung" style="width: 100%; margin-top:5px;">
     	<tr>
     			<td colspan="2">
-        			<span><strong>Nội dung:</strong> Đã nộp số tiền: <?= number_format($model->so_tien, 0, ',', '.') ?> đồng (<?= $model->hinh_thuc_thanh_toan ?>)</span>
+        			<span><strong>Nội dung:</strong> Đã nộp số tiền: <strong><?= number_format($model->so_tien, 0, ',', '.') ?> đồng (<?= $model->hinh_thuc_thanh_toan ?>)</strong></span>
         			<span style="padding-left:10px;"></span>
         			<span>Chiết khấu: <?= number_format($model->chiet_khau, 0, ',', '.') ?> đồng </span> 
         			 			

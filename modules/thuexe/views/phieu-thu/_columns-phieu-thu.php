@@ -86,10 +86,11 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ma_so_phieu',
+        'label'=>'Mã số',
         'value'=>function($model){
             return CustomFunc::fillNumber($model->ma_so_phieu);
         },
-        'width' => '80px',
+        'width' => '50px',
         'contentOptions' => [ 'style' => 'text-align:center' ],
     ],
     [
@@ -132,6 +133,16 @@ return [
         'pageSummary' => 'Tổng cộng',
         'pageSummaryOptions' => ['class' => 'text-right text-end'],
     ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'id_lich_thue',
+        'label'=>'Hạng',
+        'value'=>function($model){
+            return $model->lichThue->xe->loaiXe?$model->lichThue->xe->loaiXe->ten_loai_xe:'';
+        },
+        'pageSummary' => 'Tổng cộng',
+        'pageSummaryOptions' => ['class' => 'text-right text-end'],
+        ],
     /* [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'hinh_thuc_thanh_toan',
@@ -165,7 +176,7 @@ return [
         'pageSummaryOptions' => ['class' => 'text-right text-end'],
     ],
     
-    [
+    /* [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'chiet_khau',
         'label'=>'Chiết khấu(C)',
@@ -176,7 +187,7 @@ return [
         'format' => ['decimal', 0],
         'pageSummary' => true,
         'pageSummaryOptions' => ['class' => 'text-right text-end'],
-    ],
+    ], */
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'so_tien',
@@ -241,6 +252,11 @@ return [
      [
          'class'=>'\kartik\grid\DataColumn',
          'attribute'=>'ghi_chu',
+     ],
+     [
+         'class'=>'\kartik\grid\DataColumn',
+         'label'=>'Ghi chú (lịch)',
+         'value'=>'lichThue.ghi_chu'
      ],
 
 ];   
