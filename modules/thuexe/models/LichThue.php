@@ -47,10 +47,12 @@ class LichThue extends LichThueBase
      * get danh muc xe cam ung
      */
     public static function getDsXeCamUng(){
-        $dsXe = Xe::find()->where(['phan_loai'=>Xe::PHANLOAI_SATHACH])->all();
+        $dsXe = Xe::find()->where(['phan_loai'=>Xe::PHANLOAI_SATHACH])->orderBy(['stt'=>SORT_ASC])->all();
         // Thêm dấu + vào trước tên nhân viên
         return ArrayHelper::map($dsXe, 'id', function($model) {
             return '+ ' . $model->tenXeLong;
+        }, function($model) {
+            return 'Hạng ' . $model->loaiXe->ten_loai_xe;
         });
     }
     

@@ -25,6 +25,7 @@ use app\modules\banhang\models\HangHoa;
  * @property string|null $so_may
  * @property string|null $ngay_dang_kiem
  * @property string|null $mau_sac
+ * @property string|null $dac_diem
  * @property int|null $la_xe_cu
  * @property float|null $so_tien
  * @property string|null $nha_cung_cap
@@ -33,11 +34,12 @@ use app\modules\banhang\models\HangHoa;
  * @property int|null $id_giao_vien
  * @property int|null $nguoi_tao
  * @property string|null $thoi_gian_tao
+ * @property int|null $stt
  *
  * @property PtxLoaiXe $loaiXe
  * @property PtxPhieuThueXe[] $ptxPhieuThueXes
  */
-class Xe extends \app\models\PtxXe 
+class Xe extends \app\models\PtxXe
 {
     const XE_BINHTHUONG = 'BINHTHUONG';
     const XE_HUHONG = 'HUHONG';
@@ -187,8 +189,8 @@ class Xe extends \app\models\PtxXe
     {
         return [
             [['id_loai_xe', 'bien_so_xe'], 'required'],
-            [['id_loai_xe', 'la_xe_cu', 'nguoi_tao', 'id_giao_vien'], 'integer'],
-            [['ghi_chu'], 'string'],
+            [['id_loai_xe', 'la_xe_cu', 'nguoi_tao', 'id_giao_vien', 'stt'], 'integer'],
+            [['ghi_chu', 'dac_diem'], 'string'],
             [['phan_loai', 'ma_so'], 'string', 'max' => 20],
             [['tinh_trang_xe'], 'string', 'max' => 20],
             [['thoi_gian_tao', 'ngay_dang_kiem'], 'safe'],
@@ -218,6 +220,7 @@ class Xe extends \app\models\PtxXe
             'so_may' => 'Số máy/Số động cơ',
             'ngay_dang_kiem' => 'Ngày đăng kiểm',
             'mau_sac' => 'Màu sắc',
+            'dac_diem' => 'Đặc điểm',
             'la_xe_cu' => 'Xe đã qua sử dụng',
             'so_tien' => 'Giá trị(VND)',
             'nha_cung_cap' => 'Nhà cung cấp',
@@ -227,6 +230,7 @@ class Xe extends \app\models\PtxXe
             'id_giao_vien' => 'Giáo viên phụ trách',
             'nguoi_tao' => 'Người Tạo',
             'thoi_gian_tao' => 'Thời Gian Tạo',
+            'stt' => 'STT'
         ];
     }
     /**
@@ -311,12 +315,15 @@ class Xe extends \app\models\PtxXe
     }
     
     public function beforeSave($insert)
-    {        
+    {
         if ($this->isNewRecord) {
             $this->nguoi_tao = Yii::$app->user->identity->id;
             $this->thoi_gian_tao = date('Y-m-d H:i:s'); 
             if($this->la_xe_cu == null){
                 $this->la_xe_cu = 0;
+            }
+            if($this->stt==null){
+                $this->stt = 0;
             }
         }
         if($this->ngay_dang_kiem != null){
@@ -332,8 +339,7 @@ class Xe extends \app\models\PtxXe
         return $this->bien_so_xe . ($this->ma_so?(' (Số '.$this->ma_so.')'):'');
     }
     public function getTenXeLong(){
-        return $this->bien_so_xe
-        . ($this->ma_so ? (' - Ký hiệu xe: ' . $this->ma_so) : '' )
+        return ($this->ma_so ? ('Xe số ' . $this->ma_so) : '' ) . ' - ' . $this->bien_so_xe
         . ($this->loaiXe ? (' - ' . $this->loaiXe->ten_loai_xe) : '' );
     }
     /**

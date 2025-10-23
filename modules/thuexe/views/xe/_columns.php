@@ -90,6 +90,7 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ma_so',
+        'contentOptions' => [ 'style' => 'text-align:center' ],
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
@@ -105,6 +106,7 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'bien_so_xe',
+        'contentOptions' => [ 'style' => 'text-align:center' ],
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
@@ -115,13 +117,15 @@ return [
         'attribute'=>'ngay_dang_kiem',
         'value'=>function($model){
             return CustomFunc::convertYMDToDMY($model->ngay_dang_kiem);
-        }
+        },
+        'contentOptions' => [ 'style' => 'text-align:center' ],
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'so_hop_dong',
+        'contentOptions' => [ 'style' => 'text-align:center' ],
     ],
-    [
+   /*  [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'id_giao_vien',
         'label' => 'Người phụ trách',
@@ -129,7 +133,7 @@ return [
             return $model->giaoVien?$model->giaoVien->ho_ten:'';
         },
         //'width' => '150px',
-    ],
+    ], */
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'tinh_trang_xe',
@@ -137,6 +141,7 @@ return [
             return Xe::getLabelTinhTrangXeBadge($model->tinh_trang_xe);
         },
         'format'=>'raw',
+        'contentOptions' => [ 'style' => 'text-align:center' ],
     ],
     /* [
         'class'=>'\kartik\grid\DataColumn',
@@ -145,6 +150,12 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ghi_chu',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'stt',
+        'width' => '50px',
+        'contentOptions' => [ 'style' => 'text-align:center' ],
     ],
     /* [
         'class' => '\kartik\grid\DataColumn',

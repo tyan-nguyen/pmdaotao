@@ -10,7 +10,7 @@ use app\modules\thuexe\models\LichThi;
 
 $this->title = 'Lịch thuê xe của các xe thuộc hạng ' . $model->ten_loai_xe;
 
-$listXe = Xe::find()->where(['id_loai_xe'=>$model->id, 'phan_loai'=>'SATHACH'])->orderBy(['ma_so'=>SORT_ASC])->all();
+$listXe = Xe::find()->where(['id_loai_xe'=>$model->id, 'phan_loai'=>'SATHACH'])->orderBy(['stt'=>SORT_ASC])->all();
 $listXeData = [];
 foreach ($listXe as $iXe => $itemXe){
     $listXeData[] = [

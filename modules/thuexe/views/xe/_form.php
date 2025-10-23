@@ -53,8 +53,11 @@ if(!$model->isNewRecord){
          <div class="col-lg-2 col-md-6">
              <?= $form->field($model, 'bien_so_xe')->textInput(['maxlength' => true]) ?>
          </div>
-          <div class="col-lg-2 col-md-6">
+         <div class="col-lg-1 col-md-6">
              <?= $form->field($model, 'ma_so')->textInput(['maxlength' => true]) ?>
+         </div>
+          <div class="col-lg-1 col-md-6">
+             <?= $form->field($model, 'stt')->textInput(['maxlength' => true]) ?>
          </div>
          <div class="col-lg-3 col-md-6">
             <?= $form->field($model, 'tinh_trang_xe')->dropDownList(
@@ -74,13 +77,19 @@ if(!$model->isNewRecord){
         
         <div class="col-lg-3 col-md-6">
              <?= $form->field($model, 'ngay_dang_kiem')->widget(DatePicker::classname(), [
-                'options' => ['placeholder' => 'Ngày đăng kiểm...'],
+                'options' => [
+                    'placeholder' => 'Ngày đăng kiểm...',
+                    'autocomplete' => 'off'
+                ],
                 'pluginOptions' => [
                     'autoclose' => true,
                     'format' => 'dd/mm/yyyy',
+                    'zIndexOffset'=>'9999',
+                    'todayHighlight'=>true,
+                    'todayBtn'=>true
                 ]
-               ]); ?>
-         </div>
+             ]); ?>
+        </div>
         
         <div class="col-lg-3 col-md-6">
         	<label>&nbsp;</label>
