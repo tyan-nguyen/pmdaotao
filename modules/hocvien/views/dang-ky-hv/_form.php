@@ -67,7 +67,7 @@ if ($model->id_xa) {
             <div class="col-lg-3 col-md-6">
                  <?= $form->field($model, 'so_dien_thoai')->textInput(['maxlength' => true]) ?>
             </div>
-            <?php if (!$model->id_xa){ ?>
+            <?php if (!$model->id_xa && !$model->isNewRecord){ ?>
                  <div class="col-lg-12 col-md-12">
                      <?= $form->field($model, 'dia_chi')->textInput(['maxlength' => true]) ?>
                 </div>
