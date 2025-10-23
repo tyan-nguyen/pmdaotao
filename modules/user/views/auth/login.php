@@ -21,7 +21,7 @@ $this->title = "Đăng nhập"
 			'validateOnBlur'=>false,
 			'fieldConfig' => [
 			    'options' => ['class' => 'form-group text-start'],
-				'template'=>"{label}\n{input}\n{error}",
+				'template'=>"<strong>{label}<strong>\n{input}\n{error}",
 			],
 		]) ?>
 

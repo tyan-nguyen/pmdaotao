@@ -39,7 +39,7 @@ background-size: cover;">
                             <img src="<?= Yii::getAlias('@web')  ?>/assets/images/brand/logo1.png" class="header-brand-img theme-logos" alt="logo">
                         </a>
                     </div>
-                    <div class="card custom-card"  style="opacity:0.95">
+                    <div class="card custom-card"  style="opacity:0.9">
                         <div class="card-body pd-25">
                             <?= $content ?>
                         </div>
