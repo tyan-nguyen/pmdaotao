@@ -73,7 +73,7 @@ if ($model->id_xa) {
                 </div>
             <?php } else {?>
              <div class="col-lg-4 col-md-6">
-                 <?= $form->field($model, 'dia_chi_chi_tiet')->textInput(['maxlength' => true]) ?>
+                 <?= $form->field($model, 'dia_chi_chi_tiet')->textInput(['maxlength' => true])->label('Địa chỉ (số nhà, ấp, khóm...)') ?>
             </div>
             <div class="col-md-4">
            		<label>Xã/phường</label>
