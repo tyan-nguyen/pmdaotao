@@ -131,7 +131,7 @@ class KhachHangController extends Controller
                 'status'=>'success',
                 'khHoTen' => $kh->ho_ten,
                 'khSDT' => $kh->so_dien_thoai,
-                'khDiaChi' => $kh->dia_chi,
+                'khDiaChi' => $kh->diaChi,
                 'khCCCD' => $kh->so_cccd??''
             ];
         } else {
@@ -153,7 +153,7 @@ class KhachHangController extends Controller
                     'status'=>'success',
                     'gvHoTen' => $kh->ho_ten,
                     'gvSDT' => $kh->so_dien_thoai,
-                    'gvDiaChi' => $kh->dia_chi
+                    'gvDiaChi' => $kh->diaChi
                 ];
             } else {
                 return ['status'=>'failed'];
@@ -165,7 +165,7 @@ class KhachHangController extends Controller
                     'status'=>'success',
                     'gvHoTen' => $kh->ho_ten,
                     'gvSDT' => $kh->so_dien_thoai,
-                    'gvDiaChi' => $kh->dia_chi
+                    'gvDiaChi' => $kh->diaChi
                 ];
             } else {
                 return ['status'=>'failed'];

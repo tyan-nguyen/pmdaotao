@@ -46,7 +46,7 @@ $ngay_nop = $model->thoi_gian_tao?CustomFunc::convertYMDHISToDMY($model->thoi_gi
         <div class="col-md-4">
             <label>Địa chỉ</label><br/>
             <?= Html::textInput('dia_chi', 
-                ($modelLichThue->giaoVien ? $modelLichThue->giaoVien->dia_chi : ''), 
+                ($modelLichThue->giaoVien ? $modelLichThue->giaoVien->diaChi : ''), 
                 ['id'=>'gvDiaChi', 'class'=>'form-control', 'disabled'=>true]) ?>
         </div>
         
@@ -74,7 +74,7 @@ $ngay_nop = $model->thoi_gian_tao?CustomFunc::convertYMDHISToDMY($model->thoi_gi
         <div class="col-md-4">
             <label>Địa chỉ</label><br/>
             <?= Html::textInput('khDiaChi', 
-                ($modelLichThue->khachHang ? $modelLichThue->khachHang->dia_chi : ''), 
+                ($modelLichThue->khachHang ? $modelLichThue->khachHang->diaChi : ''), 
                 ['id'=>'khDiaChi', 'class'=>'form-control', 'disabled'=>true]) ?>
         </div>
         

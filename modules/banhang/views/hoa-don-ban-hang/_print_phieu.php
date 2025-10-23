@@ -61,7 +61,7 @@ $custom = new CustomFunc();
     		</tr>
     		<tr>
     			<td colspan="2">
-    				Địa chỉ: <?= $model->khachHang?$model->khachHang->dia_chi:'' ?>	
+    				Địa chỉ: <?= $model->khachHang?$model->khachHang->diaChi:'' ?>	
     			</td>
     			<!-- <td>
     				Email: <?php // $model->khachHang?$model->khachHang->email:'' ?>

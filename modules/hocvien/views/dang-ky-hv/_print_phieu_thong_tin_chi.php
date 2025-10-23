@@ -45,7 +45,7 @@ use app\custom\CustomFunc;
     			<td>Mã KH: <?= CustomFunc::fillNumber($model->hocVien->so_cccd) ?></td>
     		</tr>
     		<tr>
-    			<td>Địa chỉ: <?= $model->hocVien->dia_chi ?></td>
+    			<td>Địa chỉ: <?= $model->hocVien->diaChi ?></td>
     			<td>SĐT: <?= $model->hocVien->so_dien_thoai ?></td>
     		</tr>
     		<tr>

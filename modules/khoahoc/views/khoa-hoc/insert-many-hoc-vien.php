@@ -47,7 +47,7 @@ $this->registerJsFile('https://cdn.datatables.net/2.1.8/js/dataTables.js', ['dep
                     <td class="text-start">
                         <?= Html::encode($h->gioi_tinh == 1 ? 'Nam' : ($h->gioi_tinh == 0 ? 'Nữ' : 'Không xác định')) ?>
                     </td>
-                    <td class="text-start"><?= Html::encode($h->dia_chi) ?></td>
+                    <td class="text-start"><?= Html::encode($h->diaChi) ?></td>
                     <td class="text-start"><?= Html::encode($h->so_dien_thoai) ?></td>
                     <td class="text-start"><?= Html::encode($h->so_cccd) ?></td>
                 </tr>

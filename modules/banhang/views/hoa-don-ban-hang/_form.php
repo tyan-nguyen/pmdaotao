@@ -126,9 +126,9 @@ $model->ngay_giao_hang = CustomFunc::convertYMDToDMY($model->ngay_giao_hang);
         </div>
         <div class="col-md-3">
             <label>Địa chỉ</label><br/>
-            <!-- <span id="khDiaChi" style="font-weight:bold"><?= $model->khachHang ? $model->khachHang->dia_chi : '' ?></span>-->
+            <!-- <span id="khDiaChi" style="font-weight:bold"><?= $model->khachHang ? $model->khachHang->diaChi : '' ?></span>-->
             <?= Html::textInput('khDiaChi', 
-                ($model->khachHang ? $model->khachHang->dia_chi : ''), 
+                ($model->khachHang ? $model->khachHang->diaChi : ''), 
                 ['id'=>'khDiaChi', 'class'=>'form-control', 'disabled'=>true]) ?>
         </div>
         <!-- <div class="col-md-1">

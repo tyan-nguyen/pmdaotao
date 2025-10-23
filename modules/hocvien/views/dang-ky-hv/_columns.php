@@ -17,7 +17,7 @@ return [
     [
         'class' => 'kartik\grid\ActionColumn',
         'header'=>'',
-        'template' => '{payment} {update} <li><hr class="dropdown-divider"></li> {view} {nhanAo} {nhanTaiLieu} <li><hr class="dropdown-divider"></li> {danhSachDoiSatHach} {danhSachDoiHang} {danhSachBaoLuu} {huyHoSo} {doiHangTrongNgay} {doiHangNgayCu} {doiSatHach} {baoLuu} <li><hr class="dropdown-divider"></li> {delete}',
+        'template' => '{payment} {update} {bienTapDiaChi}<li><hr class="dropdown-divider"></li> {view} {nhanAo} {nhanTaiLieu} <li><hr class="dropdown-divider"></li> {danhSachDoiSatHach} {danhSachDoiHang} {danhSachBaoLuu} {huyHoSo} {doiHangTrongNgay} {doiHangNgayCu} {doiSatHach} {baoLuu} <li><hr class="dropdown-divider"></li> {delete}',
         'dropdown' => true,
         'dropdownOptions' => ['class' => 'float-right'],
         'dropdownButton'=>[
@@ -59,6 +59,9 @@ return [
             }
             if ($action === 'nhanTaiLieu') {
                 return Url::to(['dang-ky-hv/nhan-tai-lieu', 'idhv' => $key]);
+            }
+            if ($action === 'bienTapDiaChi') {
+                return Url::to(['dang-ky-hv/bien-tap-dia-chi', 'idhv' => $key]);
             }
             return Url::to([$action, 'id' => $key]);
         },
@@ -120,7 +123,11 @@ return [
                 $user = User::getCurrentUser();
                 // Only show delete button if user is admin
                 return $user->superadmin;
-            }
+            },
+            'bienTapDiaChi' => function ($model, $key, $index) {
+                $user = User::getCurrentUser();
+                return ( !$model->id_xa && ($model->noi_dang_ky == $user->noi_dang_ky || $user->superadmin) );//chung co so sua duoc
+            },
         ],
         'viewOptions' => [
             'role' => 'modal-remote',
@@ -243,6 +250,15 @@ return [
         'nhanTaiLieu' => function ($url, $model, $key) {
             return Html::a('<i class="fa fa-file-o"></i> Giao tài liệu', $url, [
                 'title' => 'Giao tài liệu cho HV',
+                'role' => 'modal-remote',
+                'class' => 'btn ripple btn-primary dropdown-item',
+                'data-bs-placement' => 'top',
+                'data-bs-toggle' => 'tooltip'
+            ]);
+        },
+        'bienTapDiaChi' => function ($url, $model, $key) {
+            return Html::a('<i class="fa fa-map-marker"></i> Cập nhật địa chỉ', $url, [
+                'title' => 'Biên tập lại địa chỉ theo đơn vị hành chính',
                 'role' => 'modal-remote',
                 'class' => 'btn ripple btn-primary dropdown-item',
                 'data-bs-placement' => 'top',

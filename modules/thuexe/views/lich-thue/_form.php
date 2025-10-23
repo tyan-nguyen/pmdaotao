@@ -111,9 +111,9 @@ if(!$checkDaThanh || ($checkDaThanh && !$laNgayCu) || $isAdmin){
         </div>
         <div class="col-md-3">
             <label>Địa chỉ</label><br/>
-            <!-- <span id="gvDiaChi" style="font-weight:bold"><?= $model->giaoVien ? $model->giaoVien->dia_chi : '' ?></span>-->
+            <!-- <span id="gvDiaChi" style="font-weight:bold"><?= $model->giaoVien ? $model->giaoVien->diaChi : '' ?></span>-->
             <?= Html::textInput('dia_chi', 
-                ($model->giaoVien ? $model->giaoVien->dia_chi : ''), 
+                ($model->giaoVien ? $model->giaoVien->diaChi : ''), 
                 ['id'=>'gvDiaChi', 'class'=>'form-control', 'disabled'=>true]) ?>
         </div>
    </div>
@@ -185,9 +185,9 @@ if(!$checkDaThanh || ($checkDaThanh && !$laNgayCu) || $isAdmin){
         </div>
         <div class="col-md-3">
             <label>Địa chỉ</label><br/>
-            <!-- <span id="khDiaChi" style="font-weight:bold"><?= $model->khachHang ? $model->khachHang->dia_chi : '' ?></span>-->
+            <!-- <span id="khDiaChi" style="font-weight:bold"><?= $model->khachHang ? $model->khachHang->diaChi : '' ?></span>-->
             <?= Html::textInput('khDiaChi', 
-                ($model->khachHang ? $model->khachHang->dia_chi : ''), 
+                ($model->khachHang ? $model->khachHang->diaChi : ''), 
                 ['id'=>'khDiaChi', 'class'=>'form-control', 'disabled'=>true]) ?>
         </div>
    </div>

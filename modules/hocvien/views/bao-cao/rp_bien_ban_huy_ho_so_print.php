@@ -28,7 +28,7 @@ use app\custom\CustomFunc;
     	<p style="font-size: 14pt;margin:20px 0px;font-weight:bold;text-align: center">Kính gửi: Trung tâm Giáo dục nghề nghiệp và Sát hạch lái xe Nguyễn Trình</p>    	
     	<p style="font-size: 14pt;margin:7px 0px;">Tôi tên là: <?= $model->ho_ten ?> <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>   Ngày sinh: <?= $model->getNgaySinh() ?> </p>
     	<p style="font-size: 14pt;margin:7px 0px;">Số điện thoại: <?= $model->so_dien_thoai ?></p>
-    	<p style="font-size: 14pt;;margin:7px 0px;">Địa chỉ: <?= $model->dia_chi ?>.</p>
+    	<p style="font-size: 14pt;;margin:7px 0px;">Địa chỉ: <?= $model->diaChi ?>.</p>
     	<p style="font-size: 14pt;;margin:7px 0px;">Số CCCD: <?= $model->so_cccd ?>  <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Ngày cấp:.........................    <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Nơi cấp:......................... </p>
     	
     	<p style="font-size: 14pt;margin:7px 0px;">Tôi đã đăng ký học tại Trung tâm Đào tạo và Sát hạch Lái xe Nguyễn Trình vào

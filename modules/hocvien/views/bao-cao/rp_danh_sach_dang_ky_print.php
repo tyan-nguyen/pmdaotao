@@ -80,7 +80,7 @@ use app\modules\hocvien\models\base\HocVienBase;
             	<td style="text-align:center"><?= $item->gioi_tinh == 1 ? 'Nam' : 'Nữ' ?></td>
             	<td style="text-align:center"><?= $item->so_cccd ?></td>
             	<td style="text-align:center"><?= $item->so_dien_thoai ?></td>
-            	<td style="text-align:left"><?= $item->dia_chi ?></td>
+            	<td style="text-align:left"><?= $item->diaChi ?></td>
             	<td style="text-align:left"><?= $item->hangDaoTao->ten_hang ?></td>
             	<td style="text-align:left"><?= CustomFunc::convertYMDHISToDMYHI($item->thoi_gian_tao) ?></td>
             	<!-- <td style="text-align:left"><?= $item->noi_dang_ky ?></td>-->

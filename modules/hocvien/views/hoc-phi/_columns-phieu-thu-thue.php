@@ -125,7 +125,7 @@ return [
             'class'=>'\kartik\grid\DataColumn',
             'label'=>'Địa chỉ',
             'value'=>function($model){
-                return $model->hocVien->dia_chi;
+                return $model->hocVien->diaChi;
             },
             'width' => '200px',
         ],

@@ -27,7 +27,7 @@ use yii\bootstrap5\Html;
                         <td><?= Html::encode($hocVien->ho_ten) ?></td>
                         <td><?= Yii::$app->formatter->asDate($hocVien->ngay_sinh, 'php:d-m-Y') ?></td>
                         <td><?= Html::encode($hocVien->gioi_tinh === '1' ? 'Nam' : 'Nữ') ?></td>
-                        <td><?= Html::encode($hocVien->dia_chi) ?></td>
+                        <td><?= Html::encode($hocVien->diaChi) ?></td>
                     </tr>
                 <?php endforeach; ?>
             <?php endif; ?>
@@ -66,7 +66,7 @@ use yii\bootstrap5\Html;
                             <td><?= Html::encode($hocVien->ho_ten) ?></td>
                             <td><?= Yii::$app->formatter->asDate($hocVien->ngay_sinh, 'php:d-m-Y') ?></td>
                             <td><?= Html::encode($hocVien->gioi_tinh === '1' ? 'Nam' : 'Nữ') ?></td>
-                            <td><?= Html::encode($hocVien->dia_chi) ?></td>
+                            <td><?= Html::encode($hocVien->diaChi) ?></td>
                         </tr>
                     <?php endforeach; ?>
                 <?php endif; ?>

@@ -503,6 +503,17 @@ class HocVienBase extends \app\models\HvHocVien
             return '';
         }
     }
+    /**
+     * lấy địa chỉ, nếu có id_xa thì lấy diaChiText, hoac cu thi lay truong dia_chi
+     */
+    public function getDiaChi(){
+        if($this->id_xa){
+            return $this->diaChiText;
+        } else {
+            return $this->dia_chi;
+        }
+    }
+    
     public function getMaSoPhieu()
     {
         $hocVien = self::findOne($this->id);

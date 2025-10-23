@@ -859,7 +859,7 @@ public function actionNopPhiThueXe($id)
             $khoaHoc = KhoaHoc::findOne($hocVien->id_khoa_hoc);
             $hotenHV = $hocVien->ho_ten;
             $cccdHV = $hocVien->so_cccd;
-            $diachiHV = $hocVien->dia_chi;
+            $diachiHV = $hocVien->diaChi;
             $sdtHV = $hocVien->so_dien_thoai;
             $idHang = $hocVien->id_hang;
             $idKhoaHoc = $hocVien->id_khoa_hoc;

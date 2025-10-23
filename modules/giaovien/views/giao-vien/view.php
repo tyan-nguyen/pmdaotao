@@ -21,7 +21,7 @@ use app\modules\giaovien\models\GiaoVien;
                                         <p><strong>Giới tính:</strong> <?= $model->gioi_tinh == 1 ? 'Nam' : 'Nữ' ?></p>
                                         <p><strong>Ngày sinh:</strong> <?= $model->getNgaySinh() ?></p>
                                         <p><strong>Số CCCD:</strong> <?= $model->so_cccd ?></p>
-                                        <p><strong>Địa Chỉ:</strong> <?= $model->dia_chi ?></p>
+                                        <p><strong>Địa Chỉ:</strong> <?= $model->diaChi ?></p>
                                         <p><strong>Điện Thoại:</strong> <?= $model->dien_thoai ?></p>
                                         <p><strong>Email:</strong> <?= $model->email ?></p>
                                         <p><strong>Mã số thuế:</strong> <?= $model->ma_so_thue ?></p>

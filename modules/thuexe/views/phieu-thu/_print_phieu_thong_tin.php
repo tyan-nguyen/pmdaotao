@@ -46,7 +46,7 @@ use app\custom\CustomFunc;
     			<td>Mã KH: <?= $model->lichThue->khachHang?$model->lichThue->khachHang->so_cccd:'' ?></td>
     		</tr>
     		<tr>
-    			<td>Địa chỉ: <?= $model->lichThue->khachHang?$model->lichThue->khachHang->dia_chi:'' ?></td>
+    			<td>Địa chỉ: <?= $model->lichThue->khachHang?$model->lichThue->khachHang->diaChi:'' ?></td>
     			<td>SĐT: <?= $model->lichThue->khachHang?$model->lichThue->khachHang->so_dien_thoai:'' ?></td>
     		</tr>
     		<tr>

@@ -61,5 +61,12 @@ class KhachHangBase extends BanleKhachHang
     {
         return $this->hasOne(LoaiKhachHang::class, ['id' => 'id_loai_khach_hang']);
     }
+    
+    /**
+     * lấy địa chỉ cho khớp trường diaChi bên học viên
+     */
+    public function getDiaChi(){
+        return $this->dia_chi;
+    }
 
 }

@@ -67,7 +67,7 @@ use app\modules\giaovien\models\GiaoVien;
                 	<td style="text-align:center;vertical-align:middle"><?= $hocVien->so_cccd ?></td>
                 	<td style="vertical-align:middle"><?= $hocVien->ho_ten ?></td>
                 	<td style="vertical-align:middle"><?= $hocVien->getNgaySinh()  ?></td>
-                	<td style="vertical-align:middle"><?= $hocVien->dia_chi ?></td>
+                	<td style="vertical-align:middle"><?= $hocVien->diaChi ?></td>
                 	<td style="vertical-align:middle"><?= $hocVien->giaoVien?$hocVien->giaoVien->ho_ten:'' ?></td>
                 </tr>
                 <?php } ?>

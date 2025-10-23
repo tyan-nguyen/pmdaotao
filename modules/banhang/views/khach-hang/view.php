@@ -20,7 +20,7 @@ use app\widgets\KhoDisplayWidget;
 									<div class="skill-tags">
                                         <p><strong>Họ Tên:</strong> <?= $model->ho_ten ?></p>
                                         <p><strong>Số điện thoại:</strong> <?= $model->so_dien_thoai?></p>
-                                        <p><strong>Địa chỉ:</strong> <?= $model->dia_chi ?></p>
+                                        <p><strong>Địa chỉ:</strong> <?= $model->diaChi ?></p>
 								    </div>
 						    </div>
 	</div>

@@ -31,7 +31,7 @@
         <td style="width: 50%; vertical-align: top;"><strong>Số CCCD:</strong> <?= $model->so_cccd ?></td>
     </tr>
     <tr>
-        <td style="width: 50%; vertical-align: top;"><strong>Địa chỉ:</strong> <?= $model->dia_chi ?></td>
+        <td style="width: 50%; vertical-align: top;"><strong>Địa chỉ:</strong> <?= $model->diaChi ?></td>
         <td style="width: 50%; vertical-align: top;"><strong>Số điện thoại:</strong> <?= $model->so_dien_thoai ?></td>
     </tr>
 </table>

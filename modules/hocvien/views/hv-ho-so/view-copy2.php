@@ -19,7 +19,7 @@ use yii\helpers\Html;
                         <p><strong>Tên học viên:</strong> <?= $model->ho_ten ?></p>
                         <p><strong>Giới tính:</strong> <?= $model->gioi_tinh == 1 ? 'Nam' : 'Nữ' ?></p>
                         <p><strong>Ngày sinh:</strong> <?= $model->getNgaySinh() ?></p>
-                        <p><strong>Địa chỉ:</strong> <?= $model->dia_chi ?></p>
+                        <p><strong>Địa chỉ:</strong> <?= $model->diaChi ?></p>
                         <p><strong>Số CCCD:</strong> <?= $model->so_cccd ?></p>
                         <p><strong>Ngày hết hạn CCCD:</strong> <?= $model->getNgayHetHanCccd()?></p>
                         <p><strong>Nơi đăng ký:</strong> <?= $model->noi_dang_ky ?></p>

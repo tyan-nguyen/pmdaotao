@@ -27,7 +27,7 @@ use app\modules\thuexe\models\PhieuThueXe;
                             </tr>
                             <tr>
                                 <th style="width: 50%;">Địa chỉ</th>
-                                <td style="width: 50%;"><?= Html::encode($model->hocVien->dia_chi) ?></td>
+                                <td style="width: 50%;"><?= Html::encode($model->hocVien->diaChi) ?></td>
                             </tr>
                             <tr>
                                 <th style="width: 50%;">Số CCCD</th>

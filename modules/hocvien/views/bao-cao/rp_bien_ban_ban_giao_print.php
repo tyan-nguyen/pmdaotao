@@ -104,7 +104,7 @@ use app\modules\khoahoc\models\KhoaHoc;
             	<td style="text-align:center"><?= $item->getNgaySinh() ?></td>
             	<td style="text-align:center"><?= $item->so_cccd ?></td>
             	<!-- <td style="text-align:center"><?= $item->so_dien_thoai ?></td>-->
-            	<td style="text-align:left"><?= $item->dia_chi ?></td>
+            	<td style="text-align:left"><?= $item->diaChi ?></td>
             	<td style="text-align:left"><?= $item->hangDaoTao->ten_hang ?></td>
             	<td style="text-align:center"><?= CustomFunc::convertYMDHISToDMY($item->thoi_gian_hoan_thanh_ho_so) ?></td>
             	<td style="text-align:left"><?= $item->ghi_chu ?></td>

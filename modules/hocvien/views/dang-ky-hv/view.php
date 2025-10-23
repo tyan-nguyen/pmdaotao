@@ -30,7 +30,7 @@ use app\modules\hocvien\models\DangKyHv;
                         <p>
                             <strong>Số ĐT:</strong> <?= $model->so_dien_thoai ?>
                             <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                            <strong>Địa chỉ:</strong> <?= $model->dia_chi ?></p>
+                            <strong>Địa chỉ:</strong> <?= $model->diaChi ?></p>
                             <p><strong>Số CCCD:</strong> <?= $model->so_cccd ?>
                             <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                             <strong>Ngày hết hạn CCCD:</strong> <?= $model->getNgayHetHanCccd()?></p>
