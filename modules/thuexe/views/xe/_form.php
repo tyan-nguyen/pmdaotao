@@ -118,6 +118,9 @@ if(!$model->isNewRecord){
              <?= $form->field($model, 'nha_cung_cap')->textInput(['maxlength' => true]) ?>
          </div>
          <div class="col-lg-12 col-md-12">
+             <?= $form->field($model, 'dac_diem')->textInput(['maxlength' => true]) ?>
+         </div>
+         <div class="col-lg-12 col-md-12">
              <?= $form->field($model, 'ghi_chu')->textarea(['rows' => 4]) ?>
          </div>
     </div>

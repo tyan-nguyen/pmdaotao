@@ -30,6 +30,7 @@ $hinhXeList = HinhXe::find()->where(['id_xe' => $model->id])->all();
                                         <p><strong>Tình trạng xe:</strong> <?= $model->tinh_trang_xe ?></p>
                                         <p><strong>Trạng thái:</strong> <?= $model->trang_thai?></p>
                                         <p><strong>Phân loại:</strong> <?= $model->getLabelPhanLoaiXe() ?></p>
+                                        <p><strong>Đặc điểm:</strong> <?= $model->dac_diem ?></p>
                                         <p><strong>Người phụ trách:</strong> <?= $model->giaoVien?$model->giaoVien->ho_ten:'' ?></p>
 								    </div>
 								    
