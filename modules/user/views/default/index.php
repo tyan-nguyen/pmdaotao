@@ -282,7 +282,7 @@ $dash = new Dashboard();
 	<div class="col-sm-12">
         <div class="card custom-card">
         	<div class="card-body" style="width: 100%; height:450px">
-        		<img src="/libs/images/truonglai.jpg" alt="img" style="width: 100%; height: 100%; object-fit: cover;">
+        		<img src="/libs/images/anhtruonglai.jpg" alt="img" style="width: 100%; height: 100%; object-fit: cover;">
         	</div>
         </div>
     </div>

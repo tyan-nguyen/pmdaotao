@@ -25,7 +25,7 @@ ViboonAsset::register($this);
         <!-- /Loader -->
 
         <!-- Page -->
-        <div class="page main-signin-wrapper" style="background-image: url(/libs/images/truonglai.jpg);background-repeat: no-repeat;
+        <div class="page main-signin-wrapper" style="background-image: url(/libs/images/anhtruonglai.jpg);background-repeat: no-repeat;
 background-position: center center;
 background-attachment: fixed;
 background-size: cover;">
