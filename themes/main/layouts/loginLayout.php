@@ -35,7 +35,7 @@ background-size: cover;">
                 <div class=" col-xl-3 col-lg-5 col-md-5 d-block mx-auto">
                     <div class="text-center mb-2">
                         <a href="index.html">
-                            <img src="<?= Yii::getAlias('@web')  ?>/assets/images/brand/logo_login.png" class="header-brand-img" alt="logo">
+                            <img src="<?= Yii::getAlias('@web')  ?>/assets/images/brand/logo_login_new.png" class="header-brand-img" alt="logo">
                             <img src="<?= Yii::getAlias('@web')  ?>/assets/images/brand/logo1.png" class="header-brand-img theme-logos" alt="logo">
                         </a>
                     </div>
