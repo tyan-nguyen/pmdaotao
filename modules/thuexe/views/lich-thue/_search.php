@@ -176,7 +176,10 @@ use yii\web\JsExpression;
 		</div>
 		<div class="col-md-2">
 		<?= $form->field($model, 'ngay_bat_dau')->widget(DatePicker::classname(), [
-                         'options' => ['placeholder' => 'Ngày thuê ...'],
+                         'options' => [
+                             'placeholder' => 'Ngày thuê ...',
+                             'autocomplete' => 'off'
+                         ],
                          'pluginOptions' => [
                          'autoclose' => true,
                          'format' => 'dd/mm/yyyy',

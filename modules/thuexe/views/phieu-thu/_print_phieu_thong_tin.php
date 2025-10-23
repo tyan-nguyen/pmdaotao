@@ -50,7 +50,7 @@ use app\custom\CustomFunc;
     			<td>SĐT: <?= $model->lichThue->khachHang?$model->lichThue->khachHang->so_dien_thoai:'' ?></td>
     		</tr>
     		<tr>
-        			<td colspan="2">Họ tên người hướng dẫn: <?= $model->lichThue->giaoVien?$model->lichThue->giaoVien->ho_ten:'' ?> (<?= $model->lichThue->giaoVien?$model->lichThue->giaoVien->so_dien_thoai:'' ?>)</td>
+        			<td colspan="2">Họ tên người hướng dẫn: <?= $model->lichThue->giaoVien?$model->lichThue->giaoVien->ho_ten:'' ?> <?= $model->lichThue->giaoVien?(' ('.$model->lichThue->giaoVien->so_dien_thoai.')'):'' ?></td>
         	</tr>
     		<!-- <tr>
     			<td colspan="2">Nội dung:</td>
