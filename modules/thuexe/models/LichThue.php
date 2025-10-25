@@ -62,7 +62,7 @@ class LichThue extends LichThueBase
      */
     public static function getDsLoaiXeCamUng(){
         //$dsXe = LoaiXe::find()->where('id IN (2,3,4,6,7,8,9,10)')->all();
-        $dsXe = LoaiXe::find()->where('id IN (2,3,4,6,10)')->all();
+        $dsXe = LoaiXe::find()->where('id IN (2,3,4,6,7,10)')->all();
         // Thêm dấu + vào trước tên nhân viên
         return ArrayHelper::map($dsXe, 'id', function($model) {
             return '+ Hạng ' . $model->ten_loai_xe;
