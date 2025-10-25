@@ -140,7 +140,8 @@ class DangKyHvSearch extends DangKyHv
         $query->joinWith(['hocPhi as hp']);
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort'=> ['defaultOrder' => ['thoi_gian_hoan_thanh_ho_so'=>SORT_DESC, 'id' => SORT_DESC]],
+            //'sort'=> ['defaultOrder' => ['thoi_gian_hoan_thanh_ho_so'=>SORT_DESC, 'id' => SORT_DESC]],
+            'sort'=> ['defaultOrder' => ['id' => SORT_DESC]],
         ]);
         
         $this->load($params);
