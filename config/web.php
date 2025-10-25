@@ -180,6 +180,19 @@ $config = [
             ],
         ],
         
+        'i18n' => [
+            'translations' => [
+                'yii*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@app/messages', // hoặc @common/messages
+                    'sourceLanguage' => 'en-US',
+                    'fileMap' => [
+                        'yii' => 'yii.php',
+                    ],
+                ],
+            ],
+        ],
+        
     ],
     'params' => $params,
 ];
