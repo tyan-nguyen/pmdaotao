@@ -8,6 +8,7 @@ use kartik\date\DatePicker;
 use app\modules\user\models\User;
 use app\modules\khoahoc\models\KhoaHoc;
 use kartik\select2\Select2;
+use app\modules\hocvien\models\DangKyHv;
 /* @var $this yii\web\View */
 /* @var $model app\modules\vanban\models\VanBanDen */
 /* @var $form yii\widgets\ActiveForm */
@@ -50,14 +51,31 @@ use kartik\select2\Select2;
             <div class="col-md-2">
                   <?= $form->field($model, 'so_dien_thoai')->textInput(['maxlength' => true]) ?>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
+                  <?php // $form->field($model, 'noi_dang_ky')->dropDownList(DangKyHv::getDmNoiDangKy(), ['prompt'=>'Tất cả'])->label('Nơi ĐK') ?>
+                   <label><?= $model->getAttributeLabel('noi_dang_ky') ?></label>
+                <?= $form->field($model, 'noi_dang_ky')->widget(Select2::classname(), [
+                    'data' => DangKyHv::getDmNoiDangKy(),
+                    'language' => 'vi',
+                    'options' => [
+                        'placeholder' => 'Chọn hạng...',  
+                        'class' => 'form-control dropdown-with-arrow',
+                        'id' => 'noi-dang-ky-search-dropdown'
+                    ],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                        'width'=>'100%'
+                    ],
+                ])->label(false); ?>
+            </div>
+            <div class="col-md-2">
                   <?= $form->field($model, 'id_hang')->dropDownList(HangDaoTao::getList(), ['prompt'=>'Tất cả']) ?>
             </div>
             <!-- <div class="col-md-2">
                   <?php // $form->field($model, 'id_khoa_hoc')->dropDownList(KhoaHoc::getList(), ['prompt'=>'Tất cả']) ?>
             </div> -->
             
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <?php // $form->field($model, 'id_khoa_hoc')->dropDownList(KhoaHoc::getList(), ['prompt'=>'Tất cả']) ?>
                 <label><?= $model->getAttributeLabel('id_khoa_hoc') ?></label>
                 <?= $form->field($model, 'id_khoa_hoc')->widget(Select2::classname(), [
