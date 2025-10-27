@@ -131,7 +131,9 @@ return [
             return CustomFunc::convertYMDHISToDMY($model->thoi_gian_bat_dau);
         },
         'contentOptions' => ['style' => 'text-align:center'],
-        'width'=>'100px'
+        'width'=>'100px',
+        'pageSummary' => 'Tổng cộng',
+        'pageSummaryOptions' => ['class' => 'text-right text-end'],
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
@@ -141,7 +143,7 @@ return [
             return CustomFunc::convertYMDHISToHI($model->thoi_gian_bat_dau);
         },
         'contentOptions' => ['style' => 'text-align:center'],
-        'width'=>'50px'
+        
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
@@ -151,9 +153,18 @@ return [
             return CustomFunc::convertYMDHISToHI($model->thoi_gian_ket_thuc);
         },
         'contentOptions' => ['style' => 'text-align:center'],
-        'width'=>'50px'
+        'width'=>'50px',
+        
     ],
-    
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'so_gio',
+        'width'=>'50px',
+        'contentOptions' => ['style' => 'text-align:center'],
+        'format' => ['decimal', 1],
+        'pageSummary' => true,
+        'pageSummaryOptions' => ['class' => 'text-right text-end'],
+    ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'don_gia',
@@ -162,18 +173,8 @@ return [
             return number_format($model->don_gia);
         },
         'width'=>'70',
-        'pageSummary' => 'Tổng cộng',
-        'pageSummaryOptions' => ['class' => 'text-right text-end'],
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'so_gio',
-        'width'=>'70',
-        'contentOptions' => ['style' => 'text-align:right'],
-        'format' => ['decimal', 1],
-        'pageSummary' => true,
-        'pageSummaryOptions' => ['class' => 'text-right text-end'],
-    ],
+        
+    ],    
     
     [
         'class'=>'\kartik\grid\DataColumn',
