@@ -339,6 +339,13 @@ class Xe extends \app\models\PtxXe
         //return $this->bien_so_xe . ($this->ma_so?(' (Số '.$this->ma_so.')'):'');
         return ($this->ma_so?(' Số '.$this->ma_so):'') . ' (' . $this->bien_so_xe . ')';
     }
+    /**
+     * hien thi ten xe with hang
+     */
+    public function getTenXeShort2(){
+        //return $this->bien_so_xe . ($this->ma_so?(' (Số '.$this->ma_so.')'):'');
+        return ($this->ma_so?(' Số '.$this->ma_so):'') . ' (' . ($this->loaiXe?$this->loaiXe->ma_loai_xe:'') . ')';
+    }
     public function getTenXeLong(){
         return ($this->ma_so ? ('Xe số ' . $this->ma_so) : '' ) . ' - ' . $this->bien_so_xe
         . ($this->loaiXe ? (' - ' . $this->loaiXe->ten_loai_xe) : '' );

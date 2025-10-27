@@ -19,7 +19,7 @@ class LoaiXeSearch extends LoaiXe
     {
         return [
             [['id', 'nguoi_tao', 'thoi_gian_tao'], 'integer'],
-            [['ten_loai_xe', 'ghi_chu'], 'safe'],
+            [['ten_loai_xe', 'ghi_chu', 'ma_loai_xe'], 'safe'],
         ];
     }
 
@@ -63,6 +63,7 @@ class LoaiXeSearch extends LoaiXe
         ]);
 
         $query->andFilterWhere(['like', 'ten_loai_xe', $this->ten_loai_xe])
+            ->andFilterWhere(['like', 'ma_loai_xe', $this->ma_loai_xe])
             ->andFilterWhere(['like', 'ghi_chu', $this->ghi_chu]);
 
         return $dataProvider;

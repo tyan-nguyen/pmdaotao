@@ -10,6 +10,7 @@ use yii\helpers\ArrayHelper;
  * This is the model class for table "ptx_loai_xe".
  *
  * @property int $id
+ * @property string $ma_loai_xe
  * @property string $ten_loai_xe
  * @property string|null $ghi_chu
  * @property int|null $nguoi_tao
@@ -38,6 +39,7 @@ class LoaiXe extends \app\models\PtxLoaiXe
             [['ghi_chu'], 'string'],
             [['nguoi_tao', 'thoi_gian_tao'], 'integer'],
             [['ten_loai_xe'], 'string', 'max' => 50],
+            [['ma_loai_xe'], 'string', 'max' => 50],
         ];
     }
 
@@ -52,6 +54,7 @@ class LoaiXe extends \app\models\PtxLoaiXe
             'ghi_chu' => 'Ghi Chú',
             'nguoi_tao' => 'Người Tạo ',
             'thoi_gian_tao' => 'Thời gian tạo',
+            'ma_loai_xe' => 'Mã loại xe'
         ];
     }
 

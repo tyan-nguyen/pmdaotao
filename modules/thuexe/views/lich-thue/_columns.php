@@ -80,7 +80,7 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'id_xe',
         'value'=>function($model){
-            return $model->xe?$model->xe->tenXeShort:'';
+            return $model->xe?$model->xe->tenXeShort2:'';
         }
     ],
     /* [
@@ -119,24 +119,39 @@ return [
             return $model->khachHang?$model->khachHang->so_dien_thoai:'';
         },
         'contentOptions' => function ($model) {
-            return ['class' => 'trang-thai-' . strtolower($model->loai_khach_hang)];
-        }
-    ],    
+            return ['class' => 'trang-thai-' . strtolower($model->loai_khach_hang), 'style'=>'text-align:center'];
+        },
+        'width'=>'100px'
+    ], 
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'thoi_gian_bat_dau',
-        'label'=>'Thời gian BĐ',
+        'label'=>'ngày thuê',
         'value'=>function($model){
-            return CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_bat_dau);
-        }
+            return CustomFunc::convertYMDHISToDMY($model->thoi_gian_bat_dau);
+        },
+        'contentOptions' => ['style' => 'text-align:center'],
+        'width'=>'100px'
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'thoi_gian_bat_dau',
+        'label'=>'Giờ BĐ',
+        'value'=>function($model){
+            return CustomFunc::convertYMDHISToHI($model->thoi_gian_bat_dau);
+        },
+        'contentOptions' => ['style' => 'text-align:center'],
+        'width'=>'50px'
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'thoi_gian_ket_thuc',
-        'label'=>'Thời gian KT',
+        'label'=>'Giờ KT',
         'value'=>function($model){
-            return CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_ket_thuc);
-        }
+            return CustomFunc::convertYMDHISToHI($model->thoi_gian_ket_thuc);
+        },
+        'contentOptions' => ['style' => 'text-align:center'],
+        'width'=>'50px'
     ],
     
     [

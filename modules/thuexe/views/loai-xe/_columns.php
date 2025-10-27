@@ -49,6 +49,10 @@ return [
     // ],
     [
         'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'ma_loai_xe',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ten_loai_xe',
     ],
     [

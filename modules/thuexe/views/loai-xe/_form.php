@@ -12,6 +12,8 @@ use app\widgets\CardWidget;
     <?php $form = ActiveForm::begin(); ?>  
 
     <?php CardWidget::begin(['title'=>'Thông tin Loại xe']) ?>
+    
+    <?= $form->field($model, 'ma_loai_xe')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'ten_loai_xe')->textInput(['maxlength' => true]) ?>
 

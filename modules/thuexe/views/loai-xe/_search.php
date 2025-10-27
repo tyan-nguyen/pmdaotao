@@ -15,6 +15,9 @@ use yii\widgets\ActiveForm;
         ]
 ]); ?>
 <div class="col-md-3">
+    <?= $form->field($model, 'ma_loai_xe')->textInput(['maxlength' => true]) ?>
+</div>
+<div class="col-md-3">
     <?= $form->field($model, 'ten_loai_xe')->textInput(['maxlength' => true]) ?>
 </div>
 <div class="row">
