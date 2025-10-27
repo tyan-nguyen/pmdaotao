@@ -27,13 +27,13 @@ use app\modules\hocvien\models\DangKyHv;
            <div class="col-md-3">
                   <?= $form->field($model, 'ho_ten')->textInput(['maxlength' => true]) ?>
            </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                   <?= $form->field($model, 'gioi_tinh')->dropDownList([
                           1 => 'Nam',
                           0 => 'Nữ',
                           ], ['prompt' => 'Chọn giới tính', 'class' => 'form-control dropdown-with-arrow']) ?>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                   <?= $form->field($model, 'ngay_sinh')->widget(DatePicker::classname(), [
                          'options' => ['placeholder' => 'Chọn ngày sinh  ...'],
                          'pluginOptions' => [
@@ -51,7 +51,7 @@ use app\modules\hocvien\models\DangKyHv;
             <div class="col-md-2">
                   <?= $form->field($model, 'so_dien_thoai')->textInput(['maxlength' => true]) ?>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
                   <?php // $form->field($model, 'noi_dang_ky')->dropDownList(DangKyHv::getDmNoiDangKy(), ['prompt'=>'Tất cả'])->label('Nơi ĐK') ?>
                    <label><?= $model->getAttributeLabel('noi_dang_ky') ?></label>
                 <?= $form->field($model, 'noi_dang_ky')->widget(Select2::classname(), [
@@ -68,14 +68,14 @@ use app\modules\hocvien\models\DangKyHv;
                     ],
                 ])->label(false); ?>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
                   <?= $form->field($model, 'id_hang')->dropDownList(HangDaoTao::getList(), ['prompt'=>'Tất cả']) ?>
             </div>
             <!-- <div class="col-md-2">
                   <?php // $form->field($model, 'id_khoa_hoc')->dropDownList(KhoaHoc::getList(), ['prompt'=>'Tất cả']) ?>
             </div> -->
             
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <?php // $form->field($model, 'id_khoa_hoc')->dropDownList(KhoaHoc::getList(), ['prompt'=>'Tất cả']) ?>
                 <label><?= $model->getAttributeLabel('id_khoa_hoc') ?></label>
                 <?= $form->field($model, 'id_khoa_hoc')->widget(Select2::classname(), [
