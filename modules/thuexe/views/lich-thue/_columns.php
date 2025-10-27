@@ -200,6 +200,7 @@ return [
             return LichThue::getDmTrangThaiLabelWithBadge($model->trang_thai);
         },
         'format'=>'html',
+        'contentOptions' => ['style' => 'text-align:center'],
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
