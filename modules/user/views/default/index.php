@@ -204,6 +204,59 @@ $dash = new Dashboard();
     	</div>
     </div>
 </div>	
+<?php elseif (User::hasRole('nXem',false)):?>
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
+    	<div class="card custom-card service">
+    		<div class="card-body">
+    			<div class="item-box text-center">
+    				<div class=" text-center text-danger mb-2"><i class="fa fa-users"></i>
+    				</div>
+    				<div class="item-box-wrap">
+    					<h5 class="mb-2">
+    						<a href="/hocvien/hv-ho-so?menu=thongke4">Quản lý học viên</a>
+    					</h5>
+    					<p class="text-muted mb-0">Quản lý thông tin học viên, khóa học, hạng đào tạo</p>
+    				</div>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+    
+    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3 ">
+    	<div class="card custom-card service">
+    		<div class="card-body">
+    			<div class="item-box text-center">
+    				<div class=" text-center mb-2 text-primary"><i class="fa fa-graduation-cap"></i>
+    				</div>
+    				<div class="item-box-wrap">						
+    					<h5 class="mb-2">
+    						<a href="/hocvien/thong-ke/thong-ke-ho-so-moi?menu=thongke1">Thống kê học viên đăng ký mới</a>
+    					</h5>				
+    					<p class="text-muted mb-0">Xem thống kê số lượng học viên đăng ký theo ngày</p>
+    				</div>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+    	
+    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3 ">
+    	<div class="card custom-card service">
+    		<div class="card-body">
+    			<div class="item-box text-center">
+    				<div class=" text-center mb-2 text-primary"><i class="fa fa-graduation-cap"></i>
+    				</div>
+    				<div class="item-box-wrap">						
+    					<h5 class="mb-2">
+    						<a href="/user/auth/change-own-password">Đổi mật khẩu</a>
+    					</h5>				
+    					<p class="text-muted mb-0">Thay đổi mật khẩu</p>
+    				</div>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+</div>	
 <?php else:?>
 <div class="row">
 
