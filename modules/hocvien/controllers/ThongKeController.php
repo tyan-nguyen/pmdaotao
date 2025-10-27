@@ -24,11 +24,11 @@ use app\modules\hocvien\models\search\ThongKeLuuLuongSearch;
  */
 class ThongKeController extends Controller
 {
-    public $freeAccessActions = [
+   /*  public $freeAccessActions = [
         'tong-hop', 
         'ban-hang',
         'luu-luong'
-    ];
+    ]; */
     /**
      * @inheritdoc
      */
