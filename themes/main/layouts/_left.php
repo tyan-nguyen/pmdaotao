@@ -50,7 +50,7 @@ use app\modules\user\models\User;
 				<?= $this->render('menus/_menu-giao-vien') ?>
 				<?php else:?>
 				
-				
+				<?= $this->render('menus/thong-ke') ?>
 				
 				<?= $this->render('menus/hoc-vien') ?>
 				

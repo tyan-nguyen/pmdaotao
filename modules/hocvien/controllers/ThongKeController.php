@@ -85,5 +85,32 @@ class ThongKeController extends Controller
             
         ]);
     }
+    /**
+     * thống kê số lượng học viên mới
+     */
+    public function actionThongKeHoSoMoi(){
+        
+        return $this->render('ho-so-moi', [
+            
+        ]);
+    }
+    /**
+     * thống kê thu tiền
+     */
+    public function actionThongKeThuTien(){
+        
+        return $this->render('thu-tien', [
+            
+        ]);
+    }
+    /**
+     * thống kê công nợ
+     */
+    public function actionThongKeCongNo(){
+        
+        return $this->render('cong-no', [
+            
+        ]);
+    }
     
 }
