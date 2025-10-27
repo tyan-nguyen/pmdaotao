@@ -165,6 +165,7 @@ class DangKyHvSearch extends DangKyHv
             't.thoi_gian_tao' => $this->thoi_gian_tao,
             't.gioi_tinh'=>$this->gioi_tinh,
             't.id_hang'=>$this->id_hang,
+            't.noi_dang_ky' => $this->noi_dang_ky,
             //'t.nguoi_tao'=>$this->nguoi_tao,
         ]);
         
