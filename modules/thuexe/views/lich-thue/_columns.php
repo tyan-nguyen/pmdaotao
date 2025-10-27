@@ -179,7 +179,7 @@ return [
         'value'=>function($model){
             return $model->tienDaThanhToan;
         },
-        'contentOptions' => ['style' => 'text-align:right'],
+        //'contentOptions' => ['style' => 'text-align:right'],
         'format' => ['decimal', 0],
         'pageSummary' => true,
         'pageSummaryOptions' => ['class' => 'text-right text-end'],
@@ -190,7 +190,7 @@ return [
             }else if($model->tienDaThanhToan == $model->tongTien){
                 $cls = 'tien-du';
             }
-            return ['class' => $cls];
+            return ['class' => $cls, 'style' => 'text-align:right'];
         }
         ],
     [

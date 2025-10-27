@@ -336,7 +336,8 @@ class Xe extends \app\models\PtxXe
      * hien thi ten xe
      */
     public function getTenXeShort(){
-        return $this->bien_so_xe . ($this->ma_so?(' (Số '.$this->ma_so.')'):'');
+        //return $this->bien_so_xe . ($this->ma_so?(' (Số '.$this->ma_so.')'):'');
+        return ($this->ma_so?(' Số '.$this->ma_so):'') . ' (' . $this->bien_so_xe . ')';
     }
     public function getTenXeLong(){
         return ($this->ma_so ? ('Xe số ' . $this->ma_so) : '' ) . ' - ' . $this->bien_so_xe
