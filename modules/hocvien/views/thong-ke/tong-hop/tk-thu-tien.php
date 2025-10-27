@@ -14,8 +14,8 @@ use app\modules\hocvien\models\NopHocPhi;
                 <td rowspan="2" width="50px" align="center">STT</td>
                 <td rowspan="2" align="center">Ngày</td>
                 <td rowspan="2" align="center">Tổng cộng</td>  
-                <td colspan="2" align="center">Cơ sở 1</td>
-                <td colspan="2" align="center">Cơ sở 2</td>
+                <td colspan="2" align="center"><?= DangKyHv::getLabelNoiDangKyOther(DangKyHv::NOIDANGKY_CS1) ?></td>
+                <td colspan="2" align="center"><?= DangKyHv::getLabelNoiDangKyOther(DangKyHv::NOIDANGKY_CS2) ?></td>
                 <td colspan="2" align="center"><?= DangKyHv::getLabelNoiDangKyOther(DangKyHv::NOIDANGKY_CS3) ?></td>
                 <td colspan="2" align="center"><?= DangKyHv::getLabelNoiDangKyOther(DangKyHv::NOIDANGKY_CS4) ?></td>
                 <td colspan="2" align="center"><?= DangKyHv::getLabelNoiDangKyOther(DangKyHv::NOIDANGKY_CS5) ?></td>                
