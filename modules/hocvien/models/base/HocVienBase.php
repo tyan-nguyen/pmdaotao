@@ -125,8 +125,8 @@ class HocVienBase extends \app\models\HvHocVien
     public static function getDmNoiDangKyShort()
     {
         return [
-            self::NOIDANGKY_CS1 => 'CS1',
-            self::NOIDANGKY_CS2 => 'CS2',
+            self::NOIDANGKY_CS1 => 'VP Nguyễn Trình',
+            self::NOIDANGKY_CS2 => 'TL Nguyễn Trình',
             self::NOIDANGKY_CS3 => 'CN Càng Long',
             self::NOIDANGKY_CS4 => 'CN Duyên Hải',
             self::NOIDANGKY_CS5 => 'CN Chợ Lách',
