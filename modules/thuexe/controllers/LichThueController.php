@@ -87,6 +87,27 @@ class LichThueController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+    
+    /**
+     * Lists all LichThue models.
+     * @return mixed
+     */
+    public function actionIndexPublic()
+    {
+        $searchModel = new LichThueSearch();
+        if(isset($_POST['search']) && $_POST['search'] != null){
+            $dataProvider = $searchModel->searchPublic(Yii::$app->request->post(), $_POST['search']);
+        } else if ($searchModel->load(Yii::$app->request->post())) {
+            $searchModel = new LichThueSearch(); // "reset"
+            $dataProvider = $searchModel->searchPublic(Yii::$app->request->post());
+        } else {
+            $dataProvider = $searchModel->searchPublic(Yii::$app->request->queryParams);
+        }
+        return $this->render('index_public', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
 
 
     /**

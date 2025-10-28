@@ -106,9 +106,9 @@ $dash = new Dashboard();
 					</div>
 					<div class="item-box-wrap">						
 						<h5 class="mb-2">
-							<a href="/thuexe/lich-thue/loai-xe-schedule?menu=ttx2&id=2">Lịch theo hạng xe</a>
+							<a href="/thuexe/lich-thue/index-public?menu=ttx4">Danh sách hôm nay</a>
 						</h5>				
-						<p class="text-muted mb-0">Xem lịch thuê tổng hợp theo hạng xe</p>
+						<p class="text-muted mb-0">Xem danh sách thuê xe hôm nay</p>
 					</div>
 				</div>
 			</div>
@@ -123,9 +123,9 @@ $dash = new Dashboard();
 					</div>
 					<div class="item-box-wrap">						
 						<h5 class="mb-2">
-							<a href="/thuexe/lich-thue/loai-xe-schedule-by-columns?menu=ttx3&id=2">Lịch theo hạng xe (theo cột)</a>
+							<a href="/thuexe/lich-thue/loai-xe-schedule-by-columns?menu=ttx3&id=2">Lịch (theo cột)</a>
 						</h5>				
-						<p class="text-muted mb-0">Xem lịch thuê tổng hợp theo hạng xe (sắp xếp mỗi xe trên 1 cột)</p>
+						<p class="text-muted mb-0">Xem lịch thuê tổng hợp theo hạng xe</p>
 					</div>
 				</div>
 			</div>

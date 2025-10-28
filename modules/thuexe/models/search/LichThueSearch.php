@@ -111,4 +111,82 @@ class LichThueSearch extends LichThue
 		}
         return $dataProvider;
     }
+    /**
+     * search lịch hôm nay (dành cho tổ thuê xe)
+     */
+    public function searchPublic($params, $cusomSearch=NULL)
+    {
+        $query = LichThue::find();
+        
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'sort'=> ['defaultOrder' => ['thoi_gian_bat_dau' => SORT_ASC]],
+            'pagination' => false,
+        ]);
+        
+        $this->load($params);
+        
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+        if($cusomSearch != NULL){
+            $query->andFilterWhere ( [ 'OR' ,['like', 'loai_giao_vien', $cusomSearch],
+                ['like', 'loai_khach_hang', $cusomSearch],
+                ['like', 'trang_thai', $cusomSearch],
+                ['like', 'ghi_chu', $cusomSearch]] );
+            
+        } else {
+            if($this->ngay_bat_dau){
+                $this->ngay_bat_dau = CustomFunc::convertDMYToYMD($this->ngay_bat_dau);
+                $query->where("DATE(thoi_gian_bat_dau) = '" . $this->ngay_bat_dau."'");
+            }
+            
+            $query->andFilterWhere([
+                'id' => $this->id,
+                'id_giao_vien' => $this->id_giao_vien,
+                'id_khach_hang' => $this->id_khach_hang,
+                'id_xe' => $this->id_xe,
+                'thoi_gian_bat_dau' => $this->thoi_gian_bat_dau,
+                'thoi_gian_ket_thuc' => $this->thoi_gian_ket_thuc,
+                'so_gio' => $this->so_gio,
+                'don_gia' => $this->don_gia,
+                'nguoi_tao' => $this->nguoi_tao,
+                'thoi_gian_tao' => $this->thoi_gian_tao,
+            ]);
+            
+            if($this->idHocVien){
+                $query->andFilterWhere([
+                    'id_khach_hang' => $this->idHocVien,
+                ]);
+            }
+            if($this->idKhachNgoai){
+                $query->andFilterWhere([
+                    'id_khach_hang' => $this->idKhachNgoai,
+                ]);
+            }
+            
+            if($this->idGiaoVien){
+                $query->andFilterWhere([
+                    'id_giao_vien' => $this->idGiaoVien,
+                ]);
+            }
+            if($this->idGiaoVienNgoai){
+                $query->andFilterWhere([
+                    'id_giao_vien' => $this->idGiaoVienNgoai,
+                ]);
+            }
+            
+            $query->andFilterWhere(['like', 'loai_giao_vien', $this->loai_giao_vien])
+            ->andFilterWhere(['like', 'loai_khach_hang', $this->loai_khach_hang])
+            ->andFilterWhere(['like', 'trang_thai', $this->trang_thai])
+            ->andFilterWhere(['like', 'ghi_chu', $this->ghi_chu]);
+            
+            //chỉ lấy của ngày hiện tại
+            $today = date('Y-m-d');
+            $query->where("DATE(thoi_gian_bat_dau) = '" . $today ."'");
+        }
+        return $dataProvider;
+    }
 }
