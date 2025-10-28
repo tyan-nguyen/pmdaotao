@@ -190,7 +190,7 @@ return [
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'label'=>'Đã TT',
+        'label'=>'Đã T.Toán',
         'width'=>'70',
         'value'=>function($model){
             return $model->tienDaThanhToan;
