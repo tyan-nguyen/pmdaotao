@@ -85,7 +85,7 @@ $dash = new Dashboard();
 		<div class="card custom-card service">
 			<div class="card-body">
 				<div class="item-box text-center">
-					<div class=" text-center text-success mb-2"><i class="fa fa-users"></i>
+					<div class=" text-center text-success mb-2"><i class="ion-model-s"></i>
 					</div>
 					<div class="item-box-wrap">
 						<h5 class="mb-2">
@@ -102,7 +102,7 @@ $dash = new Dashboard();
 		<div class="card custom-card service">
 			<div class="card-body">
 				<div class="item-box text-center">
-					<div class=" text-center mb-2 text-primary"><i class="fa fa-graduation-cap"></i>
+					<div class=" text-center mb-2 text-primary"><i class="fa fa-bars"></i>
 					</div>
 					<div class="item-box-wrap">						
 						<h5 class="mb-2">
@@ -119,7 +119,7 @@ $dash = new Dashboard();
 		<div class="card custom-card service">
 			<div class="card-body">
 				<div class="item-box text-center">
-					<div class=" text-center mb-2 text-primary"><i class="fa fa-graduation-cap"></i>
+					<div class=" text-center mb-2 text-primary"><i class="fa fa-calendar"></i>
 					</div>
 					<div class="item-box-wrap">						
 						<h5 class="mb-2">
@@ -136,7 +136,7 @@ $dash = new Dashboard();
 		<div class="card custom-card service">
 			<div class="card-body">
 				<div class="item-box text-center">
-					<div class=" text-center mb-2 text-primary"><i class="fa fa-graduation-cap"></i>
+					<div class=" text-center mb-2 text-primary"><i class="fa fa-user-circle-o"></i>
 					</div>
 					<div class="item-box-wrap">						
 						<h5 class="mb-2">
