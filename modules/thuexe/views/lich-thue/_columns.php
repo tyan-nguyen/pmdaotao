@@ -163,14 +163,15 @@ return [
         'contentOptions' => ['style' => 'text-align:center'],
         'format' => ['decimal', 1],
         'pageSummary' => true,
-        'pageSummaryOptions' => ['class' => 'text-right text-end'],
+        'pageSummaryOptions' => ['class' => 'text-center text-end'],
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'don_gia',
+        'format' => ['decimal', 0],
         'contentOptions' => ['style' => 'text-align:right'],
         'value'=>function($model){
-            return number_format($model->don_gia);
+            return $model->don_gia;
         },
         'width'=>'70',
         
