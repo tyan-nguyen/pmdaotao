@@ -221,6 +221,16 @@ return [
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'thoi_gian_tao',
+        'label'=>'Ngày tạo',
+        'value'=>function($model){
+            return CustomFunc::convertYMDHISToDMY($model->thoi_gian_tao);
+        },
+        //'width' => '100px',
+        'contentOptions' => [ 'style' => 'text-align:center'],
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'nguoi_tao',
         'value'=>function($model){
             return $model->nguoiTao?$model->nguoiTao->shortName:'';
