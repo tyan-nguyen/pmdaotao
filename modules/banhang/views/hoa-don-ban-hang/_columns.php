@@ -214,7 +214,8 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'nguoi_tao',
         'value'=>function($model){
-            return User::getHoTenByID($model->nguoi_tao);
+            $user = User::findOne($model->nguoi_tao);
+            return $user?$user->shortName:'';
         }
     ],
     // [
