@@ -93,7 +93,7 @@ return [
         'value'=>function($model){
             return $model->giaoVien?$model->giaoVien->ho_ten:'';
         },
-        'label'=>'Người hướng dẫn',
+        'label'=>'Ng. hướng dẫn',
         'contentOptions' => function ($model) {
             return ['class' => 'trang-thai-' . strtolower($model->loai_giao_vien)];
         }
