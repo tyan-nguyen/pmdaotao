@@ -147,4 +147,10 @@ class NhanVienBase extends \app\models\NvNhanVien
     public function getNgaySinh(){
         return CustomFunc::convertYMDToDMY($this->ngay_sinh);
     }
+    /**
+     * lấy địa chỉ cho khớp trường diaChi bên học viên và khách hàng
+     */
+    public function getDiaChi(){
+        return $this->dia_chi;
+    }
 }
