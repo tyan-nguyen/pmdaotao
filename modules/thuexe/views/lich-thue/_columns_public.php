@@ -81,7 +81,8 @@ return [
         'attribute'=>'id_xe',
         'value'=>function($model){
             return $model->xe?$model->xe->tenXeShort2:'';
-        }
+        },
+        'width'=>'100px'
     ],
     /* [
         'class'=>'\kartik\grid\DataColumn',
