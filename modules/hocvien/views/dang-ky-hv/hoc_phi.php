@@ -75,7 +75,7 @@ $trangThai = ($hocPhiKhoaHoc && $tongTienDaNop >= $hocPhiKhoaHoc->hoc_phi) ? 'N�
                             <?php
                             // Tìm thông tin người thu từ bảng user
                             $user = User::findOne($hcPhi->nguoi_thu);
-                            echo $user ? Html::encode($user->username) : 'Không xác định';
+                            echo $user ? Html::encode($user->shortName) : 'Không xác định';
                             ?>
                         </td>
                         
