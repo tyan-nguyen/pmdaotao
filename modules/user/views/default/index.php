@@ -89,7 +89,7 @@ $dash = new Dashboard();
 					</div>
 					<div class="item-box-wrap">
 						<h5 class="mb-2">
-							<a href="/thuexe/lich-thue/xe-schedule?menu=ttx1&id=4">Xem lịch theo xe</a>
+							<a href="/thuexe/lich-thue/xe-schedule?menu=ttx1&id=4">Lịch theo xe</a>
 						</h5>
 						<p class="text-muted mb-0">Xem lịch thuê theo từng xe cụ thể</p>
 					</div>
@@ -106,9 +106,26 @@ $dash = new Dashboard();
 					</div>
 					<div class="item-box-wrap">						
 						<h5 class="mb-2">
-							<a href="/thuexe/lich-thue/loai-xe-schedule?menu=ttx2&id=2">Xem lịch theo hạng xe</a>
+							<a href="/thuexe/lich-thue/loai-xe-schedule?menu=ttx2&id=2">Lịch theo hạng xe</a>
 						</h5>				
 						<p class="text-muted mb-0">Xem lịch thuê tổng hợp theo hạng xe</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="col-sm-12 col-md-6 col-lg-6 col-xl-3 ">
+		<div class="card custom-card service">
+			<div class="card-body">
+				<div class="item-box text-center">
+					<div class=" text-center mb-2 text-primary"><i class="fa fa-graduation-cap"></i>
+					</div>
+					<div class="item-box-wrap">						
+						<h5 class="mb-2">
+							<a href="/thuexe/lich-thue/loai-xe-schedule-by-columns?menu=ttx3&id=2">Lịch theo hạng xe (theo cột)</a>
+						</h5>				
+						<p class="text-muted mb-0">Xem lịch thuê tổng hợp theo hạng xe (sắp xếp mỗi xe trên 1 cột)</p>
 					</div>
 				</div>
 			</div>

@@ -8,6 +8,7 @@ use kartik\select2\Select2;
 use yii\web\JsExpression;
 use app\custom\CustomFunc;
 use app\modules\thuexe\models\LichThi;
+use app\modules\user\models\User;
 
 $this->title = 'Lịch thuê xe của các xe thuộc hạng ' . $model->ten_loai_xe;
 Yii::$app->params['showSearch'] = false;
@@ -48,7 +49,7 @@ foreach ($contactLog as $item) {
                 . ' đến ' . CustomFunc::convertYMDHISToDMYHI($endTime),
         'start' => $startTime,
         'end' => $endTime,
-        'url' => Url::to(['/thuexe/lich-thue/update', 'id' => $item->id, 'force_close' => 'true']),
+        'url' => Url::to([(User::hasRole('nToThueXe', false)?'/thuexe/lich-thue/view-public':'/thuexe/lich-thue/update'), 'id' => $item->id, 'force_close' => 'true']),
         'extendedProps' => [
             'role' => 'modal-remote',
         ],

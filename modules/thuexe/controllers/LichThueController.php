@@ -113,6 +113,62 @@ class LichThueController extends Controller
             ]);
         }
     }
+    
+    /**
+     * Displays a single LichThue model.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionViewPublic($id)
+    {
+        $request = Yii::$app->request;
+        $model = $this->findModel($id);
+        
+        if($request->isAjax){
+            /*
+             *   Process for ajax request
+             */
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            if($request->isGet){
+                return [
+                    'title'=> "Lịch thuê xe " . $model->xe->ma_so,
+                    'content'=>$this->renderAjax('update', [
+                        'model' => $model,
+                    ]),
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"])
+                ];
+            }else if($model->load($request->post()) && $model->save()){
+                return [
+                    'forceReload'=>'#crud-datatable-pjax',
+                    'title'=> "Lịch thuê xe " . $model->xe->ma_so,
+                    'content'=>$this->renderAjax('update', [
+                        'model' => $model,
+                    ]),
+                    'tcontent'=>'Cập nhật thành công!',
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"])
+                ];
+            }else{
+                return [
+                    'title'=> "Lịch thuê xe " . $model->xe->ma_so,
+                    'content'=>$this->renderAjax('update', [
+                        'model' => $model,
+                    ]),
+                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"])
+                ];
+            }
+        }else{
+            /*
+             *   Process for non-ajax request
+             */
+            if ($model->load($request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            }
+        }
+    }
 
     /**
      * Creates a new LichThue model.
