@@ -227,7 +227,7 @@ $dash = new Dashboard();
     	<div class="card custom-card service">
     		<div class="card-body">
     			<div class="item-box text-center">
-    				<div class=" text-center text-danger mb-2"><i class="fa fa-users"></i>
+    				<div class=" text-center text-primary mb-2"><i class="fa fa-users"></i>
     				</div>
     				<div class="item-box-wrap">
     					<h5 class="mb-2">
