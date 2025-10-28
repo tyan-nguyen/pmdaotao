@@ -244,7 +244,7 @@ $dash = new Dashboard();
     	<div class="card custom-card service">
     		<div class="card-body">
     			<div class="item-box text-center">
-    				<div class=" text-center mb-2 text-primary"><i class="fa fa-graduation-cap"></i>
+    				<div class=" text-center mb-2 text-primary"><i class="fa fa-users"></i>
     				</div>
     				<div class="item-box-wrap">						
     					<h5 class="mb-2">
@@ -281,7 +281,7 @@ $dash = new Dashboard();
 		<div class="card custom-card service">
 			<div class="card-body">
 				<div class="item-box text-center">
-					<div class=" text-center mb-2 text-info"><i class="fa fa-graduation-cap"></i>
+					<div class=" text-center mb-2 text-info"><i class="fa fa-line-chart"></i>
 					</div>
 					<div class="item-box-wrap">						
 						<h5 class="mb-2">
@@ -315,7 +315,7 @@ $dash = new Dashboard();
 		<div class="card custom-card service">
 			<div class="card-body">
 				<div class="item-box text-center">
-					<div class=" text-center text-success mb-2"><i class="fa fa-users"></i>
+					<div class=" text-center text-success mb-2"><i class="fa fa-file-text-o"></i>
 					</div>
 					<div class="item-box-wrap">
 						<h5 class="mb-2">
@@ -332,7 +332,7 @@ $dash = new Dashboard();
 		<div class="card custom-card service">
 			<div class="card-body">
 				<div class="item-box text-center">
-					<div class=" text-center mb-2 text-primary"><i class="fa fa-graduation-cap"></i>
+					<div class=" text-center mb-2 text-primary"><i class="fa fa-calendar-check-o"></i>
 					</div>
 					<div class="item-box-wrap">						
 						<h5 class="mb-2">
