@@ -344,7 +344,7 @@ class Xe extends \app\models\PtxXe
      */
     public function getTenXeShort2(){
         //return $this->bien_so_xe . ($this->ma_so?(' (Số '.$this->ma_so.')'):'');
-        return ($this->ma_so?(' Số '.$this->ma_so):'') . ' (' . ($this->loaiXe?$this->loaiXe->ma_loai_xe:'') . ')';
+        return ($this->ma_so?(' Xe '.$this->ma_so):'') . ' (' . ($this->loaiXe?$this->loaiXe->ma_loai_xe:'') . ')';
     }
     public function getTenXeLong(){
         return ($this->ma_so ? ('Xe số ' . $this->ma_so) : '' ) . ' - ' . $this->bien_so_xe
