@@ -222,7 +222,7 @@ return [
          'attribute'=>'nguoi_thu',
          'value'=>function($model){
          $user = User::findOne($model->nguoi_thu);
-             return $user ? $user->username : 'Không xác định';
+             return $user ? $user->shortName : 'Không xác định';
          },
          'contentOptions' => [ 'style' => 'text-align:center' ],
      ],

@@ -99,6 +99,11 @@ return [
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'biet_danh',
+        'label'=>'Tên ngắn',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'user_type',
         'value'=>function($model){
             return UserBase::getLabelLoaiTaiKhoan($model->user_type);

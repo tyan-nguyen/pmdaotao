@@ -43,6 +43,7 @@ use app\modules\user\models\UserBase;
                             <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
                             
                             <?= $form->field($model, 'ho_ten')->textInput(['maxlength' => true]) ?>
+                            <?= $form->field($model, 'biet_danh')->textInput(['maxlength' => true]) ?>
                             
                             <?= $form->field($model, 'user_type')->dropDownList(
                                 UserBase::getDmLoaiTaiKhoan(),

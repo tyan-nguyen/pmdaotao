@@ -63,6 +63,11 @@ class User extends UserBase{
     public function getHoTen(){
         return $this->ho_ten?$this->ho_ten:$this->username;
     }
+    
+    public function getShortName(){
+        return $this->biet_danh?$this->biet_danh:$this->username;
+    }
+    
     /**
      * lay nhan vien co lien ket voi tai khoan
      * @return \yii\db\ActiveRecord|array|NULL

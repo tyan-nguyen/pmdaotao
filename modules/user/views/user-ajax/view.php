@@ -35,6 +35,7 @@ use app\modules\user\models\UserBase;
                     //'id',
                     'username',
                     'ho_ten',
+                    'biet_danh',
                     [
                         'attribute'=>'user_type',
                         'value'=>UserBase::getLabelLoaiTaiKhoan($model->user_type),

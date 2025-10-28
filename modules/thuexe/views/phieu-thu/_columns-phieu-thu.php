@@ -226,7 +226,7 @@ return [
          'class'=>'\kartik\grid\DataColumn',
          'attribute'=>'nguoi_tao',
          'value'=>function($model){
-             return $model->nguoiTao->username;
+             return $model->nguoiTao->shortName;
          },
          'contentOptions' => [ 'style' => 'text-align:center' ],
      ],

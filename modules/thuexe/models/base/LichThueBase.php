@@ -117,8 +117,8 @@ class LichThueBase extends PtxLichThue
      */
     public static function getDmTrangThai(){
         return [
-            self::TT_LENLICH => 'Đã lên lịch',
-            self::TT_XUATHOADON => 'Đã xuất hóa đơn',
+            self::TT_LENLICH => 'Lên lịch',
+            self::TT_XUATHOADON => 'Xuất phiếu',
         ];
     }
     /**
@@ -139,9 +139,9 @@ class LichThueBase extends PtxLichThue
     public static function getDmTrangThaiLabel($val){
         $label = '';
         if($val == self::TT_LENLICH){
-            $label = 'Đã lên lịch';
+            $label = 'Lên lịch';
         }else if($val == self::TT_XUATHOADON){
-            $label = 'Đã xuất hóa đơn';
+            $label = 'Xuất phiếu';
         }
         return $label;
     }
@@ -153,9 +153,9 @@ class LichThueBase extends PtxLichThue
     public static function getDmTrangThaiLabelWithBadge($val){
         $label = '';
         if($val == self::TT_LENLICH){
-            $label = '<span class="badge bg-warning"><i class="fa fa-calendar-check-o"></i>&nbsp; Đã lên lịch</span>';
+            $label = '<span class="badge bg-warning"><i class="fa fa-calendar-check-o"></i>&nbsp; Lên lịch</span>';
         }else if($val == self::TT_XUATHOADON){
-            $label = '<span class="badge bg-success"><i class="fa fa-check"></i> &nbsp;Đã xuất HĐ</span>';
+            $label = '<span class="badge bg-success"><i class="fa fa-check"></i> &nbsp;Xuất phiếu</span>';
         }
         return $label;
     }

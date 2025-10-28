@@ -113,7 +113,10 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'dia_chi',
-        'width' => '350px',
+        'width' => '500px',
+        'value' => function($model) {
+            return $model->diaChi;
+        },
     ],
    // [
       //  'class'=>'\kartik\grid\DataColumn',
@@ -133,7 +136,7 @@ return [
         'attribute' => 'id_hang',
         'width' => '200px',
         'value' => function($model) {
-            return $model->hangDaoTao ? $model->hangDaoTao->ten_hang : 'N/A';
+        return $model->hangDaoTao ? $model->hangDaoTao->ma_hang : 'N/A';
         },
         'label' => 'Hạng đào tạo',
         'pageSummary' => 'Tổng cộng (E=A-B-C+D)',
@@ -245,7 +248,14 @@ return [
          'width' => '100px',
          'contentOptions' => [ 'style' => 'text-align:center' ],
      ],
-     
+     [
+         'class'=>'\kartik\grid\DataColumn',
+         'attribute'=>'nguoi_tao',
+         'value'=>function($model){
+            return $model->nguoiTao->shortName;
+         },
+         'width' => '100px',
+         ],
      [
          'class'=>'\kartik\grid\DataColumn',
          'attribute'=>'co_ho_so_thue',
