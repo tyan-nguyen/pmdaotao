@@ -227,10 +227,10 @@ return [
         'width' => '80px',
         'contentOptions' => [ 'style' => 'text-align:center'],
     ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'ghi_chu',
-    // ],
+     [
+         'class'=>'\kartik\grid\DataColumn',
+         'attribute'=>'ghi_chu',
+     ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'nguoi_tao',
