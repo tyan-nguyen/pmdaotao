@@ -120,7 +120,7 @@ class NopHocPhiSearch extends NopHocPhi
     {
         $query = NopHocPhi::find()->alias('t');
         $query->select(['t.*', 'hv.so_cccd']);
-        $query->joinWith(['hocVien as hv']);
+        $query->joinWith(['hocVien as hv', 'nguoiTao as nt']);
         
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -158,7 +158,8 @@ class NopHocPhiSearch extends NopHocPhi
                 //'thoi_gian_tao' => $this->thoi_gian_tao,
                 'hv.so_cccd' =>$this->ma_so_hoc_vien,
                 'hv.id_hang' => $this->id_hang,
-                'hv.noi_dang_ky' => $this->noi_dang_ky
+                //'hv.noi_dang_ky' => $this->noi_dang_ky
+                'nt.noi_dang_ky' => $this->noi_dang_ky
             ]);
             
             $query->andFilterWhere(['like', 't.loai_phieu', 'PHIEUTHU']) //IMPORTANT!!!
@@ -196,7 +197,7 @@ class NopHocPhiSearch extends NopHocPhi
     {
         $query = NopHocPhi::find()->alias('t');
         $query->select(['t.*', 'hv.so_cccd']);
-        $query->joinWith(['hocVien as hv']);
+        $query->joinWith(['hocVien as hv', 'nguoiTao as nt']);
         
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -234,7 +235,8 @@ class NopHocPhiSearch extends NopHocPhi
                 //'thoi_gian_tao' => $this->thoi_gian_tao,
                 'hv.so_cccd' =>$this->ma_so_hoc_vien,
                 'hv.id_hang' => $this->id_hang,
-                'hv.noi_dang_ky' => $this->noi_dang_ky
+                //'hv.noi_dang_ky' => $this->noi_dang_ky
+                'nt.noi_dang_ky' => $this->noi_dang_ky
             ]);
             
             $query->andFilterWhere(['like', 't.loai_phieu', 'PHIEUCHI']) //IMPORTANT!!!

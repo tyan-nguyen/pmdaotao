@@ -221,7 +221,7 @@ return [
          'class'=>'\kartik\grid\DataColumn',
          'attribute'=>'nguoi_thu',
          'value'=>function($model){
-         $user = User::findOne($model->nguoi_thu);
+            $user = User::findOne($model->nguoi_thu);
              return $user ? $user->shortName : 'Không xác định';
          },
          'contentOptions' => [ 'style' => 'text-align:center' ],

@@ -3,6 +3,7 @@ use yii\helpers\Url;
 use app\custom\CustomFunc;
 use app\modules\user\models\User;
 use yii\helpers\Html;
+use app\modules\hocvien\models\DangKyHv;
 
 return [
     [
@@ -83,6 +84,19 @@ return [
             'class' => 'kartik\grid\SerialColumn',
             'width' => '30px',
         ],
+        
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'noi_dang_ky',
+        'label'=>'Cơ sở',
+        'value'=>function($model){
+            return DangKyHv::getLabelNoiDangKyBadge($model->nguoiTao->noi_dang_ky);
+        },
+        'format'=>'raw',
+        'width' => '50px',
+        'contentOptions' => [ 'style' => 'text-align:center' ],
+    ],
+            
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ma_so_phieu',
@@ -233,14 +247,14 @@ return [
                     // 'attribute'=>'so_lan_in_phieu',
                     // ],
                                                 
-[
-    'class'=>'\kartik\grid\DataColumn',
-    'attribute'=>'nguoi_thu',
-    'value'=>function($model){
-    $user = User::findOne($model->nguoi_thu);
-    return $user ? $user->username : 'Không xác định';
-    },
-    'contentOptions' => [ 'style' => 'text-align:center' ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'nguoi_thu',
+        'value'=>function($model){
+            $user = User::findOne($model->nguoi_thu);
+            return $user ? $user->shortName : 'Không xác định';
+        },
+        'contentOptions' => [ 'style' => 'text-align:center' ],
     ],
     // [
     // 'class'=>'\kartik\grid\DataColumn',
