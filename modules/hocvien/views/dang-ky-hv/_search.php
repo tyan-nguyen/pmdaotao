@@ -228,6 +228,16 @@ $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gi
                 ])->label(false); ?>
             </div>
             
+            <div class="col-md-2">            	
+            	<?= $form->field($model, 'label')->dropDownList(
+                    ['VOUCHERT11'=>'VOUCHERT11'], 
+                    [
+                        'prompt' => '--Không có---',
+                        'class' => 'form-control dropdown-with-arrow',
+                    ]
+            	    )->label('Voucher T11 3 triệu') ?>
+            </div>
+            
             
     </div>    
 

@@ -10,6 +10,7 @@ use app\modules\hocvien\models\HangDaoTao;
 use app\modules\hocvien\models\HocVien;
 use app\modules\user\models\User;
 use app\modules\hocvien\models\base\HocVienBase;
+use app\modules\hocvien\models\DangKyHv;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\modules\vanban\models\search\VBDenSearch */
@@ -60,6 +61,10 @@ $totalFmt = number_format($dataProvider->getTotalCount(), 0, ',', '.');
 		</div>
 	</div>
 </div>
+
+<?php 
+   $slVoucher = DangKyHv::find()->where(['label'=>'VOUCHERT11'])->count();
+?>
 
 <?php Pjax::begin([
     'id'=>'myGrid',
@@ -141,7 +146,7 @@ $totalFmt = number_format($dataProvider->getTotalCount(), 0, ',', '.');
             'summary'=>'Tổng: <strong>' . $totalFmt . '</strong> dòng dữ liệu',
             'panel' => [
                 'headingOptions'=>['class'=>'card-header rounded-bottom-0 card-header text-dark'],
-                'heading' => '<i class="typcn typcn-folder-open"></i> DANH SÁCH HỌC VIÊN ĐĂNG KÝ',
+                'heading' => '<i class="typcn typcn-folder-open"></i> DANH SÁCH HỌC VIÊN ĐĂNG KÝ (VOUCHER 3TR: <strong>' . $slVoucher . '/150</strong>)',
                 'before'=>false,
             ],
             'export'=>[

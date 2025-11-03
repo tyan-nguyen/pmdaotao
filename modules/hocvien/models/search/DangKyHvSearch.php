@@ -23,7 +23,7 @@ class DangKyHvSearch extends DangKyHv
     {
         return [
             [['id', 'id_khoa_hoc', 'nguoi_tao', 'id_hang','gioi_tinh', 'da_nhan_ao', 'da_nhan_tai_lieu'], 'integer'],
-            [['ho_ten', 'so_dien_thoai', 'so_cccd', 'trang_thai', 'thoi_gian_tao', 'ngay_sinh', 'nguoi_tao', 'thoi_gian_hoan_thanh_ho_so', 'dia_chi', 'size', 'ngay_nhan_ao', 'noi_dang_ky', 'huy_ho_so', 'ghi_chu', 'ngay_nhan_tai_lieu', 'noiNhanAo', 'noiNhanTaiLieu'], 'safe'],
+            [['ho_ten', 'so_dien_thoai', 'so_cccd', 'trang_thai', 'thoi_gian_tao', 'ngay_sinh', 'nguoi_tao', 'thoi_gian_hoan_thanh_ho_so', 'dia_chi', 'size', 'ngay_nhan_ao', 'noi_dang_ky', 'huy_ho_so', 'ghi_chu', 'ngay_nhan_tai_lieu', 'noiNhanAo', 'noiNhanTaiLieu', 'label'], 'safe'],
         ];
     }
 
@@ -95,6 +95,7 @@ class DangKyHvSearch extends DangKyHv
             't.size' => $this->size,
             't.da_nhan_tai_lieu' => $this->da_nhan_tai_lieu,
             't.noi_dang_ky' => $this->noi_dang_ky,
+            't.label' => $this->label,
         ]);
         
         if($this->huy_ho_so){

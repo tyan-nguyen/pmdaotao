@@ -50,6 +50,7 @@ use Yii;
  * @property string|null $loai_ly_do
  * @property float|null $le_phi
  * @property int|null $da_nop_du
+ * @property string|null $label
  *
  * @property GdGvHv[] $gdGvHvs
  * @property HvHangDaoTao $hang
@@ -91,7 +92,7 @@ class HvHocVien extends \yii\db\ActiveRecord
             [['check_hoc_phi'], 'string', 'max' => 25],
             [['loai_dang_ky', 'trang_thai_duyet'], 'string', 'max' => 15],
             [['noi_dang_ky', 'size'], 'string', 'max' => 50],
-            [['loai_ly_do'], 'string', 'max' => 20],
+            [['loai_ly_do', 'label'], 'string', 'max' => 20],
             [['id_hang'], 'exist', 'skipOnError' => true, 'targetClass' => HvHangDaoTao::class, 'targetAttribute' => ['id_hang' => 'id']],
             [['id_khoa_hoc'], 'exist', 'skipOnError' => true, 'targetClass' => HvKhoaHoc::class, 'targetAttribute' => ['id_khoa_hoc' => 'id']],
             [['id_nhom'], 'exist', 'skipOnError' => true, 'targetClass' => HvNhom::class, 'targetAttribute' => ['id_nhom' => 'id']],
@@ -148,6 +149,7 @@ class HvHocVien extends \yii\db\ActiveRecord
             'loai_ly_do' => 'Loai Ly Do',
             'le_phi' => 'Le Phi',
             'da_nop_du' => 'Da Nop Du',
+            'label' => 'Label'
         ];
     }
 

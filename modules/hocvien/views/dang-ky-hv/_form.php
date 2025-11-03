@@ -179,12 +179,23 @@ if ($model->id_xa) {
           'pluginOptions' => [
               'allowClear' => true,
               'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
+              'width' => '100%'
          ],
           ])->label(false); ?>
     </div>
-    <div class="col-lg-6 col-md-6">
+    <div class="col-lg-3 col-md-6">
     	<?= $form->field($model, 'ghi_chu')->textarea(['rows' => 3, 'style'=>'width:100%']) ?>
     </div>
+    <div class="col-lg-3 col-md-6">
+        <?= $form->field($model, 'label')->dropDownList(
+            ['VOUCHERT11'=>'VOUCHERT11'], 
+            [
+                'prompt' => '--Không có---',
+                'class' => 'form-control dropdown-with-arrow',
+            ]
+        )->label('Voucher T11 3 triệu') ?>
+    </div>
+    
         
     </div>
     <?php CardWidget::end() ?>

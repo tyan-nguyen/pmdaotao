@@ -65,6 +65,7 @@ use app\modules\danhmuc\models\DmTinh;
  * @property string|null $loai_ly_do
  * @property float|null $le_phi
  * @property int|null $da_nop_du
+ * @property string|null $label
  *
  * @property GdGvHv[] $gdGvHvs
  * @property HvHangDaoTao $hang
@@ -341,7 +342,7 @@ class HocVienBase extends \app\models\HvHocVien
             [['check_hoc_phi'],'string','max'=>25],
             [['nguoi_lap_phieu'],'string','max'=>55],
             [['noi_dang_ky', 'size'],'string','max'=>50],
-            [['loai_ly_do'], 'string', 'max' => 20],
+            [['loai_ly_do', 'label'], 'string', 'max' => 20],
             [['loai_dang_ky'],'string','max'=>15],
             [['tongtiennop', 'le_phi'], 'number'],//virtual attribute select when report
             [['id_khoa_hoc'], 'exist', 'skipOnError' => true, 'targetClass' => KhoaHoc::class, 'targetAttribute' => ['id_khoa_hoc' => 'id']],
@@ -405,6 +406,7 @@ class HocVienBase extends \app\models\HvHocVien
             'loai_ly_do' => 'Loại lý do',
             'le_phi' => 'Lệ phí',
             'da_nop_du' => 'Đã nộp đủ',
+            'label' => 'Gán Nhãn'
         ];
     }
 
