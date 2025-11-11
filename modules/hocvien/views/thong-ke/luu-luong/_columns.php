@@ -35,7 +35,7 @@ return [
         'visibleButtons' => [
             'bienTapDiaChi' => function ($model, $key, $index) {
                 $user = User::getCurrentUser();
-                return ($model->noi_dang_ky == $user->noi_dang_ky || $user->superadmin);//chung co so sua duoc
+                return ($model->noi_dang_ky == $user->noi_dang_ky || $user->superadmin || $user->username == 'bientapdulieu');//chung co so sua duoc
             },
         ],
         'buttons' => [
