@@ -201,7 +201,7 @@ form div.required label.control-label:after {
 /*custom select2*/
 .select2-container--krajee-bs5 .select2-selection--single {
     /*padding: 0.5rem 2rem 0.375rem 0.5rem !important;*/
-    height: calc(2rem + 2px)!important;;
+    height: calc(2rem + 2px)!important;
     padding: 5px 2rem 5px 5px !important;
 }
 .select2-container--krajee-bs5 .select2-selection--single .select2-selection__clear, .select2-container--krajee-bs5 .select2-selection--multiple .select2-selection__clear {
@@ -225,10 +225,12 @@ form div.required label.control-label:after {
 /*end custom select2*/
 
 /*form control*/
+
 .form-control {
     height: calc(1.5em + 0.75rem) !important;
     /*padding: 10px !important;*/
 }
+
 textarea.form-control {
 	height: auto !important;
 }

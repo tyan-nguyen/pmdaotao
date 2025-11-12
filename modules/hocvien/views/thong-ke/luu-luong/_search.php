@@ -23,6 +23,36 @@ if ($model->id_xa) {
 }
 ?>
 
+<style>
+/*áp dụng cho select2 multiple*/
+.form-control-fix-select-multiple {
+    min-height: calc(1.5em + 0.75rem) !important;
+    height: auto !important;
+}
+.hang-select2-container .select2-selection--multiple {
+    height: auto !important;
+}
+.form-control-fix-select-multiple + .select2 .select2-selection--multiple {
+    min-height: 38px !important;
+    height: auto !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+}
+
+.form-control-fix-select-multiple + .select2 .select2-selection__rendered {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 4px;
+}
+
+.hang-select2-container .select2-selection__choice{
+    font-size:.8rem !important;
+}
+.hang-select2-container .select2-selection--single .select2-selection__clear, .select2-container--krajee-bs5 .select2-selection--multiple .select2-selection__clear {
+    padding-left: 0px !important;
+}
+</style>
+
 <div class="hoc-vien-search">
 
     <?php $form = ActiveForm::begin([
@@ -41,12 +71,12 @@ if ($model->id_xa) {
                           ], ['prompt' => 'Tất cả', 'class' => 'form-control dropdown-with-arrow']) ?>
             </div>
             
-            
+            <?php /* ?>
             <div class="col-md-2">
                   <?= $form->field($model, 'dia_chi')->textInput(['maxlength' => true]) ?>
             </div>
-            
-            <div class="col-md-2">
+            <?php */ ?>
+            <div class="col-md-3">
             	<label>Ngày sinh từ</label>
                   <?= $form->field($model, 'ngay_sinh_tu')->widget(DatePicker::classname(), [
                          'options' => [
@@ -63,7 +93,7 @@ if ($model->id_xa) {
                   ])->label(false); ?>
             </div>
             
-            <div class="col-md-2">
+            <div class="col-md-3">
             	<label>Ngày sinh đến</label>
                   <?= $form->field($model, 'ngay_sinh_den')->widget(DatePicker::classname(), [
                          'options' => [
@@ -80,18 +110,18 @@ if ($model->id_xa) {
                   ])->label(false); ?>
             </div>
             
-            <div class="col-md-2">
+            <div class="col-md-1">
             	<label>Tuổi từ</label>
                   <?= $form->field($model, 'tuoi_tu')->textInput(['maxlength' => true])->label(false) ?>
             </div>
             
-             <div class="col-md-2">
+             <div class="col-md-1">
              	<label>Tuổi đến</label>
                   <?= $form->field($model, 'tuoi_den')->textInput(['maxlength' => true])->label(false) ?>
             </div>
-             
             
-            <div class="col-md-2">
+                     
+            <div class="col-md-3">
                   <?php // $form->field($model, 'noi_dang_ky')->dropDownList(DangKyHv::getDmNoiDangKy(), ['prompt'=>'Tất cả'])->label('Nơi ĐK') ?>
                    <label><?= $model->getAttributeLabel('noi_dang_ky') ?></label>
                 <?= $form->field($model, 'noi_dang_ky')->widget(Select2::classname(), [
@@ -108,6 +138,8 @@ if ($model->id_xa) {
                     ],
                 ])->label(false); ?>
             </div>
+            
+            <?php /* ?>    
             <div class="col-md-2">
                   <?php // $form->field($model, 'id_hang')->dropDownList(HangDaoTao::getList(), ['prompt'=>'Tất cả']) ?>
                 <label><?= $model->getAttributeLabel('id_hang') ?></label>
@@ -117,7 +149,7 @@ if ($model->id_xa) {
                     'options' => [
                         'placeholder' => 'Chọn hạng...',  
                         'class' => 'form-control dropdown-with-arrow',
-                        'id' => 'hang-search-dropdown'
+                        'id' => 'hang-search-dropdown',
                     ],
                     'pluginOptions' => [
                         'allowClear' => true,
@@ -125,7 +157,9 @@ if ($model->id_xa) {
                     ],
                 ])->label(false); ?>
             </div>
-            <div class="col-md-2">
+            <?php */ ?>
+            
+             <div class="col-md-2">
                   <?php // $form->field($model, 'id_khoa_hoc')->dropDownList(KhoaHoc::getList(), ['prompt'=>'Tất cả']) ?>
                 <label><?= $model->getAttributeLabel('id_khoa_hoc') ?></label>
                 <?= $form->field($model, 'id_khoa_hoc')->widget(Select2::classname(), [
@@ -213,6 +247,27 @@ if ($model->id_xa) {
                         ],
                 ])->label(false);?>         
             </div>
+            
+            <div class="col-md-6">
+                  <?php // $form->field($model, 'id_hang')->dropDownList(HangDaoTao::getList(), ['prompt'=>'Tất cả']) ?>
+                <label>Hạng đào tạo(s)</label>
+                <?= $form->field($model, 'id_hangs')->widget(Select2::classname(), [
+                    'data' => HangDaoTao::getList(),
+                    'language' => 'vi',
+                    'options' => [
+                        'placeholder' => 'Chọn hạng...',  
+                        'class' => 'form-control-fix-select-multiple',
+                        'id' => 'hangs-search-dropdown',
+                        'multiple' => true
+                    ],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                        'width'=>'100%',
+                        'containerCssClass' => 'hang-select2-container'
+                    ],
+                ])->label(false); ?>
+            </div>
+           
            
     </div>    
 
@@ -236,6 +291,10 @@ if ($model->id_xa) {
 </style>
 
 <script>
+$('#hangs-search-dropdown').removeClass('form-control');
+$('#hangs-search-dropdown').removeClass('select2-hidden-accessible');
+
+
 $('#xa-search-dropdown').on("select2:select", function(e) { 
    if(this.value != ''){
         $.ajax({

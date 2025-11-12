@@ -81,7 +81,7 @@ if(!empty($searchModel->ngay_sinh_den)){
     	<?php if (!empty($searchModel->gioi_tinh) || !empty($searchModel->noi_dang_ky) || !empty($searchModel->id_hang) || !empty($searchModel->ngay_sinh_tu) || !empty($searchModel->ngay_sinh_den
     	    || !empty($searchModel->tuoi_tu) || !empty($searchModel->tuoi_den) )
     	    || !empty($searchModel->id_khoa_hoc) || !empty($searchModel->id_xa)
-    	    || !empty($searchModel->id_tinh) ): ?>
+    	    || !empty($searchModel->id_tinh) || !empty($searchModel->id_hangs) ): ?>
         	<div class="card custom-card">
                 <div class="card-body">
                 	
@@ -98,6 +98,18 @@ if(!empty($searchModel->ngay_sinh_den)){
                              <?php if ($searchModel->id_hang): ?>
                                 <li><i class="fa fa-angle-double-right mb-2 me-2"></i> <strong>Hạng đào tạo:</strong> <?= $searchModel->hangDaoTao->ten_hang ?></li>
                             <?php endif; ?>
+                            
+                            <?php if ($searchModel->id_hangs){
+                                $tenHang = '';
+                                foreach ($searchModel->id_hangs as $iHang=>$idHang){
+                                    $hangdaotao = HangDaoTao::findOne($idHang);
+                                    $tenHang .= $hangdaotao->ten_hang . ', ';
+                                }
+                            ?>
+                            	<li><i class="fa fa-angle-double-right mb-2 me-2"></i> <strong>Hạng đào tạo (chọn nhiều):</strong> <?= $tenHang ?></li>
+                                <?php /*?><li><i class="fa fa-angle-double-right mb-2 me-2"></i> <strong>Hạng đào tạo:</strong> <?= $searchModel->hangDaoTao->ten_hang ?></li> <?php */?>
+                            <?php } ?>
+                            
                              <?php if ($searchModel->id_khoa_hoc): ?>
                                 <li><i class="fa fa-angle-double-right mb-2 me-2"></i> <strong>Khóa học:</strong> <?= $searchModel->khoaHoc->ten_khoa_hoc ?></li>
                             <?php endif; ?>

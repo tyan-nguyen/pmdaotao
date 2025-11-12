@@ -22,6 +22,8 @@ class ThongKeLuuLuongSearch extends DangKyHv
     public $tuoi_tu;
     public $tuoi_den;
     
+    public $id_hangs;
+    
     /**
      * @inheritdoc
      */
@@ -34,7 +36,8 @@ class ThongKeLuuLuongSearch extends DangKyHv
                 'ngay_sinh', 'nguoi_tao', 'thoi_gian_hoan_thanh_ho_so', 'dia_chi', 'size', 
                 'ngay_nhan_ao', 'noi_dang_ky', 'huy_ho_so', 'ghi_chu', 'ngay_nhan_tai_lieu', 
                 'noiNhanAo', 'noiNhanTaiLieu',
-                'ngay_sinh_tu', 'ngay_sinh_den', 'tuoi_tu', 'tuoi_den', 'id_xa', 'id_tinh'], 'safe'],
+                'ngay_sinh_tu', 'ngay_sinh_den', 'tuoi_tu', 'tuoi_den', 'id_xa', 'id_tinh', 
+                'id_hangs'], 'safe'],
         ];
     }
 
@@ -162,6 +165,21 @@ class ThongKeLuuLuongSearch extends DangKyHv
             'id_tinh'=>$this->id_tinh,
         ]);
         
+        /* if($this->id_hang){
+            if(count($this->id_hang) ==1 ){
+                $query->andFilterWhere([
+                    'id_hang'=>$this->id_hang,
+                ]);
+            }
+        } */
+        
+        if($this->id_hangs){
+            $cauLenh = '';
+            $cauLenh = implode(',', $this->id_hangs);
+            $cauLenh = 'IN (' . $cauLenh . ')';
+            $query->andWhere('id_hang '.$cauLenh);
+        }
+                
         if($this->huy_ho_so){
             $query->andFilterWhere([
                 'huy_ho_so' => $this->huy_ho_so,
