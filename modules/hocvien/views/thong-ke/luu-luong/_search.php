@@ -263,7 +263,8 @@ if ($model->id_xa) {
                     'pluginOptions' => [
                         'allowClear' => true,
                         'width'=>'100%',
-                        'containerCssClass' => 'hang-select2-container'
+                        'containerCssClass' => 'hang-select2-container',
+                        'closeOnSelect' => false,
                     ],
                 ])->label(false); ?>
             </div>
