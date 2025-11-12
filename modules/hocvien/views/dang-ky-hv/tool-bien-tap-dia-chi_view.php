@@ -32,7 +32,7 @@ $user = User::findOne($model->nguoi_tao);
             		<strong>Địa chỉ cũ:</strong> <br/><?= $model->dia_chi?$model->dia_chi:'-' ?> <br/>
             		<strong>Địa chỉ sau cập nhật:</strong> <br/><?= $model->diaChiText?$model->diaChiText:'-' ?>
             	</td>
-            	<td align="center"><?= $user?$user->username:'' ?></td>
+            	<td align="center"><?= $user?$user->shortName:'' ?></td>
             </tr>
         </tbody>
     </table>
