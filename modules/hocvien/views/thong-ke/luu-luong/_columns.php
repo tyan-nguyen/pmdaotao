@@ -61,12 +61,12 @@ return [
         'attribute'=>'noi_dang_ky',
         'label'=>'NĐK',
         'value'=>function($model){
-        return DangKyHv::getLabelNoiDangKyBadge($model->noi_dang_ky) . 
-           '<span class="badge bg-success">' . DangKyHv::getLabelNoiDangKyOther($model->noi_dang_ky) . '</span>';
-        },
+            return DangKyHv::getLabelNoiDangKyBadge($model->noi_dang_ky) 
+                /*. '<span class="badge bg-success">' . DangKyHv::getLabelNoiDangKyOther($model->noi_dang_ky) . '</span>'*/;
+            },
         'format'=>'raw',
         'width' => '50px',
-        //'contentOptions' => [ 'style' => 'text-align:center' ],
+        'contentOptions' => [ 'style' => 'text-align:center' ],
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
