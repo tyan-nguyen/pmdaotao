@@ -80,6 +80,21 @@ return [
         // 'attribute'=>'id',
     // ],
     [
+        'class'=>'\kartik\grid\DataColumn',
+        'label'=>'Hình ảnh',
+        'value'=>function($model){
+        return $model->anhDaiDien ? Html::img(Yii::getAlias('@web/images/hinh-xe/' . $model->anhDaiDien->hinh_anh), [
+                'alt' => $model->bien_so_xe,
+                'class'=>'img-fluid rounded uniform-img',
+                'data-fancybox'=>'gallery',
+                'data-caption'=>$model->anhDaiDien->hinh_anh,
+                'style'=>'max-height:75px'
+            ]) : '';
+        },
+        'format'=>'raw',
+        'contentOptions' => [ 'style' => 'text-align:center' ],
+    ],
+    [
        'class'=>'\kartik\grid\DataColumn',
        'attribute'=>'id_loai_xe',
        'value' => function($model) {
@@ -120,11 +135,11 @@ return [
         },
         'contentOptions' => [ 'style' => 'text-align:center' ],
     ],
-    [
+    /* [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'so_hop_dong',
         'contentOptions' => [ 'style' => 'text-align:center' ],
-    ],
+    ], */
    /*  [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'id_giao_vien',
