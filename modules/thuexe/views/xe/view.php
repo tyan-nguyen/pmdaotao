@@ -80,7 +80,7 @@ $hinhXeList = HinhXe::find()->where(['id_xe' => $model->id])->all();
         <div class="row">
             <?php foreach ($hinhXeList as $hinhXe): ?>
                 <div class="col-md-4 mb-3">
-                    <img src="<?= Yii::getAlias('@web/images/hinh-xe/' . $hinhXe->hinh_anh) ?>" alt="Hình ảnh xe" class="img-fluid rounded uniform-img" data-fancybox="gallery" data-caption="<?= $hinhXe->hinh_anh ?>" style="<?= $hinhXe->la_dai_dien ? 'border:1px solid blue' : '' ?>" />
+                    <img src="<?= Yii::getAlias('@web/images/hinh-xe/' . $hinhXe->hinh_anh) ?>" alt="Hình ảnh xe" class="img-fluid rounded uniform-img" data-fancybox="gallery1" data-caption="<?= $hinhXe->hinh_anh ?>" style="<?= $hinhXe->la_dai_dien ? 'border:1px solid blue' : '' ?>" />
                 </div>
 
             <?php endforeach; ?>
