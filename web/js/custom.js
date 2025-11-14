@@ -1,6 +1,9 @@
 Fancybox.bind('[data-fancybox="gallery"]', {
   // Your custom options for a specific gallery
 });
+Fancybox.bind('[data-fancybox="gallery1"]', {
+  // Your custom options for a specific gallery
+});
 /**
  * ham hien thi notify
  * tham so truyen vao: text can hien thi
