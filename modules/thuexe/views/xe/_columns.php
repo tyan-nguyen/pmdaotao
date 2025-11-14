@@ -88,7 +88,7 @@ return [
                 'class'=>'img-fluid rounded uniform-img',
                 'data-fancybox'=>'gallery',
                 'data-caption'=>$model->anhDaiDien->hinh_anh,
-                'style'=>'max-height:75px'
+                'style'=>'max-height:50px'
             ]) : '<span class="badge bg-warning">Chưa có hình</span>';
         },
         'format'=>'raw',
