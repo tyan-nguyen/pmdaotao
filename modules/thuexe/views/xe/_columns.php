@@ -129,6 +129,15 @@ return [
         },
         'contentOptions' => [ 'style' => 'text-align:center' ],
     ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'tinh_trang_xe',
+        'value'=>function($model){
+            return Xe::getLabelTinhTrangXeBadge($model->tinh_trang_xe);
+        },
+        'format'=>'raw',
+        'contentOptions' => [ 'style' => 'text-align:center' ],
+      ],
     
     /* [
         'class'=>'\kartik\grid\DataColumn',
@@ -152,15 +161,7 @@ return [
         },
         //'width' => '150px',
     ], */
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'tinh_trang_xe',
-        'value'=>function($model){
-            return Xe::getLabelTinhTrangXeBadge($model->tinh_trang_xe);
-        },
-        'format'=>'raw',
-        'contentOptions' => [ 'style' => 'text-align:center' ],
-    ],
+    
     /* [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'hieu_xe',
