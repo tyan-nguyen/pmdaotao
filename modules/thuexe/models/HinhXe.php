@@ -58,4 +58,21 @@ class HinhXe extends \app\models\PtxHinhXe
         }
         return parent::beforeSave($insert);
     }
+    
+    public function afterDelete()
+    {
+        parent::afterDelete();
+        
+        // Xóa file đính kèm
+        if (!empty(Yii::getAlias('@webroot') . '/images/hinh-xe/' . $this->hinh_anh)) {
+            if (file_exists(Yii::getAlias('@webroot') . '/images/hinh-xe/' . $this->hinh_anh)) {
+                if (!@unlink(Yii::getAlias('@webroot') . '/images/hinh-xe/' . $this->hinh_anh)) {
+                    //Yii::error("Không thể xóa file: {$this->file_path}", __METHOD__);
+                }
+            }
+        }
+        
+        // Ghi log
+        //Yii::info("Model " . static::class . " ID: {$this->id} đã bị xóa", __METHOD__);
+    }
 }
