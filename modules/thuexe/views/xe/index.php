@@ -133,3 +133,47 @@ Yii::$app->params['showExport'] = true;
     /* $searchContent = $this->render("_search", ["model" => $searchModel]);
     echo FilterFormWidget::widget(["content"=>$searchContent, "description"=>"Nhập thông tin tìm kiếm."])  */
 ?>
+
+
+<script>
+//su dung trong form xoa hinh anh
+$(document).on('click', '.btn-delete-image', function () {
+    const imageId = $(this).data('id'); 
+    const parentDiv = $(this).closest('.col-md-4'); 
+
+    if (confirm('Bạn có chắc chắn muốn xóa hình này không?')) {
+        $.ajax({
+            url: '<?= \yii\helpers\Url::to(['delete-single-image']) ?>', 
+            type: 'POST',
+            data: {id: imageId}, 
+            success: function (response) {
+                if (response.success) {
+                    alert(response.message);
+                    parentDiv.fadeOut(300, function () { 
+                        $(this).remove();
+                    });
+                } else {
+                    alert(response.message);
+                }
+            },
+        });
+    }
+});
+
+$(document).on('click', '.btn-make-primary', function () {
+    const imageId = $(this).data('id'); 
+    const parentDiv = $(this).closest('.col-md-4'); 
+
+    if (confirm('Bạn có chắc chắn muốn đặt hình này làm hình đại diện cho xe?')) {
+        $.ajax({
+            url: '<?= \yii\helpers\Url::to(['make-img-primary']) ?>', 
+            type: 'POST',
+            data: {id: imageId}, 
+            success: function (response) {
+                alert(response.message);
+            },
+        });
+    }
+});
+
+</script>

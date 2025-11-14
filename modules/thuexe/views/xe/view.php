@@ -107,3 +107,4 @@ $hinhXeList = HinhXe::find()->where(['id_xe' => $model->id])->all();
     border-radius: 8px; 
 }
 </style>
+
