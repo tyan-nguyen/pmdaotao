@@ -127,19 +127,19 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'mau_sac',
     ],
-    [
+    /* [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ngay_dang_kiem',
         'value'=>function($model){
             return CustomFunc::convertYMDToDMY($model->ngay_dang_kiem);
         },
         'contentOptions' => [ 'style' => 'text-align:center' ],
-    ],
-    /* [
+    ], */
+    [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'so_hop_dong',
         'contentOptions' => [ 'style' => 'text-align:center' ],
-    ], */
+    ],
    /*  [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'id_giao_vien',
