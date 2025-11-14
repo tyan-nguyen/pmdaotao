@@ -114,6 +114,7 @@ return [
             $loaiXe = LoaiXe::findOne($model->id_loai_xe);
             return $loaiXe ? $loaiXe->ten_loai_xe : '<span style="color: red;">Trống </span>'; 
        },
+       'contentOptions' => [ 'style' => 'text-align:center' ],
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
@@ -126,6 +127,7 @@ return [
         'value' => function($model) {
             return $model->getLabelPhanLoaiXe();
         },
+        'contentOptions' => [ 'style' => 'text-align:center' ],
     ],
     
     /* [
