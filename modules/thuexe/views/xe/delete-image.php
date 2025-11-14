@@ -7,9 +7,11 @@ use yii\helpers\Html;
         <?php foreach ($hinhXeList as $hinh): ?>
             <div class="col-md-4 text-center">
                 <div class="image-wrapper">
-                    <img src="<?= Yii::getAlias('@web/images/hinh-xe/' . $hinh->hinh_anh) ?>" 
+                    <p><img src="<?= Yii::getAlias('@web/images/hinh-xe/' . $hinh->hinh_anh) ?>" 
                          alt="Hình xe" 
-                         class="img-thumbnail">
+                         class="img-thumbnail"
+                         style="<?= $hinh->la_dai_dien ? 'border:1px solid blue' : '' ?>">
+                    </p>
                     <p>
                         <?= Html::button('Xóa', [
                             'class' => 'btn btn-danger btn-delete-image',
@@ -18,7 +20,7 @@ use yii\helpers\Html;
                         
                         <?= Html::button('Làm ảnh đại diện', [
                             'class' => 'btn btn-primary btn-make-primary',
-                            'data-id' => $hinh->id, 
+                            'data-id' => $hinh->id,
                         ]) ?>
                     </p>
                 </div>
