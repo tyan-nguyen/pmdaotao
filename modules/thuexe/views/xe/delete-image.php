@@ -9,7 +9,7 @@ use yii\helpers\Html;
                 <div class="image-wrapper">
                     <img src="<?= Yii::getAlias('@web/images/hinh-xe/' . $hinh->hinh_anh) ?>" 
                          alt="Hình xe" 
-                         class="img-thumbnail uniform-img">
+                         class="img-thumbnail">
                     <p>
                         <?= Html::button('Xóa', [
                             'class' => 'btn btn-danger btn-delete-image',
