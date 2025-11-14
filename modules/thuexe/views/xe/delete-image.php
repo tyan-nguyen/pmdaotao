@@ -15,6 +15,11 @@ use yii\helpers\Html;
                             'class' => 'btn btn-danger btn-delete-image',
                             'data-id' => $hinh->id, 
                         ]) ?>
+                        
+                        <?= Html::button('Làm ảnh đại diện', [
+                            'class' => 'btn btn-primary btn-make-primary',
+                            'data-id' => $hinh->id, 
+                        ]) ?>
                     </p>
                 </div>
             </div>
@@ -41,6 +46,22 @@ $(document).on('click', '.btn-delete-image', function () {
                 } else {
                     alert(response.message);
                 }
+            },
+        });
+    }
+});
+
+$(document).on('click', '.btn-make-primary', function () {
+    const imageId = $(this).data('id'); 
+    const parentDiv = $(this).closest('.col-md-4'); 
+
+    if (confirm('Bạn có chắc chắn muốn đặt hình này làm hình đại diện cho xe?')) {
+        $.ajax({
+            url: '<?= \yii\helpers\Url::to(['make-img-primary']) ?>', 
+            type: 'POST',
+            data: {id: imageId}, 
+            success: function (response) {
+                alert(response.message);
             },
         });
     }

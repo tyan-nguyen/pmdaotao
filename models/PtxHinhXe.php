@@ -12,6 +12,7 @@ use Yii;
  * @property string $hinh_anh
  * @property int $nguoi_tao
  * @property string $thoi_gian_tao
+ * @property int|null $la_dai_dien
  */
 class PtxHinhXe extends \yii\db\ActiveRecord
 {
@@ -30,7 +31,7 @@ class PtxHinhXe extends \yii\db\ActiveRecord
     {
         return [
             [['id', 'id_xe', 'hinh_anh', 'nguoi_tao', 'thoi_gian_tao'], 'required'],
-            [['id', 'id_xe', 'nguoi_tao'], 'integer'],
+            [['id', 'id_xe', 'nguoi_tao', 'la_dai_dien'], 'integer'],
             [['hinh_anh'], 'string'],
             [['thoi_gian_tao'], 'safe'],
             [['id'], 'unique'],
@@ -48,6 +49,7 @@ class PtxHinhXe extends \yii\db\ActiveRecord
             'hinh_anh' => 'Hinh Anh',
             'nguoi_tao' => 'Nguoi Tao',
             'thoi_gian_tao' => 'Thoi Gian Tao',
+            'la_dai_dien' => 'Là ảnh đại diện'
         ];
     }
 }

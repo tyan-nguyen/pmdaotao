@@ -554,4 +554,40 @@ public function actionDeleteSingleImage()
     }
 }
 
+public function actionMakeImgPrimary()
+{
+    Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    $imageId = Yii::$app->request->post('id');
+    $hinh = HinhXe::findOne($imageId);
+    
+    if($hinh!=null){
+        $setHinhError = 0;
+        $hinhs = HinhXe::find()->where(['id_xe'=>$hinh->id_xe])->all();
+        if($hinhs!=null){
+            foreach ($hinhs as $indexHinh=>$itemHinh){
+                $itemHinh->la_dai_dien = 0;
+                if(!$itemHinh->save()){
+                    $setHinhError++;
+                }
+            }
+        }
+        if($setHinhError == 0){
+            $hinh->la_dai_dien = 1;
+        }
+        
+    }
+    
+    if ($setHinhError==0 && $hinh->save() ) {
+        return [
+            'success' => true,
+            'message' => 'Hình ảnh đã được đặt làm ảnh đại diện thành công!',
+        ];
+    } else {
+        return [
+            'success' => false,
+            'message' => 'Không thể đặt hình ảnh làm ảnh đại diện. Vui lòng thử lại.',
+        ];
+    }
+}
+
 }

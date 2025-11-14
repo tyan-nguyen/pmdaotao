@@ -365,6 +365,7 @@ class Xe extends \app\models\PtxXe
      * lay anh dai dien
      */
     public function getAnhDaiDien(){
-        return HinhXe::find()->where(['id_xe'=>$this->id])->one();
+        $hinhDaiDien = HinhXe::find()->where(['id_xe'=>$this->id, 'la_dai_dien'=>1])->one();
+        return $hinhDaiDien!=null ? $hinhDaiDien : HinhXe::find()->where(['id_xe'=>$this->id])->one();
     }
 }

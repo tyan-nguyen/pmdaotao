@@ -12,6 +12,7 @@ use Yii;
  * @property string $hinh_anh
  * @property int $nguoi_tao
  * @property string $thoi_gian_tao
+ * @property int|null $la_dai_dien
  */
 class HinhXe extends \app\models\PtxHinhXe
 {
@@ -30,7 +31,7 @@ class HinhXe extends \app\models\PtxHinhXe
     {
         return [
    
-            [['id', 'id_xe', 'nguoi_tao'], 'integer'],
+            [['id', 'id_xe', 'nguoi_tao', 'la_dai_dien'], 'integer'],
             [['hinh_anh'], 'string'],
             [['thoi_gian_tao'], 'safe'],
             [['id'], 'unique'],
@@ -48,6 +49,7 @@ class HinhXe extends \app\models\PtxHinhXe
             'hinh_anh' => 'Hình xe',
             'nguoi_tao' => 'Người tạo',
             'thoi_gian_tao' => 'Thời gian tạo',
+            'la_dai_dien' => 'Là ảnh đại diện'
         ];
     }
     public function beforeSave($insert)
@@ -55,6 +57,9 @@ class HinhXe extends \app\models\PtxHinhXe
         if ($this->isNewRecord) {
             $this->nguoi_tao = Yii::$app->user->identity->id;
             $this->thoi_gian_tao = date('Y-m-d H:i:s'); 
+            if($this->la_dai_dien == null){
+                $this->la_dai_dien = 0;
+            }
         }
         return parent::beforeSave($insert);
     }
@@ -71,8 +76,5 @@ class HinhXe extends \app\models\PtxHinhXe
                 }
             }
         }
-        
-        // Ghi log
-        //Yii::info("Model " . static::class . " ID: {$this->id} đã bị xóa", __METHOD__);
     }
 }
