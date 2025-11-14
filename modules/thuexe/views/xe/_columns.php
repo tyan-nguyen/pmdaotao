@@ -89,7 +89,7 @@ return [
                 'data-fancybox'=>'gallery',
                 'data-caption'=>$model->anhDaiDien->hinh_anh,
                 'style'=>'max-height:75px'
-            ]) : '';
+            ]) : '<span class="badge bg-warning">Chưa có hình</span>';
         },
         'format'=>'raw',
         'contentOptions' => [ 'style' => 'text-align:center' ],
