@@ -99,12 +99,4 @@ $hinhXeList = HinhXe::find()->where(['id_xe' => $model->id])->all();
 </div>
 
 </div>
-<style>
-    .uniform-img {
-    width: 100%; 
-    height: 150px; 
-    object-fit: cover; 
-    border-radius: 8px; 
-}
-</style>
 
