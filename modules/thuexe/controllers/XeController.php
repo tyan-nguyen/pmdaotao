@@ -13,6 +13,7 @@ use yii\helpers\Html;
 use yii\filters\AccessControl;
 use yii\web\UploadedFile;
 use app\modules\thuexe\models\HinhXe;
+use app\custom\CustomFunc;
 
 /**
  * XeController implements the CRUD actions for Xe model.
@@ -44,6 +45,10 @@ class XeController extends Controller
 	{
 	    Yii::$app->params['moduleID'] = 'Module Quản lý thuê xe';
 	    Yii::$app->params['modelID'] = 'Danh sách Xe';
+	    //disable crsf for action upload images
+	    if ($action->id === 'upload-images') {
+	        $this->enableCsrfValidation = false;
+	    }
 	    return parent::beforeAction($action);
 	}
 
@@ -409,13 +414,17 @@ class XeController extends Controller
                         $hinhXeModel = new HinhXe();
                         $hinhXeModel->id_xe = $id;
                         $hinhXeModel->hinh_anh = $fileName;
-    
-                     
-                        if (!$hinhXeModel->save()) {
-                            return [
-                                'success' => false,
-                                'message' => 'Lỗi khi lưu ảnh vào cơ sở dữ liệu: ' . implode(', ', $hinhXeModel->getErrorSummary(true)),
-                            ];
+                        
+                        $src = Yii::getAlias('@webroot') . '/images/temp/' . $fileName;
+                        $dest = Yii::getAlias('@webroot') . '/images/hinh-xe/' . $fileName;
+                        //nếu move thành công thì lưu
+                        if(CustomFunc::moveOrCopy($src, $dest)){
+                            if (!$hinhXeModel->save()) {
+                                return [
+                                    'success' => false,
+                                    'message' => 'Lỗi khi lưu ảnh vào cơ sở dữ liệu: ' . implode(', ', $hinhXeModel->getErrorSummary(true)),
+                                ];
+                            }
                         }
                     }
                     return [
@@ -463,7 +472,7 @@ protected function getUploadedImages($id)
     return $uploadedImages;
 }
 
-public function actionUploadImages()
+public function actionUploadImages($id)
 {
     Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 

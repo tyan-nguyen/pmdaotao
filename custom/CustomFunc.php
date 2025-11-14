@@ -188,6 +188,30 @@ class CustomFunc
         }
         return $strAfter . '.' . $str2;
     }
+    /**
+     * Move file from folder to folder <move first, if cannot copy and delte source>
+     * @param string $src
+     * @param string $dest
+     * @return boolean
+     */
+    public static function moveOrCopy($src, $dest)
+    {
+        $destDir = dirname($dest);
+        if (!is_dir($destDir)) {
+            mkdir($destDir, 0777, true);
+        }
+        
+        if (@rename($src, $dest)) {
+            return true;
+        }
+        
+        if (copy($src, $dest)) {
+            unlink($src);
+            return true;
+        }
+        
+        return false;
+    }
     
     /**
      * doc so tien thanh chu

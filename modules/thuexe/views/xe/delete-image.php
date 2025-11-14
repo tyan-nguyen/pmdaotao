@@ -7,7 +7,7 @@ use yii\helpers\Html;
         <?php foreach ($hinhXeList as $hinh): ?>
             <div class="col-md-4 text-center">
                 <div class="image-wrapper">
-                    <img src="<?= Yii::getAlias('@web/images/temp/' . $hinh->hinh_anh) ?>" 
+                    <img src="<?= Yii::getAlias('@web/images/hinh-xe/' . $hinh->hinh_anh) ?>" 
                          alt="Hình xe" 
                          class="img-thumbnail uniform-img">
                     <p>
