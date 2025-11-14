@@ -95,6 +95,19 @@ return [
         'contentOptions' => [ 'style' => 'text-align:center' ],
     ],
     [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'bien_so_xe',
+        'contentOptions' => [ 'style' => 'text-align:center' ],
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'hieu_xe',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'mau_sac',
+    ],
+    [
        'class'=>'\kartik\grid\DataColumn',
        'attribute'=>'id_loai_xe',
        'value' => function($model) {
@@ -114,19 +127,7 @@ return [
             return $model->getLabelPhanLoaiXe();
         },
     ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'hieu_xe',
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'bien_so_xe',
-        'contentOptions' => [ 'style' => 'text-align:center' ],
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'mau_sac',
-    ],
+    
     /* [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ngay_dang_kiem',
