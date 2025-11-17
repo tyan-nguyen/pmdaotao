@@ -93,7 +93,21 @@ return [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'id',
     // ],
-    
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'label'=>'Hình ảnh',
+        'value'=>function($model){
+        return $model->xe->anhDaiDien ? Html::img(Yii::getAlias('@web/images/hinh-xe/' . $model->xe->anhDaiDien->hinh_anh), [
+            'alt' => $model->xe->bien_so_xe,
+            'class'=>'img-fluid rounded uniform-img',
+            'data-fancybox'=>'gallery',
+            'data-caption'=>$model->xe->anhDaiDien->hinh_anh,
+            'style'=>'max-height:50px'
+        ]) : '<span class="badge bg-warning">Chưa có hình</span>';
+        },
+        'format'=>'raw',
+        'contentOptions' => [ 'style' => 'text-align:center' ],
+    ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'label'=>'Trạng thái xe',
