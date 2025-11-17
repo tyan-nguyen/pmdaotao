@@ -13,7 +13,7 @@ return [
     [
         'class' => 'kartik\grid\ActionColumn',
         'header'=>'',
-        'template' => '{capNhapGiaoVien} {image} {view} {update} {delete}',
+        'template' => '{lichXeGv} {capNhapGiaoVien} {image} {view} {update} {delete}',
         'dropdown' => true,
         'dropdownOptions' => ['class' => 'float-right'],
         'dropdownButton'=>[
@@ -21,18 +21,28 @@ return [
             'class'=>'btn dropdown-toggle p-0'
         ],
         'vAlign'=>'middle',
-        'width' => '20px',
-   
+        'width' => '20px',   
         'urlCreator' => function($action, $model, $key, $index) { 
+            if ($action === 'lichXeGv') {
+                return Url::to(['lich-xe/lich-xe-gv', 'idxe' => $key]);
+            }
             if ($action === 'capNhapGiaoVien') {
                 return Url::to(['phan-cong-giao-vien', 'id' => $key]);
             }
             if ($action === 'image') {
-                         return Url::to(['add-image', 'id' => $key]);
+                return Url::to(['add-image', 'id' => $key]);
             }
-                        return Url::to([$action,'id'=>$key]);
+            return Url::to([$action,'id'=>$key]);
         },        
         'buttons' => [
+            'lichXeGv' => function ($url, $model, $key) {
+                return Html::a('<i class="fa-solid fa-list-check"></i> Xem lịch dạy', $url, [
+                    'title' => 'Lịch dạy của xe',
+                    'target'=>'_blank',
+                    'data-pjax' => '0',
+                    'class' => 'btn ripple btn-warning dropdown-item',
+                ]);
+            },
             'capNhapGiaoVien' => function ($url, $model, $key) {
                 return Html::a('<i class="fa-solid fa-list-check"></i> Phân công giáo viên', $url, [
                     'title' => 'Phân công giáo viên giảng dạy',

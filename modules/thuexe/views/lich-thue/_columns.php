@@ -191,7 +191,6 @@ return [
         'width'=>'70',
         
     ],    
-    
     [
         'class'=>'\kartik\grid\DataColumn',
         'label'=>'Thành tiền',

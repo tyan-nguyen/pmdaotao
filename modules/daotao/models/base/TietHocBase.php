@@ -85,6 +85,20 @@ class TietHocBase extends GdTietHoc
     }
     
     /**
+     * Danh muc trang thai
+     * @return string[]
+     */
+    public static function getDmTrangThaiColor()
+    {
+        return [
+            self::TT_CHUATHUCHIEN => 'var(--info)',
+            self::TT_DAHOANTHANH => 'var(--primary-bg-color)',
+            self::TT_HOCVIENHUY => 'var(--warning)',
+            self::TT_DAHUY => '#ff473d',
+        ];
+    }
+    
+    /**
      * Danh muc trang thai label
      * @param int $val
      * @return string
