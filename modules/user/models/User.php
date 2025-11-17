@@ -213,7 +213,7 @@ class User extends UserBase{
             $listHvPhuTrach = HocVien::find()
             ->where(['nguoi_tao'=>$nhanvienid])
             ->andWhere("huy_ho_so = 0")
-            ->andWhere("da_nop_du = 0")
+            //->andWhere("da_nop_du = 0")
             ->all();
         } else {
             $listHvPhuTrach = HocVien::find()
@@ -221,7 +221,7 @@ class User extends UserBase{
             /* ->andFilterWhere(['<=', 'thoi_gian_tao', new Expression("STR_TO_DATE('".$endtime."','%Y-%m-%d %H:%i:%s')")]) */
             //->andFilterWhere(['<=', 'thoi_gian_tao', $endtime])
             ->andWhere("thoi_gian_tao <= '".$endtime . "'")
-            ->andWhere("da_nop_du = 0")
+            //->andWhere("da_nop_du = 0")
             ->andWhere("huy_ho_so = 0 OR (huy_ho_so = 1 AND thoi_gian_huy_ho_so > '".$endtime . "')")
             ->all();
         }
