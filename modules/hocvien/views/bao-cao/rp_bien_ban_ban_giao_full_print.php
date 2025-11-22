@@ -85,6 +85,10 @@ use yii\db\Expression;
                 $queryNew = $queryNew->andFilterWhere(['t.id_khoa_hoc' => $khoaHoc->id]);
                 $queryNew=$queryNew->andFilterWhere(['>=', 't.thoi_gian_hoan_thanh_ho_so', new Expression("STR_TO_DATE('".$start."','%Y-%m-%d %H:%i:%s')")]);
                 $queryNew=$queryNew->andFilterWhere(['<=', 't.thoi_gian_hoan_thanh_ho_so', new Expression("STR_TO_DATE('".$end."','%Y-%m-%d %H:%i:%s')")]);
+                
+                //loại bỏ hồ sơ hủy
+                $queryNew = $queryNew->andFilterWhere(['t.huy_ho_so'=>0]);
+                
                 if($byuser>0){
                     $queryNew = $queryNew->andFilterWhere(['t.nguoi_tao' => $byuser]);
                 }
