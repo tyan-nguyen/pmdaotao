@@ -84,12 +84,13 @@ return [
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
+        'label'=>'Địa chỉ cũ',
         'attribute'=>'dia_chi',
         'width' => '200px',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'label'=>'Địa chỉ (biên tập lại)',
+        'label'=>'Địa chỉ(BT lại)',
         'value'=>function($model){
             return $model->diaChiText;  
         },
@@ -132,7 +133,16 @@ return [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'trang_thai',
     // ],
-    
+     [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'thoi_gian_tao',
+        'label'=>'Ngày đăng ký',
+        'value'=>function($model){
+            return CustomFunc::convertYMDHISToDMY($model->thoi_gian_tao);
+        },
+        'width' => '70px',
+        'contentOptions' => [ 'style' => 'text-align:center'],
+     ],
      [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'thoi_gian_hoan_thanh_ho_so',

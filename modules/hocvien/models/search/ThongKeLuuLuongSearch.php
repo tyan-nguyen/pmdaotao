@@ -21,6 +21,8 @@ class ThongKeLuuLuongSearch extends DangKyHv
     public $ngay_sinh_den;
     public $tuoi_tu;
     public $tuoi_den;
+    public $ngay_dang_ky_tu;
+    public $ngay_dang_ky_den;
     
     public $id_hangs;
     
@@ -36,7 +38,7 @@ class ThongKeLuuLuongSearch extends DangKyHv
                 'ngay_sinh', 'nguoi_tao', 'thoi_gian_hoan_thanh_ho_so', 'dia_chi', 'size', 
                 'ngay_nhan_ao', 'noi_dang_ky', 'huy_ho_so', 'ghi_chu', 'ngay_nhan_tai_lieu', 
                 'noiNhanAo', 'noiNhanTaiLieu',
-                'ngay_sinh_tu', 'ngay_sinh_den', 'tuoi_tu', 'tuoi_den', 'id_xa', 'id_tinh', 
+                'ngay_sinh_tu', 'ngay_sinh_den', 'ngay_dang_ky_tu', 'ngay_dang_ky_den', 'tuoi_tu', 'tuoi_den', 'id_xa', 'id_tinh', 
                 'id_hangs'], 'safe'],
         ];
     }
@@ -144,6 +146,34 @@ class ThongKeLuuLuongSearch extends DangKyHv
             // --- CHỈ CÓ tuoi_den (tìm nhỏ hơn hoặc bằng) ---
             $from = date('Y-m-d', strtotime('-' . $this->tuoi_den . ' years'));
             $query->andFilterWhere(['>=', 'ngay_sinh', $from]);
+        }
+        
+        //xử lý ngày đăng ký từ - đến
+        // form search d/m/Y -> convert về Y-m-d
+        $tuNgay = null;
+        $denNgay = null;
+        
+        if (!empty($this->ngay_dang_ky_tu)) {
+            $tuNgay = date('Y-m-d 00:00:00', strtotime(str_replace('/', '-', $this->ngay_dang_ky_tu)));
+        }
+        
+        if (!empty($this->ngay_dang_ky_den)) {
+            $denNgay = date('Y-m-d 23:59:59', strtotime(str_replace('/', '-', $this->ngay_dang_ky_den)));
+        }
+        
+        // Tìm kiếm between
+        if ($tuNgay && $denNgay) {
+            $query->andWhere(['between', 'thoi_gian_tao', $tuNgay, $denNgay]);
+        }
+        
+        // Chỉ có từ ngày
+        if ($tuNgay && !$denNgay) {
+            $query->andWhere(['>=', 'thoi_gian_tao', $tuNgay]);
+        }
+        
+        // Chỉ có đến ngày
+        if (!$tuNgay && $denNgay) {
+            $query->andWhere(['<=', 'thoi_gian_tao', $denNgay]);
         }
 
         $query->andFilterWhere([

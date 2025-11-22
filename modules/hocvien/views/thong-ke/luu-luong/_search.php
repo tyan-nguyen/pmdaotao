@@ -268,6 +268,40 @@ if ($model->id_xa) {
                     ],
                 ])->label(false); ?>
             </div>
+            
+            <div class="col-md-3">
+            	<label>Nhận hồ sơ từ</label>
+                  <?= $form->field($model, 'ngay_dang_ky_tu')->widget(DatePicker::classname(), [
+                         'options' => [
+                             'placeholder' => 'Chọn ngày ĐK  ...',
+                             'autocomplete' => 'off'
+                         ],
+                         'pluginOptions' => [
+                         'autoclose' => true,
+                         'format' => 'dd/mm/yyyy',
+                         'zIndexOffset'=>'9999',
+                         'todayHighlight'=>true,
+                         'todayBtn'=>true
+                    ]
+                  ])->label(false); ?>
+            </div>
+            
+            <div class="col-md-3">
+            	<label>Nhận hồ sơ đến</label>
+                  <?= $form->field($model, 'ngay_dang_ky_den')->widget(DatePicker::classname(), [
+                         'options' => [
+                             'placeholder' => 'Chọn ngày ĐK  ...',
+                             'autocomplete' => 'off'
+                         ],
+                         'pluginOptions' => [
+                         'autoclose' => true,
+                         'format' => 'dd/mm/yyyy',
+                         'zIndexOffset'=>'9999',
+                         'todayHighlight'=>true,
+                         'todayBtn'=>true
+                    ]
+                  ])->label(false); ?>
+            </div>
            
            
     </div>    
