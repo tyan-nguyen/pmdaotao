@@ -81,7 +81,8 @@ if(!empty($searchModel->ngay_sinh_den)){
     	<?php if (!empty($searchModel->gioi_tinh) || !empty($searchModel->noi_dang_ky) || !empty($searchModel->id_hang) || !empty($searchModel->ngay_sinh_tu) || !empty($searchModel->ngay_sinh_den
     	    || !empty($searchModel->tuoi_tu) || !empty($searchModel->tuoi_den) )
     	    || !empty($searchModel->id_khoa_hoc) || !empty($searchModel->id_xa)
-    	    || !empty($searchModel->id_tinh) || !empty($searchModel->id_hangs) ): ?>
+    	    || !empty($searchModel->id_tinh) || !empty($searchModel->id_hangs) 
+    	    || !empty($searchModel->ngay_dang_ky_tu) || !empty($searchModel->ngay_dang_ky_den) ): ?>
         	<div class="card custom-card">
                 <div class="card-body">
                 	
@@ -130,6 +131,12 @@ if(!empty($searchModel->ngay_sinh_den)){
                             <?php endif; ?>
                             <?php if ($searchModel->id_tinh): ?>
                                 <li><i class="fa fa-angle-double-right mb-2 me-2"></i> <strong>Tỉnh/Thành:</strong> <?= DmTinh::getTenTinh($searchModel->id_tinh) ?></li>
+                            <?php endif; ?>
+                             <?php if ($searchModel->ngay_dang_ky_tu): ?>
+                                <li><i class="fa fa-angle-double-right mb-2 me-2"></i> <strong>Ngày đăng ký từ:</strong> <?= $searchModel->ngay_dang_ky_tu ?></li>
+                            <?php endif; ?>
+                             <?php if ($searchModel->ngay_dang_ky_den): ?>
+                                <li><i class="fa fa-angle-double-right mb-2 me-2"></i> <strong>Ngày đăng ký đến:</strong> <?= $searchModel->ngay_dang_ky_den ?></li>
                             <?php endif; ?>
                             </ul>
                         </div>             
