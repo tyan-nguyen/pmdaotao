@@ -504,7 +504,8 @@ class BaoCaoController extends Controller
             //$byaddress = strtoupper($byaddress);
             $query = $query->andFilterWhere(['t.id_khoa_hoc' => $bykhoa]);
         }
-        
+        //loại bỏ hồ sơ hủy
+        $query->andFilterWhere(['t.huy_so_so'=>0]);
         $model=$query->all();
         $modelCount=$query->count();
         
