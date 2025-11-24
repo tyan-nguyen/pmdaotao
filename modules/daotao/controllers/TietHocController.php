@@ -207,7 +207,7 @@ class TietHocController extends Controller
                     //kiem tra gio tiếp theo có chưa
                     $tietHoc = TietHoc::find()->where([
                         'id_thoi_gian_hoc'=>($model->id_thoi_gian_hoc+1),
-                        'id_hoc_vien'=>$model->id_hoc_vien,
+                        //'id_hoc_vien'=>$model->id_hoc_vien,
                         'id_ke_hoach'=>$model->id_ke_hoach
                     ])->exists();
                     if(!$tietHoc){
