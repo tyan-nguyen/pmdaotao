@@ -145,6 +145,7 @@ class DangKyHvController extends Controller
     {
         $request = Yii::$app->request;
         $model = new DangKyHv();  
+        $model->scenario = 'nhaphosomoi';
 
         if($request->isAjax){
             /*
