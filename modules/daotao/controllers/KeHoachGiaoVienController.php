@@ -15,6 +15,7 @@ use app\modules\user\models\User;
 use app\modules\daotao\models\base\KeHoachBase;
 use app\custom\CustomFunc;
 use app\modules\daotao\models\TietHoc;
+use app\modules\daotao\models\DmThoiGian;
 
 /**
  * KeHoachController implements the CRUD actions for KeHoach model.
@@ -353,6 +354,18 @@ class KeHoachGiaoVienController extends Controller
                     }
                 }
                 if($model->save()){
+                    //cap nhat ngay cua tiet hoc khi co thay doi ngay
+                    if($model->ngay_thuc_hien != CustomFunc::convertYMDHISToDMY($oldModel->ngay_thuc_hien)){
+                        $tietHocs = TietHoc::find()->where([
+                            'id_ke_hoach' => $model->id
+                        ])->all();
+                        foreach ($tietHocs as $iTiet=>$tiet){
+                            $time = DmThoiGian::findOne($tiet->id_thoi_gian_hoc);
+                            $tiet->thoi_gian_bd = $model->ngay_thuc_hien . ' ' . $time->thoi_gian_bd;
+                            $tiet->thoi_gian_kt = $model->ngay_thuc_hien . ' ' . $time->thoi_gian_kt;
+                            $tiet->save();
+                        }
+                    }
                     if(Yii::$app->params['showView']){
                         return [
                             'forceReload'=>'#crud-datatable-pjax',
