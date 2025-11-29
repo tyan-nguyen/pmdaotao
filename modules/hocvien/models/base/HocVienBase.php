@@ -90,6 +90,7 @@ class HocVienBase extends \app\models\HvHocVien
     const NOIDANGKY_CS8 = 'CS8';
     const NOIDANGKY_CS9 = 'CS9';
     const NOIDANGKY_CS10 = 'CS10';
+    const NOIDANGKY_CS11 = 'CS11';
     
     const HUY_BATKHAKHANG = 'BATKHAKHANG';
     const HUY_KHACHQUAN = 'KHACHQUAN';
@@ -117,6 +118,7 @@ class HocVienBase extends \app\models\HvHocVien
             self::NOIDANGKY_CS8 => 'CS8 - CN Tiểu Cần',
             self::NOIDANGKY_CS9 => 'CS9 - CN Mỏ Cày Nam',
             self::NOIDANGKY_CS10 => 'CS10 - CN Mỏ Cày Bắc',
+            self::NOIDANGKY_CS11 => 'CS11 - CN Cầu Ngang',
         ];
     }
     /**
@@ -136,6 +138,7 @@ class HocVienBase extends \app\models\HvHocVien
             self::NOIDANGKY_CS8 => 'CN Tiểu Cần',
             self::NOIDANGKY_CS9 => 'CN Mỏ Cày Nam',
             self::NOIDANGKY_CS10 => 'CN Mỏ Cày Bắc',
+            self::NOIDANGKY_CS11 => 'CN Cầu Ngang',
         ];
     }
     /**
@@ -178,6 +181,9 @@ class HocVienBase extends \app\models\HvHocVien
                 break;
             case self::NOIDANGKY_CS10:
                 $label = "CN Mỏ Cày Bắc";
+                break;
+            case self::NOIDANGKY_CS11:
+                $label = "CN Cầu Ngang";
                 break;
             default:
                 $label = '';
@@ -223,6 +229,9 @@ class HocVienBase extends \app\models\HvHocVien
             case self::NOIDANGKY_CS10:
                 $label = "CN Mỏ Cày Bắc";
                 break;
+            case self::NOIDANGKY_CS11:
+                $label = "CN Cầu Ngang";
+                break;
             default:
                 $label = '';
         }
@@ -265,6 +274,9 @@ class HocVienBase extends \app\models\HvHocVien
                 $label = '<span class="badge bg-warning">'.$val.'</span> ';
                 break;
             case self::NOIDANGKY_CS10:
+                $label = '<span class="badge bg-warning">'.$val.'</span> ';
+                break;
+            case self::NOIDANGKY_CS11:
                 $label = '<span class="badge bg-warning">'.$val.'</span> ';
                 break;
             default:
