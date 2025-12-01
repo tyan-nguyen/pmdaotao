@@ -67,7 +67,25 @@ class HvHoSoController extends Controller
             'pagination' =>$pagination, 
         ]);
     }
-
+    /**
+     * Lists all HvHocVien models.
+     * @return mixed
+     */
+    public function actionIndexSimple()
+    {
+        $searchModel = new DangKyHvSearch();
+        $dataProvider = $searchModel->searchHoSo(Yii::$app->request->queryParams);
+        //an add
+        //$dataProvider->query->andWhere(['trang_thai' => ['DANG_KY']]);
+        //$dataProvider->query->andWhere('id_khoa_hoc is NULL');
+        $pagination = $dataProvider->getPagination();
+        $pagination->pageSize = 20;
+        return $this->render('simple_index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'pagination' =>$pagination,
+        ]);
+    }
 
     /**
      * Displays a single HvHocVien model.

@@ -28,6 +28,7 @@ use app\modules\hocvien\models\HocVien;
 						<ul class="sidemenu-list">
 							<li class="side-menu__label1"><a href="javascript:void(0)">Danh mục chức năng</a></li>
 							<!-- <li><a href="/hocvien/thong-ke/luu-luong?menu=thongke4" class="slide-item" data-menu="thongke4"> <i class="fe fe-file-text"></i> Thống kê lưu lượng <span class="badge bg-warning">New</span></a></li> -->
+							<li><a href="/hocvien/hv-ho-so/index-simple?menu=thongke5" class="slide-item" data-menu="thongke5"> <i class="fe fe-file-text"></i> Hồ sơ học viên</a></li>
 							<li><a href="/hocvien/hv-ho-so?menu=thongke4" class="slide-item" data-menu="thongke4"> <i class="fe fe-file-text"></i> Hồ sơ học viên</a></li>
 							<li><a href="/hocvien/thong-ke/thong-ke-ho-so-moi?menu=thongke1" class="slide-item" data-menu="thongke1"> <i class="fe fe-file-text"></i>Thống kê đăng ký mới</a></li>
 							<li><a href="/hocvien/thong-ke/thong-ke-thu-tien?menu=thongke2" class="slide-item" data-menu="thongke2"> <i class="fe fe-file-text"></i> Thống kê thu tiền</a></li> 

@@ -43,6 +43,17 @@ class LichXeController extends Controller
             'model' => $model
         ]);
     }
+    
+    /**
+     * get lịch của xe: lich giao vien (da hoan thanh/da len lich/da qua thoi gian) so sanh voi thuc te
+     */
+    public function actionLichXeGvSoSang($idxe){
+        $model = Xe::findOne($idxe);
+        return $this->render('lich-xe-gv-so-sanh', [
+            'model' => $model
+        ]);
+    }
+    
     /**
      * get lịch của xe: lich thue xe (da len lich/da qua thoi gian)
      */
