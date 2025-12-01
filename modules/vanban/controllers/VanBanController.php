@@ -38,7 +38,7 @@ class VanBanController extends Controller
     {
         Yii::$app->params['moduleID'] = 'Module Văn bản ';
         Yii::$app->params['modelID'] = 'Tra cứu văn bản';
-        return true;
+        return parent::beforeAction($action);
     }
     
     /**

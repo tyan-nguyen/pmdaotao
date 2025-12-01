@@ -11,6 +11,7 @@ use app\modules\vanban\models\VanBanDi;
 
 use app\modules\vanban\models\search\VbDiSearch;
 use yii\web\Response;
+use yii\filters\VerbFilter;
 
 /**
  * Default controller for the `vanban` module
@@ -18,7 +19,22 @@ use yii\web\Response;
 class VbDiController extends Controller
 {
   
-
+    /**
+     * @inheritdoc
+     */
+    public function behaviors() {
+        return [
+            'ghost-access'=> [
+                'class' => 'webvimark\modules\UserManagement\components\GhostAccessControl',
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ];
+    }
     /**
      * Lists all VanBan models.
      * @return mixed
@@ -54,7 +70,7 @@ class VbDiController extends Controller
 	{
 	    Yii::$app->params['moduleID'] = 'Module Văn bản ';
 	    Yii::$app->params['modelID'] = 'Quản lý Văn bản đi';
-	    return true;
+	    return parent::beforeAction($action);
 	}
     public function actionView($id)
     {   

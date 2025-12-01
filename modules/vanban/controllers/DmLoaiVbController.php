@@ -37,7 +37,7 @@ class DmLoaiVbController extends Controller
 	{
 	    Yii::$app->params['moduleID'] = 'Module Văn bản ';
 	    Yii::$app->params['modelID'] = 'Quản lý Danh mục loại văn bản';
-	    return true;
+	    return parent::beforeAction($action);
 	}
 
     /**

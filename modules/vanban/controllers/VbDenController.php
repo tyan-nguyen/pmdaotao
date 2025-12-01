@@ -39,7 +39,7 @@ class VbDenController extends Controller
 	{
 	    Yii::$app->params['moduleID'] = 'Module Văn bản ';
 	    Yii::$app->params['modelID'] = 'Quản lý Văn bản đến';
-	    return true;
+	    return parent::beforeAction($action);
 	}
 
     /**
