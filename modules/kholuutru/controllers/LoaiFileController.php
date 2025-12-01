@@ -17,7 +17,7 @@ use yii\filters\AccessControl;
  */
 class LoaiFileController extends Controller
 {
-    public $freeAccess = true;
+    //public $freeAccess = true;
     /**
      * @inheritdoc
      */
