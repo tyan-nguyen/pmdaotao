@@ -23,7 +23,7 @@ use yii\db\Expression;
  */
 class HvThueController extends Controller
 {
-    public $freeAccess = true;
+    //public $freeAccess = true;
     //public $freeAccessActions = ['get-phieu-in-ajax', 'update-print-count', 'report-list', 'get-phieu-in-report-list-ajax'];
     /**
      * @inheritdoc
