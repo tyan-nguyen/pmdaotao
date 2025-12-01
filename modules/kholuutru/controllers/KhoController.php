@@ -42,7 +42,7 @@ class KhoController extends Controller
 	{
 	    Yii::$app->params['moduleID'] = 'Module Danh mục kho';
 	    Yii::$app->params['modelID'] = 'Danh sách Kho';
-	    //return true;
+	    return parent::beforeAction($action);
 	}
     public function actionIndex()
     {    
