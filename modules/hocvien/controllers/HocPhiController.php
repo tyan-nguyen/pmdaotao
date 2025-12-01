@@ -18,8 +18,8 @@ use yii\filters\AccessControl;
 class HocPhiController extends Controller
 {
     public $freeAccessActions = [
-        'phieu-thu',
-        'phieu-chi',
+       /*  'phieu-thu',
+        'phieu-chi', */
         'view'];
     /**
      * @inheritdoc
