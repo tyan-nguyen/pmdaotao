@@ -42,7 +42,7 @@ class NganController extends Controller
 	{
 	    Yii::$app->params['moduleID'] = 'Module Danh mục kho';
 	    Yii::$app->params['modelID'] = 'Danh sách Ngăn';
-	    return true;
+	    //return true;
 	}
     public function actionIndex()
     {    

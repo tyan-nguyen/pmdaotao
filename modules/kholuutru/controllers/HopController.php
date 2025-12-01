@@ -42,7 +42,7 @@ class HopController extends Controller
 	{
 	    Yii::$app->params['moduleID'] = 'Module Danh mục kho';
 	    Yii::$app->params['modelID'] = 'Danh sách Hộp';
-	    return true;
+	    //return true;
 	}
     public function actionIndex()
     {    
