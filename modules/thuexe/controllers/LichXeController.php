@@ -45,6 +45,16 @@ class LichXeController extends Controller
     }
     
     /**
+     * get thoi gian su dung xe thuc te//ket noi phan mem dem xe
+     */
+    public function actionXeLive($idxe){
+        $model = Xe::findOne($idxe);
+        return $this->render('xe-live', [
+            'model' => $model
+        ]);
+    }
+    
+    /**
      * get lịch của xe: lich giao vien (da hoan thanh/da len lich/da qua thoi gian) so sanh voi thuc te
      */
     public function actionLichXeGvSoSang($idxe){

@@ -13,6 +13,7 @@ use Yii;
  * @property string|null $phan_loai
  * @property string|null $hieu_xe
  * @property string|null $bien_so_xe
+ * @property string|null $ma_bien_so
  * @property string|null $tinh_trang_xe
  * @property string|null $trang_thai
  * @property string|null $ghi_chu
@@ -54,14 +55,14 @@ class PtxXe extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ma_so', 'phan_loai', 'hieu_xe', 'bien_so_xe', 'tinh_trang_xe', 'trang_thai', 'ghi_chu', 'so_khung', 'so_may', 'ngay_dang_kiem', 'mau_sac', 'dac_diem', 'la_xe_cu', 'so_tien', 'nha_cung_cap', 'so_hoa_don', 'so_hop_dong', 'id_giao_vien', 'nguoi_tao', 'thoi_gian_tao', 'stt'], 'default', 'value' => null],
+            [['ma_so', 'phan_loai', 'hieu_xe', 'bien_so_xe', 'ma_bien_so', 'tinh_trang_xe', 'trang_thai', 'ghi_chu', 'so_khung', 'so_may', 'ngay_dang_kiem', 'mau_sac', 'dac_diem', 'la_xe_cu', 'so_tien', 'nha_cung_cap', 'so_hoa_don', 'so_hop_dong', 'id_giao_vien', 'nguoi_tao', 'thoi_gian_tao', 'stt'], 'default', 'value' => null],
             [['id_loai_xe'], 'required'],
             [['id_loai_xe', 'la_xe_cu', 'id_giao_vien', 'nguoi_tao', 'stt'], 'integer'],
             [['tinh_trang_xe', 'ghi_chu', 'dac_diem'], 'string'],
             [['ngay_dang_kiem', 'thoi_gian_tao'], 'safe'],
             [['so_tien'], 'number'],
             [['ma_so', 'phan_loai'], 'string', 'max' => 20],
-            [['hieu_xe', 'bien_so_xe'], 'string', 'max' => 50],
+            [['hieu_xe', 'bien_so_xe', 'ma_bien_so'], 'string', 'max' => 50],
             [['trang_thai'], 'string', 'max' => 25],
             [['so_khung', 'so_may', 'mau_sac', 'nha_cung_cap', 'so_hoa_don', 'so_hop_dong'], 'string', 'max' => 250],
             [['id_loai_xe'], 'exist', 'skipOnError' => true, 'targetClass' => PtxLoaiXe::class, 'targetAttribute' => ['id_loai_xe' => 'id']],
@@ -80,6 +81,7 @@ class PtxXe extends \yii\db\ActiveRecord
             'phan_loai' => 'Phan Loai',
             'hieu_xe' => 'Hieu Xe',
             'bien_so_xe' => 'Bien So Xe',
+            'ma_bien_so' => 'Ma Bien So',
             'tinh_trang_xe' => 'Tinh Trang Xe',
             'trang_thai' => 'Trang Thai',
             'ghi_chu' => 'Ghi Chu',

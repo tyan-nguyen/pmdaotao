@@ -33,6 +33,29 @@ class FixController extends Controller
     }
     
     /**
+     * fixed mã biển số xe
+     */
+    public function actionFixMaBienSo(){
+        $listXes = Xe::find()->where('ma_bien_so IS NULL');
+        echo $listXes->count();
+        $countSuc = 0;
+        $listXess = $listXes->all();
+        foreach ($listXess as $iXe=>$xe){
+            $maBienSo = '';
+            if($xe->bien_so_xe != ''){
+                $maBienSo = $xe->bien_so_xe;
+                $maBienSo = str_replace('-', '', $maBienSo);
+                $maBienSo = str_replace('.', '', $maBienSo);
+            }
+            $xe->ma_bien_so = $maBienSo;
+            if($xe->save()){
+                $countSuc++;
+            }
+        }
+        echo '<br/>Thành công: '. $countSuc;
+    }
+    
+    /**
      * fixed ngày hoàn thành hồ sơ
      * dành cho dữ liệu cũ chưa có cột hoàn thành hồ sơ
      */

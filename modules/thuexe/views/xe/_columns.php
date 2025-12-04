@@ -111,6 +111,11 @@ return [
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'ma_bien_so',
+        'contentOptions' => [ 'style' => 'text-align:center' ],
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'hieu_xe',
     ],
     [
@@ -129,6 +134,7 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ma_so',
+        'label'=>'Mã số (SH)',
         'contentOptions' => [ 'style' => 'text-align:center' ],
     ],
     [

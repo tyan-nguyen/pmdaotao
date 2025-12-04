@@ -18,6 +18,7 @@ use app\modules\banhang\models\HangHoa;
  * @property string|null $phan_loai
  * @property string|null $hieu_xe
  * @property string|null $bien_so_xe
+ * @property string|null $ma_bien_so
  * @property string|null $tinh_trang_xe
  * @property string|null $trang_thai
  * @property string|null $ghi_chu
@@ -188,13 +189,13 @@ class Xe extends \app\models\PtxXe
     public function rules()
     {
         return [
-            [['id_loai_xe', 'bien_so_xe'], 'required'],
+            [['id_loai_xe', 'bien_so_xe', 'ma_bien_so'], 'required'],
             [['id_loai_xe', 'la_xe_cu', 'nguoi_tao', 'id_giao_vien', 'stt'], 'integer'],
             [['ghi_chu', 'dac_diem'], 'string'],
             [['phan_loai', 'ma_so'], 'string', 'max' => 20],
             [['tinh_trang_xe'], 'string', 'max' => 20],
             [['thoi_gian_tao', 'ngay_dang_kiem'], 'safe'],
-            [['bien_so_xe'], 'string', 'max' => 50],
+            [['bien_so_xe', 'ma_bien_so'], 'string', 'max' => 50],
             [['trang_thai'], 'string', 'max' => 25],
             [['bien_so_xe'], 'unique'],
             [['hieu_xe', 'so_khung', 'so_may', 'mau_sac', 'nha_cung_cap', 'so_hoa_don', 'so_hop_dong'], 'string', 'max' => 250],
@@ -214,6 +215,7 @@ class Xe extends \app\models\PtxXe
             'phan_loai' => 'Phân loại xe',
             'hieu_xe' => 'Hiệu Xe',
             'bien_so_xe' => 'Biển Số Xe',
+            'ma_bien_so' => 'Mã Biển Số',
             'tinh_trang_xe' => 'Tình Trạng Xe',
             'ghi_chu' => 'Ghi chú',
             'so_khung' => 'Số khung',

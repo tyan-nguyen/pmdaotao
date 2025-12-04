@@ -53,6 +53,9 @@ if(!$model->isNewRecord){
          <div class="col-lg-2 col-md-6">
              <?= $form->field($model, 'bien_so_xe')->textInput(['maxlength' => true]) ?>
          </div>
+         <div class="col-lg-2 col-md-6">
+             <?= $form->field($model, 'ma_bien_so')->textInput(['maxlength' => true]) ?>
+         </div>
          <div class="col-lg-1 col-md-6">
              <?= $form->field($model, 'ma_so')->textInput(['maxlength' => true]) ?>
          </div>

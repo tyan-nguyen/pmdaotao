@@ -36,6 +36,9 @@ use app\modules\thuexe\models\Xe;
          <?= $form->field($model, 'bien_so_xe')->textInput(['maxlength' => true]) ?>
     </div>
     <div class="col-md-2">
+         <?= $form->field($model, 'ma_bien_so')->textInput(['maxlength' => true]) ?>
+    </div>
+    <div class="col-md-2">
             <?= $form->field($model, 'tinh_trang_xe')->dropDownList(
               Xe::getDmTinhTrangXe(),
              ['prompt' => 'Chọn trạng thái']  // 
