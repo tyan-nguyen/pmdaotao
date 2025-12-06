@@ -17,6 +17,7 @@ $this->title = 'Hồ sơ học viên';
 $this->params['breadcrumbs'][] = $this->title;
 //CrudAsset::register($this);
 Yii::$app->params['showSearch'] = true;
+Yii::$app->params['showTopSearch'] = false;
 Yii::$app->params['showExport'] = true;
 ?>
 
@@ -35,7 +36,7 @@ Yii::$app->params['showExport'] = true;
 		<h5 class="mt-2"><i class="fe fe-search"></i> Tìm kiếm</h5>
 	</div>
 	<div class="card-body">
-		<div class="expanel expanel-default">
+		<div class="expanel expanel-default" style="background-color: #eee">
 			<div class="expanel-body">
 				<?php 
                     echo $this->render("simple_search", ["model" => $searchModel]);

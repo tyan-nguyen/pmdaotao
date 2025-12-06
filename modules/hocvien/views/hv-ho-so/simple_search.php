@@ -14,6 +14,12 @@ use app\modules\hocvien\models\DangKyHv;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
+<style>
+.myFilterForm input{
+    border:1px solid #ddd;
+}
+</style>
+
 <div class="hoc-vien-search">
 
     <?php $form = ActiveForm::begin([
