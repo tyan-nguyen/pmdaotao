@@ -90,6 +90,14 @@ return [
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'gioi_tinh',
+        'value'=>function($model){
+            return $model->gioi_tinh == 1 ? 'Nam' : 'Nữ';
+        }
+        //'width' => '250px',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ngay_sinh',
         'value'=>function($model){
             return CustomFunc::convertYMDHISToDMY($model->ngay_sinh);
