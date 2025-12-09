@@ -489,6 +489,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   content: info.event.title + ' (' + info.event.extendedProps.description + ')',
                   placement: 'top',
                   theme: 'light-border',
+                  allowHTML: true,
                 });
             }                
             
