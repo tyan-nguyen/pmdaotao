@@ -13,7 +13,7 @@ return [
     [
         'class' => 'kartik\grid\ActionColumn',
         'header'=>'',
-        'template' => '{lichXeGv} {capNhapGiaoVien} {image} {view} {update} {delete}',
+        'template' => '{lichXeGv} {lichXeThue} {lichXeLive} {lichTrongSan} {lichSoSanh} {capNhapGiaoVien} {image} {view} {update} {delete}',
         'dropdown' => true,
         'dropdownOptions' => ['class' => 'float-right'],
         'dropdownButton'=>[
@@ -24,7 +24,19 @@ return [
         'width' => '20px',   
         'urlCreator' => function($action, $model, $key, $index) { 
             if ($action === 'lichXeGv') {
-                return Url::to(['lich-xe/lich-xe-gv', 'idxe' => $key]);
+                return Url::to(['lich-xe/lich-xe-gv', 'idxe' => $key, 'menu'=>'dt3']);
+            }
+            if ($action === 'lichXeThue') {
+                return Url::to(['lich-thue/xe-schedule', 'id' => $key, 'menu'=>'dt3']);
+            }
+            if ($action === 'lichXeLive') {
+                return Url::to(['lich-xe/xe-live', 'idxe' => $key, 'menu'=>'dt3']);
+            }
+            if ($action === 'lichTrongSan') {
+                return Url::to(['lich-xe/xe-live-trong-san', 'idxe' => $key, 'menu'=>'dt3']);
+            }
+            if ($action === 'lichSoSanh') {
+                return Url::to(['lich-xe/lich-xe-gv-so-sanh', 'idxe' => $key, 'menu'=>'dt3']);
             }
             if ($action === 'capNhapGiaoVien') {
                 return Url::to(['phan-cong-giao-vien', 'id' => $key]);
@@ -43,8 +55,40 @@ return [
                     'class' => 'btn ripple btn-warning dropdown-item',
                 ]);
             },
+            'lichXeThue' => function ($url, $model, $key) {
+                return Html::a('<i class="fa-solid fa-list-check"></i> Xem lịch thuê', $url, [
+                    'title' => 'Lịch thuê của xe',
+                    'target'=>'_blank',
+                    'data-pjax' => '0',
+                    'class' => 'btn ripple btn-warning dropdown-item',
+                ]);
+            },
+            'lichXeLive' => function ($url, $model, $key) {
+                return Html::a('<i class="fa-solid fa-list-check"></i> Xem hoạt động<br/> đường trường', $url, [
+                    'title' => 'Lịch live đường trường',
+                    'target'=>'_blank',
+                    'data-pjax' => '0',
+                    'class' => 'btn ripple btn-warning dropdown-item',
+                ]);
+            },
+            'lichTrongSan' => function ($url, $model, $key) {
+                return Html::a('<i class="fa-solid fa-list-check"></i> Xem hoạt động<br/> trong sân', $url, [
+                    'title' => 'Lịch live trong sân',
+                    'target'=>'_blank',
+                    'data-pjax' => '0',
+                    'class' => 'btn ripple btn-warning dropdown-item',
+                ]);
+            },
+            'lichSoSanh' => function ($url, $model, $key) {
+                return Html::a('<i class="fa-solid fa-list-check"></i> So sánh hoạt<br/> động xe', $url, [
+                    'title' => 'So sánh lịch xe',
+                    'target'=>'_blank',
+                    'data-pjax' => '0',
+                    'class' => 'btn ripple btn-warning dropdown-item',
+                ]);
+            },
             'capNhapGiaoVien' => function ($url, $model, $key) {
-                return Html::a('<i class="fa-solid fa-list-check"></i> Phân công giáo viên', $url, [
+                return Html::a('<i class="fa-solid fa-pencil"></i> Phân công giáo viên', $url, [
                     'title' => 'Phân công giáo viên giảng dạy',
                     'role' => 'modal-remote',
                     'class' => 'btn ripple btn-warning dropdown-item',

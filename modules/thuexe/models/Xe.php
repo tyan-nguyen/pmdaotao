@@ -272,6 +272,16 @@ class Xe extends \app\models\PtxXe
     {
         return $this->hasMany(PhieuThueXe::class, ['id_xe' => 'id']);
     }
+    public static function getListAll()
+    {
+        $dsXe = Xe::find()
+        ->orderBy(['hieu_xe' => SORT_ASC])
+        ->all();
+        
+        return ArrayHelper::map($dsXe, 'id', function($model) {
+            return '+ ' . $model->bien_so_xe;
+        });
+    }
     public static function getList()
     {
         $dsXe = Xe::find()

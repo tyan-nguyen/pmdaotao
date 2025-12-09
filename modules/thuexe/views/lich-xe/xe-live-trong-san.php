@@ -12,13 +12,13 @@ use app\modules\daotao\models\TietHoc;
 use app\modules\demxe\models\DemXe;
 use app\modules\thuexe\models\Xe;
 
-$this->title = 'Hoạt động đường trường thực tế của xe ' . $model->bien_so_xe;
+$this->title = 'Hoạt động thực tế trong sân của xe ' . $model->bien_so_xe;
 Yii::$app->params['showSearch'] = false;
 Yii::$app->params['showView'] = true;
 
 /* $contactLog = TietHoc::find()->orderBy(['thoi_gian_bd' => SORT_ASC])// SORT_ASC quan trọng để tính gộp
     ->andWhere(['id_xe'=>$model->id])->all(); */
-$contactLog = DemXe::find()->where(['id_xe'=>$model->id, 'ma_cong'=>DemXe::CONG1])->all();
+$contactLog = DemXe::find()->where(['id_xe'=>$model->id, 'ma_cong'=>DemXe::CONG2])->all();
 
 $colorList = DemXe::getDmTrangThaiColor();
 $eventData = [];

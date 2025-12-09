@@ -46,6 +46,8 @@ class FixController extends Controller
                 $maBienSo = $xe->bien_so_xe;
                 $maBienSo = str_replace('-', '', $maBienSo);
                 $maBienSo = str_replace('.', '', $maBienSo);
+                $maBienSo = str_replace(' ', '', $maBienSo);
+                $maBienSo = strtoupper($maBienSo);
             }
             $xe->ma_bien_so = $maBienSo;
             if($xe->save()){

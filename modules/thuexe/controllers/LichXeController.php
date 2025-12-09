@@ -45,7 +45,7 @@ class LichXeController extends Controller
     }
     
     /**
-     * get thoi gian su dung xe thuc te//ket noi phan mem dem xe
+     * get thoi gian su dung xe thuc te//ket noi phan mem dem xe <duong truong>
      */
     public function actionXeLive($idxe){
         $model = Xe::findOne($idxe);
@@ -55,9 +55,20 @@ class LichXeController extends Controller
     }
     
     /**
+     * get thoi gian su dung xe thuc te//ket noi phan mem dem xe <trong san>
+     */
+    public function actionXeLiveTrongSan($idxe){
+        $model = Xe::findOne($idxe);
+        return $this->render('xe-live-trong-san', [
+            'model' => $model
+        ]);
+    }
+    
+    /**
      * get lịch của xe: lich giao vien (da hoan thanh/da len lich/da qua thoi gian) so sanh voi thuc te
      */
-    public function actionLichXeGvSoSang($idxe){
+    public function actionLichXeGvSoSanh($idxe){
+        $this->layout = '/mainFullTrial';
         $model = Xe::findOne($idxe);
         return $this->render('lich-xe-gv-so-sanh', [
             'model' => $model

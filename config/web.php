@@ -52,6 +52,9 @@ $config = [
         'danhmuc' => [
             'class' => 'app\modules\danhmuc\DanhMucModule',
         ],
+        'demxe' => [
+            'class' => 'app\modules\demxe\Module',
+        ],
         /* 'dynamikjs' => [
             'class' => 'dastanaron\dropzone\DynamicJSModule'
         ], */

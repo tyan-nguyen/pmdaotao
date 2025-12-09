@@ -8,6 +8,44 @@ use webvimark\modules\UserManagement\models\User;
 class CustomFunc 
 {  
     /**
+     * tính toán thời gian (số giờ) trong khoảng thời gian Y-m-d H:i:s
+     * làm tròn 2 số thập phân
+     * @param unknown $start
+     * @param unknown $end
+     * @return number
+     */
+    public static function diffHours($start, $end)
+    {
+        $startTime = new \DateTime($start);
+        $endTime   = new \DateTime($end);
+        
+        $diff = $startTime->diff($endTime);
+        
+        // Tổng số giờ dạng số thực
+        $hours = $diff->days * 24 + $diff->h + ($diff->i / 60) + ($diff->s / 3600);
+        
+        return round($hours,2);
+    }
+    /**
+     * tính toán thời gian (số phút) trong khoảng thời gian Y-m-d H:i:s
+     * @param unknown $start
+     * @param unknown $end
+     * @return string
+     */
+    public static function diffHoursMinutes($start, $end)
+    {
+        $startTime = new \DateTime($start);
+        $endTime   = new \DateTime($end);
+        
+        $diff = $startTime->diff($endTime);
+        
+        $hours = $diff->days * 24 + $diff->h;
+        $minutes = $diff->i;
+        
+        return sprintf("%02d:%02d", $hours, $minutes);
+    }
+    
+    /**
      * nối string ngày tháng năm, giờ, phút giây thành thời gian bắt đầu
      */
     public static function createCustomStartDate($ngay, $gio, $phut){

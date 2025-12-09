@@ -58,6 +58,8 @@ use app\modules\user\models\User;
 				
 				<?= $this->render('menus/thue-xe') ?>
 				
+				<?= $this->render('menus/dem-xe') ?>
+				
 				<?= $this->render('menus/dao-tao') ?>
 
 				<?= $this->render('menus/nhan-vien')?>
