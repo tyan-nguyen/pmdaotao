@@ -139,7 +139,7 @@ $contactLog = LichThue::find()
 
 //$colorList = ContactLogForm::getStatusColorHexList();
 $colorList = LichThue::getTrangThaiColor();
-$eventData = [];
+//$eventData = [];
 foreach ($contactLog as $item) {
     $startTime = $item->thoi_gian_bat_dau;
     $endTime = $item->thoi_gian_ket_thuc;
@@ -183,7 +183,7 @@ foreach ($contactLog as $item) {
 $contactLog = DemXe::find()->where(['id_xe'=>$model->id, 'ma_cong'=>DemXe::CONG1])->all();
 
 $colorList = DemXe::getDmTrangThaiColor();
-$eventData = [];
+//$eventData = [];
 foreach ($contactLog as $item) {
     $startTime = $item->thoi_gian_bd;
     $endTime = $item->thoi_gian_kt;
@@ -222,7 +222,7 @@ foreach ($contactLog as $item) {
 $contactLog = DemXe::find()->where(['id_xe'=>$model->id, 'ma_cong'=>DemXe::CONG2])->all();
 
 $colorList = DemXe::getDmTrangThaiColor();
-$eventData = [];
+//$eventData = [];
 foreach ($contactLog as $item) {
     $startTime = $item->thoi_gian_bd;
     $endTime = $item->thoi_gian_kt;
