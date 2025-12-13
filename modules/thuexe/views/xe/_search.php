@@ -33,6 +33,9 @@ use app\modules\thuexe\models\Xe;
          <?= $form->field($model, 'hieu_xe')->textInput(['maxlength' => true]) ?>
     </div>
     <div class="col-md-2">
+         <?= $form->field($model, 'ma_so')->textInput(['maxlength' => true])->label('Mã số Sát hạch') ?>
+    </div>
+    <div class="col-md-2">
          <?= $form->field($model, 'bien_so_xe')->textInput(['maxlength' => true]) ?>
     </div>
     <div class="col-md-2">
