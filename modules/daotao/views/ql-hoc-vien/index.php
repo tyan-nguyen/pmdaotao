@@ -59,6 +59,16 @@ Yii::$app->params['showExport'] = true;
                     .
                     Html::a('<i class="fas fa fa-sync" aria-hidden="true"></i> Tải lại', [''],
                         ['data-pjax'=>1, 'class'=>'dropdown-item', 'title'=>'Tải lại'])
+                    .Html::a('<i class="ion-checkmark-round text-primary"></i>&nbsp; Hoàn thành <br/>(nhiều HV)',
+                        ["set-ht-all"],
+                        [
+                            'class'=>'dropdown-item text-secondary',
+                            'role'=>'modal-remote-bulk',
+                            'data-confirm'=>false, 'data-method'=>false,// for overide yii data api
+                            'data-request-method'=>'post',
+                            'data-confirm-title'=>'Xác nhận hoàn thành dạy nhiều học viên?',
+                            'data-confirm-message'=>'Bạn có chắc muốn thực hiện cập nhật trạng thái hoàn thành cho nhiều học viên?'
+                        ])
                     /*.
                     Html::a('<i class="fas fa fa-trash" aria-hidden="true"></i>&nbsp; Xóa danh sách',
                         ["bulkdelete"],

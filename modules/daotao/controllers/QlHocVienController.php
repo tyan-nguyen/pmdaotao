@@ -26,6 +26,8 @@ use app\modules\lichhoc\models\LichThi;
 use app\modules\khoahoc\models\NhomHoc;
 use app\modules\lichhoc\models\KetQuaThi;
 use app\modules\lichhoc\models\PhanThi;
+use app\modules\user\models\User;
+use app\modules\daotao\models\GvHv;
 
 /**
  * HocVienController implements the CRUD actions for HvHocVien model.
@@ -984,6 +986,134 @@ class QlHocVienController extends Controller
         } else {
             return ['success' => false];
         }
+    }
+    
+    /**
+     * sét học viên đã học xong by gv, chỉ áp dụng cho giáo viên khi đăng nhập
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionSetHt($id)
+    {
+        $request = Yii::$app->request;
+        $user = User::findOne(Yii::$app->user->id);
+        $giaoVien = $user->getIdGiaoVien();
+        $model = GvHv::find()->where([
+            'id_hoc_vien' => $id,
+            'id_giao_vien' => $giaoVien
+        ])->one();
+        
+        if($request->isAjax){
+            /*
+             *   Process for ajax request
+             */
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            if($model != null){
+                $model->da_hoan_thanh = 1;
+                $model->updateAttributes(['da_hoan_thanh']);
+            }
+            return [
+                //'forceClose'=>true,
+                'forceReload'=>'#crud-datatable-pjax',
+                'title'=> "Cập nhật trạng thái <strong>đã hoàn thành</strong>",
+                'content'=>'<span class="text-success">Đã cập nhật trạng thái đã học xong cho học viên !</span>',
+                'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"])
+            ];
+        }else{
+            /*
+             *   Process for non-ajax request
+             */
+            return $this->redirect(['index']);
+        }
+        
+        
+    }
+    
+    /**
+     * sét học viên đã học xong by gv, chỉ áp dụng cho giáo viên khi đăng nhập
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionSetHtAll()
+    {
+        $request = Yii::$app->request;
+        $user = User::findOne(Yii::$app->user->id);
+        $giaoVien = $user->getIdGiaoVien();
+        
+        $pks = explode(',', $request->post( 'pks' )); // Array or selected records primary keys
+        foreach ( $pks as $pk ) {
+            $model = GvHv::find()->where([
+                'id_hoc_vien' => $pk,
+                'id_giao_vien' => $giaoVien
+            ])->one();
+            if($model != null){
+                $model->da_hoan_thanh = 1;
+                $model->updateAttributes(['da_hoan_thanh']);
+            }
+        }
+        
+        if($request->isAjax){
+            /*
+             *   Process for ajax request
+             */
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            
+            return [
+                //'forceClose'=>true,
+                'forceReload'=>'#crud-datatable-pjax',
+                'title'=> "Cập nhật trạng thái <strong>đã hoàn thành</strong>",
+                'content'=>'<span class="text-success">Đã cập nhật trạng thái đã học xong cho học viên !</span>',
+                'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"])
+            ];
+        }else{
+            /*
+             *   Process for non-ajax request
+             */
+            return $this->redirect(['index']);
+        }
+        
+        
+    }
+    
+    /**
+     * hủy sét học viên đã học xong by gv, chỉ áp dụng cho giáo viên khi đăng nhập
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionCancelSetHt($id)
+    {
+        $request = Yii::$app->request;
+        $user = User::findOne(Yii::$app->user->id);
+        $giaoVien = $user->getIdGiaoVien();
+        $model = GvHv::find()->where([
+            'id_hoc_vien' => $id,
+            'id_giao_vien' => $giaoVien
+        ])->one();
+        
+        if($request->isAjax){
+            /*
+             *   Process for ajax request
+             */
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            if($model != null){
+                $model->da_hoan_thanh = 0;
+                $model->updateAttributes(['da_hoan_thanh']);
+            }
+            return [
+                //'forceClose'=>true,
+                'forceReload'=>'#crud-datatable-pjax',
+                'title'=> "Cập nhật trạng thái học viên",
+                'content'=>'<span class="text-danger">Đã cập nhật trạng thái <strong>chưa hoàn thành</strong> cho học viên !</span>',
+                'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"])
+            ];
+        }else{
+            /*
+             *   Process for non-ajax request
+             */
+            return $this->redirect(['index']);
+        }
+        
+        
     }
     
     

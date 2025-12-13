@@ -13,6 +13,7 @@ use app\modules\hocvien\models\HocVien;
  * @property int $id
  * @property int $id_giao_vien
  * @property int $id_hoc_vien
+ * @property int|null $da_hoan_thanh
  * @property int|null $nguoi_tao
  * @property string|null $thoi_gian_tao
  *
@@ -29,7 +30,7 @@ class GvHvBase extends GdGvHv
         return [
             [['nguoi_tao', 'thoi_gian_tao'], 'default', 'value' => null],
             [['id_giao_vien', 'id_hoc_vien'], 'required'],
-            [['id_giao_vien', 'id_hoc_vien', 'nguoi_tao'], 'integer'],
+            [['id_giao_vien', 'id_hoc_vien', 'nguoi_tao', 'da_hoan_thanh'], 'integer'],
             [['thoi_gian_tao'], 'safe'],
             [['id_giao_vien'], 'exist', 'skipOnError' => true, 'targetClass' => GiaoVien::class, 'targetAttribute' => ['id_giao_vien' => 'id']],
             [['id_hoc_vien'], 'exist', 'skipOnError' => true, 'targetClass' => HocVien::class, 'targetAttribute' => ['id_hoc_vien' => 'id']],
@@ -45,6 +46,7 @@ class GvHvBase extends GdGvHv
             'id' => 'ID',
             'id_giao_vien' => 'Giáo viên',
             'id_hoc_vien' => 'Học viên',
+            'da_hoan_thanh' => 'Đã hoàn thành',
             'nguoi_tao' => 'Người tạo',
             'thoi_gian_tao' => 'Thời gian tạo',
         ];
@@ -54,6 +56,7 @@ class GvHvBase extends GdGvHv
         if ($this->isNewRecord) {
             $this->nguoi_tao = Yii::$app->user->identity->id;
             $this->thoi_gian_tao = date('Y-m-d H:i:s');
+            $this->da_hoan_thanh = 0;
         }
         return parent::beforeSave($insert);
     }

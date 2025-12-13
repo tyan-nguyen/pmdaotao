@@ -7,6 +7,8 @@ use app\modules\hocvien\models\HocPhi;
 use app\modules\hocvien\models\KhoaHoc;
 use app\custom\CustomFunc;
 use app\modules\daotao\models\TietHoc;
+use app\modules\user\models\User;
+use app\modules\daotao\models\GvHv;
 return [
     [
         'class' => 'kartik\grid\CheckboxColumn',
@@ -15,7 +17,7 @@ return [
    [
         'class' => 'kartik\grid\ActionColumn',
         'header'=>'',
-        'template' => '{view}',
+        'template' => '{view} {setHT} {huySetHT}',
         'dropdown' => true,
         'dropdownOptions' => ['class' => 'float-right'],
         'dropdownButton'=>[
@@ -23,7 +25,46 @@ return [
             'class'=>'btn dropdown-toggle p-0'
         ],
         'vAlign'=>'middle',
-        'width' => '20px',        
+        'width' => '20px',   
+       'urlCreator' => function($action, $model, $key, $index) {
+           if ($action === 'setHT') {
+               return Url::to(['set-ht', 'id' => $key]);
+           }
+           if ($action === 'huySetHT') {
+               return Url::to(['cancel-set-ht', 'id' => $key]);
+           }
+           return Url::to([$action, 'id' => $key]);
+       },
+       'buttons' => [           
+           'setHT' => function ($url, $model, $key) {
+               return Html::a('<i class="ion-checkmark-round text-primary" data-bs-toggle="tooltip" aria-label="ion-checkmark-round" data-bs-original-title="ion-checkmark-round"></i> Đã hoàn thành', $url, [
+                   'title' => 'Đánh dấu đã hoàn thành',
+                   'role' => 'modal-remote',
+                   'class' => 'btn ripple btn-warning dropdown-item',
+                   'data-bs-placement' => 'top',
+                   'data-bs-toggle' => 'tooltip',
+                   'data-bs-dismiss' => 'modal'
+               ]);
+           },
+           'huySetHT' => function ($url, $model, $key) {
+           return Html::a('<i class="ion-close-round" data-bs-toggle="tooltip" aria-label="ion-close-round" data-bs-original-title="ion-close-round"></i> Hủy hoàn thành', $url, [
+               'title' => 'Hủy đánh dấu đã hoàn thành',
+               'role' => 'modal-remote',
+               'class' => 'btn ripple btn-warning dropdown-item',
+               'data-bs-placement' => 'top',
+               'data-bs-toggle' => 'tooltip',
+               'data-bs-dismiss' => 'modal'
+           ]);
+           },
+           ],
+           'visibleButtons' => [
+               'setHT' => function ($model, $key, $index) {
+               return !$model->daHocXongByCurrentGv();
+               },
+               'huySetHT' => function ($model, $key, $index) {
+               return $model->daHocXongByCurrentGv();
+               },
+       ],
         'viewOptions' => [
             'role' => 'modal-remote',
             'title' => 'Xem',
@@ -50,7 +91,24 @@ return [
         'class' => 'kartik\grid\SerialColumn',
         'width' => '30px',
     ],
-    
+    [
+        'class'=>'\kartik\grid\DataColumn',
+       // 'attribute'=>'ho_ten',
+        'width' => '100px',
+        'format' => 'raw',
+        'value'=>function($model){
+            $user = User::findOne(Yii::$app->user->id);
+            $giaoVien = $user->getIdGiaoVien();
+            $hvHoc = GvHv::find()->where([
+                'id_hoc_vien' => $model->id,
+                'id_giao_vien' => $giaoVien
+            ])->one();
+            if($model->daHocXongByCurrentGv())
+                return '<span class="badge bg-primary" title="Hoàn thành">H.Thành</span>';
+            else 
+                return '<span class="badge bg-warning" title="Hoàn thành">Chưa H.Thành</span>';
+        }
+    ],
     [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'id_khoa_hoc',

@@ -11,6 +11,7 @@ use Yii;
 use yii\helpers\ArrayHelper;
 use app\modules\giaovien\models\GiaoVien;
 use app\modules\daotao\models\GvHv;
+use app\modules\user\models\User;
 
 class HocVien extends HocVienBase
 {
@@ -141,6 +142,7 @@ class HocVien extends HocVienBase
     {
         $dsHocVien = GvHv::find()->alias('t')->joinWith(['hocVien as hv', 'hocVien.khoaHoc as kh'])
         ->where(['t.id_giao_vien' => $idgv])
+        ->andWhere('t.da_hoan_thanh = 0 OR t.da_hoan_thanh IS NULL')
         ->orderBy(['hv.id_khoa_hoc' => SORT_ASC,'hv.ho_ten' => SORT_ASC])
         ->all();
         
@@ -150,6 +152,22 @@ class HocVien extends HocVienBase
             return $model->hocVien->khoaHoc->ten_khoa_hoc;
         });
             
+    }
+    /**
+     * chỉ áp dụng được trong list khi giáo viên đăng nhập
+     * @return string
+     */
+    public function daHocXongByCurrentGv(){
+        $user = User::findOne(Yii::$app->user->id);
+        $giaoVien = $user->getIdGiaoVien();
+        $hvHoc = GvHv::find()->where([
+            'id_hoc_vien' => $this->id,
+            'id_giao_vien' => $giaoVien
+        ])->one();
+        if($hvHoc && $hvHoc->da_hoan_thanh == 1)
+            return true;
+        else
+            return false;
     }
     
   

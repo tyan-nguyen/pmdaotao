@@ -10,6 +10,7 @@ use Yii;
  * @property int $id
  * @property int $id_giao_vien
  * @property int $id_hoc_vien
+ * @property int|null $da_hoan_thanh
  * @property int|null $nguoi_tao
  * @property string|null $thoi_gian_tao
  *
@@ -36,7 +37,7 @@ class GdGvHv extends \yii\db\ActiveRecord
         return [
             [['nguoi_tao', 'thoi_gian_tao'], 'default', 'value' => null],
             [['id_giao_vien', 'id_hoc_vien'], 'required'],
-            [['id_giao_vien', 'id_hoc_vien', 'nguoi_tao'], 'integer'],
+            [['id_giao_vien', 'id_hoc_vien', 'nguoi_tao', 'da_hoan_thanh'], 'integer'],
             [['thoi_gian_tao'], 'safe'],
             [['id_giao_vien'], 'exist', 'skipOnError' => true, 'targetClass' => NvNhanVien::class, 'targetAttribute' => ['id_giao_vien' => 'id']],
             [['id_hoc_vien'], 'exist', 'skipOnError' => true, 'targetClass' => HvHocVien::class, 'targetAttribute' => ['id_hoc_vien' => 'id']],
@@ -52,6 +53,7 @@ class GdGvHv extends \yii\db\ActiveRecord
             'id' => 'ID',
             'id_giao_vien' => 'Id Giao Vien',
             'id_hoc_vien' => 'Id Hoc Vien',
+            'da_hoan_thanh' => 'Đã hoàn thành',
             'nguoi_tao' => 'Nguoi Tao',
             'thoi_gian_tao' => 'Thoi Gian Tao',
         ];
