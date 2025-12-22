@@ -21,7 +21,7 @@ class DemXe extends PtxXeDemXe
     {
         return [
             self::CONG1 => 'Trạm Căn tin',
-            self::CONG2 => 'Trạm Sân Cảm biến',
+            self::CONG2 => 'Trạm Sân CB',
         ];
     }
     /**
@@ -226,6 +226,12 @@ class DemXe extends PtxXeDemXe
     public function getXe()
     {
         return $this->hasOne(Xe::class, ['id' => 'id_xe']);
+    }
+    /**
+     * get trạng thái phiên xe
+     */
+    public function getTrangThaiPhien(){
+        
     }
     
     

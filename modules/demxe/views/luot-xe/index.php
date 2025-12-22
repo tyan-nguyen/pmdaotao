@@ -11,7 +11,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\modules\demxe\models\search\DemXeSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Dem Xes';
+$this->title = 'Đếm xe';
 $this->params['breadcrumbs'][] = $this->title;
 Yii::$app->params['showSearch'] = true;
 Yii::$app->params['showView'] = true;
@@ -87,7 +87,7 @@ Yii::$app->params['showView'] = true;
             'summary'=>'Tổng: {totalCount} dòng dữ liệu',
             'panel' => [
                 'headingOptions'=>['class'=>'card-header rounded-bottom-0 card-header text-dark'],
-                'heading' => '<i class="typcn typcn-folder-open"></i> DANH SÁCH Dem Xes',
+                'heading' => '<i class="typcn typcn-folder-open"></i> DANH SÁCH ĐẾM XE',
                 'before'=>false,
             ],
             'export'=>[

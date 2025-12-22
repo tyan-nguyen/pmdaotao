@@ -63,6 +63,7 @@ foreach ($contactLog as $item) {
     $trangThai = $item->trang_thai;
     $color = $colorList[$trangThai] ?? '#000';
     $bienSoXe = $item->xe->bien_so_xe;
+    $monHoc = $item->monHoc->ten_mon;
     
     if ($current === null) {
         // bắt nhóm đầu tiên
@@ -73,6 +74,7 @@ foreach ($contactLog as $item) {
             'hoc_vien' => $hv,
             'id_hoc_vien' => $idHv,
             'trang_thai' => $trangThai,
+            'mon_hoc' => $monHoc,
             'color' => $color,
             'bien_so_xe'=>$bienSoXe
         ];
@@ -81,10 +83,12 @@ foreach ($contactLog as $item) {
         // 1. Liền kề về thời gian
         // 2. Cùng học viên
         // 3. Cùng trạng thái
+        // 4. Cùng môn học
         if (
             $start == $current['end'] &&
             $idHv == $current['id_hoc_vien'] &&
-            $trangThai == $current['trang_thai']
+            $trangThai == $current['trang_thai'] &&
+            $monHoc = $current['mon_hoc']
             ) {
                 // gộp: tăng giờ kết thúc
                 $current['end'] = $end;
@@ -99,6 +103,7 @@ foreach ($contactLog as $item) {
                     'hoc_vien' => $hv,
                     'id_hoc_vien' => $idHv,
                     'trang_thai' => $trangThai,
+                    'mon_hoc' => $monHoc,
                     'color' => $color,
                     'bien_so_xe' => $bienSoXe
                 ];
@@ -119,6 +124,7 @@ foreach ($merged as $m) {
         'description' => 'Xe:'. $m['bien_so_xe'] .'<br>GV: ' . $m['giao_vien'] . ' - HV: ' . $m['hoc_vien']
         . ' dạy từ ' . CustomFunc::convertYMDHISToDMYHI($m['start'])
         . ' đến ' . CustomFunc::convertYMDHISToDMYHI($m['end'])
+        . '<br>Môn học: ' . $m['mon_hoc']
         . '<br>Trạng thái: ' . TietHoc::getDmTrangThai()[$m['trang_thai']],
         'start' => $m['start'],
         'end' => $m['end'],
