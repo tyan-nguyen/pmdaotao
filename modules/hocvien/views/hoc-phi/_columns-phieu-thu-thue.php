@@ -85,28 +85,7 @@ return [
             'width' => '30px',
         ],
         
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'noi_dang_ky',
-        'label'=>'Cơ sở',
-        'value'=>function($model){
-            return DangKyHv::getLabelNoiDangKyBadge($model->nguoiTao->noi_dang_ky);
-        },
-        'format'=>'raw',
-        'width' => '50px',
-        'contentOptions' => [ 'style' => 'text-align:center' ],
-    ],
-            
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'ma_so_phieu',
-        'label'=>'Số HĐ',
-        'value'=>function($model){
-            return CustomFunc::fillNumber($model->ma_so_phieu);
-        },
-        'width' => '50px',
-        'contentOptions' => [ 'style' => 'text-align:center' ],
-        ],
+    
         [
             'class'=>'\kartik\grid\DataColumn',
             'attribute'=>'thoi_gian_tao',
@@ -127,6 +106,7 @@ return [
             'value'=>function($model){
                 return $model->hocVien->ho_ten;
             },
+            'width' => '150px',
         ],
         [
             'class'=>'\kartik\grid\DataColumn',
@@ -150,6 +130,7 @@ return [
             'value'=>function($model){
                 return $model->hocVien->hangDaoTao->ma_hang;
             },
+            'width' => '80px',
         ],
                     /* [
                      'class'=>'\kartik\grid\DataColumn',
@@ -256,6 +237,28 @@ return [
         },
         'contentOptions' => [ 'style' => 'text-align:center' ],
     ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'noi_dang_ky',
+        'label'=>'Cơ sở',
+        'value'=>function($model){
+        return DangKyHv::getLabelNoiDangKyBadge($model->nguoiTao->noi_dang_ky);
+        },
+        'format'=>'raw',
+        'width' => '50px',
+        'contentOptions' => [ 'style' => 'text-align:center' ],
+        ],
+        
+        [
+            'class'=>'\kartik\grid\DataColumn',
+            'attribute'=>'ma_so_phieu',
+            'label'=>'Số HĐ',
+            'value'=>function($model){
+            return CustomFunc::fillNumber($model->ma_so_phieu);
+            },
+            'width' => '50px',
+            'contentOptions' => [ 'style' => 'text-align:center' ],
+            ],
     // [
     // 'class'=>'\kartik\grid\DataColumn',
     // 'attribute'=>'bien_lai',
