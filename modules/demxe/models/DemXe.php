@@ -66,6 +66,7 @@ class DemXe extends PtxXeDemXe
     {
         return [
             self::CONG1_START => 'Cổng 1 Ra',
+            self::CONG1_START => 'Cổng 1 Ra 2',
             self::CONG1_END => 'Cổng 1 Vào',
             self::CONG2_START => 'Cổng 2 Vào',
             self::CONG2_END => 'Cổng 2 Ra',
