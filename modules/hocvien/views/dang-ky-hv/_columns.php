@@ -289,6 +289,21 @@ return [
         'attribute'=>'ho_ten',
         'width' => '175px',
     ],
+    [
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'gioi_tinh',
+        'label'=>'G.T',
+        'width' => '50px',
+        'value' => function ($model) {
+        return $model->gioi_tinh == 1 ? 'Nam' : 'Nữ';
+        },
+        'filter' => [
+            1 => 'Nam',
+            0 => 'Nữ',
+        ],
+        'headerOptions' => ['style' => 'text-align: center;'],
+        'contentOptions' => ['style' => 'text-align: center;'],
+     ],
     /* [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'dia_chi',
@@ -313,12 +328,12 @@ return [
     [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'id_hang',
-        'width' => '100px',
+        'width' => '80px',
         'value' => function($model) {
         return '<span title="'. ($model->hangDaoTao ? $model->hangDaoTao->ten_hang : 'N/A') .'">' . ($model->hangDaoTao ? $model->hangDaoTao->ma_hang : 'N/A') . '</span>';
         },
         'format'=>'html',
-        'label' => 'H.Đào tạo',        
+        'label' => 'Hạng ĐT',        
         'pageSummary' => 'Tổng cộng (E=A-B-C+D)',
         'pageSummaryOptions' => ['class' => 'text-right text-end'],
         //'contentOptions' => [ 'style' => 'text-align:center' ],
@@ -464,7 +479,7 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ghi_chu',
         'label'=>'Ghi chú',
-        'width' => '200px'
+        'width' => '150px'
     ],
     
      /* [
