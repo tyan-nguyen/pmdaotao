@@ -104,33 +104,12 @@ $totalFmt = number_format($dataProvider->getTotalCount(), 0, ',', '.');
 						<div class="dropdown-menu tx-13" style="">
 							<h6 class="dropdown-header tx-uppercase tx-11 tx-bold bg-info tx-spacing-1">
 								Chọn chức năng</h6>'
-                    .
+                    /* .
                     Html::a('<i class="fas fa fa-plus" aria-hiddi="true"></i> Thêm mới', ['create'],
-                        ['role'=>'modal-remote','title'=> 'Thêm mới','class'=>'dropdown-item'])
+                        ['role'=>'modal-remote','title'=> 'Thêm mới','class'=>'dropdown-item']) */
                     .
                     Html::a('<i class="fas fa fa-sync" aria-hidden="true"></i> Tải lại', [''],
                         ['data-pjax'=>1, 'class'=>'dropdown-item', 'title'=>'Tải lại'])
-                    .
-                    Html::a('<i class="fas fa fa-trash" aria-hidden="true"></i>&nbsp; Xóa danh sách',
-                        ["bulkdelete"],
-                        [
-                            'class'=>'dropdown-item text-secondary',
-                            'role'=>'modal-remote-bulk',
-                            'data-confirm'=>false, 'data-method'=>false,// for overide yii data api
-                            'data-request-method'=>'post',
-                            'data-confirm-title'=>'Xác nhận xóa?',
-                            'data-confirm-message'=>'Bạn có chắc muốn xóa?'
-                        ])
-                    .'<li><hr class="dropdown-divider"></li>'
-                    . Html::a('<i class="fas fa-clipboard-list"></i> In DS theo ca', ['report-list'],
-                        ['role'=>'modal-remote','title'=> 'In DS theo ca','class'=>'dropdown-item'])
-                    /* .'<li><hr class="dropdown-divider"></li>'
-                    . Html::a('<i class="fas fa-clipboard-list"></i> Báo cáo DS HV', ['/hocvien/bao-cao/rp-danh-sach-dang-ky'],
-                        ['role'=>'modal-remote','title'=> 'Báo cáo danh sách học viên','class'=>'dropdown-item']) */
-                    .'<li><hr class="dropdown-divider"></li>'
-                    . Html::a('<i class="fas fa-clipboard-list"></i> BB bàn giao hồ sơ', ['/hocvien/bao-cao/rp-bien-ban-ban-giao'],
-                        ['role'=>'modal-remote','title'=> 'Biên bản bàn giao hồ sơ','class'=>'dropdown-item'])
-                    .'<li><hr class="dropdown-divider"></li>'
                     .'
 						</div>
 					</div>

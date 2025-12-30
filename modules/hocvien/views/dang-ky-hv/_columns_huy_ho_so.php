@@ -17,7 +17,8 @@ return [
     [
         'class' => 'kartik\grid\ActionColumn',
         'header'=>'',
-        'template' => '{payment} {update} {bienTapDiaChi}<li><hr class="dropdown-divider"></li> {view} {nhanAo} {nhanTaiLieu} <li><hr class="dropdown-divider"></li> {danhSachDoiSatHach} {danhSachDoiHang} {danhSachBaoLuu} {huyHoSo} {doiHangTrongNgay} {doiHangNgayCu} {doiSatHach} {baoLuu} <li><hr class="dropdown-divider"></li> {delete}',
+        //'template' => '{payment} {update} {bienTapDiaChi}<li><hr class="dropdown-divider"></li> {view} {nhanAo} {nhanTaiLieu} <li><hr class="dropdown-divider"></li> {danhSachDoiSatHach} {danhSachDoiHang} {danhSachBaoLuu} {huyHoSo} {doiHangTrongNgay} {doiHangNgayCu} {doiSatHach} {baoLuu} <li><hr class="dropdown-divider"></li> {delete}',
+        'template' => '{view}',
         'dropdown' => true,
         'dropdownOptions' => ['class' => 'float-right'],
         'dropdownButton'=>[
