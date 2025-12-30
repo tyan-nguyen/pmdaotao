@@ -79,6 +79,7 @@ return [
         'attribute' => 'ho_ten',
         'width' => '200px',
     ],
+    
     [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'tai_khoan',
@@ -92,12 +93,13 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'gioi_tinh',
         'width' => '50px',
-         'value'=> function ($model)
-         {
-            return $model->gioi_tinh == 1 ? 'Nam' : 'Nữ' ;
-         },
+        'value'=> function ($model)
+        {
+           return $model->gioi_tinh == 1 ? 'Nam' : 'Nữ' ;
+        },
         'filter'=> [1 => 'Nam', 0 => 'Nữ'],
     ],
+    
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ngay_sinh',
@@ -105,7 +107,27 @@ return [
             return CustomFunc::convertYMDHISToDMY($model->ngay_sinh);
         },
         'width' => '70px',
-        ],
+    ],
+        
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'label'=>'Xe phụ trách',
+        'value'=>function($model){
+            $text = '';
+            foreach ($model->getDanhSachXePhuTrach() as $iXe=>$item){
+                if($item != null){
+                    if($iXe > 0){
+                        $text .= '<br/>';
+                    }
+                    $text .= '- ' . $item->xe->bien_so_xe . ' - ' . $item->xe->loaiXe->ten_loai_xe;
+                }
+            }
+            return $text;
+        },
+        'format'=>'raw',
+        'width' => '200px',
+    ],
+                
     [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'id_phong_ban',

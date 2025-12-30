@@ -8,6 +8,7 @@ use app\modules\user\models\User;
 use app\modules\nhanvien\models\To;
 use app\modules\vanban\models\VanBan;
 use app\custom\CustomFunc;
+use app\modules\daotao\models\GvXe;
 /**
  * This is the model class for table "nv_nhan_vien".
  *
@@ -152,5 +153,16 @@ class NhanVienBase extends \app\models\NvNhanVien
      */
     public function getDiaChi(){
         return $this->dia_chi;
+    }
+    
+    /**
+     * Gets query for [[GdGvHvs]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDanhSachXePhuTrach()
+    {
+        $gvXe = GvXe::find()->where(['id_giao_vien'=>$this->id])->all();
+        return $gvXe;
     }
 }

@@ -7,6 +7,7 @@ use yii\helpers\ArrayHelper;
 use app\custom\CustomFunc;
 use app\modules\kholuutru\models\File;
 use app\modules\kholuutru\models\LuuKho;
+use app\modules\daotao\models\GvXe;
 
 class NhanVien extends NhanVienBase
 {
@@ -59,4 +60,5 @@ class NhanVien extends NhanVienBase
         return $model?$model->ho_ten:'-';
     }
 
+    
 }
