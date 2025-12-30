@@ -37,7 +37,8 @@ $totalFmt = number_format($dataProvider->getTotalCount(), 0, ',', '.');
     color:blue !important;
 }
 /*.ho-so-da-huy td{*/
-.ho-so-da-huy td:not(:nth-child(14)):not(:nth-child(15)):not(:nth-child(16)):not(:nth-child(17)) {
+/*.ho-so-da-huy td:not(:nth-child(14)):not(:nth-child(15)):not(:nth-child(16)):not(:nth-child(17)) {*/
+.ho-so-da-huy td:nth-child(2), .ho-so-da-huy td:nth-child(3), .ho-so-da-huy td:nth-child(4){
     color:blue !important;
     text-decoration: line-through;
 }
