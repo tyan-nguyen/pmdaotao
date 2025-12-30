@@ -287,7 +287,7 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ho_ten',
-        'width' => '175px',
+        'width' => '150px',
     ],
     [
         'class' => '\kartik\grid\DataColumn',
@@ -479,7 +479,7 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ghi_chu',
         'label'=>'Ghi chú',
-        'width' => '150px'
+        'width' => '175px'
     ],
     
      /* [
