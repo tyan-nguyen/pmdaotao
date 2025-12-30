@@ -325,6 +325,14 @@ class Xe extends \app\models\PtxXe
             return $model->xe->loaiXe->ten_loai_xe;
         });
     }
+    /**
+     * get giáo viên được phân công sử dụng xe
+     */
+    public function getListGiaoVienSuDung()
+    {
+        $dsGv = GvXe::find()->where(['id_xe'=>$this->id])->all();
+        return $dsGv;        
+    }
     
     public function beforeSave($insert)
     {

@@ -207,11 +207,11 @@ return [
         },
         'contentOptions' => [ 'style' => 'text-align:center' ],
     ], */
-    [
+    /* [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'so_hop_dong',
         'contentOptions' => [ 'style' => 'text-align:center' ],
-    ],
+    ], */
    /*  [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'id_giao_vien',
@@ -226,6 +226,21 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'hieu_xe',
     ], */
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'label'=>'GV phụ trách',
+        'value'=>function($model){
+            $text = '';
+            foreach ($model->getListGiaoVienSuDung() as $iGv=>$gv){
+                if($iGv > 0){
+                    $text .= '<br/>';
+                }
+                $text .= '- ' . $gv->giaoVien->ho_ten;
+            }
+            return $text;
+        },
+        'format'=>'raw'
+    ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ghi_chu',
