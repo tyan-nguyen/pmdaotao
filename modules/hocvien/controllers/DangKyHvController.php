@@ -76,6 +76,26 @@ class DangKyHvController extends Controller
     }
     
     /**
+     * Lists all HvHocVien models - hủy hồ sơ.
+     * @return mixed
+     */
+    public function actionIndexHuyHoSo()
+    {
+        $searchModel = new DangKyHvSearch();
+        $dataProvider = $searchModel->searchHuyHoSo(Yii::$app->request->queryParams);
+        //an add
+        //$dataProvider->query->andWhere(['trang_thai' => ['DANG_KY']]);
+        //$dataProvider->query->andWhere('id_khoa_hoc is NULL');
+        $pagination = $dataProvider->getPagination();
+        $pagination->pageSize = 20;
+        return $this->render('index-huy-ho-so', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'pagination' =>$pagination,
+        ]);
+    }
+    
+    /**
      * Lists all HvHocVien models.
      * @return mixed
      */

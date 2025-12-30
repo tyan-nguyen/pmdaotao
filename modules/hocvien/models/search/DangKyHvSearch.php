@@ -190,4 +190,105 @@ class DangKyHvSearch extends DangKyHv
         
         return $dataProvider;
     }
+    
+    /**
+     * Creates data provider instance with search query applied
+     *
+     * @param array $params
+     *
+     * @return ActiveDataProvider
+     */
+    public function searchHuyHoSo($params)
+    {
+        $query = DangKyHv::find()->alias('t');
+        
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'sort'=> ['defaultOrder' => ['thoi_gian_huy_ho_so' => SORT_DESC]],
+        ]);
+        
+        $this->load($params);
+        
+        if (!$this->validate()) {
+            // Uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+        
+        if($this->noiNhanAo != null && $this->noiNhanTaiLieu != null){
+            $query->joinWith(['nguoiGiaoAo ga', 'nguoiGiaoTaiLieu gtl']);
+        } else if($this->noiNhanAo != null){
+            $query->joinWith(['nguoiGiaoAo ga']);
+        } else if($this->noiNhanTaiLieu != null){
+            $query->joinWith(['nguoiGiaoTaiLieu gtl']);
+        }
+        
+        if($this->noiNhanAo != null){
+            $query->andFilterWhere(['ga.noi_dang_ky' => $this->noiNhanAo]);
+        }
+        if($this->noiNhanTaiLieu != null){
+            $query->andFilterWhere(['gtl.noi_dang_ky' => $this->noiNhanTaiLieu]);
+        }
+        
+        if($this->ngay_nhan_ao){
+            $this->ngay_nhan_ao = CustomFunc::convertDMYToYMD($this->ngay_nhan_ao);
+        }
+        if($this->ngay_nhan_tai_lieu){
+            $this->ngay_nhan_tai_lieu = CustomFunc::convertDMYToYMD($this->ngay_nhan_tai_lieu);
+        }
+        if($this->thoi_gian_hoan_thanh_ho_so){
+            $this->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertDMYToYMD($this->thoi_gian_hoan_thanh_ho_so);
+            $query->where("DATE(t.thoi_gian_hoan_thanh_ho_so) = '" . $this->thoi_gian_hoan_thanh_ho_so."'");
+        }
+        if($this->thoi_gian_tao){
+            $this->thoi_gian_tao = CustomFunc::convertDMYToYMD($this->thoi_gian_tao);
+            $query->where("DATE(t.thoi_gian_tao) = '" . $this->thoi_gian_tao."'");
+        }
+        
+        $query->andFilterWhere([
+            't.id' => $this->id,
+            't.id_khoa_hoc' => $this->id_khoa_hoc,
+            't.nguoi_tao' => $this->nguoi_tao,
+            //'thoi_gian_tao' => $this->thoi_gian_tao,
+            't.gioi_tinh'=>$this->gioi_tinh,
+            't.id_hang'=>$this->id_hang,
+            //'nguoi_tao'=>$this->nguoi_tao,
+            't.da_nhan_ao' => $this->da_nhan_ao,
+            't.ngay_nhan_ao' => $this->ngay_nhan_ao,
+            't.ngay_nhan_tai_lieu' => $this->ngay_nhan_tai_lieu,
+            't.size' => $this->size,
+            't.da_nhan_tai_lieu' => $this->da_nhan_tai_lieu,
+            't.noi_dang_ky' => $this->noi_dang_ky,
+            't.label' => $this->label,
+        ]);
+        
+        /* if($this->huy_ho_so){
+            $query->andFilterWhere([
+                't.huy_ho_so' => $this->huy_ho_so,
+            ]);
+        } else { */
+            $query->andFilterWhere([
+                't.huy_ho_so' => 1,
+            ]);
+        /* } */
+        
+        $query->andFilterWhere(['like', 't.ho_ten', $this->ho_ten])
+        ->andFilterWhere(['like', 't.dia_chi', $this->dia_chi])
+        ->andFilterWhere(['like', 't.so_dien_thoai', $this->so_dien_thoai])
+        ->andFilterWhere(['like', 't.so_cccd', $this->so_cccd])
+        ->andFilterWhere(['like', 't.trang_thai', $this->trang_thai])
+        // ->andFilterWhere(['like', 'id_hang', $this->id_hang])
+        ->andFilterWhere(['like', 't.ngay_sinh', $this->ngay_sinh])
+        ->andFilterWhere(['like', 't.ghi_chu', $this->ghi_chu]);
+        
+        //load danh sách của cơ sở nhân viên nhận hồ sơ
+        /* $user = User::getCurrentUser();
+         if(!$user->superadmin && $user->noi_dang_ky){
+         $query->andFilterWhere([
+         'noi_dang_ky' => $user->noi_dang_ky
+         ]);
+         } */
+        
+        return $dataProvider;
+    }
 }
