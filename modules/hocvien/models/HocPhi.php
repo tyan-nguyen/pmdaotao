@@ -73,8 +73,7 @@ class HocPhi extends \app\models\HvHocPhi
             $this->nguoi_tao = Yii::$app->user->identity->id;
             $this->thoi_gian_tao = date('Y-m-d H:i:s');
           
-        }
-  
+        }  
         return parent::beforeSave($insert);
     }
 }

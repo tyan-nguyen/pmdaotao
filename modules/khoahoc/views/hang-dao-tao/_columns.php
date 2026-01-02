@@ -99,7 +99,16 @@ return [
         'attribute'=>'ten_hang',
         'width' => '100px',
     ],
-
+    [
+        'class' => '\kartik\grid\DataColumn',
+        'label'=>'Học phí',
+        'width' => '100px',
+        'value' => function($model) {
+            return $model->currentHocPhi?$model->currentHocPhi->hoc_phi:0;
+        },
+        'contentOptions' => [ 'style' => 'text-align:right' ],
+        'format' => ['decimal', 0]
+    ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'check_phan_hang',

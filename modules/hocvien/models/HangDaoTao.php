@@ -69,7 +69,19 @@ class HangDaoTao extends \app\models\HvHangDaoTao
         //neu user la chi nhanh cho lach va hang dao tao hang a, a1 se lay theo hoc phi cung
         // con lai thi lay hoc phi moi nhat
         $user = User::getCurrentUser();
-        if(($user->noi_dang_ky == DangKyHv::NOIDANGKY_CS5 
+        if(($user->noi_dang_ky == DangKyHv::NOIDANGKY_CS5
+            || $user->noi_dang_ky == DangKyHv::NOIDANGKY_CS9
+            || $user->noi_dang_ky == DangKyHv::NOIDANGKY_CS10
+            || $user->noi_dang_ky == DangKyHv::NOIDANGKY_CS12
+            ) && $this->id==7){//hạng A1
+                return HocPhi::findOne(3);//học phí cho hạng A1(cho CN chợ lách)
+        } else if(($user->noi_dang_ky == DangKyHv::NOIDANGKY_CS5
+            || $user->noi_dang_ky == DangKyHv::NOIDANGKY_CS9
+            || $user->noi_dang_ky == DangKyHv::NOIDANGKY_CS10
+            || $user->noi_dang_ky == DangKyHv::NOIDANGKY_CS12
+            ) && $this->id==8){//hạng A1
+                return HocPhi::findOne(4);//học phí cho hạng A1 - CGPLX (cho CN chợ lách)
+        } else if(($user->noi_dang_ky == DangKyHv::NOIDANGKY_CS5 
             || $user->noi_dang_ky == DangKyHv::NOIDANGKY_CS9 
             || $user->noi_dang_ky == DangKyHv::NOIDANGKY_CS10
             || $user->noi_dang_ky == DangKyHv::NOIDANGKY_CS12

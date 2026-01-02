@@ -3,6 +3,7 @@
 namespace app\modules\khoahoc\models;
 use Yii;
 use app\modules\daotao\models\HangMonHoc;
+use app\modules\hocvien\models\HocPhi;
 /**
  * This is the model class for table "hv_hang_dao_tao".
  *
@@ -65,5 +66,12 @@ class HangDaoTao extends \app\models\HvHangDaoTao
     public function getListModule()
     {
         return $this->hasMany(HangMonHoc::class, ['id_hang' => 'id']);
+    }
+    
+    /**
+     * get hoc phi hien tai cua hang dao tao
+     */
+    public function getCurrentHocPhi(){
+        return $this->hasOne(HocPhi::class, ['id_hang' => 'id'])->orderBy(['id'=>SORT_DESC]);
     }
 }

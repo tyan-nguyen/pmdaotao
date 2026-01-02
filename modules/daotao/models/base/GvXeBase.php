@@ -6,6 +6,7 @@ use Yii;
 use app\models\GdGvXe;
 use app\modules\giaovien\models\GiaoVien;
 use app\modules\thuexe\models\Xe;
+use app\modules\daotao\models\GvXeHistory;
 
 /**
  * This is the model class for table "gd_gv_xe".
@@ -57,6 +58,25 @@ class GvXeBase extends GdGvXe
             $this->thoi_gian_tao = date('Y-m-d H:i:s');
         }
         return parent::beforeSave($insert);
+    }
+    /**
+     * after delete
+     */
+    public function afterDelete()
+    {
+        parent::afterDelete(); // luôn gọi trước
+        
+        $history = new GvXeHistory();
+        $history->id_giao_vien = $this->id_giao_vien;
+        $history->id_xe = $this->id_xe;
+        $history->time_start = $this->thoi_gian_tao;
+        $history->time_end = date('Y-m-d H:i:s');
+        //$history->note = '';
+        
+        // Không throw exception để tránh rollback delete chính
+        if (!$history->save(false)) {
+            Yii::error($history->errors, __METHOD__);
+        }
     }
     
     /**
