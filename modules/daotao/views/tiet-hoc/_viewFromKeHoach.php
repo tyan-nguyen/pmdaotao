@@ -72,7 +72,19 @@ use app\modules\user\models\User;
      	<td><?= $tietHoc->hocVien->ho_ten ?></td>
      	<td><?= $tietHoc->hocVien->khoaHoc->ten_khoa_hoc ?></td>
      	<td><?= $tietHoc->monHoc->ten_mon /*. ($tietHoc->monHoc->ten_mon_sub?(' ('.$tietHoc->monHoc->ten_mon_sub.')'):'')*/ ?></td>
-     	<td align="center"><?= $tietHoc->xe->bien_so_xe ?></td>
+     	<td align="center">
+     		<?php 
+         		if(User::hasPermission('qQuanLySuKienDemXe')){
+         		    echo Html::a($tietHoc->xe->bien_so_xe, 
+         		        '/thuexe/lich-xe/lich-xe-gv-so-sanh?idxe='.$tietHoc->id_xe.'&menu=dt3',[
+         		            'data-pjax'=>0,
+         		            'target'=>'_blank'
+         		        ]);
+         		} else {
+         		     echo $tietHoc->xe->bien_so_xe;
+         		}
+         		?>
+     	</td>
      	<td align="center"><?= TietHoc::getLabelTinhTrangXeBadge($tietHoc->trang_thai) ?></td>
      	<td align="center"><?= $tietHoc->so_km  ?></td>
      	<td><?= $tietHoc->ghi_chu ?></td>
