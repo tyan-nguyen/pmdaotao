@@ -13,12 +13,28 @@ use app\modules\thuexe\models\Xe;
 
     <?php $form = ActiveForm::begin([
         	'id'=>'myFilterForm',
-            'method' => 'post',
+            'method' => 'get',
             'options' => [
                 'class' => 'myFilterForm'
             ]
       	]); ?>
 	<div class="row">
+		<div class="col-md-2">
+             <?= $form->field($model, 'loaiXe')->widget(Select2::classname(), [
+                    'data' =>  ['xeNha'=>'Xe nội bộ', 'xeLa'=>'Xe lạ'],
+                    'language' => 'vi',
+                    'options' => [
+                        'placeholder' => 'Chọn xe...',
+                        'id' => 'loai-xe-dropdown'
+                    ],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                        'width' => '100%'
+                    ],
+            ])->label('Nhóm xe');?> 
+                
+        </div>
+        
     	<div class="col-md-2">
              <?= $form->field($model, 'id_xe')->widget(Select2::classname(), [
                  'data' =>  Xe::getListAll(),
@@ -42,11 +58,28 @@ use app\modules\thuexe\models\Xe;
       	         'prompt' => '-Tất cả-'
 			]) ?>
     	</div>
-    	<div class="col-md-3">
-			<?= $form->field($model, 'thoi_gian_bd')->textInput() ?>
+    	
+    	
+    	<div class="col-md-2">
+			<?= $form->field($model, 'thoi_gian_bd')->textInput()->label('Thời gian đi') ?>
     	</div>
-    	<div class="col-md-3">
-			<?= $form->field($model, 'thoi_gian_kt')->textInput() ?>
+    	
+    	<div class="col-md-2">
+			<?= $form->field($model, 'thoi_gian_kt')->textInput()->label('Thời gian về') ?>
+    	</div>
+
+    	
+    	<div class="col-md-2">
+			<?= $form->field($model, 'bd_tu')->textInput()->label('Đi từ') ?>
+    	</div>
+    	<div class="col-md-2">
+			<?= $form->field($model, 'bd_den')->textInput()->label('Đi đến') ?>
+    	</div>
+    	<div class="col-md-2">
+			<?= $form->field($model, 'kt_tu')->textInput()->label('Về từ') ?>
+    	</div>
+    	<div class="col-md-2">
+			<?= $form->field($model, 'kt_den')->textInput()->label('Về đến') ?>
     	</div>
     	<!--<div class="col-md-4">
 			<?= $form->field($model, 'so_gio')->textInput() ?>
