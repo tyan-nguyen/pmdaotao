@@ -90,7 +90,8 @@ return [
                     return Html::a($model->xe->bien_so_xe,
                         '/thuexe/lich-xe/lich-xe-gv-so-sanh?idxe='.$model->id_xe.'&menu=dt3',[
                             'data-pjax'=>0,
-                            'target'=>'_blank'
+                            'target'=>'_blank',
+                            'style'=>'font-weight:bold; color:#212121'
                         ]);
                 } else {
                     return $model->xe->bien_so_xe;
