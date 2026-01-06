@@ -2,6 +2,8 @@
 use yii\helpers\Url;
 use app\modules\demxe\models\DemXe;
 use app\custom\CustomFunc;
+use app\modules\user\models\User;
+use yii\helpers\Html;
 
 return [
     [
@@ -83,6 +85,19 @@ return [
         'attribute'=>'ma_xe',
         'label'=>'Biển số xe',
         'value'=>function($model){
+            if($model->xe){
+                if(User::hasPermission('qQuanLySuKienDemXe')){
+                    return Html::a($model->xe->bien_so_xe,
+                        '/thuexe/lich-xe/lich-xe-gv-so-sanh?idxe='.$model->id_xe.'&menu=dt3',[
+                            'data-pjax'=>0,
+                            'target'=>'_blank'
+                        ]);
+                } else {
+                    return $model->xe->bien_so_xe;
+                }
+            } else {
+                return $model->bien_so_xe;
+            }
             return $model->xe?$model->xe->bien_so_xe:$model->bien_so_xe;
         }
     ],
