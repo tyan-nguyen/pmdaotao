@@ -90,6 +90,7 @@ return [
                     return Html::a($model->xe->bien_so_xe,
                         '/thuexe/lich-xe/lich-xe-gv-so-sanh?idxe='.$model->id_xe.'&menu=dt3',[
                             'data-pjax'=>0,
+                            'role'=>'00',
                             'target'=>'_blank',
                             'style'=>'font-weight:bold; color:#212121'
                         ]);
