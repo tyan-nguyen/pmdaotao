@@ -101,7 +101,8 @@ return [
             }
             return $model->xe?$model->xe->bien_so_xe:$model->bien_so_xe;
         },
-        'format'=>'html'
+        'format'=>'html',
+        'contentOptions' => ['data-pjax' => 0],
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
