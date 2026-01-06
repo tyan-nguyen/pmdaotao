@@ -70,7 +70,7 @@ return [
         'label'=>'Loại xe',
         'value'=>function($model){
             return $model->id_xe != null ? '<span class="badge bg-primary">Xe nội bộ</span>' 
-                : '<span class="badge bg-warning">Xe khách</span>';
+                : '<span class="badge bg-info">Xe khách</span>';
         },
         'format'=>'html'
     ],
