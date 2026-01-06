@@ -68,7 +68,7 @@ return [
         'attribute'=>'id_xe',
         'label'=>'Loại xe',
         'value'=>function($model){
-            return $model->id_xe != null ? 'Xe nội bộ' : 'Xe ngoài';
+            return $model->id_xe != null ? 'Xe nội bộ' : 'Xe khách';
         }
     ],
     /* [
