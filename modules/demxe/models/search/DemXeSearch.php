@@ -17,6 +17,7 @@ class DemXeSearch extends DemXe
     public $bd_den;
     public $kt_tu;
     public $kt_den;
+    public $status;
     /**
      * @inheritdoc
      */
@@ -25,7 +26,7 @@ class DemXeSearch extends DemXe
         return [
             [['id', 'id_xe', 'nguoi_tao', 'id_file'], 'integer'],
             [['ma_xe', 'ma_cong', 'thoi_gian_bd', 'thoi_gian_kt', 'so_phut', 
-                'thoi_gian_tao', 'ghi_chu', 'loaiXe', 'bd_tu', 'bd_den', 'kt_tu', 'kt_den'], 'safe'],
+                'thoi_gian_tao', 'ghi_chu', 'loaiXe', 'bd_tu', 'bd_den', 'kt_tu', 'kt_den', 'status'], 'safe'],
             [['so_gio'], 'number']
         ];
     }
@@ -187,6 +188,16 @@ class DemXeSearch extends DemXe
                     }
                 }
                 
+            }
+            
+            if(!empty($this->status)){
+                if($this->status == 'CHICOVO'){
+                    $query->andWhere('thoi_gian_bd IS NULL and thoi_gian_kt IS NOT NULL');
+                }else if($this->status == 'CHICORA'){
+                    $query->andWhere('thoi_gian_bd IS NOT NULL and thoi_gian_kt IS NULL');
+                }else if($this->status == 'COVOCORA'){
+                    $query->andWhere('thoi_gian_bd IS NOT NULL and thoi_gian_kt IS NOT NULL');
+                }
             }
                 
 		}

@@ -431,3 +431,17 @@ style for all grid
 .crud-datatable .float-right .dropdown-toggle {
 	padding: 2px 3px 0px 3px !important;
 }
+
+/** thêm css cho icon */
+.c-icon-danger{
+	color:red;
+	font-weight: bold;
+}
+.c-icon-warning{
+	color:orange;
+	font-weight: bold;
+}
+.c-icon-normal{
+	color:blue;
+	font-weight: bold;
+}

@@ -228,12 +228,44 @@ class DemXe extends PtxXeDemXe
     {
         return $this->hasOne(Xe::class, ['id' => 'id_xe']);
     }
+    /** DANH SÁCH TRẠNG THÁI PHIÊN */
+    /**
+     * get trạng thái phiên xe
+     */
+    public static function getDmTrangThaiPhien(){
+        return [
+            'CHICOVO'=>'Có vô không có ra',
+            'CHICORA'=>'Có ra chưa có vô',
+            'COVOCORA'=>'Có ra có vô',
+        ];
+    }
     /**
      * get trạng thái phiên xe
      */
     public function getTrangThaiPhien(){
-        
+        $status = '';
+        if($this->thoi_gian_bd == null && $this->thoi_gian_kt!=null){
+            $status = 'Có vô không có ra';
+        } else if($this->thoi_gian_bd != null && $this->thoi_gian_kt==null){
+            $status = 'Có ra chưa có vô';
+        }else if($this->thoi_gian_bd != null && $this->thoi_gian_kt!=null){
+            $status = 'Có ra có vô';
+        }
+        return $status;
     }
-    
+    /**
+     * get trạng thái phiên xe status
+     */
+    public function getTrangThaiPhienIcon(){
+        $status = '';
+        if($this->thoi_gian_bd == null && $this->thoi_gian_kt!=null){
+            $status = '<i class="ion-alert c-icon-danger"></i>';
+        } else if($this->thoi_gian_bd != null && $this->thoi_gian_kt==null){
+            $status = '<i class="ion-alert-circled c-icon-warning"></i>';
+        }else if($this->thoi_gian_bd != null && $this->thoi_gian_kt!=null){
+            $status = '<i class="ion-checkmark c-icon-normal"></i>';
+        }
+        return $status;
+    }
     
 }

@@ -56,6 +56,15 @@ return [
     // ],
     [
         'class'=>'\kartik\grid\DataColumn',
+        'label'=>'T.T.',
+        'value'=>function($model){
+            return $model->trangThaiPhienIcon;
+        },
+        'format'=>'html',
+        'contentOptions' => ['style' => 'text-align:center'],
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'id_xe',
         'label'=>'Loại xe',
         'value'=>function($model){

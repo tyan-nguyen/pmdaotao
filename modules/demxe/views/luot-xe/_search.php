@@ -81,6 +81,12 @@ use app\modules\thuexe\models\Xe;
     	<div class="col-md-2">
 			<?= $form->field($model, 'kt_den')->textInput()->label('Về đến') ?>
     	</div>
+    	
+    	<div class="col-md-2">
+			<?= $form->field($model, 'status')->dropDownList(DemXe::getDmTrangThaiPhien(), 
+			    ['prompt'=>'-Tất cả-'])->label('Lọc theo trạng thái') ?>
+    	</div>
+    	
     	<!--<div class="col-md-4">
 			<?= $form->field($model, 'so_gio')->textInput() ?>
     	</div>
