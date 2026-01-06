@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Url;
 use app\modules\demxe\models\DemXe;
+use app\custom\CustomFunc;
 
 return [
     [
@@ -93,10 +94,16 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'thoi_gian_bd',
+        'value'=>function($model){
+        return CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_bd);
+        }
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'thoi_gian_kt',
+        'value'=>function($model){
+            return CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_kt);
+        }
     ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
