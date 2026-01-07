@@ -87,6 +87,11 @@ use app\modules\thuexe\models\Xe;
 			    ['prompt'=>'-Tất cả-'])->label('Lọc theo trạng thái') ?>
     	</div>
     	
+    	<div class="col-md-2">
+			<?= $form->field($model, 'suKien')->dropDownList(DemXe::getDmSuKien(), 
+			    ['prompt'=>'-Tất cả-'])->label('Lọc theo sự kiện') ?>
+    	</div>
+    	
     	<!--<div class="col-md-4">
 			<?= $form->field($model, 'so_gio')->textInput() ?>
     	</div>

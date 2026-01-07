@@ -113,8 +113,9 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ma_cong',
         'value'=>function($model){
-            return DemXe::getTram()[$model->ma_cong];
+            return DemXe::getTramIcon()[$model->ma_cong];
         },
+        'format'=>'html',
         'contentOptions' => ['style' => 'text-align:center'],
     ],
     [

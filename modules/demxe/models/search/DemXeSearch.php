@@ -17,7 +17,8 @@ class DemXeSearch extends DemXe
     public $bd_den;
     public $kt_tu;
     public $kt_den;
-    public $status;
+    public $status;//trang thai cua phien co day du gio di gio ve khong
+    public $suKien;//su kien xe theo yeu cau: xe qua dem, xe khong co ke hoach...
     /**
      * @inheritdoc
      */
@@ -26,7 +27,8 @@ class DemXeSearch extends DemXe
         return [
             [['id', 'id_xe', 'nguoi_tao', 'id_file'], 'integer'],
             [['ma_xe', 'ma_cong', 'thoi_gian_bd', 'thoi_gian_kt', 'so_phut', 
-                'thoi_gian_tao', 'ghi_chu', 'loaiXe', 'bd_tu', 'bd_den', 'kt_tu', 'kt_den', 'status'], 'safe'],
+                'thoi_gian_tao', 'ghi_chu', 'loaiXe', 'bd_tu', 'bd_den', 'kt_tu', 'kt_den', 
+                'status', 'suKien'], 'safe'],
             [['so_gio'], 'number']
         ];
     }

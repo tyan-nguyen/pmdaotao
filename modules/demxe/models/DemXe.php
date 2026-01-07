@@ -24,6 +24,13 @@ class DemXe extends PtxXeDemXe
             self::CONG2 => 'Trạm Sân CB',
         ];
     }
+    public static function getTramIcon()
+    {
+        return [
+            self::CONG1 => '<span class="badge bg-primary">Trạm Căn tin',
+            self::CONG2 => '<span class="badge bg-info">Trạm Sân CB</span>',
+        ];
+    }
     /**
      * Danh muc tram thuoc cong nao
      * @return string[]
@@ -307,4 +314,39 @@ class DemXe extends PtxXeDemXe
             return false;
     }
     
+    /**
+     * sự kiện theo yêu cầu
+     */
+    /**
+     * get trạng thái phiên xe
+     */
+    public static function getDmSuKien(){
+        return [
+            'HasInNotOut'=>'Có vô không có ra',
+            'HasOutNotIn'=>'Có ra chưa có vô',
+        ];
+    }
+    
+    public function getSuKienIcon(){
+        $html = '';
+        if($this->xeQuaDem)
+            $html = '<i class="ion-alert c-icon-danger" title="'.$this->trangThaiPhien.'"></i>';
+        else if($this->diKhongKeHoach)
+            $html = '<i class="ion-alert-circled c-icon-warning" title="'.$this->trangThaiPhien.'"></i>';
+        return $html;
+    }
+    /**
+     * sự kiện xe qua đêm
+     */
+    public function getXeQuaDem(){
+        //xe đi chua ve?
+        //xe ve khong co di?
+        
+    }
+    /**
+     * sự kiện xe đi không có kế hoạch
+     */
+    public function getDiKhongKeHoach(){
+        //số phút + -
+    }
 }
