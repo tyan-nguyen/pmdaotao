@@ -29,7 +29,7 @@ Yii::$app->params['showView'] = true;
 .warning-custom-row td:nth-child(6), .warning-custom-row td:nth-child(6) .btn-in-grid{
     color:orange !important;
 }
-.ok-custom-row td:nth-child(6), .warning-custom-row td:nth-child(6) .btn-in-grid{
+.ok-custom-row td:nth-child(6), .ok-custom-row td:nth-child(6) .btn-in-grid{
     color:blue !important;
 }
 </style>
