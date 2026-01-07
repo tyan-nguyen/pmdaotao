@@ -59,9 +59,9 @@ return [
     // ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'label'=>'T.T.',
+        'attribute'=>'ma_cong',
         'value'=>function($model){
-            return $model->trangThaiPhienIcon;
+            return DemXe::getTramIcon()[$model->ma_cong];
         },
         'format'=>'html',
         'contentOptions' => ['style' => 'text-align:center'],
@@ -71,12 +71,22 @@ return [
         'attribute'=>'id_xe',
         'label'=>'Loại xe',
         'value'=>function($model){
-            return $model->id_xe != null ? '<span class="badge bg-primary">Xe nội bộ</span>' 
-                : '<span class="badge bg-info">Xe khách</span>';
+            return $model->id_xe != null ? '<span class="badge bg-primary">Xe nội bộ</span>'
+            : '<span class="badge bg-info">Xe khách</span>';
         },
         'format'=>'html',
         'contentOptions' => ['style' => 'text-align:center'],
     ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'label'=>'T.T.',
+        'value'=>function($model){
+            return $model->trangThaiPhienIcon;
+        },
+        'format'=>'html',
+        'contentOptions' => ['style' => 'text-align:center'],
+    ],
+    
     /* [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ma_xe',
@@ -109,15 +119,7 @@ return [
         'format'=>'raw',
         'contentOptions' => ['style' => 'text-align:center'],
     ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'ma_cong',
-        'value'=>function($model){
-            return DemXe::getTramIcon()[$model->ma_cong];
-        },
-        'format'=>'html',
-        'contentOptions' => ['style' => 'text-align:center'],
-    ],
+    
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'thoi_gian_bd',
@@ -159,5 +161,6 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ghi_chu',
+        'contentOptions' => ['style' => 'width:300px'],
     ],
 ];   
