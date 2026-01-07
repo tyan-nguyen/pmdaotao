@@ -91,10 +91,16 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'thoi_gian_tu',
+        'value'=>function($model){
+            return CustomFunc::convertYMDHISToDMYHIS($model->thoi_gian_tu);
+        }
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'thoi_gian_den',
+        'value'=>function($model){
+            return CustomFunc::convertYMDHISToDMYHIS($model->thoi_gian_den);
+        }
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
