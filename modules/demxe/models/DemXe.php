@@ -259,13 +259,45 @@ class DemXe extends PtxXeDemXe
     public function getTrangThaiPhienIcon(){
         $status = '';
         if($this->thoi_gian_bd == null && $this->thoi_gian_kt!=null){
-            $status = '<i class="ion-alert c-icon-danger"></i>';
+            $status = '<i class="ion-alert c-icon-danger" title="Có dữ liệu về nhưng không có đi"></i>';
         } else if($this->thoi_gian_bd != null && $this->thoi_gian_kt==null){
-            $status = '<i class="ion-alert-circled c-icon-warning"></i>';
+            $status = '<i class="ion-alert-circled c-icon-warning" title="Đi chưa về"></i>';
         }else if($this->thoi_gian_bd != null && $this->thoi_gian_kt!=null){
             $status = '<i class="ion-checkmark c-icon-normal"></i>';
         }
         return $status;
+    }
+    /**
+     * check trạng thái của phiên
+     * return true/false
+     */
+    
+    /**
+     * check có vô ko có ra
+     */
+    public function getCoVoKhongCoRa(){
+        if($this->thoi_gian_bd == null && $this->thoi_gian_kt!=null)
+            return true;
+        else 
+            return false;
+    }
+    /**
+     * check có ra không có vô
+     */
+    public function getCoRaKhongCoVo(){
+        if($this->thoi_gian_bd != null && $this->thoi_gian_kt==null)
+            return true;
+        else
+            return false;
+    }
+    /**
+     * check có ra không có vô
+     */
+    public function getCoRaCoVo(){
+        if($this->thoi_gian_bd != null && $this->thoi_gian_kt!=null)
+            return true;
+        else
+            return false;
     }
     
 }

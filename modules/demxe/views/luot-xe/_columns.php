@@ -89,9 +89,10 @@ return [
                 if(User::hasPermission('qQuanLySuKienDemXe')){
                     return Html::a($model->xe->bien_so_xe,
                         '/thuexe/lich-xe/lich-xe-gv-so-sanh?idxe='.$model->id_xe.'&menu=dt3',[
-                            'data-pjax'=>'0',
                             'target'=>'_blank',
-                            'style'=>'font-weight:bold; color:#212121'
+                            'data-pjax' => '0',
+                            'class'=>'btn-in-grid',
+                            //'style'=>'font-weight:bold'
                         ]);
                 } else {
                     return $model->xe->bien_so_xe;
@@ -101,8 +102,7 @@ return [
             }
             return $model->xe?$model->xe->bien_so_xe:$model->bien_so_xe;
         },
-        'format'=>'html',
-        'contentOptions' => ['data-pjax' => 0],
+        'format'=>'raw'
     ],
     [
         'class'=>'\kartik\grid\DataColumn',

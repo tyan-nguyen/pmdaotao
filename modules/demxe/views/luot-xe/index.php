@@ -18,6 +18,22 @@ Yii::$app->params['showView'] = true;
 //CrudAsset::register($this);
 
 ?>
+
+<style>
+#crud-datatable-togdata-page{
+    border:0px!important;
+}
+.danger-custom-row td:nth-child(6), .danger-custom-row td:nth-child(6) .btn-in-grid{
+    color:red !important;
+}
+.warning-custom-row td:nth-child(6), .warning-custom-row td:nth-child(6) .btn-in-grid{
+    color:orange !important;
+}
+.ok-custom-row td:nth-child(6), .warning-custom-row td:nth-child(6) .btn-in-grid{
+    color:blue !important;
+}
+</style>
+
 <?php if(Yii::$app->params['showSearch']):?><div class="card border-default" id="divFilterExtend">
 	<div class="card-header rounded-bottom-0 card-header text-dark" id="simple">
 		<h5 class="mt-2"><i class="fe fe-search"></i> Tìm kiếm</h5>
@@ -46,6 +62,14 @@ Yii::$app->params['showView'] = true;
             //'filterModel' => $searchModel,
             'pjax'=>true,
             'columns' => require(__DIR__.'/_columns.php'),
+            'rowOptions' => function ($model, $key, $index, $grid) {
+                if($model->coVoKhongCoRa)
+                    return ['class' => 'danger-custom-row'];
+                else if($model->coRaKhongCoVo)
+                    return ['class' => 'warning-custom-row'];
+                else
+                    return ['class' => 'ok-custom-row'];
+            },
             'toolbar'=> [
                 ['content'=>
                     '
