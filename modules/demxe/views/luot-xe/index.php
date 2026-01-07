@@ -67,7 +67,7 @@ Yii::$app->params['showView'] = true;
                     return ['class' => 'danger-custom-row'];
                 else if($model->hasOutNotIn)
                     return ['class' => 'warning-custom-row'];
-                else
+                else if($this->hasInOut)
                     return ['class' => 'ok-custom-row'];
             },
             'toolbar'=> [
