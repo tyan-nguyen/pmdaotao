@@ -232,11 +232,18 @@ class DemXe extends PtxXeDemXe
     /**
      * get trạng thái phiên xe
      */
-    public static function getDmTrangThaiPhien(){
+   /*  public static function getDmTrangThaiPhien(){
         return [
             'CHICOVO'=>'Có vô không có ra',
             'CHICORA'=>'Có ra chưa có vô',
             'COVOCORA'=>'Có ra có vô',
+        ];
+    } */
+    public static function getDmTrangThaiPhien(){
+        return [
+            'HasInNotOut'=>'Có vô không có ra',
+            'HasOutNotIn'=>'Có ra chưa có vô',
+            'HasInOut'=>'Có ra có vô',
         ];
     }
     /**
@@ -244,11 +251,11 @@ class DemXe extends PtxXeDemXe
      */
     public function getTrangThaiPhien(){
         $status = '';
-        if($this->thoi_gian_bd == null && $this->thoi_gian_kt!=null){
+        if($this->hasInNotOut){
             $status = 'Có vô không có ra';
-        } else if($this->thoi_gian_bd != null && $this->thoi_gian_kt==null){
+        } else if($this->hasOutNotIn){
             $status = 'Có ra chưa có vô';
-        }else if($this->thoi_gian_bd != null && $this->thoi_gian_kt!=null){
+        }else if($this->hasInOut){
             $status = 'Có ra có vô';
         }
         return $status;
@@ -258,11 +265,11 @@ class DemXe extends PtxXeDemXe
      */
     public function getTrangThaiPhienIcon(){
         $status = '';
-        if($this->thoi_gian_bd == null && $this->thoi_gian_kt!=null){
-            $status = '<i class="ion-alert c-icon-danger" title="Có dữ liệu về nhưng không có đi"></i>';
-        } else if($this->thoi_gian_bd != null && $this->thoi_gian_kt==null){
-            $status = '<i class="ion-alert-circled c-icon-warning" title="Đi chưa về"></i>';
-        }else if($this->thoi_gian_bd != null && $this->thoi_gian_kt!=null){
+        if($this->hasInNotOut){
+            $status = '<i class="ion-alert c-icon-danger" title="'.$this->trangThaiPhien.'"></i>';
+        } else if($this->hasOutNotIn){
+            $status = '<i class="ion-alert-circled c-icon-warning" title="'.$this->trangThaiPhien.'"></i>';
+        }else if($this->hasInOut){
             $status = '<i class="ion-checkmark c-icon-normal"></i>';
         }
         return $status;
@@ -275,7 +282,7 @@ class DemXe extends PtxXeDemXe
     /**
      * check có vô ko có ra
      */
-    public function getCoVoKhongCoRa(){
+    public function getHasInNotOut(){
         if($this->thoi_gian_bd == null && $this->thoi_gian_kt!=null)
             return true;
         else 
@@ -284,7 +291,7 @@ class DemXe extends PtxXeDemXe
     /**
      * check có ra không có vô
      */
-    public function getCoRaKhongCoVo(){
+    public function getHasOutNotIn(){
         if($this->thoi_gian_bd != null && $this->thoi_gian_kt==null)
             return true;
         else
@@ -293,7 +300,7 @@ class DemXe extends PtxXeDemXe
     /**
      * check có ra không có vô
      */
-    public function getCoRaCoVo(){
+    public function getHasInOut(){
         if($this->thoi_gian_bd != null && $this->thoi_gian_kt!=null)
             return true;
         else

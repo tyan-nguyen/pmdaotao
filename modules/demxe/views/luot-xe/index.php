@@ -63,9 +63,9 @@ Yii::$app->params['showView'] = true;
             'pjax'=>true,
             'columns' => require(__DIR__.'/_columns.php'),
             'rowOptions' => function ($model, $key, $index, $grid) {
-                if($model->coVoKhongCoRa)
+                if($model->hasInNotOut)
                     return ['class' => 'danger-custom-row'];
-                else if($model->coRaKhongCoVo)
+                else if($model->hasOutNotIn)
                     return ['class' => 'warning-custom-row'];
                 else
                     return ['class' => 'ok-custom-row'];

@@ -74,7 +74,8 @@ return [
             return $model->id_xe != null ? '<span class="badge bg-primary">Xe nội bộ</span>' 
                 : '<span class="badge bg-info">Xe khách</span>';
         },
-        'format'=>'html'
+        'format'=>'html',
+        'contentOptions' => ['style' => 'text-align:center'],
     ],
     /* [
         'class'=>'\kartik\grid\DataColumn',
@@ -92,38 +93,45 @@ return [
                             'target'=>'_blank',
                             'data-pjax' => '0',
                             'class'=>'btn-in-grid',
+                            'title'=>$model->trangThaiPhien
                             //'style'=>'font-weight:bold'
                         ]);
                 } else {
                     return $model->xe->bien_so_xe;
                 }
             } else {
-                return $model->bien_so_xe;
+                return '<span title="'.$model->trangThaiPhien.'">' . $model->bien_so_xe . '</span>';
             }
-            return $model->xe?$model->xe->bien_so_xe:$model->bien_so_xe;
+            return '<span title="'.$model->trangThaiPhien.'">' . 
+                ($model->xe?$model->xe->bien_so_xe:$model->bien_so_xe)
+                . '</span>';
         },
-        'format'=>'raw'
+        'format'=>'raw',
+        'contentOptions' => ['style' => 'text-align:center'],
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ma_cong',
         'value'=>function($model){
             return DemXe::getTram()[$model->ma_cong];
-        }
+        },
+        'contentOptions' => ['style' => 'text-align:center'],
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'thoi_gian_bd',
         'value'=>function($model){
-        return CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_bd);
-        }
+            return CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_bd);
+        },
+        'contentOptions' => ['style' => 'text-align:center'],
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'thoi_gian_kt',
         'value'=>function($model){
             return CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_kt);
-        }
+        },
+        'contentOptions' => ['style' => 'text-align:center'],
     ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
@@ -132,6 +140,7 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'so_phut',
+        'contentOptions' => ['style' => 'text-align:center'],
     ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',

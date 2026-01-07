@@ -191,11 +191,11 @@ class DemXeSearch extends DemXe
             }
             
             if(!empty($this->status)){
-                if($this->status == 'CHICOVO'){
+                if($this->status == 'HasInNotOut'){
                     $query->andWhere('thoi_gian_bd IS NULL and thoi_gian_kt IS NOT NULL');
-                }else if($this->status == 'CHICORA'){
+                }else if($this->status == 'HasOutNotIn'){
                     $query->andWhere('thoi_gian_bd IS NOT NULL and thoi_gian_kt IS NULL');
-                }else if($this->status == 'COVOCORA'){
+                }else if($this->status == 'HasInOut'){
                     $query->andWhere('thoi_gian_bd IS NOT NULL and thoi_gian_kt IS NOT NULL');
                 }
             }
