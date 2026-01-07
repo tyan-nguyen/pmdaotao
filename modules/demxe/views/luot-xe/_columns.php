@@ -140,6 +140,7 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'so_phut',
+        'label'=>'Thời gian',
         'contentOptions' => ['style' => 'text-align:center'],
     ],
     // [
