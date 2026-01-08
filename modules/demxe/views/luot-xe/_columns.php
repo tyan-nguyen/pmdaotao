@@ -59,6 +59,15 @@ return [
     // ],
     [
         'class'=>'\kartik\grid\DataColumn',
+        'label'=>'T.T.',
+        'value'=>function($model){
+        return $model->trangThaiPhienIcon;
+        },
+        'format'=>'html',
+        'contentOptions' => ['style' => 'text-align:center'],
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ma_cong',
         'value'=>function($model){
             return DemXe::getTramIcon()[$model->ma_cong];
@@ -77,16 +86,16 @@ return [
         'format'=>'html',
         'contentOptions' => ['style' => 'text-align:center'],
     ],
+    
     [
         'class'=>'\kartik\grid\DataColumn',
-        'label'=>'T.T.',
+        'label'=>'Sự kiện',
         'value'=>function($model){
-            return $model->trangThaiPhienIcon;
+            return $model->suKienIcon;
         },
-        'format'=>'html',
+        'format'=>'raw',
         'contentOptions' => ['style' => 'text-align:center'],
-    ],
-    
+        ],
     /* [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ma_xe',

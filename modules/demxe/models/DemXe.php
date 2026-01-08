@@ -4,6 +4,7 @@ namespace app\modules\demxe\models;
 use Yii;
 use app\models\PtxXeDemXe;
 use app\modules\thuexe\models\Xe;
+use yii\helpers\Html;
 
 class DemXe extends PtxXeDemXe
 {    
@@ -318,22 +319,31 @@ class DemXe extends PtxXeDemXe
      * sự kiện theo yêu cầu
      */
     /**
-     * get trạng thái phiên xe
+     * get trạng thái sự kiện xe
      */
     public static function getDmSuKien(){
         return [
-            'HasInNotOut'=>'Có vô không có ra',
-            'HasOutNotIn'=>'Có ra chưa có vô',
+            'OneNightStand'=>'Qua đêm',
+            'NonRegister'=>'Đi không đăng ký kế hoạch',
         ];
+    }
+    
+    public function getSuKien(){
+        $text = '';
+        if($this->xeQuaDem)
+            $text = 'Qua đêm';
+        else if($this->diKhongKeHoach)
+            $text = 'Đi không đăng ký kế hoạch';
+        return $text;
     }
     
     public function getSuKienIcon(){
         $html = '';
         if($this->xeQuaDem)
-            $html = '<i class="ion-alert c-icon-danger" title="'.$this->trangThaiPhien.'"></i>';
-        else if($this->diKhongKeHoach)
-            $html = '<i class="ion-alert-circled c-icon-warning" title="'.$this->trangThaiPhien.'"></i>';
-        return $html;
+            $html .= Html::img('/libs/images/icons/error.gif', ['width'=>'20', 'title'=>'XE QUA ĐÊM']);
+        if($this->diKhongKeHoach)
+            $html .= Html::img('/libs/images/icons/location.gif', ['width'=>'22', 'title'=>'ĐI KHÔNG KẾ HOẠCH']);
+        return $html!=''?$html:'-';
     }
     /**
      * sự kiện xe qua đêm
@@ -341,6 +351,18 @@ class DemXe extends PtxXeDemXe
     public function getXeQuaDem(){
         //xe đi chua ve?
         //xe ve khong co di?
+        //xe co di co ve
+        if($this->hasInOut){
+            $di = strtotime($this->thoi_gian_bd);
+            $ve = strtotime($this->thoi_gian_kt);
+            
+            $nightStart = strtotime(date('Y-m-d', $di) . ' 00:00:00');
+            $nightEnd   = strtotime(date('Y-m-d', $di) . ' 05:00:00');
+            
+            $hasOvernight = ($di < $nightEnd && $ve > $nightStart);
+            return $hasOvernight;
+        } else 
+            return false;
         
     }
     /**
@@ -348,5 +370,6 @@ class DemXe extends PtxXeDemXe
      */
     public function getDiKhongKeHoach(){
         //số phút + -
+        return false;
     }
 }
