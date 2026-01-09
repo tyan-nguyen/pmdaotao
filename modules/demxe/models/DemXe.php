@@ -353,16 +353,43 @@ class DemXe extends PtxXeDemXe
         //xe ve khong co di?
         //xe co di co ve
         if($this->hasInOut){
-            $di = strtotime($this->thoi_gian_bd);
+           /*  $di = strtotime($this->thoi_gian_bd);
             $ve = strtotime($this->thoi_gian_kt);
             
             $nightStart = strtotime(date('Y-m-d', $di) . ' 00:00:00');
             $nightEnd   = strtotime(date('Y-m-d', $di) . ' 05:00:00');
             
             $hasOvernight = ($di < $nightEnd && $ve > $nightStart);
+            return $hasOvernight; */
+            
+            $di = strtotime($this->thoi_gian_bd);
+            $ve = strtotime($this->thoi_gian_kt);
+            
+            $hasOvernight = false;
+            
+            $startDate = date('Y-m-d', $di);
+            $endDate   = date('Y-m-d', $ve);
+            
+            $current = strtotime($startDate);
+            
+            while ($current <= strtotime($endDate)) {
+                
+                $nightStart = strtotime(date('Y-m-d', $current) . ' 00:00:00');
+                $nightEnd   = strtotime(date('Y-m-d', $current) . ' 05:00:00');
+                
+                // check giao nhau
+                if ($di < $nightEnd && $ve > $nightStart) {
+                    $hasOvernight = true;
+                    break;
+                }
+                
+                // sang ngày tiếp theo
+                $current = strtotime('+1 day', $current);
+            }
             return $hasOvernight;
-        } else 
+        } else{
             return false;
+        }
         
     }
     /**
