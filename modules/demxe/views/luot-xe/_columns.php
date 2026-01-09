@@ -91,7 +91,7 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'label'=>'Sự kiện',
         'value'=>function($model){
-            return $model->suKienIcon;
+            return $model->id_xe ? $model->suKienIcon : '-';
         },
         'format'=>'raw',
         'contentOptions' => ['style' => 'text-align:center'],
