@@ -80,8 +80,9 @@ return [
         'attribute'=>'id_xe',
         'label'=>'Loại xe',
         'value'=>function($model){
-            return $model->id_xe != null ? '<span class="badge bg-primary">Xe nội bộ</span>'
-            : '<span class="badge bg-info">Xe khách</span>';
+           // return $model->id_xe != null ? '<span class="badge bg-primary">Xe nội bộ</span>'
+            //: '<span class="badge bg-info">Xe khách</span>';
+            return $model->loaiXe;
         },
         'format'=>'html',
         'contentOptions' => ['style' => 'text-align:center'],

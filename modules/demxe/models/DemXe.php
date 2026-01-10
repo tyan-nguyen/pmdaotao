@@ -314,6 +314,17 @@ class DemXe extends PtxXeDemXe
         else
             return false;
     }
+    /**
+     * get loiạ xe theo id_xe
+     */
+    public function getLoaiXe(){
+        if($this->id_xe){
+            return '<span class="badge bg-primary">'.$this->xe->labelPhanLoaiXe.'</span>';
+            
+        } else {
+            return '<span class="badge bg-info">Xe khách</span>';
+        }
+    }
     
     /**
      * sự kiện theo yêu cầu
