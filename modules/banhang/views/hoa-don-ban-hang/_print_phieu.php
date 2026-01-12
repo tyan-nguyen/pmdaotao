@@ -112,7 +112,7 @@ $custom = new CustomFunc();
     		</tbody>
     	</table>
     	
-    	<p style="margin-top:6pt;font-size:11pt;font-style: italic;">Tổng số tiền bằng chữ: <strong><?= $custom->chuyenSoTienThanhChu($model->tongTien) ?> đồng.</strong></p>
+    	<p style="margin-top:6pt;font-size:11pt;font-style: italic;">Tổng số tiền bằng chữ: <strong><?= $custom->chuyenSoTienThanhChu($model->tongTien) ?> đồng</strong> - HTTT: <strong><?= $model->getDmHinhThucThanhToanLabel($model->hinh_thuc_thanh_toan) ?></strong></p>
     	
     	<table id="table-ky-ten" style="width: 100%; margin-top:5px;">
     		<tr>
