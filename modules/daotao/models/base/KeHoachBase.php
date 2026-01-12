@@ -110,7 +110,7 @@ class KeHoachBase extends \app\models\GdKeHoach
     {
         switch ($val) {
             case self::TT_NHAP:
-                $label = '<span class="badge bg-primary">Nháp</span> ';
+                $label = '<span class="badge bg-danger">Nháp</span> ';
                 break;
             case self::TT_CHODUYET:
                 $label = '<span class="badge bg-warning">Chờ duyệt</span> ';

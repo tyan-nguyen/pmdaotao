@@ -198,8 +198,10 @@ class Xe extends \app\models\PtxXe
             [['bien_so_xe', 'ma_bien_so'], 'string', 'max' => 50],
             [['trang_thai'], 'string', 'max' => 25],
             [['bien_so_xe'], 'unique'],
-            [['hieu_xe', 'so_khung', 'so_may', 'mau_sac', 'nha_cung_cap', 'so_hoa_don', 'so_hop_dong'], 'string', 'max' => 250],
-            [['id_loai_xe'], 'exist', 'skipOnError' => true, 'targetClass' =>LoaiXe::class, 'targetAttribute' => ['id_loai_xe' => 'id']],
+            [['hieu_xe', 'so_khung', 'so_may', 'mau_sac', 'nha_cung_cap', 
+                'so_hoa_don', 'so_hop_dong'], 'string', 'max' => 250],
+            [['id_loai_xe'], 'exist', 'skipOnError' => true, 'targetClass' =>LoaiXe::class, 
+                'targetAttribute' => ['id_loai_xe' => 'id']],
         ];
     }
 
