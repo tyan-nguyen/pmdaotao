@@ -209,7 +209,7 @@ class NopHocPhi extends \app\models\HvNopHocPhi
              }
          }
          
-         if($this->co_thu_ho && $this->id_thu_ho == null){
+         if($this->co_thu_ho && $this->so_tien_thu_ho == null){
              $thuHo = ThuHo::find([
                  'id_hang' => $this->hocVien->id_hang,
                  'active' => 1
