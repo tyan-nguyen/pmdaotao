@@ -82,7 +82,7 @@ use app\modules\hocvien\models\NopHocPhi;
         			<th rowspan="2">Chuyển khoản</th>
         			<th rowspan="2">Chiết khấu</th>
         			<th rowspan="2">Còn lại</th>
-        			<th rowspan="2">Thu hộ</th>
+        			<th rowspan="2">Thu hộ (TM)</th>
         			<th rowspan="2">Nhân viên</th>
         			
         			<!-- <th rowspan="2">Tiền mặt</th>
