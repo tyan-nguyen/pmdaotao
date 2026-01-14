@@ -215,11 +215,12 @@ class NopHocPhi extends \app\models\HvNopHocPhi
                  'active' => 1
              ])->one();
              if($thuHo!=NULL){
+                $this->id_thu_ho = '';
                 $this->id_thu_ho = $thuHo->id;
                 $this->so_tien_thu_ho = $thuHo->so_tien;
                 $this->ghi_chu_thu_ho = $thuHo->ghi_chu;
                 $this->hinh_thuc_thu_ho = 'TM';
-                $this->updateAttributes(['id_thu_ho' , 'so_tien_thu_ho',
+                $this->updateAttributes(['id_thu_ho', 'so_tien_thu_ho',
                     'hinh_thuc_thu_ho', 'ghi_chu_thu_ho']);
              }
          }
