@@ -210,7 +210,7 @@ class NopHocPhi extends \app\models\HvNopHocPhi
          }
          
          if($this->co_thu_ho && $this->id_thu_ho == null){
-             $thuHo = ThuHo::find([
+             $thuHo = ThuHo::find()->where([
                  'id_hang' => $this->hocVien->id_hang,
                  'active' => 1
              ])->one();
