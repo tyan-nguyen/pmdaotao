@@ -209,13 +209,16 @@ class NopHocPhi extends \app\models\HvNopHocPhi
              }
          }
          
+         if(!$this->co_thu_ho && $this->id_thu_ho != null){
+             $this->id_thu_ho = null;
+             $this->updateAttributes(['id_thu_ho']);
+         }
          if($this->co_thu_ho && $this->so_tien_thu_ho == null){
              $thuHo = ThuHo::find([
                  'id_hang' => $this->hocVien->id_hang,
                  'active' => 1
              ])->one();
              if($thuHo!=NULL){
-                $this->id_thu_ho = '';
                 $this->id_thu_ho = $thuHo->id;
                 $this->so_tien_thu_ho = $thuHo->so_tien;
                 $this->ghi_chu_thu_ho = $thuHo->ghi_chu;
