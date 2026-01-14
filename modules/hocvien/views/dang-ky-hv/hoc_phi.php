@@ -50,6 +50,7 @@ $trangThai = ($hocPhiKhoaHoc && $tongTienDaNop >= $hocPhiKhoaHoc->hoc_phi) ? 'N�
                     <th>Còn lại</th>
                     <th>Ngày nộp</th>
                     <th>Người thu</th>
+                    <th>Thu hộ</th>
                     <th>Ghi chú</th>
                     <th><i class="fas fa-print"></i></th>
                     <th></th>
@@ -78,7 +79,7 @@ $trangThai = ($hocPhiKhoaHoc && $tongTienDaNop >= $hocPhiKhoaHoc->hoc_phi) ? 'N�
                             echo $user ? Html::encode($user->shortName) : 'Không xác định';
                             ?>
                         </td>
-                        
+                        <td align="center"><?= $hcPhi->co_thu_ho ? '<i class="ion-checkmark-circled text-success"></i>' : '' ?></td>
                         <td><?= $hcPhi->ghi_chu ?></td>
                         
                         <td><span id="soLanIn<?= $hcPhi->id ?>"><?= $hcPhi->so_lan_in_phieu ?></span></td>

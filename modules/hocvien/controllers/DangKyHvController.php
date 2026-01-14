@@ -1001,6 +1001,17 @@ public function actionGetPhieuInReportListAjax($startdate, $starttime, $enddate,
     }
     $modelSoTienChietKhau = $queryChietKhau->sum('t.chiet_khau');
     
+    $queryThuHo = NopHocPhi::find()->alias('t')->joinWith(['hocVien as hv'])->select(['t.*', 'hv.noi_dang_ky'])
+    ->andFilterWhere(['>=', 't.thoi_gian_tao', new Expression("STR_TO_DATE('".$start."','%Y-%m-%d %H:%i:%s')")])
+    ->andFilterWhere(['<=', 't.thoi_gian_tao', new Expression("STR_TO_DATE('".$end."','%Y-%m-%d %H:%i:%s')")]);
+    if($byuser>0){
+        $queryThuHo = $queryThuHo->andFilterWhere(['t.nguoi_tao' => $byuser]);
+    }
+    if($byaddress>0){
+        $queryThuHo = $queryThuHo->andFilterWhere(['hv.noi_dang_ky' => $byaddress]);
+    }
+    $modelSoTienThuHo = $queryThuHo->sum('t.so_tien_thu_ho');
+    
     if($typereport==0){
         $content = $this->renderPartial('_print_report_list_0', [
             'model' => $model,
@@ -1011,6 +1022,7 @@ public function actionGetPhieuInReportListAjax($startdate, $starttime, $enddate,
             'modelSoTienNopTM'=> $modelSoTienNopTM,
             'modelSoTienNopCK'=> $modelSoTienNopCK,
             'modelSoTienChietKhau' => $modelSoTienChietKhau,
+            'modelSoTienThuHo' => $modelSoTienThuHo,
             'byuser' => $byuser
         ]);
     }else if($typereport==1){
@@ -1023,6 +1035,7 @@ public function actionGetPhieuInReportListAjax($startdate, $starttime, $enddate,
             'modelSoTienNopTM'=> $modelSoTienNopTM,
             'modelSoTienNopCK'=> $modelSoTienNopCK,
             'modelSoTienChietKhau' => $modelSoTienChietKhau,
+            'modelSoTienThuHo' => $modelSoTienThuHo,
             'byuser' => $byuser
         ]);
     } else if($typereport==2){
@@ -1035,6 +1048,7 @@ public function actionGetPhieuInReportListAjax($startdate, $starttime, $enddate,
             'modelSoTienNopTM'=> $modelSoTienNopTM,
             'modelSoTienNopCK'=> $modelSoTienNopCK,
             'modelSoTienChietKhau' => $modelSoTienChietKhau,
+            'modelSoTienThuHo' => $modelSoTienThuHo,
             'byuser' => $byuser
         ]);
     } else if($typereport==3){
@@ -1047,6 +1061,7 @@ public function actionGetPhieuInReportListAjax($startdate, $starttime, $enddate,
             'modelSoTienNopTM'=> $modelSoTienNopTM,
             'modelSoTienNopCK'=> $modelSoTienNopCK,
             'modelSoTienChietKhau' => $modelSoTienChietKhau,
+            'modelSoTienThuHo' => $modelSoTienThuHo,
             'byuser' => $byuser
         ]);
     }

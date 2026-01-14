@@ -61,6 +61,18 @@ return [
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'is_thu_ho',
+        'label'=>'Thu hộ',
+        'value'=>function($model){
+            return $model->is_thu_ho ? 
+                ('<span class="badge bg-success">'.  'Thu hộ, không tính doanh thu' . '</span>') : '';  
+        },
+        'format'=>'html',
+        'headerOptions' => ['style' => 'width:10%;'],
+        'contentOptions' => ['style' => 'width:10%; white-space: nowrap;'],
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ghi_chu',
     ],
     /* [

@@ -89,9 +89,19 @@ $model->ngay_nop = CustomFunc::convertYMDToDMY($model->ngay_nop);
         <div class="col-lg-3 col-md-6">
             <?= $form->field($model, 'hinh_thuc_thanh_toan')->dropDownList(NopHocPhi::getDmHinhThucThanhToan(), ['prompt'=>'-Chọn-','class'=>'form-control','id'=>'selectHinhThucThanhToan']) ?>
         </div>
-        <div class="col-lg-9 col-md-6">
+        
+        <?php 
+         $batThuHo = (in_array($hocVien->id_hang, array(7,8,9,10) ) && $hocVien->checkThuHo());
+        ?>
+        <div class="<?= $batThuHo?'col-lg-6':'col-lg-9' ?> col-md-6">
             <?= $form->field($model, 'ghi_chu')->textInput([]) ?>
         </div>
+        <?php if($batThuHo){?>
+        <div class="col-lg-3 col-md-6">
+        	<label style="font-style: italic;color:blue;">*Thu hộ (không thao tác gì ngoài trường hợp đặc biệt)</label>
+            <?= $form->field($model, 'co_thu_ho')->checkbox(['checked'=>$hocVien->checkThuHo()]) ?>
+        </div>
+        <?php }?>
         
    </div>
    

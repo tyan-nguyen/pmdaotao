@@ -27,6 +27,11 @@ use app\modules\user\models\User;
  * @property string|null $thoi_gian_tao
  * @property int $da_kiem_tra
  * @property string $ghi_chu
+  * @property int|null $co_thu_ho
+ * @property int|null $id_thu_ho
+ * @property float $so_tien_thu_ho
+ * @property string $hinh_thuc_thu_ho
+ * @property string $ghi_chu_thu_ho
  *
  * @property HocVien $hocVien
  */
@@ -50,11 +55,11 @@ class NopHocPhi extends \app\models\HvNopHocPhi
         return [
             /* [[ 'so_tien_nop', 'ngay_nop', 'nguoi_thu'], 'required'], */
             [[ 'so_tien_nop', 'ngay_nop', 'hinh_thuc_thanh_toan', 'loai_nop'], 'required'],
-            [['id_hoc_vien', 'id_hoc_phi', 'ma_so_phieu', 'so_lan_in_phieu', 'nguoi_thu', 'nguoi_tao', 'da_kiem_tra'], 'integer'],
-            [['so_tien_nop', 'chiet_khau', 'so_tien_con_lai'], 'number'],
+            [['id_hoc_vien', 'id_hoc_phi', 'ma_so_phieu', 'so_lan_in_phieu', 'nguoi_thu', 'nguoi_tao', 'da_kiem_tra', 'co_thu_ho', 'id_thu_ho'], 'integer'],
+            [['so_tien_nop', 'chiet_khau', 'so_tien_con_lai', 'so_tien_thu_ho'], 'number'],
             [['ngay_nop', 'thoi_gian_tao', 'ghi_chu'], 'safe'],
-            [['loai_phieu', 'loai_nop', 'hinh_thuc_thanh_toan'],'string','max'=>20],
-            [['bien_lai'], 'string'],
+            [['loai_phieu', 'loai_nop', 'hinh_thuc_thanh_toan', 'hinh_thuc_thu_ho'],'string','max'=>20],
+            [['bien_lai', 'ghi_chu_thu_ho'], 'string'],
             [['id_hoc_vien'], 'exist', 'skipOnError' => true, 'targetClass' => HocVien::class, 'targetAttribute' => ['id_hoc_vien' => 'id']],
             [['file'], 'file','extensions' => 'png, jpg, jfif'],
         ];
@@ -84,7 +89,12 @@ class NopHocPhi extends \app\models\HvNopHocPhi
             'thoi_gian_tao' => 'Thời gian tạo',
             'da_kiem_tra' => 'Đã kiểm tra',
             'ghi_chu' => 'Ghi chú',
-            'file'=>'Chọn Biên lai'
+            'file'=>'Chọn Biên lai',
+            'co_thu_ho' => 'Đã thu hộ lệ phí thi',
+            'id_thu_ho' => 'Mã thu hộ',
+            'so_tien_thu_ho' => 'Số tiền thu hộ',
+            'ghi_chu_thu_ho' => 'Ghi chú thu hộ',
+            'hinh_thuc_thu_ho' => 'Hình thức thu hộ'
         ];
     }
  
@@ -133,6 +143,9 @@ class NopHocPhi extends \app\models\HvNopHocPhi
                 $this->loai_phieu = self::PHIEUTHULABEL;
             }
             $this->ma_so_phieu = $this->getMaSoPhieu($this->loai_phieu);
+            if($this->co_thu_ho == null){
+                $this->co_thu_ho = 0;
+            }
         }
         // Xử lý trường 'bien_lai'  khi giá trị là Base64 (webcam)
         if (!empty($this->bien_lai)) {
@@ -195,6 +208,22 @@ class NopHocPhi extends \app\models\HvNopHocPhi
                  }
              }
          }
+         
+         if($this->co_thu_ho && $this->id_thu_ho == null){
+             $thuHo = ThuHo::find([
+                 'id_hang' => $this->hocVien->id_hang,
+                 'active' => 1
+             ])->one();
+             if($thuHo!=NULL){
+                $this->id_thu_ho = $thuHo->id;
+                $this->so_tien_thu_ho = $thuHo->so_tien;
+                $this->ghi_chu_thu_ho = $thuHo->ghi_chu;
+                $this->hinh_thuc_thu_ho = 'TM';
+                $this->updateAttributes(['id_thu_ho' , 'so_tien_thu_ho',
+                    'hinh_thuc_thu_ho', 'ghi_chu_thu_ho']);
+             }
+         }
+         
         // }
      }
     

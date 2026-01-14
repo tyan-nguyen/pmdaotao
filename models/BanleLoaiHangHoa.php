@@ -12,6 +12,7 @@ use Yii;
  * @property string|null $ghi_chu
  * @property int|null $nguoi_tao
  * @property string|null $thoi_gian_tao
+ * @property int|null $is_thu_ho
  *
  * @property HhHangHoa[] $hhHangHoas
  */
@@ -34,7 +35,7 @@ class BanleLoaiHangHoa extends \yii\db\ActiveRecord
             [['ghi_chu', 'nguoi_tao', 'thoi_gian_tao'], 'default', 'value' => null],
             [['ten_loai_hang_hoa'], 'required'],
             [['ghi_chu'], 'string'],
-            [['nguoi_tao'], 'integer'],
+            [['nguoi_tao', 'is_thu_ho'], 'integer'],
             [['thoi_gian_tao'], 'safe'],
             [['ten_loai_hang_hoa'], 'string', 'max' => 250],
         ];
@@ -51,6 +52,7 @@ class BanleLoaiHangHoa extends \yii\db\ActiveRecord
             'ghi_chu' => 'Ghi Chu',
             'nguoi_tao' => 'Nguoi Tao',
             'thoi_gian_tao' => 'Thoi Gian Tao',
+            'is_thu_ho' => 'Thu hộ không tính doanh thu'
         ];
     }
 

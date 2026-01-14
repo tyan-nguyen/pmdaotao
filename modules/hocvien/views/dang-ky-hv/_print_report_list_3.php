@@ -82,6 +82,7 @@ use app\modules\hocvien\models\NopHocPhi;
         			<th rowspan="2">Chuyển khoản</th>
         			<th rowspan="2">Chiết khấu</th>
         			<th rowspan="2">Còn lại</th>
+        			<th rowspan="2">Thu hộ</th>
         			<th rowspan="2">Nhân viên</th>
         			
         			<!-- <th rowspan="2">Tiền mặt</th>
@@ -241,6 +242,7 @@ use app\modules\hocvien\models\NopHocPhi;
             	<td style="text-align:right"><?= $item->hinh_thuc_thanh_toan=='CK' ? number_format($item->so_tien_nop) : '' ?></td>
             	<td style="text-align:right"><?= number_format($item->chiet_khau) ?></td>
             	<td style="text-align:right"><?= number_format($item->so_tien_con_lai) ?></td>
+            	<td style="text-align:right"><?= number_format($item->so_tien_thu_ho) ?></td>
             	<td style="text-align:center"><?= User::findOne($item->nguoi_tao)->ho_ten ?></td>
             </tr>
             <?php }} ?>	
@@ -250,6 +252,8 @@ use app\modules\hocvien\models\NopHocPhi;
             	<td align="right"><?= number_format($modelSoTienNopCK) ?></td>
             	<td align="right"><?= number_format($modelSoTienChietKhau) ?></td>
             	<td align="right"><?php /*number_format($tongTienConLai)*/ ?></td>
+            	<td align="right"><?= number_format($modelSoTienThuHo) ?></td>
+            	
             </tr>
             </tbody>
         </table>

@@ -128,6 +128,17 @@ class BaoCaoController extends Controller
         }
         $modelSoTienChietKhau = $queryChietKhau->sum('t.chiet_khau');
         
+        $queryThuHo = NopHocPhi::find()->alias('t')->joinWith(['hocVien as hv'])->select(['t.*', 'hv.noi_dang_ky'])
+        ->andFilterWhere(['>=', 't.thoi_gian_tao', new Expression("STR_TO_DATE('".$start."','%Y-%m-%d %H:%i:%s')")])
+        ->andFilterWhere(['<=', 't.thoi_gian_tao', new Expression("STR_TO_DATE('".$end."','%Y-%m-%d %H:%i:%s')")]);
+        if($byuser>0){
+            $queryThuHo = $queryThuHo->andFilterWhere(['t.nguoi_tao' => $byuser]);
+        }
+        if($byaddress>0){
+            $queryThuHo = $queryThuHo->andFilterWhere(['hv.noi_dang_ky' => $byaddress]);
+        }
+        $modelSoTienThuHo = $queryThuHo->sum('t.so_tien_thu_ho');
+        
         
         // Load file Excel mẫu
         $template = \Yii::getAlias('@app/templates/bb_theo_ca.xlsx');
@@ -270,6 +281,7 @@ class BaoCaoController extends Controller
         $dataChild[] = $item->hinh_thuc_thanh_toan=='CK' ? $item->so_tien_nop : '';
         $dataChild[] = $item->chiet_khau;
         $dataChild[] = $item->so_tien_con_lai;
+        $dataChild[] = $item->so_tien_thu_ho;
         $dataChild[] = User::findOne($item->nguoi_tao)? User::findOne($item->nguoi_tao)->ho_ten : '';
         
         $data[] = $dataChild;
@@ -299,26 +311,29 @@ class BaoCaoController extends Controller
         $sheet->setCellValue('M'.$row, '=SUM(M7:M'.($row-1).')');
         $sheet->setCellValue('N'.$row, '=SUM(N7:N'.($row-1).')');
         $sheet->setCellValue('O'.$row, '=SUM(O7:O'.($row-1).')');
+        //$sheet->setCellValue('Q'.$row, '=SUM(Q7:Q'.($row-1).')');'
+        $sheet->setCellValue('Q'.$row, $modelSoTienThuHo);
+        
         
         //sét numberformat
         //$sheet->getStyle('G7:P'.($row-1))
-        $sheet->getStyle('G7:P'.$row)
+        $sheet->getStyle('G7:Q'.$row)
             ->getNumberFormat()
             ->setFormatCode('#,##0');
        
         // Format dòng tổng thành in đậm
-        $sheet->getStyle('A'.$row.':Q'.$row)->getFont()->setBold(true);
+        $sheet->getStyle('A'.$row.':R'.$row)->getFont()->setBold(true);
         
         // Kẻ border toàn bảng
         //$sheet->getStyle("A7:Q" . ($row-1))->applyFromArray([
-        $sheet->getStyle("A7:Q" . $row)->applyFromArray([
+        $sheet->getStyle("A7:R" . $row)->applyFromArray([
             'borders' => [
                 'allBorders' => ['borderStyle' => Border::BORDER_THIN]
             ]
         ]);
         
         // Auto size
-        foreach (range('A','Q') as $col) {
+        foreach (range('A','R') as $col) {
             $sheet->getColumnDimension($col)->setAutoSize(true);
         }
         

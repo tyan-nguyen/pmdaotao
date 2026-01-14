@@ -48,6 +48,18 @@ use app\modules\hocvien\models\NopHocPhi;
         <div class="col-lg-9 col-md-6">
             <?= $form->field($model, 'ghi_chu')->textInput([]) ?>
         </div>
+        <div class="col-lg-4 col-md-4">
+            <?= $form->field($model, 'co_thu_ho')->checkbox([]) ?>
+        </div>
+        <div class="col-lg-4 col-md-4">
+            <?= $form->field($model, 'so_tien_thu_ho')->textInput([]) ?>
+        </div>
+        <div class="col-lg-4 col-md-4">
+            <?= $form->field($model, 'hinh_thuc_thu_ho')->textInput([]) ?>
+        </div>
+        <div class="col-lg-12 col-md-12">
+            <?= $form->field($model, 'ghi_chu_thu_ho')->textInput([]) ?>
+        </div>
         
    </div>
    

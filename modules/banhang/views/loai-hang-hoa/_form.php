@@ -18,6 +18,9 @@ use yii\widgets\ActiveForm;
         <div class="col-md-12">
         	<?= $form->field($model, 'ghi_chu')->textarea(['rows' => 6]) ?>
         </div>
+        <div class="col-md-12">
+        	<?= $form->field($model, 'is_thu_ho')->checkbox() ?>
+        </div>
 	</div>
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">

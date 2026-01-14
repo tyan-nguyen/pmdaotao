@@ -13,6 +13,7 @@ use app\custom\CustomFunc;
  * @property string|null $ghi_chu
  * @property int|null $nguoi_tao
  * @property string|null $thoi_gian_tao
+ * @property int|null $is_thu_ho
  *
  * @property HhHangHoa[] $hhHangHoas
  */
@@ -27,7 +28,7 @@ class LoaiHangHoaBase extends \app\models\BanleLoaiHangHoa
             [['ghi_chu', 'nguoi_tao', 'thoi_gian_tao'], 'default', 'value' => null],
             [['ten_loai_hang_hoa'], 'required'],
             [['ghi_chu'], 'string'],
-            [['nguoi_tao'], 'integer'],
+            [['nguoi_tao', 'is_thu_ho'], 'integer'],
             [['thoi_gian_tao'], 'safe'],
             [['ten_loai_hang_hoa'], 'string', 'max' => 250],
         ];
@@ -44,6 +45,7 @@ class LoaiHangHoaBase extends \app\models\BanleLoaiHangHoa
             'ghi_chu' => 'Ghi chú',
             'nguoi_tao' => 'Người tạo',
             'thoi_gian_tao' => 'Thời gian tạo',
+            'is_thu_ho' => 'Thu hộ không tính doanh thu'
         ];
     }
     
@@ -51,6 +53,8 @@ class LoaiHangHoaBase extends \app\models\BanleLoaiHangHoa
         if ($this->isNewRecord) {
             $this->nguoi_tao = Yii::$app->user->identity->id;
             $this->thoi_gian_tao = date('Y-m-d H:i:s');
+            if($this->is_thu_ho == null)
+                $this->is_thu_ho = 0;
         }
         return parent::beforeSave($insert);
     }
