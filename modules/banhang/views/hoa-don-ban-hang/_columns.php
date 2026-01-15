@@ -206,10 +206,11 @@ return [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'chi_phi_van_chuyen',
     // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'ghi_chu',
-    // ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'ghi_chu',
+        'contentOptions' => ['style' => 'text-align:center;width:75px;'],
+    ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'nguoi_tao',
