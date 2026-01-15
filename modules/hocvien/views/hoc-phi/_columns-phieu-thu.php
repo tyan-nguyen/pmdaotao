@@ -216,7 +216,16 @@ return [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'so_lan_in_phieu',
     // ],
-     
+     [
+        'class'=>'\kartik\grid\DataColumn',
+        'label'=>'Thu hộ',
+        'value'=>function($model){
+            return $model->co_thu_ho?'<i class="ion-checkmark-circled text-success"></i>':'';
+        },
+        'width' => '30px',
+        'format' => 'html',
+        'contentOptions' => [ 'style' => 'text-align:center'],
+     ],
      [
          'class'=>'\kartik\grid\DataColumn',
          'attribute'=>'nguoi_thu',
