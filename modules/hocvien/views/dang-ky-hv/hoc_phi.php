@@ -79,7 +79,7 @@ $trangThai = ($hocPhiKhoaHoc && $tongTienDaNop >= $hocPhiKhoaHoc->hoc_phi) ? 'N�
                             echo $user ? Html::encode($user->shortName) : 'Không xác định';
                             ?>
                         </td>
-                        <td align="center"><?= $hcPhi->co_thu_ho ? '<i class="ion-checkmark-circled text-success"></i>' : '' ?></td>
+                        <td align="center"><?= number_format($hcPhi->so_tien_thu_ho, 0, ',', '.') ?></td>
                         <td><?= $hcPhi->ghi_chu ?></td>
                         
                         <td><span id="soLanIn<?= $hcPhi->id ?>"><?= $hcPhi->so_lan_in_phieu ?></span></td>

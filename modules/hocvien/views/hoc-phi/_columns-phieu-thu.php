@@ -220,7 +220,7 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'label'=>'Thu hộ',
         'value'=>function($model){
-            return $model->co_thu_ho?'<i class="ion-checkmark-circled text-success"></i>':'';
+            return $model->co_thu_ho?$model->so_tien_thu_ho:'';
         },
         'width' => '30px',
         'format' => 'html',
