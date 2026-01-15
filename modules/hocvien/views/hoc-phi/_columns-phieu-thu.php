@@ -222,10 +222,10 @@ return [
         'value'=>function($model){
             return $model->co_thu_ho?$model->so_tien_thu_ho:'';
         },
+        'contentOptions' => [ 'style' => 'text-align:right' ],
         'format' => ['decimal', 0],
-        'width' => '30px',
-        'format' => 'html',
-        'contentOptions' => [ 'style' => 'text-align:center'],
+        'pageSummary' => true,
+        'pageSummaryOptions' => ['class' => 'text-right text-end'],
      ],
      [
          'class'=>'\kartik\grid\DataColumn',
