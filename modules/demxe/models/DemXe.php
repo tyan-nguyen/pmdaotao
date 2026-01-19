@@ -458,8 +458,9 @@ class DemXe extends PtxXeDemXe
                 $exists = TietHoc::find()
                 ->andWhere(['<=', 'thoi_gian_bd', $end])
                 ->andWhere(['>=', 'thoi_gian_bd', $start])
+                ->andWhere(['id_xe'=>$this->id_xe])
                 ->exists();
-                if($exists)
+                if(!$exists)
                     return true;
                 else 
                     return false;
