@@ -433,31 +433,35 @@ class DemXe extends PtxXeDemXe
      * sau đó so với ngày kế hoạch có không, nếu có thì true, ngược lại thì false
      */
     public function getDiKhongKeHoach(){
-        $thoiGianHienTai = date('Y-m-d H:i:s');
-        $ngayDi = null;
-        //lấy ngày đi của phiên >30 phút, thời gian về - đi > 30 phút hoặc hiện tại - đi > 30 phút
-        $phutDi = 0;
-        if($this->thoi_gian_bd != null && $this->thoi_gian_kt != null){
-            $phutDi = CustomFunc::getMinutes($this->thoi_gian_bd, $this->thoi_gian_kt);
-            $ngayDi = CustomFunc::convertYMDHISToYMD($this->thoi_gian_bd);
-        } else if($this->thoi_gian_bd != null && $this->thoi_gian_kt == null){
-            $phutDi = CustomFunc::getMinutes($this->thoi_gian_bd, $thoiGianHienTai);
-            $ngayDi = CustomFunc::convertYMDHISToYMD($this->thoi_gian_bd);
-        } else if($this->thoi_gian_bd == null && $this->thoi_gian_kt != null){
-            $dt = new \DateTime($this->thoi_gian_kt);
-            $phutDi = CustomFunc::getMinutes($dt->format('Y-m-d 00:00:00'), $this->thoi_gian_kt);
-            $ngayDi = CustomFunc::convertYMDHISToYMD($this->thoi_gian_kt);
-        } 
-        //so với ngày kế hoạch
-        $start = $ngayDi . ' 00:00:00';
-        $end   = $ngayDi . ' 23:59:59';
-        $exists = TietHoc::find()
-        ->andWhere(['<=', 'thoi_gian_bd', $end])
-        ->andWhere(['>=', 'thoi_gian_bd', $start])
-        ->exists();
-        if($exists)
-            return true;
-        else 
+        if(!$this->id_xe){//xe la
             return false;
+        } else {
+            $thoiGianHienTai = date('Y-m-d H:i:s');
+            $ngayDi = null;
+            //lấy ngày đi của phiên >30 phút, thời gian về - đi > 30 phút hoặc hiện tại - đi > 30 phút
+            $phutDi = 0;
+            if($this->thoi_gian_bd != null && $this->thoi_gian_kt != null){
+                $phutDi = CustomFunc::getMinutes($this->thoi_gian_bd, $this->thoi_gian_kt);
+                $ngayDi = CustomFunc::convertYMDHISToYMD($this->thoi_gian_bd);
+            } else if($this->thoi_gian_bd != null && $this->thoi_gian_kt == null){
+                $phutDi = CustomFunc::getMinutes($this->thoi_gian_bd, $thoiGianHienTai);
+                $ngayDi = CustomFunc::convertYMDHISToYMD($this->thoi_gian_bd);
+            } else if($this->thoi_gian_bd == null && $this->thoi_gian_kt != null){
+                $dt = new \DateTime($this->thoi_gian_kt);
+                $phutDi = CustomFunc::getMinutes($dt->format('Y-m-d 00:00:00'), $this->thoi_gian_kt);
+                $ngayDi = CustomFunc::convertYMDHISToYMD($this->thoi_gian_kt);
+            } 
+            //so với ngày kế hoạch
+            $start = $ngayDi . ' 00:00:00';
+            $end   = $ngayDi . ' 23:59:59';
+            $exists = TietHoc::find()
+            ->andWhere(['<=', 'thoi_gian_bd', $end])
+            ->andWhere(['>=', 'thoi_gian_bd', $start])
+            ->exists();
+            if($exists)
+                return true;
+            else 
+                return false;
+        }
     }
 }
