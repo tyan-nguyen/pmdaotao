@@ -452,16 +452,20 @@ class DemXe extends PtxXeDemXe
                 $ngayDi = CustomFunc::convertYMDHISToYMD($this->thoi_gian_kt);
             } 
             //so với ngày kế hoạch
-            $start = $ngayDi . ' 00:00:00';
-            $end   = $ngayDi . ' 23:59:59';
-            $exists = TietHoc::find()
-            ->andWhere(['<=', 'thoi_gian_bd', $end])
-            ->andWhere(['>=', 'thoi_gian_bd', $start])
-            ->exists();
-            if($exists)
-                return true;
-            else 
+            if($phutDi >= 30){//30 phút
+                $start = $ngayDi . ' 00:00:00';
+                $end   = $ngayDi . ' 23:59:59';
+                $exists = TietHoc::find()
+                ->andWhere(['<=', 'thoi_gian_bd', $end])
+                ->andWhere(['>=', 'thoi_gian_bd', $start])
+                ->exists();
+                if($exists)
+                    return true;
+                else 
+                    return false;
+            } else {
                 return false;
+            }
         }
     }
 }
