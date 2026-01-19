@@ -27,7 +27,7 @@ class CustomFunc
         return round($hours,2);
     }
     /**
-     * tính toán thời gian (số phút) trong khoảng thời gian Y-m-d H:i:s
+     * tính toán thời gian (số phút) định dạng giờ:phút trong khoảng thời gian Y-m-d H:i:s
      * @param unknown $start
      * @param unknown $end
      * @return string
@@ -45,6 +45,17 @@ class CustomFunc
         return sprintf("%02d:%02d", $hours, $minutes);
     }
     
+    /**
+     * tính số phút giữa 2 khoảng thời gian
+     */
+    public static function getMinutes($start, $end){
+        $startTime = new \DateTime($start);
+        $endTime   = new \DateTime($end);
+        
+        $minutes = ($endTime->getTimestamp() - $startTime->getTimestamp()) / 60;
+        $minutes = round($minutes);
+        return $minutes;
+    }
     /**
      * nối string ngày tháng năm, giờ, phút giây thành thời gian bắt đầu
      */

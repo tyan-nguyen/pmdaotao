@@ -5,6 +5,8 @@ use Yii;
 use app\models\PtxXeDemXe;
 use app\modules\thuexe\models\Xe;
 use yii\helpers\Html;
+use app\custom\CustomFunc;
+use app\modules\daotao\models\TietHoc;
 
 class DemXe extends PtxXeDemXe
 {    
@@ -427,9 +429,35 @@ class DemXe extends PtxXeDemXe
     }
     /**
      * sự kiện xe đi không có kế hoạch
+     * check ngày đi (phiên >30 phút hoặc tính từ lúc đi tới hiện tại là >30 phút) 
+     * sau đó so với ngày kế hoạch có không, nếu có thì true, ngược lại thì false
      */
     public function getDiKhongKeHoach(){
-        //số phút + -
-        return false;
+        $thoiGianHienTai = date('Y-m-d H:i:s');
+        $ngayDi = null;
+        //lấy ngày đi của phiên >30 phút, thời gian về - đi > 30 phút hoặc hiện tại - đi > 30 phút
+        $phutDi = 0;
+        if($this->thoi_gian_bd != null && $this->thoi_gian_kt != null){
+            $phutDi = CustomFunc::getMinutes($this->thoi_gian_bd, $this->thoi_gian_kt);
+            $ngayDi = CustomFunc::convertYMDHISToYMD($this->thoi_gian_bd);
+        } else if($this->thoi_gian_bd != null && $this->thoi_gian_kt == null){
+            $phutDi = CustomFunc::getMinutes($this->thoi_gian_bd, $thoiGianHienTai);
+            $ngayDi = CustomFunc::convertYMDHISToYMD($this->thoi_gian_bd);
+        } else if($this->thoi_gian_bd == null && $this->thoi_gian_kt != null){
+            $dt = new \DateTime($this->thoi_gian_kt);
+            $phutDi = CustomFunc::getMinutes($dt->format('Y-m-d 00:00:00'), $this->thoi_gian_kt);
+            $ngayDi = CustomFunc::convertYMDHISToYMD($this->thoi_gian_kt);
+        } 
+        //so với ngày kế hoạch
+        $start = $ngayDi . ' 00:00:00';
+        $end   = $ngayDi . ' 23:59:59';
+        $exists = TietHoc::find()
+        ->andWhere(['<=', 'thoi_gian_bd', $end])
+        ->andWhere(['>=', 'thoi_gian_bd', $start])
+        ->exists();
+        if($exists)
+            return true;
+        else 
+            return false;
     }
 }
