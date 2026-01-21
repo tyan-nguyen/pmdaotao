@@ -93,6 +93,7 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ngay_thuc_hien',
+        'label'=>'Ngày thực hiện',
         'value'=>function($model){
             return CustomFunc::convertYMDToDMY($model->ngay_thuc_hien);
         },
@@ -102,7 +103,7 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'thoi_gian_gui_duyet',
-        'label'=>'TG. gửi',
+        'label'=>'TG. gửi duyệt',
         'value'=>function($model){
             return $model->thoi_gian_gui_duyet?CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_gui_duyet	):'';
         },
