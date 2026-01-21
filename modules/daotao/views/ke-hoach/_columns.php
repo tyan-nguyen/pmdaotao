@@ -88,7 +88,7 @@ return [
         'value'=>function($model){
             return $model->giaoVien?$model->giaoVien->ho_ten:'';
         },
-        'width' => '200px',
+        'width' => '175px',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
