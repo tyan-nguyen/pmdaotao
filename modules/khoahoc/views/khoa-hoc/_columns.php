@@ -119,7 +119,11 @@ return [
         },
         'label' => 'Hạng đào tạo',
     ], */
-
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'nhom_co_so',
+        'width' => '75px',
+    ],
 
     [
         'class'=>'\kartik\grid\DataColumn',

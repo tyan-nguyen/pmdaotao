@@ -20,11 +20,14 @@ use kartik\date\DatePicker;
             ]
       	]); ?>
     <div class='row'>
-        <div class="col-md-3">
+        <div class="col-md-2">
               <?= $form->field($model, 'ten_khoa_hoc')->textInput(['maxlength' => true]) ?>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
               <?= $form->field($model, 'id_hang')->dropDownList(HangDaoTao::getList(), ['prompt'=>'Chọn hạng']) ?>
+        </div>
+        <div class="col-md-2">
+              <?= $form->field($model, 'nhom_co_so')->dropDownList(['TRAVINH'=>'Trà Vinh', 'BENTRE'=>'Bến Tre'], ['prompt'=>'Chọn hạng']) ?>
         </div>
         <div class="col-md-3">   
              <?= $form->field($model, 'ngay_bat_dau')->widget(DatePicker::classname(), [

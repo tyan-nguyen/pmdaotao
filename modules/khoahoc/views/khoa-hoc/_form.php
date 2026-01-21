@@ -64,8 +64,14 @@ $model->ngay_ket_thuc = CustomFunc::convertYMDToDMY($model->ngay_ket_thuc);
                   'prompt'=>'-Chọn-'
               ]) ?>
         </div>
+        
+        <div class="col-lg-3 col-md-6">
+              <?= $form->field($model, 'nhom_co_so')->dropDownList(['TRAVINH'=>'Trà Vinh', 'BENTRE'=>'Bến Tre'], [
+                  'prompt'=>'-Chọn-'
+              ]) ?>
+        </div>
 
-        <div class='col-md-9'>
+        <div class='col-md-6'>
         <?= $form->field($model, 'ghi_chu')->textarea(['rows' => 6, 'placeholder' => 'Nhập ghi chú']) ?>
         </div>
     </div>

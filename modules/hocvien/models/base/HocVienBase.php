@@ -101,7 +101,23 @@ class HocVienBase extends \app\models\HvHocVien
     //dành cho thay đổi hạng
     public $so_tien;
     public $thoi_gian_thay_doi;        
-    
+    /**
+     * danh muc nhom co so (tra vinh/ben tre)
+     */
+    public static function getNhomCoSo($val){
+        if(in_array($val, [
+            self::NOIDANGKY_CS1, self::NOIDANGKY_CS2, self::NOIDANGKY_CS3, self::NOIDANGKY_CS4, 
+            self::NOIDANGKY_CS6, self::NOIDANGKY_CS7, self::NOIDANGKY_CS8, self::NOIDANGKY_CS11
+        ])){
+            return 'TRAVINH';
+        } else if(in_array($val, [
+                self::NOIDANGKY_CS5, self::NOIDANGKY_CS9, self::NOIDANGKY_CS10, self::NOIDANGKY_CS12
+        ])){
+            return 'BENTRE';
+        } else {
+            return '';
+        }
+    }
     /**
      * Danh muc noi dang ky
      * @return string[]

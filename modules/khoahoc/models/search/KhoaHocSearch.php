@@ -19,7 +19,7 @@ class KhoaHocSearch extends KhoaHoc
     {
         return [
             [['id', 'id_hang', 'nguoi_tao'], 'integer'],
-            [['ten_khoa_hoc', 'ngay_bat_dau', 'ngay_ket_thuc', 'ghi_chu', 'trang_thai', 'thoi_gian_tao'], 'safe'],
+            [['ten_khoa_hoc', 'ngay_bat_dau', 'ngay_ket_thuc', 'ghi_chu', 'trang_thai', 'thoi_gian_tao', 'nhom_co_so'], 'safe'],
         ];
     }
 
@@ -62,6 +62,7 @@ class KhoaHocSearch extends KhoaHoc
             'ngay_ket_thuc' => $this->ngay_ket_thuc,
             'nguoi_tao' => $this->nguoi_tao,
             'thoi_gian_tao' => $this->thoi_gian_tao,
+            'nhom_co_so' => $this->nhom_co_so,
         ]);
 
         $query->andFilterWhere(['like', 'ten_khoa_hoc', $this->ten_khoa_hoc])

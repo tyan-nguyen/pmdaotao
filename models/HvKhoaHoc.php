@@ -18,6 +18,7 @@ use Yii;
  * @property string|null $thoi_gian_tao
  * @property int|null $id_hoc_phi
  * @property int | $so_hoc_vien_khoa_hoc 
+ * @property string|null $nhom_co_so
  * @property HvHangDaoTao $hang
  * @property HvHocVien[] $hvHocViens
  * @property HvTaiLieuKhoaHoc[] $hvTaiLieuKhoaHocs
@@ -43,6 +44,7 @@ class HvKhoaHoc extends \yii\db\ActiveRecord
             [['ngay_bat_dau', 'ngay_ket_thuc', 'thoi_gian_tao'], 'safe'],
             [['ghi_chu'], 'string'],
             [['ten_khoa_hoc', 'trang_thai'], 'string', 'max' => 255],
+            [['nhom_co_so'], 'string', 'max' => 20],
             [['id_hang'], 'exist', 'skipOnError' => true, 'targetClass' => HvHangDaoTao::class, 'targetAttribute' => ['id_hang' => 'id']],
         ];
     }
@@ -62,6 +64,7 @@ class HvKhoaHoc extends \yii\db\ActiveRecord
             'trang_thai' => 'Trang Thai',
             'nguoi_tao' => 'Nguoi Tao',
             'thoi_gian_tao' => 'Thoi Gian Tao',
+            'nhom_co_so' => 'Nhom co so'
         ];
     }
 
