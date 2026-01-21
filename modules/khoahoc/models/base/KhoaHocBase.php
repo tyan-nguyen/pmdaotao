@@ -20,6 +20,7 @@ use app\modules\hocvien\models\HocPhi;
  * @property string|null $thoi_gian_tao
  * @property int|null $id_hoc_phi
  * @property int| $so_hoc_vien_khoa_hoc 
+ * @property string|null $nhom_co_so
  * @property HangDaoTao $hang
  * @property HocVien[] $hvHocViens
  * @property TaiLieuKhoaHoc[] $hvTaiLieuKhoaHocs
@@ -87,6 +88,7 @@ class KhoaHocBase extends \app\models\HvKhoaHoc
             [['ngay_bat_dau', 'ngay_ket_thuc', 'thoi_gian_tao'], 'safe'],
             [['ghi_chu'], 'string'],
             [['ten_khoa_hoc', 'trang_thai'], 'string', 'max' => 255],
+            [['nhom_co_so'], 'string', 'max' => 20],
             [['listIdHocVien'], 'safe'],
             [['id_hang'], 'exist', 'skipOnError' => true, 'targetClass' => HangDaoTao::class, 'targetAttribute' => ['id_hang' => 'id']],
             [['idGiaoVien'], 'required', 'on'=>'phan-cong-giang-day'], //on add mau cua vao ke hoach
@@ -110,6 +112,7 @@ class KhoaHocBase extends \app\models\HvKhoaHoc
             'thoi_gian_tao' => 'Thời gian tạo',
             'id_hoc_phi'=>'Id học phí',
             'so_hoc_vien_khoa_hoc'=>'Số học viên khóa học',
+            'nhom_co_so' => 'Địa điểm',
             
             'idGiaoVien'=>'Giáo viên phụ trách',
         ];
