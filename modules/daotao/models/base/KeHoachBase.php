@@ -111,19 +111,19 @@ class KeHoachBase extends \app\models\GdKeHoach
     {
         switch ($val) {
             case self::TT_NHAP:
-                $label = '<span class="badge bg-danger">Nháp</span> ';
+                $label = '<span class="badge bg-danger"><i class="fa fa-edit"></i> Nháp</span> ';
                 break;
             case self::TT_CHODUYET:
-                $label = '<span class="badge bg-warning">Chờ duyệt</span> ';
+                $label = '<span class="badge bg-warning"><i class="fa fa-hourglass-half"></i> Chờ duyệt</span> ';
                 break;
             case self::TT_DADUYET:
-                $label = '<span class="badge bg-primary">Đã duyệt</span> ';
+                $label = '<span class="badge bg-primary"><i class="fa fa-check-circle"></i> Đã duyệt</span> ';
                 break;
             case self::TT_KHONGDUYET:
-                $label = '<span class="badge bg-danger">Không duyệt</span> ';
+                $label = '<span class="badge bg-danger"><i class="fa fa-remove"></i> Không duyệt</span> ';
                 break;
             case self::TT_HOANTHANH:
-                $label = '<span class="badge bg-info">Hoàn thành</span> ';
+                $label = '<span class="badge bg-info"><i class="fa fa-check-square-o"></i> Hoàn thành</span> ';
                 break;
             default:
                 $label = '';
