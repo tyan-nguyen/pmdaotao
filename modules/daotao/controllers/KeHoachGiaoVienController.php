@@ -118,6 +118,9 @@ class KeHoachGiaoVienController extends Controller
             if($model!=null){
                 if($model->gdTietHocs!=null && $model->nguoi_tao == Yii::$app->user->id){
                     $model->trang_thai_duyet = KeHoachBase::TT_CHODUYET;
+                    if($model->thoi_gian_gui_duyet==null){
+                        $model->thoi_gian_gui_duyet = date('Y-m-d H:i:s');
+                    }
                     $model->save(false);
                     return [
                         'forceReload'=>'#crud-datatable-pjax',

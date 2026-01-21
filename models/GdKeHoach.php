@@ -11,6 +11,7 @@ use Yii;
  * @property int $id_giao_vien
  * @property string $ngay_thuc_hien
  * @property string|null $ghi_chu
+ * @property string|null thoi_gian_gui_duyet	
  * @property string|null $trang_thai_duyet
  * @property int|null $id_nguoi_duyet
  * @property string|null $noi_dung_duyet
@@ -41,7 +42,7 @@ class GdKeHoach extends \yii\db\ActiveRecord
             [['ghi_chu', 'trang_thai_duyet', 'id_nguoi_duyet', 'noi_dung_duyet', 'thoi_gian_duyet', 'thoi_gian_tao', 'nguoi_tao'], 'default', 'value' => null],
             [['id_giao_vien', 'ngay_thuc_hien'], 'required'],
             [['id_giao_vien', 'id_nguoi_duyet', 'nguoi_tao'], 'integer'],
-            [['ngay_thuc_hien', 'thoi_gian_duyet', 'thoi_gian_tao'], 'safe'],
+            [['ngay_thuc_hien', 'thoi_gian_duyet', 'thoi_gian_tao', 'thoi_gian_gui_duyet'], 'safe'],
             [['ghi_chu', 'noi_dung_duyet'], 'string'],
             [['trang_thai_duyet'], 'string', 'max' => 20],
         ];
@@ -57,6 +58,7 @@ class GdKeHoach extends \yii\db\ActiveRecord
             'id_giao_vien' => 'Id Giao Vien',
             'ngay_thuc_hien' => 'Ngay Thuc Hien',
             'ghi_chu' => 'Ghi Chu',
+            'thoi_gian_gui_duyet' => 'Thoi Gian Gui Duyet',
             'trang_thai_duyet' => 'Trang Thai Duyet',
             'id_nguoi_duyet' => 'Id Nguoi Duyet',
             'noi_dung_duyet' => 'Noi Dung Duyet',

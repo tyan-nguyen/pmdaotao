@@ -74,44 +74,64 @@ return [
     // ],
     [
         'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'trang_thai_duyet',
+        'value'=>function($model){
+            return KeHoach::getLabelTrangThaiBadge($model->trang_thai_duyet);
+        },
+        'format' => 'raw',
+        'width' => '75px',
+        'contentOptions' => [ 'style' => 'text-align:center' ],
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'id_giao_vien',
         'value'=>function($model){
             return $model->giaoVien?$model->giaoVien->ho_ten:'';
-        }
+        },
+        'width' => '200px',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ngay_thuc_hien',
         'value'=>function($model){
             return CustomFunc::convertYMDToDMY($model->ngay_thuc_hien);
-        }
+        },
+        'width' => '100px',
+        'contentOptions' => [ 'style' => 'text-align:center' ],
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'trang_thai_duyet',
+        'attribute'=>'thoi_gian_gui_duyet',
+        'label'=>'TG. gửi',
         'value'=>function($model){
-            return KeHoach::getLabelTrangThaiBadge($model->trang_thai_duyet);
+            return $model->thoi_gian_gui_duyet?CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_gui_duyet	):'';
         },
-        'format' => 'raw'
+        'width' => '125px',
+        'contentOptions' => [ 'style' => 'text-align:center' ],
     ],
+    
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'id_nguoi_duyet',
         'value'=>function($model){
-        return $model->nguoiDuyet?($model->nguoiDuyet->ho_ten?$model->nguoiDuyet->ho_ten:$model->nguoiDuyet->username):'';
-        }
+            return $model->nguoiDuyet?($model->nguoiDuyet->ho_ten?$model->nguoiDuyet->ho_ten:$model->nguoiDuyet->username):'';
+        },
+        'width' => '150px',
+        'contentOptions' => [ 'style' => 'text-align:center' ],
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'thoi_gian_duyet',
         'value'=>function($model){
-            return CustomFunc::convertYMDHISToDMYHIS($model->thoi_gian_duyet);
-        }
+            return CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_duyet);
+        },
+        'width' => '125px',
+        'contentOptions' => [ 'style' => 'text-align:center' ],
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'noi_dung_duyet',
-        'width' => '250px',
+        //'width' => '250px',
     ],
     
     // [

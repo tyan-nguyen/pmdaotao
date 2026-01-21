@@ -15,6 +15,7 @@ use app\modules\user\models\User;
  * @property int $id_giao_vien
  * @property string $ngay_thuc_hien
  * @property string|null $ghi_chu
+ * @property string|null thoi_gian_gui_duyet
  * @property string|null $trang_thai_duyet
  * @property int|null $id_nguoi_duyet
  * @property string|null $noi_dung_duyet
@@ -138,7 +139,7 @@ class KeHoachBase extends \app\models\GdKeHoach
             [['trang_thai_duyet', 'id_nguoi_duyet', 'noi_dung_duyet', 'thoi_gian_duyet', 'thoi_gian_tao', 'nguoi_tao'], 'default', 'value' => null],
             [['id_giao_vien', 'ngay_thuc_hien'], 'required'],
             [['id_giao_vien', 'id_nguoi_duyet', 'nguoi_tao'], 'integer'],
-            [['ngay_thuc_hien', 'thoi_gian_duyet', 'thoi_gian_tao'], 'safe'],
+            [['ngay_thuc_hien', 'thoi_gian_duyet', 'thoi_gian_tao', 'thoi_gian_gui_duyet'], 'safe'],
             [['noi_dung_duyet', 'ghi_chu'], 'string'],
             [['trang_thai_duyet'], 'string', 'max' => 20],
             [['trang_thai_duyet'], 'required', 'on'=>'duyet-kh'], //bat buoc khi duyet
@@ -155,6 +156,7 @@ class KeHoachBase extends \app\models\GdKeHoach
             'id_giao_vien' => 'Giáo viên',
             'ngay_thuc_hien' => 'Ngày',
             'ghi_chu' => 'Ghi chú',
+            'thoi_gian_gui_duyet' => 'Thời gian gửi duyệt',
             'trang_thai_duyet' => 'Trạng thái',
             'id_nguoi_duyet' => 'Người duyệt',
             'noi_dung_duyet' => 'Nội dung duyệt',
