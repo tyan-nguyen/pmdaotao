@@ -445,3 +445,12 @@ style for all grid
 	color:blue;
 	font-weight: bold;
 }
+/** css cho a bien so xe **/
+.aBienSo{
+	border-color: #212121!important;
+	color: #212121 !important;
+}
+.aBienSo:hover{
+	border-color: red!important;	
+	color: red!important;
+}

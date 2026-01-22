@@ -78,7 +78,8 @@ use app\modules\user\models\User;
          		    echo Html::a($tietHoc->xe->bien_so_xe, 
          		        '/thuexe/lich-xe/lich-xe-gv-so-sanh?idxe='.$tietHoc->id_xe.'&menu=dt3',[
          		            'data-pjax'=>0,
-         		            'target'=>'_blank'
+         		            'target'=>'_blank',
+         		            'class'=>'aBienSo'
          		        ]);
          		} else {
          		     echo $tietHoc->xe->bien_so_xe;
