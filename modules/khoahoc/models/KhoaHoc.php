@@ -38,7 +38,7 @@ class KhoaHoc extends KhoaHocBase
         if($user->noi_dang_ky != null){
             $nhomCoSo = HocVienBase::getNhomCoSo($user->noi_dang_ky);
             if($nhomCoSo == 'TRAVINH' || $nhomCoSo == 'BENTRE'){
-                $query->andWhere("nhom_co_so IS NULL OR nhom_co_so ='".$nhomCoSo."'");
+                $query->andWhere("nhom_co_so IS NULL OR nhom_co_so = '' OR nhom_co_so ='".$nhomCoSo."'");
             }
         }
         // Sắp xếp danh sách theo thứ tự bảng chữ cái dựa trên 'ten_loai'
