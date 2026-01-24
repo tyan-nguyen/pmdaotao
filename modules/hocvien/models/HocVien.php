@@ -12,6 +12,8 @@ use yii\helpers\ArrayHelper;
 use app\modules\giaovien\models\GiaoVien;
 use app\modules\daotao\models\GvHv;
 use app\modules\user\models\User;
+use app\modules\daotao\models\HangMonHoc;
+use app\modules\daotao\models\TietHoc;
 
 class HocVien extends HocVienBase
 {
@@ -169,5 +171,21 @@ class HocVien extends HocVienBase
         else
             return false;
     }
-  
+  /**
+   * lấy số lượng đã học các môn (dạng text hiển thị trong view kế hoạch)
+   */
+    public function viewSoGioHocHtml(){
+        $html='';
+        $dsMonHoc = HangMonHoc::find()->where(['id_hang' => $this->id_hang])->all();
+        foreach ($dsMonHoc as $iM=>$m){
+            $tietHocOk = TietHoc::find()->where(['id_hoc_vien'=>$this->id, 'id_mon_hoc'=>$m->id_mon, 'trang_thai'=>TietHoc::TT_DAHOANTHANH])->sum('so_gio');
+            $tietHocHocVienHuy = TietHoc::find()->where(['id_hoc_vien'=>$this->id, 'id_mon_hoc'=>$m->id_mon, 'trang_thai'=>TietHoc::TT_HOCVIENHUY])->sum('so_gio');
+            $tongKm = TietHoc::find()->where(['id_hoc_vien'=>$this->id, 'id_mon_hoc'=>$m->id_mon, 'trang_thai'=>TietHoc::TT_DAHOANTHANH])->sum('so_km');
+            $html.= 'Tổng giờ: '. ($tietHocOk+$tietHocHocVienHuy) . '/' . $m->mon->so_gio_tt;
+            $html.= ' - Đã hoàn thành: ' . $tietHocOk . '/' . $m->mon->so_gio_tt;
+            $html .= ' - Học viên hủy: ' . $tietHocHocVienHuy;
+            $html .= ' - Tổng KM: ' . $tongKm;
+        }
+        return $html;
+    }
 }
