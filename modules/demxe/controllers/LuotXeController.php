@@ -331,7 +331,7 @@ class LuotXeController extends Controller
         
         $listVP = [];
         //get all dem xe match date
-        $demXe = 
+        $demXe = "!!!!!!!!!!!!!!!";
         
         //loop all data, check overnight or not planing
         //send listVP to view
