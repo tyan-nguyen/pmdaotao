@@ -11,6 +11,7 @@ use yii\filters\VerbFilter;
 use \yii\web\Response;
 use yii\helpers\Html;
 use yii\filters\AccessControl;
+use app\custom\CustomFunc;
 
 /**
  * DemXeController implements the CRUD actions for DemXe model.
@@ -290,5 +291,51 @@ class LuotXeController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+    
+    /**
+     * báo cáo xe vi phạm qua đêm/đi không có kế hoạch
+     */
+    public function actionBcViPham(){
+        $request = Yii::$app->request;
+        if ($request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            
+            return [
+                'title' => "Báo cáo vi phạm",
+                'content' => $this->renderAjax('rp_bao_cao_vi_pham', [
+                    
+                ]),
+                'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"])
+            ];
+        }
+    }
+    /**
+     * in báo cáo vi phạm theo các tham số (dành cho xe đào tạo)
+     * @param unknown $startdate
+     * @param unknown $starttime
+     * @param unknown $enddate
+     * @param unknown $endtime
+     * @param unknown $byuser
+     * @param unknown $typereport
+     * @param unknown $byaddress
+     */
+    public function actionGetPhieuInXeDaoTao($startdate, $starttime, $enddate, $endtime, $typereport)//0 for all
+    {
+        if($starttime == null)
+            $starttime = '00:00:00';
+        if($endtime == null)
+            $endtime = '23:59:59';
+        $start = CustomFunc::convertDMYToYMD($startdate) . ' ' . $starttime;
+        $end = CustomFunc::convertDMYToYMD($enddate) . ' ' . $endtime;
+        
+        $listVP = [];
+        //get all dem xe match date
+        $demXe = 
+        
+        //loop all data, check overnight or not planing
+        //send listVP to view
+        
+        
     }
 }

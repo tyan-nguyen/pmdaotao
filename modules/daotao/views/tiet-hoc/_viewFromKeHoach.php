@@ -69,7 +69,13 @@ use app\modules\user\models\User;
         )):'' ?></td>
      	<?php endif;?>
      	<?php if($gioIsExist == true):?>
-     	<td><?= $tietHoc->hocVien->ho_ten ?></td>
+     	<td><?php 
+     	if($model->trang_thai_duyet == KeHoach::TT_NHAP || $model->trang_thai_duyet == KeHoach::TT_CHODUYET ){
+     	    echo '<span title="'.$tietHoc->hocVien->viewSoGioHocHtml().'">' . $tietHoc->hocVien->ho_ten . '</span>';
+     	}else{
+     	     echo $tietHoc->hocVien->ho_ten;
+     	}
+     	?></td>
      	<td><?= $tietHoc->hocVien->khoaHoc->ten_khoa_hoc ?></td>
      	<td><?= $tietHoc->monHoc->ten_mon /*. ($tietHoc->monHoc->ten_mon_sub?(' ('.$tietHoc->monHoc->ten_mon_sub.')'):'')*/ ?></td>
      	<td align="center">
