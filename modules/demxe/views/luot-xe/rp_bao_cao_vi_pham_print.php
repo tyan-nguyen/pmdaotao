@@ -106,20 +106,19 @@ use app\modules\user\models\User;
         		<td></td>
         		<td style="text-align: center;font-weight:300;font-style: italic;">Vĩnh Long, ngày <?= date('d') ?> tháng <?= date('m') ?> năm <?= date('Y') ?></td>
         	</tr>
+        	
     		<tr>
     			<td></td>
     			<td style="text-align: center;font-weight: bold;font-style: normal;">NGƯỜI LẬP</td>
     		</tr>
-    		<tr>
-    			<td></td>
-    			<td><span class="text-13">(Ký, Họ tên)</span></td>
-    		</tr>
+    		
     		<tr>
         		<td></td>
     			<td style="padding-top:40px;font-size:13pt;font-weight: bold"><?= User::getCurrentUser()->getHoTen() ?></td>
     		</tr>
     	</table>
-    	
+
+<div style="width:100%;text-align: right;font-style:italic;margin-top:20px">Thời gian xuất báo cáo: <?= date('d/m/Y H:i') ?></div>    	
     	
 	</div>
 </div>
