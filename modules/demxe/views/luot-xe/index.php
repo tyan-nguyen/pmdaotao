@@ -95,6 +95,9 @@ Yii::$app->params['showView'] = true;
                             'data-confirm-title'=>'Xác nhận xóa?',
                             'data-confirm-message'=>'Bạn có chắc muốn xóa?'
                         ])
+                    .'<li><hr class="dropdown-divider"></li>'
+                    . Html::a('<i class="fas fa-clipboard-list"></i> Báo cáo vi phạm', ['bc-vi-pham'],
+                        ['role'=>'modal-remote','title'=> 'In DS theo ca','class'=>'dropdown-item'])
                     .
                     '
 						</div>

@@ -12,6 +12,7 @@ use \yii\web\Response;
 use yii\helpers\Html;
 use yii\filters\AccessControl;
 use app\custom\CustomFunc;
+use app\modules\thuexe\models\Xe;
 
 /**
  * DemXeController implements the CRUD actions for DemXe model.
@@ -322,6 +323,7 @@ class LuotXeController extends Controller
      */
     public function actionGetPhieuInXeDaoTao($startdate, $starttime, $enddate, $endtime, $typereport)//0 for all
     {
+        $currentTime = date('Y-m-d H:i:s');
         if($starttime == null)
             $starttime = '00:00:00';
         if($endtime == null)
@@ -330,12 +332,64 @@ class LuotXeController extends Controller
         $end = CustomFunc::convertDMYToYMD($enddate) . ' ' . $endtime;
         
         $listVP = [];
-        //get all dem xe match date
-        $demXe = "!!!!!!!!!!!!!!!";
+        //get all dem xe match date,
+        //lay moc ngày di, luot xe co di co ve, moc ve la ngay ve, 
+        //luot xe chua co moc ve, ngay ve la ngay $end
+        $listXe = Xe::find()->where(['phan_loai'=>Xe::PHANLOAI_TAPLAI])->all();
+        foreach ($listXe as $iXe=>$xe){
+            $demXe = DemXe::find()->alias('t')->joinWith(['xe as x'])->where([
+                't.id_xe' => $xe->id,
+            ])->andWhere(['>=','t.thoi_gian_bd', $start])
+            ->andWhere([
+                'or',
+                ['<=', 't.thoi_gian_kt', $end],
+                ['thoi_gian_kt' => null],
+                //['thoi_gian' => ''],
+            ])
+            ->all();
+            $mss = '';
+            foreach ($demXe as $iDx=>$dx){
+                //check qua dem
+                if($dx->xeQuaDem){
+                    $mss = 'Xe đi qua đêm (' . CustomFunc::convertYMDHISToDMYHI($dx->thoi_gian_bd)
+                    . ' - ' . ($dx->thoi_gian_kt!=null?CustomFunc::convertYMDHISToDMYHI($dx->thoi_gian_kt):
+                    '???' ) . ')'  . ';';
+                }
+                //check khong ke hoach
+                if($dx->diKhongKeHoach){
+                    $mss .=  'Xe đi không kế hoạch (' . CustomFunc::convertYMDHISToDMYHI($dx->thoi_gian_bd)
+                    . ' - ' . ($dx->thoi_gian_kt!=null?CustomFunc::convertYMDHISToDMYHI($dx->thoi_gian_kt):
+                    '???' ) . ')' . ';';
+                }
+            }
+            if($mss!=''){
+                $listVP[$xe->bien_so_xe] = $mss;
+            }
+        }
+        /* $demXe = DemXe::find()->alias('t')->joinWith(['xe as x'])->where([
+            'x.phan_loai' => Xe::PHANLOAI_TAPLAI,
+        ])->andWhere(['>=','t.thoi_gian_bd', $start])
+        ->andWhere([
+            'or',
+            ['<=', 't.thoi_gian_kt', $end],
+            ['thoi_gian' => null],
+            //['thoi_gian' => ''],
+        ])
+        ->all(); */
         
         //loop all data, check overnight or not planing
         //send listVP to view
-        
+        if($typereport==1){
+            $content = $this->renderPartial('rp_bao_cao_vi_pham_print', [
+                'list'=>$listVP,
+                'start' => $start,
+                'end' => $end
+            ]);
+        }
+        return $this->asJson([
+            'status' => 'success',
+            'content' => $content,
+        ]);
         
     }
 }
