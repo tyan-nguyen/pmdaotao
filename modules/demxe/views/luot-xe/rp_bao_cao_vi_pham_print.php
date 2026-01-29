@@ -94,7 +94,6 @@ use app\modules\user\models\User;
                 	<td></td>
                 </tr>
                 
-              
                 <?php 
                 }
                 ?>

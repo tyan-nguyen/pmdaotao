@@ -90,6 +90,18 @@ return [
     // ],
     [
         'class'=>'\kartik\grid\DataColumn',
+        'label'=>'TT',
+        'value'=>function($model){
+            return (!$model->daDocFile() || !$model->daImportFile())?
+            '<i class="ion-close-circled text-danger"></i>'
+                :'<i class="ion-checkmark-circled text-success"></i>';
+        },
+        'width' => '30px',
+        'format' => 'html',
+        'contentOptions' => [ 'style' => 'text-align:center'],
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'thoi_gian_tu',
         'value'=>function($model){
             return CustomFunc::convertYMDHISToDMYHIS($model->thoi_gian_tu);
