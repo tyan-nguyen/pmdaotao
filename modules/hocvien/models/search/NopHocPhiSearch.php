@@ -20,6 +20,7 @@ class NopHocPhiSearch extends NopHocPhi
     public $endtime;
     public $ma_so_hoc_vien;
     public $id_hang;
+    public $id_khoa;
     public $noi_dang_ky;
     /**
      * @inheritdoc
@@ -28,7 +29,7 @@ class NopHocPhiSearch extends NopHocPhi
     {
         return [
             [['id', 'id_hoc_vien', 'id_hoc_phi', 'ma_so_phieu', 'so_lan_in_phieu', 'nguoi_thu', 'nguoi_tao'], 'integer'],
-            [['loai_phieu', 'loai_nop', 'ngay_nop', 'hinh_thuc_thanh_toan', 'bien_lai', 'thoi_gian_tao', 'da_kiem_tra', 'ghi_chu', 'startdate', 'starttime', 'enddate', 'endtime', 'ma_so_hoc_vien', 'id_hang', 'noi_dang_ky'], 'safe'],
+            [['loai_phieu', 'loai_nop', 'ngay_nop', 'hinh_thuc_thanh_toan', 'bien_lai', 'thoi_gian_tao', 'da_kiem_tra', 'ghi_chu', 'startdate', 'starttime', 'enddate', 'endtime', 'ma_so_hoc_vien', 'id_hang', 'noi_dang_ky', 'id_khoa'], 'safe'],
             [['so_tien_nop', 'chiet_khau', 'so_tien_con_lai'], 'number'],
             [['startdate', 'enddate'], 'checkDateFormat']
         ];
@@ -158,6 +159,7 @@ class NopHocPhiSearch extends NopHocPhi
                 //'thoi_gian_tao' => $this->thoi_gian_tao,
                 'hv.so_cccd' =>$this->ma_so_hoc_vien,
                 'hv.id_hang' => $this->id_hang,
+                'hv.id_khoa_hoc' => $this->id_khoa,
                 //'hv.noi_dang_ky' => $this->noi_dang_ky
                 'nt.noi_dang_ky' => $this->noi_dang_ky
             ]);

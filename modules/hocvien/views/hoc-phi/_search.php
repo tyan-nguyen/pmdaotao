@@ -6,6 +6,7 @@ use app\modules\user\models\User;
 use kartik\date\DatePicker;
 use app\modules\hocvien\models\DangKyHv;
 use app\modules\hocvien\models\HangDaoTao;
+use app\modules\khoahoc\models\KhoaHoc;
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\hocvien\models\NopHocPhi */
@@ -30,6 +31,9 @@ use app\modules\hocvien\models\HangDaoTao;
         </div>
         <div class="col-md-2">
               <?= $form->field($model, 'id_hang')->dropDownList(HangDaoTao::getList(), ['prompt'=>'Tất cả'])->label('Hạng đào tạo') ?>
+        </div>
+        <div class="col-md-2">
+              <?= $form->field($model, 'id_khoa')->dropDownList(KhoaHoc::getList(), ['prompt'=>'Tất cả'])->label('Khóa học') ?>
         </div>
         <div class="col-md-2">
 	 		  <?= $form->field($model, 'startdate')->widget(DatePicker::classname(), [
