@@ -36,6 +36,42 @@ use app\modules\khoahoc\models\KhoaHoc;
               <?= $form->field($model, 'id_khoa')->dropDownList(KhoaHoc::getList(), ['prompt'=>'Tất cả'])->label('Khóa học') ?>
         </div>
         <div class="col-md-2">
+	 		 <?= $form->field($model, 'nguoi_tao')->dropDownList(User::getList(), 
+	 		     ['prompt'=>'Tất cả'])->label('NV tiếp nhận') ?>
+	 	</div>
+	 	<div class="col-md-2">
+	 		  <?= $form->field($model, 'thoi_gian_tao')->widget(DatePicker::classname(), [
+                         'options' => ['placeholder' => 'Chọn ngày  ...'],
+                         'pluginOptions' => [
+                         'autoclose' => true,
+                         'format' => 'dd/mm/yyyy',
+                         'zIndexOffset'=>'9999',
+                         'todayHighlight'=>true,
+                         'todayBtn'=>true
+                  ]
+              ]); ?>
+	 	</div>
+     </div>
+     <div class="row">
+	 	<div class="col-md-2">
+	 		 <?= $form->field($model, 'ma_so_phieu')->textInput() ?>
+	 	</div>
+	 	<div class="col-md-2">
+	 		<?= $form->field($model, 'loai_nop')->dropDownList(
+	 		    NopHocPhi::getDmLoaiNop(),
+	 		    ['prompt'=>'-Chọn-']
+	 		) ?>
+	 	</div>
+	 	<div class="col-md-2">
+	 		<?= $form->field($model, 'hinh_thuc_thanh_toan')->dropDownList(
+	 		    NopHocPhi::getDmHinhThucThanhToan(),
+	 		    ['prompt'=>'-Chọn-']
+	 		) ?>
+	 	</div>
+	 	<!-- <div class="col-md-2">
+	 		 <?= $form->field($model, 'nguoi_thu')->textInput() ?>
+	 	</div>-->
+	 	<div class="col-md-2">
 	 		  <?= $form->field($model, 'startdate')->widget(DatePicker::classname(), [
                          'options' => ['placeholder' => 'Chọn ngày  ...'],
                          'pluginOptions' => [
@@ -64,42 +100,6 @@ use app\modules\khoahoc\models\KhoaHoc;
 	 	</div>
 	 	<div class="col-md-1">
 	 		  <?= $form->field($model, 'endtime')->textInput()->label('&nbsp;') ?>
-	 	</div>
-     </div>
-     <div class="row">
-	 	<div class="col-md-2">
-	 		 <?= $form->field($model, 'ma_so_phieu')->textInput() ?>
-	 	</div>
-	 	<div class="col-md-2">
-	 		<?= $form->field($model, 'loai_nop')->dropDownList(
-	 		    NopHocPhi::getDmLoaiNop(),
-	 		    ['prompt'=>'-Chọn-']
-	 		) ?>
-	 	</div>
-	 	<div class="col-md-2">
-	 		<?= $form->field($model, 'hinh_thuc_thanh_toan')->dropDownList(
-	 		    NopHocPhi::getDmHinhThucThanhToan(),
-	 		    ['prompt'=>'-Chọn-']
-	 		) ?>
-	 	</div>
-	 	<!-- <div class="col-md-2">
-	 		 <?= $form->field($model, 'nguoi_thu')->textInput() ?>
-	 	</div>-->
-	 	<div class="col-md-2">
-	 		 <?= $form->field($model, 'nguoi_tao')->dropDownList(User::getList(), 
-	 		     ['prompt'=>'Tất cả'])->label('NV tiếp nhận') ?>
-	 	</div>
-	 	<div class="col-md-2">
-	 		  <?= $form->field($model, 'thoi_gian_tao')->widget(DatePicker::classname(), [
-                         'options' => ['placeholder' => 'Chọn ngày  ...'],
-                         'pluginOptions' => [
-                         'autoclose' => true,
-                         'format' => 'dd/mm/yyyy',
-                         'zIndexOffset'=>'9999',
-                         'todayHighlight'=>true,
-                         'todayBtn'=>true
-                  ]
-              ]); ?>
 	 	</div>
  	</div>
 
