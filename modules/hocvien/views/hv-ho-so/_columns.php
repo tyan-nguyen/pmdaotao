@@ -3,6 +3,7 @@ use yii\helpers\Url;
 use yii\bootstrap5\Html;
 use app\custom\CustomFunc;
 use app\modules\hocvien\models\DangKyHv;
+use app\modules\user\models\User;
 return [
     [
         'class' => 'kartik\grid\CheckboxColumn',
@@ -113,10 +114,12 @@ return [
     [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'id_hang',
-        'width' => '200px',
+        'width' => '120px',
         'value' => function($model) {
-            return $model->hangDaoTao ? $model->hangDaoTao->ten_hang : 'N/A';
+            //return $model->hangDaoTao ? $model->hangDaoTao->ten_hang : 'N/A';
+    return '<span title="'. ($model->hangDaoTao ? $model->hangDaoTao->ten_hang : 'N/A') .'">' . ($model->hangDaoTao ? $model->hangDaoTao->ma_hang : 'N/A') . '</span>';
         },
+        'format'=>'raw',
         'label' => 'Hạng đào tạo',
         //'pageSummary' => 'Tổng cộng (E=A-B-C+D)',
         //'pageSummaryOptions' => ['class' => 'text-right text-end'],
@@ -128,7 +131,7 @@ return [
         'width' => '100px',
         'contentOptions' => [ 'style' => 'text-align:center' ],
     ],
-    /* [
+    [
         'class' => '\kartik\grid\DataColumn',
         'label'=>'Học phí(A)',
         'width' => '120px',
@@ -139,9 +142,10 @@ return [
         'format' => ['decimal', 0],
         'pageSummary' => true,
         'pageSummaryOptions' => ['class' => 'text-right text-end'],
-        ], */
+        'visible'=>User::hasRole('nDaoTao',true),
+        ],
         //'pageSummary' => true,
-    /* [
+    [
         'class' => '\kartik\grid\DataColumn',
         'label'=>'Đã thanh toán(B)',
         'width' => '120px',
@@ -152,7 +156,8 @@ return [
         'format' => ['decimal', 0],
         'pageSummary' => true,
         'pageSummaryOptions' => ['class' => 'text-right text-end'],
-     ], */
+        'visible'=>User::hasRole('nDaoTao',true),
+     ],
      /* [
          'class' => '\kartik\grid\DataColumn',
          'label'=>'Chiết khấu(C)',
@@ -177,7 +182,7 @@ return [
           'pageSummary' => true,
           'pageSummaryOptions' => ['class' => 'text-right text-end'],
        ], */
-      /* [
+     [
           'class' => '\kartik\grid\DataColumn',
           'label'=>'Còn lại(E)',
           'width' => '120px',
@@ -188,7 +193,8 @@ return [
           'format' => ['decimal', 0],
           'pageSummary' => true,
           'pageSummaryOptions' => ['class' => 'text-right text-end'],
-     ], */
+          'visible'=>User::hasRole('nDaoTao',true),
+     ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'trang_thai',
