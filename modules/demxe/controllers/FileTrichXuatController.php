@@ -166,27 +166,31 @@ class FileTrichXuatController extends Controller
                     $demXe->id_xe = $xe->id;
       
                     $demXe->thoi_gian_bd = $ct->thoi_gian;
-                    $demXe->thoi_gian_kt = '';
+                    $demXe->id_start = $ct->id;//bổ sung id file content
+                    $demXe->thoi_gian_kt = null;//
                     $demXe->so_gio = 0;
-                    $demXe->so_phut = '';
+                    $demXe->so_phut = null;//
                     $demXe->id_file = $ct->id_file;
-                    $demXe->ghi_chu = '';
+                    $demXe->ghi_chu = null;//
                     if($demXe->save()){
                         $sLuongThanhCong ++;
                     }
                 } else if (in_array($ct->camera, DemXe::getDmCongEndXeNha(), true)) {
                     //trường hợp có xe ra gần nhất, thì edit thời gian về
-                     $demXe = DemXe::find()->where(['ma_xe'=>$ct->ma_xe])->orderBy('id DESC')->one();
-                     if($demXe!=null && $demXe->thoi_gian_kt == ''){
+                     $demXe = DemXe::find()->where(['ma_xe'=>$ct->ma_xe])
+                        ->andWhere(['ma_cong'=>DemXe::getCongThuocTram($ct->camera)]) 
+                        ->orderBy('id DESC')->one();
+                     if($demXe!=null && ($demXe->thoi_gian_kt == null || $demXe->thoi_gian_kt == '')){
                          $demXe->thoi_gian_kt = $ct->thoi_gian;
+                         $demXe->id_end = $ct->id;//bổ sung id file content
                          $demXe->so_gio = CustomFunc::diffHours($demXe->thoi_gian_bd, $demXe->thoi_gian_kt);
                          $demXe->so_phut = CustomFunc::diffHoursMinutes($demXe->thoi_gian_bd, $demXe->thoi_gian_kt);
                          if($demXe->save()){
                              $sLuongThanhCong ++;
                          }
-                     }else if(($demXe!=null && $demXe->thoi_gian_kt != null) || $demXe==null){
+                     }else if(($demXe!=null && ($demXe->thoi_gian_kt != null || $demXe->thoi_gian_kt != '') ) || $demXe==null){
                          $sLuongLoi++;
-                         $tinNhanLoi .= 'Xe nhà ' . $ct->ma_xe . ' - ' . $ct->thoi_gian . ' có đi vào nhưng không có dữ liệu đi.<br/>';
+                         $tinNhanLoi .= 'Xe nội bộ ' . $ct->ma_xe . ' - ' . $ct->thoi_gian . ' có đi vào nhưng không có dữ liệu đi.<br/>';
                          $demXe = new DemXe();
                          $demXe->ma_xe = $ct->ma_xe;
                          $demXe->bien_so_xe = $ct->bien_so_xe;
@@ -195,10 +199,11 @@ class FileTrichXuatController extends Controller
                          
                          //$demXe->thoi_gian_bd = $ct->thoi_gian;
                          $demXe->thoi_gian_kt = $ct->thoi_gian;
+                         $demXe->id_end = $ct->id;//bổ sung id file content
                          $demXe->so_gio = 0;
-                         $demXe->so_phut = '';
+                         $demXe->so_phut = null;//
                          $demXe->id_file = $ct->id_file;
-                         $demXe->ghi_chu = '';
+                         $demXe->ghi_chu = null;//
                          if($demXe->save()){
                              //$sLuongThanhCong ++;
                          }
@@ -214,19 +219,25 @@ class FileTrichXuatController extends Controller
                     //$demXe->id_xe = $xe->id;
                     
                     $demXe->thoi_gian_bd = $ct->thoi_gian;
-                    $demXe->thoi_gian_kt = '';
+                    $demXe->id_start = $ct->id;//bổ sung id file content
+                    $demXe->thoi_gian_kt = null;//
                     $demXe->so_gio = 0;
-                    $demXe->so_phut = '';
+                    $demXe->so_phut = null;//
                     $demXe->id_file = $ct->id_file;
-                    $demXe->ghi_chu = '';
+                    $demXe->ghi_chu = null;//
                     if($demXe->save()){
                         $sLuongThanhCong ++;
                     }
                 } else if (in_array($ct->camera, DemXe::getDmCongEndXeLa(), true)) {
-                    //trường hợp có xe ra gần nhất, thì edit thời gian về
-                    $demXe = DemXe::find()->where(['ma_xe'=>$ct->ma_xe])->orderBy('id DESC')->one();
-                    if($demXe!=null && $demXe->thoi_gian_kt == ''){
+                    //trường hợp có xe ra gần nhất tại trạm ra tương ứng cổng vào,
+                    // lưu ý lấy lưu và về không đúng cổng
+                    //thì edit thời gian về
+                    $demXe = DemXe::find()->where(['ma_xe'=>$ct->ma_xe])
+                        ->andWhere(['ma_cong'=>DemXe::getCongThuocTram($ct->camera)])   //!!!!!!!!!!!!!!!!!
+                        ->orderBy('id DESC')->one();
+                    if($demXe!=null && ($demXe->thoi_gian_kt == '' || $demXe->thoi_gian_kt == null) ){
                         $demXe->thoi_gian_kt = $ct->thoi_gian;
+                        $demXe->id_end = $ct->id; //bổ sung id file content
                         $demXe->so_gio = CustomFunc::diffHours($demXe->thoi_gian_bd, $demXe->thoi_gian_kt);
                         $demXe->so_phut = CustomFunc::diffHoursMinutes($demXe->thoi_gian_bd, $demXe->thoi_gian_kt);
                         if($demXe->save()){
@@ -243,10 +254,11 @@ class FileTrichXuatController extends Controller
                         
                         //$demXe->thoi_gian_bd = $ct->thoi_gian;
                         $demXe->thoi_gian_kt = $ct->thoi_gian;
+                        $demXe->id_end = $ct->id; //bổ sung id file content
                         $demXe->so_gio = 0;
-                        $demXe->so_phut = '';
+                        $demXe->so_phut = null;//
                         $demXe->id_file = $ct->id_file;
-                        $demXe->ghi_chu = '';
+                        $demXe->ghi_chu = null;//
                         if($demXe->save()){
                             //$sLuongThanhCong ++;
                         }

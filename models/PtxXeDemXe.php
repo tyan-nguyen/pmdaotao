@@ -10,7 +10,7 @@ use Yii;
  * @property int $id
  * @property int|null $id_xe
  * @property string $ma_xe
- * @property string $bien_so_xe
+ * @property string|null $bien_so_xe
  * @property string|null $ma_cong
  * @property string|null $thoi_gian_bd
  * @property string|null $thoi_gian_kt
@@ -20,6 +20,8 @@ use Yii;
  * @property string|null $thoi_gian_tao
  * @property int|null $id_file
  * @property string|null $ghi_chu
+ * @property int|null $id_start
+ * @property int|null $id_end
  *
  * @property PtxXeFileTrichXuat $file
  */
@@ -41,13 +43,13 @@ class PtxXeDemXe extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_xe', 'ma_cong', 'thoi_gian_bd', 'thoi_gian_kt', 'so_gio', 'so_phut', 'nguoi_tao', 'thoi_gian_tao', 'id_file', 'ghi_chu'], 'default', 'value' => null],
-            [['id_xe', 'nguoi_tao', 'id_file'], 'integer'],
+            [['id_xe', 'bien_so_xe', 'ma_cong', 'thoi_gian_bd', 'thoi_gian_kt', 'so_gio', 'so_phut', 'nguoi_tao', 'thoi_gian_tao', 'id_file', 'ghi_chu', 'id_start', 'id_end'], 'default', 'value' => null],
+            [['id_xe', 'nguoi_tao', 'id_file', 'id_start', 'id_end'], 'integer'],
             [['ma_xe'], 'required'],
             [['thoi_gian_bd', 'thoi_gian_kt', 'thoi_gian_tao'], 'safe'],
             [['so_gio'], 'number'],
             [['ghi_chu'], 'string'],
-            [['ma_xe', 'so_phut', 'bien_so_xe'], 'string', 'max' => 50],
+            [['ma_xe', 'bien_so_xe', 'so_phut'], 'string', 'max' => 50],
             [['ma_cong'], 'string', 'max' => 20],
             [['id_file'], 'exist', 'skipOnError' => true, 'targetClass' => PtxXeFileTrichXuat::class, 'targetAttribute' => ['id_file' => 'id']],
         ];
@@ -62,7 +64,7 @@ class PtxXeDemXe extends \yii\db\ActiveRecord
             'id' => 'ID',
             'id_xe' => 'Id Xe',
             'ma_xe' => 'Ma Xe',
-            'bien_so_xe' => 'Bien so xe',
+            'bien_so_xe' => 'Bien So Xe',
             'ma_cong' => 'Ma Cong',
             'thoi_gian_bd' => 'Thoi Gian Bd',
             'thoi_gian_kt' => 'Thoi Gian Kt',
@@ -72,6 +74,8 @@ class PtxXeDemXe extends \yii\db\ActiveRecord
             'thoi_gian_tao' => 'Thoi Gian Tao',
             'id_file' => 'Id File',
             'ghi_chu' => 'Ghi Chu',
+            'id_start' => 'Id Start',
+            'id_end' => 'Id End',
         ];
     }
 

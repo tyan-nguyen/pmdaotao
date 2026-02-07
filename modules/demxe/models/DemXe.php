@@ -100,15 +100,19 @@ class DemXe extends PtxXeDemXe
     public static function getDmCongStartXeLa()
     {
         return [
-            self::CONG1_START,
-            self::CONG2_END,
+            //self::CONG1_START,
+            //self::CONG2_END,
+            self::CONG1_END,
+            self::CONG2_START,
         ];
     }
     public static function getDmCongEndXeLa()
     {
         return [
-            self::CONG1_END,
-            self::CONG2_START,
+            //self::CONG1_END,
+            //self::CONG2_START,
+            self::CONG1_START,
+            self::CONG2_END,
         ];
     }
     /**
@@ -172,8 +176,8 @@ class DemXe extends PtxXeDemXe
     public function rules()
     {
         return [
-            [['id_xe', 'thoi_gian_bd', 'thoi_gian_kt', 'so_gio', 'nguoi_tao', 'thoi_gian_tao', 'id_file', 'ghi_chu'], 'default', 'value' => null],
-            [['id_xe', 'nguoi_tao', 'id_file'], 'integer'],
+            [['id_xe', 'thoi_gian_bd', 'thoi_gian_kt', 'so_gio', 'nguoi_tao', 'thoi_gian_tao', 'id_file', 'ghi_chu', 'id_start', 'id_end'], 'default', 'value' => null],
+            [['id_xe', 'nguoi_tao', 'id_file', 'id_start', 'id_end'], 'integer'],
             [['ma_xe', 'ma_cong'], 'required'],
             [['thoi_gian_bd', 'thoi_gian_kt', 'thoi_gian_tao'], 'safe'],
             [['so_gio'], 'number'],
@@ -203,6 +207,8 @@ class DemXe extends PtxXeDemXe
             'thoi_gian_tao' => 'Thời gian tạo',
             'id_file' => 'File',
             'ghi_chu' => 'Ghi chú',
+            'id_start' => 'Mã DL BĐ',
+            'id_end' => 'Mã DL KT',
         ];
     }
     

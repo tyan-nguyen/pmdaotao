@@ -4,6 +4,7 @@ use app\modules\demxe\models\DemXe;
 use app\custom\CustomFunc;
 use app\modules\user\models\User;
 use yii\helpers\Html;
+use app\modules\demxe\models\FileTrichXuatContent;
 
 return [
     [
@@ -171,6 +172,23 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ghi_chu',
+        'contentOptions' => ['style' => 'width:300px'],
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'label'=>'Test',
+        'value'=>function($model){
+            $htm = null;
+            if(!empty($model->id_start)){
+                $in = FileTrichXuatContent::findOne($model->id_start);
+                $htm .= 'IN ' . $in->camera;
+            }
+            if(!empty($model->id_end)){
+                $out = FileTrichXuatContent::findOne($model->id_end);
+                $htm .= ' OUT: ' . $out->camera;
+            }
+            return $htm;
+        },
         'contentOptions' => ['style' => 'width:300px'],
     ],
 ];   
