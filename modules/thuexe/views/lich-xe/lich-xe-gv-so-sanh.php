@@ -138,7 +138,7 @@ foreach ($merged as $m) {
 //lịch dùng xe add to list lịch (sét màu đen)
 $lichDungXes = LichDungXe::find()->where([
     'id_xe'=> $model->id
-])->all();
+])->andWhere(['>=', 'thoi_gian_bat_dau', $fromDate])->all();
 foreach ($lichDungXes as $item){
     $eventData[] = [
         'title' => 'Phụ trách: ' . $item->nguoiPhuTrach->ho_ten,
@@ -159,6 +159,7 @@ foreach ($lichDungXes as $item){
 $contactLog = LichThue::find()
 //->joinWith(['xe as x'])
 ->andWhere(['id_xe'=>$model->id])
+->andWhere(['>=', 'thoi_gian_bat_dau', $fromDate])
 ->orderBy(['thoi_gian_tao' => SORT_DESC])
 //->andWhere(['x.id_loai_xe'=>$model->id])
 ->all();
@@ -206,7 +207,8 @@ foreach ($contactLog as $item) {
 }
 
 
-$contactLog = DemXe::find()->where(['id_xe'=>$model->id, 'ma_cong'=>DemXe::CONG1])->all();
+$contactLog = DemXe::find()->where(['id_xe'=>$model->id, 'ma_cong'=>DemXe::CONG1])
+    ->andWhere(['>=', 'thoi_gian_bd', $fromDate])->all();
 
 $colorList = DemXe::getDmTrangThaiColor();
 //$eventData = [];
@@ -245,7 +247,8 @@ foreach ($contactLog as $item) {
 }
 
 
-$contactLog = DemXe::find()->where(['id_xe'=>$model->id, 'ma_cong'=>DemXe::CONG2])->all();
+$contactLog = DemXe::find()->where(['id_xe'=>$model->id, 'ma_cong'=>DemXe::CONG2])
+    ->andWhere(['>=', 'thoi_gian_bd', $fromDate])->all();
 
 $colorList = DemXe::getDmTrangThaiColor();
 //$eventData = [];
