@@ -75,7 +75,7 @@ return [
         },
         'format'=>'raw',
         'contentOptions' => [ 'style' => 'text-align:center' ],
-        'width' => '200px',
+        'width' => '100px',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
