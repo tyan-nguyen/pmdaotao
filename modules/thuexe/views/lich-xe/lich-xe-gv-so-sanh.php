@@ -47,7 +47,6 @@ $listXeData[] = [
 //$contactLog = ContactLogPolicy::getContactLogByStaff();
 //lấy từ 30 ngày gần nhất ->tương lai
 $fromDate = date('Y-m-d 00:00:00', strtotime('-30 days'));
-
 $contactLog = TietHoc::find()// SORT_ASC quan trọng để tính gộp
 ->andWhere(['id_xe'=>$model->id])->andWhere(['>=', 'thoi_gian_bd', $fromDate])->orderBy(['thoi_gian_bd' => SORT_ASC])->all();
 //$colorList = ContactLogForm::getStatusColorHexList();
