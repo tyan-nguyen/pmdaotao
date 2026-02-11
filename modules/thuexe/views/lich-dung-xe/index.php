@@ -14,7 +14,7 @@ use yii\widgets\Pjax;
 $this->title = 'Lịch sử dụng xe';
 $this->params['breadcrumbs'][] = $this->title;
 Yii::$app->params['showSearch'] = true;
-Yii::$app->params['showView'] = true;
+Yii::$app->params['showView'] = false;
 //CrudAsset::register($this);
 
 ?>
