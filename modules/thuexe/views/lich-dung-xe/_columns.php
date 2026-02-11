@@ -81,7 +81,7 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'id_xe',
         'value'=>function($model){
-            return $model->xe?$model->xe->tenXeShort:'';
+            return $model->xe?$model->xe->tenXeLong:'';
         },
         'width' => '150px',
     ],
