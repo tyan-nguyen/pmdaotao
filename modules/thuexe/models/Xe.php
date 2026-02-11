@@ -178,7 +178,7 @@ class Xe extends \app\models\PtxXe
                 $label = "Chưa phân loại";
                 break;
             default:
-                $label = '';
+                $label = 'Chưa phân loại';
         }
         return $label;
     }
