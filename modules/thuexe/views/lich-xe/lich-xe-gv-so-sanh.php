@@ -10,6 +10,7 @@ use app\modules\thuexe\models\LichThi;
 use app\modules\user\models\User;
 use app\modules\daotao\models\TietHoc;
 use app\modules\demxe\models\DemXe;
+use app\modules\thuexe\models\LichDungXe;
 
 $this->title = 'So sánh lịch sử dụng xe ' . $model->bien_so_xe;
 
@@ -132,7 +133,24 @@ foreach ($merged as $m) {
         'resourceId' => 'collich'
     ];
 }
-
+//lịch dùng xe add to list lịch (sét màu đen)
+$lichDungXes = LichDungXe::find()->where([
+    'id_xe'=> $model->id
+])->all();
+foreach ($lichDungXes as $item){
+    $eventData[] = [
+        'title' => 'Phụ trách: ' . $item->nguoiPhuTrach->ho_ten,
+        'description' => 'Xe:'. $item->xe->bien_so_xe .'<br>'
+        . 'Từ ' . CustomFunc::convertYMDHISToDMYHI($item->thoi_gian_bat_dau)
+        . ' đến ' . CustomFunc::convertYMDHISToDMYHI($item->thoi_gian_ket_thuc)
+        . '<br>Nội dung: ' . $item->noi_dung
+        . '<br>Trạng thái: ' . LichDungXe::getDmTrangThai()[$item->trang_thai],
+        'start' => $item->thoi_gian_bat_dau,
+        'end' => $item->thoi_gian_ket_thuc,
+        'backgroundColor' => '#212121',
+        'resourceId' => 'collich'
+    ];
+}
 
 
 //$contactLog = ContactLogPolicy::getContactLogByStaff();
