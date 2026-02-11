@@ -137,7 +137,8 @@ foreach ($merged as $m) {
 }
 //lịch dùng xe add to list lịch (sét màu đen)
 $lichDungXes = LichDungXe::find()->where([
-    'id_xe'=> $model->id
+    'id_xe'=> $model->id,
+    'trang_thai' => LichDungXe::TT_ACTIVE
 ])->andWhere(['>=', 'thoi_gian_bat_dau', $fromDate])->all();
 foreach ($lichDungXes as $item){
     $eventData[] = [
