@@ -27,7 +27,7 @@ if ($model->id_nguoi_phu_trach) {
     <?php CardWidget::begin(['title'=>'THÔNG TIN XE']) ?>
        <div class="row">  
        		<div class="col-md-4">
-            	<?= $form->field($model, 'id_xe')->widget(Select2::classname(), [
+            	<?= $form->field($model, 'id_xe')->widget(Select2::class, [
            		       'data' => LichDungXe::getDsXe(),
                         'language' => 'vi',
             	        'options' => ['placeholder' => 'Chọn xe...', 'disabled'=>$disallowEdit],
@@ -44,7 +44,7 @@ if ($model->id_nguoi_phu_trach) {
                  ]);?>
             </div> 
             <div class="col-md-4">
-            	<?= $form->field($model, 'id_nguoi_phu_trach')->widget(Select2::classname(), [
+            	<?= $form->field($model, 'id_nguoi_phu_trach')->widget(Select2::class, [
             	'initValueText' => $nguoiPhuTrachValue, // This shows selected text on form load
                 'language' => 'vi',
                 'options' => [
@@ -88,7 +88,7 @@ if ($model->id_nguoi_phu_trach) {
        <?php CardWidget::begin(['title'=>'THỜI GIAN']) ?>
        <div class="row">     
             <div class="col-md-4">
-            	<?= $form->field($model, 'ngay_bat_dau')->widget(DatePicker::classname(), [
+            	<?= $form->field($model, 'ngay_bat_dau')->widget(DatePicker::class, [
             	    'options' => ['id' => 'start-date', 'placeholder' => 'Chọn ngày  ...', 'disabled'=>$disallowEdit],
             	    'removeButton'=>$disallowEdit?false:[],
                     'pluginOptions' => [
@@ -135,7 +135,7 @@ if ($model->id_nguoi_phu_trach) {
             </div>
         
             <div class="col-md-4">
-            	<?= $form->field($model, 'ngay_ket_thuc')->widget(DatePicker::classname(), [
+            	<?= $form->field($model, 'ngay_ket_thuc')->widget(DatePicker::class, [
             	    'options' => ['id' => 'end-date', 'placeholder' => 'Chọn ngày  ...', 'disabled'=>$disallowEdit],
             	    'removeButton'=>$disallowEdit?false:[],
                     'pluginOptions' => [
