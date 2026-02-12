@@ -28,7 +28,7 @@ class FileUploadController extends Controller
             $model->file = UploadedFile::getInstance($model, 'file');
             
             if ($model->validate()) {
-                $filename = time() . '_' . $model->file->name;
+                $filename = date('Ymd_His') . '_' . uniqid() . '.' . pathinfo($model->file->name, PATHINFO_EXTENSION);
                 $filePath = Yii::getAlias('@webroot') . '/uploads/dem-xe/' . $filename;
                 if($model->file->saveAs($filePath)){
                     $newFile = new FileTrichXuat();
