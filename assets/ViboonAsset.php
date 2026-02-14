@@ -43,11 +43,11 @@ class ViboonAsset extends AssetBundle
         'assets/plugins/fullcalendar/moment.min.js',
         'assets/plugins/fullcalendar/fullcalendar.min.js',
         'assets/plugins/fullcalendar/locales/vi.js',
-        //'assets/js/fullcalendar.js',
-        'assets/js/custom.js?v=1',
+        //'assets/js/fullcalendar.js',        
         //'assets/js/custom-switcher.js',
         //'assets/switcher/js/switcher.js',        
         'assets/js/tooltip.js',
+        'assets/js/custom.js?v=2',
         'assets/plugins/owl-carousel/owl.carousel.js',
         'assets/plugins/multislider/multislider.js',
         'assets/js/carousel.js',
@@ -59,7 +59,7 @@ class ViboonAsset extends AssetBundle
         'https://cdn.jsdelivr.net/npm/flatpickr',
         //fancybox
         'js/fancybox/fancybox.umd.js',
-        'js/custom.js?v=2.3',
+        'js/custom.js?v=2.4',
         //'assets/plugins/tabs/jquery.multipurpose_tabcontent.js',
         //'assets/plugins/tabs/tab-content.js'
     ];
