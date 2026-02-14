@@ -137,3 +137,9 @@ use app\modules\user\models\User;
      <?php } ?>
      </tbody>
 </table>
+
+<script>
+$('[data-bs-toggle="tooltip-primary"]').tooltip({
+		template: '<div class="tooltip tooltip-primary" role="tooltip"><div class="tooltip-arrow"><\/div><div class="tooltip-inner"><\/div><\/div>'
+	});
+</script>
