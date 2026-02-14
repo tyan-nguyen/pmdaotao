@@ -76,7 +76,7 @@ use app\modules\user\models\User;
      	     echo $tietHoc->hocVien->ho_ten;
      	}
      	?>
-     		<button class="btn ripple btn-info" data-bs-placement="left" data-bs-toggle="tooltip" type="button" title="Tooltip on left">Hover me</button>
+     	
      	</td>
      	<td><?= $tietHoc->hocVien->khoaHoc->ten_khoa_hoc ?></td>
      	<td><?= $tietHoc->monHoc->ten_mon /*. ($tietHoc->monHoc->ten_mon_sub?(' ('.$tietHoc->monHoc->ten_mon_sub.')'):'')*/ ?></td>
