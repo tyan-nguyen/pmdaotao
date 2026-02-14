@@ -71,7 +71,7 @@ use app\modules\user\models\User;
      	<?php if($gioIsExist == true):?>
      	<td><?php 
      	if($model->trang_thai_duyet == KeHoach::TT_NHAP || $model->trang_thai_duyet == KeHoach::TT_CHODUYET ){
-     	    echo '<span style="color:blue;cursor:pointer;" title="'.$tietHoc->hocVien->viewSoGioHocHtml().'">' . $tietHoc->hocVien->ho_ten . '</span>';
+     	    echo '<span style="color:blue;cursor:pointer;" data-bs-placement="top" data-bs-toggle="tooltip" title="'.$tietHoc->hocVien->viewSoGioHocHtml().'">' . $tietHoc->hocVien->ho_ten . '</span>';
      	}else{
      	     echo $tietHoc->hocVien->ho_ten;
      	}
