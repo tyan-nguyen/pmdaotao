@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\modules\demxe\models\DemXe;
+use app\modules\user\models\User;
 
 /**
  * DemXeSearch represents the model behind the search form about `app\modules\demxe\models\DemXe`.
@@ -75,6 +76,11 @@ class DemXeSearch extends DemXe
             ['like', 'ghi_chu', $cusomSearch]] );
  
 		} else {
+		    if(User::hasRole('nDaoTao',false)){
+		        $this->loaiXe = 'xeNha';
+		        $this->ma_cong = DemXe::CONG1;
+		    }
+		    
         	$query->andFilterWhere([
                 'id' => $this->id,
                 'id_xe' => $this->id_xe,
