@@ -176,7 +176,7 @@ use app\modules\banhang\models\LoaiHangHoa;
 			<?= $form->field($model, 'hinh_thuc_thanh_toan')->dropDownList(
                 HoaDon::getDmHinhThucThanhToan(),
                 ['prompt'=>'-Tất cả-']
-            )->label('HTTT') ?>
+            )->label('HT.TT') ?>
         </div>
         <div class="col-md-2">
               <?= $form->field($model, 'nguoi_tao')->dropDownList(User::getListUsers(), 
