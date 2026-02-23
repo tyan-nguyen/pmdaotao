@@ -142,7 +142,7 @@ use app\modules\banhang\models\LoaiHangHoa;
         <div class="col-md-1">
 			<?= $form->field($model, 'nam')->dropDownList(HoaDon::getDmNamHoaDon(), ['prompt'=>'-Tất cả-']) ?>        
         </div>
-        <div class="col-md-2">
+        <div class="col-md-1">
 			<?= $form->field($model, 'trang_thai')->dropDownList(
 			    HoaDon::getDmTrangThai(),
                 ['prompt'=>'-Tất cả-']
@@ -172,7 +172,7 @@ use app\modules\banhang\models\LoaiHangHoa;
                   ]
            ]); ?>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-1">
 			<?= $form->field($model, 'hinh_thuc_thanh_toan')->dropDownList(
                 HoaDon::getDmHinhThucThanhToan(),
                 ['prompt'=>'-Tất cả-']
