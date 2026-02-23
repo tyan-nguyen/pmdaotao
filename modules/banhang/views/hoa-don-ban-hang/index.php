@@ -118,7 +118,7 @@ Yii::$app->params['showView'] = true;
                 ]
             ],
             'exportConfig' => [
-                GridView::EXCEL_X => [
+                GridView::EXCEL => [
                     'label' => 'Xuất Excel',
                     'filename' => 'ds_hoa_don_' . date('Y-m-d'),
                     'options' => ['title' => 'Danh sách hóa đơn'],
