@@ -193,7 +193,7 @@ use app\modules\banhang\models\LoaiHangHoa;
                  'todayHighlight'=>true,
                  'todayBtn'=>true
                ]
-            ]); ?>
+            ])->label('từ ngày'); ?>
         </div>
         
         <div class="col-md-2">
@@ -206,7 +206,7 @@ use app\modules\banhang\models\LoaiHangHoa;
                  'todayHighlight'=>true,
                  'todayBtn'=>true
                ]
-            ]); ?>
+            ])->label('Đến ngày'); ?>
         </div>
         
         </div>  
