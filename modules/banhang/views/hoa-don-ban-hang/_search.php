@@ -179,9 +179,35 @@ use app\modules\banhang\models\LoaiHangHoa;
             ) ?>
         </div>
         <div class="col-md-2">
-                  <?= $form->field($model, 'nguoi_tao')->dropDownList(User::getListUsers(), 
-                      ['prompt'=>'-Tất cả-'])->label('Nhân viên') ?>
-            </div>
+              <?= $form->field($model, 'nguoi_tao')->dropDownList(User::getListUsers(), 
+                  ['prompt'=>'-Tất cả-'])->label('Nhân viên') ?>
+        </div>
+        
+        <div class="col-md-2">
+			<?= $form->field($model, 'tuNgay')->widget(DatePicker::classname(), [
+                 'options' => ['placeholder' => 'Từ ngày ...'],
+                 'pluginOptions' => [
+                 'autoclose' => true,
+                 'format' => 'dd/mm/yyyy',
+                 'zIndexOffset'=>'9999',
+                 'todayHighlight'=>true,
+                 'todayBtn'=>true
+               ]
+            ]); ?>
+        </div>
+        
+        <div class="col-md-2">
+			<?= $form->field($model, 'denNgay')->widget(DatePicker::classname(), [
+                 'options' => ['placeholder' => 'Đến ngày ...'],
+                 'pluginOptions' => [
+                 'autoclose' => true,
+                 'format' => 'dd/mm/yyyy',
+                 'zIndexOffset'=>'9999',
+                 'todayHighlight'=>true,
+                 'todayBtn'=>true
+               ]
+            ]); ?>
+        </div>
         
         </div>  
 	</div>

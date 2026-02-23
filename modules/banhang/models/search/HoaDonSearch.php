@@ -13,6 +13,8 @@ use app\custom\CustomFunc;
  */
 class HoaDonSearch extends HoaDon
 {
+    public $tuNgay;
+    public $denNgay;
     /**
      * @inheritdoc
      */
@@ -20,7 +22,9 @@ class HoaDonSearch extends HoaDon
     {
         return [
             [['id', 'id_khach_hang', 'so_don_hang', 'so_vao_so', 'nam', 'so_lan_in', 'da_giao_hang', 'nguoi_tao', 'edit_mode'], 'integer'],
-            [['trang_thai', 'ngay_dat_hang', 'ngay_xuat', 'hinh_thuc_thanh_toan', 'ngay_giao_hang', 'ghi_chu', 'thoi_gian_tao', 'idHocVien', 'idKhachNgoai', 'loai_khach_hang', 'loai_hang_hoa'], 'safe'],
+            [['trang_thai', 'ngay_dat_hang', 'ngay_xuat', 'hinh_thuc_thanh_toan', 'ngay_giao_hang', 'ghi_chu', 'thoi_gian_tao', 'idHocVien', 'idKhachNgoai', 'loai_khach_hang', 'loai_hang_hoa',
+                'tuNgay', 'denNgay'
+            ], 'safe'],
             [['chi_phi_van_chuyen'], 'number'],
         ];
     }
@@ -63,6 +67,18 @@ class HoaDonSearch extends HoaDon
             ['like', 'ghi_chu', $cusomSearch]] );
  
 		} else {
+		    if(!empty($this->tuNgay) && !empty($this->denNgay)) {
+		        $fromDate = \DateTime::createFromFormat('d/m/Y', $this->tuNgay)
+		        ->format('Y-m-d 00:00:00');
+		        
+		        $toDate = \DateTime::createFromFormat('d/m/Y', $this->denNgay)
+		        ->format('Y-m-d 00:00:00');
+		        
+		        // dùng < ngày hôm sau (tối ưu hơn <= 23:59:59)
+		        $toDateNext = date('Y-m-d H:i:s', strtotime($toDate . ' +1 day'));
+		        $query->andWhere(['>=', 'ngay_xuat', $fromDate])
+		        ->andWhere(['<', 'ngay_xuat', $toDateNext]);
+		    }
 		    if($this->ngay_dat_hang){
 		        $this->ngay_dat_hang = CustomFunc::convertDMYToYMD($this->ngay_dat_hang);
 		    }
