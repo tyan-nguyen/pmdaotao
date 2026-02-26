@@ -1,4 +1,6 @@
 <?php
+
+use app\modules\nhanvien\models\NhanVien;
 use yii\bootstrap5\Html;
 use yii\widgets\ActiveForm;
 use app\widgets\CardWidget;
@@ -15,6 +17,11 @@ $nguoiPhuTrachValue = '';
 if ($model->id_nguoi_phu_trach) {
     $nguoiPhuTrachValue = $model->nguoiPhuTrach ? 
     ($model->nguoiPhuTrach->ho_ten . ' ('. $model->nguoiPhuTrach->dien_thoai . ')') : '';
+}else{
+    $nhanVienFromUser = NhanVien::getCurrentNhanVien();
+    if ($nhanVienFromUser) {
+        $nguoiPhuTrachValue = $nhanVienFromUser->ho_ten . ' ('. $nhanVienFromUser->dien_thoai . ')';
+    }
 }
 ?>
 

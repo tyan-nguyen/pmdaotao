@@ -165,4 +165,13 @@ class NhanVienBase extends \app\models\NvNhanVien
         $gvXe = GvXe::find()->where(['id_giao_vien'=>$this->id])->all();
         return $gvXe;
     }
+    /**
+     * lấy nhân viên hiện tại theo user đang đăng nhập
+      * @return NhanVien|null
+     */
+    public static function getCurrentNhanVien()
+    {
+        $userId = Yii::$app->user->id;
+        return self::find()->where(['tai_khoan' => $userId])->one();
+    }
 }
