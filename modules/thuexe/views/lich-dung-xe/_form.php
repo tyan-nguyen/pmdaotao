@@ -20,6 +20,7 @@ if ($model->id_nguoi_phu_trach) {
 }else{
     $nhanVienFromUser = NhanVien::getCurrentNhanVien();
     if ($nhanVienFromUser) {
+        $model->id_nguoi_phu_trach = $nhanVienFromUser->id;
         $nguoiPhuTrachValue = $nhanVienFromUser->ho_ten . ' ('. $nhanVienFromUser->dien_thoai . ')';
     }
 }
