@@ -7,6 +7,7 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\modules\thuexe\models\LichDungXe;
 use app\custom\CustomFunc;
+use app\modules\user\models\User;
 
 /**
  * LichDungXeSearch represents the model behind the search form about `app\modules\thuexe\models\LichDungXe`.
@@ -77,9 +78,19 @@ class LichDungXeSearch extends LichDungXe
             'thoi_gian_bat_dau' => $this->thoi_gian_bat_dau,
             'thoi_gian_ket_thuc' => $this->thoi_gian_ket_thuc,
             'so_gio' => $this->so_gio,
-            'nguoi_tao' => $this->nguoi_tao,
+            //'nguoi_tao' => $this->nguoi_tao,
             'thoi_gian_tao' => $this->thoi_gian_tao,
         ]);
+
+        if(!User::getCurrentUser()->superadmin){
+            $query->andFilterWhere([
+                'nguoi_tao' => Yii::$app->user->id,
+            ]);
+        } else {
+            $query->andFilterWhere([
+                'nguoi_tao' => $this->nguoi_tao,
+            ]);
+        }
 
         $query->andFilterWhere(['like', 'noi_dung', $this->noi_dung])
             ->andFilterWhere(['like', 'trang_thai', $this->trang_thai])
