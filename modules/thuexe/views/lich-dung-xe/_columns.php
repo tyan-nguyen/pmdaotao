@@ -131,6 +131,15 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ghi_chu',
     ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'nguoi_tao',
+        'value'=>function($model){
+            return $model->nguoiTao?$model->nguoiTao->ho_ten:'';
+        },
+        'label'=>'Người tạo',
+        'width' => '120px',
+    ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'nguoi_tao',
