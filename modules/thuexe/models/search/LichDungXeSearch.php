@@ -82,7 +82,7 @@ class LichDungXeSearch extends LichDungXe
             'thoi_gian_tao' => $this->thoi_gian_tao,
         ]);
 
-        if(!User::getCurrentUser()->superadmin){
+        if(!User::hasPermission('qXoaKeHoachDungXe')){
             $query->andFilterWhere([
                 'nguoi_tao' => Yii::$app->user->id,
             ]);
