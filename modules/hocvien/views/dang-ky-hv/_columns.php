@@ -316,13 +316,13 @@ return [
         'width' => '90px',
         'contentOptions' => [ 'style' => 'text-align:center' ],
     ],
-    /* [
+    [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'so_cccd',
         'label'=>'CCCD (Mã KH)',
-        'width' => '150px',
+        'width' => '100px',
         'contentOptions' => [ 'style' => 'text-align:center' ],
-    ], */
+    ],
 
  
     [
