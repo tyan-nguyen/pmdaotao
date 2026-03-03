@@ -145,7 +145,7 @@ class LichThiBase extends PtxLichThi
 
         // đang thi
         if ($t >= $bd && $t <= $kt) {
-            return 'Đang thi';
+            return '<span class="badge bg-danger">Đang thi</span>';
         }
 
         // đã thực hiện (đã kết thúc)
@@ -157,10 +157,10 @@ class LichThiBase extends PtxLichThi
         $diff = $bd - $t; // giây
         $days = $diff / 86400;
         if ($days <= 7) {
-            return 'Sắp bắt đầu';
+            return '<span class="badge bg-warning">Sắp bắt đầu</span>';
         }
 
-        return 'Đã lên lịch';
+        return '<span class="badge bg-secondary">Đã lên lịch</span>';
     }
 
 }
