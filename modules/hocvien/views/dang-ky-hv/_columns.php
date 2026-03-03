@@ -309,13 +309,13 @@ return [
         'attribute'=>'dia_chi',
         'width' => '150px',
     ], */
-    [
+   /* [
        'class'=>'\kartik\grid\DataColumn',
        'attribute'=>'so_dien_thoai',
         'label'=>'SĐT',
         'width' => '90px',
         'contentOptions' => [ 'style' => 'text-align:center' ],
-    ],
+    ],*/
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'so_cccd',
