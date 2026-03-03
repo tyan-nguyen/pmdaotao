@@ -21,6 +21,7 @@ use app\models\PtxLichThi;
 class LichThiBase extends PtxLichThi
 {
     CONST PHANLOAI_THI = 'THI';
+    CONST PHANLOAI_TN = 'TOTNGHIEP';
     CONST PHANLOAI_KIEMTRA = 'KIEMTRA';
     
     /**
@@ -30,6 +31,7 @@ class LichThiBase extends PtxLichThi
     public static function getDmLoai(){
         return [
             self::PHANLOAI_THI => 'Thi sát hạch',
+            self::PHANLOAI_TN => 'Thi tốt nghiệp',
             self::PHANLOAI_KIEMTRA => 'Kiểm tra/Khảo sát/Bảo trì',
         ];
     }
@@ -44,6 +46,8 @@ class LichThiBase extends PtxLichThi
             $label = 'Thi sát hạch';
         }else if($val == self::PHANLOAI_KIEMTRA){
             $label = 'Kiểm tra/Khảo sát/Bảo trì';
+        }else if($val == self::PHANLOAI_TN){
+            $label = 'Thi tốt nghiệp';
         }
         return $label;
     }
