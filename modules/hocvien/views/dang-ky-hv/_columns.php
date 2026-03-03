@@ -453,7 +453,7 @@ return [
         'contentOptions' => [ 'style' => 'text-align:center'],
     ],
     
-    [
+   /* [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'da_nhan_ao',
         'label'=>'Áo',
@@ -463,7 +463,7 @@ return [
         },
         'width' => '30px',
         'contentOptions' => [ 'style' => 'text-align:center'],
-   ],
+   ],*/
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'size',
