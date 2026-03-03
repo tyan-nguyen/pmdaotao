@@ -287,7 +287,7 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ho_ten',
-        'width' => '150px',
+        'width' => '200px',
     ],
     [
         'class' => '\kartik\grid\DataColumn',
