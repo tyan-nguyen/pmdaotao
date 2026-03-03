@@ -121,4 +121,46 @@ class LichThiBase extends PtxLichThi
         return parent::beforeSave($insert);
     }
 
+    /**
+     * Trả về trạng thái kỳ thi dựa vào hai cột `thoi_gian_bd` và `thoi_gian_kt` của bản ghi.
+     * So sánh với một thời điểm được cung cấp hoặc thời điểm hiện tại của hệ thống nếu không truyền.
+     *
+     * Quy tắc:
+     * - nếu thời điểm nằm trong khoảng (thoi_gian_bd, thoi_gian_kt): "Đang thi"
+     * - nếu thời điểm lớn hơn thoi_gian_kt: "Đã thực hiện"
+     * - nếu thời điểm nhỏ hơn thoi_gian_bd nhưng cách thoi_gian_bd không quá 7 ngày: "Sắp bắt đầu"
+     * - nếu thời điểm nhỏ hơn thoi_gian_bd và cách nhiều hơn 7 ngày: "Đã lên lịch"
+     *
+     * @param string|null $thoi_gian_db thời điểm kiểm tra (dạng Y-m-d H:i:s); mặc định là thời điểm hiện tại hệ thống
+     * @return string trạng thái
+     */
+    public function getTrangThaiTheoThoiGian($thoi_gian_db = null)
+    {
+        if ($thoi_gian_db === null) {
+            $thoi_gian_db = date('Y-m-d H:i:s');
+        }
+        $t = strtotime($thoi_gian_db);
+        $bd = strtotime($this->thoi_gian_bd);
+        $kt = strtotime($this->thoi_gian_kt);
+
+        // đang thi
+        if ($t >= $bd && $t <= $kt) {
+            return 'Đang thi';
+        }
+
+        // đã thực hiện (đã kết thúc)
+        if ($t > $kt) {
+            return 'Đã thực hiện';
+        }
+
+        // thời điểm nhỏ hơn bắt đầu -> kiểm tra khoảng cách
+        $diff = $bd - $t; // giây
+        $days = $diff / 86400;
+        if ($days <= 7) {
+            return 'Sắp bắt đầu';
+        }
+
+        return 'Đã lên lịch';
+    }
+
 }

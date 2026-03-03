@@ -57,6 +57,15 @@ return [
     // ],
     [
         'class'=>'\kartik\grid\DataColumn',
+        'label'=>'Trạng thái',
+        'value'=>function($model){
+            return $model->getTrangThaiTheoThoiGian();
+        },
+        'format'=>'raw',
+        'contentOptions' => ['style' => 'width:150px'],
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'phan_loai',
         'value'=>function($model){
             return LichThi::getDmLoaiLabelWithBadge($model->phan_loai);
