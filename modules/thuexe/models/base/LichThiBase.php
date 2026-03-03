@@ -52,6 +52,21 @@ class LichThiBase extends PtxLichThi
         return $label;
     }
     /**
+     * Danh muc loai hoc vien html
+     * @return string[]
+     */
+    public static function getDmLoaiLabelWithBadge($val){
+        $label = '';
+        if($val == self::PHANLOAI_THI){
+            $label = '<span class="badge bg-primary">Thi sát hạch</span>';
+        }else if($val == self::PHANLOAI_KIEMTRA){
+            $label = '<span class="badge bg-warning">Kiểm tra/Khảo sát/Bảo trì</span>';
+        }else if($val == self::PHANLOAI_TN){
+            $label = '<span class="badge bg-success">Thi tốt nghiệp</span>';
+        }
+        return $label;
+    }
+    /**
      * {@inheritdoc}
      */
     public function rules()

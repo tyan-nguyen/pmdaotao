@@ -59,8 +59,9 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'phan_loai',
         'value'=>function($model){
-            return LichThi::getDmLoaiLabel($model->phan_loai);
+            return LichThi::getDmLoaiLabelWithBadge($model->phan_loai);
         },
+        'format'=>'raw',
         'contentOptions' => ['style' => 'width:150px'],
     ],
     [
