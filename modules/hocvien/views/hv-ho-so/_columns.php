@@ -195,6 +195,16 @@ return [
           'pageSummaryOptions' => ['class' => 'text-right text-end'],
           'visible'=>User::hasRole('nDaoTao',true),
      ],
+     [
+          'class'=>'\kartik\grid\DataColumn',
+          'label'=>'Thu hộ',
+          'value'=>function($model){
+            return !$model->checkThuHo()?'<i class="ion-checkmark-circled text-success"></i>':'';
+          },
+          'width' => '30px',
+          'format' => 'html',
+          'contentOptions' => [ 'style' => 'text-align:center'],
+     ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'trang_thai',
