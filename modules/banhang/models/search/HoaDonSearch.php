@@ -7,6 +7,7 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\modules\banhang\models\HoaDon;
 use app\custom\CustomFunc;
+use app\modules\user\models\User;
 
 /**
  * HoaDonSearch represents the model behind the search form about `app\modules\banhang\models\HoaDon`.
@@ -89,10 +90,21 @@ class HoaDonSearch extends HoaDon
 		    if($this->ngay_giao_hang){
 		        $this->ngay_giao_hang = CustomFunc::convertDMYToYMD($this->ngay_giao_hang);
 		    }
+            if(User::hasRole('nDaoTao',false)){
+                $query->andFilterWhere([
+                    'loai_hang_hoa' => 11,
+                ]);
+            } else{
+                 $query->andFilterWhere([
+                    'loai_hang_hoa' => $this->loai_hang_hoa,
+                ]);
+            }
+
+
         	$query->andFilterWhere([
                 'id' => $this->id,
                 //'id_khach_hang' => $this->id_khach_hang,
-        	    'loai_hang_hoa' => $this->loai_hang_hoa,
+        	    
         	    'loai_khach_hang' => $this->loai_khach_hang,
                 'so_don_hang' => $this->so_don_hang,
                 'so_vao_so' => $this->so_vao_so,

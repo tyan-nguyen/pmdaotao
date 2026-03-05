@@ -28,6 +28,7 @@ use app\modules\hocvien\models\HocVien;
 					<div class="tab-pane active" id="side3">
 						<ul class="sidemenu-list">
 							<li><a href="/hocvien/hv-ho-so?menu=hv4" class="slide-item" data-menu="hv4"> <i class="fe fe-file-text"></i> Hồ sơ học viên</a></li>
+							<li><a href="<?= Yii::getAlias('@web/banhang/hoa-don-ban-hang?menu=hv7') ?>" class="slide-item" data-menu="hv7"><i class="fe fe-file-text"></i> Thu hộ lệ phí</a></li>
 							<li><a href="/daotao/ke-hoach?menu=hv5" class="slide-item" data-menu="hv5"> <i class="fe fe-file-text"></i> Kế hoạch giảng dạy</a></li>
 							<li class=""><a href="<?= Yii::getAlias('@web/demxe/luot-xe?menu=hv6') ?>" class="slide-item" data-menu="hv6"><i class="fe fe-file-text"></i> Camera đếm xe</a>
 						</ul>
