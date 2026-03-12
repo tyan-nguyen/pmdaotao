@@ -82,7 +82,11 @@ if(!empty($searchModel->ngay_sinh_den)){
     	    || !empty($searchModel->tuoi_tu) || !empty($searchModel->tuoi_den) )
     	    || !empty($searchModel->id_khoa_hoc) || !empty($searchModel->id_xa)
     	    || !empty($searchModel->id_tinh) || !empty($searchModel->id_hangs) 
-    	    || !empty($searchModel->ngay_dang_ky_tu) || !empty($searchModel->ngay_dang_ky_den) ): ?>
+    	    || !empty($searchModel->ngay_dang_ky_tu) || !empty($searchModel->ngay_dang_ky_den)
+            || !empty($searchModel->size)
+            || !empty($searchModel->da_nhan_ao)
+            || !empty($searchModel->dan_nhan_tai_lieu)   
+            ): ?>
         	<div class="card custom-card">
                 <div class="card-body">
                 	

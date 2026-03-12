@@ -14,7 +14,7 @@ return [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'id',
     // ],
-    [
+    /*[
         'class' => 'kartik\grid\ActionColumn',
         'header'=>'',
         'template' => '{bienTapDiaChi}',
@@ -50,7 +50,7 @@ return [
             }
             
         ],                
-    ],
+    ],*/
     
     [
         'class' => 'kartik\grid\SerialColumn',
@@ -82,15 +82,15 @@ return [
         'width' => '40px',
         'contentOptions' => [ 'style' => 'text-align:center' ],
     ],
+    // [
+    //     'class'=>'\kartik\grid\DataColumn',
+    //     'label'=>'Địa chỉ cũ',
+    //     'attribute'=>'dia_chi',
+    //     'width' => '200px',
+    // ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'label'=>'Địa chỉ cũ',
-        'attribute'=>'dia_chi',
-        'width' => '200px',
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'label'=>'Địa chỉ(BT lại)',
+        'label'=>'Địa chỉ',
         'value'=>function($model){
             return $model->diaChiText;  
         },
@@ -172,6 +172,38 @@ return [
          'width' => '70px',
          'contentOptions' => [ 'style' => 'text-align:center'],
     ],*/
+
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'da_nhan_ao',
+        'label'=>'Áo',
+        'format'=>'html',
+        'value'=>function($model){
+        return $model->da_nhan_ao==1?'<i class="ion-checkmark-round text-primary"></i>':'';
+        },
+        'width' => '30px',
+        'contentOptions' => [ 'style' => 'text-align:center'],
+   ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'size',
+        'label'=>'Size',
+        'format'=>'html',
+        'width' => '30px',
+        'contentOptions' => [ 'style' => 'text-align:center'],
+    ],
+    
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'da_nhan_tai_lieu',
+        'label'=>'TLiệu',
+        'format'=>'html',
+        'value'=>function($model){
+            return $model->da_nhan_tai_lieu==1?'<i class="ion-checkmark-round text-primary"></i>':'';
+        },
+        'width' => '30px',
+        'contentOptions' => [ 'style' => 'text-align:center'],
+],
    
     
 ];   

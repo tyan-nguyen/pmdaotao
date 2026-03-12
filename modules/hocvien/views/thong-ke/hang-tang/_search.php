@@ -251,7 +251,7 @@ if ($model->id_xa) {
             </div>
             -->
             
-            <div class="col-md-6">
+            <div class="col-md-7">
                   <?php // $form->field($model, 'id_hang')->dropDownList(HangDaoTao::getList(), ['prompt'=>'Tất cả']) ?>
                 <label>Hạng đào tạo(s)</label>
                 <?= $form->field($model, 'id_hangs')->widget(Select2::classname(), [
