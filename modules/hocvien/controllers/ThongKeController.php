@@ -17,6 +17,7 @@ use app\modules\hocvien\models\DangKyHv;
 use app\modules\hocvien\models\NopHocPhi;
 use yii\web\UploadedFile;
 use app\custom\CustomFunc;
+use app\modules\hocvien\models\search\ThongKeHangTangSearch;
 use yii\db\Expression;
 use app\modules\hocvien\models\search\ThongKeLuuLuongSearch;
 /**
@@ -71,6 +72,23 @@ class ThongKeController extends Controller
         $pagination = $dataProvider->getPagination();
         $pagination->pageSize = 20;
         return $this->render('luu-luong', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'pagination' =>$pagination,
+        ]);
+    }    
+     /**
+     * thống kê hàng tặng
+     */
+    public function actionHangTang(){        
+        $searchModel = new ThongKeHangTangSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        //an add
+        //$dataProvider->query->andWhere(['trang_thai' => ['DANG_KY']]);
+        //$dataProvider->query->andWhere('id_khoa_hoc is NULL');
+        $pagination = $dataProvider->getPagination();
+        $pagination->pageSize = 20;
+        return $this->render('hang-tang', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'pagination' =>$pagination,
