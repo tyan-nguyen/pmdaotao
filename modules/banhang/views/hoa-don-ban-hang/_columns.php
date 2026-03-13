@@ -123,7 +123,7 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'id_khach_hang',
         'value'=>function($model){
-            return $model->khachHang->ho_ten;
+            return $model->khachHang?$model->khachHang->ho_ten:'';
         }
     ],
     [
