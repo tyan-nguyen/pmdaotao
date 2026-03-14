@@ -108,24 +108,24 @@ Yii::$app->params['showExport'] = true;
             'exportConfig' => [
                 GridView::EXCEL => [
                     'label' => 'Xuất Excel',
-                    'filename' => 'ds_hoc_vien_' . date('Y-m-d'),
-                    'options' => ['title' => 'Danh sách học viên'],
+                    'filename' => 'ds_xe_' . date('Y-m-d'),
+                    'options' => ['title' => 'Danh sách xe'],
                     'config' => [
-                        'worksheet' => 'Học viên',
+                        'worksheet' => 'DS Xe',
                         'cssFile' => '', // nếu cần
                     ],
                 ],
                 GridView::PDF => [
                     'label' => 'Xuất PDF',
                     'filename' => 'ds_hoc_vien_' . date('Y-m-d'),
-                    'options' => ['title' => 'Danh sách học viên'],
+                    'options' => ['title' => 'Danh sách xe'],
                     'config' => [
                         'methods' => [
-                            'SetHeader' => ['DANH SÁCH HỌC VIÊN|DANH SÁCH|Xuất ngày: ' . date("d/m/Y")],
+                            'SetHeader' => ['DANH SÁCH XE|DANH SÁCH|Xuất ngày: ' . date("d/m/Y")],
                             'SetFooter' => ['|Trang {PAGENO}|'],
                         ],
                         'options' => [
-                            'title' => 'Danh sách học viên',
+                            'title' => 'Danh sách xe',
                             'subject' => 'Xuất file PDF',
                             'keywords' => 'export, pdf,',
                         ],
