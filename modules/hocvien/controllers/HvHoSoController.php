@@ -60,11 +60,7 @@ class HvHoSoController extends Controller
         //$dataProvider->query->andWhere(['trang_thai' => ['DANG_KY']]);
         //$dataProvider->query->andWhere('id_khoa_hoc is NULL');
         $pagination = $dataProvider->getPagination();
-        if(!empty($_GET['pageSize'])){
-            $pagination->pageSize = $_GET['pageSize'];
-        }else{
-            $pagination->pageSize = 20;
-        }
+        $pagination->pageSize = 20;
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
