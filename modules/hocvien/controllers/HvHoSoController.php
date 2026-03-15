@@ -60,7 +60,12 @@ class HvHoSoController extends Controller
         //$dataProvider->query->andWhere(['trang_thai' => ['DANG_KY']]);
         //$dataProvider->query->andWhere('id_khoa_hoc is NULL');
         $pagination = $dataProvider->getPagination();
-        $pagination->pageSize = 20;
+        if(!empty($_GET['pageSize'])){
+            $pagination->pageSize = $_GET['pageSize'];
+        } else {
+            $pagination->pageSize = 20;
+        }
+        
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -592,7 +597,7 @@ public function actionReportList(){
     }
 }
 
-public function actionGetPhieuInReportListAjax($startdate, $starttime, $enddate, $endtime, $byuser=0,$typereport)//0 for all
+public function actionGetPhieuInReportListAjax($startdate, $starttime, $enddate, $endtime, $typereport, $byuser=0)//0 for all
 {
     if($byuser==null){
         $byuser = 0;
