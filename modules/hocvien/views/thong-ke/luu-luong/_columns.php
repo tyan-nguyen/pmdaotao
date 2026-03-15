@@ -84,10 +84,17 @@ return [
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'so_cccd',
+        'label'=>'CCCD (Mã KH)',
+        'width' => '100px',
+        'contentOptions' => [ 'style' => 'text-align:center' ],
+    ],
+    /* [
+        'class'=>'\kartik\grid\DataColumn',
         'label'=>'Địa chỉ cũ',
         'attribute'=>'dia_chi',
         'width' => '200px',
-    ],
+    ], */
     [
         'class'=>'\kartik\grid\DataColumn',
         'label'=>'Địa chỉ(BT lại)',
