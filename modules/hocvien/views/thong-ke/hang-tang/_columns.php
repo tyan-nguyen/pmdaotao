@@ -88,21 +88,21 @@ return [
     //     'attribute'=>'dia_chi',
     //     'width' => '200px',
     // ],
-    [
+    /*[
         'class'=>'\kartik\grid\DataColumn',
         'label'=>'Địa chỉ',
         'value'=>function($model){
             return $model->diaChiText;  
         },
         'width' => '200px',
-    ],
-    /* [
+    ],*/
+    [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'so_cccd',
         'label'=>'CCCD (Mã KH)',
         'width' => '150px',
         'contentOptions' => [ 'style' => 'text-align:center' ],
-    ], */
+    ],
 
  
     [
