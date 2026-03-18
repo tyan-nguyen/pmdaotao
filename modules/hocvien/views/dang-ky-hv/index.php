@@ -151,7 +151,8 @@ $totalFmt = number_format($dataProvider->getTotalCount(), 0, ',', '.');
             'summary'=>'Tổng: <strong>' . $totalFmt . '</strong> dòng dữ liệu',
             'panel' => [
                 'headingOptions'=>['class'=>'card-header rounded-bottom-0 card-header text-dark'],
-                'heading' => '<i class="typcn typcn-folder-open"></i> DANH SÁCH HỌC VIÊN ĐĂNG KÝ (VOUCHER 3TR: <strong>' . $slVoucher . '/150</strong>)',
+                /*'heading' => '<i class="typcn typcn-folder-open"></i> DANH SÁCH HỌC VIÊN ĐĂNG KÝ (VOUCHER 3TR: <strong>' . $slVoucher . '/150</strong>)',*/
+                'heading' => '<i class="typcn typcn-folder-open"></i> DANH SÁCH HỌC VIÊN ĐĂNG KÝ',
                 'before'=>false,
             ],
             'export'=>[
