@@ -119,7 +119,7 @@ class KeHoachGiaoVienController extends Controller
                 //check thời gian trình duyệt hợp lệ
                 $today = date('Y-m-d');
                 $timeKhongHopLe = ($model->ngay_thuc_hien <= $today);
-                if($timeKhongHopLe){
+                if($timeKhongHopLe && (empty($model->thoi_gian_gui_duyet) || $model->thoi_gian_gui_duyet === '0000-00-00 00:00:00')){
                     return [
                         'title'=> "Thông báo",
                         'content'=>'<span class="text-danger"><h2>Không thể trình duyệt kế hoạch thời gian quá hạn! Vui lòng liên hệ người phụ trách để được hỗ trợ.</h2></span>',
