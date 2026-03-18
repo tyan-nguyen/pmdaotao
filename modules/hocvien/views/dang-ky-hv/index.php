@@ -46,6 +46,7 @@ $totalFmt = number_format($dataProvider->getTotalCount(), 0, ',', '.');
 .doi-ngay-sat-hach td{
     color:green !important;
 }
+
 </style>
 <div class="card border-default" id="divFilterExtend">
 	<div class="card-header rounded-bottom-0 card-header text-dark" id="simple">
@@ -77,6 +78,9 @@ $totalFmt = number_format($dataProvider->getTotalCount(), 0, ',', '.');
         <?=GridView::widget([
             'id'=>'crud-datatable',
             'dataProvider' => $dataProvider,
+            'containerOptions' => [
+                'style' => 'min-height:500px;'
+            ],
             //'filterModel' => $searchModel,
             'pjax'=>true,
             'showPageSummary' => true,
@@ -140,7 +144,7 @@ $totalFmt = number_format($dataProvider->getTotalCount(), 0, ',', '.');
             ],          
             'striped' => false,
             'condensed' => true,
-            'responsive' => false,
+            'responsive' => true,
             'panelHeadingTemplate'=>'<div style="width:100%;"><div class="float-start mt-2 text-primary">{title}</div> <div class="float-end">{toolbar}</div></div>',
             'panelFooterTemplate'=>'<div style="width:100%;"><div class="float-start">{summary}</div><div class="float-end">{pager}</div></div>',
             'summary'=>'Tổng: <strong>' . $totalFmt . '</strong> dòng dữ liệu',
