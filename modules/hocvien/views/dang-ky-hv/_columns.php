@@ -287,7 +287,9 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ho_ten',
-        'width' => '250px',
+        //'width' => '500px',
+        'headerOptions' => ['style' => 'width:150px;'],
+        'contentOptions' => ['style' => 'min-width:150px;'],
     ],
     [
         'class' => '\kartik\grid\DataColumn',
@@ -453,7 +455,7 @@ return [
         'contentOptions' => [ 'style' => 'text-align:center'],
     ],
     
-   /* [
+    [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'da_nhan_ao',
         'label'=>'Áo',
@@ -463,7 +465,7 @@ return [
         },
         'width' => '30px',
         'contentOptions' => [ 'style' => 'text-align:center'],
-   ],*/
+   ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'size',
@@ -489,7 +491,9 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ghi_chu',
         'label'=>'Ghi chú',
-        'width' => '175px'
+        //'width' => '300px'
+        'headerOptions' => ['style' => 'width:200px;'],
+        'contentOptions' => ['style' => 'min-width:200px;'],
     ],
     
      /* [
