@@ -145,6 +145,7 @@ $totalFmt = number_format($dataProvider->getTotalCount(), 0, ',', '.');
             'striped' => false,
             'condensed' => true,
             'responsive' => true,
+            'perfectScrollbar' => true,
             'panelHeadingTemplate'=>'<div style="width:100%;"><div class="float-start mt-2 text-primary">{title}</div> <div class="float-end">{toolbar}</div></div>',
             'panelFooterTemplate'=>'<div style="width:100%;"><div class="float-start">{summary}</div><div class="float-end">{pager}</div></div>',
             'summary'=>'Tổng: <strong>' . $totalFmt . '</strong> dòng dữ liệu',
