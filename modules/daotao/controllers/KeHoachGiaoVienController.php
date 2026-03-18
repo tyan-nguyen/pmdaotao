@@ -116,6 +116,19 @@ class KeHoachGiaoVienController extends Controller
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($model!=null){
+                //check thời gian trình duyệt hợp lệ
+                $today = date('Y-m-d');
+                $timeKhongHopLe = ($model->ngay_thuc_hien <= $today);
+                if($timeKhongHopLe){
+                    return [
+                        'title'=> "Thông báo",
+                        'content'=>'<span class="text-danger"><h2>Không thể trình duyệt kế hoạch thời gian quá hạn! Vui lòng liên hệ người phụ trách để được hỗ trợ.</h2></span>',
+                        'tcontent'=>'Không thể trình duyệt kế hoạch thời gian quá hạn!',
+                        'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"])
+                    ];
+                }
+
+
                 if($model->gdTietHocs!=null && $model->nguoi_tao == Yii::$app->user->id){
                     $model->trang_thai_duyet = KeHoachBase::TT_CHODUYET;
                     if($model->thoi_gian_gui_duyet==null){

@@ -83,7 +83,7 @@ class KeHoachSearch extends KeHoach
             ->andFilterWhere(['like', 'noi_dung_duyet', $this->noi_dung_duyet]);
         
           //khong load trang thai nhap
-          $query->andFilterWhere(['<>', 'trang_thai_duyet', KeHoach::TT_NHAP]);
+          //$query->andFilterWhere(['<>', 'trang_thai_duyet', KeHoach::TT_NHAP]);
 		}
         return $dataProvider;
     }
