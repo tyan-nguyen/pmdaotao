@@ -10,6 +10,7 @@ use app\modules\banhang\models\KhachHang;
 use app\modules\hocvien\models\DangKyHv;
 use app\custom\CustomFunc;
 use app\modules\thuexe\models\PhieuThu;
+use app\modules\user\models\History;
 use yii\helpers\Html;
 use app\modules\user\models\User;
 
@@ -36,6 +37,7 @@ use app\modules\user\models\User;
  */
 class LichThueBase extends PtxLichThue
 {   
+    const MODEL_ID = 'lichthue';
     public $ngay_bat_dau;
     public $gio_bat_dau;
     public $phut_bat_dau;
@@ -280,6 +282,14 @@ class LichThueBase extends PtxLichThue
         }
         
         return parent::beforeSave($insert);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function afterSave( $insert, $changedAttributes ){
+        parent::afterSave($insert, $changedAttributes);
+        History::addHistoryLichThue($this::MODEL_ID, $changedAttributes, $this, $insert);
     }
     
     

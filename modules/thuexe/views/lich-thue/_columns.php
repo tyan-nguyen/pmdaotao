@@ -13,7 +13,7 @@ return [
     [
         'class' => 'kartik\grid\ActionColumn',
         'header'=>'',
-        'template' => '{chiTiet} {delete}',
+        'template' => '{chiTiet} {history} {delete}',
         'dropdown' => true,
         'dropdownOptions' => ['class' => 'float-right'],
         'dropdownButton'=>[
@@ -25,23 +25,38 @@ return [
         'urlCreator' => function($action, $model, $key, $index) {
             if ($action === 'chiTiet') {
                 return Url::to(['update', 'id' => $key]);
+            }else if($action === 'history'){
+                return Url::to(['history', 'id' => $key]);
             }
         	return Url::to([$action,'id'=>$key]);
         },
         'buttons' => [
             'chiTiet' => function ($url, $model, $key) {
-            return Html::a('<i class="fa fa-folder-open"></i> Chi tiết', $url, [
-                'title' => 'Xem chi tiết',
-                'role' => 'modal-remote',
-                'class' => 'btn ripple btn-warning dropdown-item',
-                'data-bs-placement' => 'top',
-                'data-bs-toggle' => 'tooltip',
-            ]);
+                return Html::a('<i class="fa fa-folder-open"></i> Chi tiết', $url, [
+                    'title' => 'Xem chi tiết',
+                    'role' => 'modal-remote',
+                    'class' => 'btn ripple btn-warning dropdown-item',
+                    'data-bs-placement' => 'top',
+                    'data-bs-toggle' => 'tooltip',
+                ]);
+            },
+            'history' => function ($url, $model, $key) {
+                return Html::a('<i class="fa fa-history"></i> Lịch sử', $url, [
+                    'title' => 'Xem lịch sử',
+                    'role' => 'modal-remote',
+                    'class' => 'btn ripple btn-info dropdown-item',
+                    'data-bs-placement' => 'top',
+                    'data-bs-toggle' => 'tooltip',
+                ]);
             },
         ],
         'visibleButtons' => [
             'view' => function ($model, $key, $index) {
                 return Yii::$app->params['showView'];
+            },
+            'history' => function ($model, $key, $index) {
+                $user = User::getCurrentUser();
+                return $user->superadmin;
             },
             'delete' => function ($model, $key, $index) {
                 $user = User::getCurrentUser();

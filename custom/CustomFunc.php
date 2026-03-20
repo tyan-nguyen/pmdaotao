@@ -191,6 +191,15 @@ class CustomFunc
             return '';
         }
     }
+    /**
+     * lay ten tai khoan boi userID
+     * @param int $userID
+     * @return string
+     */
+    public static function getTenTaiKhoan($userID){
+        $model = User::findOne($userID);
+        return $model!=NULL?$model->username:'';  
+    }
     
     /**
      * generate random 4 string or number

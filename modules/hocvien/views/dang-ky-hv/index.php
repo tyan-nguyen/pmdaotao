@@ -162,7 +162,7 @@ $totalFmt = number_format($dataProvider->getTotalCount(), 0, ',', '.');
                 'filename' => 'ds_hoc_vien' . date('Y-m-d'), // tên file export mặc định
                 'options' => [
                     'class' => 'btn'
-                ]
+                ],
             ],
             'exportConfig' => [
                 GridView::EXCEL => [

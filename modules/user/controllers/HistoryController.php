@@ -1,136 +1,60 @@
 <?php
 
-namespace app\modules\thuexe\controllers;
+namespace app\modules\dungchung\controllers;
 
+use app\modules\user\models\History;
+use app\modules\user\models\HistorySearch;
 use Yii;
-use app\modules\thuexe\models\LichThue;
-use app\modules\thuexe\models\search\LichThueSearch;
+use yii\filters\VerbFilter;
+use yii\helpers\Html;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use \yii\web\Response;
-use yii\helpers\Html;
-use yii\filters\AccessControl;
-use app\modules\thuexe\models\Xe;
-use app\modules\thuexe\models\LoaiXe;
+use yii\web\Response;
 
 /**
- * LichThueController implements the CRUD actions for LichThue model.
+ * HistoryController implements the CRUD actions for History model.
  */
-class LichThueController extends Controller
+class HistoryController extends Controller
 {
     /**
      * @inheritdoc
      */
     public function behaviors() {
-    		return [
-    			'ghost-access'=> [
-    			'class' => 'webvimark\modules\UserManagement\components\GhostAccessControl',
-        		],
-    			'verbs' => [
-    				'class' => VerbFilter::className(),
-    				'actions' => [
-    					'delete' => ['POST'],
-    				],
-    			],
+		return [
+		    'ghost-access'=> [
+		        'class' => 'webvimark\modules\UserManagement\components\GhostAccessControl',
+		    ],
+			'verbs' => [
+				'class' => VerbFilter::className(),
+				'actions' => [
+					'delete' => ['POST'],
+				],
+			],
 		];
-	}
-	
-	// Xem lịch thuê của xe
-	//$id: id cua xe
-	public function actionXeSchedule($id)
-	{
-	    $model = Xe::findOne($id);
-	    return $this->render('xe_schedule', [
-	        'model' => $model
-	    ]);
-	}
-	
-	// Xem lịch thuê của loại xe
-	//$id: id cua loai xe
-	public function actionLoaiXeSchedule($id)
-	{
-	    $model = LoaiXe::findOne($id);
-	    return $this->render('loai_xe_schedule', [
-	        'model' => $model
-	    ]);
-	}
-	
-	// Xem lịch thuê của loại xe
-	//$id: id cua loai xe
-	public function actionLoaiXeScheduleByColumns($id)
-	{
-	    $this->layout = '/mainFullTrial';
-	    $model = LoaiXe::findOne($id);
-	    return $this->render('loai_xe_schedule_by_columns', [
-	        'model' => $model
-	    ]);
 	}
 
     /**
-     * Lists all LichThue models.
+     * Lists all History models.
      * @return mixed
      */
     public function actionIndex()
     {    
-        $searchModel = new LichThueSearch();
-  		if(isset($_POST['search']) && $_POST['search'] != null){
-            $dataProvider = $searchModel->search(Yii::$app->request->post(), $_POST['search']);
-        } else if ($searchModel->load(Yii::$app->request->post())) {
-            $searchModel = new LichThueSearch(); // "reset"
+        $searchModel = new HistorySearch();
+  		if ($searchModel->load(Yii::$app->request->post())) {
+  		    $searchModel = new HistorySearch(); // "reset"
             $dataProvider = $searchModel->search(Yii::$app->request->post());
         } else {
-            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        }    
+        	$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		}
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
-    
-    /**
-     * Lists all LichThue models.
-     * @return mixed
-     */
-    public function actionIndexPublic()
-    {
-        $searchModel = new LichThueSearch();
-        if(isset($_POST['search']) && $_POST['search'] != null){
-            $dataProvider = $searchModel->searchPublic(Yii::$app->request->post(), $_POST['search']);
-        } else if ($searchModel->load(Yii::$app->request->post())) {
-            $searchModel = new LichThueSearch(); // "reset"
-            $dataProvider = $searchModel->searchPublic(Yii::$app->request->post());
-        } else {
-            $dataProvider = $searchModel->searchPublic(Yii::$app->request->queryParams);
-        }
-        return $this->render('index_public', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-    /**
-     * Displays history for a single LichThue model.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionHistory($id){
-        $request = Yii::$app->request;
-        if($request->isAjax){
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return [
-                    'title'=> "Lịch sử",
-                    'content'=>$this->renderAjax('history', [
-                        'model' => $this->findModel($id),
-                    ]),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"])
-        
-                ];    
-        }
-    }
 
 
     /**
-     * Displays a single LichThue model.
+     * Displays a single History model.
      * @param integer $id
      * @return mixed
      */
@@ -140,7 +64,7 @@ class LichThueController extends Controller
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "Lịch thuê xe",
+                    'title'=> "History",
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
                     ]),
@@ -153,96 +77,26 @@ class LichThueController extends Controller
             ]);
         }
     }
-    
-    /**
-     * Displays a single LichThue model.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionViewPublic($id)
-    {
-        $request = Yii::$app->request;
-        $model = $this->findModel($id);
-        
-        if($request->isAjax){
-            /*
-             *   Process for ajax request
-             */
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            if($request->isGet){
-                return [
-                    'title'=> "Lịch thuê xe " . $model->xe->ma_so,
-                    'content'=>$this->renderAjax('update', [
-                        'model' => $model,
-                    ]),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"])
-                ];
-            }else if($model->load($request->post()) && $model->save()){
-                return [
-                    'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Lịch thuê xe " . $model->xe->ma_so,
-                    'content'=>$this->renderAjax('update', [
-                        'model' => $model,
-                    ]),
-                    'tcontent'=>'Cập nhật thành công!',
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"])
-                ];
-            }else{
-                return [
-                    'title'=> "Lịch thuê xe " . $model->xe->ma_so,
-                    'content'=>$this->renderAjax('update', [
-                        'model' => $model,
-                    ]),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"])
-                ];
-            }
-        }else{
-            /*
-             *   Process for non-ajax request
-             */
-            if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            } else {
-                return $this->render('update', [
-                    'model' => $model,
-                ]);
-            }
-        }
-    }
 
     /**
-     * Creates a new LichThue model.
+     * Creates a new History model.
      * For ajax request will return json object
      * and for non-ajax request if creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($type)
+    public function actionCreate()
     {
-        if($type != 'hocvien' && $type != 'khachngoai' && $type != 'lienket'){
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
         $request = Yii::$app->request;
-        $model = new LichThue();  
-        
-        if($type == 'hocvien'){
-            $model->loai_giao_vien = LichThue::GV_GIAOVIEN;
-            $model->loai_khach_hang = LichThue::KH_HOCVIEN;
-        } else if($type == 'khachngoai'){
-            $model->loai_giao_vien = LichThue::GV_GIAOVIEN;
-            $model->loai_khach_hang = LichThue::KH_KHACHNGOAI;
-        }else if($type == 'lienket'){
-            $model->loai_giao_vien = LichThue::GV_KHACHNGOAI;
-            $model->loai_khach_hang = LichThue::KH_KHACHNGOAI;
-        }
-        
+        $model = new History();  
+
         if($request->isAjax){
             /*
-            * Process for ajax request
+            *   Process for ajax request
             */
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Thêm mới Lịch thuê xe",
+                    'title'=> "Thêm mới History",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -253,18 +107,16 @@ class LichThueController extends Controller
             }else if($model->load($request->post()) && $model->save()){
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Lịch thuê xe " . $model->xe->bien_so_xe,
+                    'title'=> "Thêm mới History",
+                    'content'=>'<span class="text-success">Thêm mới thành công</span>',
                     'tcontent'=>'Thêm mới thành công!',
-                    'content'=>$this->renderAjax('update', [
-                        'model' => $model,
-                    ]),
                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                    Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                            Html::a('Tiếp tục thêm',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
         
                 ];         
             }else{           
                 return [
-                    'title'=> "Thêm mới Lịch thuê xe",
+                    'title'=> "Thêm mới History",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -289,7 +141,7 @@ class LichThueController extends Controller
     }
 
     /**
-     * Updates an existing LichThue model.
+     * Updates an existing History model.
      * For ajax request will return json object
      * and for non-ajax request if update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
@@ -307,7 +159,7 @@ class LichThueController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Lịch thuê xe " . $model->xe->bien_so_xe,
+                    'title'=> "Cập nhật History",
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
@@ -317,17 +169,17 @@ class LichThueController extends Controller
             }else if($model->load($request->post()) && $model->save()){
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Lịch thuê xe " . $model->xe->bien_so_xe,
-                    'content'=>$this->renderAjax('update', [
+                    'title'=> "History",
+                    'content'=>$this->renderAjax('view', [
                         'model' => $model,
                     ]),
                     'tcontent'=>'Cập nhật thành công!',
                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                    Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
+                            Html::a('Sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
                 ];    
             }else{
                  return [
-                    'title'=> "Lịch thuê xe " . $model->xe->bien_so_xe,
+                    'title'=> "Cập nhật History",
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
@@ -350,7 +202,7 @@ class LichThueController extends Controller
     }
 
     /**
-     * Delete an existing LichThue model.
+     * Delete an existing History model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -373,10 +225,12 @@ class LichThueController extends Controller
             */
             return $this->redirect(['index']);
         }
+
+
     }
 
      /**
-     * Delete multiple existing LichThue model.
+     * Delete multiple existing History model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -399,26 +253,32 @@ class LichThueController extends Controller
         }
 
         if($request->isAjax){
+            /*
+            *   Process for ajax request
+            */
             Yii::$app->response->format = Response::FORMAT_JSON;
             return ['forceClose'=>true,'forceReload'=>'#crud-datatable-pjax',
             			'tcontent'=>$delOk==true?'Xóa thành công!':('Không thể xóa:'.implode('</br>', $fList)),
             ];
         }else{
+            /*
+            *   Process for non-ajax request
+            */
             return $this->redirect(['index']);
         }
        
     }
 
     /**
-     * Finds the LichThue model based on its primary key value.
+     * Finds the History model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return LichThue the loaded model
+     * @return History the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = LichThue::findOne($id)) !== null) {
+        if (($model = History::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
