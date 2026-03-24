@@ -132,6 +132,7 @@ $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gi
                   ]); ?>
             </div>
            
+            <?php /* ?>
             <div class="col-md-2">
                   <?= $form->field($model, 'thoi_gian_tao')->widget(DatePicker::classname(), [
                         'options' => ['placeholder' => 'Chọn ngày tiếp nhận đăng ký  ...', 'autocomplete'=>'off'],
@@ -144,6 +145,7 @@ $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gi
                         ]
                   ])->label('Ngày nhận HV mới'); ?>
             </div>
+            <?php */ ?>
             
             <div class="col-md-2">
                   <?= $form->field($model, 'ghi_chu')->textInput(['maxlength' => true]) ?>
@@ -236,6 +238,40 @@ $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gi
                         'class' => 'form-control dropdown-with-arrow',
                     ]
             	    )->label('Voucher T11 3 triệu') ?>
+            </div>
+
+            <div class="col-md-2">
+            	<label>Nhận hồ sơ từ</label>
+                  <?= $form->field($model, 'ngay_dang_ky_tu')->widget(DatePicker::classname(), [
+                         'options' => [
+                             'placeholder' => 'Chọn ngày ĐK  ...',
+                             'autocomplete' => 'off'
+                         ],
+                         'pluginOptions' => [
+                         'autoclose' => true,
+                         'format' => 'dd/mm/yyyy',
+                         'zIndexOffset'=>'9999',
+                         'todayHighlight'=>true,
+                         'todayBtn'=>true
+                    ]
+                  ])->label(false); ?>
+            </div>
+            
+            <div class="col-md-2">
+            	<label>Nhận hồ sơ đến</label>
+                  <?= $form->field($model, 'ngay_dang_ky_den')->widget(DatePicker::classname(), [
+                         'options' => [
+                             'placeholder' => 'Chọn ngày ĐK  ...',
+                             'autocomplete' => 'off'
+                         ],
+                         'pluginOptions' => [
+                         'autoclose' => true,
+                         'format' => 'dd/mm/yyyy',
+                         'zIndexOffset'=>'9999',
+                         'todayHighlight'=>true,
+                         'todayBtn'=>true
+                    ]
+                  ])->label(false); ?>
             </div>
             
             
