@@ -241,7 +241,7 @@ $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gi
             </div>
 
             <div class="col-md-2">
-            	<label>Nhận hồ sơ từ</label>
+            	<label>Ngày đăng ký từ</label>
                   <?= $form->field($model, 'ngay_dang_ky_tu')->widget(DatePicker::classname(), [
                          'options' => [
                              'placeholder' => 'Chọn ngày ĐK  ...',
@@ -258,7 +258,7 @@ $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gi
             </div>
             
             <div class="col-md-2">
-            	<label>Nhận hồ sơ đến</label>
+            	<label>Ngày đăng ký đến</label>
                   <?= $form->field($model, 'ngay_dang_ky_den')->widget(DatePicker::classname(), [
                          'options' => [
                              'placeholder' => 'Chọn ngày ĐK  ...',
