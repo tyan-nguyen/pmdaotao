@@ -325,7 +325,15 @@ return [
         'width' => '100px',
         'contentOptions' => [ 'style' => 'text-align:center' ],
     ],
-
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'ngay_sinh',
+        'value'=>function($model){
+            return $model->getNgaySinh();
+        },
+        'width' => '90px',
+        'contentOptions' => [ 'style' => 'text-align:center' ],
+    ],
  
     [
         'class' => '\kartik\grid\DataColumn',
