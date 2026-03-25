@@ -23,6 +23,7 @@ if(!$user->superadmin && $user->noi_dang_ky){
 $this->title = $listTitle;
 $this->params['breadcrumbs'][] = $this->title;
 //CrudAsset::register($this);
+Yii::$app->params['showTopSearch'] = false;
 Yii::$app->params['showSearch'] = true;
 Yii::$app->params['showExport'] = false;
 
@@ -48,7 +49,7 @@ $totalFmt = number_format($dataProvider->getTotalCount(), 0, ',', '.');
 }
 
 </style>
-<div class="card border-default" id="divFilterExtend">
+<div class="card border-default" id="divFilterExtend" <?= Yii::$app->request->get('DangKyHvSearch') ? 'style="display:block;"' : 'style="display:none;"' ?>>
 	<div class="card-header rounded-bottom-0 card-header text-dark" id="simple">
 		<h5 class="mt-2"><i class="fe fe-search"></i> Tìm kiếm</h5>
 	</div>

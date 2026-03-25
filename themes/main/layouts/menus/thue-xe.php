@@ -34,7 +34,7 @@ use app\modules\user\models\User;
 							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/lich-thue/loai-xe-schedule?menu=dc9&id=2') ?>" class="slide-item" data-menu="dc9"><i class="fe fe-file-text"></i> Xem lịch hạng xe (C.Biến)</a></li>
 							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/lich-thue/loai-xe-schedule-by-columns?menu=dc5&id=2') ?>" class="slide-item" data-menu="dc5"><i class="fe fe-file-text"></i> Lịch hạng xe theo cột <span class="badge bg-warning">New</span></a></li>
 							
-							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/lich-thi?menu=dc3') ?>" class="slide-item" data-menu="dc3"><i class="fe fe-file-text"></i> Lịch thi</a></li>
+							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/lich-thi?menu=dca') ?>" class="slide-item" data-menu="dca"><i class="fe fe-file-text"></i> Lịch thi</a></li>
 							
 							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/phieu-thu/phieu-thu?menu=dc2') ?>" class="slide-item" data-menu="dc2"><i class="fe fe-file-text"></i> Phiếu thu tiền</a></li>
 							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/phieu-thu/phieu-chi?menu=dc4') ?>" class="slide-item" data-menu="dc4"><i class="fe fe-file-text"></i> Phiếu chi tiền</a></li>

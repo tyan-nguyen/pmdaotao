@@ -8,13 +8,21 @@ use app\modules\user\models\User;
 use app\modules\khoahoc\models\KhoaHoc;
 use app\custom\CustomFunc;
 use app\modules\hocvien\models\DangKyHv;
+use app\modules\hocvien\models\DmLienKet;
 use app\modules\hocvien\models\HangDaoTao;
 use kartik\select2\Select2;
+use yii\web\JsExpression;
+
 /* @var $this yii\web\View */
 /* @var $model app\modules\vanban\models\VanBanDen */
 /* @var $form yii\widgets\ActiveForm */
 
 $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gian_hoan_thanh_ho_so);
+$initValueLienKet = '';
+if ($model->id_lien_ket) {
+    $lienKet = DmLienKet::findOne($model->id_lien_ket);
+    $initValueLienKet = $lienKet ? $lienKet->ten_lien_ket : '';
+}
 ?>
 
 <div class="hoc-vien-search">
@@ -273,6 +281,50 @@ $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gi
                     ]
                   ])->label(false); ?>
             </div>
+
+             <div class="col-md-1">
+            	<label>&nbsp;</label>
+                <?= $form->field($model, 'co_lien_ket')->checkbox([
+                    'itemOptions' => [
+                    'label' => 'Chữ hiển thị mới',
+                ]]) ?>
+            </div>
+            <div class="col-md-3">
+			<label>DM ĐV liên kết</label>
+			<?= $form->field($model, 'id_lien_ket')->widget(Select2::classname(), [
+                'initValueText' => $initValueLienKet, // This shows selected text on form load
+                'language' => 'vi',
+                'options' => [
+                    'placeholder' => 'Chọn dm liên kết...',  
+                    'class' => 'form-control dropdown-with-arrow',
+                    'id' => 'idLienKetSearch'
+                ],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                    //'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
+                    'width'=>'100%',
+                    'minimumInputLength' => 0, // ← allow fetch without typing
+                    'ajax' => [
+                        'url' => '/hocvien/dm-lien-ket/search-dm-lien-ket',
+                        'dataType' => 'json',
+                        'delay' => 250,
+                        /* 'data' => new JsExpression('function(params) {
+                            return {q:params.term};
+                        }'), */
+                        'data' => new JsExpression('function(params) {
+                            return {
+                                q: params.term || "", // if empty input, send empty string
+                            };
+                        }'),
+                        'processResults' => new JsExpression('function(data) {
+                            return {results:data};
+                        }'),
+                        'cache' => true
+                    ],
+                ],
+            ])->label(false); ?>
+
+        </div>
             
             
     </div>    

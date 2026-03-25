@@ -454,7 +454,18 @@ return [
         'width' => '70px',
         'contentOptions' => [ 'style' => 'text-align:center'],
     ],
-    
+
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'label'=>'L.Kết',
+        'format'=>'html',
+        'value'=>function($model){
+            return $model->id_lien_ket > 0 ? '<i class="fa fa-chain text-danger"></i>':'';
+        },
+        'width' => '30px',
+        'contentOptions' => [ 'style' => 'text-align:center'],
+   ],
+      
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'da_nhan_ao',
@@ -494,6 +505,17 @@ return [
         //'width' => '300px'
         'headerOptions' => ['style' => 'width:200px;'],
         'contentOptions' => ['style' => 'min-width:200px;'],
+    ],
+
+     [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'id_lien_ket',
+        'label'=>'ĐV L.Kết',
+       'value'=>function($model){
+            return $model->lienKet ? $model->lienKet->ten_lien_ket:'';
+        },
+        'headerOptions' => ['style' => 'width:150px;'],
+        'contentOptions' => ['style' => 'min-width:150px;'],
     ],
     
      /* [

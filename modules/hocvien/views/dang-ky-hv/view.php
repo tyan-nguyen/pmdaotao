@@ -41,7 +41,18 @@ use app\modules\hocvien\models\DangKyHv;
                         </p>
                         <p>
                          	<strong>Ngày đăng ký:</strong> <?= CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_tao) ?><strong> <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Nhận hồ sơ:</strong> <?= CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_hoan_thanh_ho_so) ?>
-                        </p>                          
+                        </p>
+                        
+                        <?php if($model->id_lien_ket > 0){ ?>
+                        <p>
+                            <strong><i class="fa fa-chain"></i> Liên kết:</strong> <?= $model->lienKet ? $model->lienKet->ten_lien_ket : '-' ?>
+                            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <strong>Ngày LK:</strong> <?= $model->ngay_lien_ket ? CustomFunc::convertYMDHISToDMYHI($model->ngay_lien_ket) : '-' ?>
+                            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <strong>NV LK:</strong> <?= $model->nguoiLienKet ? $model->nguoiLienKet->ho_ten : '-' ?>
+                        </p>
+                        <?php } ?>
+
                         <p>
                         	<strong>Đã nhận áo:</strong> <?= $model->da_nhan_ao?'<i class="ion-checkmark-round text-primary"></i> Có':'<i class="ion-close-round" data-bs-toggle="tooltip" aria-label="ion-close-round" data-bs-original-title="ion-close-round"></i> Không' ?><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
                         	<strong>Size:</strong> <?= $model->size?$model->size:'-' ?><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <strong>Ngày nhận:</strong> <?= $model->ngay_nhan_ao?CustomFunc::convertYMDToDMY($model->ngay_nhan_ao):'-' ?> <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 

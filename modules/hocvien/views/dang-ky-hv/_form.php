@@ -34,6 +34,12 @@ $initValueXa = '';
 if ($model->id_xa) {
     $initValueXa = $model->xa ? $model->xa->tenXaWithTinh : '';
 }
+$initValueLienKet = '';
+if ($model->id_lien_ket > 0) {
+    $initValueLienKet = $model->lienKet ? $model->lienKet->ten_lien_ket : '';
+} else {
+    $model->id_lien_ket = '';
+}
 ?>
 <div class="hv-hoc-vien-form">
 
@@ -46,14 +52,14 @@ if ($model->id_xa) {
         <div class="col-lg-3 col-md-6">
             <?= $form->field($model, 'ho_ten')->textInput(['maxlength' => true]) ?>
         </div>
-        <div class="col-lg-3 col-md-6">
+        <div class="col-lg-1 col-md-6">
             <?= $form->field($model, 'gioi_tinh')->dropDownList([
              1 => 'Nam',
              0 => 'Nữ',
              ], ['prompt' => 'Chọn giới tính', 'class' => 'form-control dropdown-with-arrow']) ?>
         </div>
  
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-2 col-md-6">
             	<?= $form->field($model, 'ngay_sinh')->widget(DatePicker::classname(), [
                     'options' => ['placeholder' => 'Chọn ngày sinh  ...', 'autocomplete'=>'off'],
                     'pluginOptions' => [
@@ -66,6 +72,41 @@ if ($model->id_xa) {
             </div>
             <div class="col-lg-3 col-md-6">
                  <?= $form->field($model, 'so_dien_thoai')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <label><?= $model->getAttributeLabel('id_lien_ket') ?></label>
+                <?= $form->field($model, 'id_lien_ket')->widget(Select2::classname(), [
+                    'initValueText' => $initValueLienKet, // This shows selected text on form load
+                    'language' => 'vi',
+                    'options' => [
+                        'placeholder' => 'Chọn dm liên kết...',  
+                        'class' => 'form-control dropdown-with-arrow',
+                        'id' => 'idLienKet'
+                    ],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                        'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
+                        'width'=>'100%',
+                        'minimumInputLength' => 0, // ← allow fetch without typing
+                        'ajax' => [
+                            'url' => '/hocvien/dm-lien-ket/search-dm-lien-ket',
+                            'dataType' => 'json',
+                            'delay' => 250,
+                            /* 'data' => new JsExpression('function(params) {
+                                return {q:params.term};
+                            }'), */
+                            'data' => new JsExpression('function(params) {
+                                return {
+                                    q: params.term || "", // if empty input, send empty string
+                                };
+                            }'),
+                            'processResults' => new JsExpression('function(data) {
+                                return {results:data};
+                            }'),
+                            'cache' => true
+                        ],
+                    ],
+                ])->label(false); ?>
             </div>
             <?php if (!$model->id_xa && !$model->isNewRecord){ ?>
                  <div class="col-lg-12 col-md-12">

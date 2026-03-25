@@ -18,6 +18,7 @@ use app\modules\hocvien\models\BaoLuu;
 use app\modules\hocvien\models\DoiSatHach;
 use app\modules\danhmuc\models\DmXa;
 use app\modules\danhmuc\models\DmTinh;
+use app\modules\hocvien\models\DmLienKet;
 
 /**
  * This is the model class for table "hv_hoc_vien".
@@ -66,6 +67,9 @@ use app\modules\danhmuc\models\DmTinh;
  * @property float|null $le_phi
  * @property int|null $da_nop_du
  * @property string|null $label
+ * @property int|null $id_lien_ket
+ * @property string|null $ngay_lien_ket
+ * @property int|null $id_nguoi_nhap_lien_ket
  *
  * @property GdGvHv[] $gdGvHvs
  * @property HvHangDaoTao $hang
@@ -376,7 +380,7 @@ class HocVienBase extends \app\models\HvHocVien
         return [
             /*[['id_hang', 'ho_ten', 'so_cccd','id_hang'], 'required'],*/
             [['id_hang', 'ho_ten', 'noi_dang_ky'], 'required'],
-            [['id_khoa_hoc', 'id_hoc_phi', 'nguoi_tao','gioi_tinh','id_hang','id_nhom','nguoi_duyet','ma_so_phieu','so_lan_in_phieu','co_ho_so_thue', 'da_nhan_ao', 'id_giao_vien', 'huy_ho_so', 'da_nhan_tai_lieu', 'da_nop_du', 'nguoi_giao_ao', 'nguoi_giao_tai_lieu', 'id_xa', 'id_tinh'], 'integer'],
+            [['id_khoa_hoc', 'id_hoc_phi', 'nguoi_tao','gioi_tinh','id_hang','id_nhom','nguoi_duyet','ma_so_phieu','so_lan_in_phieu','co_ho_so_thue', 'da_nhan_ao', 'id_giao_vien', 'huy_ho_so', 'da_nhan_tai_lieu', 'da_nop_du', 'nguoi_giao_ao', 'nguoi_giao_tai_lieu', 'id_xa', 'id_tinh', 'id_lien_ket', 'id_nguoi_nhap_lien_ket'], 'integer'],
             [['thoi_gian_tao', 'thoi_gian_hoan_thanh_ho_so', 'thoi_gian_huy_ho_so', 'ngay_sinh','ngay_het_han_cccd'], 'safe'],
             [['ho_ten', 'so_dien_thoai', 'so_cccd', 'trang_thai','dia_chi', 'dia_chi_chi_tiet', 'trang_thai_duyet'], 'string', 'max' => 255],
             [['check_hoc_phi'],'string','max'=>25],
@@ -387,7 +391,7 @@ class HocVienBase extends \app\models\HvHocVien
             [['tongtiennop', 'le_phi'], 'number'],//virtual attribute select when report
             [['id_khoa_hoc'], 'exist', 'skipOnError' => true, 'targetClass' => KhoaHoc::class, 'targetAttribute' => ['id_khoa_hoc' => 'id']],
             [['id_nhom'], 'exist', 'skipOnError' => true, 'targetClass' => NhomHoc::class, 'targetAttribute' => ['id_nhom' => 'id']],
-            [['ghi_chu', 'ngay_nhan_ao', 'ngay_nhan_tai_lieu', 'ly_do_huy_ho_so', 'so_tien', 'thoi_gian_thay_doi'], 'safe'],
+            [['ghi_chu', 'ngay_nhan_ao', 'ngay_nhan_tai_lieu', 'ly_do_huy_ho_so', 'so_tien', 'thoi_gian_thay_doi', 'ngay_lien_ket'], 'safe'],
             [['da_nhan_tai_lieu'], 'required', 'requiredValue' => 1, 'message' => 'Bạn phải chọn đã nhận tài liệu', 'on' => 'nhantailieu'],
             [['ngay_nhan_tai_lieu'], 'required', 'on' => 'nhantailieu'],
             [['da_nhan_ao'], 'required', 'requiredValue' => 1, 'message' => 'Bạn phải chọn đã nhận áo', 'on' => 'nhanao'],
@@ -446,7 +450,10 @@ class HocVienBase extends \app\models\HvHocVien
             'loai_ly_do' => 'Loại lý do',
             'le_phi' => 'Lệ phí',
             'da_nop_du' => 'Đã nộp đủ',
-            'label' => 'Gán Nhãn'
+            'label' => 'Gán Nhãn',
+            'id_lien_ket' => 'Liên kết',
+            'ngay_lien_ket' => 'Ngày liên kết',
+            'id_nguoi_nhap_lien_ket' => 'Người nhập liên kết',
         ];
     }
 
@@ -526,6 +533,10 @@ class HocVienBase extends \app\models\HvHocVien
     public function getTinh()
     {
         return $this->hasOne(DmTinh::class, ['id' => 'id_tinh']);
+    }
+    public function getLienKet()
+    {
+        return $this->hasOne(DmLienKet::class, ['id' => 'id_lien_ket']);
     }
     public function getNgaySinh(){
         return CustomFunc::convertYMDToDMY($this->ngay_sinh);
@@ -626,6 +637,9 @@ class HocVienBase extends \app\models\HvHocVien
     }
     public function getNguoiTao(){
         return $this->hasOne(User::class, ['id' => 'nguoi_tao']);
+    }
+    public function getNguoiLienKet(){
+        return $this->hasOne(User::class, ['id' => 'nguoi_lien_ket']);
     }
     public function getTienDaNop(){//bao gom tong so tien nop am + duong
         return NopHocPhi::find()->where(['id_hoc_vien'=>$this->id])->sum('so_tien_nop');

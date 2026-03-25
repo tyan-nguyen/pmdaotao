@@ -29,7 +29,7 @@ use app\modules\hocvien\models\HocVien;
 							<li class="side-menu__label1"><a href="javascript:void(0)">Danh mục chức năng</a></li>
 							<li><a href="/hocvien/thong-ke/tong-hop?menu=hv8" class="slide-item" data-menu="hv8"> <i class="fe fe-file-text"></i>Thống kê - Công nợ</a></li>
 							<li><a href="/hocvien/thong-ke/luu-luong?menu=hv2" class="slide-item" data-menu="hv2"> <i class="fe fe-file-text"></i> Thống kê lưu lượng <span class="badge bg-warning">New</span></a></li> 
-							<li><a href="/hocvien/thong-ke/hang-tang?menu=hv2" class="slide-item" data-menu="hv2"> <i class="fe fe-file-text"></i> Thống kê áo, tài liệu <span class="badge bg-warning">New</span></a></li> 
+							<li><a href="/hocvien/thong-ke/hang-tang?menu=hvb" class="slide-item" data-menu="hvb"> <i class="fe fe-file-text"></i> Thống kê áo, tài liệu <span class="badge bg-warning">New</span></a></li> 
 							<li><a href="/hocvien/dang-ky-hv?menu=hv1" class="slide-item" data-menu="hv1"> <i class="fe fe-file-text"></i> Học viên đăng ký</a></li>
 							<li><a href="/hocvien/dang-ky-hv/hoc-vien-doi-hang?menu=hv9&sort=-thoi_gian_thay_doi" class="slide-item" data-menu="hv9"> <i class="fe fe-file-text"></i> Học viên đổi hạng</a></li>
 							<li><a href="/hocvien/dang-ky-hv/index-huy-ho-so?menu=hv9" class="slide-item" data-menu="hv9"> <i class="fe fe-file-text"></i> Học viên hủy hồ sơ</a></li>
@@ -39,6 +39,7 @@ use app\modules\hocvien\models\HocVien;
 							<li><a href="/hocvien/hv-thue?menu=hv5" class="slide-item" data-menu="hv5"> <i class="fe fe-file-text"></i> Hồ sơ thuế</a></li>
 							<!-- <li><a href="/hocvien/hoc-vien?menu=hv2" class="slide-item" data-menu="hv2"> <i class="fe fe-file-text"></i> Danh sách học viên</a></li> -->
 							<li><a href="/kholuutru/loai-file/index?doiTuong=<?= HocVien::MODEL_ID ?>&menu=hv3" class="slide-item" data-menu="hv3"> <i class="fe fe-file-text"></i> Loại hồ sơ</a></li>
+							<li><a href="/hocvien/dm-lien-ket?menu=hva" class="slide-item" data-menu="hva"> <i class="fe fe-file-text"></i> Đơn vị liên kết</a></li>
 							
 						</ul>
 						<div class="menutabs-content px-0">

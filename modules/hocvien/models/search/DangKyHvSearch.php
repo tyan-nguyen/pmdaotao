@@ -18,16 +18,28 @@ class DangKyHvSearch extends DangKyHv
     public $noiNhanTaiLieu;//search noi nhan ho so
     public $ngay_dang_ky_tu;
     public $ngay_dang_ky_den;
+    public $co_lien_ket; //checkbox có liên kết hay không
+
+    public function attributeLabels()
+    {
+        // Lấy các label mặc định từ model cha (nếu có)
+        $labels = parent::attributeLabels();
+        
+        // Ghi đè hoặc thêm mới label cho thuộc tính ảo
+        $labels['co_lien_ket'] = 'HV liên kết';
+        
+        return $labels;
+    }
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id', 'id_khoa_hoc', 'nguoi_tao', 'id_hang','gioi_tinh', 'da_nhan_ao', 'da_nhan_tai_lieu'], 'integer'],
+            [['id', 'id_khoa_hoc', 'nguoi_tao', 'id_hang','gioi_tinh', 'da_nhan_ao', 'da_nhan_tai_lieu', 'id_lien_ket'], 'integer'],
             [['ho_ten', 'so_dien_thoai', 'so_cccd', 'trang_thai', 'thoi_gian_tao', 'ngay_sinh', 'nguoi_tao', 'thoi_gian_hoan_thanh_ho_so', 'dia_chi', 'size', 'ngay_nhan_ao', 'noi_dang_ky', 'huy_ho_so', 'ghi_chu', 
             'ngay_dang_ky_tu', 'ngay_dang_ky_den',
-            'ngay_nhan_tai_lieu', 'noiNhanAo', 'noiNhanTaiLieu', 'label'], 'safe'],
+            'ngay_nhan_tai_lieu', 'noiNhanAo', 'noiNhanTaiLieu', 'label', 'co_lien_ket'], 'safe'],
         ];
     }
 
@@ -129,6 +141,7 @@ class DangKyHvSearch extends DangKyHv
             't.da_nhan_tai_lieu' => $this->da_nhan_tai_lieu,
             't.noi_dang_ky' => $this->noi_dang_ky,
             't.label' => $this->label,
+            't.id_lien_ket' => $this->id_lien_ket,
         ]);
         
         if($this->huy_ho_so){
@@ -150,6 +163,9 @@ class DangKyHvSearch extends DangKyHv
             ->andFilterWhere(['like', 't.ngay_sinh', $this->ngay_sinh])
             ->andFilterWhere(['like', 't.ghi_chu', $this->ghi_chu]);
         
+        if($this->co_lien_ket){
+            $query->andWhere('id_lien_ket > 0');
+        }
        //load danh sách của cơ sở nhân viên nhận hồ sơ 
         /* $user = User::getCurrentUser();
         if(!$user->superadmin && $user->noi_dang_ky){
