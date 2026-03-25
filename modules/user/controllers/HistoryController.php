@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\dungchung\controllers;
+namespace app\modules\user\controllers;
 
 use app\modules\user\models\History;
 use app\modules\user\models\HistorySearch;
