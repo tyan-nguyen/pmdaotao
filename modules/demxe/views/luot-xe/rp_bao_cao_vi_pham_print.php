@@ -14,7 +14,7 @@ use app\modules\user\models\User;
 } */
 $loaiViPhamLabel = '';
 if($typereport==1){
-	$loaiViPhamLabel = 'Xe qua đêm';
+	$loaiViPhamLabel = 'Xe qua đêm và không kế hoạch';
 } else if($typereport==2){
 	$loaiViPhamLabel = 'Xe đi không kế hoạch';
 }
@@ -59,7 +59,7 @@ if($typereport==1){
 <td colspan="2">
 <span class="phieu-h1">BÁO CÁO DANH SÁCH XE VI PHẠM</span>
 <br/>
-(<strong><?= $loaiViPhamLabel ?></strong> - Xuất tự động từ phần mềm Quản lý xe ra vào, cho các xe thuộc Phòng đào tạo quản lý)
+(<strong><?= $loaiViPhamLabel ?></strong> - Xuất tự động từ phần mềm Quản lý xe ra vào thuộc Phòng đào tạo)
 </td>
 </tr>
 <tr>
