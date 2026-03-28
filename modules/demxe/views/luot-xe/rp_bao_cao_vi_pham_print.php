@@ -17,6 +17,8 @@ if($typereport==1){
 	$loaiViPhamLabel = 'Xe qua đêm và không kế hoạch';
 } else if($typereport==2){
 	$loaiViPhamLabel = 'Xe đi không kế hoạch';
+} else if($typereport==3){
+	$loaiViPhamLabel = 'Xe qua đêm';
 }
 ?>
 
