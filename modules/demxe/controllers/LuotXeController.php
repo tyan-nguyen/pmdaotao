@@ -383,13 +383,15 @@ class LuotXeController extends Controller
             $content = $this->renderPartial('rp_bao_cao_vi_pham_print', [
                 'list'=>$listVP,
                 'start' => $start,
-                'end' => $end
+                'end' => $end,
+                'typereport' => $typereport
             ]);
         } else if($typereport==2){
             $content = $this->renderPartial('rp_bao_cao_vi_pham_print', [
                 'list'=>$listVP,
                 'start' => $start,
-                'end' => $end
+                'end' => $end,
+                'typereport' => $typereport
             ]);
         }
         return $this->asJson([

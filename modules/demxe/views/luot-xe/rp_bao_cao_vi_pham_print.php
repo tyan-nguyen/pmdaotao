@@ -12,6 +12,12 @@ use app\modules\user\models\User;
         }
     }
 } */
+$loaiViPhamLabel = '';
+if($typereport==1){
+	$loaiViPhamLabel = 'Xe qua đêm';
+} else if($typereport==2){
+	$loaiViPhamLabel = 'Xe đi không kế hoạch';
+}
 ?>
 
 <link href="/css/print-display.css" rel="stylesheet">
@@ -53,11 +59,11 @@ use app\modules\user\models\User;
 <td colspan="2">
 <span class="phieu-h1">BÁO CÁO DANH SÁCH XE VI PHẠM</span>
 <br/>
-(Xuất tự động từ phần mềm Quản lý xe ra vào, cho các xe thuộc Phòng đào tạo quản lý)
+(<strong><?= $loaiViPhamLabel ?></strong> - Xuất tự động từ phần mềm Quản lý xe ra vào, cho các xe thuộc Phòng đào tạo quản lý)
 </td>
 </tr>
 <tr>
-<td colspan="2" style="text-align: center;width: 50%;padding-top:10px"><span>Thời gian từ <?= CustomFunc::convertYMDHISToDMYHI($start) ?> đến <?= CustomFunc::convertYMDHISToDMYHI($end) ?></span></td>
+<td colspan="2" style="text-align: center;width: 50%;padding-top:0px"><span>Thời gian từ <?= CustomFunc::convertYMDHISToDMYHI($start) ?> đến <?= CustomFunc::convertYMDHISToDMYHI($end) ?></span></td>
 </tr>
 <tr><td></td></tr>
     	</table>
