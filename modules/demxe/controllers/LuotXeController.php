@@ -350,7 +350,7 @@ class LuotXeController extends Controller
             $mss = '';
             foreach ($demXe as $iDx=>$dx){
                 //check qua dem
-                if($typereport==1 && $dx->xeQuaDem){
+                if(($typereport==1 || $typereport==3) && $dx->xeQuaDem){
                     $mss = 'Xe đi qua đêm (' . CustomFunc::convertYMDHISToDMYHI($dx->thoi_gian_bd)
                     . ' - ' . ($dx->thoi_gian_kt!=null?CustomFunc::convertYMDHISToDMYHI($dx->thoi_gian_kt):
                     '?' ) . ')'  . ';';
@@ -387,6 +387,13 @@ class LuotXeController extends Controller
                 'typereport' => $typereport
             ]);
         } else if($typereport==2){
+            $content = $this->renderPartial('rp_bao_cao_vi_pham_print', [
+                'list'=>$listVP,
+                'start' => $start,
+                'end' => $end,
+                'typereport' => $typereport
+            ]);
+        }else if($typereport==3){
             $content = $this->renderPartial('rp_bao_cao_vi_pham_print', [
                 'list'=>$listVP,
                 'start' => $start,
