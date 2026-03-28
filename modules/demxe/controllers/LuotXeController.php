@@ -353,13 +353,13 @@ class LuotXeController extends Controller
                 if($typereport==1 && $dx->xeQuaDem){
                     $mss = 'Xe đi qua đêm (' . CustomFunc::convertYMDHISToDMYHI($dx->thoi_gian_bd)
                     . ' - ' . ($dx->thoi_gian_kt!=null?CustomFunc::convertYMDHISToDMYHI($dx->thoi_gian_kt):
-                    '???' ) . ')'  . ';';
+                    '?' ) . ')'  . ';';
                 }
                 //check khong ke hoach
                 if(($typereport==1 || $typereport==2) && $dx->diKhongKeHoach){
                     $mss .=  'Xe đi không kế hoạch (' . CustomFunc::convertYMDHISToDMYHI($dx->thoi_gian_bd)
                     . ' - ' . ($dx->thoi_gian_kt!=null?CustomFunc::convertYMDHISToDMYHI($dx->thoi_gian_kt):
-                    '???' ) . ')' . ';';
+                    '?' ) . ')' . ';';
                 }
             }
             if($mss!=''){
