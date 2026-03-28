@@ -62,8 +62,12 @@ use app\modules\hocvien\models\DangKyHv;
 </div>
 
 <div class="row">    
-     <div class="col-md-3" style="padding-top:20px">    
+    <div class="col-md-3" style="padding-top:20px">    
     	<?= Html::button('<i class="fa fa-print"> </i> In báo cáo', ['class' => 'btn btn-success', 'style'=>'width:100%', 'onclick' => 'InBaoCao(0,1)']) ?>
+    </div>
+
+    <div class="col-md-3" style="padding-top:20px">    
+    	<?= Html::button('<i class="fa fa-print"> </i> In xe không kế hoạch ', ['class' => 'btn btn-success', 'style'=>'width:100%', 'onclick' => 'InBaoCao(0,2)']) ?>
     </div>
     
     <!-- <div class="col-md-3" style="padding-top:20px">    

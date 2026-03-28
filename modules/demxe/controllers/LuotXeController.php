@@ -350,13 +350,13 @@ class LuotXeController extends Controller
             $mss = '';
             foreach ($demXe as $iDx=>$dx){
                 //check qua dem
-                if($dx->xeQuaDem){
+                if($typereport==1 && $dx->xeQuaDem){
                     $mss = 'Xe đi qua đêm (' . CustomFunc::convertYMDHISToDMYHI($dx->thoi_gian_bd)
                     . ' - ' . ($dx->thoi_gian_kt!=null?CustomFunc::convertYMDHISToDMYHI($dx->thoi_gian_kt):
                     '???' ) . ')'  . ';';
                 }
                 //check khong ke hoach
-                if($dx->diKhongKeHoach){
+                if(($typereport==1 || $typereport==2) && $dx->diKhongKeHoach){
                     $mss .=  'Xe đi không kế hoạch (' . CustomFunc::convertYMDHISToDMYHI($dx->thoi_gian_bd)
                     . ' - ' . ($dx->thoi_gian_kt!=null?CustomFunc::convertYMDHISToDMYHI($dx->thoi_gian_kt):
                     '???' ) . ')' . ';';
@@ -380,6 +380,12 @@ class LuotXeController extends Controller
         //loop all data, check overnight or not planing
         //send listVP to view
         if($typereport==1){
+            $content = $this->renderPartial('rp_bao_cao_vi_pham_print', [
+                'list'=>$listVP,
+                'start' => $start,
+                'end' => $end
+            ]);
+        } else if($typereport==2){
             $content = $this->renderPartial('rp_bao_cao_vi_pham_print', [
                 'list'=>$listVP,
                 'start' => $start,
