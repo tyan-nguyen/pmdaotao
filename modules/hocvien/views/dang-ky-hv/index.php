@@ -48,6 +48,37 @@ $totalFmt = number_format($dataProvider->getTotalCount(), 0, ',', '.');
     color:green !important;
 }
 
+/* Tùy chỉnh thanh cuộn giả lập phía trên */
+.double-scroll-wrapper::-webkit-scrollbar {
+    height: 13px; /* Độ rộng (chiều cao) của thanh cuộn ngang */
+}
+
+/* Tùy chỉnh thanh cuộn gốc của GridView */
+.kv-grid-container::-webkit-scrollbar {
+    height: 13px; 
+}
+
+/* Màu nền của thanh cuộn */
+.double-scroll-wrapper::-webkit-scrollbar-track,
+.kv-grid-container::-webkit-scrollbar-track {
+    background: #eae9f1; 
+    border-radius: 10px;
+}
+
+/* Màu của cục kéo (thumb) */
+.double-scroll-wrapper::-webkit-scrollbar-thumb,
+.kv-grid-container::-webkit-scrollbar-thumb {
+    background: #eae9f1; 
+    border-radius: 10px;
+    border: 2px solid #f1f1f1; /* Tạo khoảng trắng bao quanh để trông thanh thoát hơn */
+}
+
+/* Hiệu ứng khi di chuột vào cục kéo */
+.double-scroll-wrapper::-webkit-scrollbar-thumb:hover,
+.kv-grid-container::-webkit-scrollbar-thumb:hover {
+    background: #b3b1b1; 
+}
+
 </style>
 <div class="card border-default" id="divFilterExtend" <?= Yii::$app->request->get('DangKyHvSearch') ? 'style="display:block;"' : 'style="display:none;"' ?>>
 	<div class="card-header rounded-bottom-0 card-header text-dark" id="simple">
@@ -230,4 +261,39 @@ $totalFmt = number_format($dataProvider->getTotalCount(), 0, ',', '.');
 <?php
     /* $searchContent = $this->render("_search", ["model" => $searchModel]);
     echo FilterFormWidget::widget(["content"=>$searchContent, "description"=>"Nhập thông tin tìm kiếm."])  */
+?>
+
+<?php
+$js = <<<JS
+    function addDoubleScroll() {
+        var container = $('.kv-grid-container');
+        // Xóa scrollbar cũ nếu đã tồn tại (để tránh lặp khi Pjax reload)
+        $('.double-scroll-wrapper').remove();
+        
+        // Tạo một div giả lập có chiều rộng bằng với table bên trong
+        var tableWidth = container.find('table').outerWidth();
+        var topScroll = $('<div class="double-scroll-wrapper" style="overflow-x:auto; overflow-y:hidden; height:20px; width:100%;">' +
+                          '<div style="width:' + tableWidth + 'px; height:20px;"></div></div>');
+        
+        // Chèn vào phía trên container của Grid
+        container.before(topScroll);
+        
+        // Đồng bộ hóa 2 thanh cuộn
+        topScroll.scroll(function(){
+            container.scrollLeft(topScroll.scrollLeft());
+        });
+        container.scroll(function(){
+            topScroll.scrollLeft(container.scrollLeft());
+        });
+    }
+
+    // Chạy khi load trang
+    addDoubleScroll();
+    
+    // Nếu bạn có dùng Pjax, hãy chạy lại sau khi Pjax hoàn tất
+    $(document).on('pjax:complete', function() {
+        addDoubleScroll();
+    });
+JS;
+$this->registerJs($js);
 ?>
