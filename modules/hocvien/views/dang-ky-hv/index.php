@@ -48,36 +48,38 @@ $totalFmt = number_format($dataProvider->getTotalCount(), 0, ',', '.');
     color:green !important;
 }
 
-/* Tùy chỉnh thanh cuộn giả lập phía trên */
-.double-scroll-wrapper::-webkit-scrollbar {
-    height: 13px; /* Độ rộng (chiều cao) của thanh cuộn ngang */
-}
-
-/* Tùy chỉnh thanh cuộn gốc của GridView */
+/* 1. Thiết lập chiều cao cố định cho cả 2 trạng thái */
+.double-scroll-wrapper::-webkit-scrollbar,
 .kv-grid-container::-webkit-scrollbar {
-    height: 13px; 
+    height: 14px; /* Đây là chiều cao tối đa khi nở ra */
 }
 
-/* Màu nền của thanh cuộn */
+/* 2. Phần nền (Track) - nên để trong suốt hoặc màu rất nhẹ */
 .double-scroll-wrapper::-webkit-scrollbar-track,
 .kv-grid-container::-webkit-scrollbar-track {
-    background: #eae9f1; 
-    border-radius: 10px;
+    background: transparent;
 }
 
-/* Màu của cục kéo (thumb) */
+/* 3. Cục kéo (Thumb) - Đây là nơi xử lý hiệu ứng mượt */
 .double-scroll-wrapper::-webkit-scrollbar-thumb,
 .kv-grid-container::-webkit-scrollbar-thumb {
-    background: #eae9f1; 
-    border-radius: 10px;
-    border: 2px solid #f1f1f1; /* Tạo khoảng trắng bao quanh để trông thanh thoát hơn */
+    background-color: #eae9f1;
+    border-radius: 20px;
+    /* MẸO: Dùng border dày cùng màu với nền trang (ví dụ màu trắng #ffffff) 
+       để ép cục kéo trông nhỏ lại khi ở trạng thái nghỉ */
+    border: 4px solid #ffffff; 
+    transition: all 0.4s ease-in-out; /* Tạo độ trễ mượt mà */
 }
 
-/* Hiệu ứng khi di chuột vào cục kéo */
-.double-scroll-wrapper::-webkit-scrollbar-thumb:hover,
-.kv-grid-container::-webkit-scrollbar-thumb:hover {
-    background: #b3b1b1; 
+/* 4. Khi Hover vào vùng chứa (Container) */
+.double-scroll-wrapper:hover::-webkit-scrollbar-thumb,
+.kv-grid-container:hover::-webkit-scrollbar-thumb {
+    background-color: #b3b1b1; /* Đậm hơn một chút cho rõ */
+    /* Khi hover, giảm độ dày border để cục kéo "nở" ra */
+    border: 1px solid #ffffff; 
 }
+
+/** eae9f1 b3b1b1 */
 
 </style>
 <div class="card border-default" id="divFilterExtend" <?= Yii::$app->request->get('DangKyHvSearch') ? 'style="display:block;"' : 'style="display:none;"' ?>>
