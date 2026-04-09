@@ -81,6 +81,47 @@ $totalFmt = number_format($dataProvider->getTotalCount(), 0, ',', '.');
 
 /** eae9f1 b3b1b1 */
 
+/* Container của Kartik */
+.kv-grid-container {
+    overflow-x: auto;
+}
+
+/* Cột 2: NĐK */
+.kv-sticky-column-3 {
+    position: sticky !important;
+    left: 0; /* Chỉnh lại cho khít với độ rộng cột 1 */
+    
+    background-color: white !important;
+    box-shadow: inset -1px 0 0 #dee2e6;
+}
+
+/* Cột 2: NĐK */
+.kv-sticky-column-4 {
+    position: sticky !important;
+    left: 50px; /* Chỉnh lại cho khít với độ rộng cột 1 */
+   
+    background-color: white !important;
+    box-shadow: inset -1px 0 0 #dee2e6;
+}
+
+/* XỬ LÝ GIAO ĐIỂM: Để Header không bị chữ ở dưới trượt qua khi scroll cả 2 hướng */
+
+thead th.kv-sticky-column-3,
+thead th.kv-sticky-column-4 {
+    
+    background-color: #f5f5f5 !important;
+}
+
+/* Ngăn chữ lọt qua viền khi cuộn */
+.kv-sticky-column-3, .kv-sticky-column-4 {
+    background-clip: padding-box; 
+}
+
+/* Đảm bảo menu luôn nằm trên cùng */
+.dropdown-menu {
+    z-index: 9999 !important;
+}
+
 </style>
 <div class="card border-default" id="divFilterExtend" <?= Yii::$app->request->get('DangKyHvSearch') ? 'style="display:block;"' : 'style="display:none;"' ?>>
 	<div class="card-header rounded-bottom-0 card-header text-dark" id="simple">
@@ -111,9 +152,11 @@ $totalFmt = number_format($dataProvider->getTotalCount(), 0, ',', '.');
     <div id="ajaxCrudDatatable">
         <?=GridView::widget([
             'id'=>'crud-datatable',
+            'floatHeader' => true, // Cố định tiêu đề phía trên
             'dataProvider' => $dataProvider,
             'containerOptions' => [
-                'style' => 'min-height:500px;'
+                'style' => 'min-height:500px;',
+                'class' => 'kv-grid-container'
             ],
             //'filterModel' => $searchModel,
             'pjax'=>true,

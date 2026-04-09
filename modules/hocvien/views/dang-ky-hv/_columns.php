@@ -282,14 +282,16 @@ return [
         },
         'format'=>'raw',
         'width' => '50px',
-        'contentOptions' => [ 'style' => 'text-align:center' ],
+        'contentOptions' => [ 'style' => 'text-align:center', 'class' => 'kv-sticky-column-3' ],
+        'headerOptions' => ['class' => 'kv-sticky-column-3'],
+
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ho_ten',
         //'width' => '500px',
-        'headerOptions' => ['style' => 'width:150px;'],
-        'contentOptions' => ['style' => 'min-width:150px;'],
+        'headerOptions' => ['style' => 'width:150px;', 'class' => 'kv-sticky-column-4'],
+        'contentOptions' => ['style' => 'min-width:150px;', 'class' => 'kv-sticky-column-4'],
     ],
     [
         'class' => '\kartik\grid\DataColumn',
