@@ -4,7 +4,7 @@ use app\modules\hocvien\models\HocVien;
 
 ?>
 <li class="slide">
-	<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);">		
+	<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);">
 		<span class="side-menu__label"><i class="fa fa-folder"></i> Đăng ký - Học phí</span><i class="angle fa fa-caret-right"></i>
 	</a>
 	<ul class="slide-menu" data-menu="hv">
@@ -28,8 +28,8 @@ use app\modules\hocvien\models\HocVien;
 						<ul class="sidemenu-list">
 							<li class="side-menu__label1"><a href="javascript:void(0)">Danh mục chức năng</a></li>
 							<li><a href="/hocvien/thong-ke/tong-hop?menu=hv8" class="slide-item" data-menu="hv8"> <i class="fe fe-file-text"></i>Thống kê - Công nợ</a></li>
-							<li><a href="/hocvien/thong-ke/luu-luong?menu=hv2" class="slide-item" data-menu="hv2"> <i class="fe fe-file-text"></i> Thống kê lưu lượng <span class="badge bg-warning">New</span></a></li> 
-							<li><a href="/hocvien/thong-ke/hang-tang?menu=hvb" class="slide-item" data-menu="hvb"> <i class="fe fe-file-text"></i> Thống kê áo, tài liệu <span class="badge bg-warning">New</span></a></li> 
+							<li><a href="/hocvien/thong-ke/luu-luong?menu=hv2" class="slide-item" data-menu="hv2"> <i class="fe fe-file-text"></i> Thống kê lưu lượng <span class="badge bg-warning">New</span></a></li>
+							<li><a href="/hocvien/thong-ke/hang-tang?menu=hvb" class="slide-item" data-menu="hvb"> <i class="fe fe-file-text"></i> Thống kê áo, tài liệu <span class="badge bg-warning">New</span></a></li>
 							<li><a href="/hocvien/dang-ky-hv?menu=hv1" class="slide-item" data-menu="hv1"> <strong><i class="fe fe-file-text"></i> HỌC VIÊN ĐĂNG KÝ</strong></a></li>
 							<li><a href="/hocvien/dang-ky-hv/hoc-vien-doi-hang?menu=hv9&sort=-thoi_gian_thay_doi" class="slide-item" data-menu="hv9"> <i class="fe fe-file-text"></i> Học viên đổi hạng</a></li>
 							<li><a href="/hocvien/dang-ky-hv/index-huy-ho-so?menu=hv9" class="slide-item" data-menu="hv9"> <i class="fe fe-file-text"></i> Học viên hủy hồ sơ</a></li>
@@ -40,7 +40,7 @@ use app\modules\hocvien\models\HocVien;
 							<!-- <li><a href="/hocvien/hoc-vien?menu=hv2" class="slide-item" data-menu="hv2"> <i class="fe fe-file-text"></i> Danh sách học viên</a></li> -->
 							<li><a href="/kholuutru/loai-file/index?doiTuong=<?= HocVien::MODEL_ID ?>&menu=hv3" class="slide-item" data-menu="hv3"> <i class="fe fe-file-text"></i> Loại hồ sơ</a></li>
 							<li><a href="/hocvien/dm-lien-ket?menu=hva" class="slide-item" data-menu="hva"> <i class="fe fe-file-text"></i> Đơn vị liên kết</a></li>
-							<li><a href="/hocvien/dm-nhan-ho-so-ho?menu=hvc" class="slide-item" data-menu="hvc"> <i class="fe fe-file-text"></i> DM nhận hồ sơ</a></li>
+							<li><a href="/hocvien/dm-nhan-ho-so-ho?menu=hvc" class="slide-item" data-menu="hvc"> <i class="fe fe-file-text"></i> DM nhận hồ sơ hộ</a></li>
 						</ul>
 						<div class="menutabs-content px-0">
 							<!-- menu tab here -->
