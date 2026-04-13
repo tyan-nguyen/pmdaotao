@@ -1,5 +1,5 @@
-
 <?php
+
 use yii\bootstrap5\Html;
 use yii\widgets\ActiveForm;
 
@@ -9,6 +9,7 @@ use app\modules\khoahoc\models\KhoaHoc;
 use app\custom\CustomFunc;
 use app\modules\hocvien\models\DangKyHv;
 use app\modules\hocvien\models\DmLienKet;
+use app\modules\hocvien\models\DmNhanHoSoHo;
 use app\modules\hocvien\models\HangDaoTao;
 use kartik\select2\Select2;
 use yii\web\JsExpression;
@@ -23,28 +24,33 @@ if ($model->id_lien_ket) {
     $lienKet = DmLienKet::findOne($model->id_lien_ket);
     $initValueLienKet = $lienKet ? $lienKet->ten_lien_ket : '';
 }
+$initValueNhanHoSoHo = '';
+if ($model->id_nhan_ho_so_ho) {
+    $nhanHoSoHo = DmNhanHoSoHo::findOne($model->id_nhan_ho_so_ho);
+    $initValueNhanHoSoHo = $nhanHoSoHo ? $nhanHoSoHo->ten_don_vi : '';
+}
 ?>
 
 <div class="hoc-vien-search">
 
     <?php $form = ActiveForm::begin([
-        	'id'=>'myFilterForm',
-            'method' => 'get',
-            'options' => [
-                'class' => 'myFilterForm'
-            ]
-      	]); ?>
-    	<div class="row">
-           <div class="col-md-3">
-                  <?= $form->field($model, 'ho_ten')->textInput(['maxlength' => true]) ?>
-           </div>
-            <div class="col-md-1">
-                  <?= $form->field($model, 'gioi_tinh')->dropDownList([
-                          1 => 'Nam',
-                          0 => 'Nữ',
-                          ], ['prompt' => 'Tất cả', 'class' => 'form-control dropdown-with-arrow']) ?>
-            </div>
-            <?php /* ?>
+        'id' => 'myFilterForm',
+        'method' => 'get',
+        'options' => [
+            'class' => 'myFilterForm'
+        ]
+    ]); ?>
+    <div class="row">
+        <div class="col-md-3">
+            <?= $form->field($model, 'ho_ten')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-md-1">
+            <?= $form->field($model, 'gioi_tinh')->dropDownList([
+                1 => 'Nam',
+                0 => 'Nữ',
+            ], ['prompt' => 'Tất cả', 'class' => 'form-control dropdown-with-arrow']) ?>
+        </div>
+        <?php /* ?>
             <div class="col-md-2">
                   <?= $form->field($model, 'ngay_sinh')->widget(DatePicker::classname(), [
                          'options' => ['placeholder' => 'Chọn ngày sinh  ...'],
@@ -58,89 +64,92 @@ if ($model->id_lien_ket) {
                   ]); ?>
             </div>
             <?php */ ?>
-            
-            <div class="col-md-2">
-                  <?= $form->field($model, 'so_cccd')->textInput(['maxlength' => true]) ?>
-            </div>
-            
-            <div class="col-md-2">
-                  <?= $form->field($model, 'dia_chi')->textInput(['maxlength' => true]) ?>
-            </div>
-             
-            <div class="col-md-2">
-                  <?= $form->field($model, 'so_dien_thoai')->textInput(['maxlength' => true]) ?>
-            </div>
-            
-            <div class="col-md-2">
-                  <?php // $form->field($model, 'noi_dang_ky')->dropDownList(DangKyHv::getDmNoiDangKy(), ['prompt'=>'Tất cả'])->label('Nơi ĐK') ?>
-                   <label><?= $model->getAttributeLabel('noi_dang_ky') ?></label>
-                <?= $form->field($model, 'noi_dang_ky')->widget(Select2::classname(), [
-                    'data' => DangKyHv::getDmNoiDangKy(),
-                    'language' => 'vi',
-                    'options' => [
-                        'placeholder' => 'Chọn hạng...',  
-                        'class' => 'form-control dropdown-with-arrow',
-                        'id' => 'noi-dang-ky-search-dropdown'
-                    ],
-                    'pluginOptions' => [
-                        'allowClear' => true,
-                        'width'=>'100%'
-                    ],
-                ])->label(false); ?>
-            </div>
-            
-            <div class="col-md-2">
-                  <?php // $form->field($model, 'id_hang')->dropDownList(HangDaoTao::getList(), ['prompt'=>'Tất cả']) ?>
-                <label><?= $model->getAttributeLabel('id_hang') ?></label>
-                <?= $form->field($model, 'id_hang')->widget(Select2::classname(), [
-                    'data' => HangDaoTao::getList(),
-                    'language' => 'vi',
-                    'options' => [
-                        'placeholder' => 'Chọn hạng...',  
-                        'class' => 'form-control dropdown-with-arrow',
-                        'id' => 'hang-search-dropdown'
-                    ],
-                    'pluginOptions' => [
-                        'allowClear' => true,
-                        'width'=>'100%'
-                    ],
-                ])->label(false); ?>
-            </div>
-            <div class="col-md-2">
-                  <?php // $form->field($model, 'id_khoa_hoc')->dropDownList(KhoaHoc::getList(), ['prompt'=>'Tất cả']) ?>
-                <label><?= $model->getAttributeLabel('id_khoa_hoc') ?></label>
-                <?= $form->field($model, 'id_khoa_hoc')->widget(Select2::classname(), [
-                    'data' => KhoaHoc::getList(),
-                    'language' => 'vi',
-                    'options' => [
-                        'placeholder' => 'Chọn khóa...',  
-                        'class' => 'form-control dropdown-with-arrow',
-                        'id' => 'khoa-hoc-search-dropdown'
-                    ],
-                    'pluginOptions' => [
-                        'allowClear' => true,
-                        'width'=>'100%'
-                    ],
-                ])->label(false); ?>
-            </div>
-            <div class="col-md-2">
-                  <?= $form->field($model, 'nguoi_tao')->dropDownList(User::getListNvNhanHoSo(), ['prompt'=>'Tất cả'])->label('NV tiếp nhận') ?>
-            </div>
-            
-            <div class="col-md-2">
-                  <?= $form->field($model, 'thoi_gian_hoan_thanh_ho_so')->widget(DatePicker::classname(), [
-                         'options' => ['placeholder' => 'Chọn ngày HTHS ...', 'autocomplete'=>'off'],
-                         'pluginOptions' => [
-                             'autoclose' => true,
-                             'format' => 'dd/mm/yyyy',
-                             'zIndexOffset'=>'9999',
-                             'todayHighlight'=>true,
-                             'todayBtn'=>true
-                        ]
-                  ]); ?>
-            </div>
-           
-            <?php /* ?>
+
+        <div class="col-md-2">
+            <?= $form->field($model, 'so_cccd')->textInput(['maxlength' => true]) ?>
+        </div>
+
+        <div class="col-md-2">
+            <?= $form->field($model, 'dia_chi')->textInput(['maxlength' => true]) ?>
+        </div>
+
+        <div class="col-md-2">
+            <?= $form->field($model, 'so_dien_thoai')->textInput(['maxlength' => true]) ?>
+        </div>
+
+        <div class="col-md-2">
+            <?php // $form->field($model, 'noi_dang_ky')->dropDownList(DangKyHv::getDmNoiDangKy(), ['prompt'=>'Tất cả'])->label('Nơi ĐK') 
+            ?>
+            <label><?= $model->getAttributeLabel('noi_dang_ky') ?></label>
+            <?= $form->field($model, 'noi_dang_ky')->widget(Select2::classname(), [
+                'data' => DangKyHv::getDmNoiDangKy(),
+                'language' => 'vi',
+                'options' => [
+                    'placeholder' => 'Chọn hạng...',
+                    'class' => 'form-control dropdown-with-arrow',
+                    'id' => 'noi-dang-ky-search-dropdown'
+                ],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                    'width' => '100%'
+                ],
+            ])->label(false); ?>
+        </div>
+
+        <div class="col-md-2">
+            <?php // $form->field($model, 'id_hang')->dropDownList(HangDaoTao::getList(), ['prompt'=>'Tất cả']) 
+            ?>
+            <label><?= $model->getAttributeLabel('id_hang') ?></label>
+            <?= $form->field($model, 'id_hang')->widget(Select2::classname(), [
+                'data' => HangDaoTao::getList(),
+                'language' => 'vi',
+                'options' => [
+                    'placeholder' => 'Chọn hạng...',
+                    'class' => 'form-control dropdown-with-arrow',
+                    'id' => 'hang-search-dropdown'
+                ],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                    'width' => '100%'
+                ],
+            ])->label(false); ?>
+        </div>
+        <div class="col-md-2">
+            <?php // $form->field($model, 'id_khoa_hoc')->dropDownList(KhoaHoc::getList(), ['prompt'=>'Tất cả']) 
+            ?>
+            <label><?= $model->getAttributeLabel('id_khoa_hoc') ?></label>
+            <?= $form->field($model, 'id_khoa_hoc')->widget(Select2::classname(), [
+                'data' => KhoaHoc::getList(),
+                'language' => 'vi',
+                'options' => [
+                    'placeholder' => 'Chọn khóa...',
+                    'class' => 'form-control dropdown-with-arrow',
+                    'id' => 'khoa-hoc-search-dropdown'
+                ],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                    'width' => '100%'
+                ],
+            ])->label(false); ?>
+        </div>
+        <div class="col-md-2">
+            <?= $form->field($model, 'nguoi_tao')->dropDownList(User::getListNvNhanHoSo(), ['prompt' => 'Tất cả'])->label('NV tiếp nhận') ?>
+        </div>
+
+        <div class="col-md-2">
+            <?= $form->field($model, 'thoi_gian_hoan_thanh_ho_so')->widget(DatePicker::classname(), [
+                'options' => ['placeholder' => 'Chọn ngày HTHS ...', 'autocomplete' => 'off'],
+                'pluginOptions' => [
+                    'autoclose' => true,
+                    'format' => 'dd/mm/yyyy',
+                    'zIndexOffset' => '9999',
+                    'todayHighlight' => true,
+                    'todayBtn' => true
+                ]
+            ]); ?>
+        </div>
+
+        <?php /* ?>
             <div class="col-md-2">
                   <?= $form->field($model, 'thoi_gian_tao')->widget(DatePicker::classname(), [
                         'options' => ['placeholder' => 'Chọn ngày tiếp nhận đăng ký  ...', 'autocomplete'=>'off'],
@@ -154,155 +163,201 @@ if ($model->id_lien_ket) {
                   ])->label('Ngày nhận HV mới'); ?>
             </div>
             <?php */ ?>
-            
-            <div class="col-md-2">
-                  <?= $form->field($model, 'ghi_chu')->textInput(['maxlength' => true]) ?>
-            </div>
-            
-            <div class="col-md-1">
-            	<label>&nbsp;</label>
-                <?= $form->field($model, 'huy_ho_so')->checkbox() ?>
-            </div>
-            
-            <div class="col-md-1">
-                  <?= $form->field($model, 'da_nhan_ao')->dropDownList([1=>'Đã nhận', 0=>'Chưa nhận', ], ['prompt'=>'Tất cả'])->label('Nhận áo') ?>
-            </div>
-            <div class="col-md-1">
-                  <?= $form->field($model, 'size')->dropDownList([
-                      'S'=>'Size S',
-                      'M'=>'Size M',
-                      'L'=>'Size L',
-                      'XL'=>'Size XL',
-                      '2XL'=>'Size 2XL',
-                      '3XL'=>'Size 3XL',
-                      '4XL'=>'Size 4XL'
-                  ], ['prompt'=>'Tất cả'])->label('Size') ?>
-            </div>
-            <div class="col-md-2">
-                  <?= $form->field($model, 'ngay_nhan_ao')->widget(DatePicker::classname(), [
-                         'options' => ['placeholder' => 'Chọn ngày nhận ...', 'autocomplete'=>'off'],
-                         'pluginOptions' => [
-                         'autoclose' => true,
-                         'format' => 'dd/mm/yyyy',
-                         'zIndexOffset'=>'9999',
-                         'todayHighlight'=>true,
-                         'todayBtn'=>true
-                  ]
-                  ]); ?>
-            </div>
-            <div class="col-md-2">
-            	<label>Nơi nhận áo</label>
-            	<?= $form->field($model, 'noiNhanAo')->widget(Select2::classname(), [
-                    'data' => DangKyHv::getDmNoiDangKy(),
-                    'language' => 'vi',
-                    'options' => [
-                        'placeholder' => 'Nơi nhận áo...',  
-                        'class' => 'form-control dropdown-with-arrow',
-                        'id' => 'noi-nhan-ao-search-dropdown'
-                    ],
-                    'pluginOptions' => [
-                        'allowClear' => true,
-                        'width'=>'100%'
-                    ],
-                ])->label(false); ?>
-            </div>
-            <div class="col-md-1">
-                  <?= $form->field($model, 'da_nhan_tai_lieu')->dropDownList([1=>'Đã nhận', 0=>'Chưa nhận', ], ['prompt'=>'Tất cả'])->label('Nhận tài liệu') ?>
-            </div>
-             <div class="col-md-2">
-                  <?= $form->field($model, 'ngay_nhan_tai_lieu')->widget(DatePicker::classname(), [
-                        'options' => ['placeholder' => 'Chọn ngày nhận ...', 'autocomplete'=>'off'],
-                         'pluginOptions' => [
-                         'autoclose' => true,
-                         'format' => 'dd/mm/yyyy',
-                         'zIndexOffset'=>'9999',
-                         'todayHighlight'=>true,
-                         'todayBtn'=>true
-                  ]
-                  ]); ?>
-            </div>
-            <div class="col-md-2">
-            	<label>Nơi nhận tài liệu</label>
-            	<?= $form->field($model, 'noiNhanTaiLieu')->widget(Select2::classname(), [
-                    'data' => DangKyHv::getDmNoiDangKy(),
-                    'language' => 'vi',
-                    'options' => [
-                        'placeholder' => 'Nơi nhận tài liệu...',  
-                        'class' => 'form-control dropdown-with-arrow',
-                        'id' => 'noi-nhan-tai-lieu-search-dropdown'
-                    ],
-                    'pluginOptions' => [
-                        'allowClear' => true,
-                        'width'=>'100%'
-                    ],
-                ])->label(false); ?>
-            </div>
-            
-            <div class="col-md-2">            	
-            	<?= $form->field($model, 'label')->dropDownList(
-                    ['VOUCHERT11'=>'VOUCHERT11'], 
-                    [
-                        'prompt' => '--Không có---',
-                        'class' => 'form-control dropdown-with-arrow',
-                    ]
-            	    )->label('Voucher T11 3 triệu') ?>
-            </div>
 
-            <div class="col-md-2">
-            	<label>Ngày đăng ký từ</label>
-                  <?= $form->field($model, 'ngay_dang_ky_tu')->widget(DatePicker::classname(), [
-                         'options' => [
-                             'placeholder' => 'Chọn ngày ĐK  ...',
-                             'autocomplete' => 'off'
-                         ],
-                         'pluginOptions' => [
-                         'autoclose' => true,
-                         'format' => 'dd/mm/yyyy',
-                         'zIndexOffset'=>'9999',
-                         'todayHighlight'=>true,
-                         'todayBtn'=>true
-                    ]
-                  ])->label(false); ?>
-            </div>
-            
-            <div class="col-md-2">
-            	<label>Ngày đăng ký đến</label>
-                  <?= $form->field($model, 'ngay_dang_ky_den')->widget(DatePicker::classname(), [
-                         'options' => [
-                             'placeholder' => 'Chọn ngày ĐK  ...',
-                             'autocomplete' => 'off'
-                         ],
-                         'pluginOptions' => [
-                         'autoclose' => true,
-                         'format' => 'dd/mm/yyyy',
-                         'zIndexOffset'=>'9999',
-                         'todayHighlight'=>true,
-                         'todayBtn'=>true
-                    ]
-                  ])->label(false); ?>
-            </div>
+        <div class="col-md-2">
+            <?= $form->field($model, 'ghi_chu')->textInput(['maxlength' => true]) ?>
+        </div>
 
-             <div class="col-md-1">
-            	<label>&nbsp;</label>
-                <?= $form->field($model, 'co_lien_ket')->checkbox([
-                    'itemOptions' => [
+        <div class="col-md-1">
+            <label>&nbsp;</label>
+            <?= $form->field($model, 'huy_ho_so')->checkbox() ?>
+        </div>
+
+        <div class="col-md-1">
+            <?= $form->field($model, 'da_nhan_ao')->dropDownList([1 => 'Đã nhận', 0 => 'Chưa nhận',], ['prompt' => 'Tất cả'])->label('Nhận áo') ?>
+        </div>
+        <div class="col-md-1">
+            <?= $form->field($model, 'size')->dropDownList([
+                'S' => 'Size S',
+                'M' => 'Size M',
+                'L' => 'Size L',
+                'XL' => 'Size XL',
+                '2XL' => 'Size 2XL',
+                '3XL' => 'Size 3XL',
+                '4XL' => 'Size 4XL'
+            ], ['prompt' => 'Tất cả'])->label('Size') ?>
+        </div>
+        <div class="col-md-2">
+            <?= $form->field($model, 'ngay_nhan_ao')->widget(DatePicker::classname(), [
+                'options' => ['placeholder' => 'Chọn ngày nhận ...', 'autocomplete' => 'off'],
+                'pluginOptions' => [
+                    'autoclose' => true,
+                    'format' => 'dd/mm/yyyy',
+                    'zIndexOffset' => '9999',
+                    'todayHighlight' => true,
+                    'todayBtn' => true
+                ]
+            ]); ?>
+        </div>
+        <div class="col-md-2">
+            <label>Nơi nhận áo</label>
+            <?= $form->field($model, 'noiNhanAo')->widget(Select2::classname(), [
+                'data' => DangKyHv::getDmNoiDangKy(),
+                'language' => 'vi',
+                'options' => [
+                    'placeholder' => 'Nơi nhận áo...',
+                    'class' => 'form-control dropdown-with-arrow',
+                    'id' => 'noi-nhan-ao-search-dropdown'
+                ],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                    'width' => '100%'
+                ],
+            ])->label(false); ?>
+        </div>
+        <div class="col-md-1">
+            <?= $form->field($model, 'da_nhan_tai_lieu')->dropDownList([1 => 'Đã nhận', 0 => 'Chưa nhận',], ['prompt' => 'Tất cả'])->label('Nhận tài liệu') ?>
+        </div>
+        <div class="col-md-2">
+            <?= $form->field($model, 'ngay_nhan_tai_lieu')->widget(DatePicker::classname(), [
+                'options' => ['placeholder' => 'Chọn ngày nhận ...', 'autocomplete' => 'off'],
+                'pluginOptions' => [
+                    'autoclose' => true,
+                    'format' => 'dd/mm/yyyy',
+                    'zIndexOffset' => '9999',
+                    'todayHighlight' => true,
+                    'todayBtn' => true
+                ]
+            ]); ?>
+        </div>
+        <div class="col-md-2">
+            <label>Nơi nhận tài liệu</label>
+            <?= $form->field($model, 'noiNhanTaiLieu')->widget(Select2::classname(), [
+                'data' => DangKyHv::getDmNoiDangKy(),
+                'language' => 'vi',
+                'options' => [
+                    'placeholder' => 'Nơi nhận tài liệu...',
+                    'class' => 'form-control dropdown-with-arrow',
+                    'id' => 'noi-nhan-tai-lieu-search-dropdown'
+                ],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                    'width' => '100%'
+                ],
+            ])->label(false); ?>
+        </div>
+
+        <div class="col-md-2">
+            <?= $form->field($model, 'label')->dropDownList(
+                ['VOUCHERT11' => 'VOUCHERT11'],
+                [
+                    'prompt' => '--Không có---',
+                    'class' => 'form-control dropdown-with-arrow',
+                ]
+            )->label('Voucher T11 3 triệu') ?>
+        </div>
+
+        <div class="col-md-2">
+            <label>Ngày đăng ký từ</label>
+            <?= $form->field($model, 'ngay_dang_ky_tu')->widget(DatePicker::classname(), [
+                'options' => [
+                    'placeholder' => 'Chọn ngày ĐK  ...',
+                    'autocomplete' => 'off'
+                ],
+                'pluginOptions' => [
+                    'autoclose' => true,
+                    'format' => 'dd/mm/yyyy',
+                    'zIndexOffset' => '9999',
+                    'todayHighlight' => true,
+                    'todayBtn' => true
+                ]
+            ])->label(false); ?>
+        </div>
+
+        <div class="col-md-2">
+            <label>Ngày đăng ký đến</label>
+            <?= $form->field($model, 'ngay_dang_ky_den')->widget(DatePicker::classname(), [
+                'options' => [
+                    'placeholder' => 'Chọn ngày ĐK  ...',
+                    'autocomplete' => 'off'
+                ],
+                'pluginOptions' => [
+                    'autoclose' => true,
+                    'format' => 'dd/mm/yyyy',
+                    'zIndexOffset' => '9999',
+                    'todayHighlight' => true,
+                    'todayBtn' => true
+                ]
+            ])->label(false); ?>
+        </div>
+
+        <div class="col-md-1">
+            <label>&nbsp;</label>
+            <?= $form->field($model, 'co_nhan_ho_so_ho')->checkbox([
+                'itemOptions' => [
+                    'label' => 'Nhận HS hộ',
+                ]
+            ]) ?>
+        </div>
+        <div class="col-md-3">
+            <label>DM Nhận hồ sơ hộ</label>
+            <?= $form->field($model, 'id_nhan_ho_so_ho')->widget(Select2::classname(), [
+                'initValueText' => $initValueNhanHoSoHo, // This shows selected text on form load
+                'language' => 'vi',
+                'options' => [
+                    'placeholder' => 'Chọn dm nhận HS hộ...',
+                    'class' => 'form-control dropdown-with-arrow',
+                    'id' => 'idNhanHoSoHoSearch'
+                ],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                    //'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
+                    'width' => '100%',
+                    'minimumInputLength' => 0, // ← allow fetch without typing
+                    'ajax' => [
+                        'url' => '/hocvien/dm-nhan-ho-so-ho/search-dm-nhan-ho-so-ho',
+                        'dataType' => 'json',
+                        'delay' => 250,
+                        /* 'data' => new JsExpression('function(params) {
+                            return {q:params.term};
+                        }'), */
+                        'data' => new JsExpression('function(params) {
+                            return {
+                                q: params.term || "", // if empty input, send empty string
+                            };
+                        }'),
+                        'processResults' => new JsExpression('function(data) {
+                            return {results:data};
+                        }'),
+                        'cache' => true
+                    ],
+                ],
+            ])->label(false); ?>
+
+        </div>
+
+        <div class="col-md-1">
+            <label>&nbsp;</label>
+            <?= $form->field($model, 'co_lien_ket')->checkbox([
+                'itemOptions' => [
                     'label' => 'Chữ hiển thị mới',
-                ]]) ?>
-            </div>
-            <div class="col-md-3">
-			<label>DM ĐV liên kết</label>
-			<?= $form->field($model, 'id_lien_ket')->widget(Select2::classname(), [
+                ]
+            ]) ?>
+        </div>
+        <div class="col-md-3">
+            <label>DM ĐV liên kết</label>
+            <?= $form->field($model, 'id_lien_ket')->widget(Select2::classname(), [
                 'initValueText' => $initValueLienKet, // This shows selected text on form load
                 'language' => 'vi',
                 'options' => [
-                    'placeholder' => 'Chọn dm liên kết...',  
+                    'placeholder' => 'Chọn dm liên kết...',
                     'class' => 'form-control dropdown-with-arrow',
                     'id' => 'idLienKetSearch'
                 ],
                 'pluginOptions' => [
                     'allowClear' => true,
                     //'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
-                    'width'=>'100%',
+                    'width' => '100%',
                     'minimumInputLength' => 0, // ← allow fetch without typing
                     'ajax' => [
                         'url' => '/hocvien/dm-lien-ket/search-dm-lien-ket',
@@ -325,25 +380,25 @@ if ($model->id_lien_ket) {
             ])->label(false); ?>
 
         </div>
-            
-            
-    </div>    
 
-    <?php if (!Yii::$app->request->isAjax){ ?>
-    <div class="col-md-12 text-center">
-        <div class="form-group mb-0">
-	        <?= Html::submitButton('<i class="fe fe-search"></i> Tìm kiếm',['class' => 'btn btn-primary']) ?>
-	        <?= Html::resetButton('<i class="fe fe-x"></i> Xóa tìm kiếm', ['class' => 'btn btn-info']) ?>
-	    </div>
+
     </div>
+
+    <?php if (!Yii::$app->request->isAjax) { ?>
+        <div class="col-md-12 text-center">
+            <div class="form-group mb-0">
+                <?= Html::submitButton('<i class="fe fe-search"></i> Tìm kiếm', ['class' => 'btn btn-primary']) ?>
+                <?= Html::resetButton('<i class="fe fe-x"></i> Xóa tìm kiếm', ['class' => 'btn btn-info']) ?>
+            </div>
+        </div>
     <?php } ?>
 
 
     <?php ActiveForm::end(); ?>
-    
+
 </div>
 <style>
     .hoc-vien-search label {
-    font-weight: bold;
-}
+        font-weight: bold;
+    }
 </style>
