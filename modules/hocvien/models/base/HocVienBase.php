@@ -1,6 +1,7 @@
 <?php
 
 namespace app\modules\hocvien\models\base;
+
 use app\custom\CustomFunc;
 use Yii;
 
@@ -89,7 +90,7 @@ class HocVienBase extends \app\models\HvHocVien
 {
     const NOIDANGKY_CS1 = 'CS1';
     const NOIDANGKY_CS2 = 'CS2';
-    
+
     const NOIDANGKY_CS3 = 'CS3';
     const NOIDANGKY_CS4 = 'CS4';
     const NOIDANGKY_CS5 = 'CS5';
@@ -100,27 +101,37 @@ class HocVienBase extends \app\models\HvHocVien
     const NOIDANGKY_CS10 = 'CS10';
     const NOIDANGKY_CS11 = 'CS11';
     const NOIDANGKY_CS12 = 'CS12';
-    
+
     const HUY_BATKHAKHANG = 'BATKHAKHANG';
     const HUY_KHACHQUAN = 'KHACHQUAN';
     const HUY_CHUQUAN = 'CHUQUAN';
-    
-    public $tongtiennop;//virtual attribute select when report
+
+    public $tongtiennop; //virtual attribute select when report
     //dành cho thay đổi hạng
     public $so_tien;
-    public $thoi_gian_thay_doi;        
+    public $thoi_gian_thay_doi;
     /**
      * danh muc nhom co so (tra vinh/ben tre)
      */
-    public static function getNhomCoSo($val){
-        if(in_array($val, [
-            self::NOIDANGKY_CS1, self::NOIDANGKY_CS2, self::NOIDANGKY_CS3, self::NOIDANGKY_CS4, 
-            self::NOIDANGKY_CS6, self::NOIDANGKY_CS7, self::NOIDANGKY_CS8, self::NOIDANGKY_CS11
-        ])){
+    public static function getNhomCoSo($val)
+    {
+        if (in_array($val, [
+            self::NOIDANGKY_CS1,
+            self::NOIDANGKY_CS2,
+            self::NOIDANGKY_CS3,
+            self::NOIDANGKY_CS4,
+            self::NOIDANGKY_CS6,
+            self::NOIDANGKY_CS7,
+            self::NOIDANGKY_CS8,
+            self::NOIDANGKY_CS11
+        ])) {
             return 'TRAVINH';
-        } else if(in_array($val, [
-                self::NOIDANGKY_CS5, self::NOIDANGKY_CS9, self::NOIDANGKY_CS10, self::NOIDANGKY_CS12
-        ])){
+        } else if (in_array($val, [
+            self::NOIDANGKY_CS5,
+            self::NOIDANGKY_CS9,
+            self::NOIDANGKY_CS10,
+            self::NOIDANGKY_CS12
+        ])) {
             return 'BENTRE';
         } else {
             return '';
@@ -220,13 +231,13 @@ class HocVienBase extends \app\models\HvHocVien
         }
         return $label;
     }
-    
+
     /**
      * Danh muc trang thai label
      * @param int $val
      * @return string
      */
-    public static function getLabelNoiDangKyOther($val=NULL)
+    public static function getLabelNoiDangKyOther($val = NULL)
     {
         switch ($val) {
             case self::NOIDANGKY_CS1:
@@ -270,57 +281,57 @@ class HocVienBase extends \app\models\HvHocVien
         }
         return $label;
     }
-    
+
     /**
      * Danh muc trang thai label
      * @param int $val
      * @return string
      */
-    public static function getLabelNoiDangKyBadge($val=NULL)
+    public static function getLabelNoiDangKyBadge($val = NULL)
     {
         switch ($val) {
             case self::NOIDANGKY_CS1:
-                $label = '<span class="badge bg-primary">'.$val.'</span> ';
+                $label = '<span class="badge bg-primary">' . $val . '</span> ';
                 break;
             case self::NOIDANGKY_CS2:
-                $label = '<span class="badge bg-info">'.$val.'</span> ';
+                $label = '<span class="badge bg-info">' . $val . '</span> ';
                 break;
             case self::NOIDANGKY_CS3:
-                $label = '<span class="badge bg-warning">'.$val.'</span> ';
+                $label = '<span class="badge bg-warning">' . $val . '</span> ';
                 break;
             case self::NOIDANGKY_CS4:
-                $label = '<span class="badge bg-warning">'.$val.'</span> ';
+                $label = '<span class="badge bg-warning">' . $val . '</span> ';
                 break;
             case self::NOIDANGKY_CS5:
-                $label = '<span class="badge bg-warning">'.$val.'</span> ';
+                $label = '<span class="badge bg-warning">' . $val . '</span> ';
                 break;
             case self::NOIDANGKY_CS6:
-                $label = '<span class="badge bg-warning">'.$val.'</span> ';
+                $label = '<span class="badge bg-warning">' . $val . '</span> ';
                 break;
             case self::NOIDANGKY_CS7:
-                $label = '<span class="badge bg-warning">'.$val.'</span> ';
+                $label = '<span class="badge bg-warning">' . $val . '</span> ';
                 break;
             case self::NOIDANGKY_CS8:
-                $label = '<span class="badge bg-warning">'.$val.'</span> ';
+                $label = '<span class="badge bg-warning">' . $val . '</span> ';
                 break;
             case self::NOIDANGKY_CS9:
-                $label = '<span class="badge bg-warning">'.$val.'</span> ';
+                $label = '<span class="badge bg-warning">' . $val . '</span> ';
                 break;
             case self::NOIDANGKY_CS10:
-                $label = '<span class="badge bg-warning">'.$val.'</span> ';
+                $label = '<span class="badge bg-warning">' . $val . '</span> ';
                 break;
             case self::NOIDANGKY_CS11:
-                $label = '<span class="badge bg-warning">'.$val.'</span> ';
+                $label = '<span class="badge bg-warning">' . $val . '</span> ';
                 break;
             case self::NOIDANGKY_CS12:
-                $label = '<span class="badge bg-warning">'.$val.'</span> ';
+                $label = '<span class="badge bg-warning">' . $val . '</span> ';
                 break;
             default:
                 $label = '';
         }
         return $label;
     }
-    
+
     /**
      * Danh muc ly do huy ho so
      * @return string[]
@@ -337,7 +348,7 @@ class HocVienBase extends \app\models\HvHocVien
      * Danh muc ly do huy ho so label
      * @return string[]
      */
-    public static function getDmLyDoHuyLablel($val=NULL)
+    public static function getDmLyDoHuyLablel($val = NULL)
     {
         switch ($val) {
             case self::HUY_BATKHAKHANG:
@@ -384,15 +395,15 @@ class HocVienBase extends \app\models\HvHocVien
         return [
             /*[['id_hang', 'ho_ten', 'so_cccd','id_hang'], 'required'],*/
             [['id_hang', 'ho_ten', 'noi_dang_ky'], 'required'],
-            [['id_khoa_hoc', 'id_hoc_phi', 'nguoi_tao','gioi_tinh','id_hang','id_nhom','nguoi_duyet','ma_so_phieu','so_lan_in_phieu','co_ho_so_thue', 'da_nhan_ao', 'id_giao_vien', 'huy_ho_so', 'da_nhan_tai_lieu', 'da_nop_du', 'nguoi_giao_ao', 'nguoi_giao_tai_lieu', 'id_xa', 'id_tinh', 'id_lien_ket', 'id_nguoi_nhap_lien_ket', 'id_nhan_ho_so_ho', 'id_nguoi_nhap_nhan_ho_so_ho'], 'integer'],
-            [['thoi_gian_tao', 'thoi_gian_hoan_thanh_ho_so', 'thoi_gian_huy_ho_so', 'ngay_sinh','ngay_het_han_cccd', 'ngay_nhan_ho_so_ho'], 'safe'],
-            [['ho_ten', 'so_dien_thoai', 'so_cccd', 'trang_thai','dia_chi', 'dia_chi_chi_tiet', 'trang_thai_duyet'], 'string', 'max' => 255],
-            [['check_hoc_phi'],'string','max'=>25],
-            [['nguoi_lap_phieu'],'string','max'=>55],
-            [['noi_dang_ky', 'size'],'string','max'=>50],
+            [['id_khoa_hoc', 'id_hoc_phi', 'nguoi_tao', 'gioi_tinh', 'id_hang', 'id_nhom', 'nguoi_duyet', 'ma_so_phieu', 'so_lan_in_phieu', 'co_ho_so_thue', 'da_nhan_ao', 'id_giao_vien', 'huy_ho_so', 'da_nhan_tai_lieu', 'da_nop_du', 'nguoi_giao_ao', 'nguoi_giao_tai_lieu', 'id_xa', 'id_tinh', 'id_lien_ket', 'id_nguoi_nhap_lien_ket', 'id_nhan_ho_so_ho', 'id_nguoi_nhap_nhan_ho_so_ho'], 'integer'],
+            [['thoi_gian_tao', 'thoi_gian_hoan_thanh_ho_so', 'thoi_gian_huy_ho_so', 'ngay_sinh', 'ngay_het_han_cccd', 'ngay_nhan_ho_so_ho'], 'safe'],
+            [['ho_ten', 'so_dien_thoai', 'so_cccd', 'trang_thai', 'dia_chi', 'dia_chi_chi_tiet', 'trang_thai_duyet'], 'string', 'max' => 255],
+            [['check_hoc_phi'], 'string', 'max' => 25],
+            [['nguoi_lap_phieu'], 'string', 'max' => 55],
+            [['noi_dang_ky', 'size'], 'string', 'max' => 50],
             [['loai_ly_do', 'label'], 'string', 'max' => 20],
-            [['loai_dang_ky'],'string','max'=>15],
-            [['tongtiennop', 'le_phi'], 'number'],//virtual attribute select when report
+            [['loai_dang_ky'], 'string', 'max' => 15],
+            [['tongtiennop', 'le_phi'], 'number'], //virtual attribute select when report
             [['id_khoa_hoc'], 'exist', 'skipOnError' => true, 'targetClass' => KhoaHoc::class, 'targetAttribute' => ['id_khoa_hoc' => 'id']],
             [['id_nhom'], 'exist', 'skipOnError' => true, 'targetClass' => NhomHoc::class, 'targetAttribute' => ['id_nhom' => 'id']],
             [['ghi_chu', 'ngay_nhan_ao', 'ngay_nhan_tai_lieu', 'ly_do_huy_ho_so', 'so_tien', 'thoi_gian_thay_doi', 'ngay_lien_ket'], 'safe'],
@@ -413,15 +424,15 @@ class HocVienBase extends \app\models\HvHocVien
         return [
             'id' => 'ID',
             'id_khoa_hoc' => 'Khóa học',
-            'id_hang'=>'Hạng đào tạo ',
+            'id_hang' => 'Hạng đào tạo ',
             'id_hoc_phi' => 'Học phí',
             'ho_ten' => 'Họ tên',
-            'ngay_sinh'=>'Ngày sinh',
+            'ngay_sinh' => 'Ngày sinh',
             'so_dien_thoai' => 'Số điện thoại',
             'so_cccd' => 'Số Căn cước công dân',
-            'gioi_tinh'=>'Giới tính',
-            'dia_chi'=>'Địa chỉ',
-            'dia_chi_chi_tiet'=>'Địa chỉ',
+            'gioi_tinh' => 'Giới tính',
+            'dia_chi' => 'Địa chỉ',
+            'dia_chi_chi_tiet' => 'Địa chỉ',
             'id_xa' => 'Xã/Phường',
             'id_tinh' => 'Tỉnh/Thành',
             'trang_thai' => 'Trạng thái',
@@ -429,19 +440,19 @@ class HocVienBase extends \app\models\HvHocVien
             'thoi_gian_tao' => 'Thời gian tạo',
             'nguoi_lap_phieu' => 'Người lặp phiếu',
             'check_hoc_phi' => 'Học phí',
-            'id_nhom'=>'Nhóm',
-            'loai_dang_ky'=>'Loại hình đăng ký',
-            'nguoi_duyet'=>'Người duyệt',
-            'trang_thai_duyet'=>'Trạng thái duyệt',
-            'ngay_het_han_cccd'=>'Ngày hết hạn CCCD',
-            'noi_dang_ky'=>'Nơi đăng ký',
-            'ma_so_phieu'=>'Mã số phiếu',
-            'so_lan_in_phieu'=>'Số lần in phiếu',
+            'id_nhom' => 'Nhóm',
+            'loai_dang_ky' => 'Loại hình đăng ký',
+            'nguoi_duyet' => 'Người duyệt',
+            'trang_thai_duyet' => 'Trạng thái duyệt',
+            'ngay_het_han_cccd' => 'Ngày hết hạn CCCD',
+            'noi_dang_ky' => 'Nơi đăng ký',
+            'ma_so_phieu' => 'Mã số phiếu',
+            'so_lan_in_phieu' => 'Số lần in phiếu',
             'ghi_chu' => 'Ghi chú',
             'thoi_gian_hoan_thanh_ho_so' => 'Thời gian hoàn thành hồ sơ',
             'co_ho_so_thue' => 'Có hồ sơ thuế',
             'da_nhan_ao' => 'Đã nhận áo',
-            'size'=>'Size',
+            'size' => 'Size',
             'ngay_nhan_ao' => 'Ngày nhận áo',
             'nguoi_giao_ao' => 'Người giao áo',
             'da_nhan_tai_lieu' => 'Đã nhận tài liệu',
@@ -469,7 +480,7 @@ class HocVienBase extends \app\models\HvHocVien
      *
      * @return \yii\db\ActiveQuery
      */
- 
+
 
     /**
      * Gets query for [[HvNopHocPhis]].
@@ -549,20 +560,23 @@ class HocVienBase extends \app\models\HvHocVien
     {
         return $this->hasOne(DmNhanHoSoHo::class, ['id' => 'id_nhan_ho_so_ho']);
     }
-    public function getNgaySinh(){
+    public function getNgaySinh()
+    {
         return CustomFunc::convertYMDToDMY($this->ngay_sinh);
     }
-    public function getNgayHetHanCccd(){
+    public function getNgayHetHanCccd()
+    {
         return CustomFunc::convertYMDToDMY($this->ngay_het_han_cccd);
-    } 
+    }
     /**
      * lấy địa chỉ động theo dia_chi_chi_tiet, id_xa va id_tinh
      */
-    public function getDiaChiText(){
-        if($this->id_tinh!=null && $this->id_xa !=null){
-            return ($this->dia_chi_chi_tiet?($this->dia_chi_chi_tiet . ', '):'') .
-                ($this->xa?($this->xa->ten_xa_full . ', '):'') .
-                ($this->tinh?$this->tinh->ten_tinh_full:'');
+    public function getDiaChiText()
+    {
+        if ($this->id_tinh != null && $this->id_xa != null) {
+            return ($this->dia_chi_chi_tiet ? ($this->dia_chi_chi_tiet . ', ') : '') .
+                ($this->xa ? ($this->xa->ten_xa_full . ', ') : '') .
+                ($this->tinh ? $this->tinh->ten_tinh_full : '');
         } else {
             return '';
         }
@@ -570,50 +584,52 @@ class HocVienBase extends \app\models\HvHocVien
     /**
      * lấy địa chỉ, nếu có id_xa thì lấy diaChiText, hoac cu thi lay truong dia_chi
      */
-    public function getDiaChi(){
-        if($this->id_xa){
+    public function getDiaChi()
+    {
+        if ($this->id_xa) {
             return $this->diaChiText;
         } else {
             return $this->dia_chi;
         }
     }
-    
+
     public function getMaSoPhieu()
     {
         $hocVien = self::findOne($this->id);
         if ($hocVien && !empty($hocVien->ma_so_phieu) && $hocVien->ma_so_phieu != 0) {
             return $hocVien->ma_so_phieu;
         }
-    
+
         $maxMaSoPhieu = self::find()->select('MAX(ma_so_phieu)')->scalar();
         $newMaSoPhieu = $maxMaSoPhieu ? $maxMaSoPhieu + 1 : 1;
 
         if ($hocVien) {
             $hocVien->ma_so_phieu = $newMaSoPhieu;
-            $hocVien->save(false); 
+            $hocVien->save(false);
         }
-    
+
         return $newMaSoPhieu;
     }
-    
+
     /**
      * phần chỉnh sửa học phí - hạng đào tạo
      */
     //get học phí thực tế theo bảng thay đổi học phí, học phí thực tế = học phí ban đầu + sum tất cả thay đổi học phí của học viên
-    public function getTienHocPhi(){
-        if($this->thayDoiHangs!=null){
+    public function getTienHocPhi()
+    {
+        if ($this->thayDoiHangs != null) {
             return $this->hocPhi->hoc_phi + $this->getThayDoiHangs()->sum('so_tien');
         } else {
             return $this->hocPhi->hoc_phi;
         }
-        
     }
     //get học phí thực tế theo bảng thay đổi học phí tìm theo thời gian,
     //học phí thực tế = học phí ban đầu + sum tất cả thay đổi học phí trong khoảng thời gian của học viên (<= mốc thời gian)
-    public function getTienHocPhiTheoThoiGian($endTime){
-        $thayDoiHangs = $this->getThayDoiHangs()->andWhere("thoi_gian_thay_doi <= '".$endTime."' ");
-       // $thayDoiHangs = ThayDoiHocPhi::find()->where(['id_hoc_vien'=>$this->id])->andWhere("thoi _gian_tao >= '".$endTime."' ");
-        if($thayDoiHangs!=null){
+    public function getTienHocPhiTheoThoiGian($endTime)
+    {
+        $thayDoiHangs = $this->getThayDoiHangs()->andWhere("thoi_gian_thay_doi <= '" . $endTime . "' ");
+        // $thayDoiHangs = ThayDoiHocPhi::find()->where(['id_hoc_vien'=>$this->id])->andWhere("thoi _gian_tao >= '".$endTime."' ");
+        if ($thayDoiHangs != null) {
             return $this->hocPhi->hoc_phi + $thayDoiHangs->sum('so_tien');
         } else {
             return $this->hocPhi->hoc_phi;
@@ -637,98 +653,115 @@ class HocVienBase extends \app\models\HvHocVien
     /**
      * kết thúc phần chỉnh sửa học phí - hạng đào tạo
      */
-    
+
     //lấy ngày hoàn thành hồ sơ, query lấy ngày nộp tiền 50% hoặc 100% đầu tiên
-    public function getNgayHoanThanhHoSo(){
+    public function getNgayHoanThanhHoSo()
+    {
         $nopTien = NopHocPhi::find()->alias('t2')
-        ->joinWith(['hocVien as hv', 'hocVien.hocPhi as hp'])
-        ->where(['id_hoc_vien'=>$this->id])
-        ->andWhere('t2.so_tien_con_lai <= hp.hoc_phi/2')->one(); //còn lại <= 50% học phí là ok
-        return $nopTien==null?'':CustomFunc::convertYMDHISToDMY($nopTien->thoi_gian_tao);
+            ->joinWith(['hocVien as hv', 'hocVien.hocPhi as hp'])
+            ->where(['id_hoc_vien' => $this->id])
+            ->andWhere('t2.so_tien_con_lai <= hp.hoc_phi/2')->one(); //còn lại <= 50% học phí là ok
+        return $nopTien == null ? '' : CustomFunc::convertYMDHISToDMY($nopTien->thoi_gian_tao);
     }
-    public function getNguoiTao(){
+    public function getNguoiTao()
+    {
         return $this->hasOne(User::class, ['id' => 'nguoi_tao']);
     }
-    public function getNguoiLienKet(){
+    public function getNguoiLienKet()
+    {
         return $this->hasOne(User::class, ['id' => 'nguoi_lien_ket']);
     }
-    public function getTienDaNop(){//bao gom tong so tien nop am + duong
-        return NopHocPhi::find()->where(['id_hoc_vien'=>$this->id])->sum('so_tien_nop');
+    public function getNguoiNhapNhanHoSoHo()
+    {
+        return $this->hasOne(User::class, ['id' => 'id_nguoi_nhap_nhan_ho_so_ho']);
     }
-    public function getTienDaNopDuong(){//bao gom tong so tien nop > 0
-        return NopHocPhi::find()->where(['id_hoc_vien'=>$this->id])->andWhere('so_tien_nop > 0')->sum('so_tien_nop');
+    public function getTienDaNop()
+    { //bao gom tong so tien nop am + duong
+        return NopHocPhi::find()->where(['id_hoc_vien' => $this->id])->sum('so_tien_nop');
     }
-    public function getTienDaNopDuongTM(){//bao gom tong so tien nop > 0
-        return NopHocPhi::find()->where(['id_hoc_vien'=>$this->id, 'hinh_thuc_thanh_toan'=>'TM'])->andWhere('so_tien_nop > 0')->sum('so_tien_nop');
+    public function getTienDaNopDuong()
+    { //bao gom tong so tien nop > 0
+        return NopHocPhi::find()->where(['id_hoc_vien' => $this->id])->andWhere('so_tien_nop > 0')->sum('so_tien_nop');
     }
-    public function getTienDaNopDuongCK(){//bao gom tong so tien nop > 0
-        return NopHocPhi::find()->where(['id_hoc_vien'=>$this->id, 'hinh_thuc_thanh_toan'=>'CK'])->andWhere('so_tien_nop > 0')->sum('so_tien_nop');
+    public function getTienDaNopDuongTM()
+    { //bao gom tong so tien nop > 0
+        return NopHocPhi::find()->where(['id_hoc_vien' => $this->id, 'hinh_thuc_thanh_toan' => 'TM'])->andWhere('so_tien_nop > 0')->sum('so_tien_nop');
     }
-    public function getTienDaNopAm(){//bao gom tong so tien nop > 0
-        return NopHocPhi::find()->where(['id_hoc_vien'=>$this->id])->andWhere('so_tien_nop < 0')->sum('so_tien_nop');
+    public function getTienDaNopDuongCK()
+    { //bao gom tong so tien nop > 0
+        return NopHocPhi::find()->where(['id_hoc_vien' => $this->id, 'hinh_thuc_thanh_toan' => 'CK'])->andWhere('so_tien_nop > 0')->sum('so_tien_nop');
     }
-    public function getTienChietKhau(){//bao gom tong so tien da chiet khau
-        return NopHocPhi::find()->where(['id_hoc_vien'=>$this->id])->sum('chiet_khau');
+    public function getTienDaNopAm()
+    { //bao gom tong so tien nop > 0
+        return NopHocPhi::find()->where(['id_hoc_vien' => $this->id])->andWhere('so_tien_nop < 0')->sum('so_tien_nop');
     }
-    public function getTienDaThanhToan(){//bao gom so tien nop va chiet khau
-       $tt = NopHocPhi::find()->where(['id_hoc_vien'=>$this->id])->sum('so_tien_nop');
-       $ck = NopHocPhi::find()->where(['id_hoc_vien'=>$this->id])->sum('chiet_khau');
-       return $tt + $ck;
+    public function getTienChietKhau()
+    { //bao gom tong so tien da chiet khau
+        return NopHocPhi::find()->where(['id_hoc_vien' => $this->id])->sum('chiet_khau');
+    }
+    public function getTienDaThanhToan()
+    { //bao gom so tien nop va chiet khau
+        $tt = NopHocPhi::find()->where(['id_hoc_vien' => $this->id])->sum('so_tien_nop');
+        $ck = NopHocPhi::find()->where(['id_hoc_vien' => $this->id])->sum('chiet_khau');
+        return $tt + $ck;
     }
     /**
      * tính tiền chưa thanh toán toàn thời gian
      * @return number
      */
-    public function getTienChuaThanhToan(){ //chua thanh toan hoc phi - so tien nop - chiet khau
-        $tt = NopHocPhi::find()->where(['id_hoc_vien'=>$this->id])->sum('so_tien_nop');
-        $ck = NopHocPhi::find()->where(['id_hoc_vien'=>$this->id])->sum('chiet_khau');
+    public function getTienChuaThanhToan()
+    { //chua thanh toan hoc phi - so tien nop - chiet khau
+        $tt = NopHocPhi::find()->where(['id_hoc_vien' => $this->id])->sum('so_tien_nop');
+        $ck = NopHocPhi::find()->where(['id_hoc_vien' => $this->id])->sum('chiet_khau');
         //return $this->hocPhi->hoc_phi - $tt - $ck;
         return $this->tienHocPhi - $tt - $ck;
     }
-    
+
     /**
      * Tính tiền học phí chưa thanh toán từ lúc đầu tới mốc thời gian
      * chua thanh toan hoc phi - so tien nop - chiet khau (tinh tu dau toi moc thoi gian)
      * datime: $endtime Y-m-d H:i:s
      * @return number
      */
-    public function getTienChuaThanhToanByEndTime($endtime){
+    public function getTienChuaThanhToanByEndTime($endtime)
+    {
         $tt = NopHocPhi::find()
             /* ->andFilterWhere(['<=', 'thoi_gian_tao', new Expression("STR_TO_DATE('".$endtime."','%Y-%m-%d %H:%i:%s')")]) */
-        
-            ->where(['id_hoc_vien'=>$this->id]);
-            
-			//->andFilterWhere(['<=', 'thoi_gian_tao', $endtime])
-            if($endtime != NULL){
-		      $tt = $tt->andWhere("thoi_gian_tao <= '".$endtime . "'");
-            }
-            $tt = $tt->sum('so_tien_nop');
+
+            ->where(['id_hoc_vien' => $this->id]);
+
+        //->andFilterWhere(['<=', 'thoi_gian_tao', $endtime])
+        if ($endtime != NULL) {
+            $tt = $tt->andWhere("thoi_gian_tao <= '" . $endtime . "'");
+        }
+        $tt = $tt->sum('so_tien_nop');
         $ck = NopHocPhi::find()
             /* ->andFilterWhere(['<=', 'thoi_gian_tao', new Expression("STR_TO_DATE('".$endtime."','%Y-%m-%d %H:%i:%s')")]) */
-      
-            ->where(['id_hoc_vien'=>$this->id]);
-			//  ->andFilterWhere(['<=', 'thoi_gian_tao', $endtime])
-            if($endtime != NULL){
-                $ck = $ck->andWhere("thoi_gian_tao <= '".$endtime . "'");
-            }
-            $ck = $ck->sum('chiet_khau');
+
+            ->where(['id_hoc_vien' => $this->id]);
+        //  ->andFilterWhere(['<=', 'thoi_gian_tao', $endtime])
+        if ($endtime != NULL) {
+            $ck = $ck->andWhere("thoi_gian_tao <= '" . $endtime . "'");
+        }
+        $ck = $ck->sum('chiet_khau');
         //return $this->hocPhi->hoc_phi - $tt - $ck;
-        
-            $tienHocPhi = $this->tienHocPhi;
-            if($endtime != NULL){
-                $tienHocPhi = $this->getTienHocPhiTheoThoiGian($endtime);
-            }
-            return $tienHocPhi - $tt - $ck;
+
+        $tienHocPhi = $this->tienHocPhi;
+        if ($endtime != NULL) {
+            $tienHocPhi = $this->getTienHocPhiTheoThoiGian($endtime);
+        }
+        return $tienHocPhi - $tt - $ck;
     }
-    
+
     /**
      * check hạng A, A1, chưa có thu hộ thì true, ngược lại đã có thì false
      */
-    public function checkThuHo(){
-        $hp = NopHocPhi::find()->where(['id_hoc_vien'=>$this->id, 'co_thu_ho'=>1])->one();
-        if($hp!=null)
+    public function checkThuHo()
+    {
+        $hp = NopHocPhi::find()->where(['id_hoc_vien' => $this->id, 'co_thu_ho' => 1])->one();
+        if ($hp != null)
             return false;
-            else
-                return true;
+        else
+            return true;
     }
 }

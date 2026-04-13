@@ -1,4 +1,5 @@
 <?php
+
 use yii\helpers\Html;
 use app\widgets\FileDisplayWidget;
 use app\modules\hocvien\models\HocVien;
@@ -21,77 +22,92 @@ use app\modules\hocvien\models\DangKyHv;
                 <div class="card-body">
                     <div class="skill-tags">
                         <p>
-                        	<strong>Tên học viên:</strong> <?= $model->ho_ten ?>
-                        	<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                        	<strong>Giới tính:</strong> <?= $model->gioi_tinh == 1 ? 'Nam' : 'Nữ' ?>
-                        	<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                        	<strong>Ngày sinh:</strong> <?= $model->getNgaySinh() ?>                        
-                        </p>                       
+                            <strong>Tên học viên:</strong> <?= $model->ho_ten ?>
+                            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <strong>Giới tính:</strong> <?= $model->gioi_tinh == 1 ? 'Nam' : 'Nữ' ?>
+                            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <strong>Ngày sinh:</strong> <?= $model->getNgaySinh() ?>
+                        </p>
                         <p>
                             <strong>Số ĐT:</strong> <?= $model->so_dien_thoai ?>
                             <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                            <strong>Địa chỉ:</strong> <?= $model->diaChi ?></p>
-                            <p><strong>Số CCCD:</strong> <?= $model->so_cccd ?>
+                            <strong>Địa chỉ:</strong> <?= $model->diaChi ?>
+                        </p>
+                        <p><strong>Số CCCD:</strong> <?= $model->so_cccd ?>
                             <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                            <strong>Ngày hết hạn CCCD:</strong> <?= $model->getNgayHetHanCccd()?></p>
+                            <strong>Ngày hết hạn CCCD:</strong> <?= $model->getNgayHetHanCccd() ?>
+                        </p>
                         <p>
                             <strong>Nơi đăng ký:</strong> <?= $model->getLabelNoiDangKy() ?>
-                             <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                             <strong>NV tiếp nhận:</strong> <?= $model->nguoiTao->ho_ten ?>
                         </p>
                         <p>
-                         	<strong>Ngày đăng ký:</strong> <?= CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_tao) ?><strong> <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Nhận hồ sơ:</strong> <?= CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_hoan_thanh_ho_so) ?>
+                            <strong>Ngày đăng ký:</strong> <?= CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_tao) ?><strong> <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Nhận hồ sơ:</strong> <?= CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_hoan_thanh_ho_so) ?>
                         </p>
-                        
-                        <?php if($model->id_lien_ket > 0){ ?>
-                        <p>
-                            <strong><i class="fa fa-chain"></i> Liên kết:</strong> <?= $model->lienKet ? $model->lienKet->ten_lien_ket : '-' ?>
-                            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                            <strong>Ngày LK:</strong> <?= $model->ngay_lien_ket ? CustomFunc::convertYMDHISToDMYHI($model->ngay_lien_ket) : '-' ?>
-                            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                            <strong>NV LK:</strong> <?= $model->nguoiLienKet ? $model->nguoiLienKet->ho_ten : '-' ?>
-                        </p>
+
+                        <?php if ($model->id_lien_ket > 0) { ?>
+                            <p>
+                                <strong><i class="fa fa-chain"></i> Liên kết:</strong> <?= $model->lienKet ? $model->lienKet->ten_lien_ket : '-' ?>
+                                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                <strong>Ngày LK:</strong> <?= $model->ngay_lien_ket ? CustomFunc::convertYMDHISToDMYHI($model->ngay_lien_ket) : '-' ?>
+                                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                <strong>NV LK:</strong> <?= $model->nguoiLienKet ? $model->nguoiLienKet->ho_ten : '-' ?>
+                            </p>
+                        <?php } ?>
+
+                        <?php if ($model->id_nhan_ho_so_ho > 0) { ?>
+                            <p>
+                                <strong><i class="mdi mdi-account-star"></i> Nhận hồ sơ hộ:</strong> <?= $model->nhanHoSoHo ? $model->nhanHoSoHo->ten_don_vi : '-' ?>
+                                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                <strong>Ngày nhập TH:</strong> <?= $model->ngay_nhap_ho_so_ho ? CustomFunc::convertYMDHISToDMYHI($model->ngay_nhap_ho_so_ho) : '-' ?>
+                                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                <strong>NV nhập TH:</strong> <?= $model->nguoiNhapNhanHoSoHo ? $model->nguoiNhapNhanHoSoHo->ho_ten : '-' ?>
+                            </p>
                         <?php } ?>
 
                         <p>
-                        	<strong>Đã nhận áo:</strong> <?= $model->da_nhan_ao?'<i class="ion-checkmark-round text-primary"></i> Có':'<i class="ion-close-round" data-bs-toggle="tooltip" aria-label="ion-close-round" data-bs-original-title="ion-close-round"></i> Không' ?><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
-                        	<strong>Size:</strong> <?= $model->size?$model->size:'-' ?><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <strong>Ngày nhận:</strong> <?= $model->ngay_nhan_ao?CustomFunc::convertYMDToDMY($model->ngay_nhan_ao):'-' ?> <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
-                        	<strong>NV giao:</strong> <?= $model->nguoiGiaoAo?$model->nguoiGiaoAo->ho_ten:'-' ?>
+                            <strong>Đã nhận áo:</strong> <?= $model->da_nhan_ao ? '<i class="ion-checkmark-round text-primary"></i> Có' : '<i class="ion-close-round" data-bs-toggle="tooltip" aria-label="ion-close-round" data-bs-original-title="ion-close-round"></i> Không' ?><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <strong>Size:</strong> <?= $model->size ? $model->size : '-' ?><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <strong>Ngày nhận:</strong> <?= $model->ngay_nhan_ao ? CustomFunc::convertYMDToDMY($model->ngay_nhan_ao) : '-' ?> <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <strong>NV giao:</strong> <?= $model->nguoiGiaoAo ? $model->nguoiGiaoAo->ho_ten : '-' ?>
                         </p>
                         <p>
-                        	<strong>Đã nhận tài liệu:</strong> <?= $model->da_nhan_tai_lieu?'<i class="ion-checkmark-round text-primary"></i> Có':'<i class="ion-close-round" data-bs-toggle="tooltip" aria-label="ion-close-round" data-bs-original-title="ion-close-round"></i> Không' ?><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
-                        	<strong>Ngày nhận:</strong> <?= $model->ngay_nhan_tai_lieu?CustomFunc::convertYMDToDMY($model->ngay_nhan_tai_lieu):'-' ?> <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
-                        	<strong>NV giao:</strong> <?= $model->nguoiGiaoTaiLieu?$model->nguoiGiaoTaiLieu->ho_ten:'-' ?>
-                       	</p>
+                            <strong>Đã nhận tài liệu:</strong> <?= $model->da_nhan_tai_lieu ? '<i class="ion-checkmark-round text-primary"></i> Có' : '<i class="ion-close-round" data-bs-toggle="tooltip" aria-label="ion-close-round" data-bs-original-title="ion-close-round"></i> Không' ?><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <strong>Ngày nhận:</strong> <?= $model->ngay_nhan_tai_lieu ? CustomFunc::convertYMDToDMY($model->ngay_nhan_tai_lieu) : '-' ?> <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <strong>NV giao:</strong> <?= $model->nguoiGiaoTaiLieu ? $model->nguoiGiaoTaiLieu->ho_ten : '-' ?>
+                        </p>
                         <p><strong>Ghi chú thêm:</strong> <?= $model->ghi_chu ?></p>
-                                                
-                        <?php if($model->huy_ho_so){ ?>
-                        <p><strong>Trạng thái:</strong> Đã hủy hồ sơ
-                        <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                        <strong>Thời gian hủy:</strong> <?= CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_huy_ho_so) ?></p>
-                         <p><strong>Lý do hủy:</strong> <?= DangKyHv::getDmLyDoHuyLablel($model->loai_ly_do) ?>
-                        <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                        <strong>Lệ phí:</strong> <?= number_format($model->le_phi) ?></p>
-                        <p><strong>Ghi chú hủy:</strong> <?= $model->ly_do_huy_ho_so ?></p>
-                        
-                        <?= Html::button('<i class="fa fa-print"></i> In Phiếu hủy', [
-                        	    'class' => 'btn btn-sm btn-default', 
-                                'onclick' => 'InPhieuHuyHoSo('.$model->id.')']) ?>
+
+                        <?php if ($model->huy_ho_so) { ?>
+                            <p><strong>Trạng thái:</strong> Đã hủy hồ sơ
+                                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                <strong>Thời gian hủy:</strong> <?= CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_huy_ho_so) ?>
+                            </p>
+                            <p><strong>Lý do hủy:</strong> <?= DangKyHv::getDmLyDoHuyLablel($model->loai_ly_do) ?>
+                                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                <strong>Lệ phí:</strong> <?= number_format($model->le_phi) ?>
+                            </p>
+                            <p><strong>Ghi chú hủy:</strong> <?= $model->ly_do_huy_ho_so ?></p>
+
+                            <?= Html::button('<i class="fa fa-print"></i> In Phiếu hủy', [
+                                'class' => 'btn btn-sm btn-default',
+                                'onclick' => 'InPhieuHuyHoSo(' . $model->id . ')'
+                            ]) ?>
                         <?php } ?>
-                        
+
                     </div>
                 </div>
             </div>
-         </div>
-         <div class="col-xl-5 col-md-12">
-            
+        </div>
+        <div class="col-xl-5 col-md-12">
+
             <div class="card custom-card">
                 <div class="card-header custom-card-header rounded-bottom-0">
                     <h6 class="card-title mb-0 text-center" style="color: red;">Thông tin học phí</h6>
                 </div>
                 <div class="card-body">
                     <div class="skill-tags">
-                        <p><strong>Tên khóa học:</strong> 
+                        <p><strong>Tên khóa học:</strong>
                             <?php if ($model->id_khoa_hoc == null): ?>
                                 Học viên chưa được sắp khóa học
                             <?php else: ?>
@@ -99,30 +115,30 @@ use app\modules\hocvien\models\DangKyHv;
                             <?php endif; ?>
                         </p>
                         <p><strong>Hạng đào tạo:</strong> <?= $model->hangDaoTao->ten_hang ?></p>
-                         
-        				<!-- <p><strong>HỌC PHÍ:</strong> <strong><?= number_format($model->hocPhi->hoc_phi) ?></strong></p> -->
-        				<p>
-        					<strong>HỌC PHÍ:</strong> <strong><?= number_format($model->tienHocPhi) ?></strong>
-        					<?=  $model->thayDoiHangs ? Html::a('<i class="fas fa-external-link-alt"></i>', '/hocvien/dang-ky-hv/view-thay-doi-hang?id='.$model->id, ['role'=>'modal-remote-2', 'title'=>'Xem quá trình thay đổi hạng', 'style'=>'float:none'])  : '' ?> 
-        				</p>
-        				
-        				<!-- 
+
+                        <!-- <p><strong>HỌC PHÍ:</strong> <strong><?= number_format($model->hocPhi->hoc_phi) ?></strong></p> -->
+                        <p>
+                            <strong>HỌC PHÍ:</strong> <strong><?= number_format($model->tienHocPhi) ?></strong>
+                            <?= $model->thayDoiHangs ? Html::a('<i class="fas fa-external-link-alt"></i>', '/hocvien/dang-ky-hv/view-thay-doi-hang?id=' . $model->id, ['role' => 'modal-remote-2', 'title' => 'Xem quá trình thay đổi hạng', 'style' => 'float:none'])  : '' ?>
+                        </p>
+
+                        <!-- 
         				<p>Học phí thực tế: <?= number_format($model->tienHocPhi) ?></p>
         				<p>Học phí thực tế endtime: <?= number_format($model->getTienHocPhiTheoThoiGian('2025-05-23 15:49:45')) ?></p>
         				
         				 -->
-        				 
-        				 
-        				
-        				<p><strong>CHIẾT KHẤU:</strong> <strong><?= number_format($model->tienChietKhau) ?></strong></p>
-        				<p><strong><strong>ĐÃ NỘP:</strong> <?= number_format($model->tienDaNop) ?></strong></p>
-        				<p>- Thu tiền: <?= number_format($model->tienDaNopDuong) ?></p>
-        				<p>- Chi tiền: <span style="color:red"><?= number_format($model->tienDaNopAm) ?></span></p>
-        				
-        				<p><strong>CÒN LẠI:</strong> <strong><?= number_format($model->tienChuaThanhToan) ?></strong></p>
+
+
+
+                        <p><strong>CHIẾT KHẤU:</strong> <strong><?= number_format($model->tienChietKhau) ?></strong></p>
+                        <p><strong><strong>ĐÃ NỘP:</strong> <?= number_format($model->tienDaNop) ?></strong></p>
+                        <p>- Thu tiền: <?= number_format($model->tienDaNopDuong) ?></p>
+                        <p>- Chi tiền: <span style="color:red"><?= number_format($model->tienDaNopAm) ?></span></p>
+
+                        <p><strong>CÒN LẠI:</strong> <strong><?= number_format($model->tienChuaThanhToan) ?></strong></p>
                     </div>
                 </div>
-               <!-- <div class="card-header custom-card-header rounded-bottom-0">
+                <!-- <div class="card-header custom-card-header rounded-bottom-0">
                     <h6 class="card-title mb-0 text-center" style="color: red;">Thông tin kiểm duyệt</h6>
                 </div>
                 <div class="card-body">
@@ -135,19 +151,19 @@ use app\modules\hocvien\models\DangKyHv;
                          <span class="text-warning">Chờ duyệt</span>
                     <?php endif; ?>
                     </div>
-                </div> --> 
+                </div> -->
             </div>
-            
+
         </div>
-        
+
         <!-- nộp học phí -->
         <div class="col-xl-12 col-md-12">
-        	<?= $this->render('hoc_phi', ['model' => $model]) ?>               
+            <?= $this->render('hoc_phi', ['model' => $model]) ?>
         </div>
         <div class="col-md-12" style="text-align: right;margin-bottom:20px">
-            <?php 
-                $user = User::getCurrentUser();
-                // only show 'payment' if user chung co so
+            <?php
+            $user = User::getCurrentUser();
+            // only show 'payment' if user chung co so
             ?>
             <?php /* ($model->noi_dang_ky == $user->noi_dang_ky || $user->superadmin) ? Html::a('<i class="fas fa-dollar-sign"></i> Đóng học phí', '/hocvien/dang-ky-hv/create2?id='.$model->id, [
                 'title' => 'Đóng học phí',
@@ -157,63 +173,63 @@ use app\modules\hocvien\models\DangKyHv;
                 'data-bs-toggle' => 'tooltip',
                 'style'=>'color:white'
             ]) : '' */ ?>
-            <?= Html::a('<i class="fas fa-dollar-sign"></i> Đóng học phí', '/hocvien/dang-ky-hv/create2?id='.$model->id, [
+            <?= Html::a('<i class="fas fa-dollar-sign"></i> Đóng học phí', '/hocvien/dang-ky-hv/create2?id=' . $model->id, [
                 'title' => 'Đóng học phí',
                 'role' => 'modal-remote',
-                'class' => 'btn btn-warning', 
+                'class' => 'btn btn-warning',
                 'data-bs-placement' => 'top',
                 'data-bs-toggle' => 'tooltip',
-                'style'=>'color:white'
-            ])?>
+                'style' => 'color:white'
+            ]) ?>
         </div>
 
         <!-- Thông tin file -->
         <div class="col-xl-12 col-md-12">
-        
-        <div class="card custom-card">
-            <div class="card-header custom-card-header rounded-bottom-0">
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link show active " id="add-document-tab" data-bs-toggle="tab" href="#add-document" role="tab" aria-controls="add-student" aria-selected="false" style="color: blue;"><i class="fa fa-file"></i> Hồ sơ học viên</a>
-                    </li>
 
-                    
-                   
-                </ul>
-			</div>
-                   <div class="card-body">
-                      <div class="skill-tags">
+            <div class="card custom-card">
+                <div class="card-header custom-card-header rounded-bottom-0">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link show active " id="add-document-tab" data-bs-toggle="tab" href="#add-document" role="tab" aria-controls="add-student" aria-selected="false" style="color: blue;"><i class="fa fa-file"></i> Hồ sơ học viên</a>
+                        </li>
 
-                           
 
-                              <!-- Nội dung Tài liệu khóa học -->
-                              <div class="tab-pane fade show active" id="add-document" role="tabpanel" aria-labelledby="add-document-tab">
 
-                        <?= FileDisplayWidget::widget([
-                             'type'=>'ALL',
-                             'doiTuong'=>Hocvien::MODEL_ID,
-                             'idDoiTuong'=>$model->id,
-                        ])?>
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                            </div>
+                    </ul>
+                </div>
+                <div class="card-body">
+                    <div class="skill-tags">
+
+
+
+                        <!-- Nội dung Tài liệu khóa học -->
+                        <div class="tab-pane fade show active" id="add-document" role="tabpanel" aria-labelledby="add-document-tab">
+
+                            <?= FileDisplayWidget::widget([
+                                'type' => 'ALL',
+                                'doiTuong' => Hocvien::MODEL_ID,
+                                'idDoiTuong' => $model->id,
+                            ]) ?>
+
+
+
+
+
+
+
                         </div>
-                      </div>
-                  </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        
-            
-        </div>
-		<p>
-            <?php /* Html::button('<i class="fa fa-print"> </i> In Phiếu Thông Tin', ['class' => 'btn btn-success', 'onclick' => 'InPhieuThongTin()']) */ ?>
-       </p>
-       
-       <?php /* ?>
+
+
+    </div>
+    <p>
+        <?php /* Html::button('<i class="fa fa-print"> </i> In Phiếu Thông Tin', ['class' => 'btn btn-success', 'onclick' => 'InPhieuThongTin()']) */ ?>
+    </p>
+
+    <?php /* ?>
        
        <?= Html::dropDownList('tuychonin',null, [
            1=>'In phiếu thu 100%',
@@ -233,99 +249,98 @@ use app\modules\hocvien\models\DangKyHv;
         </div>
         
         <?php */ ?>
-        
-        <!-- <div class="row pull-right">
+
+    <!-- <div class="row pull-right">
         	<div class="col-md-12">
-                <?= Html::a('<i class="fas fa-dollar-sign"></i> Đóng học phí', '/hocvien/dang-ky-hv/create2?id='.$model->id, [
+                <?= Html::a('<i class="fas fa-dollar-sign"></i> Đóng học phí', '/hocvien/dang-ky-hv/create2?id=' . $model->id, [
                     'title' => 'Đóng học phí',
                     'role' => 'modal-remote',
-                    'class' => 'btn btn-warning', 
+                    'class' => 'btn btn-warning',
                     'data-bs-placement' => 'top',
                     'data-bs-toggle' => 'tooltip',
                 ]) ?>
             </div>
         </div>-->
 
-<?php /* ?>
+    <?php /* ?>
        <p style="margin-top:10px">Lần in: <strong id="soLanIn"><?= $model->so_lan_in_phieu ?? 0 ?></strong></p>
- <?php */ ?>      
-       
-       
+ <?php */ ?>
 
-        <!-- Phần tử ẩn chứa nội dung phiếu -->
-         <div style="display:none">
-              <div id="print"></div>
-          </div>
-          <!-- Phần tử ẩn chứa nội dung phiếu -->
-        <div style="display:none">
-          <div id="printDoiHang"></div>
-        </div>
+
+
+    <!-- Phần tử ẩn chứa nội dung phiếu -->
+    <div style="display:none">
+        <div id="print"></div>
     </div>
-    
+    <!-- Phần tử ẩn chứa nội dung phiếu -->
+    <div style="display:none">
+        <div id="printDoiHang"></div>
+    </div>
+</div>
+
 </div>
 <script>
-
-function InPhieuThu(id,nhap) {
-    $.ajax({
-        type: 'POST',
-        url: '/hocvien/dang-ky-hv/get-phieu-in-ajax?id=' + id + '&type=phieuthu&' + '&nhap=' + nhap,
-        success: function (data) {
-            if (data.status === 'success') {
-                $('#print').html(data.content);
-                //printPhieuXuat(); // Gọi hàm in phiếu
-				printPhieu();
-                // Khi in xong, cập nhật số lần in
-                if(nhap == 0){//in thật
-                    setTimeout(function() {
-                        updatePrintCount(id);
-                    }, 1000); // Đợi 1 giây sau khi in để cập nhật
+    function InPhieuThu(id, nhap) {
+        $.ajax({
+            type: 'POST',
+            url: '/hocvien/dang-ky-hv/get-phieu-in-ajax?id=' + id + '&type=phieuthu&' + '&nhap=' + nhap,
+            success: function(data) {
+                if (data.status === 'success') {
+                    $('#print').html(data.content);
+                    //printPhieuXuat(); // Gọi hàm in phiếu
+                    printPhieu();
+                    // Khi in xong, cập nhật số lần in
+                    if (nhap == 0) { //in thật
+                        setTimeout(function() {
+                            updatePrintCount(id);
+                        }, 1000); // Đợi 1 giây sau khi in để cập nhật
+                    }
+                } else {
+                    alert('Không thể tải phiếu!');
                 }
-            } else {
-                alert('Không thể tải phiếu!');
+            },
+            error: function() {
+                alert('Đã xảy ra lỗi.');
             }
-        },
-        error: function () {
-            alert('Đã xảy ra lỗi.');
-        }
-    });
-}
+        });
+    }
 
-// Hàm cập nhật số lần in
-function updatePrintCount(id) {
-    $.ajax({
-        type: 'POST',
-        url: '/hocvien/dang-ky-hv/update-print-count?id='+id,
-        success: function (response) {
-            if (response.success) {
-                $('#soLanIn'+id).text(response.so_lan_in); // Cập nhật số lần in
-            } else {
-                alert('Cập nhật số lần in thất bại!');
+    // Hàm cập nhật số lần in
+    function updatePrintCount(id) {
+        $.ajax({
+            type: 'POST',
+            url: '/hocvien/dang-ky-hv/update-print-count?id=' + id,
+            success: function(response) {
+                if (response.success) {
+                    $('#soLanIn' + id).text(response.so_lan_in); // Cập nhật số lần in
+                } else {
+                    alert('Cập nhật số lần in thất bại!');
+                }
+            },
+            error: function() {
+                alert('Lỗi kết nối server!');
             }
-        },
-        error: function () {
-            alert('Lỗi kết nối server!');
-        }
-    });
-}
+        });
+    }
 
 
-function printPhieuXuat() {
-    var printContents = document.getElementById('print').innerHTML;
+    function printPhieuXuat() {
+        var printContents = document.getElementById('print').innerHTML;
 
-    // Tạo iframe ẩn
-    var iframe = document.createElement('iframe');
-    iframe.style.position = 'absolute';
-    iframe.style.width = '0px';
-    iframe.style.height = '0px';
-    iframe.style.border = 'none';
+        // Tạo iframe ẩn
+        var iframe = document.createElement('iframe');
+        iframe.style.position = 'absolute';
+        iframe.style.width = '0px';
+        iframe.style.height = '0px';
+        iframe.style.border = 'none';
 
-    // Thêm iframe vào body
-    document.body.appendChild(iframe);
+        // Thêm iframe vào body
+        document.body.appendChild(iframe);
 
-    // Ghi nội dung cần in vào iframe
-    var doc = iframe.contentWindow.document;
-    doc.open();
-    doc.write(`
+        // Ghi nội dung cần in vào iframe
+        var doc = iframe.contentWindow.document;
+        doc.open();
+        doc.write(`
         <html>
             <head>
                 <title>In phiếu</title>
@@ -338,32 +353,31 @@ function printPhieuXuat() {
             </body>
         </html>
     `);
-    doc.close();
+        doc.close();
 
-  
-    iframe.contentWindow.focus();
-    iframe.contentWindow.print();
 
-    // Xóa iframe 
-    setTimeout(() => document.body.removeChild(iframe), 1000);
-}
+        iframe.contentWindow.focus();
+        iframe.contentWindow.print();
 
-function InPhieuHuyHoSo(id) {
-    $.ajax({
-        type: 'POST',
-        url: '/hocvien/bao-cao/rp-bien-ban-huy-ho-so-print?idhv=' + id,
-        success: function (data) {
-            if (data.status === 'success') {
-                $('#printDoiHang').html(data.content);
-				printPhieuDoiHang();
-            } else {
-                alert('Không thể tải phiếu!');
+        // Xóa iframe 
+        setTimeout(() => document.body.removeChild(iframe), 1000);
+    }
+
+    function InPhieuHuyHoSo(id) {
+        $.ajax({
+            type: 'POST',
+            url: '/hocvien/bao-cao/rp-bien-ban-huy-ho-so-print?idhv=' + id,
+            success: function(data) {
+                if (data.status === 'success') {
+                    $('#printDoiHang').html(data.content);
+                    printPhieuDoiHang();
+                } else {
+                    alert('Không thể tải phiếu!');
+                }
+            },
+            error: function() {
+                alert('Đã xảy ra lỗi.');
             }
-        },
-        error: function () {
-            alert('Đã xảy ra lỗi.');
-        }
-    });
-}
+        });
+    }
 </script>
-
