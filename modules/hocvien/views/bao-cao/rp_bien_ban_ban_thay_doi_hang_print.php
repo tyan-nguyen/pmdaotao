@@ -54,8 +54,8 @@ use app\custom\CustomFunc;
 				<td colspan="3" align="right" style="font-style: italic;font-size:14pt">Vĩnh Long, ngày <?= date("d", strtotime($model->thoi_gian_thay_doi)) ?> tháng <?= date("m", strtotime($model->thoi_gian_thay_doi)) ?> năm <?= date("Y", strtotime($model->thoi_gian_thay_doi)) ?></td>
 			</tr>
 			<tr>
-				<td width="30%" align="center"><span style="font-weight: bold;font-size:14pt">GIÁM ĐỐC TRUNG TÂM</span></td>
-				<td width="30%"></td>
+				<td width="40%" align="center"><span style="font-weight: bold;font-size:14pt">GIÁM ĐỐC TRUNG TÂM</span></td>
+				<td width="20%"></td>
 				<td align="center"><span style="font-weight: bold;font-size:14pt">NGƯỜI LÀM ĐƠN</span></td>
 			</tr>
 			<tr>
