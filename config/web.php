@@ -107,9 +107,9 @@ $config = [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
         ],
-        'errorHandler' => [
+        /* 'errorHandler' => [
             'errorAction' => 'site/error',
-        ],
+        ], */
         /*'mailer' => [
             'class' => \yii\symfonymailer\Mailer::class,
             'viewPath' => '@app/mail',
