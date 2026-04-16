@@ -122,7 +122,7 @@ class SiteController extends Controller
 
     public function actionError()
     {
-        $this->layout = '@app/themes/main/layouts/nolayout';
+        $this->layout = 'nolayout';
 
         $exception = Yii::$app->errorHandler->exception;
 
