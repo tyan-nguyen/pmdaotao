@@ -103,6 +103,7 @@ class HvHoSoController extends Controller
      */
     public function actionView($id)
     {
+        $this->layout = 'nolayout';
         throw new NotFoundHttpException('Trang không tồn tại.');
         /* $model = HocVien::find()->where(['id' => $id])->one();
         $trang_thai_duyet = $model->trang_thai_duyet;
