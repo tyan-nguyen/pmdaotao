@@ -96,19 +96,6 @@ class HvHoSoController extends Controller
         ]);
     }
 
-    public function actionError()
-    {
-        $this->layout = '@app/themes/main/layouts/nolayout'; // layout bạn muốn dùng
-
-        $exception = Yii::$app->errorHandler->exception;
-
-        if ($exception !== null) {
-            return $this->render('error', [
-                'exception' => $exception,
-            ]);
-        }
-    }
-
     /**
      * Displays a single HvHocVien model.
      * @param integer $id

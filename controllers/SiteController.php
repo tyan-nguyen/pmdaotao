@@ -19,14 +19,14 @@ class SiteController extends Controller
     public function behaviors()
     {
         return [
-           
+
             'verbs' => [
                 'class' => VerbFilter::class,
                 'actions' => [
                     'logout' => ['post'],
                 ],
             ],
-            'ghost-access'=> [
+            'ghost-access' => [
                 'class' => 'webvimark\modules\UserManagement\components\GhostAccessControl',
             ],
         ];
@@ -118,5 +118,18 @@ class SiteController extends Controller
     public function actionAbout()
     {
         return $this->render('about');
+    }
+
+    public function actionError()
+    {
+        $this->layout = 'nolayout'; // layout bạn muốn dùng
+
+        $exception = Yii::$app->errorHandler->exception;
+
+        if ($exception !== null) {
+            return $this->render('error', [
+                'exception' => $exception,
+            ]);
+        }
     }
 }

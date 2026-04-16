@@ -7,13 +7,13 @@ $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
-    'language'=>'vi',
+    'language' => 'vi',
     'timeZone' => 'Asia/Ho_Chi_Minh',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
     ],
-    'modules'=>[
+    'modules' => [
         'khoahoc' => [
             'class' => 'app\modules\khoahoc\Khoahoc',
         ],
@@ -23,11 +23,11 @@ $config = [
         'nhanvien' => [
             'class' => 'app\modules\nhanvien\Nhanvien',
         ],
-        
+
         'kholuutru' => [
             'class' => 'app\modules\kholuutru\Kholuutru',
         ],
-        
+
         'user' => [
             'class' => 'app\modules\user\UserModule',
         ],
@@ -58,12 +58,12 @@ $config = [
         /* 'dynamikjs' => [
             'class' => 'dastanaron\dropzone\DynamicJSModule'
         ], */
-       
+
         'user-management' => [
             'class' => 'webvimark\modules\UserManagement\UserManagementModule',
-            
+
             // 'enableRegistration' => true,
-            
+
             // Add regexp validation to passwords. Default pattern does not restrict user and can enter any set of characters.
             // The example below allows user to enter :
             // any set of characters
@@ -72,25 +72,24 @@ $config = [
             // (?=\S*[A-Z]): and at least one uppercase letter
             // (?=\S*[\d]): and at least one number
             // $: anchored to the end of the string
-            
+
             //'passwordRegexp' => '^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$',
-            
-            
+
+
             // Here you can set your handler to change layout for any controller or action
             // Tip: you can use this event in any module
-            'on beforeAction'=>function(yii\base\ActionEvent $event) {
-                if ( $event->action->uniqueId == 'user-management/auth/login' )
-                {
+            'on beforeAction' => function (yii\base\ActionEvent $event) {
+                if ($event->action->uniqueId == 'user-management/auth/login') {
                     $event->action->controller->layout = '\loginLayout.php';
                 };
             },
-         ],
-         'gridview' =>  [
-             'class' => '\kartik\grid\Module'
-         ],
+        ],
+        'gridview' =>  [
+            'class' => '\kartik\grid\Module'
+        ],
     ],
     'components' => [
-      
+
         'pdf' => [
             'class' => '\kartik\mpdf\Pdf',
             'format' => \kartik\mpdf\Pdf::FORMAT_A4,
@@ -140,22 +139,22 @@ $config = [
             ],
         ],
         'db' => $db,
-        
+
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                '/'=>'/user',
+                '/' => '/user',
                 'nhan_vien/options' => 'nhan_vien/get-options',
             ],
         ],
-        
+
         'user' => [
             //'class' => 'webvimark\modules\UserManagement\components\UserConfig',
             'class' => 'app\modules\user\components\UserConfig',
-            
+
             // Comment this if you don't want to record user logins
-            'on afterLogin' => function($event) {
+            'on afterLogin' => function ($event) {
                 \webvimark\modules\UserManagement\models\UserVisitLog::newVisitor($event->identity->id);
             }
         ],
@@ -166,23 +165,23 @@ $config = [
                 'baseUrl' => '@web/../themes/main',
             ],
         ],
-        
+
         'formatter' => [
             'class' => 'yii\i18n\Formatter',
             'nullDisplay' => '-',
         ],
-        
+
         'assetManager' => [
             'bundles' => [
                 'yii\web\JqueryAsset' => [
-                    'jsOptions' => [ 'position' => \yii\web\View::POS_HEAD ],
+                    'jsOptions' => ['position' => \yii\web\View::POS_HEAD],
                 ],
                 /* 'kartik\form\ActiveFormAsset' => [
                     'bsDependencyEnabled' => false // do not load bootstrap assets for a specific asset bundle
                 ], */
             ],
         ],
-        
+
         'i18n' => [
             'translations' => [
                 'yii*' => [
@@ -195,7 +194,7 @@ $config = [
                 ],
             ],
         ],
-        
+
     ],
     'params' => $params,
 ];
