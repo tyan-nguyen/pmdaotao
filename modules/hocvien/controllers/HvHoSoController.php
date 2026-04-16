@@ -96,6 +96,19 @@ class HvHoSoController extends Controller
         ]);
     }
 
+    public function actionError()
+    {
+        $this->layout = 'nolayout'; // layout bạn muốn dùng
+
+        $exception = Yii::$app->errorHandler->exception;
+
+        if ($exception !== null) {
+            return $this->render('error', [
+                'exception' => $exception,
+            ]);
+        }
+    }
+
     /**
      * Displays a single HvHocVien model.
      * @param integer $id
@@ -103,7 +116,6 @@ class HvHoSoController extends Controller
      */
     public function actionView($id)
     {
-        $this->layout = 'nolayout';
         throw new NotFoundHttpException('Trang không tồn tại.');
         /* $model = HocVien::find()->where(['id' => $id])->one();
         $trang_thai_duyet = $model->trang_thai_duyet;
