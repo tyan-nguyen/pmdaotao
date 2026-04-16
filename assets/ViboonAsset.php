@@ -1,9 +1,11 @@
 <?php
+
 /**
  * @link https://www.yiiframework.com/
  * @copyright Copyright (c) 2008 Yii Software LLC
  * @license https://www.yiiframework.com/license/
  */
+
 namespace app\assets;
 
 use yii\web\AssetBundle;
@@ -38,7 +40,7 @@ class ViboonAsset extends AssetBundle
         'assets/js/sticky.js',
         'assets/plugins/notify/js/jquery.growl.js',
         'assets/plugins/notify/js/notifIt.js',
-        
+
         //'assets/plugins/calendar/underscore-min.js',
         'assets/plugins/fullcalendar/moment.min.js',
         'assets/plugins/fullcalendar/fullcalendar.min.js',
@@ -51,7 +53,7 @@ class ViboonAsset extends AssetBundle
         'assets/plugins/owl-carousel/owl.carousel.js',
         'assets/plugins/multislider/multislider.js',
         'assets/js/carousel.js',
-        'js/vue.js',//vuejs
+        'js/vue.js', //vuejs
         'js/print-this/printThis.js',
         'js/ModalRemote.js?v=5',
         'js/ajaxcrud.js?v=2',
@@ -59,7 +61,7 @@ class ViboonAsset extends AssetBundle
         'https://cdn.jsdelivr.net/npm/flatpickr',
         //fancybox
         'js/fancybox/fancybox.umd.js',
-        'js/custom.js?v=2.5',
+        'js/custom.js?v=2.6',
         //'assets/plugins/tabs/jquery.multipurpose_tabcontent.js',
         //'assets/plugins/tabs/tab-content.js'
     ];

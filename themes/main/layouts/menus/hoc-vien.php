@@ -41,6 +41,7 @@ use app\modules\hocvien\models\HocVien;
 							<li><a href="/kholuutru/loai-file/index?doiTuong=<?= HocVien::MODEL_ID ?>&menu=hv3" class="slide-item" data-menu="hv3"> <i class="fe fe-file-text"></i> Loại hồ sơ</a></li>
 							<li><a href="/hocvien/dm-lien-ket?menu=hva" class="slide-item" data-menu="hva"> <i class="fe fe-file-text"></i> Đơn vị liên kết</a></li>
 							<li><a href="/hocvien/dm-nhan-ho-so-ho?menu=hvc" class="slide-item" data-menu="hvc"> <i class="fe fe-file-text"></i> DM nhận hồ sơ hộ</a></li>
+							<li><a href="/hocvien/file-thi-xe-may?menu=hvd" class="slide-item" data-menu="hvd"> <i class="fe fe-file-text"></i> <strong>FILE DS THI XE MÁY</strong></a></li>
 						</ul>
 						<div class="menutabs-content px-0">
 							<!-- menu tab here -->
