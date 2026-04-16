@@ -1,34 +1,38 @@
 <?php
+
 use yii\helpers\Url;
 use yii\bootstrap5\Html;
 use app\custom\CustomFunc;
 use app\modules\hocvien\models\DangKyHv;
 use app\modules\user\models\User;
+
 return [
     [
         'class' => 'kartik\grid\CheckboxColumn',
         'width' => '20px',
     ],
 
-        // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'id',
+    // [
+    // 'class'=>'\kartik\grid\DataColumn',
+    // 'attribute'=>'id',
     // ],
     [
         'class' => 'kartik\grid\ActionColumn',
-        'header'=>'',
+        'header' => '',
         //'template' => '{payment} {view} {update} {delete} ',
-        'template' => '{view}',
+        'template' => '{view} {view1}',
         'dropdown' => true,
         'dropdownOptions' => ['class' => 'float-right'],
-        'dropdownButton'=>[
-            'label'=>'<i class="fe fe-settings floating"></i>',
-            'class'=>'btn dropdown-toggle p-0'
+        'dropdownButton' => [
+            'label' => '<i class="fe fe-settings floating"></i>',
+            'class' => 'btn dropdown-toggle p-0'
         ],
-        'vAlign'=>   'middle',
+        'vAlign' =>   'middle',
         'width' => '20px',
-        'urlCreator' => function($action, $model, $key, $index) { 
-            if ($action === 'payment') {
+        'urlCreator' => function ($action, $model, $key, $index) {
+            if ($action === 'view1') {
+                return Url::to(['view1', 'id' => $key]);
+            } else if ($action === 'payment') {
                 return Url::to(['create2', 'id' => $key]);
             }
             return Url::to([$action, 'id' => $key]);
@@ -42,123 +46,136 @@ return [
         ],
         'updateOptions' => [
             'role' => 'modal-remote',
-            'title' => 'Sửa', 
+            'title' => 'Sửa',
             'class' => 'btn ripple btn-info btn-sm',
             'data-bs-placement' => 'top',
             'data-bs-toggle' => 'tooltip-info'
         ],
         'deleteOptions' => [
             'role' => 'modal-remote',
-            'title' => 'Xóa', 
+            'title' => 'Xóa',
             'class' => 'btn ripple btn-success btn-sm',
             'data-bs-placement' => 'top',
             'data-bs-toggle' => 'tooltip-success'
         ],
-    'buttons' => [
-    'payment' => function ($url, $model, $key) {
-        return Html::a('<i class="fas fa-dollar-sign"></i> Đóng học phí', $url, [
-            'title' => 'Đóng học phí',
-            'role' => 'modal-remote',
-            'class' => 'btn ripple btn-warning dropdown-item', 
-            'data-bs-placement' => 'top',
-            'data-bs-toggle' => 'tooltip',
-        ]);
-    },
-],
+        'visibleButtons' => [
+            'view' => false,
+            'view1' => true,
+        ],
+        'buttons' => [
+            'view1' => function ($url, $model, $key) {
+                return Html::a('<i class="fas fa-eye"></i> Xem', $url, [
+                    'title' => 'Xem',
+                    'role' => 'modal-remote',
+                    'class' => 'btn ripple btn-primary dropdown-item',
+                    'data-bs-placement' => 'top',
+                    'data-bs-toggle' => 'tooltip',
+                ]);
+            },
+            'payment' => function ($url, $model, $key) {
+                return Html::a('<i class="fas fa-dollar-sign"></i> Đóng học phí', $url, [
+                    'title' => 'Đóng học phí',
+                    'role' => 'modal-remote',
+                    'class' => 'btn ripple btn-warning dropdown-item',
+                    'data-bs-placement' => 'top',
+                    'data-bs-toggle' => 'tooltip',
+                ]);
+            },
+        ],
 
     ],
     [
         'class' => 'kartik\grid\SerialColumn',
         'width' => '30px',
     ],
-    
+
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'noi_dang_ky',
-        'label'=>'NĐK',
-        'value'=>function($model){
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'noi_dang_ky',
+        'label' => 'NĐK',
+        'value' => function ($model) {
             return DangKyHv::getLabelNoiDangKyBadge($model->noi_dang_ky);
         },
-        'format'=>'raw',
+        'format' => 'raw',
         'width' => '50px',
-        'contentOptions' => [ 'style' => 'text-align:center' ],
-        ],
-    
+        'contentOptions' => ['style' => 'text-align:center'],
+    ],
+
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'ho_ten',
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'ho_ten',
         'width' => '150px',
     ],
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'ngay_sinh',
-        'value'=>function($model){
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'ngay_sinh',
+        'value' => function ($model) {
             return CustomFunc::convertYMDHISToDMY($model->ngay_sinh);
         },
         'width' => '70px',
     ],
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'so_dien_thoai',
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'so_dien_thoai',
         'width' => '100px',
     ],
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'so_cccd',
-        'label'=>'CCCD (Mã KH)',
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'so_cccd',
+        'label' => 'CCCD (Mã KH)',
         'width' => '150px',
-        'contentOptions' => [ 'style' => 'text-align:center' ],
+        'contentOptions' => ['style' => 'text-align:center'],
     ],
 
- 
+
     [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'id_hang',
         'width' => '120px',
-        'value' => function($model) {
+        'value' => function ($model) {
             //return $model->hangDaoTao ? $model->hangDaoTao->ten_hang : 'N/A';
-    return '<span title="'. ($model->hangDaoTao ? $model->hangDaoTao->ten_hang : 'N/A') .'">' . ($model->hangDaoTao ? $model->hangDaoTao->ma_hang : 'N/A') . '</span>';
+            return '<span title="' . ($model->hangDaoTao ? $model->hangDaoTao->ten_hang : 'N/A') . '">' . ($model->hangDaoTao ? $model->hangDaoTao->ma_hang : 'N/A') . '</span>';
         },
-        'format'=>'raw',
+        'format' => 'raw',
         'label' => 'Hạng đào tạo',
         //'pageSummary' => 'Tổng cộng (E=A-B-C+D)',
         //'pageSummaryOptions' => ['class' => 'text-right text-end'],
     ],
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'khoaHoc.ten_khoa_hoc',
-        'label'=>'Khóa học',
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'khoaHoc.ten_khoa_hoc',
+        'label' => 'Khóa học',
         'width' => '100px',
-        'contentOptions' => [ 'style' => 'text-align:center' ],
+        'contentOptions' => ['style' => 'text-align:center'],
     ],
     [
         'class' => '\kartik\grid\DataColumn',
-        'label'=>'Học phí(A)',
+        'label' => 'Học phí(A)',
         'width' => '120px',
-        'value' => function($model) {
+        'value' => function ($model) {
             return $model->hocPhi->hoc_phi;
         },
-        'contentOptions' => [ 'style' => 'text-align:right' ],
+        'contentOptions' => ['style' => 'text-align:right'],
         'format' => ['decimal', 0],
         'pageSummary' => true,
         'pageSummaryOptions' => ['class' => 'text-right text-end'],
-        'visible'=>User::hasRole('nDaoTao',true),
-        ],
-        //'pageSummary' => true,
+        'visible' => User::hasRole('nDaoTao', true),
+    ],
+    //'pageSummary' => true,
     [
         'class' => '\kartik\grid\DataColumn',
-        'label'=>'Đã thanh toán(B)',
+        'label' => 'Đã thanh toán(B)',
         'width' => '120px',
-        'value' => function($model) {
+        'value' => function ($model) {
             return $model->tienDaNopDuong;
         },
-        'contentOptions' => [ 'style' => 'text-align:right' ],
+        'contentOptions' => ['style' => 'text-align:right'],
         'format' => ['decimal', 0],
         'pageSummary' => true,
         'pageSummaryOptions' => ['class' => 'text-right text-end'],
-        'visible'=>User::hasRole('nDaoTao',true),
-     ],
-     /* [
+        'visible' => User::hasRole('nDaoTao', true),
+    ],
+    /* [
          'class' => '\kartik\grid\DataColumn',
          'label'=>'Chiết khấu(C)',
          'width' => '120px',
@@ -170,7 +187,7 @@ return [
          'pageSummary' => true,
          'pageSummaryOptions' => ['class' => 'text-right text-end'],
       ], */
-     /*  [
+    /*  [
           'class' => '\kartik\grid\DataColumn',
           'label'=>'Chi lại(D)',
           'width' => '120px',
@@ -182,35 +199,35 @@ return [
           'pageSummary' => true,
           'pageSummaryOptions' => ['class' => 'text-right text-end'],
        ], */
-     [
-          'class' => '\kartik\grid\DataColumn',
-          'label'=>'Còn lại(E)',
-          'width' => '120px',
-          'value' => function($model) {
+    [
+        'class' => '\kartik\grid\DataColumn',
+        'label' => 'Còn lại(E)',
+        'width' => '120px',
+        'value' => function ($model) {
             return $model->tienChuaThanhToan;
-          },
-          'contentOptions' => [ 'style' => 'text-align:right;font-weight:bold'],
-          'format' => ['decimal', 0],
-          'pageSummary' => true,
-          'pageSummaryOptions' => ['class' => 'text-right text-end'],
-          'visible'=>User::hasRole('nDaoTao',true),
-     ],
-     [
-          'class'=>'\kartik\grid\DataColumn',
-          'label'=>'Thu hộ',
-          'value'=>function($model){
-            return !$model->checkThuHo()?'<i class="ion-checkmark-circled text-success"></i>':'';
-          },
-          'width' => '30px',
-          'format' => 'html',
-          'contentOptions' => [ 'style' => 'text-align:center'],
-     ],
+        },
+        'contentOptions' => ['style' => 'text-align:right;font-weight:bold'],
+        'format' => ['decimal', 0],
+        'pageSummary' => true,
+        'pageSummaryOptions' => ['class' => 'text-right text-end'],
+        'visible' => User::hasRole('nDaoTao', true),
+    ],
+    [
+        'class' => '\kartik\grid\DataColumn',
+        'label' => 'Thu hộ',
+        'value' => function ($model) {
+            return !$model->checkThuHo() ? '<i class="ion-checkmark-circled text-success"></i>' : '';
+        },
+        'width' => '30px',
+        'format' => 'html',
+        'contentOptions' => ['style' => 'text-align:center'],
+    ],
     // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'trang_thai',
+    // 'class'=>'\kartik\grid\DataColumn',
+    // 'attribute'=>'trang_thai',
     // ],
-     
-        /* [
+
+    /* [
             'class'=>'\kartik\grid\DataColumn',
             'attribute'=>'noi_dang_ky',
             'width' => '200px',
@@ -218,7 +235,7 @@ return [
                 return $model->getLabelNoiDangKy();
             }
         ], */
-     /* [
+    /* [
          'class'=>'\kartik\grid\DataColumn',
          'attribute'=>'thoi_gian_tao',
          'value'=>function($model){
@@ -227,28 +244,28 @@ return [
          'width' => '100px',
     ], */
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'thoi_gian_hoan_thanh_ho_so',
-        'label'=>'Hoàn thành HS',
-        'value'=>function($model){
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'thoi_gian_hoan_thanh_ho_so',
+        'label' => 'Hoàn thành HS',
+        'value' => function ($model) {
             return CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_hoan_thanh_ho_so);
         },
         'width' => '80px',
-        ],
-        
+    ],
+
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'nguoi_tao',
-        'value'=>function($model){
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'nguoi_tao',
+        'value' => function ($model) {
             return $model->nguoiTao->shortName;
         },
         'width' => '100px',
     ],
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'ghi_chu',
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'ghi_chu',
         'width' => '200px',
-     ],
+    ],
     /* [
         'class'=>'\kartik\grid\DataColumn',
         'header'=>'HT hồ sơ',
@@ -257,9 +274,9 @@ return [
         },
         'width' => '100px',
         ], */
-    
-    
-    
+
+
+
     /*
     [
         'class' => '\kartik\grid\DataColumn',
@@ -292,7 +309,7 @@ return [
         },
     ],
     */
-  
-    
- 
-];   
+
+
+
+];

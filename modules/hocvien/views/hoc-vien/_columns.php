@@ -1,4 +1,5 @@
 <?php
+
 use yii\helpers\Url;
 use yii\bootstrap5\Html;
 use app\modules\hocvien\models\NopHocPhi;
@@ -6,6 +7,7 @@ use app\modules\hocvien\models\HocVien;
 use app\modules\hocvien\models\HocPhi;
 use app\modules\hocvien\models\KhoaHoc;
 use app\custom\CustomFunc;
+
 return [
     [
         'class' => 'kartik\grid\CheckboxColumn',
@@ -13,23 +15,23 @@ return [
     ],
     [
         'class' => 'kartik\grid\ActionColumn',
-        'header'=>'',
+        'header' => '',
         'template' => '{capNhapGiaoVien} {view}',
         'dropdown' => true,
         'dropdownOptions' => ['class' => 'float-right'],
-        'dropdownButton'=>[
-            'label'=>'<i class="fe fe-settings floating"></i>',
-            'class'=>'btn dropdown-toggle p-0'
+        'dropdownButton' => [
+            'label' => '<i class="fe fe-settings floating"></i>',
+            'class' => 'btn dropdown-toggle p-0'
         ],
-        'vAlign'=>'middle',
+        'vAlign' => 'middle',
         'width' => '20px',
-        'urlCreator' => function($action, $model, $key, $index) {
+        'urlCreator' => function ($action, $model, $key, $index) {
             if ($action === 'capNhapGiaoVien') {
                 return Url::to(['phan-cong-giao-vien', 'id' => $key]);
             }
             return Url::to([$action, 'id' => $key]);
         },
-        
+
         'viewOptions' => [
             'role' => 'modal-remote',
             'title' => 'Xem',
@@ -39,58 +41,58 @@ return [
         ],
         'updateOptions' => [
             'role' => 'modal-remote',
-            'title' => 'Sửa', 
+            'title' => 'Sửa',
             'class' => 'btn ripple btn-info btn-sm',
             'data-bs-placement' => 'top',
             'data-bs-toggle' => 'tooltip-info'
         ],
         'deleteOptions' => [
             'role' => 'modal-remote',
-            'title' => 'Xóa', 
+            'title' => 'Xóa',
             'class' => 'btn ripple btn-success btn-sm',
             'data-bs-placement' => 'top',
             'data-bs-toggle' => 'tooltip-success'
         ],
         'buttons' => [
-          'capNhapGiaoVien' => function ($url, $model, $key) {
-              return Html::a('<i class="fa-solid fa-list-check"></i> Phân công giáo viên', $url, [
-                'title' => 'Phân công giáo viên giảng dạy',
-                'role' => 'modal-remote',
-                'class' => 'btn ripple btn-warning dropdown-item', 
-                'data-bs-placement' => 'top',
-                'data-bs-toggle' => 'tooltip',
-              ]);
-           },
-       ],
+            'capNhapGiaoVien' => function ($url, $model, $key) {
+                return Html::a('<i class="fa-solid fa-list-check"></i> Phân công giáo viên', $url, [
+                    'title' => 'Phân công giáo viên giảng dạy',
+                    'role' => 'modal-remote',
+                    'class' => 'btn ripple btn-warning dropdown-item',
+                    'data-bs-placement' => 'top',
+                    'data-bs-toggle' => 'tooltip',
+                ]);
+            },
+        ],
     ],
     [
         'class' => 'kartik\grid\SerialColumn',
         'width' => '30px',
     ],
-    
+
     [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'id_khoa_hoc',
         'value' => function ($model) {
-        $khoaHoc = KhoaHoc::findOne($model->id_khoa_hoc);
-        return $khoaHoc
-        ? '<strong>' . $khoaHoc->ten_khoa_hoc . '</strong>'
-            : '<span class="badge bg-warning"> Chưa sắp khóa học </span>';
+            $khoaHoc = KhoaHoc::findOne($model->id_khoa_hoc);
+            return $khoaHoc
+                ? '<strong>' . $khoaHoc->ten_khoa_hoc . '</strong>'
+                : '<span class="badge bg-warning"> Chưa sắp khóa học </span>';
         },
         'format' => 'raw',
         'width' => '200px',
     ],
-   
+
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'ho_ten',
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'ho_ten',
         'width' => '200px',
     ],
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'ngay_sinh',
-        'value'=>function($model){
-            return CustomFunc::convertYMDToDMY($model->ngay_sinh);  
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'ngay_sinh',
+        'value' => function ($model) {
+            return CustomFunc::convertYMDToDMY($model->ngay_sinh);
         },
         'width' => '100px',
     ],
@@ -104,50 +106,50 @@ return [
         'filter' => [
             1 => 'Nam',
             0 => 'Nữ',
-        ], 
+        ],
         'headerOptions' => ['style' => 'text-align: center;'],
         'contentOptions' => ['style' => 'text-align: center;'],
     ],
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'so_cccd',
-        'label'=>'CCCD (Mã KH)',
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'so_cccd',
+        'label' => 'CCCD (Mã KH)',
         'width' => '150px',
-        'contentOptions' => [ 'style' => 'text-align:center' ],
+        'contentOptions' => ['style' => 'text-align:center'],
     ],
     [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'id_hang',
         'width' => '250px',
-        'value' => function($model) {
+        'value' => function ($model) {
             return $model->hangDaoTao ? $model->hangDaoTao->ten_hang : 'N/A';
         },
         'label' => 'Hạng đào tạo',
-        ],
-    
-    
+    ],
+
+
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'id_giao_vien',
-        'value'=>function($model){
-            return $model->giaoVien?$model->giaoVien->ho_ten:'';
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'id_giao_vien',
+        'value' => function ($model) {
+            return $model->giaoVien ? $model->giaoVien->ho_ten : '';
         },
         'width' => '150px',
     ],
 
-     /* [
+    /* [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'trang_thai',
         'width' => '150px',
      ], */
 
-    
+
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'nguoi_tao',
-        'value'=>function($model){
-        return $model->nguoiTao->username;
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'nguoi_tao',
+        'value' => function ($model) {
+            return $model->nguoiTao->username;
         },
         'width' => '100px',
     ],
-];   
+];
