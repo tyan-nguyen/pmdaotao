@@ -24,8 +24,10 @@ use yii\db\Expression;
  */
 class HvHoSoController extends Controller
 {
-   // public $freeAccess = true;
+    // public $freeAccess = true;
     //public $freeAccessActions = ['get-phieu-in-ajax', 'update-print-count', 'report-list', 'get-phieu-in-report-list-ajax'];
+    public $freeAccessActions = ['view'];
+
     /**
      * @inheritdoc
      */
