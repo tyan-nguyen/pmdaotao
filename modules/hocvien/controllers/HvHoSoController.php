@@ -98,7 +98,7 @@ class HvHoSoController extends Controller
 
     public function actionError()
     {
-        $this->layout = 'nolayout'; // layout bạn muốn dùng
+        $this->layout = '@app/themes/main/layouts/nolayout'; // layout bạn muốn dùng
 
         $exception = Yii::$app->errorHandler->exception;
 
