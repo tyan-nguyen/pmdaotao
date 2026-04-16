@@ -1,4 +1,5 @@
 <?php
+
 use app\assets\ViboonAsset;
 use yii\helpers\Html;
 
@@ -8,52 +9,54 @@ ViboonAsset::register($this);
 <!doctype html>
 <html lang="en" dir="ltr">
 
-	<head>
-		<link rel="shortcut icon" type="image/x-icon" href="<?= Yii::getAlias('@web')  ?>/assets/images/brand/favicon.ico" >
-		<!-- Title -->
-		<title><?= Html::encode($this->title) ?></title>
-		<?php $this->head() ?>
-	</head>
+<head>
+    <link rel="shortcut icon" type="image/x-icon" href="<?= Yii::getAlias('@web')  ?>/assets/images/brand/favicon.ico">
+    <!-- Title -->
+    <title><?= Html::encode($this->title) ?></title>
+    <meta name="robots" content="noindex, nofollow">
+    <?php $this->head() ?>
+</head>
 
-	<body class="app sidebar-mini login-img">
-	<?php $this->beginBody() ?>
-	
-	 <!-- Loader -->
-        <div id="global-loader">
-            <img src="<?= Yii::getAlias('@web')  ?>/assets/images/svgs/loader1.svg" alt="loader">
-        </div>
-        <!-- /Loader -->
+<body class="app sidebar-mini login-img">
+    <?php $this->beginBody() ?>
 
-        <!-- Page -->
-        <div class="page main-signin-wrapper" style="background-image: url(/libs/images/anhtruonglai.jpg);background-repeat: no-repeat;
+    <!-- Loader -->
+    <div id="global-loader">
+        <img src="<?= Yii::getAlias('@web')  ?>/assets/images/svgs/loader1.svg" alt="loader">
+    </div>
+    <!-- /Loader -->
+
+    <!-- Page -->
+    <div class="page main-signin-wrapper" style="background-image: url(/libs/images/anhtruonglai.jpg);background-repeat: no-repeat;
 background-position: center center;
 background-attachment: fixed;
 background-size: cover;">
 
-            <!-- Row -->
-            <div class="row text-center ps-0 pe-0 ms-0 me-0">
-                <div class=" col-xl-3 col-lg-5 col-md-5 d-block mx-auto">
-                    <div class="text-center mb-2">
-                        <a href="#">
-                            <img src="<?= Yii::getAlias('@web')  ?>/assets/images/brand/logo_login_new.png" class="header-brand-img" alt="logo">
-                            <img src="<?= Yii::getAlias('@web')  ?>/assets/images/brand/logo1.png" class="header-brand-img theme-logos" alt="logo">
-                        </a>
-                    </div>
-                    <div class="card custom-card"  style="opacity:0.9">
-                        <div class="card-body pd-25">
-                            <?= $content ?>
-                        </div>
+        <!-- Row -->
+        <div class="row text-center ps-0 pe-0 ms-0 me-0">
+            <div class=" col-xl-3 col-lg-5 col-md-5 d-block mx-auto">
+                <div class="text-center mb-2">
+                    <a href="#">
+                        <img src="<?= Yii::getAlias('@web')  ?>/assets/images/brand/logo_login_new.png" class="header-brand-img" alt="logo">
+                        <img src="<?= Yii::getAlias('@web')  ?>/assets/images/brand/logo1.png" class="header-brand-img theme-logos" alt="logo">
+                    </a>
+                </div>
+                <div class="card custom-card" style="opacity:0.9">
+                    <div class="card-body pd-25">
+                        <?= $content ?>
                     </div>
                 </div>
             </div>
-            <!-- End Row -->
-
         </div>
-        <!-- End Page -->
-		
-        <!-- Back to top -->
-        <a href="#top" id="back-to-top"><i class="fa fa-angle-up"></i></a>
-		<?php $this->endBody() ?>
-	</body>
+        <!-- End Row -->
+
+    </div>
+    <!-- End Page -->
+
+    <!-- Back to top -->
+    <a href="#top" id="back-to-top"><i class="fa fa-angle-up"></i></a>
+    <?php $this->endBody() ?>
+</body>
+
 </html>
 <?php $this->endPage() ?>
