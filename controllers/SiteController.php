@@ -12,7 +12,7 @@ use app\models\ContactForm;
 
 class SiteController extends Controller
 {
-    public $freeAccessActions = ['index'];
+    public $freeAccessActions = ['index', 'error'];
     /**
      * {@inheritdoc}
      */
