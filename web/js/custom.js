@@ -1,91 +1,99 @@
 Fancybox.bind('[data-fancybox="gallery"]', {
-  // Your custom options for a specific gallery
+	// Your custom options for a specific gallery
 });
 Fancybox.bind('[data-fancybox="gallery1"]', {
-  // Your custom options for a specific gallery
+	// Your custom options for a specific gallery
 });
 /**
  * ham hien thi notify
  * tham so truyen vao: text can hien thi
  * [su dung trong ajax crud]
  */
-function showNotif(mess){
-    return $.growl({
-        style: "notice",
-        title: "Thông báo!",
-        duration: 2000,
-        message: mess           
-    });
+function showNotif(mess) {
+	return $.growl({
+		style: "notice",
+		title: "Thông báo!",
+		duration: 2000,
+		message: mess
+	});
+}
+function showError(mess) {
+	return $.growl({
+		style: "error",
+		title: "Lỗi!",
+		duration: 2000,
+		message: mess
+	});
 }
 /**
  * in html tu 1 div
  * [them id #print cho div parent]
  */
-function printQr(){
+function printQr() {
 	$('#print').printThis({
-		 //debug: false,               // show the iframe for debugging
-		 importCSS: false,            // import parent page css
-		 loadCSS: ['/css/print-single.css?v=25'],
-		 //printDelay: 333,
-    });
+		//debug: false,               // show the iframe for debugging
+		importCSS: false,            // import parent page css
+		loadCSS: ['/css/print-single.css?v=25'],
+		//printDelay: 333,
+	});
 }
 
 /**
  * in html tu 1 div
  * [them id #print cho div parent]
  */
-function printPhieu(){
+function printPhieu() {
 	$('#print').printThis({
-		 //debug: false,               // show the iframe for debugging
-		 importCSS: false,            // import parent page css
-		 loadCSS: ['/css/print-phieu.css?v=3',
-		 	'/assets/fontawesome-free-6.4.0-web/css/all.min.css',
-		 ],
-		 //printDelay: 333,
-    });
+		//debug: false,               // show the iframe for debugging
+		importCSS: false,            // import parent page css
+		loadCSS: ['/css/print-phieu.css?v=3',
+			'/assets/fontawesome-free-6.4.0-web/css/all.min.css',
+		],
+		//printDelay: 333,
+	});
 }
 /**
  * in html tu 1 div
  * [them id #print cho div parent]
  */
-function printHoaDon(){
+function printHoaDon() {
 	$('#printHD').printThis({
-		 //debug: false,               // show the iframe for debugging
-		 importCSS: false,            // import parent page css
-		 loadCSS: ['/css/print-hoa-don.css?v=1',
-		 	'/assets/fontawesome-free-6.4.0-web/css/all.min.css',
-		 ],
-		 //printDelay: 333,
-    });
+		//debug: false,               // show the iframe for debugging
+		importCSS: false,            // import parent page css
+		loadCSS: ['/css/print-hoa-don.css?v=1',
+			'/assets/fontawesome-free-6.4.0-web/css/all.min.css',
+		],
+		//printDelay: 333,
+	});
 }
 /**
  * in html tu 1 div
  * [them id #printDoiHang cho div parent]
  */
-function printPhieuDoiHang(){
+function printPhieuDoiHang() {
 	$('#printDoiHang').printThis({
-		 //debug: false,               // show the iframe for debugging
-		 importCSS: false,            // import parent page css
-		 loadCSS: ['/css/print-phieu.css?v=3',
-		 	'/assets/fontawesome-free-6.4.0-web/css/all.min.css',
-		 ],
-		 //printDelay: 333,
-    });
+		//debug: false,               // show the iframe for debugging
+		importCSS: false,            // import parent page css
+		loadCSS: ['/css/print-phieu.css?v=3',
+			'/assets/fontawesome-free-6.4.0-web/css/all.min.css',
+		],
+		//printDelay: 333,
+	});
 }
 
 /**
  * xu ly user khong co hanh dong nao trong khoang thoi gian
  */
 /*function debounce(callback, timeout, _this) {
-    var timer;
-    return function(e) {
-        var _that = this;
-        if (timer)
-            clearTimeout(timer);
-        timer = setTimeout(function() { 
-            callback.call(_this || _that, e);
-        }, timeout);
-    }
+	var timer;
+	return function(e) {
+		var _that = this;
+		if (timer)
+			clearTimeout(timer);
+		timer = setTimeout(function() { 
+			callback.call(_this || _that, e);
+		}, timeout);
+	}
 }
 
 // we'll attach the function created by "debounce" to each of the target
@@ -93,7 +101,7 @@ function printPhieuDoiHang(){
 // with no additional input; it can be attached to any number of desired
 // events
 var userAction = debounce(function(e) {
-    console.log("silence");
+	console.log("silence");
 }, 2000);
 
 document.addEventListener("mousemove", userAction, false);
@@ -101,20 +109,20 @@ document.addEventListener("click", userAction, false);
 document.addEventListener("scroll", userAction, false);*/
 
 
-function setMenuActive(){
+function setMenuActive() {
 	const queryString = window.location.search;
 	const urlParams = new URLSearchParams(queryString);
 	const dataMenu = urlParams.get('menu');
 	//console.log(dataMenu);
-	if(dataMenu != null){
-		const parentMenu = dataMenu.substring(0,dataMenu.length - 1);
+	if (dataMenu != null) {
+		const parentMenu = dataMenu.substring(0, dataMenu.length - 1);
 		//console.log(parentMenu);
-		$("a[data-menu='"+dataMenu+"']").addClass('active');
-		$("ul[data-menu='"+parentMenu+"']").css({ display: "block" });
+		$("a[data-menu='" + dataMenu + "']").addClass('active');
+		$("ul[data-menu='" + parentMenu + "']").css({ display: "block" });
 	}
 }
 setMenuActive();
 
-function toggleSearch(){
+function toggleSearch() {
 	$("#divFilterExtend").toggle();
 }
