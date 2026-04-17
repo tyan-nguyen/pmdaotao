@@ -439,6 +439,15 @@ return [
     ],
     [
         'class' => '\kartik\grid\DataColumn',
+        'label' => 'SL.Thi',
+        'value' => function ($model) {
+            return $model->soLanThi;
+        },
+        'width' => '30px',
+        'contentOptions' => ['style' => 'text-align:center'],
+    ],
+    [
+        'class' => '\kartik\grid\DataColumn',
         'attribute' => 'nguoi_tao',
         'value' => function ($model) {
             return $model->nguoiTao->shortName;
