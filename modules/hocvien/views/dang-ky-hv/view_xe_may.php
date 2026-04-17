@@ -58,7 +58,7 @@ use app\widgets\CardWidget;
                                             <th>Loại thu</th>
                                             <th>Ngày đóng</th>
                                             <th>Số tiền</th>
-                                            <th>Hình thức</th>
+                                            <th style="text-align: center;">Hình thức</th>
                                             <th>Người thu</th>
                                             <th>Ghi chú</th>
                                         </tr>
@@ -75,7 +75,7 @@ use app\widgets\CardWidget;
                                                     <td><?= $tienLePhi['type'] === 'ThuLanDau' ? 'Thu kèm học phí' : 'Thu hóa đơn lẻ' ?></td>
                                                     <td><?= $tienLePhi['thoi_gian'] ?></td>
                                                     <td><?= number_format($tienLePhi['so_tien']) ?></td>
-                                                    <td><?= $tienLePhi['hinh_thuc'] ?></td>
+                                                    <td style="text-align: center;"><?= $tienLePhi['hinh_thuc'] ?></td>
                                                     <td><?= $tienLePhi['nguoi_thu'] ?></td>
                                                     <td><?= $tienLePhi['ghi_chu'] ?></td>
                                                 </tr>
