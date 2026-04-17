@@ -142,7 +142,7 @@ use app\widgets\CardWidget;
                                         ?>
                                                 <tr>
                                                     <td><?= $stt ?></td>
-                                                    <td><?= $tienLePhi['hinh_thuc'] == 'ThuLanDau' ? 'Thu kèm học phí' : 'Thu hóa đơn lẻ' ?></td>
+                                                    <td><?= $tienLePhi['type'] === 'ThuLanDau' ? 'Thu kèm học phí' : 'Thu hóa đơn lẻ' ?></td>
                                                     <td><?= $tienLePhi['thoi_gian'] ?></td>
                                                     <td><?= number_format($tienLePhi['so_tien']) ?></td>
                                                     <td><?= $tienLePhi['hinh_thuc'] ?></td>
