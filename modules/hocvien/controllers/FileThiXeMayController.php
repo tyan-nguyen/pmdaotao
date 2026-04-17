@@ -190,6 +190,7 @@ class FileThiXeMayController extends Controller
                 $query = HocVien::find()->where([
                     //'ngay_sinh' => CustomFunc::convertDMYToYMD($row[2]), //tạm bỏ
                     'so_cccd' => $row[3],
+                    'huy_ho_so' => 0
                 ])
                     ->andWhere(new Expression('UPPER(ho_ten) = :name', [':name' => mb_strtoupper($row[1], 'UTF-8')]))
                     ->andWhere('id_hang IN (7,8,9,10)'); //hạng xe máy
@@ -292,8 +293,9 @@ class FileThiXeMayController extends Controller
                 $hocVien = HocVien::find()->where([
                     //'ngay_sinh' => CustomFunc::convertDMYToYMD($row[2]),
                     'so_cccd' => $row[3],
+                    'huy_ho_so' => 0
                 ])
-                    ->andWhere(new Expression('UPPER(ho_ten) = :name', [':name' => strtoupper($row[1])]))
+                    ->andWhere(new Expression('UPPER(ho_ten) = :name', [':name' => mb_strtoupper($row[1], 'UTF-8')]))
                     ->andWhere('id_hang IN (7,8,9,10)') //hạng xe máy
                     ->one();
                 if ($hocVien != null) {
