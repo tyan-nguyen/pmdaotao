@@ -19,6 +19,7 @@ use app\modules\daotao\models\TietHoc;
 class HocVien extends HocVienBase
 {
     const MODEL_ID = 'HOCVIEN';
+    const LOAI_HOC_VIEN_XE_MAY = [7, 8, 9, 10]; // A và A1
 
     public function getPubName()
     {
