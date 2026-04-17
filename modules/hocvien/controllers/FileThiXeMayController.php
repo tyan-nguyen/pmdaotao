@@ -16,6 +16,7 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 use app\custom\CustomFunc;
 use app\models\FileUploadForm;
 use app\modules\hocvien\models\HocVien;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
 use yii\db\Expression;
 use yii\web\UploadedFile;
 
@@ -246,7 +247,9 @@ class FileThiXeMayController extends Controller
         unset($rows[2]);
         $success = 0;
         $failed = 0;
+        $rIndex = 3;
         foreach ($rows as $row) {
+            $rIndex++;
             //tim hoc vien
             //check custom id hoc vien (row E)
             if (isset($row[4]) && $row[4] != null) {
@@ -257,7 +260,27 @@ class FileThiXeMayController extends Controller
                     $data->id_file = $model->id;
                     $data->sbd = $row[0];
                     $data->ho_ten = $row[1];
-                    $data->ngay_sinh = $row[2];
+                    //$data->ngay_sinh = $row[2];
+                    $cell = $sheet->getCellByColumnAndRow(3, $rIndex);
+                    $value = $cell->getValue();
+
+                    // CASE 1: Excel date (numeric)
+                    if (is_numeric($value)) {
+                        $data->ngay_sinh = Date::excelToDateTimeObject($value)
+                            ->format('d/m/Y');
+                    }
+                    // CASE 2: string (mm/dd/yyyy)
+                    else {
+                        $date = \DateTime::createFromFormat('m/d/Y', $value);
+
+                        if ($date) {
+                            $data->ngay_sinh = $date->format('d/m/Y');
+                        } else {
+                            // fallback thử d/m/Y
+                            $date = \DateTime::createFromFormat('d/m/Y', $value);
+                            $data->ngay_sinh = $date ? $date->format('d/m/Y') : null;
+                        }
+                    }
                     $data->cccd = $row[3];
                     if ($data->save()) {
                         $success++;
@@ -279,7 +302,27 @@ class FileThiXeMayController extends Controller
                     $data->id_file = $model->id;
                     $data->sbd = $row[0];
                     $data->ho_ten = $row[1];
-                    $data->ngay_sinh = $row[2];
+                    //$data->ngay_sinh = $row[2];
+                    $cell = $sheet->getCellByColumnAndRow(3, $rIndex);
+                    $value = $cell->getValue();
+
+                    // CASE 1: Excel date (numeric)
+                    if (is_numeric($value)) {
+                        $data->ngay_sinh = Date::excelToDateTimeObject($value)
+                            ->format('d/m/Y');
+                    }
+                    // CASE 2: string (mm/dd/yyyy)
+                    else {
+                        $date = \DateTime::createFromFormat('m/d/Y', $value);
+
+                        if ($date) {
+                            $data->ngay_sinh = $date->format('d/m/Y');
+                        } else {
+                            // fallback thử d/m/Y
+                            $date = \DateTime::createFromFormat('d/m/Y', $value);
+                            $data->ngay_sinh = $date ? $date->format('d/m/Y') : null;
+                        }
+                    }
                     $data->cccd = $row[3];
                     if ($data->save()) {
                         $success++;
