@@ -82,7 +82,7 @@ class FileThiXeMayController extends Controller
 
                 if ($model->file->saveAs($filePath)) {
                     $newFile = new FileThiXeMay();
-                    $newFile->ten_khoa_thi = $model->file->name;
+                    $newFile->ten_khoa_thi = pathinfo($model->file->name, PATHINFO_FILENAME);
                     //$newFile->ngay_thi = '';
                     $newFile->url = $filename;
                     $newFile->filename = $model->file->name;
@@ -102,6 +102,7 @@ class FileThiXeMayController extends Controller
      * Readfile & import content file to db (file_thi_xe_may_content).
      * @param integer $id
      * @return mixed
+     * tạm tắt tìm theo ngày sinh vì sợ lỗi định dạng datime trong excel
      */
     public function actionReadFile($id)
     {
@@ -113,7 +114,6 @@ class FileThiXeMayController extends Controller
         $rows = $sheet->toArray();
 
         $request = Yii::$app->request;
-        Yii::$app->response->format = Response::FORMAT_JSON;
 
         $textFirstRow = $rows[0][0];
         $textSBD = $rows[2][0];
@@ -134,7 +134,7 @@ class FileThiXeMayController extends Controller
         if ($titleCheck === false) {
             return [
                 'title' => "Kết quả CHECK FILE",
-                'content' => "File không đúng định dạng!" . ' ' . $textSBD . ' ' . $textHoTen,
+                'content' => "File không đúng định dạng!",
                 'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"])
             ];
         }
@@ -147,6 +147,13 @@ class FileThiXeMayController extends Controller
         $visitedCMT = [];
 
         foreach ($rows as $row) {
+
+
+            /*  var_dump($row[2]);
+            die; */
+
+
+
             $curentRow++;
             if ($row[0] == null || $row[1] == null || $row[2] == null || $row[3] == null) {
                 $rowErrors[$curentRow] = 'Lỗi dữ liệu trống!';
@@ -166,66 +173,37 @@ class FileThiXeMayController extends Controller
                 $visitedCMT[$row[3]] = $curentRow;
             }
 
-            $hocVien = HocVien::find()->where([
-                'ngay_sinh' => CustomFunc::convertDMYToYMD($row[2]),
-                'so_cccd' => $row[3],
-            ])
-                ->andWhere(new Expression('UPPER(ho_ten) = :name', [':name' => strtoupper($row[1])]))
-                ->one();
-            if ($hocVien == null) {
-                $rowErrors[$curentRow] = 'Thông tin học viên SBD <strong>' . $row[0] . '</strong> không tồn tại';
+            //check custom id hoc vien (row E)
+            if (isset($row[4]) && $row[4] != null) {
+                $hocVien = HocVien::findOne($row[4]);
+                if ($hocVien === null) {
+                    $rowErrors[$curentRow] = 'Thông tin học viên (custom id) SBD <strong>' . $row[0] . '</strong> không tồn tại';
+                } else {
+                    //check sbd
+                    if ($hocVien->ho_ten != $row[1] || $hocVien->so_cccd != $row[3]) {
+                        $rowErrors[$curentRow] = 'Thông tin học viên (custom id) SBD <strong>' . $row[0] . '</strong> không đúng';
+                    }
+                }
+            } else {
+
+                $query = HocVien::find()->where([
+                    //'ngay_sinh' => CustomFunc::convertDMYToYMD($row[2]), //tạm bỏ
+                    'so_cccd' => $row[3],
+                ])
+                    ->andWhere(new Expression('UPPER(ho_ten) = :name', [':name' => mb_strtoupper($row[1], 'UTF-8')]))
+                    ->andWhere('id_hang IN (7,8,9,10)'); //hạng xe máy
+                //$hocVien = $query->one();
+                $countHocVien = $query->count();
+
+                if ($countHocVien == 0) {
+                    $rowErrors[$curentRow] = 'Thông tin học viên SBD <strong>' . $row[0] . '</strong> không tồn tại';
+                } else if ($countHocVien > 1) {
+                    $rowErrors[$curentRow] = 'Có nhiều hơn 1 học viên cùng thông tin, hãy chỉnh sửa bằng cách thêm ID học viên vào cột E.';
+                }
             }
+            //return $this->render('view', ['model' => $model]); //render để test
         }
 
-
-        /*
-        $tuNgay = '';
-        $denNgay = '';
-        if (stripos($rows[0][0], 'Từ ngày') !== false) {
-            //từ ngày - đến ngày
-            $text = $sheet->getCell('A1')->getValue();
-            $matches = '';
-            // Regex để lấy ngày
-            preg_match('/Từ ngày (.*?) đến (.*)/', $text, $matches);
-            $fromDate = trim($matches[1] ?? '');
-            $toDate   = trim($matches[2] ?? '');
-
-            $fromDate = CustomFunc::convertDMYHISToYMDHIS($fromDate);
-            $toDate = CustomFunc::convertDMYHISToYMDHIS($toDate);
-        } else {
-            //chỉ trong ngày
-            //từ ngày - đến ngày
-            $text = $sheet->getCell('A1')->getValue();
-            $matches = '';
-            // Regex để lấy ngày
-            preg_match('/Ngày (.*?) từ (.*) đến (.*)/', $text, $matches);
-            $fromDate = trim(($matches[1] . ' ' . $matches[2]) ?? '');
-            $toDate   = trim(($matches[1] . ' ' . $matches[3]) ?? '');
-
-            $fromDate = CustomFunc::convertDMYHISToYMDHIS($fromDate);
-            $toDate = CustomFunc::convertDMYHISToYMDHIS($toDate);
-        }
-
-        $model->thoi_gian_tu = $fromDate;
-        $model->thoi_gian_den = $toDate;
-        if ($model->save()) {
-            unset($rows[0]);
-            unset($rows[1]);
-            foreach ($rows as $row) {
-                $modelData = new FileTrichXuatContent();
-                $modelData->id_file = $model->id;
-                $congId = array_search($row[1], DemXe::getDmCongFromCamera());
-                $modelData->camera = $congId;
-                $maXe = str_replace('-', '', $row[3]);
-                $maXe = str_replace('.', '', $maXe);
-                $maXe = str_replace(' ', '', $maXe);
-                $modelData->ma_xe = strtoupper($maXe); //chuyển sang viết hoa các ký tự ABC
-                $modelData->bien_so_xe = $row[3];
-                $modelData->thoi_gian = CustomFunc::convertDMYHISToYMDHIS($row[6]);
-                $modelData->save(false); // save không validate hoặc dùng validate tùy bạn
-            }
-        }
-        */
         if ($rowErrors === null) {
             $model->da_doc_file_ok = 1;
             $model->save(false);
@@ -233,6 +211,8 @@ class FileThiXeMayController extends Controller
             $model->da_doc_file_ok = 2;
             $model->save(false);
         }
+
+        Yii::$app->response->format = Response::FORMAT_JSON;
         return [
             'title' => "Kết quả CHECK FILE",
             //'content' => "Đã đọc nội dung file từ: " . $textFirstRow . ' - ' . implode('<br/>', $rowErrors),
@@ -268,24 +248,44 @@ class FileThiXeMayController extends Controller
         $failed = 0;
         foreach ($rows as $row) {
             //tim hoc vien
-            $hocVien = HocVien::find()->where([
-                'ngay_sinh' => CustomFunc::convertDMYToYMD($row[2]),
-                'so_cccd' => $row[3],
-            ])
-                ->andWhere(new Expression('UPPER(ho_ten) = :name', [':name' => strtoupper($row[1])]))
-                ->one();
-            if ($hocVien != null) {
-                $data = new FileThiXeMayContent();
-                $data->id_hoc_vien = $hocVien->id;
-                $data->id_file = $model->id;
-                $data->sbd = $row[0];
-                $data->ho_ten = $row[1];
-                $data->ngay_sinh = $row[2];
-                $data->cccd = $row[3];
-                if ($data->save()) {
-                    $success++;
-                } else {
-                    $failed++;
+            //check custom id hoc vien (row E)
+            if (isset($row[4]) && $row[4] != null) {
+                $hocVien = HocVien::findOne($row[4]);
+                if ($hocVien != null) {
+                    $data = new FileThiXeMayContent();
+                    $data->id_hoc_vien = $hocVien->id;
+                    $data->id_file = $model->id;
+                    $data->sbd = $row[0];
+                    $data->ho_ten = $row[1];
+                    $data->ngay_sinh = $row[2];
+                    $data->cccd = $row[3];
+                    if ($data->save()) {
+                        $success++;
+                    } else {
+                        $failed++;
+                    }
+                }
+            } else {
+                $hocVien = HocVien::find()->where([
+                    //'ngay_sinh' => CustomFunc::convertDMYToYMD($row[2]),
+                    'so_cccd' => $row[3],
+                ])
+                    ->andWhere(new Expression('UPPER(ho_ten) = :name', [':name' => strtoupper($row[1])]))
+                    ->andWhere('id_hang IN (7,8,9,10)') //hạng xe máy
+                    ->one();
+                if ($hocVien != null) {
+                    $data = new FileThiXeMayContent();
+                    $data->id_hoc_vien = $hocVien->id;
+                    $data->id_file = $model->id;
+                    $data->sbd = $row[0];
+                    $data->ho_ten = $row[1];
+                    $data->ngay_sinh = $row[2];
+                    $data->cccd = $row[3];
+                    if ($data->save()) {
+                        $success++;
+                    } else {
+                        $failed++;
+                    }
                 }
             }
         }

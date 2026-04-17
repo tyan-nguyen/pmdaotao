@@ -49,6 +49,16 @@ class SiteController extends Controller
     }
 
     /**
+     * Displays test.
+     *
+     * @return string
+     */
+    public function actionTest()
+    {
+        return $this->render('test');
+    }
+
+    /**
      * Displays homepage.
      *
      * @return string

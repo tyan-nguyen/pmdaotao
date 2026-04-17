@@ -7,6 +7,7 @@ use app\modules\kholuutru\models\File;
 use app\modules\kholuutru\models\LuuKho;
 use app\modules\khoahoc\models\NhomHoc;
 use app\custom\CustomFunc;
+use app\modules\banhang\models\HoaDon;
 use Yii;
 use yii\helpers\ArrayHelper;
 use app\modules\giaovien\models\GiaoVien;
@@ -17,12 +18,13 @@ use app\modules\daotao\models\TietHoc;
 
 class HocVien extends HocVienBase
 {
-    CONST MODEL_ID = 'HOCVIEN';
-    
-    public function getPubName(){
+    const MODEL_ID = 'HOCVIEN';
+
+    public function getPubName()
+    {
         return $this->ho_ten;
     }
-    
+
     /**
      * {@inheritdoc}
      * xoa file anh, tai lieu, lich su sau khi xoa du lieu
@@ -33,7 +35,7 @@ class HocVien extends HocVienBase
         LuuKho::deleteKhoThamChieu($this::MODEL_ID, $this->id);
         return parent::afterDelete();
     }
-    
+
     /* public function getHocPhi()
     {
         // Truy vấn học phí từ bảng hoc_phi dựa trên id_hang
@@ -47,11 +49,11 @@ class HocVien extends HocVienBase
     }
     public function getNhomHoc()
     {
-        return $this->hasOne(NhomHoc:: class,['id'=>'id_nhom'] );
+        return $this->hasOne(NhomHoc::class, ['id' => 'id_nhom']);
     }
     public function beforeSave($insert)
     {
-       
+
         /*        
         if ($this->id_khoa_hoc) { // Kiểm tra nếu có id_khoa_hoc
             // Truy vấn số học viên tối đa cho phép của khóa học
@@ -74,36 +76,36 @@ class HocVien extends HocVienBase
             }
         }
         */
-    
+
         if ($this->isNewRecord) {
             $this->nguoi_tao = Yii::$app->user->identity->id;
             $this->thoi_gian_tao = date('Y-m-d H:i:s');
             $this->trang_thai = 'NHAPTRUCTIEP';
             $this->loai_dang_ky = 'Nhập trực tiếp';
-            $this->id_hoc_phi =1; 
+            $this->id_hoc_phi = 1;
             //if($this->id_hang){
-              //  $this->id_hoc_phi = 1;
+            //  $this->id_hoc_phi = 1;
             //}
         }
         //set id_hoc_phi
         /* if($this->id_hoc_phi == null){
              $this->id_hoc_phi = HangDaoTao::findOne($this->id_hang)->hocPhi->id;
         } */
-        
+
         $this->ngay_sinh = CustomFunc::convertDMYToYMD($this->ngay_sinh);
         $this->ngay_het_han_cccd = CustomFunc::convertDMYToYMD($this->ngay_het_han_cccd);
         $this->ngay_nhan_ao = CustomFunc::convertDMYToYMD($this->ngay_nhan_ao);
         $this->ngay_nhan_tai_lieu = CustomFunc::convertDMYToYMD($this->ngay_nhan_tai_lieu);
-        if($this->huy_ho_so){
-            if($this->thoi_gian_huy_ho_so == ''){
+        if ($this->huy_ho_so) {
+            if ($this->thoi_gian_huy_ho_so == '') {
                 $this->thoi_gian_huy_ho_so = date('Y-m-d H:i:s');
             } else {
                 $this->thoi_gian_huy_ho_so = CustomFunc::convertDMYHISToYMDHIS($this->thoi_gian_huy_ho_so);
             }
         }
-        
-        
-    
+
+
+
         return parent::beforeSave($insert);
     }
     /**
@@ -117,7 +119,7 @@ class HocVien extends HocVienBase
             $this->updateAttributes(['id_hoc_phi']);
         }
     } */
-    
+
     /**
      * for gv in hoc_vien table
      * @param unknown $idgv
@@ -126,14 +128,13 @@ class HocVien extends HocVienBase
     public static function getListByGiaoVien($idgv)
     {
         $dsHocVien = HocVien::find()
-        ->where(['id_giao_vien' => $idgv])
-        ->orderBy(['id_khoa_hoc' => SORT_ASC,'ho_ten' => SORT_ASC])
-        ->all();
-        
+            ->where(['id_giao_vien' => $idgv])
+            ->orderBy(['id_khoa_hoc' => SORT_ASC, 'ho_ten' => SORT_ASC])
+            ->all();
+
         return ArrayHelper::map($dsHocVien, 'id', function ($model) {
             return '+ ' . $model->ho_ten;
         });
-       
     }
     /**
      * for gv in gv_hv table
@@ -143,49 +144,99 @@ class HocVien extends HocVienBase
     public static function getListByGiaoVienDay($idgv)
     {
         $dsHocVien = GvHv::find()->alias('t')->joinWith(['hocVien as hv', 'hocVien.khoaHoc as kh'])
-        ->where(['t.id_giao_vien' => $idgv])
-        ->andWhere('t.da_hoan_thanh = 0 OR t.da_hoan_thanh IS NULL')
-        ->orderBy(['hv.id_khoa_hoc' => SORT_ASC,'hv.ho_ten' => SORT_ASC])
-        ->all();
-        
+            ->where(['t.id_giao_vien' => $idgv])
+            ->andWhere('t.da_hoan_thanh = 0 OR t.da_hoan_thanh IS NULL')
+            ->orderBy(['hv.id_khoa_hoc' => SORT_ASC, 'hv.ho_ten' => SORT_ASC])
+            ->all();
+
         return ArrayHelper::map($dsHocVien, 'id_hoc_vien', function ($model) {
             return '+ ' . $model->hocVien->ho_ten . ' (' . $model->hocVien->khoaHoc->ten_khoa_hoc . ')';
-        },function ($model) {
+        }, function ($model) {
             return $model->hocVien->khoaHoc->ten_khoa_hoc;
         });
-            
     }
     /**
      * chỉ áp dụng được trong list khi giáo viên đăng nhập
      * @return string
      */
-    public function daHocXongByCurrentGv(){
+    public function daHocXongByCurrentGv()
+    {
         $user = User::findOne(Yii::$app->user->id);
         $giaoVien = $user->getIdGiaoVien();
         $hvHoc = GvHv::find()->where([
             'id_hoc_vien' => $this->id,
             'id_giao_vien' => $giaoVien
         ])->one();
-        if($hvHoc && $hvHoc->da_hoan_thanh == 1)
+        if ($hvHoc && $hvHoc->da_hoan_thanh == 1)
             return true;
         else
             return false;
     }
-  /**
-   * lấy số lượng đã học các môn (dạng text hiển thị trong view kế hoạch)
-   */
-    public function viewSoGioHocHtml(){
-        $html='';
+    /**
+     * lấy số lượng đã học các môn (dạng text hiển thị trong view kế hoạch)
+     */
+    public function viewSoGioHocHtml()
+    {
+        $html = '';
         $dsMonHoc = HangMonHoc::find()->where(['id_hang' => $this->id_hang])->all();
-        foreach ($dsMonHoc as $iM=>$m){
-            $tietHocOk = TietHoc::find()->where(['id_hoc_vien'=>$this->id, 'id_mon_hoc'=>$m->id_mon, 'trang_thai'=>TietHoc::TT_DAHOANTHANH])->sum('so_gio');
-            $tietHocHocVienHuy = TietHoc::find()->where(['id_hoc_vien'=>$this->id, 'id_mon_hoc'=>$m->id_mon, 'trang_thai'=>TietHoc::TT_HOCVIENHUY])->sum('so_gio');
-            $tongKm = TietHoc::find()->where(['id_hoc_vien'=>$this->id, 'id_mon_hoc'=>$m->id_mon, 'trang_thai'=>TietHoc::TT_DAHOANTHANH])->sum('so_km');
-            $html.= 'Tổng giờ: '. ($tietHocOk+$tietHocHocVienHuy) . '/' . $m->mon->so_gio_tt;
-            $html.= ' - Đã hoàn thành: ' . $tietHocOk . '/' . $m->mon->so_gio_tt;
+        foreach ($dsMonHoc as $iM => $m) {
+            $tietHocOk = TietHoc::find()->where(['id_hoc_vien' => $this->id, 'id_mon_hoc' => $m->id_mon, 'trang_thai' => TietHoc::TT_DAHOANTHANH])->sum('so_gio');
+            $tietHocHocVienHuy = TietHoc::find()->where(['id_hoc_vien' => $this->id, 'id_mon_hoc' => $m->id_mon, 'trang_thai' => TietHoc::TT_HOCVIENHUY])->sum('so_gio');
+            $tongKm = TietHoc::find()->where(['id_hoc_vien' => $this->id, 'id_mon_hoc' => $m->id_mon, 'trang_thai' => TietHoc::TT_DAHOANTHANH])->sum('so_km');
+            $html .= 'Tổng giờ: ' . ($tietHocOk + $tietHocHocVienHuy) . '/' . $m->mon->so_gio_tt;
+            $html .= ' - Đã hoàn thành: ' . $tietHocOk . '/' . $m->mon->so_gio_tt;
             $html .= ' - Học viên hủy: ' . $tietHocHocVienHuy;
             $html .= ' - Tổng KM: ' . $tongKm;
         }
         return $html;
+    }
+
+    public function getFileThiXeMayContents()
+    {
+        return $this->hasMany(FileThiXeMayContent::class, ['id_hoc_vien' => 'id']);
+    }
+
+    public function getSoLanThi()
+    {
+        return $this->getFileThiXeMayContents()->count();
+    }
+
+    //get số lần đóng tiền lệ phí
+    public function getDongTienLePhi()
+    {
+        $listLePhi = null;
+        //search in hoa don hoc phi
+        $hoaDonHocPhi = NopHocPhi::find()->where(['id_hoc_vien' => $this->id])
+            ->andWhere('so_tien_thu_ho >0')->all();
+        foreach ($hoaDonHocPhi as $hoaDonHocPhi) {
+            $user = User::findOne($hoaDonHocPhi->nguoi_tao);
+            $listLePhi[] = [
+                'type' => 'ThuLanDau',
+                'id' => $hoaDonHocPhi->id,
+                'so_tien' => $hoaDonHocPhi->so_tien_thu_ho,
+                'hinh_thuc' => $hoaDonHocPhi->hinh_thuc_thu_ho,
+                'ghi_chu' => $hoaDonHocPhi->ghi_chu_thu_ho,
+                'thoi_gian' => CustomFunc::convertYMDHISToDMYHI($hoaDonHocPhi->thoi_gian_tao),
+                'nguoi_thu' => $user->shortName,
+            ];
+        }
+        //search in ban hang
+        $banHangs = HoaDon::find()->where(['loai_khach_hang' => HoaDon::LOAI_HOCVIEN])
+            ->andWhere('id_khach_hang =:id_hoc_vien', [':id_hoc_vien' => $this->id])
+            ->andWhere('trang_thai =:trang_thai', [':trang_thai' => HoaDon::TRANGTHAI_DA_TT])
+            ->andWhere('loai_hang_hoa =:id_loai', [':id_loai' => 11])->all(); //11 là thu hộ lệ phí
+        foreach ($banHangs as $banHang) {
+            $user = User::findOne($banHang->nguoi_tao);
+            $listLePhi[] = [
+                'type' => 'ThuLePhi',
+                'id' => $banHang->id,
+                'so_tien' => $banHang->tongTien,
+                'hinh_thuc' => $banHang->hinh_thuc_thanh_toan,
+                'ghi_chu' => $banHang->ghi_chu,
+                'thoi_gian' => CustomFunc::convertYMDHISToDMYHI($banHang->ngay_xuat),
+                'nguoi_thu' => $user->shortName,
+            ];
+        }
+        return $listLePhi;
     }
 }

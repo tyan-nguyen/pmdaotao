@@ -5,8 +5,8 @@ namespace app\custom;
 
 use webvimark\modules\UserManagement\models\User;
 
-class CustomFunc 
-{  
+class CustomFunc
+{
     /**
      * tính toán thời gian (số giờ) trong khoảng thời gian Y-m-d H:i:s
      * làm tròn 2 số thập phân
@@ -18,13 +18,13 @@ class CustomFunc
     {
         $startTime = new \DateTime($start);
         $endTime   = new \DateTime($end);
-        
+
         $diff = $startTime->diff($endTime);
-        
+
         // Tổng số giờ dạng số thực
         $hours = $diff->days * 24 + $diff->h + ($diff->i / 60) + ($diff->s / 3600);
-        
-        return round($hours,2);
+
+        return round($hours, 2);
     }
     /**
      * tính toán thời gian (số phút) định dạng giờ:phút trong khoảng thời gian Y-m-d H:i:s
@@ -36,22 +36,23 @@ class CustomFunc
     {
         $startTime = new \DateTime($start);
         $endTime   = new \DateTime($end);
-        
+
         $diff = $startTime->diff($endTime);
-        
+
         $hours = $diff->days * 24 + $diff->h;
         $minutes = $diff->i;
-        
+
         return sprintf("%02d:%02d", $hours, $minutes);
     }
-    
+
     /**
      * tính số phút giữa 2 khoảng thời gian
      */
-    public static function getMinutes($start, $end){
+    public static function getMinutes($start, $end)
+    {
         $startTime = new \DateTime($start);
         $endTime   = new \DateTime($end);
-        
+
         $minutes = ($endTime->getTimestamp() - $startTime->getTimestamp()) / 60;
         $minutes = round($minutes);
         return $minutes;
@@ -59,30 +60,33 @@ class CustomFunc
     /**
      * nối string ngày tháng năm, giờ, phút giây thành thời gian bắt đầu
      */
-    public static function createCustomStartDate($ngay, $gio, $phut){
+    public static function createCustomStartDate($ngay, $gio, $phut)
+    {
         $ngay = CustomFunc::convertDMYToYMD($ngay);
         $date_string = $ngay . ' ' . $gio . ':' . $phut . ':' . '00';
-        return $date_string!=null ? date('Y-m-d H:i:s', strtotime($date_string)) : '';
+        return $date_string != null ? date('Y-m-d H:i:s', strtotime($date_string)) : '';
     }
     /**
      * nối string ngày tháng năm, giờ, phút giây thành thời gian kết thúc
      */
-    public static function createCustomEndDate($ngay, $gio, $phut){
+    public static function createCustomEndDate($ngay, $gio, $phut)
+    {
         $ngay = CustomFunc::convertDMYToYMD($ngay);
         //$date_string = $ngay . ' ' . $gio . ':' . $phut . ':' . '59';
         $date_string = $ngay . ' ' . $gio . ':' . $phut . ':' . '00';
-        return $date_string!=null ? date('Y-m-d H:i:s', strtotime($date_string)) : '';
+        return $date_string != null ? date('Y-m-d H:i:s', strtotime($date_string)) : '';
     }
     /**
      * fill number 000.. cho so hoa don neu so tu 1->9999 
      * @param unknown $number
      * @return string|unknown
      */
-    public static function fillNumber($number){
+    public static function fillNumber($number)
+    {
         $num = strlen($number);
-        if( $num < 5){
+        if ($num < 5) {
             $str0 = '';
-            for($i=1;$i<=(5-$num); $i++){
+            for ($i = 1; $i <= (5 - $num); $i++) {
                 $str0 .= '0';
             }
             return $str0 . $number;
@@ -95,76 +99,85 @@ class CustomFunc
      * @param string $date_string
      * @return string
      */
-    public static function convertYMDHISToDMY($date_string){
-        return $date_string!=null ? date("d/m/Y", strtotime($date_string)) : '';
+    public static function convertYMDHISToDMY($date_string)
+    {
+        return $date_string != null ? date("d/m/Y", strtotime($date_string)) : '';
     }
     /**
      * chuyen doi ngay chuoi Y-m-d H:i:s -> Y-m-d
      * @param string $date_string
      * @return string
      */
-    public static function convertYMDHISToYMD($date_string){
-        return $date_string!=null ? date("Y-m-d", strtotime($date_string)) : '';
+    public static function convertYMDHISToYMD($date_string)
+    {
+        return $date_string != null ? date("Y-m-d", strtotime($date_string)) : '';
     }
     /**
      * chuyen doi ngay chuoi Y-m-d H:i:s -> H:i
      * @param string $date_string
      * @return string
      */
-    public static function convertYMDHISToHI($date_string){
-        return $date_string!=null ? date("H:i", strtotime($date_string)) : '';
+    public static function convertYMDHISToHI($date_string)
+    {
+        return $date_string != null ? date("H:i", strtotime($date_string)) : '';
     }
     /**
      * chuyen doi ngay chuoi Y-m-d H:i:s -> H
      * @param string $date_string
      * @return string
      */
-    public static function convertYMDHISToH($date_string){
-        return $date_string!=null ? date("H", strtotime($date_string)) : '';
+    public static function convertYMDHISToH($date_string)
+    {
+        return $date_string != null ? date("H", strtotime($date_string)) : '';
     }
     /**
      * chuyen doi ngay chuoi Y-m-d H:i:s -> i
      * @param string $date_string
      * @return string
      */
-    public static function convertYMDHISToI($date_string){
-        return $date_string!=null ? date("i", strtotime($date_string)) : '';
+    public static function convertYMDHISToI($date_string)
+    {
+        return $date_string != null ? date("i", strtotime($date_string)) : '';
     }
     /**
      * chuyen doi ngay chuoi Y-m-d H:i:s -> dd/mm/yyyy H:i:s
      * @param string $date_string
      * @return string
      */
-    public static function convertYMDHISToDMYHIS($date_string){
-        return $date_string!=null ? date("d/m/Y H:i:s", strtotime($date_string)) : '';
+    public static function convertYMDHISToDMYHIS($date_string)
+    {
+        return $date_string != null ? date("d/m/Y H:i:s", strtotime($date_string)) : '';
     }
     /**
      * chuyen doi ngay chuoi Y-m-d H:i:s -> dd/mm/yyyy H:i:s
      * @param string $date_string
      * @return string
      */
-    public static function convertDMYHISToYMDHIS($date_string){
-        if($date_string != null){
+    public static function convertDMYHISToYMDHIS($date_string)
+    {
+        if ($date_string != null) {
             $date_string = str_replace('/', '-', $date_string);
         }
-        return $date_string!=null ? date("Y-m-d H:i:s", strtotime($date_string)) : '';
+        return $date_string != null ? date("Y-m-d H:i:s", strtotime($date_string)) : '';
     }
     /**
      * chuyen doi ngay chuoi Y-m-d H:i:s -> dd/mm/yyyy H:i
      * @param string $date_string
      * @return string
      */
-    public static function convertYMDHISToDMYHI($date_string){
-        return $date_string!=null ? date("d/m/Y H:i", strtotime($date_string)) : '';
+    public static function convertYMDHISToDMYHI($date_string)
+    {
+        return $date_string != null ? date("d/m/Y H:i", strtotime($date_string)) : '';
     }
-    
+
     /**
      * chuyen doi ngay chuoi Y-m-d -> dd/mm/yyyy
      * @param string $date_string
      * @return string
      */
-    public static function convertYMDToDMY($date_string){
-        return $date_string!=null ? date("d/m/Y", strtotime($date_string)) : '';
+    public static function convertYMDToDMY($date_string)
+    {
+        return $date_string != null ? date("d/m/Y", strtotime($date_string)) : '';
     }
 
     /**
@@ -172,21 +185,50 @@ class CustomFunc
      * @param string $date_string
      * @return string
      */
-    public static function convertDMYToYMD($date_string){
-        if($date_string != null){
+    public static function convertDMYToYMD($date_string)
+    {
+        if ($date_string != null) {
             $date_string = str_replace('/', '-', $date_string);
             return date("Y-m-d", strtotime($date_string));
-        } else 
+        } else
             return '';
     }
+    /**
+     * chuyen doi ngay chuoi dd/mm/yyyy -> Y-m-d để lưu CSDL
+     * @param string $date_string
+     * @return string
+     **** fixx lỗi chuyển lỗi thành Y-d-m khi đọc từ excel
+     */
+    /* public static function convertDMYToYMD2($date_string)
+    {
+        if (empty($date_string)) {
+            return '';
+        }
+
+        // Nếu là số (Excel date)
+        if (is_numeric($date_string)) {
+            $timestamp = ($date_string - 25569) * 86400;
+            return gmdate("Y-m-d", $timestamp);
+        }
+
+        // Nếu là string dạng d/m/Y
+        $date = \DateTime::createFromFormat('d/m/Y', $date_string);
+
+        if ($date !== false) {
+            return $date->format('Y-m-d');
+        }
+
+        return '';
+    } */
     /**
      * chuyen doi thoi gian tu chuoi 12:00:00 -> 12:00
      * @param string $time_string
      * @return string
      */
-    public static function convertHIStoHI($time_string){
-        if($time_string!=null){
-            return date ('H:i',strtotime($time_string));
+    public static function convertHIStoHI($time_string)
+    {
+        if ($time_string != null) {
+            return date('H:i', strtotime($time_string));
         } else {
             return '';
         }
@@ -196,34 +238,37 @@ class CustomFunc
      * @param int $userID
      * @return string
      */
-    public static function getTenTaiKhoan($userID){
+    public static function getTenTaiKhoan($userID)
+    {
         $model = User::findOne($userID);
-        return $model!=NULL?$model->username:'';  
+        return $model != NULL ? $model->username : '';
     }
-    
+
     /**
      * generate random 4 string or number
      */
-    function generateRandomString() {
+    function generateRandomString()
+    {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $randomString = '';
-        
+
         // Shuffle the characters
         $shuffledCharacters = str_shuffle($characters);
-        
+
         // Take the first 4 characters
         $randomString = substr($shuffledCharacters, 0, 4);
-        
+
         return $randomString;
     }
-    
+
     /**
      * get string limit by char
      */
-    public static function getStringByChars($string, $numChar){
-        if($string != '' && strlen($string) > $numChar){
-            $pos=strpos($string, ' ', $numChar);
-            return substr($string,0,$pos ) . ' ..';
+    public static function getStringByChars($string, $numChar)
+    {
+        if ($string != '' && strlen($string) > $numChar) {
+            $pos = strpos($string, ' ', $numChar);
+            return substr($string, 0, $pos) . ' ..';
         } else {
             return $string;
         }
@@ -231,15 +276,16 @@ class CustomFunc
     /**
      * get string limit by char in file name & extension
      */
-    public static function getStringByCharsForFileName($string, $numChar){
+    public static function getStringByCharsForFileName($string, $numChar)
+    {
         $strUse = explode('.', $string);
         $str1 = $strUse[0];
         $str2 = $strUse[1];
         $strAfter = '';
-        if($str1 != null){
-            if(strlen($str1) > $numChar){
-                $pos=strpos($str1, ' ', $numChar);
-                $strAfter = substr($str1,0,$pos ) . '(..)';
+        if ($str1 != null) {
+            if (strlen($str1) > $numChar) {
+                $pos = strpos($str1, ' ', $numChar);
+                $strAfter = substr($str1, 0, $pos) . '(..)';
             } else {
                 $strAfter = $str1;
             }
@@ -258,23 +304,24 @@ class CustomFunc
         if (!is_dir($destDir)) {
             mkdir($destDir, 0777, true);
         }
-        
+
         if (@rename($src, $dest)) {
             return true;
         }
-        
+
         if (copy($src, $dest)) {
             unlink($src);
             return true;
         }
-        
+
         return false;
     }
-    
+
     /**
      * doc so tien thanh chu
      */
-    function chuyenSoTienThanhChu($number) {
+    function chuyenSoTienThanhChu($number)
+    {
         $hyphen      = ' ';
         $conjunction = '  ';
         $separator   = ' ';
@@ -325,7 +372,7 @@ class CustomFunc
             trigger_error(
                 'convert_number_to_words only accepts numbers between -' . PHP_INT_MAX . ' and ' . PHP_INT_MAX,
                 E_USER_WARNING
-                );
+            );
             return false;
         }
         if ($number < 0) {

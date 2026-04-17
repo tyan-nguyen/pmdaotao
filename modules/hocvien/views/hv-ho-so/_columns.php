@@ -252,7 +252,15 @@ return [
         },
         'width' => '80px',
     ],
-
+    [
+        'class' => '\kartik\grid\DataColumn',
+        'label' => 'Lần thi',
+        'value' => function ($model) {
+            return $model->soLanThi;
+        },
+        'width' => '60px',
+        'contentOptions' => ['style' => 'text-align:center'],
+    ],
     [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'nguoi_tao',
