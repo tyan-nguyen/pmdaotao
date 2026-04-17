@@ -149,8 +149,14 @@ use app\widgets\CardWidget;
                                                     <td><?= $tienLePhi['nguoi_thu'] ?></td>
                                                     <td><?= $tienLePhi['ghi_chu'] ?></td>
                                                 </tr>
-                                        <?php
+                                            <?php
                                             }
+                                        } else {
+                                            ?>
+                                            <tr>
+                                                <td colspan="7" class="text-center">Chưa có dữ liệu</td>
+                                            </tr>
+                                        <?php
                                         }
                                         ?>
                                     </tbody>
@@ -181,17 +187,25 @@ use app\widgets\CardWidget;
                                     <tbody>
                                         <?php
                                         $stt = 0;
-                                        foreach ($model->fileThiXeMayContents as $fileThiXeMayContent) {
-                                            $stt++;
+                                        if ($model->fileThiXeMayContents != null) {
+                                            foreach ($model->fileThiXeMayContents as $fileThiXeMayContent) {
+                                                $stt++;
                                         ?>
+                                                <tr>
+                                                    <td><?= $stt ?></td>
+                                                    <td><?= $fileThiXeMayContent->file->ten_khoa_thi ?></td>
+                                                    <td><?= $fileThiXeMayContent->sbd ?></td>
+                                                    <td><?= $fileThiXeMayContent->ho_ten ?></td>
+                                                    <td><?= $fileThiXeMayContent->ngay_sinh ?></td>
+                                                    <td><?= $fileThiXeMayContent->cccd ?></td>
+                                                    <td><?= $fileThiXeMayContent->ghi_chu ?></td>
+                                                </tr>
+                                            <?php
+                                            }
+                                        } else {
+                                            ?>
                                             <tr>
-                                                <td><?= $stt ?></td>
-                                                <td><?= $fileThiXeMayContent->file->ten_khoa_thi ?></td>
-                                                <td><?= $fileThiXeMayContent->sbd ?></td>
-                                                <td><?= $fileThiXeMayContent->ho_ten ?></td>
-                                                <td><?= $fileThiXeMayContent->ngay_sinh ?></td>
-                                                <td><?= $fileThiXeMayContent->cccd ?></td>
-                                                <td><?= $fileThiXeMayContent->ghi_chu ?></td>
+                                                <td colspan="7" class="text-center">Chưa có dữ liệu</td>
                                             </tr>
                                         <?php
                                         }
