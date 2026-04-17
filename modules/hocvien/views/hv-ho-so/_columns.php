@@ -4,6 +4,7 @@ use yii\helpers\Url;
 use yii\bootstrap5\Html;
 use app\custom\CustomFunc;
 use app\modules\hocvien\models\DangKyHv;
+use app\modules\hocvien\models\HocVien;
 use app\modules\user\models\User;
 
 return [
@@ -256,7 +257,7 @@ return [
         'class' => '\kartik\grid\DataColumn',
         'label' => 'Lần thi',
         'value' => function ($model) {
-            return $model->soLanThi;
+            return in_array($model->id_hang, HocVien::LOAI_HOC_VIEN_XE_MAY) ? $model->soLanThi : '';
         },
         'width' => '60px',
         'contentOptions' => ['style' => 'text-align:center'],

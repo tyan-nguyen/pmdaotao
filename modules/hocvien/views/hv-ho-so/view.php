@@ -114,108 +114,112 @@ use app\widgets\CardWidget;
                             <!-- Nội dung Tài liệu khóa học -->
                             <div class="tab-pane fade show active" id="add-document" role="tabpanel" aria-labelledby="add-document-tab">
 
-
                                 <?php
-                                CardWidget::begin([
-                                    'title' => 'Lịch sử thu hộ',
-                                ]);
+                                if (in_array($model->id_hang, HocVien::LOAI_HOC_VIEN_XE_MAY)) {
                                 ?>
 
-                                <table class="table table-bordered table-responsive" style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th>STT</th>
-                                            <th>Loại thu</th>
-                                            <th>Ngày đóng</th>
-                                            <th>Số tiền</th>
-                                            <th>Hình thức</th>
-                                            <th>Người thu</th>
-                                            <th>Ghi chú</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
-                                        if ($model->dongTienLePhi != null) {
+                                    <?php
+                                    CardWidget::begin([
+                                        'title' => 'Lịch sử thu hộ',
+                                    ]);
+                                    ?>
+
+                                    <table class="table table-bordered table-responsive" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>STT</th>
+                                                <th>Loại thu</th>
+                                                <th>Ngày đóng</th>
+                                                <th>Số tiền</th>
+                                                <th>Hình thức</th>
+                                                <th>Người thu</th>
+                                                <th>Ghi chú</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            if ($model->dongTienLePhi != null) {
+                                                $stt = 0;
+                                                foreach ($model->dongTienLePhi as $tienLePhi) {
+                                                    $stt++;
+                                            ?>
+                                                    <tr>
+                                                        <td><?= $stt ?></td>
+                                                        <td><?= $tienLePhi['type'] === 'ThuLanDau' ? 'Thu kèm học phí' : 'Thu hóa đơn lẻ' ?></td>
+                                                        <td><?= $tienLePhi['thoi_gian'] ?></td>
+                                                        <td><?= number_format($tienLePhi['so_tien']) ?></td>
+                                                        <td><?= $tienLePhi['hinh_thuc'] ?></td>
+                                                        <td><?= $tienLePhi['nguoi_thu'] ?></td>
+                                                        <td><?= $tienLePhi['ghi_chu'] ?></td>
+                                                    </tr>
+                                                <?php
+                                                }
+                                            } else {
+                                                ?>
+                                                <tr>
+                                                    <td colspan="7" class="text-center">Chưa có dữ liệu</td>
+                                                </tr>
+                                            <?php
+                                            }
+                                            ?>
+                                        </tbody>
+                                    </table>
+
+                                    <?php
+                                    CardWidget::end();
+                                    ?>
+
+                                    <?php
+                                    CardWidget::begin([
+                                        'title' => 'Lịch sử thi',
+                                    ]);
+                                    ?>
+
+                                    <table class="table table-bordered table-responsive" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>STT</th>
+                                                <th>Kỳ thi</th>
+                                                <th>SBD</th>
+                                                <th>Họ tên</th>
+                                                <th>Ngày sinh</th>
+                                                <th>Số CMT</th>
+                                                <th>Ghi chú</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
                                             $stt = 0;
-                                            foreach ($model->dongTienLePhi as $tienLePhi) {
-                                                $stt++;
-                                        ?>
+                                            if ($model->fileThiXeMayContents != null) {
+                                                foreach ($model->fileThiXeMayContents as $fileThiXeMayContent) {
+                                                    $stt++;
+                                            ?>
+                                                    <tr>
+                                                        <td><?= $stt ?></td>
+                                                        <td><?= $fileThiXeMayContent->file->ten_khoa_thi ?></td>
+                                                        <td><?= $fileThiXeMayContent->sbd ?></td>
+                                                        <td><?= $fileThiXeMayContent->ho_ten ?></td>
+                                                        <td><?= $fileThiXeMayContent->ngay_sinh ?></td>
+                                                        <td><?= $fileThiXeMayContent->cccd ?></td>
+                                                        <td><?= $fileThiXeMayContent->ghi_chu ?></td>
+                                                    </tr>
+                                                <?php
+                                                }
+                                            } else {
+                                                ?>
                                                 <tr>
-                                                    <td><?= $stt ?></td>
-                                                    <td><?= $tienLePhi['type'] === 'ThuLanDau' ? 'Thu kèm học phí' : 'Thu hóa đơn lẻ' ?></td>
-                                                    <td><?= $tienLePhi['thoi_gian'] ?></td>
-                                                    <td><?= number_format($tienLePhi['so_tien']) ?></td>
-                                                    <td><?= $tienLePhi['hinh_thuc'] ?></td>
-                                                    <td><?= $tienLePhi['nguoi_thu'] ?></td>
-                                                    <td><?= $tienLePhi['ghi_chu'] ?></td>
+                                                    <td colspan="7" class="text-center">Chưa có dữ liệu</td>
                                                 </tr>
                                             <?php
                                             }
-                                        } else {
                                             ?>
-                                            <tr>
-                                                <td colspan="7" class="text-center">Chưa có dữ liệu</td>
-                                            </tr>
-                                        <?php
-                                        }
-                                        ?>
-                                    </tbody>
-                                </table>
+                                        </tbody>
+                                    </table>
 
-                                <?php
-                                CardWidget::end();
-                                ?>
-
-                                <?php
-                                CardWidget::begin([
-                                    'title' => 'Lịch sử thi',
-                                ]);
-                                ?>
-
-                                <table class="table table-bordered table-responsive" style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th>STT</th>
-                                            <th>Kỳ thi</th>
-                                            <th>SBD</th>
-                                            <th>Họ tên</th>
-                                            <th>Ngày sinh</th>
-                                            <th>Số CMT</th>
-                                            <th>Ghi chú</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
-                                        $stt = 0;
-                                        if ($model->fileThiXeMayContents != null) {
-                                            foreach ($model->fileThiXeMayContents as $fileThiXeMayContent) {
-                                                $stt++;
-                                        ?>
-                                                <tr>
-                                                    <td><?= $stt ?></td>
-                                                    <td><?= $fileThiXeMayContent->file->ten_khoa_thi ?></td>
-                                                    <td><?= $fileThiXeMayContent->sbd ?></td>
-                                                    <td><?= $fileThiXeMayContent->ho_ten ?></td>
-                                                    <td><?= $fileThiXeMayContent->ngay_sinh ?></td>
-                                                    <td><?= $fileThiXeMayContent->cccd ?></td>
-                                                    <td><?= $fileThiXeMayContent->ghi_chu ?></td>
-                                                </tr>
-                                            <?php
-                                            }
-                                        } else {
-                                            ?>
-                                            <tr>
-                                                <td colspan="7" class="text-center">Chưa có dữ liệu</td>
-                                            </tr>
-                                        <?php
-                                        }
-                                        ?>
-                                    </tbody>
-                                </table>
-
-                                <?php
-                                CardWidget::end();
-                                ?>
+                                    <?php
+                                    CardWidget::end();
+                                    ?>
+                                <?php } ?>
 
                                 <?= FileDisplayWidget::widget([
                                     'type' => 'ALL',
