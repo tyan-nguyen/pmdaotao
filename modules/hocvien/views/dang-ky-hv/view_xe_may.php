@@ -47,7 +47,7 @@ use app\widgets\CardWidget;
 
                                 <?php
                                 CardWidget::begin([
-                                    'title' => 'Lịch sử đóng lệ phí',
+                                    'title' => 'Lịch sử thu hộ',
                                 ]);
                                 ?>
 
