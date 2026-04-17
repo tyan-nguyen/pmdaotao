@@ -106,6 +106,8 @@ class HocVienBase extends \app\models\HvHocVien
     const HUY_KHACHQUAN = 'KHACHQUAN';
     const HUY_CHUQUAN = 'CHUQUAN';
 
+    const LOAI_HOC_VIEN_XE_MAY = [7, 8, 9, 10]; // A và A1
+
     public $tongtiennop; //virtual attribute select when report
     //dành cho thay đổi hạng
     public $so_tien;

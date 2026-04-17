@@ -441,7 +441,7 @@ return [
         'class' => '\kartik\grid\DataColumn',
         'label' => 'SL.Thi',
         'value' => function ($model) {
-            return $model->soLanThi;
+            return in_array($model->id_hang, DangKyHv::LOAI_HOC_VIEN_XE_MAY) ? $model->soLanThi : '';
         },
         'width' => '30px',
         'contentOptions' => ['style' => 'text-align:center'],
