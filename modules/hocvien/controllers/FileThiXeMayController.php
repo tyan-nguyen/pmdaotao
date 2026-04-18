@@ -181,7 +181,7 @@ class FileThiXeMayController extends Controller
                     $rowErrors[$curentRow] = 'Thông tin học viên (custom id) SBD <strong>' . $row[0] . '</strong> không tồn tại';
                 } else {
                     //check sbd
-                    if ($hocVien->ho_ten != $row[1] || $hocVien->so_cccd != $row[3]) {
+                    if ($hocVien->ho_ten != $row[1] && $hocVien->so_cccd != $row[3]) {
                         $rowErrors[$curentRow] = 'Thông tin học viên (custom id) SBD <strong>' . $row[0] . '</strong> không đúng';
                     }
                 }
