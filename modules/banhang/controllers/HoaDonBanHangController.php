@@ -23,109 +23,110 @@ class HoaDonBanHangController extends Controller
     /**
      * @inheritdoc
      */
-    public function behaviors() {
-    		return [
-    			'ghost-access'=> [
-    			'class' => 'webvimark\modules\UserManagement\components\GhostAccessControl',
-        		],
-    			'verbs' => [
-    				'class' => VerbFilter::className(),
-    				'actions' => [
-    					'delete' => ['POST'],
-    				],
-    			],
-		];
-	}
-	
-	/**
-	 * load hoa don in
-	 * @return mixed
-	 */
-	public function actionGetPhieuXuatKhoInAjax($idHoaDon)
-	{
-	    Yii::$app->response->format = Response::FORMAT_JSON;
-	    $model = HoaDon::findOne($idHoaDon);
-	    if($model !=null){
-	        return [
-	            'status'=>'success',
-	            'content' => $this->renderAjax('_print_phieu', [
-	                'model' => $model
-	            ])
-	        ];
-	    } else {
-	        return [
-	            'status'=>'failed',
-	            'content' => 'Phiếu xuất kho không tồn tại!'
-	        ];
-	    }
-	}
-	
-	/**
-	 * xuat hoa don va thanh toan
-	 */
-	public function actionXuatVaThanhToan($id){
-	    $request = Yii::$app->request;
-	    $model = $this->findModel($id);
-	    
-	    Yii::$app->response->format = Response::FORMAT_JSON;
-	    
-	    //check đơn hàng null
-	    if(!$model->hoaDonChiTiets){
-	        $model->addError('id', 'Không thể xuất hóa đơn trống, vui lòng thêm sản phẩm vào hóa đơn!');
-	        return [
-	            'forceReload'=>'#crud-datatable-pjax',
-	            'title'=> "Cập nhật Hóa đơn",
-	            'content'=>$this->renderAjax('update', [
-	                'model' => $model,
-	            ]),
-	            'tcontent'=>'Không thể xuất hóa đơn trống, vui lòng thêm sản phẩm vào hóa đơn!',
-	            'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-	            Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
-	        ];
-	    }
-	    
-	    $trangThaiHienTai = $model->trang_thai;	    
-	    $model->trang_thai = HoaDon::TRANGTHAI_DA_TT;
-	    $model->so_vao_so = $model->getSoHoaDonCuoi($model->nam) + 1;
-	    $model->so_don_hang = $model->getSoDonHangCuoi() + 1;
-	    $model->ngay_xuat = date('Y-m-d H:i:s');
-	    
-	    
-	    if($model->save()){
-	        $model->refresh();
-	        if($trangThaiHienTai == HoaDon::TRANGTHAI_NHAP){
-	            $model->xuatHang();
-	        }
-	        
-	        return [
-	            'forceReload'=>'#crud-datatable-pjax',
-	            'title'=> "Cập nhật Hóa đơn",
-	            'content'=>$this->renderAjax('update', [
-	                'model' => $model,
-	            ]),
-	            'tcontent'=>'Xuất và thanh toán thành công!',
-	            'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-	            Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
-	        ];
-	    }    
-	    
-	}
+    public function behaviors()
+    {
+        return [
+            'ghost-access' => [
+                'class' => 'webvimark\modules\UserManagement\components\GhostAccessControl',
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * load hoa don in
+     * @return mixed
+     */
+    public function actionGetPhieuXuatKhoInAjax($idHoaDon)
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $model = HoaDon::findOne($idHoaDon);
+        if ($model != null) {
+            return [
+                'status' => 'success',
+                'content' => $this->renderAjax('_print_phieu', [
+                    'model' => $model
+                ])
+            ];
+        } else {
+            return [
+                'status' => 'failed',
+                'content' => 'Phiếu xuất kho không tồn tại!'
+            ];
+        }
+    }
+
+    /**
+     * xuat hoa don va thanh toan
+     */
+    public function actionXuatVaThanhToan($id)
+    {
+        $request = Yii::$app->request;
+        $model = $this->findModel($id);
+
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        //check đơn hàng null
+        if (!$model->hoaDonChiTiets) {
+            $model->addError('id', 'Không thể xuất hóa đơn trống, vui lòng thêm sản phẩm vào hóa đơn!');
+            return [
+                'forceReload' => '#crud-datatable-pjax',
+                'title' => "Cập nhật Hóa đơn",
+                'content' => $this->renderAjax('update', [
+                    'model' => $model,
+                ]),
+                'tcontent' => 'Không thể xuất hóa đơn trống, vui lòng thêm sản phẩm vào hóa đơn!',
+                'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                    Html::button('Lưu lại', ['class' => 'btn btn-primary', 'type' => "submit"])
+            ];
+        }
+
+        $trangThaiHienTai = $model->trang_thai;
+        $model->trang_thai = HoaDon::TRANGTHAI_DA_TT;
+        $model->so_vao_so = $model->getSoHoaDonCuoi($model->nam) + 1;
+        $model->so_don_hang = $model->getSoDonHangCuoi() + 1;
+        $model->ngay_xuat = date('Y-m-d H:i:s');
+
+
+        if ($model->save()) {
+            $model->refresh();
+            if ($trangThaiHienTai == HoaDon::TRANGTHAI_NHAP) {
+                $model->xuatHang();
+            }
+
+            return [
+                'forceReload' => '#crud-datatable-pjax',
+                'title' => "Cập nhật Hóa đơn",
+                'content' => $this->renderAjax('update', [
+                    'model' => $model,
+                ]),
+                'tcontent' => 'Xuất và thanh toán thành công!',
+                'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                    Html::button('Lưu lại', ['class' => 'btn btn-primary', 'type' => "submit"])
+            ];
+        }
+    }
 
     /**
      * Lists all HoaDon models.
      * @return mixed
      */
     public function actionIndex()
-    {    
+    {
         $searchModel = new HoaDonSearch();
-  		if(isset($_POST['search']) && $_POST['search'] != null){
+        if (isset($_POST['search']) && $_POST['search'] != null) {
             $dataProvider = $searchModel->search(Yii::$app->request->post(), $_POST['search']);
         } else if ($searchModel->load(Yii::$app->request->post())) {
             $searchModel = new HoaDonSearch(); // "reset"
             $dataProvider = $searchModel->search(Yii::$app->request->post());
         } else {
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        }    
+        }
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -139,19 +140,19 @@ class HoaDonBanHangController extends Controller
      * @return mixed
      */
     public function actionView($id)
-    {   
+    {
         $request = Yii::$app->request;
-        if($request->isAjax){
+        if ($request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "Hóa đơn",
-                    'content'=>$this->renderAjax('view', [
-                        'model' => $this->findModel($id),
-                    ]),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::a('Sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
-                ];    
-        }else{
+                'title' => "Hóa đơn",
+                'content' => $this->renderAjax('view', [
+                    'model' => $this->findModel($id),
+                ]),
+                'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                    Html::a('Sửa', ['update', 'id' => $id], ['class' => 'btn btn-primary', 'role' => 'modal-remote'])
+            ];
+        } else {
             return $this->render('view', [
                 'model' => $this->findModel($id),
             ]);
@@ -165,33 +166,33 @@ class HoaDonBanHangController extends Controller
      * and for non-ajax request if creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($loai=NULL)
+    public function actionCreate($loai = NULL)
     {
         $request = Yii::$app->request;
-        $model = new HoaDon();  
+        $model = new HoaDon();
         $model->loai_khach_hang = $loai;
         $tieuDe = '';
-        if($loai == HoaDon::LOAI_HOCVIEN)
+        if ($loai == HoaDon::LOAI_HOCVIEN)
             $tieuDe = ' (Học viên của Trung tâm)';
-        if($loai == HoaDon::LOAI_KHACHLE)
+        if ($loai == HoaDon::LOAI_KHACHLE)
             $tieuDe = ' (Khách ngoài Trung tâm)';
 
-        if($request->isAjax){
+        if ($request->isAjax) {
             /*
             *   Process for ajax request
             */
             Yii::$app->response->format = Response::FORMAT_JSON;
-            if($request->isGet){
+            if ($request->isGet) {
                 return [
-                    'title'=> "Thêm mới hóa đơn" .$tieuDe,
-                    'content'=>$this->renderAjax('create', [
+                    'title' => "Thêm mới hóa đơn" . $tieuDe,
+                    'content' => $this->renderAjax('create', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
-        
-                ];         
-            }else if($model->load($request->post()) && $model->save()){
+                    'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                        Html::button('Lưu lại', ['class' => 'btn btn-primary', 'type' => "submit"])
+
+                ];
+            } else if ($model->load($request->post()) && $model->save()) {
                 /* return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Thêm mới hóa đơn".$tieuDe,
@@ -202,26 +203,26 @@ class HoaDonBanHangController extends Controller
         
                 ];  */
                 return [
-                    'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Cập nhật hóa đơn".$tieuDe,
-                    'content'=>$this->renderAjax('update', [
+                    'forceReload' => '#crud-datatable-pjax',
+                    'title' => "Cập nhật hóa đơn" . $tieuDe,
+                    'content' => $this->renderAjax('update', [
                         'model' => $model,
                     ]),
-                    'tcontent'=>'Thêm mới thành công!',
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]) . Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
-                ];      
-            }else{           
+                    'tcontent' => 'Thêm mới thành công!',
+                    'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) . Html::button('Lưu lại', ['class' => 'btn btn-primary', 'type' => "submit"])
+                ];
+            } else {
                 return [
-                    'title'=> "Thêm mới hóa đơn".$tieuDe,
-                    'content'=>$this->renderAjax('create', [
+                    'title' => "Thêm mới hóa đơn" . $tieuDe,
+                    'content' => $this->renderAjax('create', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
-        
-                ];         
+                    'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                        Html::button('Lưu lại', ['class' => 'btn btn-primary', 'type' => "submit"])
+
+                ];
             }
-        }else{
+        } else {
             /*
             *   Process for non-ajax request
             */
@@ -233,9 +234,8 @@ class HoaDonBanHangController extends Controller
                 ]);
             }
         }
-       
     }
-    
+
     /**
      * Updates an existing HoaDon model.
      * For ajax request will return json object
@@ -246,34 +246,34 @@ class HoaDonBanHangController extends Controller
     public function actionUpdate($id)
     {
         $request = Yii::$app->request;
-        $model = $this->findModel($id);  
-        if($model->loai_khach_hang == HoaDon::LOAI_HOCVIEN)
+        $model = $this->findModel($id);
+        if ($model->loai_khach_hang == HoaDon::LOAI_HOCVIEN)
             $tieuDe = ' (Học viên của Trung tâm)';
-        if($model->loai_khach_hang == HoaDon::LOAI_KHACHLE)
+        if ($model->loai_khach_hang == HoaDon::LOAI_KHACHLE)
             $tieuDe = ' (Khách ngoài Trung tâm)';
 
-        if($request->isAjax){
+        if ($request->isAjax) {
             /*
             *   Process for ajax request
             */
             $canEdit = false;
             $cruser = User::getCurrentUser();
-            if ($model->nguoiTao && ($model->nguoiTao->noi_dang_ky == $cruser->noi_dang_ky) && CustomFunc::convertYMDHISToDMY($model->thoi_gian_tao) == date('d/m/Y')){
+            if ($model->nguoiTao && ($model->nguoiTao->noi_dang_ky == $cruser->noi_dang_ky) && CustomFunc::convertYMDHISToDMY($model->thoi_gian_tao) == date('d/m/Y')) {
                 $canEdit = true;
             }
-            
+
             Yii::$app->response->format = Response::FORMAT_JSON;
-            if($request->isGet){
+            if ($request->isGet) {
                 return [
-                    'title'=> "Cập nhật hóa đơn".$tieuDe,
-                    'content'=>$this->renderAjax('update', [
+                    'title' => "Cập nhật hóa đơn" . $tieuDe,
+                    'content' => $this->renderAjax('update', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                (($model->trang_thai==HoaDon::TRANGTHAI_NHAP || User::hasRole('Admin') || $canEdit)?Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"]):'')
-                ];         
-            }else if($model->load($request->post()) && $model->save()){
-            	/* if(Yii::$app->params['showView']){
+                    'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                        (($model->trang_thai == HoaDon::TRANGTHAI_NHAP || User::hasRole('Admin') || $canEdit) ? Html::button('Lưu lại', ['class' => 'btn btn-primary', 'type' => "submit"]) : '')
+                ];
+            } else if ($model->load($request->post()) && $model->save()) {
+                /* if(Yii::$app->params['showView']){
                     return [
                         'forceReload'=>'#crud-datatable-pjax',
                         'title'=> "Hóa đơn",
@@ -288,26 +288,87 @@ class HoaDonBanHangController extends Controller
                 	return ['forceClose'=>true,'forceReload'=>'#crud-datatable-pjax','tcontent'=>'Cập nhật thành công!',];
                 } */
                 return [
-                    'forceReload'=>'#crud-datatable-pjax',
-                    'tcontent'=>'Cập nhật thành công!',
-                    'title'=> "Cập nhật hóa đơn".$tieuDe,
-                    'content'=>$this->renderAjax('update', [
+                    'forceReload' => '#crud-datatable-pjax',
+                    'tcontent' => 'Cập nhật thành công!',
+                    'title' => "Cập nhật hóa đơn" . $tieuDe,
+                    'content' => $this->renderAjax('update', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                    ($model->trang_thai==HoaDon::TRANGTHAI_NHAP?Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"]):'')
-                ];   
-            }else{
-                 return [
-                    'title'=> "Cập nhật hóa đơn".$tieuDe,
-                    'content'=>$this->renderAjax('update', [
+                    'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                        ($model->trang_thai == HoaDon::TRANGTHAI_NHAP ? Html::button('Lưu lại', ['class' => 'btn btn-primary', 'type' => "submit"]) : '')
+                ];
+            } else {
+                return [
+                    'title' => "Cập nhật hóa đơn" . $tieuDe,
+                    'content' => $this->renderAjax('update', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                     ($model->trang_thai==HoaDon::TRANGTHAI_NHAP?Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"]):'')
-                ];        
+                    'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                        ($model->trang_thai == HoaDon::TRANGTHAI_NHAP ? Html::button('Lưu lại', ['class' => 'btn btn-primary', 'type' => "submit"]) : '')
+                ];
             }
-        }else{
+        } else {
+            /*
+            *   Process for non-ajax request
+            */
+            if ($model->load($request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            }
+        }
+    }
+
+    /**
+     * Updates ghi chú hóa đơn.
+     * For ajax request will return json object
+     * and for non-ajax request if update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionUpdateGhiChu($id)
+    {
+        $request = Yii::$app->request;
+        $model = $this->findModel($id);
+
+        if ($request->isAjax) {
+            /*
+            *   Process for ajax request
+            */
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            if ($request->isGet) {
+                return [
+                    'title' => "Cập nhật ghi chú hóa đơn",
+                    'content' => $this->renderAjax('update-ghi-chu', [
+                        'model' => $model,
+                    ]),
+                    'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                        Html::button('Lưu lại', ['class' => 'btn btn-primary', 'type' => "submit"])
+                ];
+            } else if ($model->load($request->post()) && $model->save()) {
+                return [
+                    'forceReload' => '#crud-datatable-pjax',
+                    'tcontent' => 'Cập nhật ghi chú thành công!',
+                    'title' => "Cập nhật chi chú hóa đơn",
+                    'content' => $this->renderAjax('update-ghi-chu', [
+                        'model' => $model,
+                    ]),
+                    'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                        Html::button('Lưu lại', ['class' => 'btn btn-primary', 'type' => "submit"])
+                ];
+            } else {
+                return [
+                    'title' => "Cập nhật chi chú hóa đơn",
+                    'content' => $this->renderAjax('update-ghi-chu', [
+                        'model' => $model,
+                    ]),
+                    'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                        Html::button('Lưu lại', ['class' => 'btn btn-primary', 'type' => "submit"])
+                ];
+            }
+        } else {
             /*
             *   Process for non-ajax request
             */
@@ -333,23 +394,21 @@ class HoaDonBanHangController extends Controller
         $request = Yii::$app->request;
         $this->findModel($id)->delete();
 
-        if($request->isAjax){
+        if ($request->isAjax) {
             /*
             *   Process for ajax request
             */
             Yii::$app->response->format = Response::FORMAT_JSON;
-            return ['forceClose'=>true,'forceReload'=>'#crud-datatable-pjax'];
-        }else{
+            return ['forceClose' => true, 'forceReload' => '#crud-datatable-pjax'];
+        } else {
             /*
             *   Process for non-ajax request
             */
             return $this->redirect(['index']);
         }
-
-
     }
 
-     /**
+    /**
      * Delete multiple existing HoaDon model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
@@ -357,38 +416,39 @@ class HoaDonBanHangController extends Controller
      * @return mixed
      */
     public function actionBulkdelete()
-    {        
+    {
         $request = Yii::$app->request;
-        $pks = explode(',', $request->post( 'pks' )); // Array or selected records primary keys
+        $pks = explode(',', $request->post('pks')); // Array or selected records primary keys
         $delOk = true;
         $fList = array();
-        foreach ( $pks as $pk ) {
+        foreach ($pks as $pk) {
             $model = $this->findModel($pk);
-            try{
-            	$model->delete();
-            }catch(\Exception $e) {
-            	$delOk = false;
-            	$fList[] = $model->id;
+            try {
+                $model->delete();
+            } catch (\Exception $e) {
+                $delOk = false;
+                $fList[] = $model->id;
             }
         }
 
-        if($request->isAjax){
+        if ($request->isAjax) {
             /*
             *   Process for ajax request
             */
             Yii::$app->response->format = Response::FORMAT_JSON;
-            return ['forceClose'=>true,'forceReload'=>'#crud-datatable-pjax',
-            			'tcontent'=>$delOk==true?'Xóa thành công!':('Không thể xóa:'.implode('</br>', $fList)),
+            return [
+                'forceClose' => true,
+                'forceReload' => '#crud-datatable-pjax',
+                'tcontent' => $delOk == true ? 'Xóa thành công!' : ('Không thể xóa:' . implode('</br>', $fList)),
             ];
-        }else{
+        } else {
             /*
             *   Process for non-ajax request
             */
             return $this->redirect(['index']);
         }
-       
     }
-    
+
     /**
      * update print count
      * @param unknown $id
@@ -397,7 +457,7 @@ class HoaDonBanHangController extends Controller
     public function actionUpdatePrintCount($id)
     {
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-        
+
         $model = $this->findModel($id);
         if ($model !== null) {
             $model->so_lan_in = ($model->so_lan_in ?? 0) + 1;
