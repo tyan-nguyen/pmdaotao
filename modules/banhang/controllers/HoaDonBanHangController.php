@@ -340,7 +340,7 @@ class HoaDonBanHangController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if ($request->isGet) {
                 return [
-                    'title' => "Cập nhật ghi chú hóa đơn",
+                    'title' => "Cập nhật ghi chú hóa đơn " . $model->soHoaDon,
                     'content' => $this->renderAjax('update-ghi-chu', [
                         'model' => $model,
                     ]),
@@ -351,7 +351,7 @@ class HoaDonBanHangController extends Controller
                 return [
                     'forceReload' => '#crud-datatable-pjax',
                     'tcontent' => 'Cập nhật ghi chú thành công!',
-                    'title' => "Cập nhật chi chú hóa đơn",
+                    'title' => "Cập nhật chi chú hóa đơn " . $model->soHoaDon,
                     'content' => $this->renderAjax('update-ghi-chu', [
                         'model' => $model,
                     ]),
@@ -360,7 +360,7 @@ class HoaDonBanHangController extends Controller
                 ];
             } else {
                 return [
-                    'title' => "Cập nhật chi chú hóa đơn",
+                    'title' => "Cập nhật chi chú hóa đơn " . $model->soHoaDon,
                     'content' => $this->renderAjax('update-ghi-chu', [
                         'model' => $model,
                     ]),
