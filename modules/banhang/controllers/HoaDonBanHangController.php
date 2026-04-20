@@ -160,6 +160,27 @@ class HoaDonBanHangController extends Controller
     }
 
     /**
+     * Displays history for a single LichThue model.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionHistory($id)
+    {
+        $request = Yii::$app->request;
+        if ($request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return [
+                'title' => "Lịch sử",
+                'content' => $this->renderAjax('history', [
+                    'model' => $this->findModel($id),
+                ]),
+                'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"])
+
+            ];
+        }
+    }
+
+    /**
      * Creates a new HoaDon model.
      * $loai is loai khach hang
      * For ajax request will return json object
@@ -352,6 +373,7 @@ class HoaDonBanHangController extends Controller
                     'forceReload' => '#crud-datatable-pjax',
                     'tcontent' => 'Cập nhật ghi chú thành công!',
                     'title' => "Cập nhật chi chú hóa đơn " . $model->soHoaDon,
+                    'forceClose' => true,
                     'content' => $this->renderAjax('update-ghi-chu', [
                         'model' => $model,
                     ]),

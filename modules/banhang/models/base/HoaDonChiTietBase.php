@@ -5,6 +5,7 @@ namespace app\modules\banhang\models\base;
 use Yii;
 use app\modules\banhang\models\HoaDon;
 use app\modules\banhang\models\HangHoa;
+use app\modules\user\models\History;
 
 /**
  * This is the model class for table "kh_don_hang_chi_tiet".
@@ -24,8 +25,8 @@ use app\modules\banhang\models\HangHoa;
  * @property HhHangHoa $hangHoa
  */
 class HoaDonChiTietBase extends \app\models\BanleDonHangChiTiet
-{  
-    public $tongSoLuongSanPham;//su dung trong report
+{
+    public $tongSoLuongSanPham; //su dung trong report
     public $tongTienSanPham;
     public $tongChietKhauSanPham;
     /**
@@ -44,7 +45,7 @@ class HoaDonChiTietBase extends \app\models\BanleDonHangChiTiet
             [['id_hang_hoa'], 'exist', 'skipOnError' => true, 'targetClass' => HangHoa::class, 'targetAttribute' => ['id_hang_hoa' => 'id']],
         ];
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -63,18 +64,28 @@ class HoaDonChiTietBase extends \app\models\BanleDonHangChiTiet
             'ghi_chu' => 'Ghi chú',
         ];
     }
-    
+
     /**
      * {@inheritdoc}
      */
-    public function beforeSave($insert) {
+    public function beforeSave($insert)
+    {
         if ($this->isNewRecord) {
             $this->thoi_gian_tao = date('Y-m-d H:i:s');
             $this->nguoi_tao = Yii::$app->user->id;
         }
         return parent::beforeSave($insert);
     }
-    
+
+    /**
+     * {@inheritdoc}
+     */
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+        History::addHistoryHoaDonChiTiet(HoaDon::MODEL_ID, $changedAttributes, $this, $insert); //lay model id cua HoaDon
+    }
+
     /**
      * Gets query for [[DonHang]].
      *
@@ -84,7 +95,7 @@ class HoaDonChiTietBase extends \app\models\BanleDonHangChiTiet
     {
         return $this->hasOne(HoaDon::class, ['id' => 'id_don_hang']);
     }
-    
+
     /**
      * Gets query for [[HangHoa]].
      *
@@ -94,15 +105,17 @@ class HoaDonChiTietBase extends \app\models\BanleDonHangChiTiet
     {
         return $this->hasOne(HangHoa::class, ['id' => 'id_hang_hoa']);
     }
-    
-    public function getSoLuong(){
-        return $this->so_luong?$this->so_luong:0;
+
+    public function getSoLuong()
+    {
+        return $this->so_luong ? $this->so_luong : 0;
     }
-    public function getDonGia(){
-        return $this->don_gia?$this->don_gia:0;
+    public function getDonGia()
+    {
+        return $this->don_gia ? $this->don_gia : 0;
     }
-    public function getChietKhau(){
-        return $this->chiet_khau?$this->chiet_khau:0;
+    public function getChietKhau()
+    {
+        return $this->chiet_khau ? $this->chiet_khau : 0;
     }
-    
 }

@@ -2,6 +2,9 @@
 
 namespace app\modules\user\models;
 
+use app\modules\banhang\models\HangHoa;
+use app\modules\banhang\models\HoaDon;
+use app\modules\banhang\models\HoaDonChiTiet;
 use app\modules\banhang\models\KhachHang;
 use app\modules\giaovien\models\GiaoVien;
 use app\modules\hocvien\models\HocVien;
@@ -39,18 +42,19 @@ class HistoryBase extends \app\models\UserHistory
             'nguoi_tao' => 'Người thực hiện',
         ];
     }
-    
+
     /**
-    * {@inheritdoc}
-    */
-    public function beforeSave($insert) {
+     * {@inheritdoc}
+     */
+    public function beforeSave($insert)
+    {
         if ($this->isNewRecord) {
             $this->thoi_gian_tao = date('Y-m-d H:i:s');
             $this->nguoi_tao = Yii::$app->user->id;
         }
         return parent::beforeSave($insert);
     }
-    
+
     /**
      * luu lich su thay doi cho model goi trong aftersave
      * use(in aftersave): History::addHistory($this::MODEL_ID, $changedAttributes, $this, $insert);
@@ -60,20 +64,21 @@ class HistoryBase extends \app\models\UserHistory
      * - $mod:activerecord: model thong qua findOne(hoac goi $this trong aftersave)
      * - $isNew:tham so $insert cua aftersave
      */
-    public static function addHistory($type, $atr, $mod, $isNew){
+    public static function addHistory($type, $atr, $mod, $isNew)
+    {
         $noiDung = '';
-        if($isNew == false){
-            foreach ($atr as $key=>$value){
-                if($atr[$key] != $mod->$key){
-                    $noiDung .= '<p>Thay đổi '. $mod->getAttributeLabel($key) .' "'. $value . '" thành "'. $mod->$key . '"</p>';
+        if ($isNew == false) {
+            foreach ($atr as $key => $value) {
+                if ($atr[$key] != $mod->$key) {
+                    $noiDung .= '<p>Thay đổi ' . $mod->getAttributeLabel($key) . ' "' . $value . '" thành "' . $mod->$key . '"</p>';
                 }
             }
         } else {
             $noiDung = 'Thực hiện thêm mới dữ liệu thành công.';
         }
-        
+
         //$his->noi_dung = var_dump($changedAttributes);
-        if($noiDung != null){
+        if ($noiDung != null) {
             $his = new History();
             $his->loai = $type;
             $his->id_tham_chieu = $mod->id;
@@ -82,48 +87,129 @@ class HistoryBase extends \app\models\UserHistory
         }
     }
     /** luu lai lich su cho model lichthue */
-    public static function addHistoryLichThue($type, $atr, $mod, $isNew){       
+    public static function addHistoryLichThue($type, $atr, $mod, $isNew)
+    {
         $noiDung = '';
-        if($isNew == false){
-            $model = LichThue::findOne($mod->id); 
-            if($model != null){
-                foreach ($atr as $key=>$value){
-                    if($atr[$key] != $mod->$key){
-                        if($key == 'id_giao_vien' && $model->loai_giao_vien == LichThue::GV_GIAOVIEN){
+        if ($isNew == false) {
+            $model = LichThue::findOne($mod->id);
+            if ($model != null) {
+                foreach ($atr as $key => $value) {
+                    if ($atr[$key] != $mod->$key) {
+                        if ($key == 'id_giao_vien' && $model->loai_giao_vien == LichThue::GV_GIAOVIEN) {
                             $gvold = GiaoVien::findOne($value);
                             $gvnew = GiaoVien::findOne($mod->$key);
-                            $noiDung .= '<p>Thay đổi '. $mod->getAttributeLabel($key) . ' Trung tâm' .' "'. $gvold->ho_ten . '" thành "'. $gvnew->ho_ten . '"</p>';
-                        } else if($key == 'id_giao_vien' && $model->loai_giao_vien == LichThue::GV_KHACHNGOAI){
+                            $noiDung .= '<p>Thay đổi ' . $mod->getAttributeLabel($key) . ' Trung tâm' . ' "' . $gvold->ho_ten . '" thành "' . $gvnew->ho_ten . '"</p>';
+                        } else if ($key == 'id_giao_vien' && $model->loai_giao_vien == LichThue::GV_KHACHNGOAI) {
                             $gvold = KhachHang::findOne($value);
                             $gvnew = KhachHang::findOne($mod->$key);
-                            $noiDung .= '<p>Thay đổi '. $mod->getAttributeLabel($key) . ' gv ngoài' .' "'. $gvold->ho_ten . '" thành "'. $gvnew->ho_ten . '"</p>';
-                        } else if($key == 'id_khach_hang' && $model->loai_khach_hang == LichThue::KH_HOCVIEN){
+                            $noiDung .= '<p>Thay đổi ' . $mod->getAttributeLabel($key) . ' gv ngoài' . ' "' . $gvold->ho_ten . '" thành "' . $gvnew->ho_ten . '"</p>';
+                        } else if ($key == 'id_khach_hang' && $model->loai_khach_hang == LichThue::KH_HOCVIEN) {
                             $hvold = HocVien::findOne($value);
                             $hvnew = HocVien::findOne($mod->$key);
-                            $noiDung .= '<p>Thay đổi '. $mod->getAttributeLabel($key) . ' Trung tâm' .' "'. $hvold->ho_ten . '" thành "'. $hvnew->ho_ten . '"</p>';
-                        } else if($key == 'id_khach_hang' && $model->loai_khach_hang == LichThue::KH_KHACHNGOAI){
+                            $noiDung .= '<p>Thay đổi ' . $mod->getAttributeLabel($key) . ' Trung tâm' . ' "' . $hvold->ho_ten . '" thành "' . $hvnew->ho_ten . '"</p>';
+                        } else if ($key == 'id_khach_hang' && $model->loai_khach_hang == LichThue::KH_KHACHNGOAI) {
                             $hvold = KhachHang::findOne($value);
                             $hvnew = KhachHang::findOne($mod->$key);
-                            $noiDung .= '<p>Thay đổi '. $mod->getAttributeLabel($key) . ' ngoài' .' "'. $hvold->ho_ten . '" thành "'. $hvnew->ho_ten . '"</p>';
-                        } else if($key == 'id_xe'){
+                            $noiDung .= '<p>Thay đổi ' . $mod->getAttributeLabel($key) . ' ngoài' . ' "' . $hvold->ho_ten . '" thành "' . $hvnew->ho_ten . '"</p>';
+                        } else if ($key == 'id_xe') {
                             $xeold = Xe::findOne($value);
                             $xenew = Xe::findOne($mod->$key);
-                            $noiDung .= '<p>Thay đổi '. $mod->getAttributeLabel($key) .' "'. $xeold->tenXeShort . '" thành "'. $xenew->tenXeShort . '"</p>';
+                            $noiDung .= '<p>Thay đổi ' . $mod->getAttributeLabel($key) . ' "' . $xeold->tenXeShort . '" thành "' . $xenew->tenXeShort . '"</p>';
                         } else {
-                            $noiDung .= '<p>Thay đổi '. $mod->getAttributeLabel($key) .' "'. $value . '" thành "'. $mod->$key . '"</p>';
+                            $noiDung .= '<p>Thay đổi ' . $mod->getAttributeLabel($key) . ' "' . $value . '" thành "' . $mod->$key . '"</p>';
+                        }
                     }
                 }
-                }
-            } 
+            }
         } else {
             $noiDung = 'Thực hiện thêm mới dữ liệu thành công.';
         }
-        
+
         //$his->noi_dung = var_dump($changedAttributes);
-        if($noiDung != null){
+        if ($noiDung != null) {
             $his = new History();
             $his->loai = $type;
             $his->id_tham_chieu = $mod->id;
+            $his->noi_dung = $noiDung;
+            $his->save();
+        }
+    }
+    /** luu lai lich su cho model lichthue */
+    public static function addHistoryHoaDon($type, $atr, $mod, $isNew)
+    {
+        $noiDung = '';
+        if ($isNew == false) {
+            $model = HoaDon::findOne($mod->id);
+            if ($model != null) {
+                foreach ($atr as $key => $value) {
+                    if ($atr[$key] != $mod->$key) {
+                        if ($key == 'id_khach_hang' && $model->loai_khach_hang == HoaDon::LOAI_HOCVIEN) {
+                            $hvold = HocVien::findOne($value);
+                            $hvnew = HocVien::findOne($mod->$key);
+                            $noiDung .= '<p>Thay đổi ' . $mod->getAttributeLabel($key) . ' Trung tâm' . ' "' . $hvold->ho_ten . '" thành "' . $hvnew->ho_ten . '"</p>';
+                        } else if ($key == 'id_khach_hang' && $model->loai_khach_hang == HoaDon::LOAI_KHACHLE) {
+                            $hvold = KhachHang::findOne($value);
+                            $hvnew = KhachHang::findOne($mod->$key);
+                            $noiDung .= '<p>Thay đổi ' . $mod->getAttributeLabel($key) . ' ngoài' . ' "' . $hvold->ho_ten . '" thành "' . $hvnew->ho_ten . '"</p>';
+                        } else if ($key == 'edit_mode') {
+                            if ($mod->$key == 1) {
+                                $noiDung .= '<p>Bật chế độ cho phép chỉnh sửa sau khi xuất</p>';
+                            } else {
+                                $noiDung .= '<p>Tắt chế độ cho phép chỉnh sửa sau khi xuất</p>';
+                            }
+                        } else {
+                            $noiDung .= '<p>Thay đổi ' . $mod->getAttributeLabel($key) . ' "' . $value . '" thành "' . $mod->$key . '"</p>';
+                        }
+                    }
+                }
+            }
+        } else {
+            $noiDung = 'Thực hiện thêm mới dữ liệu thành công.';
+        }
+
+        //$his->noi_dung = var_dump($changedAttributes);
+        if ($noiDung != null) {
+            $his = new History();
+            $his->loai = $type;
+            $his->id_tham_chieu = $mod->id;
+            $his->noi_dung = $noiDung;
+            $his->save();
+        }
+    }
+    /** luu lai lich su cho model lichthue */
+    public static function addHistoryHoaDonChiTiet($type, $atr, $mod, $isNew)
+    {
+        $noiDung = '';
+        if ($isNew == false) {
+            $model = HoaDonChiTiet::findOne($mod->id);
+            if ($model != null) {
+                //$hangHoa = HangHoa::findOne($atr['id_hang_hoa']);
+                $noiDung = '<p>Thay đổi: ' . $model->hangHoa->ten_hang_hoa . ', số lượng: ' . $atr['so_luong'] . ', đơn giá: ' . number_format($atr['don_gia'], 0, ',', '.') . ', thành tiền: ' . number_format(($atr['so_luong'] * $atr['don_gia'] - $atr['chiet_khau']), 0, ',', '.') . '</p>';
+                $noiDung .= '<p> Thành: ' . $model->hangHoa->ten_hang_hoa . ', số lượng: ' . $model->so_luong . ', đơn giá: ' . number_format($model->don_gia, 0, ',', '.') . ', thành tiền: ' . number_format($model->thanhTien, 0, ',', '.') . '</p>';
+                /* foreach ($atr as $key => $value) {
+                    if ($atr[$key] != $mod->$key) {
+                        if ($key == 'id_hang_hoa') {
+                            $hangHoa = HangHoa::findOne($value);
+                            $hangHoaNew = HangHoa::findOne($mod->$key);
+                            $noiDung .= '<p>Thay đổi ' . $mod->getAttributeLabel($key) . ' "' . $hangHoa->ten_hang_hoa . '" thành "' . $hangHoaNew->ten_hang_hoa . '"</p>';
+                        } else {
+                            $noiDung .= '<p>Thay đổi ' . $mod->getAttributeLabel($key) . ' "' . $value . '" thành "' . $mod->$key . '"</p>';
+
+                            $noiDung = 'Thay đổi: ' . $model->hangHoa->ten_hang_hoa . ', số lượng: ' . $model->so_luong . ', đơn giá: ' . number_format($model->don_gia, 0, ',', '.') . ', thành tiền: ' . number_format($model->thanhTien, 0, ',', '.');
+                        }
+                    }
+                } */
+            }
+        } else {
+            $model = HoaDonChiTiet::findOne($mod->id);
+            $noiDung = 'Thêm hàng hóa vào hóa đơn: ' . $model->hangHoa->ten_hang_hoa . ', số lượng: ' . $model->so_luong . ', đơn giá: ' . number_format($model->don_gia, 0, ',', '.') . ', thành tiền: ' . number_format($model->thanhTien, 0, ',', '.');
+        }
+
+        //$his->noi_dung = var_dump($changedAttributes);
+        if ($noiDung != null) {
+            $his = new History();
+            $his->loai = $type;
+            $his->id_tham_chieu = $mod->id_don_hang;
             $his->noi_dung = $noiDung;
             $his->save();
         }

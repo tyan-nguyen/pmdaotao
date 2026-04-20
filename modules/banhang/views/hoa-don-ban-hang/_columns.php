@@ -14,7 +14,7 @@ return [
     [
         'class' => 'kartik\grid\ActionColumn',
         'header' => '',
-        'template' => '{chiTiet} {suaGhiChu} {delete}',
+        'template' => '{chiTiet} {suaGhiChu} {history} {delete}',
         'dropdown' => true,
         'dropdownOptions' => ['class' => 'float-right'],
         'dropdownButton' => [
@@ -28,6 +28,8 @@ return [
                 return Url::to(['update', 'id' => $key]);
             } else if ($action === 'suaGhiChu') {
                 return Url::to(['update-ghi-chu', 'id' => $key]);
+            } else if ($action === 'history') {
+                return Url::to(['history', 'id' => $key]);
             }
             return Url::to([$action, 'id' => $key]);
         },
@@ -50,6 +52,15 @@ return [
                     'data-bs-toggle' => 'tooltip',
                 ]);
             },
+            'history' => function ($url, $model, $key) {
+                return Html::a('<i class="fa fa-history"></i> Lịch sử', $url, [
+                    'title' => 'Xem lịch sử',
+                    'role' => 'modal-remote',
+                    'class' => 'btn ripple btn-info dropdown-item',
+                    'data-bs-placement' => 'top',
+                    'data-bs-toggle' => 'tooltip',
+                ]);
+            },
         ],
         'visibleButtons' => [
             'view' => function ($model, $key, $index) {
@@ -59,7 +70,11 @@ return [
                 $user = User::getCurrentUser();
                 // Only show delete button if user is admin
                 return $user->superadmin;
-            }
+            },
+            'history' => function ($model, $key, $index) {
+                $user = User::getCurrentUser();
+                return $user->superadmin;
+            },
         ],
         'viewOptions' => [
             'role' => 'modal-remote',
