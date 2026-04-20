@@ -1,13 +1,16 @@
 <?php
 
 namespace app\modules\khoahoc\models;
+
 use Yii;
 use app\modules\daotao\models\HangMonHoc;
 use app\modules\hocvien\models\HocPhi;
+
 /**
  * This is the model class for table "hv_hang_dao_tao".
  *
  * @property int $id
+ * @property int|null $id_nhom_hang
  * @property string $ma_hang
  * @property string $ten_hang
  * @property string|null $ghi_chu
@@ -25,12 +28,12 @@ class HangDaoTao extends \app\models\HvHangDaoTao
     public function rules()
     {
         return [
-            [['ten_hang','check_phan_hang'], 'required'],
+            [['ten_hang', 'check_phan_hang'], 'required'],
             [['ghi_chu'], 'string'],
-            [['nguoi_tao'], 'integer'],
+            [['nguoi_tao', 'id_nhom_hang'], 'integer'],
             [['thoi_gian_tao'], 'safe'],
             [['ten_hang'], 'string', 'max' => 255],
-            [['check_phan_hang'],'string','max'=>15],
+            [['check_phan_hang'], 'string', 'max' => 15],
             [['ma_hang'], 'string', 'max' => 20],
         ];
     }
@@ -42,22 +45,29 @@ class HangDaoTao extends \app\models\HvHangDaoTao
     {
         return [
             'id' => 'ID',
+            'id_nhom_hang' => 'Nhóm Hạng',
             'ma_hang' => 'Mã hạng',
             'ten_hang' => 'Tên Hạng',
             'ghi_chu' => 'Ghi chú',
             'nguoi_tao' => 'Người tạo',
             'thoi_gian_tao' => 'Thời gian tạo',
-            'check_phan_hang'=>'Phân hạng',
+            'check_phan_hang' => 'Phân hạng',
         ];
     }
-    public function beforeSave($insert) {
+    public function beforeSave($insert)
+    {
         if ($this->isNewRecord) {
             $this->nguoi_tao = Yii::$app->user->identity->id;
             $this->thoi_gian_tao = date('Y-m-d H:i:s');
         }
         return parent::beforeSave($insert);
     }
-    
+
+    public function getNhomHang()
+    {
+        return $this->hasOne(NhomHangDaoTao::class, ['id' => 'id_nhom_hang']);
+    }
+
     /**
      * Gets query for [[MonHoc]].
      *
@@ -67,11 +77,12 @@ class HangDaoTao extends \app\models\HvHangDaoTao
     {
         return $this->hasMany(HangMonHoc::class, ['id_hang' => 'id']);
     }
-    
+
     /**
      * get hoc phi hien tai cua hang dao tao
      */
-    public function getCurrentHocPhi(){
-        return $this->hasOne(HocPhi::class, ['id_hang' => 'id'])->orderBy(['id'=>SORT_DESC]);
+    public function getCurrentHocPhi()
+    {
+        return $this->hasOne(HocPhi::class, ['id_hang' => 'id'])->orderBy(['id' => SORT_DESC]);
     }
 }

@@ -1,15 +1,19 @@
 <?php
 
 namespace app\modules\khoahoc\models\base;
+
 use app\custom\CustomFunc;
 use Yii;
 use app\modules\hocvien\models\HocVien;
 use app\modules\hocvien\models\HangDaoTao;
 use app\modules\hocvien\models\HocPhi;
+use app\modules\khoahoc\models\NhomHangDaoTao;
+
 /**
  * This is the model class for table "hv_khoa_hoc".
  *
  * @property int $id
+ * @property int|null $id_nhom_hang
  * @property int $id_hang
  * @property string $ten_khoa_hoc
  * @property string $ngay_bat_dau
@@ -27,48 +31,53 @@ use app\modules\hocvien\models\HocPhi;
  */
 class KhoaHocBase extends \app\models\HvKhoaHoc
 {
-   CONST TRANGTHAI_CHUAHOANTHANH = 'CHUA_HOAN_THANH';//MỚI TẠO CHƯA ĐỦ HỌC VIÊN
-   CONST TRANGTHAI_DAHOANTHANH = 'DA_HOAN_THANH';//ĐÃ KẾT THÚC KHÓA HỌC
-   CONST TRANGTHAI_DANGHOC = 'DANG_HOC';//KHÓA HỌC ĐANG HỌC HOẶC ĐÃ ĐỦ HỌC VIÊN
-   
-   public $listIdHocVien;//dung trong form phan cong giang day
-   public $idGiaoVien;//dung trong form phan cong giang day
-   
-   //show list trang thai
-   public function getListTrangThai(){
-       return [
-           self::TRANGTHAI_CHUAHOANTHANH => $this->getLabelTrangThai(self::TRANGTHAI_CHUAHOANTHANH),
-           self::TRANGTHAI_DANGHOC => $this->getLabelTrangThai(self::TRANGTHAI_DANGHOC),
-           self::TRANGTHAI_DAHOANTHANH => $this->getLabelTrangThai(self::TRANGTHAI_DAHOANTHANH),
-       ];
-   }
-   //get label trang thai by value
-   public function getLabelTrangThai($trangThai){
-       $label = '';
-       switch ($trangThai){
-           case self::TRANGTHAI_CHUAHOANTHANH:
-               $label = 'Chưa hoàn thành';
-               break;
-           case self::TRANGTHAI_DAHOANTHANH:
-               $label = 'Hoàn thành';
-               break;
-           case self::TRANGTHAI_DANGHOC:
-               $label = 'Đào tạo/Đủ học viên';
-               break;
-       }
-       return $label;
-   }
-   //get label trang thai cua model
-   public function getTenTrangThai(){
-       return $this->getLabelTrangThai($this->trang_thai);
-   }
+    const TRANGTHAI_CHUAHOANTHANH = 'CHUA_HOAN_THANH'; //MỚI TẠO CHƯA ĐỦ HỌC VIÊN
+    const TRANGTHAI_DAHOANTHANH = 'DA_HOAN_THANH'; //ĐÃ KẾT THÚC KHÓA HỌC
+    const TRANGTHAI_DANGHOC = 'DANG_HOC'; //KHÓA HỌC ĐANG HỌC HOẶC ĐÃ ĐỦ HỌC VIÊN
+
+    public $listIdHocVien; //dung trong form phan cong giang day
+    public $idGiaoVien; //dung trong form phan cong giang day
+
+    //show list trang thai
+    public function getListTrangThai()
+    {
+        return [
+            self::TRANGTHAI_CHUAHOANTHANH => $this->getLabelTrangThai(self::TRANGTHAI_CHUAHOANTHANH),
+            self::TRANGTHAI_DANGHOC => $this->getLabelTrangThai(self::TRANGTHAI_DANGHOC),
+            self::TRANGTHAI_DAHOANTHANH => $this->getLabelTrangThai(self::TRANGTHAI_DAHOANTHANH),
+        ];
+    }
+    //get label trang thai by value
+    public function getLabelTrangThai($trangThai)
+    {
+        $label = '';
+        switch ($trangThai) {
+            case self::TRANGTHAI_CHUAHOANTHANH:
+                $label = 'Chưa hoàn thành';
+                break;
+            case self::TRANGTHAI_DAHOANTHANH:
+                $label = 'Hoàn thành';
+                break;
+            case self::TRANGTHAI_DANGHOC:
+                $label = 'Đào tạo/Đủ học viên';
+                break;
+        }
+        return $label;
+    }
+    //get label trang thai cua model
+    public function getTenTrangThai()
+    {
+        return $this->getLabelTrangThai($this->trang_thai);
+    }
     /**
      * {@inheritdoc}
      */
-    public function getNgayBatDau(){
+    public function getNgayBatDau()
+    {
         return CustomFunc::convertYMDToDMY($this->ngay_bat_dau);
     }
-    public function getNgayKetThuc(){
+    public function getNgayKetThuc()
+    {
         return CustomFunc::convertYMDToDMY($this->ngay_ket_thuc);
     }
     /* public static function tableName()
@@ -83,15 +92,15 @@ class KhoaHocBase extends \app\models\HvKhoaHoc
     {
         return [
             //[['id_hang', 'ten_khoa_hoc','so_hoc_vien_khoa_hoc'], 'required'],
-            [['ten_khoa_hoc','so_hoc_vien_khoa_hoc'], 'required'],
-            [['id_hang', 'nguoi_tao','id_hoc_phi','so_hoc_vien_khoa_hoc', 'idGiaoVien'], 'integer'],
+            [['ten_khoa_hoc', 'so_hoc_vien_khoa_hoc'], 'required'],
+            [['id_hang', 'nguoi_tao', 'id_hoc_phi', 'so_hoc_vien_khoa_hoc', 'idGiaoVien', 'id_nhom_hang'], 'integer'],
             [['ngay_bat_dau', 'ngay_ket_thuc', 'thoi_gian_tao'], 'safe'],
             [['ghi_chu'], 'string'],
             [['ten_khoa_hoc', 'trang_thai'], 'string', 'max' => 255],
             [['nhom_co_so'], 'string', 'max' => 20],
             [['listIdHocVien'], 'safe'],
             [['id_hang'], 'exist', 'skipOnError' => true, 'targetClass' => HangDaoTao::class, 'targetAttribute' => ['id_hang' => 'id']],
-            [['idGiaoVien'], 'required', 'on'=>'phan-cong-giang-day'], //on add mau cua vao ke hoach
+            [['idGiaoVien'], 'required', 'on' => 'phan-cong-giang-day'], //on add mau cua vao ke hoach
         ];
     }
 
@@ -102,6 +111,7 @@ class KhoaHocBase extends \app\models\HvKhoaHoc
     {
         return [
             'id' => 'ID',
+            'id_nhom_hang' => 'Nhóm Hạng',
             'id_hang' => 'Hạng khóa học',
             'ten_khoa_hoc' => 'Tên khóa học',
             'ngay_bat_dau' => 'Ngày bắt đầu',
@@ -110,14 +120,17 @@ class KhoaHocBase extends \app\models\HvKhoaHoc
             'trang_thai' => 'Trạng thái',
             'nguoi_tao' => 'Người tạo',
             'thoi_gian_tao' => 'Thời gian tạo',
-            'id_hoc_phi'=>'Id học phí',
-            'so_hoc_vien_khoa_hoc'=>'Số học viên khóa học',
+            'id_hoc_phi' => 'Id học phí',
+            'so_hoc_vien_khoa_hoc' => 'Số học viên khóa học',
             'nhom_co_so' => 'Địa điểm',
-            
-            'idGiaoVien'=>'Giáo viên phụ trách',
+
+            'idGiaoVien' => 'Giáo viên phụ trách',
         ];
     }
-
+    public function getNhomHang()
+    {
+        return $this->hasOne(NhomHangDaoTao::class, ['id' => 'id_nhom_hang']);
+    }
     /**
      * Gets query for [[Hang]].
      *
@@ -129,7 +142,7 @@ class KhoaHocBase extends \app\models\HvKhoaHoc
     }
     public function getHocPhi()
     {
-        return $this->hasOne(HocPhi::class,['id'=>'id_hoc_phi']);
+        return $this->hasOne(HocPhi::class, ['id' => 'id_hoc_phi']);
     }
 
     /**
@@ -139,7 +152,7 @@ class KhoaHocBase extends \app\models\HvKhoaHoc
      */
     public function getHvHocViens()
     {
-        return $this->hasMany(HocVien::class, ['id_khoa_hoc' => 'id'])->where(['huy_ho_so'=>0]);
+        return $this->hasMany(HocVien::class, ['id_khoa_hoc' => 'id'])->where(['huy_ho_so' => 0]);
     }
 
     public function beforeSave($insert)
@@ -148,7 +161,7 @@ class KhoaHocBase extends \app\models\HvKhoaHoc
         $this->ngay_ket_thuc = CustomFunc::convertDMYToYMD($this->ngay_ket_thuc);
         if (strtotime($this->ngay_ket_thuc) < strtotime($this->ngay_bat_dau)) {
             $this->addError('ngay_ket_thuc', 'Ngày kết thúc không được nhỏ hơn ngày bắt đầu.');
-            return false; 
+            return false;
         }
         if ($this->isNewRecord) {
             $this->nguoi_tao = Yii::$app->user->identity->id;

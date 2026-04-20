@@ -8,6 +8,7 @@ use Yii;
  * This is the model class for table "hv_khoa_hoc".
  *
  * @property int $id
+ * @property int|null $id_nhom_hang
  * @property int $id_hang
  * @property string $ten_khoa_hoc
  * @property string $ngay_bat_dau
@@ -40,7 +41,7 @@ class HvKhoaHoc extends \yii\db\ActiveRecord
     {
         return [
             [['id_hang', 'ten_khoa_hoc', 'ngay_bat_dau', 'ngay_ket_thuc', 'trang_thai'], 'required'],
-            [['id_hang', 'nguoi_tao'], 'integer'],
+            [['id_hang', 'nguoi_tao', 'id_nhom_hang'], 'integer'],
             [['ngay_bat_dau', 'ngay_ket_thuc', 'thoi_gian_tao'], 'safe'],
             [['ghi_chu'], 'string'],
             [['ten_khoa_hoc', 'trang_thai'], 'string', 'max' => 255],
@@ -56,6 +57,7 @@ class HvKhoaHoc extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'id_nhom_hang' => 'ID Nhóm Hạng',
             'id_hang' => 'Id Hang',
             'ten_khoa_hoc' => 'Ten Khoa Hoc',
             'ngay_bat_dau' => 'Ngay Bat Dau',

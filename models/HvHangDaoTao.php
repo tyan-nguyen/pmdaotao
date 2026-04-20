@@ -8,6 +8,7 @@ use Yii;
  * This is the model class for table "hv_hang_dao_tao".
  *
  * @property int $id
+ * @property int|null $id_nhom_hang
  * @property string|null $ma_hang
  * @property string $ten_hang
  * @property string|null $ghi_chu
@@ -43,7 +44,7 @@ class HvHangDaoTao extends \yii\db\ActiveRecord
             [['ma_hang', 'ghi_chu', 'nguoi_tao', 'thoi_gian_tao'], 'default', 'value' => null],
             [['ten_hang', 'check_phan_hang'], 'required'],
             [['ghi_chu'], 'string'],
-            [['nguoi_tao'], 'integer'],
+            [['nguoi_tao', 'id_nhom_hang'], 'integer'],
             [['thoi_gian_tao'], 'safe'],
             [['ma_hang'], 'string', 'max' => 20],
             [['ten_hang'], 'string', 'max' => 255],
@@ -58,6 +59,7 @@ class HvHangDaoTao extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'id_nhom_hang' => 'ID Nhom Hang',
             'ma_hang' => 'Ma Hang',
             'ten_hang' => 'Ten Hang',
             'ghi_chu' => 'Ghi Chu',
@@ -126,5 +128,4 @@ class HvHangDaoTao extends \yii\db\ActiveRecord
     {
         return $this->hasMany(NvDay::class, ['id_hang_xe' => 'id']);
     }
-
 }

@@ -29,6 +29,8 @@
 							</li>
 							<li class=""><a href="<?= Yii::getAlias('@web/khoahoc/hang-dao-tao?menu=khoahoc2') ?>" class="slide-item" data-menu="khoahoc2"><i class="fe fe-file-text"></i> Danh sách hạng đào tạo</a>
 							</li>
+							<li class=""><a href="<?= Yii::getAlias('@web/khoahoc/nhom-hang-dao-tao?menu=khoahoc3') ?>" class="slide-item" data-menu="khoahoc3"><i class="fe fe-file-text"></i> Danh sách nhóm hạng đào tạo</a>
+							</li>
 						</ul>
 						<div class="menutabs-content px-0">
 							<!-- menu tab here -->
