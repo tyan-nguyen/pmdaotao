@@ -141,7 +141,7 @@ return [
     [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'ghi_chu',
-        'width' => '200px',
+        'width' => '300px',
     ],
     // [
     //     'class'=>'\kartik\grid\DataColumn',
