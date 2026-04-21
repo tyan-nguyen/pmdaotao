@@ -67,7 +67,7 @@ if ($model->id_nhan_ho_so_ho > 0) {
             ], ['prompt' => 'Chọn giới tính', 'class' => 'form-control dropdown-with-arrow']) ?>
         </div>
 
-        <div class="col-lg-2 col-md-6">
+        <div class="col-lg-3 col-md-6">
             <?= $form->field($model, 'ngay_sinh')->widget(DatePicker::classname(), [
                 'options' => ['placeholder' => 'Chọn ngày sinh  ...', 'autocomplete' => 'off'],
                 'pluginOptions' => [
@@ -78,7 +78,7 @@ if ($model->id_nhan_ho_so_ho > 0) {
                 ]
             ]); ?>
         </div>
-        <div class="col-lg-3 col-md-6">
+        <div class="col-lg-2 col-md-6">
             <?= $form->field($model, 'so_dien_thoai')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-lg-3 col-md-6">
