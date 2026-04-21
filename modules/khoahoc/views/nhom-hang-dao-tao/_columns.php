@@ -86,6 +86,7 @@ return [
     [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'stt',
+        'contentOptions' => ['style' => 'text-align:center'],
     ],
     [
         'class' => '\kartik\grid\DataColumn',
@@ -101,6 +102,11 @@ return [
             return CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_tao);
         },
         'contentOptions' => ['style' => 'text-align:center'],
+    ],
+    [
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'ghi_chu',
+        'width' => '300px',
     ],
     // [
     // 'class'=>'\kartik\grid\DataColumn',
