@@ -18,7 +18,7 @@ class KhoaHocSearch extends KhoaHoc
     public function rules()
     {
         return [
-            [['id', 'id_hang', 'nguoi_tao'], 'integer'],
+            [['id', 'id_hang', 'nguoi_tao', 'id_nhom_hang'], 'integer'],
             [['ten_khoa_hoc', 'ngay_bat_dau', 'ngay_ket_thuc', 'ghi_chu', 'trang_thai', 'thoi_gian_tao', 'nhom_co_so'], 'safe'],
         ];
     }
@@ -45,7 +45,7 @@ class KhoaHocSearch extends KhoaHoc
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort'=> ['defaultOrder' => ['id' => SORT_DESC]],
+            'sort' => ['defaultOrder' => ['id' => SORT_DESC]],
         ]);
 
         $this->load($params);
@@ -64,6 +64,7 @@ class KhoaHocSearch extends KhoaHoc
             'nguoi_tao' => $this->nguoi_tao,
             'thoi_gian_tao' => $this->thoi_gian_tao,
             'nhom_co_so' => $this->nhom_co_so,
+            'id_nhom_hang' => $this->id_nhom_hang,
         ]);
 
         $query->andFilterWhere(['like', 'ten_khoa_hoc', $this->ten_khoa_hoc])

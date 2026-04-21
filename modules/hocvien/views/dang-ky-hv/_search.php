@@ -120,6 +120,7 @@ if ($model->id_nhan_ho_so_ho) {
             <label><?= $model->getAttributeLabel('id_khoa_hoc') ?></label>
             <?= $form->field($model, 'id_khoa_hoc')->widget(Select2::classname(), [
                 'data' => KhoaHoc::getList(),
+                //'data' => KhoaHoc::getListWithParent(),
                 'language' => 'vi',
                 'options' => [
                     'placeholder' => 'Chọn khóa...',

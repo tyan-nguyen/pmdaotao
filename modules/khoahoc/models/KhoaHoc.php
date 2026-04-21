@@ -73,13 +73,16 @@ class KhoaHoc extends KhoaHocBase
         //$dsKH = KhoaHoc::find()->orderBy(['ten_khoa_hoc' => SORT_ASC])->all();
         if ($anKhoaHocFull) {
             $dsKH = $query->andWhere(['trang_thai' => self::TRANGTHAI_CHUAHOANTHANH])
-                ->orderBy(['id' => SORT_DESC])->all();
+                ->orderBy(['id_nhom_hang' => SORT_ASC, 'id' => SORT_DESC])
+                /* ->orderBy(['id' => SORT_DESC]) */->all();
         } else {
-            $dsKH = $query->orderBy(['id' => SORT_DESC])->all();
+            $dsKH = $query->orderBy(['id_nhom_hang' => SORT_ASC, 'id' => SORT_DESC])/* ->orderBy(['id' => SORT_DESC]) */->all();
         }
 
         return ArrayHelper::map($dsKH, 'id', function ($model) {
             return '+ ' . $model->ten_khoa_hoc . ' (' . $model->showSoLuong . ')'; // Thêm dấu + trước tên loại
+        }, function ($model) {
+            return $model->nhomHang ? $model->nhomHang->ten_nhom_hang : '---';
         });
     }
     public static function getListByHang($idHang)

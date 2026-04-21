@@ -221,7 +221,7 @@ if ($model->id_nhan_ho_so_ho > 0) {
             <?= $form->field($model, 'id_khoa_hoc')->widget(Select2::classname(), [
                 'data' => !empty($model->id_khoa_hoc) ? [
                     $model->id_khoa_hoc => \app\modules\khoahoc\models\KhoaHoc::findOne($model->id_khoa_hoc)->ten_khoa_hoc
-                ] : \app\modules\khoahoc\models\KhoaHoc::getList(1), //an khoa hoc da du hoc vien
+                ] : /* \app\modules\khoahoc\models\KhoaHoc::getList(1) */ \app\modules\khoahoc\models\KhoaHoc::getListWithParent(1), //an khoa hoc da du hoc vien
                 'language' => 'vi',
                 'options' => [
                     'placeholder' => 'Chọn Khóa học...',
