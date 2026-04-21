@@ -117,7 +117,7 @@ return [
     [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'ten_hang',
-        'width' => '100px',
+        'width' => '200px',
     ],
     [
         'class' => '\kartik\grid\DataColumn',
