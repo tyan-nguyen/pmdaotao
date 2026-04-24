@@ -244,7 +244,7 @@ foreach ($contactLog as $item) {
         'description' => 'Xe chạy từ ' . CustomFunc::convertYMDHISToDMYHI($startTime)
             . ' đến ' . CustomFunc::convertYMDHISToDMYHI($endTime) . ', thời gian chạy: ' . $item->so_phut,
         'start' => $startTime,
-        'end' => $endTime,
+        'end' => $endTime ? $endTime : date('Y-m-d H:i:s'),
         'url' => Url::to(['/demxe/luot-xe/update', 'id' => $item->id, 'force_close' => 'true']),
         'extendedProps' => [
             'role' => 'modal-remote',
@@ -284,7 +284,7 @@ foreach ($contactLog as $item) {
         'description' => 'Xe chạy từ ' . CustomFunc::convertYMDHISToDMYHI($startTime)
             . ' đến ' . CustomFunc::convertYMDHISToDMYHI($endTime) . ', thời gian chạy: ' . $item->so_phut,
         'start' => $startTime,
-        'end' => $endTime,
+        'end' => $endTime ? $endTime : date('Y-m-d H:i:s'),
         'url' => Url::to(['/demxe/luot-xe/update', 'id' => $item->id, 'force_close' => 'true']),
         'extendedProps' => [
             'role' => 'modal-remote',
