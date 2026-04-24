@@ -32,7 +32,7 @@ class KeHoachBase extends \app\models\GdKeHoach
     const TT_DADUYET = 'DADUYET';
     const TT_KHONGDUYET = 'KHONGDUYET';
     const TT_HOANTHANH = 'HOANTHANH';
-    
+
     /**
      * Danh muc trang thai all
      * @return string[]
@@ -47,7 +47,7 @@ class KeHoachBase extends \app\models\GdKeHoach
             self::TT_HOANTHANH => 'Hoàn thành',
         ];
     }
-    
+
     /**
      * Danh muc trang thai for giao vien
      * @return string[]
@@ -56,11 +56,11 @@ class KeHoachBase extends \app\models\GdKeHoach
     {
         return [
             self::TT_NHAP => 'Nháp',
-           // self::TT_CHODUYET => 'Chờ duyệt',
-           // self::TT_HOANTHANH => 'Hoàn thành',
+            // self::TT_CHODUYET => 'Chờ duyệt',
+            // self::TT_HOANTHANH => 'Hoàn thành',
         ];
     }
-    
+
     /**
      * Danh muc trang thai for duyet
      * @return string[]
@@ -72,13 +72,25 @@ class KeHoachBase extends \app\models\GdKeHoach
             self::TT_KHONGDUYET => 'Không duyệt',
         ];
     }
-    
+
+    /**
+     * Danh muc trang thai for hien thi lich su dung xe (khong show nhap)
+     * @return string[]
+     */
+    public static function getDmTrangThaiForLichSuDungXe()
+    {
+        return [
+            self::TT_DADUYET,
+            self::TT_HOANTHANH
+        ];
+    }
+
     /**
      * Danh muc trang thai label
      * @param int $val
      * @return string
      */
-    public static function getLabelTrangThaiOther($val=NULL)
+    public static function getLabelTrangThaiOther($val = NULL)
     {
         switch ($val) {
             case self::TT_NHAP:
@@ -101,13 +113,13 @@ class KeHoachBase extends \app\models\GdKeHoach
         }
         return $label;
     }
-    
+
     /**
      * Danh muc trang thai label
      * @param int $val
      * @return string
      */
-    public static function getLabelTrangThaiBadge($val=NULL)
+    public static function getLabelTrangThaiBadge($val = NULL)
     {
         switch ($val) {
             case self::TT_NHAP:
@@ -142,7 +154,7 @@ class KeHoachBase extends \app\models\GdKeHoach
             [['ngay_thuc_hien', 'thoi_gian_duyet', 'thoi_gian_tao', 'thoi_gian_gui_duyet'], 'safe'],
             [['noi_dung_duyet', 'ghi_chu'], 'string'],
             [['trang_thai_duyet'], 'string', 'max' => 20],
-            [['trang_thai_duyet'], 'required', 'on'=>'duyet-kh'], //bat buoc khi duyet
+            [['trang_thai_duyet'], 'required', 'on' => 'duyet-kh'], //bat buoc khi duyet
         ];
     }
 
@@ -165,35 +177,36 @@ class KeHoachBase extends \app\models\GdKeHoach
             'nguoi_tao' => 'Người tạo',
         ];
     }
-    
-    public function beforeSave($insert) {
+
+    public function beforeSave($insert)
+    {
         if ($this->isNewRecord) {
             $this->nguoi_tao = Yii::$app->user->identity->id;
             $this->thoi_gian_tao = date('Y-m-d H:i:s');
-            if($this->trang_thai_duyet==null)
+            if ($this->trang_thai_duyet == null)
                 $this->trang_thai_duyet = self::TT_NHAP;
-            if($this->thoi_gian_duyet!=null)
+            if ($this->thoi_gian_duyet != null)
                 $this->thoi_gian_duyet = CustomFunc::convertDMYHISToYMDHIS($this->thoi_gian_duyet);
         }
-        if($this->ngay_thuc_hien!=null)
+        if ($this->ngay_thuc_hien != null)
             $this->ngay_thuc_hien = CustomFunc::convertDMYToYMD($this->ngay_thuc_hien);
-        if($this->thoi_gian_duyet!=null)
+        if ($this->thoi_gian_duyet != null)
             $this->thoi_gian_duyet = CustomFunc::convertDMYHISToYMDHIS($this->thoi_gian_duyet);
         return parent::beforeSave($insert);
     }
-    
+
     public function afterSave($insert, $changedAttributes)
     {
         parent::afterSave($insert, $changedAttributes);
-        
-        if($this->trang_thai_duyet == self::TT_HOANTHANH){
-            foreach ($this->gdTietHocs as $tietHoc){
-                if($tietHoc->trang_thai == TietHoc::TT_CHUATHUCHIEN){
+
+        if ($this->trang_thai_duyet == self::TT_HOANTHANH) {
+            foreach ($this->gdTietHocs as $tietHoc) {
+                if ($tietHoc->trang_thai == TietHoc::TT_CHUATHUCHIEN) {
                     $tietHoc->trang_thai = TietHoc::TT_DAHOANTHANH;
                     $tietHoc->save(false);
                 }
             }
-        }        
+        }
     }
 
     /**
@@ -223,5 +236,4 @@ class KeHoachBase extends \app\models\GdKeHoach
     {
         return $this->hasOne(User::class, ['id' => 'id_nguoi_duyet']);
     }
-
 }
