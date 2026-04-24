@@ -152,7 +152,7 @@ class LuotXeController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
+    public function actionUpdate($id, $force_close = false)
     {
         $request = Yii::$app->request;
         $model = $this->findModel($id);
@@ -184,7 +184,16 @@ class LuotXeController extends Controller
                             Html::a('Sửa', ['update', 'id' => $id], ['class' => 'btn btn-primary', 'role' => 'modal-remote'])
                     ];
                 } else {
-                    return ['forceClose' => true, 'forceReload' => '#crud-datatable-pjax', 'tcontent' => 'Cập nhật thành công!',];
+                    if ($force_close == false) {
+                        return ['forceClose' => true, 'forceReload' => '#crud-datatable-pjax', 'tcontent' => 'Cập nhật thành công!',];
+                    } else {
+                        return [
+                            'title' => "Dữ liệu đếm xe",
+                            'content' => 'Cập nhật thành công! Vui lòng tải lại danh sách!',
+                            'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                                Html::a('Sửa', ['update', 'id' => $id, 'force_close' => true], ['class' => 'btn btn-primary', 'role' => 'modal-remote'])
+                        ];
+                    }
                 }
             } else {
                 return [
