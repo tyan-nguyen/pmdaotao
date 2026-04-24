@@ -15,7 +15,7 @@ Yii::$app->params['showSearch'] = false;
 Yii::$app->params['showView'] = true;
 
 //$contactLog = ContactLogPolicy::getContactLogByStaff();
-$fromDateBD = date('Y-m-d H:i:s', strtotime('-1 month')); //lấy cách hiện tại 1 tháng trở về sau
+$fromDateBD = date('Y-m-d H:i:s', strtotime('-30 days')); //lấy cách hiện tại 1 tháng trở về sau
 $contactLog = LichThue::find()->alias('t')
     ->joinWith(['xe as x'])
     ->orderBy(['thoi_gian_tao' => SORT_DESC])
