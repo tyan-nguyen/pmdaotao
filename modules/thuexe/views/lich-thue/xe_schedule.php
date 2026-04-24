@@ -14,8 +14,11 @@ Yii::$app->params['showSearch'] = false;
 Yii::$app->params['showView'] = true;
 
 //$contactLog = ContactLogPolicy::getContactLogByStaff();
+$fromDateBD = date('Y-m-d H:i:s', strtotime('-1 month')); //lấy cách hiện tại 1 tháng trở về sau
 $contactLog = LichThue::find()->orderBy(['thoi_gian_tao' => SORT_DESC])
-    ->andWhere(['id_xe'=>$model->id])->all();
+    ->andWhere(['id_xe' => $model->id])
+    ->andWhere(['>=', 'thoi_gian_bat_dau', $fromDateBD])
+    ->all();
 //$colorList = ContactLogForm::getStatusColorHexList();
 $colorList = LichThue::getTrangThaiColor();
 $eventData = [];
@@ -23,25 +26,25 @@ foreach ($contactLog as $item) {
     $startTime = $item->thoi_gian_bat_dau;
     $endTime = $item->thoi_gian_ket_thuc;
     //$backgroundColor = '#ffc107';
-   // $backgroundColor = '#ddd';
+    // $backgroundColor = '#ddd';
 
     if ($item->trang_thai !== null) {
         $backgroundColor = $colorList[$item->trang_thai];
     }
-    
-    if(LichThue::checkLichDangHieuLucChuaXuatHoaDon($item->id)){
+
+    if (LichThue::checkLichDangHieuLucChuaXuatHoaDon($item->id)) {
         $backgroundColor = '#fca13a';
-    } else if(LichThue::checkLichDangHieuLucDaXuatHoaDon($item->id)){
+    } else if (LichThue::checkLichDangHieuLucDaXuatHoaDon($item->id)) {
         $backgroundColor = '#54b75c';
-    }else if(LichThue::checkLichSapToi($item->id)){
+    } else if (LichThue::checkLichSapToi($item->id)) {
         $backgroundColor = '#ff0000';
     }
-    
+
     $eventData[] = [
         'title' => 'Xe số ' . $item->xe->ma_so . ' - ' . $item->xe->bien_so_xe,
-        'description' => 'GV: '. ($item->giaoVien ? $item->giaoVien->ho_ten : '') . ' - HV: '
-        . ($item->khachHang ? $item->khachHang->ho_ten : '') . ' thuê từ ' . CustomFunc::convertYMDHISToDMYHI($startTime)
-        . ' đến ' . CustomFunc::convertYMDHISToDMYHI($endTime),
+        'description' => 'GV: ' . ($item->giaoVien ? $item->giaoVien->ho_ten : '') . ' - HV: '
+            . ($item->khachHang ? $item->khachHang->ho_ten : '') . ' thuê từ ' . CustomFunc::convertYMDHISToDMYHI($startTime)
+            . ' đến ' . CustomFunc::convertYMDHISToDMYHI($endTime),
         'start' => $startTime,
         'end' => $endTime,
         'url' => Url::to(['/thuexe/lich-thue/update', 'id' => $item->id, 'force_close' => 'true']),
@@ -56,8 +59,8 @@ foreach ($contactLog as $item) {
 //add background cho lich thi
 /***** thêm khoảng thời gian sau để phòng load hết chậm load trang ***/
 $lichThi = LichThi::find()->all();
-if($lichThi){
-    foreach ($lichThi as $iLichThi=>$lich){
+if ($lichThi) {
+    foreach ($lichThi as $iLichThi => $lich) {
         $eventData[] = [
             'groupId' => 'highlight',
             'start' => $lich->thoi_gian_bd,
@@ -73,6 +76,7 @@ if($lichThi){
     .fc-day-today {
         background-color: #ddd !important;
     }
+
     .fc-timegrid-event {
         background-color: #ffc107;
     }
@@ -109,14 +113,14 @@ if($lichThi){
             ?>
         </div>
         <div class="col-md-8">
-        	<span style="background-color:#45aaf2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Đã lên lịch 
-        	&nbsp;&nbsp;<span style="background-color:#fca13a">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Đang thuê (chưa HĐ)
-        	&nbsp;&nbsp;<span style="background-color:#54b75c">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Đang thuê (có HĐ)
-        	&nbsp;&nbsp;<span style="background-color:#ff0000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 30 phút nữa tới
-        	&nbsp;&nbsp;<span style="background-color:#02587b">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Đã hoàn thành
-        	<br/>
-        	Màu nền: <span style="background-color:#ddd">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Hôm nay 
-        	&nbsp;&nbsp; &nbsp;<span style="background-color:yellow">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Ngày thi 
+            <span style="background-color:#45aaf2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Đã lên lịch
+            &nbsp;&nbsp;<span style="background-color:#fca13a">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Đang thuê (chưa HĐ)
+            &nbsp;&nbsp;<span style="background-color:#54b75c">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Đang thuê (có HĐ)
+            &nbsp;&nbsp;<span style="background-color:#ff0000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 30 phút nữa tới
+            &nbsp;&nbsp;<span style="background-color:#02587b">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Đã hoàn thành
+            <br />
+            Màu nền: <span style="background-color:#ddd">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Hôm nay
+            &nbsp;&nbsp; &nbsp;<span style="background-color:yellow">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Ngày thi
         </div>
     </div>
 
@@ -188,11 +192,11 @@ if($lichThi){
                 if (info.event.extendedProps.role) {
                     info.el.setAttribute('role', info.event.extendedProps.role);
                 }
-                if(info.event.title){
+                if (info.event.title) {
                     tippy(info.el, {
-                      content: info.event.title + ' (' + info.event.extendedProps.description + ')',
-                      placement: 'top',
-                      theme: 'light-border',
+                        content: info.event.title + ' (' + info.event.extendedProps.description + ')',
+                        placement: 'top',
+                        theme: 'light-border',
                     });
                 }
             },
