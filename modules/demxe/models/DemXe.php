@@ -221,6 +221,12 @@ class DemXe extends PtxXeDemXe
      */
     public function beforeSave($insert)
     {
+        if ($this->thoi_gian_bd != null) {
+            $this->thoi_gian_bd = CustomFunc::convertDMYHISToYMDHIS($this->thoi_gian_bd);
+        }
+        if ($this->thoi_gian_kt != null) {
+            $this->thoi_gian_kt = CustomFunc::convertDMYHISToYMDHIS($this->thoi_gian_kt);
+        }
 
         if ($this->isNewRecord) {
             $this->nguoi_tao = Yii::$app->user->identity->id;

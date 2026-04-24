@@ -22,35 +22,36 @@ class LuotXeController extends Controller
     /**
      * @inheritdoc
      */
-    public function behaviors() {
-    		return [
-    			'ghost-access'=> [
-    			'class' => 'webvimark\modules\UserManagement\components\GhostAccessControl',
-        		],
-    			'verbs' => [
-    				'class' => VerbFilter::className(),
-    				'actions' => [
-    					'delete' => ['POST'],
-    				],
-    			],
-		];
-	}
+    public function behaviors()
+    {
+        return [
+            'ghost-access' => [
+                'class' => 'webvimark\modules\UserManagement\components\GhostAccessControl',
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ];
+    }
 
     /**
      * Lists all DemXe models.
      * @return mixed
      */
     public function actionIndex()
-    {    
+    {
         $searchModel = new DemXeSearch();
-  		if(isset($_POST['search']) && $_POST['search'] != null){
+        if (isset($_POST['search']) && $_POST['search'] != null) {
             $dataProvider = $searchModel->search(Yii::$app->request->post(), $_POST['search']);
         } else if ($searchModel->load(Yii::$app->request->post())) {
             $searchModel = new DemXeSearch(); // "reset"
             $dataProvider = $searchModel->search(Yii::$app->request->post());
         } else {
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        }    
+        }
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -64,19 +65,19 @@ class LuotXeController extends Controller
      * @return mixed
      */
     public function actionView($id)
-    {   
+    {
         $request = Yii::$app->request;
-        if($request->isAjax){
+        if ($request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "DemXe",
-                    'content'=>$this->renderAjax('view', [
-                        'model' => $this->findModel($id),
-                    ]),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::a('Sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
-                ];    
-        }else{
+                'title' => "Dữ liệu đếm xe",
+                'content' => $this->renderAjax('view', [
+                    'model' => $this->findModel($id),
+                ]),
+                'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                    Html::a('Sửa', ['update', 'id' => $id], ['class' => 'btn btn-primary', 'role' => 'modal-remote'])
+            ];
+        } else {
             return $this->render('view', [
                 'model' => $this->findModel($id),
             ]);
@@ -92,45 +93,45 @@ class LuotXeController extends Controller
     public function actionCreate()
     {
         $request = Yii::$app->request;
-        $model = new DemXe();  
+        $model = new DemXe();
 
-        if($request->isAjax){
+        if ($request->isAjax) {
             /*
             *   Process for ajax request
             */
             Yii::$app->response->format = Response::FORMAT_JSON;
-            if($request->isGet){
+            if ($request->isGet) {
                 return [
-                    'title'=> "Thêm mới DemXe",
-                    'content'=>$this->renderAjax('create', [
+                    'title' => "Thêm mới dữ liệu đếm xe",
+                    'content' => $this->renderAjax('create', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
-        
-                ];         
-            }else if($model->load($request->post()) && $model->save()){
+                    'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                        Html::button('Lưu lại', ['class' => 'btn btn-primary', 'type' => "submit"])
+
+                ];
+            } else if ($model->load($request->post()) && $model->save()) {
                 return [
-                    'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Thêm mới DemXe",
-                    'content'=>'<span class="text-success">Thêm mới thành công</span>',
-                    'tcontent'=>'Thêm mới thành công!',
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::a('Tiếp tục thêm',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
-        
-                ];         
-            }else{           
+                    'forceReload' => '#crud-datatable-pjax',
+                    'title' => "Thêm mới dữ liệu đếm xe",
+                    'content' => '<span class="text-success">Thêm mới thành công</span>',
+                    'tcontent' => 'Thêm mới thành công!',
+                    'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                        Html::a('Tiếp tục thêm', ['create'], ['class' => 'btn btn-primary', 'role' => 'modal-remote'])
+
+                ];
+            } else {
                 return [
-                    'title'=> "Thêm mới DemXe",
-                    'content'=>$this->renderAjax('create', [
+                    'title' => "Thêm mới dữ liệu đếm xe",
+                    'content' => $this->renderAjax('create', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
-        
-                ];         
+                    'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                        Html::button('Lưu lại', ['class' => 'btn btn-primary', 'type' => "submit"])
+
+                ];
             }
-        }else{
+        } else {
             /*
             *   Process for non-ajax request
             */
@@ -142,7 +143,6 @@ class LuotXeController extends Controller
                 ]);
             }
         }
-       
     }
 
     /**
@@ -155,48 +155,48 @@ class LuotXeController extends Controller
     public function actionUpdate($id)
     {
         $request = Yii::$app->request;
-        $model = $this->findModel($id);       
+        $model = $this->findModel($id);
 
-        if($request->isAjax){
+        if ($request->isAjax) {
             /*
             *   Process for ajax request
             */
             Yii::$app->response->format = Response::FORMAT_JSON;
-            if($request->isGet){
+            if ($request->isGet) {
                 return [
-                    'title'=> "Cập nhật DemXe",
-                    'content'=>$this->renderAjax('update', [
+                    'title' => "Cập nhật dữ liệu đếm xe",
+                    'content' => $this->renderAjax('update', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
-                ];         
-            }else if($model->load($request->post()) && $model->save()){
-            	if(Yii::$app->params['showView']){
+                    'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                        Html::button('Lưu lại', ['class' => 'btn btn-primary', 'type' => "submit"])
+                ];
+            } else if ($model->load($request->post()) && $model->save()) {
+                if (Yii::$app->params['showView']) {
                     return [
-                        'forceReload'=>'#crud-datatable-pjax',
-                        'title'=> "DemXe",
-                        'content'=>$this->renderAjax('view', [
+                        'forceReload' => '#crud-datatable-pjax',
+                        'title' => "Dữ liệu đếm xe",
+                        'content' => $this->renderAjax('view', [
                             'model' => $model,
                         ]),
-                        'tcontent'=>'Cập nhật thành công!',
-                        'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::a('Sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
-                    ];    
-                }else{
-                	return ['forceClose'=>true,'forceReload'=>'#crud-datatable-pjax','tcontent'=>'Cập nhật thành công!',];
+                        'tcontent' => 'Cập nhật thành công!',
+                        'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                            Html::a('Sửa', ['update', 'id' => $id], ['class' => 'btn btn-primary', 'role' => 'modal-remote'])
+                    ];
+                } else {
+                    return ['forceClose' => true, 'forceReload' => '#crud-datatable-pjax', 'tcontent' => 'Cập nhật thành công!',];
                 }
-            }else{
-                 return [
-                    'title'=> "Cập nhật DemXe",
-                    'content'=>$this->renderAjax('update', [
+            } else {
+                return [
+                    'title' => "Cập nhật dữ liệu đếm xe",
+                    'content' => $this->renderAjax('update', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
-                ];        
+                    'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                        Html::button('Lưu lại', ['class' => 'btn btn-primary', 'type' => "submit"])
+                ];
             }
-        }else{
+        } else {
             /*
             *   Process for non-ajax request
             */
@@ -222,23 +222,21 @@ class LuotXeController extends Controller
         $request = Yii::$app->request;
         $this->findModel($id)->delete();
 
-        if($request->isAjax){
+        if ($request->isAjax) {
             /*
             *   Process for ajax request
             */
             Yii::$app->response->format = Response::FORMAT_JSON;
-            return ['forceClose'=>true,'forceReload'=>'#crud-datatable-pjax'];
-        }else{
+            return ['forceClose' => true, 'forceReload' => '#crud-datatable-pjax'];
+        } else {
             /*
             *   Process for non-ajax request
             */
             return $this->redirect(['index']);
         }
-
-
     }
 
-     /**
+    /**
      * Delete multiple existing DemXe model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
@@ -246,36 +244,37 @@ class LuotXeController extends Controller
      * @return mixed
      */
     public function actionBulkdelete()
-    {        
+    {
         $request = Yii::$app->request;
-        $pks = explode(',', $request->post( 'pks' )); // Array or selected records primary keys
+        $pks = explode(',', $request->post('pks')); // Array or selected records primary keys
         $delOk = true;
         $fList = array();
-        foreach ( $pks as $pk ) {
+        foreach ($pks as $pk) {
             $model = $this->findModel($pk);
-            try{
-            	$model->delete();
-            }catch(\Exception $e) {
-            	$delOk = false;
-            	$fList[] = $model->id;
+            try {
+                $model->delete();
+            } catch (\Exception $e) {
+                $delOk = false;
+                $fList[] = $model->id;
             }
         }
 
-        if($request->isAjax){
+        if ($request->isAjax) {
             /*
             *   Process for ajax request
             */
             Yii::$app->response->format = Response::FORMAT_JSON;
-            return ['forceClose'=>true,'forceReload'=>'#crud-datatable-pjax',
-            			'tcontent'=>$delOk==true?'Xóa thành công!':('Không thể xóa:'.implode('</br>', $fList)),
+            return [
+                'forceClose' => true,
+                'forceReload' => '#crud-datatable-pjax',
+                'tcontent' => $delOk == true ? 'Xóa thành công!' : ('Không thể xóa:' . implode('</br>', $fList)),
             ];
-        }else{
+        } else {
             /*
             *   Process for non-ajax request
             */
             return $this->redirect(['index']);
         }
-       
     }
 
     /**
@@ -293,20 +292,19 @@ class LuotXeController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-    
+
     /**
      * báo cáo xe vi phạm qua đêm/đi không có kế hoạch
      */
-    public function actionBcViPham(){
+    public function actionBcViPham()
+    {
         $request = Yii::$app->request;
         if ($request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
-            
+
             return [
                 'title' => "Báo cáo vi phạm",
-                'content' => $this->renderAjax('rp_bao_cao_vi_pham', [
-                    
-                ]),
+                'content' => $this->renderAjax('rp_bao_cao_vi_pham', []),
                 'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"])
             ];
         }
@@ -321,48 +319,48 @@ class LuotXeController extends Controller
      * @param unknown $typereport
      * @param unknown $byaddress
      */
-    public function actionGetPhieuInXeDaoTao($startdate, $starttime, $enddate, $endtime, $typereport)//0 for all
+    public function actionGetPhieuInXeDaoTao($startdate, $starttime, $enddate, $endtime, $typereport) //0 for all
     {
         $currentTime = date('Y-m-d H:i:s');
-        if($starttime == null)
+        if ($starttime == null)
             $starttime = '00:00:00';
-        if($endtime == null)
+        if ($endtime == null)
             $endtime = '23:59:59';
         $start = CustomFunc::convertDMYToYMD($startdate) . ' ' . $starttime;
         $end = CustomFunc::convertDMYToYMD($enddate) . ' ' . $endtime;
-        
+
         $listVP = [];
         //get all dem xe match date,
         //lay moc ngày di, luot xe co di co ve, moc ve la ngay ve, 
         //luot xe chua co moc ve, ngay ve la ngay $end
-        $listXe = Xe::find()->where(['phan_loai'=>Xe::PHANLOAI_TAPLAI])->all();
-        foreach ($listXe as $iXe=>$xe){
+        $listXe = Xe::find()->where(['phan_loai' => Xe::PHANLOAI_TAPLAI])->all();
+        foreach ($listXe as $iXe => $xe) {
             $demXe = DemXe::find()->alias('t')->joinWith(['xe as x'])->where([
                 't.id_xe' => $xe->id,
-            ])->andWhere(['>=','t.thoi_gian_bd', $start])
-            ->andWhere([
-                'or',
-                ['<=', 't.thoi_gian_kt', $end],
-                ['thoi_gian_kt' => null],
-                //['thoi_gian' => ''],
-            ])
-            ->all();
+            ])->andWhere(['>=', 't.thoi_gian_bd', $start])
+                ->andWhere([
+                    'or',
+                    ['<=', 't.thoi_gian_kt', $end],
+                    ['thoi_gian_kt' => null],
+                    //['thoi_gian' => ''],
+                ])
+                ->all();
             $mss = '';
-            foreach ($demXe as $iDx=>$dx){
+            foreach ($demXe as $iDx => $dx) {
                 //check qua dem
-                if(($typereport==1 || $typereport==3) && $dx->xeQuaDem){
+                if (($typereport == 1 || $typereport == 3) && $dx->xeQuaDem) {
                     $mss = 'Xe đi qua đêm (' . CustomFunc::convertYMDHISToDMYHI($dx->thoi_gian_bd)
-                    . ' - ' . ($dx->thoi_gian_kt!=null?CustomFunc::convertYMDHISToDMYHI($dx->thoi_gian_kt):
-                    '?' ) . ')'  . ';';
+                        . ' - ' . ($dx->thoi_gian_kt != null ? CustomFunc::convertYMDHISToDMYHI($dx->thoi_gian_kt) :
+                            '?') . ')'  . ';';
                 }
                 //check khong ke hoach
-                if(($typereport==1 || $typereport==2) && $dx->diKhongKeHoach){
+                if (($typereport == 1 || $typereport == 2) && $dx->diKhongKeHoach) {
                     $mss .=  'Xe đi không kế hoạch (' . CustomFunc::convertYMDHISToDMYHI($dx->thoi_gian_bd)
-                    . ' - ' . ($dx->thoi_gian_kt!=null?CustomFunc::convertYMDHISToDMYHI($dx->thoi_gian_kt):
-                    '?' ) . ')' . ';';
+                        . ' - ' . ($dx->thoi_gian_kt != null ? CustomFunc::convertYMDHISToDMYHI($dx->thoi_gian_kt) :
+                            '?') . ')' . ';';
                 }
             }
-            if($mss!=''){
+            if ($mss != '') {
                 $listVP[$xe->bien_so_xe] = $mss;
             }
         }
@@ -376,26 +374,26 @@ class LuotXeController extends Controller
             //['thoi_gian' => ''],
         ])
         ->all(); */
-        
+
         //loop all data, check overnight or not planing
         //send listVP to view
-        if($typereport==1){
+        if ($typereport == 1) {
             $content = $this->renderPartial('rp_bao_cao_vi_pham_print', [
-                'list'=>$listVP,
+                'list' => $listVP,
                 'start' => $start,
                 'end' => $end,
                 'typereport' => $typereport
             ]);
-        } else if($typereport==2){
+        } else if ($typereport == 2) {
             $content = $this->renderPartial('rp_bao_cao_vi_pham_print', [
-                'list'=>$listVP,
+                'list' => $listVP,
                 'start' => $start,
                 'end' => $end,
                 'typereport' => $typereport
             ]);
-        }else if($typereport==3){
+        } else if ($typereport == 3) {
             $content = $this->renderPartial('rp_bao_cao_vi_pham_print', [
-                'list'=>$listVP,
+                'list' => $listVP,
                 'start' => $start,
                 'end' => $end,
                 'typereport' => $typereport
@@ -405,6 +403,5 @@ class LuotXeController extends Controller
             'status' => 'success',
             'content' => $content,
         ]);
-        
     }
 }
