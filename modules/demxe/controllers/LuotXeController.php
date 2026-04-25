@@ -171,37 +171,52 @@ class LuotXeController extends Controller
                     'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
                         Html::button('Lưu lại', ['class' => 'btn btn-primary', 'type' => "submit"])
                 ];
-            } else if ($model->load($request->post()) && $model->save()) {
-                if (Yii::$app->params['showView']) {
-                    return [
-                        'forceReload' => '#crud-datatable-pjax',
-                        'title' => "Dữ liệu đếm xe",
-                        'content' => $this->renderAjax('view', [
-                            'model' => $model,
-                        ]),
-                        'tcontent' => 'Cập nhật thành công!',
-                        'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
-                            Html::a('Sửa', ['update', 'id' => $id], ['class' => 'btn btn-primary', 'role' => 'modal-remote'])
-                    ];
-                } else {
-                    if ($force_close == false) {
-                        return ['forceClose' => true, 'forceReload' => '#crud-datatable-pjax', 'tcontent' => 'Cập nhật thành công!',];
+            } else if ($model->load($request->post())) {
+                if ($model->thoi_gian_bd != null && $model->thoi_gian_kt != null) {
+                    $model->so_gio = CustomFunc::diffHours($model->thoi_gian_bd, $model->thoi_gian_kt);
+                    $model->so_phut = CustomFunc::diffHoursMinutes($model->thoi_gian_bd, $model->thoi_gian_kt);
+                }
+                if ($model->save()) {
+                    if (Yii::$app->params['showView']) {
+                        return [
+                            'forceReload' => '#crud-datatable-pjax',
+                            'title' => "Dữ liệu đếm xe",
+                            'content' => $this->renderAjax('view', [
+                                'model' => $model,
+                            ]),
+                            'tcontent' => 'Cập nhật thành công!',
+                            'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                                Html::a('Sửa', ['update', 'id' => $id], ['class' => 'btn btn-primary', 'role' => 'modal-remote'])
+                        ];
                     } else {
-                        /* return [
+                        if ($force_close == false) {
+                            return ['forceClose' => true, 'forceReload' => '#crud-datatable-pjax', 'tcontent' => 'Cập nhật thành công!',];
+                        } else {
+                            /* return [
                             'title' => "Dữ liệu đếm xe",
                             'content' => 'Cập nhật thành công! Vui lòng tải lại danh sách!',
                             'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
                                 Html::a('Sửa', ['update', 'id' => $id, 'force_close' => true], ['class' => 'btn btn-primary', 'role' => 'modal-remote'])
                         ]; */
-                        return [
-                            'title' => "Dữ liệu đếm xe",
-                            'content' => $this->renderAjax('view', [
-                                'model' => $model,
-                            ]),
-                            'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
-                                Html::a('Sửa', ['update', 'id' => $id, 'force_close' => true], ['class' => 'btn btn-primary', 'role' => 'modal-remote'])
-                        ];
+                            return [
+                                'title' => "Dữ liệu đếm xe",
+                                'content' => $this->renderAjax('view', [
+                                    'model' => $model,
+                                ]),
+                                'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                                    Html::a('Sửa', ['update', 'id' => $id, 'force_close' => true], ['class' => 'btn btn-primary', 'role' => 'modal-remote'])
+                            ];
+                        }
                     }
+                } else {
+                    return [
+                        'title' => "Cập nhật dữ liệu đếm xe",
+                        'content' => $this->renderAjax('update', [
+                            'model' => $model,
+                        ]),
+                        'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                            Html::button('Lưu lại', ['class' => 'btn btn-primary', 'type' => "submit"])
+                    ];
                 }
             } else {
                 return [
