@@ -9,9 +9,11 @@ use yii\helpers\Html;
 use app\custom\CustomFunc;
 use app\modules\daotao\models\KeHoach;
 use app\modules\daotao\models\TietHoc;
+use app\modules\user\models\History;
 
 class DemXe extends PtxXeDemXe
 {
+    const MODEL_ID = 'demxe';
     const CONG1 = 'CONG1';
     const CONG1_START = 'CONG1_START';
     const CONG1_END = 'CONG1_END';
@@ -234,6 +236,16 @@ class DemXe extends PtxXeDemXe
         }
         return parent::beforeSave($insert);
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+        History::addHistoryDemXe($this::MODEL_ID, $changedAttributes, $this, $insert);
+    }
+
 
     /**
      * Gets query for [[File]].

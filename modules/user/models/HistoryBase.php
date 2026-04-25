@@ -6,6 +6,7 @@ use app\modules\banhang\models\HangHoa;
 use app\modules\banhang\models\HoaDon;
 use app\modules\banhang\models\HoaDonChiTiet;
 use app\modules\banhang\models\KhachHang;
+use app\modules\demxe\models\DemXe;
 use app\modules\giaovien\models\GiaoVien;
 use app\modules\hocvien\models\HocVien;
 use app\modules\thuexe\models\LichThue;
@@ -210,6 +211,33 @@ class HistoryBase extends \app\models\UserHistory
             $his = new History();
             $his->loai = $type;
             $his->id_tham_chieu = $mod->id_don_hang;
+            $his->noi_dung = $noiDung;
+            $his->save();
+        }
+    }
+
+    /** luu lai lich su cho model lichthue */
+    public static function addHistoryDemXe($type, $atr, $mod, $isNew)
+    {
+        $noiDung = '';
+        $model = DemXe::findOne($mod->id);
+        if ($isNew == false) {
+            if ($model != null) {
+                foreach ($atr as $key => $value) {
+                    if ($atr[$key] != $mod->$key) {
+                        $noiDung .= '<p>Thay đổi ' . $mod->getAttributeLabel($key) . ' "' . $value . '" thành "' . $mod->$key . '"</p>';
+                    }
+                }
+            }
+        } else {
+            $noiDung = 'Thực hiện thêm mới dữ liệu từ file ' . $model->file->filename;
+        }
+
+        //$his->noi_dung = var_dump($changedAttributes);
+        if ($noiDung != null) {
+            $his = new History();
+            $his->loai = $type;
+            $his->id_tham_chieu = $mod->id;
             $his->noi_dung = $noiDung;
             $his->save();
         }

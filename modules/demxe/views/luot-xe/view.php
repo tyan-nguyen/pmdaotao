@@ -1,28 +1,52 @@
 <?php
 
+use app\custom\CustomFunc;
+use app\modules\demxe\models\DemXe;
+use app\modules\user\models\History;
+use app\modules\user\models\User;
+use app\widgets\CardWidget;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\demxe\models\DemXe */
 ?>
 <div class="dem-xe-view">
- 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'id_xe',
-            'ma_xe',
-            'ma_cong',
-            'thoi_gian_bd',
-            'thoi_gian_kt',
-            'so_gio',
-            'so_phut',
-            'nguoi_tao',
-            'thoi_gian_tao',
-            'id_file',
-            'ghi_chu:ntext',
-        ],
-    ]) ?>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <?php CardWidget::begin([
+                'title' => 'Thông tin lượt xe',
+            ]) ?>
+
+            <h3 class="mb-3"><?= $model->xe ? $model->xe->bien_so_xe : $model->bien_so_xe  ?></h3>
+            <p><strong>Mã cổng:</strong> <?= $model->ma_cong ?></p>
+            <p><strong>Bắt đầu:</strong> <?= CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_bd) ?></p>
+            <p><strong>Kết thúc:</strong> <?= CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_kt) ?></p>
+            <p><strong>Số giờ:</strong> <?= $model->so_gio ?></p>
+            <p><strong>Số phút:</strong> <?= $model->so_phut ?></p>
+            <p><strong>File:</strong> <?= $model->file->filename ?></p>
+            <p><strong>Ghi chú:</strong> <?= $model->ghi_chu ?></p>
+            <p><strong>Ngày tạo:</strong> <?= CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_tao) ?></p>
+            <p><strong>Người tạo:</strong> <?= User::findOne($model->nguoi_tao)->ho_ten ?? '' ?></p>
+            <?php CardWidget::end() ?>
+        </div>
+        <div class="col-lg-6">
+            <?php CardWidget::begin([
+                'title' => 'Hình ảnh xe',
+            ]) ?>
+            <?php if ($model->xe) { ?>
+                <img src="<?= Yii::$app->request->baseUrl ?>/images/hinh-xe/<?= $model->xe->anhDaiDien->hinh_anh ?>" alt="<?= $model->xe->bien_so_xe ?>" class="img-fluid" style="width: 100%; height: auto;">
+            <?php } ?>
+            <?php CardWidget::end() ?>
+        </div>
+        <div class="col-lg-12">
+            <?php CardWidget::begin([
+                'title' => 'Lịch sử thay đổi',
+            ]) ?>
+            <?= History::showHistory(DemXe::MODEL_ID, $model->id) ?>
+            <?php CardWidget::end() ?>
+        </div>
+
+    </div>
 
 </div>
