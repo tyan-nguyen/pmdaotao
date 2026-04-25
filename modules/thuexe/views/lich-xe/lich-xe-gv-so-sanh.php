@@ -245,7 +245,7 @@ foreach ($contactLog as $item) {
             . ' đến ' . CustomFunc::convertYMDHISToDMYHI($endTime) . ', thời gian chạy: ' . $item->so_phut,
         'start' => $startTime,
         'end' => $endTime ? $endTime : date('Y-m-d H:i:s'),
-        'url' => Url::to(['/demxe/luot-xe/update', 'id' => $item->id, 'force_close' => 'true']),
+        'url' => Url::to(['/demxe/luot-xe/view', 'id' => $item->id, 'force_close' => 'true']),
         'extendedProps' => [
             'role' => 'modal-remote',
         ],
