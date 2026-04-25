@@ -22,7 +22,6 @@ use yii\widgets\DetailView;
             <p><strong>Mã cổng:</strong> <?= $model->ma_cong ?></p>
             <p><strong>Bắt đầu:</strong> <?= CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_bd) ?></p>
             <p><strong>Kết thúc:</strong> <?= CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_kt) ?></p>
-            <p><strong>Số giờ:</strong> <?= $model->so_gio ?></p>
             <p><strong>Số phút:</strong> <?= $model->so_phut ?></p>
             <p><strong>File:</strong> <?= $model->file->filename ?></p>
             <p><strong>Ghi chú:</strong> <?= $model->ghi_chu ?></p>
