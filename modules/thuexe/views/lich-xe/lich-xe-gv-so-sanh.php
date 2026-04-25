@@ -286,7 +286,7 @@ foreach ($contactLog as $item) {
         'start' => $startTime,
         'end' => $endTime,
         //'end' => $endTime ? $endTime : date('Y-m-d H:i:s'),
-        'url' => Url::to(['/demxe/luot-xe/update', 'id' => $item->id, 'force_close' => 'true']),
+        'url' => Url::to(['/demxe/luot-xe/view', 'id' => $item->id, 'force_close' => 'true']),
         'extendedProps' => [
             'role' => 'modal-remote',
         ],

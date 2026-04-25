@@ -64,7 +64,7 @@ class LuotXeController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
+    public function actionView($id, $force_close = false)
     {
         $request = Yii::$app->request;
         if ($request->isAjax) {
@@ -75,7 +75,7 @@ class LuotXeController extends Controller
                     'model' => $this->findModel($id),
                 ]),
                 'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
-                    Html::a('Sửa', ['update', 'id' => $id], ['class' => 'btn btn-primary', 'role' => 'modal-remote'])
+                    ($force_close == false ? Html::a('Sửa', ['update', 'id' => $id], ['class' => 'btn btn-primary', 'role' => 'modal-remote']) : Html::a('Sửa', ['update', 'id' => $id, $force_close = true], ['class' => 'btn btn-primary', 'role' => 'modal-remote']))
             ];
         } else {
             return $this->render('view', [
@@ -156,6 +156,7 @@ class LuotXeController extends Controller
     {
         $request = Yii::$app->request;
         $model = $this->findModel($id);
+        $oldModel = $this->findModel($id);
 
         if ($request->isAjax) {
             /*
