@@ -173,8 +173,10 @@ class LuotXeController extends Controller
                 ];
             } else if ($model->load($request->post())) {
                 if ($model->thoi_gian_bd != null && $model->thoi_gian_kt != null) {
-                    $model->so_gio = CustomFunc::diffHours($model->thoi_gian_bd, $model->thoi_gian_kt);
-                    $model->so_phut = CustomFunc::diffHoursMinutes($model->thoi_gian_bd, $model->thoi_gian_kt);
+                    $start = CustomFunc::convertDMYHISToYMDHIS($model->thoi_gian_bd);
+                    $end = CustomFunc::convertDMYHISToYMDHIS($model->thoi_gian_kt);
+                    $model->so_gio = CustomFunc::diffHours($start, $end);
+                    $model->so_phut = CustomFunc::diffHoursMinutes($start, $end);
                 }
                 if ($model->save()) {
                     if (Yii::$app->params['showView']) {
