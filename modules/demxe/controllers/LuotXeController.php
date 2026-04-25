@@ -187,9 +187,17 @@ class LuotXeController extends Controller
                     if ($force_close == false) {
                         return ['forceClose' => true, 'forceReload' => '#crud-datatable-pjax', 'tcontent' => 'Cập nhật thành công!',];
                     } else {
-                        return [
+                        /* return [
                             'title' => "Dữ liệu đếm xe",
                             'content' => 'Cập nhật thành công! Vui lòng tải lại danh sách!',
+                            'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                                Html::a('Sửa', ['update', 'id' => $id, 'force_close' => true], ['class' => 'btn btn-primary', 'role' => 'modal-remote'])
+                        ]; */
+                        return [
+                            'title' => "Dữ liệu đếm xe",
+                            'content' => $this->renderAjax('view', [
+                                'model' => $model,
+                            ]),
                             'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
                                 Html::a('Sửa', ['update', 'id' => $id, 'force_close' => true], ['class' => 'btn btn-primary', 'role' => 'modal-remote'])
                         ];
