@@ -67,7 +67,11 @@ class DmNhanHoSoHoController extends Controller
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
         $query = DmNhanHoSoHo::find()
-            ->select(['id', "CONCAT(ten_don_vi, ' (', loai_don_vi, ')') AS text"]);
+            ->select(['id', "CONCAT(ten_don_vi, ' (', CASE 
+                    WHEN loai_don_vi = 'GIAOVIEN' THEN 'Cá nhân'
+                    WHEN loai_don_vi = 'TOCHUC' THEN 'Tổ chức'
+                    ELSE loai_don_vi
+                END, ')') AS text"]);
         if (!empty($q)) {
             $query->andFilterWhere([
                 'OR',

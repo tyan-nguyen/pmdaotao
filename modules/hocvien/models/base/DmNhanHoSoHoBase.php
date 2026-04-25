@@ -18,7 +18,7 @@ class DmNhanHoSoHoBase extends HvDmNhanHoSoHo
     {
         return [
             self::LOAI_LIEN_KET_TC => 'Tổ chức',
-            self::LOAI_LIEN_KET_GV => 'Giáo viên',
+            self::LOAI_LIEN_KET_GV => 'Cá nhân',
         ];
     }
     /**
@@ -30,7 +30,7 @@ class DmNhanHoSoHoBase extends HvDmNhanHoSoHo
             case self::LOAI_LIEN_KET_TC:
                 return 'Tổ chức';
             case self::LOAI_LIEN_KET_GV:
-                return 'Giáo viên';
+                return 'Cá nhân';
             default:
                 return '';
         }

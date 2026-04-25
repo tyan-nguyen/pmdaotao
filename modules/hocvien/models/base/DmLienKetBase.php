@@ -28,18 +28,19 @@ class DmLienKetBase extends HvDmLienKet
     {
         return [
             self::LOAI_LIEN_KET_TC => 'Tổ chức',
-            self::LOAI_LIEN_KET_GV => 'Giáo viên',
+            self::LOAI_LIEN_KET_GV => 'Cá nhân',
         ];
     }
     /**
      * danh muc loai lien ket label
      */
-    public static function getDmLoaiLienKetLabel($loaiLienKet=NULL){
+    public static function getDmLoaiLienKetLabel($loaiLienKet = NULL)
+    {
         switch ($loaiLienKet) {
             case self::LOAI_LIEN_KET_TC:
-                return 'Tổ chức';       
+                return 'Tổ chức';
             case self::LOAI_LIEN_KET_GV:
-                return 'Giáo viên';
+                return 'Cá nhân';
             default:
                 return '';
         }
@@ -88,8 +89,8 @@ class DmLienKetBase extends HvDmLienKet
         return parent::beforeSave($insert);
     }
     //relationships with class DangKyHv
-    public function getHvLienKets() {
+    public function getHvLienKets()
+    {
         return $this->hasMany(DangKyHv::className(), ['id_lien_ket' => 'id']);
     }
-
 }

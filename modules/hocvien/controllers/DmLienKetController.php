@@ -20,42 +20,43 @@ class DmLienKetController extends Controller
     /**
      * @inheritdoc
      */
-    public function behaviors() {
-    		return [
-    			'ghost-access'=> [
-    			'class' => 'webvimark\modules\UserManagement\components\GhostAccessControl',
-        		],
-    			'verbs' => [
-    				'class' => VerbFilter::className(),
-    				'actions' => [
-    					'delete' => ['POST'],
-    				],
-    			],
-		];
-	}
+    public function behaviors()
+    {
+        return [
+            'ghost-access' => [
+                'class' => 'webvimark\modules\UserManagement\components\GhostAccessControl',
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ];
+    }
 
     /**
      * Lists all DmLienKet models.
      * @return mixed
      */
     public function actionIndex()
-    {    
+    {
         $searchModel = new DmLienKetSearch();
-  		if(isset($_POST['search']) && $_POST['search'] != null){
+        if (isset($_POST['search']) && $_POST['search'] != null) {
             $dataProvider = $searchModel->search(Yii::$app->request->post(), $_POST['search']);
         } else if ($searchModel->load(Yii::$app->request->post())) {
             $searchModel = new DmLienKetSearch(); // "reset"
             $dataProvider = $searchModel->search(Yii::$app->request->post());
         } else {
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        }    
+        }
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
 
-     /**
+    /**
      * get list dm lien ket by ajax request
      * @param unknown $q
      * @param unknown $loai
@@ -66,15 +67,20 @@ class DmLienKetController extends Controller
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
         $query = DmLienKet::find()
-        ->select(['id', "CONCAT(ten_lien_ket, ' (', loai_lien_ket, ')') AS text"]);
+            ->select(['id', "CONCAT(ten_lien_ket, ' (', CASE 
+                    WHEN loai_lien_ket = 'GIAOVIEN' THEN 'Cá nhân'
+                    WHEN loai_lien_ket = 'TOCHUC' THEN 'Tổ chức'
+                    ELSE loai_lien_ket
+                END, ')') AS text"]);
         if (!empty($q)) {
-            $query->andFilterWhere( [ 'OR',
+            $query->andFilterWhere([
+                'OR',
                 ['like', 'ten_lien_ket', $q],
                 ['like', 'loai_lien_ket', $q]
             ]);
         }
 
-        $results = $query->orderBy(['id'=>SORT_DESC])->limit(10)->asArray()->all();
+        $results = $query->orderBy(['id' => SORT_DESC])->limit(10)->asArray()->all();
         return $results;
     }
 
@@ -85,19 +91,19 @@ class DmLienKetController extends Controller
      * @return mixed
      */
     public function actionView($id)
-    {   
+    {
         $request = Yii::$app->request;
-        if($request->isAjax){
+        if ($request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "DmLienKet",
-                    'content'=>$this->renderAjax('view', [
-                        'model' => $this->findModel($id),
-                    ]),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::a('Sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
-                ];    
-        }else{
+                'title' => "DmLienKet",
+                'content' => $this->renderAjax('view', [
+                    'model' => $this->findModel($id),
+                ]),
+                'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                    Html::a('Sửa', ['update', 'id' => $id], ['class' => 'btn btn-primary', 'role' => 'modal-remote'])
+            ];
+        } else {
             return $this->render('view', [
                 'model' => $this->findModel($id),
             ]);
@@ -113,45 +119,45 @@ class DmLienKetController extends Controller
     public function actionCreate()
     {
         $request = Yii::$app->request;
-        $model = new DmLienKet();  
+        $model = new DmLienKet();
 
-        if($request->isAjax){
+        if ($request->isAjax) {
             /*
             *   Process for ajax request
             */
             Yii::$app->response->format = Response::FORMAT_JSON;
-            if($request->isGet){
+            if ($request->isGet) {
                 return [
-                    'title'=> "Thêm mới DmLienKet",
-                    'content'=>$this->renderAjax('create', [
+                    'title' => "Thêm mới DmLienKet",
+                    'content' => $this->renderAjax('create', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
-        
-                ];         
-            }else if($model->load($request->post()) && $model->save()){
+                    'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                        Html::button('Lưu lại', ['class' => 'btn btn-primary', 'type' => "submit"])
+
+                ];
+            } else if ($model->load($request->post()) && $model->save()) {
                 return [
-                    'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Thêm mới DmLienKet",
-                    'content'=>'<span class="text-success">Thêm mới thành công</span>',
-                    'tcontent'=>'Thêm mới thành công!',
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::a('Tiếp tục thêm',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
-        
-                ];         
-            }else{           
+                    'forceReload' => '#crud-datatable-pjax',
+                    'title' => "Thêm mới DmLienKet",
+                    'content' => '<span class="text-success">Thêm mới thành công</span>',
+                    'tcontent' => 'Thêm mới thành công!',
+                    'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                        Html::a('Tiếp tục thêm', ['create'], ['class' => 'btn btn-primary', 'role' => 'modal-remote'])
+
+                ];
+            } else {
                 return [
-                    'title'=> "Thêm mới DmLienKet",
-                    'content'=>$this->renderAjax('create', [
+                    'title' => "Thêm mới DmLienKet",
+                    'content' => $this->renderAjax('create', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
-        
-                ];         
+                    'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                        Html::button('Lưu lại', ['class' => 'btn btn-primary', 'type' => "submit"])
+
+                ];
             }
-        }else{
+        } else {
             /*
             *   Process for non-ajax request
             */
@@ -163,7 +169,6 @@ class DmLienKetController extends Controller
                 ]);
             }
         }
-       
     }
 
     /**
@@ -176,48 +181,48 @@ class DmLienKetController extends Controller
     public function actionUpdate($id)
     {
         $request = Yii::$app->request;
-        $model = $this->findModel($id);       
+        $model = $this->findModel($id);
 
-        if($request->isAjax){
+        if ($request->isAjax) {
             /*
             *   Process for ajax request
             */
             Yii::$app->response->format = Response::FORMAT_JSON;
-            if($request->isGet){
+            if ($request->isGet) {
                 return [
-                    'title'=> "Cập nhật DmLienKet",
-                    'content'=>$this->renderAjax('update', [
+                    'title' => "Cập nhật DmLienKet",
+                    'content' => $this->renderAjax('update', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
-                ];         
-            }else if($model->load($request->post()) && $model->save()){
-            	if(Yii::$app->params['showView']){
+                    'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                        Html::button('Lưu lại', ['class' => 'btn btn-primary', 'type' => "submit"])
+                ];
+            } else if ($model->load($request->post()) && $model->save()) {
+                if (Yii::$app->params['showView']) {
                     return [
-                        'forceReload'=>'#crud-datatable-pjax',
-                        'title'=> "DmLienKet",
-                        'content'=>$this->renderAjax('view', [
+                        'forceReload' => '#crud-datatable-pjax',
+                        'title' => "DmLienKet",
+                        'content' => $this->renderAjax('view', [
                             'model' => $model,
                         ]),
-                        'tcontent'=>'Cập nhật thành công!',
-                        'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::a('Sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
-                    ];    
-                }else{
-                	return ['forceClose'=>true,'forceReload'=>'#crud-datatable-pjax','tcontent'=>'Cập nhật thành công!',];
+                        'tcontent' => 'Cập nhật thành công!',
+                        'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                            Html::a('Sửa', ['update', 'id' => $id], ['class' => 'btn btn-primary', 'role' => 'modal-remote'])
+                    ];
+                } else {
+                    return ['forceClose' => true, 'forceReload' => '#crud-datatable-pjax', 'tcontent' => 'Cập nhật thành công!',];
                 }
-            }else{
-                 return [
-                    'title'=> "Cập nhật DmLienKet",
-                    'content'=>$this->renderAjax('update', [
+            } else {
+                return [
+                    'title' => "Cập nhật DmLienKet",
+                    'content' => $this->renderAjax('update', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
-                ];        
+                    'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                        Html::button('Lưu lại', ['class' => 'btn btn-primary', 'type' => "submit"])
+                ];
             }
-        }else{
+        } else {
             /*
             *   Process for non-ajax request
             */
@@ -242,14 +247,14 @@ class DmLienKetController extends Controller
     {
         $request = Yii::$app->request;
         $model = $this->findModel($id);
-        if($model!=null){
+        if ($model != null) {
             //check hoc vien existed
             $hvLienKet = $model->getHvLienKets()->one();
-            if($hvLienKet!=null){
-                if($request->isAjax){
+            if ($hvLienKet != null) {
+                if ($request->isAjax) {
                     Yii::$app->response->format = Response::FORMAT_JSON;
-                    return ['forceClose'=>true,'forceReload'=>'#crud-datatable-pjax','tcontent'=>'Không thể xóa vì có liên kết với học viên!',];
-                }else{
+                    return ['forceClose' => true, 'forceReload' => '#crud-datatable-pjax', 'tcontent' => 'Không thể xóa vì có liên kết với học viên!',];
+                } else {
                     Yii::$app->session->setFlash('error', 'Không thể xóa vì có liên kết với học viên!');
                     return $this->redirect(['index']);
                 }
@@ -258,23 +263,21 @@ class DmLienKetController extends Controller
             }
         }
 
-        if($request->isAjax){
+        if ($request->isAjax) {
             /*
             *   Process for ajax request
             */
             Yii::$app->response->format = Response::FORMAT_JSON;
-            return ['forceClose'=>true,'forceReload'=>'#crud-datatable-pjax'];
-        }else{
+            return ['forceClose' => true, 'forceReload' => '#crud-datatable-pjax'];
+        } else {
             /*
             *   Process for non-ajax request
             */
             return $this->redirect(['index']);
         }
-
-
     }
 
-     /**
+    /**
      * Delete multiple existing DmLienKet model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
@@ -282,38 +285,39 @@ class DmLienKetController extends Controller
      * @return mixed
      */
     public function actionBulkdelete()
-    {        
+    {
         $request = Yii::$app->request;
-        $pks = explode(',', $request->post( 'pks' )); // Array or selected records primary keys
+        $pks = explode(',', $request->post('pks')); // Array or selected records primary keys
         $delOk = true;
         $fList = array();
-        foreach ( $pks as $pk ) {
+        foreach ($pks as $pk) {
 
             $model = $this->findModel($pk);
             $hvLienKet = $model->getHvLienKets()->one();
-            if($hvLienKet==null){
+            if ($hvLienKet == null) {
                 $model->delete();
-            }else{
+            } else {
                 $delOk = false;
-            	$fList[] = $model->id;
+                $fList[] = $model->id;
             }
         }
 
-        if($request->isAjax){
+        if ($request->isAjax) {
             /*
             *   Process for ajax request
             */
             Yii::$app->response->format = Response::FORMAT_JSON;
-            return ['forceClose'=>true,'forceReload'=>'#crud-datatable-pjax',
-            			'tcontent'=>$delOk==true?'Xóa thành công!':('Không thể xóa:'.implode('</br>', $fList)),
+            return [
+                'forceClose' => true,
+                'forceReload' => '#crud-datatable-pjax',
+                'tcontent' => $delOk == true ? 'Xóa thành công!' : ('Không thể xóa:' . implode('</br>', $fList)),
             ];
-        }else{
+        } else {
             /*
             *   Process for non-ajax request
             */
             return $this->redirect(['index']);
         }
-       
     }
 
     /**
