@@ -240,8 +240,21 @@ class CustomFunc
      */
     public static function getTenTaiKhoan($userID)
     {
+        if ($userID == null || $userID == 0) return '';
         $model = User::findOne($userID);
         return $model != NULL ? $model->username : '';
+    }
+
+    /**
+     * lay ten user ngan hoac ten tai khoan boi userID
+     * @param int $userID
+     * @return string
+     */
+    public static function getShortUserName($userID)
+    {
+        if ($userID == null || $userID == 0) return '';
+        $model = \app\modules\user\models\User::findOne($userID);
+        return $model != NULL ? $model->shortName : '';
     }
 
     /**

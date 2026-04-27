@@ -1,41 +1,45 @@
 .uniform-img {
-    width: 100%; 
-    height: 150px; 
-    object-fit: cover; 
-    border-radius: 8px; 
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
 }
 
 /** custom modal */
 /*an add*/
-@media(min-width:767px) and (max-width: 1300px){
-	.modal-xxl {
-	    max-width: 98%; /* hoặc giá trị tùy ý */
-	}
-}
-/*an add*/
-@media(min-width:1300px){
-	.modal-xxl {
-	    max-width: 1298px; /* hoặc giá trị tùy ý */
-	}
+@media(min-width:767px) and (max-width: 1300px) {
+    .modal-xxl {
+        max-width: 98%;
+        /* hoặc giá trị tùy ý */
+    }
 }
 
-.tr-red, .tr-red td{
-	color: red !important;
+/*an add*/
+@media(min-width:1300px) {
+    .modal-xxl {
+        max-width: 1298px;
+        /* hoặc giá trị tùy ý */
+    }
+}
+
+.tr-red,
+.tr-red td {
+    color: red !important;
 }
 
 /**for top link*/
-.header-icons .nav-link:hover{
-	color: red !important;
+.header-icons .nav-link:hover {
+    color: red !important;
 }
 
-.service a:hover{
-	color: red !important;
+.service a:hover {
+    color: red !important;
 }
 
-.main-content-title{
-	font-weight: bold;
-	color: var(--primary-bg-color);
-	text-transform: uppercase;
+.main-content-title {
+    font-weight: bold;
+    color: var(--primary-bg-color);
+    text-transform: uppercase;
 }
 
 .page-header {
@@ -46,7 +50,7 @@
 
 .app-sidebar {
     background: linear-gradient(45deg, var(--primary-bg-color), transparent) !important;
-    color:black !important;
+    color: black !important;
     /*font-weight: bold !important;*/
 }
 
@@ -65,102 +69,120 @@
     /*box-shadow: 0 0 0 1px rgba(--primary07, .12), 0 8px 16px 0 rgba(--primary07, .24) !important;*/
 
 }
+
 .modal-header {
     background-color: var(--primary06) !important;
-    color:white !important;
+    color: white !important;
     border-start-start-radius: 0 !important;
     border-start-end-radius: 0 !important;
     padding: 15px 20px;
 }
 
-.modal-header .text-primary{
-	color:white !important;
+.modal-header .text-primary {
+    color: white !important;
 }
 
-.table-danger th, .table-danger td, .table-danger thead th, .table-danger tbody+tbody {
+.table-danger th,
+.table-danger td,
+.table-danger thead th,
+.table-danger tbody+tbody {
     border-color: var(--info);
 }
 
-.table-danger>th, .table-danger>td {
+.table-danger>th,
+.table-danger>td {
     background-color: var(--info);
 }
 
 .page-link {
-	border: 0px solid #ddd !important;
+    border: 0px solid #ddd !important;
 }
+
 .page-item.active .page-link {
-	font-weight: bold;
-	color: var(--info);
+    font-weight: bold;
+    color: var(--info);
     background: none !important;
 }
+
 .kv-table-header {
     background: linear-gradient(to bottom, #fff 0%, #ddd 100%);
 }
 
-.slide-item, .sub-side-menu__item, .sub-slide-item2 {
+.slide-item,
+.sub-side-menu__item,
+.sub-slide-item2 {
     padding-inline-start: 1rem;
 }
 
-.datepicker-days table{
-	width: 100%;
+.datepicker-days table {
+    width: 100%;
 }
+
 /** add red * after required field **/
 form div.required label.control-label:after {
 
-  content:" * ";
+    content: " * ";
 
-  color:red;
+    color: red;
 
 }
+
 /*span*/
-.data{
-	color: #17b794 !important;
-	cursor: pointer !important;
+.data {
+    color: #17b794 !important;
+    cursor: pointer !important;
 }
-.hl-color{
-	color: #f6866a !important;
+
+.hl-color {
+    color: #f6866a !important;
 }
-.data:hover{
-	color: #f6866a !important;
+
+.data:hover {
+    color: #f6866a !important;
 }
 
 /** div scroll */
-.div-scroll{
-	overflow-x: hidden;
-	overflow-y:scroll;
+.div-scroll {
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
-.dh-500{
-	height:500px;
+
+.dh-500 {
+    height: 500px;
 }
-.dh-600{
-	height:600px;
+
+.dh-600 {
+    height: 600px;
 }
-.dh-700{
-	height:700px;
+
+.dh-700 {
+    height: 700px;
 }
 
 
 
-.main-logo img{
-	max-width: 150px;
-	max-height: 50px;
+.main-logo img {
+    max-width: 150px;
+    max-height: 50px;
 }
 
 /**qr code**/
-.text-qr{
-	border:0px !important;
+.text-qr {
+    border: 0px !important;
 }
 
 .text-qr:focus {
-	border:0px !important;
-	color: white !important;
+    border: 0px !important;
+    color: white !important;
 }
+
 /**qr code*/
 
 /*form*/
-.formInput .card-title{
-	text-transform: uppercase;
+.formInput .card-title {
+    text-transform: uppercase;
 }
+
 /*custom*/
 /*fixed select2 overflow*/
 /* body .modal-dialog .select2-container {
@@ -169,37 +191,44 @@ form div.required label.control-label:after {
 #ajaxCrudDatatable table .select2-container {
     z-index: 0 !important;
 } */
-.kv-table-header a{
+.kv-table-header a {
     text-decoration: none;
 }
-.alink{
+
+.alink {
     text-decoration: none;
 }
-.blink{
+
+.blink {
     cursor: pointer;
     text-decoration: none;
     font-weight: bold;
     color: white;
 }
-.form-group .help-block{
+
+.form-group .help-block {
     color: red;
     font-style: italic;
     font-size: 13px;
 }
-.has-error input{
+
+.has-error input {
     border: 1px solid red;
 }
-.has-error label{
+
+.has-error label {
     color: red;
 }
-#liveToast .toast-body{
+
+#liveToast .toast-body {
     color: #0D6EFD;
 }
+
 /*end custom*/
 
 /*custom css for gridview*/
-#crud-datatable-filters{
-	display: none;
+#crud-datatable-filters {
+    display: none;
 }
 
 /*end custom css for gridview*/
@@ -208,27 +237,34 @@ form div.required label.control-label:after {
 /*custom select2*/
 .select2-container--krajee-bs5 .select2-selection--single {
     /*padding: 0.5rem 2rem 0.375rem 0.5rem !important;*/
-    height: calc(2rem + 2px)!important;
+    height: calc(2rem + 2px) !important;
     padding: 5px 2rem 5px 5px !important;
 }
-.select2-container--krajee-bs5 .select2-selection--single .select2-selection__clear, .select2-container--krajee-bs5 .select2-selection--multiple .select2-selection__clear {
+
+.select2-container--krajee-bs5 .select2-selection--single .select2-selection__clear,
+.select2-container--krajee-bs5 .select2-selection--multiple .select2-selection__clear {
     padding-left: 20px !important;
 }
+
 .select2-container--krajee-bs5 .select2-results__option--highlighted[aria-selected] {
     background-color: #0d6efd !important;
     color: #fff;
 }
+
 .select2-container--krajee-bs5 .select2-results__option.select2-results__option--selected,
 .select2-container--krajee-bs5 .select2-results__option[aria-selected=true] {
     color: #fff !important;
     background-color: #0d6efd !important;
 }
+
 .select2-container--krajee-bs5 .select2-results__group {
     color: #0d6efd !important;
 }
+
 .select2-container--krajee-bs5 li.select2-results__option {
     background: none !important;
 }
+
 /*end custom select2*/
 
 /*form control*/
@@ -239,61 +275,75 @@ form div.required label.control-label:after {
 }
 
 textarea.form-control {
-	height: auto !important;
+    height: auto !important;
 }
 
-.datepicker-dropdown{
-	min-width: 20rem !important;
+.datepicker-dropdown {
+    min-width: 20rem !important;
 }
 
-.custom-inline-radio{
-	display: inline-block;
-	margin-right:10px;
+.custom-inline-radio {
+    display: inline-block;
+    margin-right: 10px;
 }
 
 /*end form control*/
 
 /*gridview*/
-.btn-open-link{
-	color: #17b794;
+.btn-open-link {
+    color: #17b794;
 }
-.btn-open-link:hover{
-	text-decoration: underline;
-	color: #17b794;
+
+.btn-open-link:hover {
+    text-decoration: underline;
+    color: #17b794;
 }
 
 .btn-in-grid {
     /* Optional: Add some padding to make space for the icon */
-    padding-left: 0; 
-    transition: padding-left 0.3s ease; /* Smooth transition for padding */
-    position: relative; /* Needed for absolute positioning of the icon if desired */
+    padding-left: 0;
+    transition: padding-left 0.3s ease;
+    /* Smooth transition for padding */
+    position: relative;
+    /* Needed for absolute positioning of the icon if desired */
 }
 
 .btn-in-grid::before {
-    font-family: 'Font Awesome 6 Free'; /* Or 'Font Awesome 5 Free', 'Font Awesome 6 Pro', etc. */
-    font-weight: 900; /* Or 400 for regular, 100 for thin, etc., depending on the icon style */
-    content: '\f08e'; /* Unicode for the desired icon (e.g., fa-chevron-right) */
-    margin-right: 0; /* Initially no margin */
-    opacity: 0; /* Initially hidden */
-    transition: opacity 0.3s ease, margin-right 0.3s ease; /* Smooth transitions */
-    position: absolute; /* Optional: for precise positioning */
-    left: 0; /* Optional: for precise positioning */
+    font-family: 'Font Awesome 6 Free';
+    /* Or 'Font Awesome 5 Free', 'Font Awesome 6 Pro', etc. */
+    font-weight: 900;
+    /* Or 400 for regular, 100 for thin, etc., depending on the icon style */
+    content: '\f08e';
+    /* Unicode for the desired icon (e.g., fa-chevron-right) */
+    margin-right: 0;
+    /* Initially no margin */
+    opacity: 0;
+    /* Initially hidden */
+    transition: opacity 0.3s ease, margin-right 0.3s ease;
+    /* Smooth transitions */
+    position: absolute;
+    /* Optional: for precise positioning */
+    left: 0;
+    /* Optional: for precise positioning */
 }
 
 .btn-in-grid:hover::before {
-    opacity: 1; /* Show icon on hover */
-    margin-right: 5px; /* Add some space between icon and text */
+    opacity: 1;
+    /* Show icon on hover */
+    margin-right: 5px;
+    /* Add some space between icon and text */
     /* Optional: Adjust position if using absolute positioning */
-    /* left: -20px; */ 
+    /* left: -20px; */
 }
 
 .btn-in-grid:hover {
-    padding-left: 20px; /* Adjust padding to accommodate the icon */
+    padding-left: 20px;
+    /* Adjust padding to accommodate the icon */
     color: red;
 }
 
 /*gridview*/
-main > .container {
+main>.container {
     padding: 70px 15px 20px;
 }
 
@@ -303,7 +353,7 @@ main > .container {
     height: 60px;
 }
 
-.footer > .container {
+.footer>.container {
     padding-right: 15px;
     padding-left: 15px;
 }
@@ -314,7 +364,8 @@ main > .container {
 }
 
 /* add sorting icons to gridview sort links */
-a.asc:after, a.desc:after {
+a.asc:after,
+a.desc:after {
     content: '';
     left: 3px;
     display: inline-block;
@@ -354,14 +405,14 @@ a.desc:after {
 }
 
 /* align the logout "link" (button in form) of the navbar */
-.nav li > form > button.logout {
+.nav li>form>button.logout {
     padding-top: 7px;
     color: rgba(255, 255, 255, 0.5);
 }
 
 @media(max-width:767px) {
-    .nav li > form > button.logout {
-        display:block;
+    .nav li>form>button.logout {
+        display: block;
         text-align: left;
         width: 100%;
         padding: 10px 0;
@@ -369,26 +420,27 @@ a.desc:after {
 }
 
 /*an add*/
-@media (max-width: 991px){
-	/*.main-header-left.horizontal .main-logo .desktop-logo {
+@media (max-width: 991px) {
+
+    /*.main-header-left.horizontal .main-logo .desktop-logo {
 	    max-width: 150px;
 	}*/
-	 /*thay doi bg menu left*/
-	.app-sidebar {
-	    background: white !important;
-	    color: black !important;
-	    /* font-weight: bold !important; */
-	}
+    /*thay doi bg menu left*/
+    .app-sidebar {
+        background: white !important;
+        color: black !important;
+        /* font-weight: bold !important; */
+    }
 }
 
 
-.nav > li > form > button.logout:focus,
-.nav > li > form > button.logout:hover {
+.nav>li>form>button.logout:focus,
+.nav>li>form>button.logout:hover {
     text-decoration: none;
     color: rgba(255, 255, 255, 0.75);
 }
 
-.nav > li > form > button.logout:focus {
+.nav>li>form>button.logout:focus {
     outline: none;
 }
 
@@ -400,28 +452,31 @@ a.desc:after {
 	font-size:80%!important;
 } */
 
-.div-500{
-	height:500px;
-	overflow-y: auto;
-}
-.div-600{
-	height:600px;
-	overflow-y: auto;
+.div-500 {
+    height: 500px;
+    overflow-y: auto;
 }
 
-.card-end{
-	margin-bottom: 0;
+.div-600 {
+    height: 600px;
+    overflow-y: auto;
+}
+
+.card-end {
+    margin-bottom: 0;
 }
 
 /** custom modal */
 #ajaxCrudModal .modal-body {
     padding: 20px 20px;
 }
+
 #ajaxCrudModal .custom-card .card-body {
     padding: 1rem 1rem;
 }
+
 #ajaxCrudModal .custom-card .card-header {
-	min-height: 3rem;
+    min-height: 3rem;
     padding: .5rem 1rem;
 }
 
@@ -429,28 +484,42 @@ a.desc:after {
 style for all grid
 */
 .crud-datatable .float-right .dropdown-toggle {
-	padding: 2px 3px 0px 3px !important;
+    padding: 2px 3px 0px 3px !important;
 }
 
 /** thêm css cho icon */
-.c-icon-danger{
-	color:red;
-	font-weight: bold;
+.c-icon-danger {
+    color: red;
+    font-weight: bold;
 }
-.c-icon-warning{
-	color:orange;
-	font-weight: bold;
+
+.c-icon-warning {
+    color: orange;
+    font-weight: bold;
 }
-.c-icon-normal{
-	color:blue;
-	font-weight: bold;
+
+.c-icon-normal {
+    color: blue;
+    font-weight: bold;
 }
+
 /** css cho a bien so xe **/
-.aBienSo{
-	border-color: #212121!important;
-	color: #212121 !important;
+.aBienSo {
+    border-color: #212121 !important;
+    color: #212121 !important;
 }
-.aBienSo:hover{
-	border-color: red!important;	
-	color: red!important;
+
+.aBienSo:hover {
+    border-color: red !important;
+    color: red !important;
+}
+
+/** table history */
+.tbl-history tr:not(:first-child) {
+    border-top: 1px solid #ddd !important;
+}
+
+.tbl-history th,
+.tbl-history td {
+    border-block-start: 0px solid var(--border);
 }
