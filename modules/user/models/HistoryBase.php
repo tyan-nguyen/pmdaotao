@@ -298,7 +298,7 @@ class HistoryBase extends \app\models\UserHistory
         } else {
             $noiDung = 'Thực hiện thêm mới dữ liệu học phí: ';
             $noiDung .= '<br/>Số phiếu: ' . $model->ma_so_phieu;
-            $noiDung .= '<br/>Ngày nộp: ' . CustomFunc::convertYMDHISToDMYHIS($model->ngay_nop);
+            $noiDung .= '<br/>Ngày nộp: ' . CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_tao);
             $noiDung .= '<br/>Số tiền: ' . number_format($model->so_tien_nop, 0, ',', '.') . '(' . $model->hinh_thuc_thanh_toan . ')';
             $noiDung .= '<br/>Người thu: ' . (User::findOne($model->nguoi_tao) ? User::findOne($model->nguoi_tao)->shortName : '');
             $noiDung .= '<br/>Ghi chú: ' . $model->ghi_chu;
