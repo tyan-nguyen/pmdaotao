@@ -216,7 +216,7 @@ class HistoryBase extends \app\models\UserHistory
         }
     }
 
-    /** luu lai lich su cho model lichthue */
+    /** luu lai lich su cho model demxe */
     public static function addHistoryDemXe($type, $atr, $mod, $isNew)
     {
         $noiDung = '';
@@ -231,6 +231,42 @@ class HistoryBase extends \app\models\UserHistory
             }
         } else {
             $noiDung = 'Thực hiện thêm mới dữ liệu từ file ' . $model->file->filename;
+        }
+
+        //$his->noi_dung = var_dump($changedAttributes);
+        if ($noiDung != null) {
+            $his = new History();
+            $his->loai = $type;
+            $his->id_tham_chieu = $mod->id;
+            $his->noi_dung = $noiDung;
+            $his->save();
+        }
+    }
+    /** luu lai lich su cho model hocvien */
+    public static function addHistoryHocVien($type, $atr, $mod, $isNew)
+    {
+        $noiDung = '';
+        $model = HocVien::findOne($mod->id);
+        if ($isNew == false) {
+            if ($model != null) {
+                foreach ($atr as $key => $value) {
+                    if ($atr[$key] != $mod->$key) {
+                        if ($key == 'nguoi_giao_ao') {
+                            $tenOld = User::findOne($value) ? User::findOne($value)->shortName : '';
+                            $tenNew = User::findOne($mod->$key) ? User::findOne($mod->$key)->shortName : '';
+                            $noiDung .= '<p>Thay đổi ' . $mod->getAttributeLabel($key) . ' "' . $tenOld . '" thành "' . $tenNew . '"</p>';
+                        } else if ($key == 'nguoi_giao_tai_lieu') {
+                            $tenOld = User::findOne($value) ? User::findOne($value)->shortName : '';
+                            $tenNew = User::findOne($mod->$key) ? User::findOne($mod->$key)->shortName : '';
+                            $noiDung .= '<p>Thay đổi ' . $mod->getAttributeLabel($key) . ' "' . $tenOld . '" thành "' . $tenNew . '"</p>';
+                        } else {
+                            $noiDung .= '<p>Thay đổi ' . $mod->getAttributeLabel($key) . ' "' . $value . '" thành "' . $mod->$key . '"</p>';
+                        }
+                    }
+                }
+            }
+        } else {
+            $noiDung = 'Thực hiện thêm mới dữ liệu';
         }
 
         //$his->noi_dung = var_dump($changedAttributes);

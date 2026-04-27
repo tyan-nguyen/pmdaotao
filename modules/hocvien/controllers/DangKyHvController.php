@@ -146,10 +146,10 @@ class DangKyHvController extends Controller
                 );
             }
 
-            $viewModel = 'view';
-            if (in_array($model->id_hang, HocVien::LOAI_HOC_VIEN_XE_MAY)) {
+            $viewModel = 'view_oto';
+            /*  if (in_array($model->id_hang, HocVien::LOAI_HOC_VIEN_XE_MAY)) {
                 $viewModel = 'view_xe_may';
-            }
+            } */
 
             return [
                 'title' => "Học viên  #" . $id,

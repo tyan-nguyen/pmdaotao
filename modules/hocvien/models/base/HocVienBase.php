@@ -3,6 +3,7 @@
 namespace app\modules\hocvien\models\base;
 
 use app\custom\CustomFunc;
+use app\modules\banhang\models\HoaDon;
 use Yii;
 
 use app\modules\hocvien\models\KhoaHoc;
@@ -21,6 +22,7 @@ use app\modules\danhmuc\models\DmXa;
 use app\modules\danhmuc\models\DmTinh;
 use app\modules\hocvien\models\DmLienKet;
 use app\modules\hocvien\models\DmNhanHoSoHo;
+use app\modules\user\models\History;
 
 /**
  * This is the model class for table "hv_hoc_vien".
@@ -88,6 +90,8 @@ use app\modules\hocvien\models\DmNhanHoSoHo;
  */
 class HocVienBase extends \app\models\HvHocVien
 {
+    const MODEL_ID = 'hocvien';
+
     const NOIDANGKY_CS1 = 'CS1';
     const NOIDANGKY_CS2 = 'CS2';
 
@@ -765,5 +769,40 @@ class HocVienBase extends \app\models\HvHocVien
             return false;
         else
             return true;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+        History::addHistoryHocVien($this::MODEL_ID, $changedAttributes, $this, $insert);
+    }
+
+    //get số lần đóng tiền lệ phí
+    public function getMuaHangs()
+    {
+        $listMuaHang = null;
+        //search in ban hang
+        $banHangs = HoaDon::find()->where(['loai_khach_hang' => HoaDon::LOAI_HOCVIEN])
+            ->andWhere('id_khach_hang =:id_hoc_vien', [':id_hoc_vien' => $this->id])
+            ->andWhere('trang_thai =:trang_thai', [':trang_thai' => HoaDon::TRANGTHAI_DA_TT])
+            //->andWhere('loai_hang_hoa =:id_loai', [':id_loai' => 11])
+            ->andWhere(['<>', 'loai_hang_hoa', 11]) //11 là thu hộ lệ phí
+            ->all();
+        foreach ($banHangs as $banHang) {
+            $user = User::findOne($banHang->nguoi_tao);
+            $listMuaHang[] = [
+                'type' => $banHang->loaiHangHoa->ten_loai_hang_hoa,
+                'id' => $banHang->id,
+                'so_tien' => $banHang->tongTien,
+                'hinh_thuc' => $banHang->hinh_thuc_thanh_toan,
+                'ghi_chu' => $banHang->ghi_chu,
+                'thoi_gian' => CustomFunc::convertYMDHISToDMYHI($banHang->ngay_xuat),
+                'nguoi_thu' => $user->shortName,
+            ];
+        }
+        return $listMuaHang;
     }
 }

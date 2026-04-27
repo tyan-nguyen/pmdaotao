@@ -25,6 +25,9 @@ use app\widgets\CardWidget;
                             <a class="nav-link" id="exam-tab" data-bs-toggle="tab" href="#exam-div" role="tab" aria-controls="exam-div" aria-selected="false" style="color: blue;"><i class="fa fa-retweet"></i> Thu hộ/lần thi <span style="font-weight: bold;">(<?= $model->soLanThi ?>) </span></a>
                         </li>
                         <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="buy-tab" data-bs-toggle="tab" href="#buy-div" role="tab" aria-controls="buy-div" aria-selected="false" style="color: blue;"><i class="fa fa-list-ul"></i> Mua hàng</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
                             <a class="nav-link" id="file-tab" data-bs-toggle="tab" href="#file-div" role="tab" aria-controls="file-div" aria-selected="false" style="color: blue;"><i class="fa fa-paperclip"></i> File đính kèm</a>
                         </li>
                         <li class="nav-item" role="presentation">
@@ -41,6 +44,17 @@ use app\widgets\CardWidget;
                             <div class="tab-pane fade show active" id="info-div" role="tabpanel" aria-labelledby="info-tab">
 
                                 <?= $this->render('view_item_info', ['model' => $model]) ?>
+
+                            </div>
+
+
+                            <!-- Thông tin lịch sử mua hàng -->
+                            <div class="tab-pane fade" id="buy-div" role="tabpanel" aria-labelledby="buy-tab">
+
+                                <!-- Thông tin mua hàng -->
+                                <div class="col-xl-12 col-md-12">
+                                    <?= $this->render('view_item_buy', ['model' => $model]) ?>
+                                </div>
 
                             </div>
 

@@ -14,6 +14,7 @@ use app\modules\user\models\History;
 class DemXe extends PtxXeDemXe
 {
     const MODEL_ID = 'demxe';
+
     const CONG1 = 'CONG1';
     const CONG1_START = 'CONG1_START';
     const CONG1_END = 'CONG1_END';
