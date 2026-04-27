@@ -300,7 +300,7 @@ class HistoryBase extends \app\models\UserHistory
             $noiDung .= '<br/>Số phiếu: ' . $model->ma_so_phieu;
             $noiDung .= '<br/>Ngày nộp: ' . CustomFunc::convertYMDHISToDMYHIS($model->ngay_nop);
             $noiDung .= '<br/>Số tiền: ' . number_format($model->so_tien_nop, 0, ',', '.') . '(' . $model->hinh_thuc_thanh_toan . ')';
-            $noiDung .= ($model->nguoi_tao ? ('<br/>Người thu ' . (User::findOne($model->nguoi_tao) ? User::findOne($model->nguoi_tao)->shortName : '')) : '');
+            $noiDung .= '<br/>Người thu: ' . (User::findOne($model->nguoi_tao) ? User::findOne($model->nguoi_tao)->shortName : '');
             $noiDung .= '<br/>Ghi chú: ' . $model->ghi_chu;
         }
 
@@ -308,7 +308,7 @@ class HistoryBase extends \app\models\UserHistory
         if ($noiDung != null) {
             $his = new History();
             $his->loai = $type;
-            $his->id_tham_chieu = $mod->id;
+            $his->id_tham_chieu = $mod->id_hoc_vien;
             $his->noi_dung = $noiDung;
             $his->save();
         }
