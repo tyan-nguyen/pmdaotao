@@ -5,7 +5,10 @@ namespace app\modules\hocvien\models;
 use Yii;
 use app\modules\hocvien\models\HocVien;
 use app\custom\CustomFunc;
+use app\modules\hocvien\models\base\HocVienBase;
+use app\modules\user\models\History;
 use app\modules\user\models\User;
+
 /**
  * This is the model class for table "hv_nop_hoc_phi".
  *
@@ -27,7 +30,7 @@ use app\modules\user\models\User;
  * @property string|null $thoi_gian_tao
  * @property int $da_kiem_tra
  * @property string $ghi_chu
-  * @property int|null $co_thu_ho
+ * @property int|null $co_thu_ho
  * @property int|null $id_thu_ho
  * @property float $so_tien_thu_ho
  * @property string $hinh_thuc_thu_ho
@@ -54,14 +57,14 @@ class NopHocPhi extends \app\models\HvNopHocPhi
     {
         return [
             /* [[ 'so_tien_nop', 'ngay_nop', 'nguoi_thu'], 'required'], */
-            [[ 'so_tien_nop', 'ngay_nop', 'hinh_thuc_thanh_toan', 'loai_nop'], 'required'],
+            [['so_tien_nop', 'ngay_nop', 'hinh_thuc_thanh_toan', 'loai_nop'], 'required'],
             [['id_hoc_vien', 'id_hoc_phi', 'ma_so_phieu', 'so_lan_in_phieu', 'nguoi_thu', 'nguoi_tao', 'da_kiem_tra', 'co_thu_ho', 'id_thu_ho'], 'integer'],
             [['so_tien_nop', 'chiet_khau', 'so_tien_con_lai', 'so_tien_thu_ho'], 'number'],
             [['ngay_nop', 'thoi_gian_tao', 'ghi_chu'], 'safe'],
-            [['loai_phieu', 'loai_nop', 'hinh_thuc_thanh_toan', 'hinh_thuc_thu_ho'],'string','max'=>20],
+            [['loai_phieu', 'loai_nop', 'hinh_thuc_thanh_toan', 'hinh_thuc_thu_ho'], 'string', 'max' => 20],
             [['bien_lai', 'ghi_chu_thu_ho'], 'string'],
             [['id_hoc_vien'], 'exist', 'skipOnError' => true, 'targetClass' => HocVien::class, 'targetAttribute' => ['id_hoc_vien' => 'id']],
-            [['file'], 'file','extensions' => 'png, jpg, jfif'],
+            [['file'], 'file', 'extensions' => 'png, jpg, jfif'],
         ];
     }
 
@@ -89,7 +92,7 @@ class NopHocPhi extends \app\models\HvNopHocPhi
             'thoi_gian_tao' => 'Thời gian tạo',
             'da_kiem_tra' => 'Đã kiểm tra',
             'ghi_chu' => 'Ghi chú',
-            'file'=>'Chọn Biên lai',
+            'file' => 'Chọn Biên lai',
             'co_thu_ho' => 'Đã thu hộ lệ phí thi',
             'id_thu_ho' => 'Mã thu hộ',
             'so_tien_thu_ho' => 'Số tiền thu hộ',
@@ -97,7 +100,7 @@ class NopHocPhi extends \app\models\HvNopHocPhi
             'hinh_thuc_thu_ho' => 'Hình thức thu hộ'
         ];
     }
- 
+
     /**
      * Gets query for [[HocVien]].
      *
@@ -107,43 +110,46 @@ class NopHocPhi extends \app\models\HvNopHocPhi
     {
         return $this->hasOne(HocVien::class, ['id' => 'id_hoc_vien']);
     }
-   
-    public function getNgayNop(){
+
+    public function getNgayNop()
+    {
         return CustomFunc::convertYMDToDMY($this->ngay_nop);
     }
-    
-    public function getNguoiTao(){
+
+    public function getNguoiTao()
+    {
         return $this->hasOne(User::class, ['id' => 'nguoi_tao']);
     }
-    
+
     public function getMaSoPhieu($loaiPhieu)
     {
-        if($loaiPhieu==null){
+        if ($loaiPhieu == null) {
             $loaiPhieu = self::PHIEUTHULABEL;
         }
-        $maxMaSoPhieu = self::find()->select('MAX(ma_so_phieu)')->where(['loai_phieu'=>$loaiPhieu])->scalar();
+        $maxMaSoPhieu = self::find()->select('MAX(ma_so_phieu)')->where(['loai_phieu' => $loaiPhieu])->scalar();
         $newMaSoPhieu = $maxMaSoPhieu ? $maxMaSoPhieu + 1 : 1;
         return $newMaSoPhieu;
     }
-    
-    public function beforeSave($insert) {
+
+    public function beforeSave($insert)
+    {
         //$this->ngay_nop = CustomFunc::convertDMYToYMD($this->ngay_nop);
         if ($this->isNewRecord) {
             $this->nguoi_tao = Yii::$app->user->identity->id;
             $this->thoi_gian_tao = date('Y-m-d H:i:s');
-            $this->ngay_nop = CustomFunc::convertDMYToYMD($this->ngay_nop);             
+            $this->ngay_nop = CustomFunc::convertDMYToYMD($this->ngay_nop);
             $this->so_lan_in_phieu = 0;
             $this->da_kiem_tra = 0;
-            if($this->chiet_khau==null){
+            if ($this->chiet_khau == null) {
                 $this->chiet_khau = 0;
             }
-            if($this->so_tien_nop < 0){
+            if ($this->so_tien_nop < 0) {
                 $this->loai_phieu = self::PHIEUCHILABEL;
-            } else{
+            } else {
                 $this->loai_phieu = self::PHIEUTHULABEL;
             }
             $this->ma_so_phieu = $this->getMaSoPhieu($this->loai_phieu);
-            if($this->co_thu_ho == null){
+            if ($this->co_thu_ho == null) {
                 $this->co_thu_ho = 0;
             }
         }
@@ -154,31 +160,30 @@ class NopHocPhi extends \app\models\HvNopHocPhi
                 // Loại bỏ tiền tố Base64
                 $data = preg_replace('#^data:image/\w+;base64,#i', '', $this->bien_lai);
                 $data = base64_decode($data);
-    
+
                 // Kiểm tra xem việc giải mã có thành công không
                 if ($data === false) {
                     $this->addError('bien_lai', 'Dữ liệu hình ảnh không hợp lệ.');
                     return false;
                 }
-    
+
                 // Tạo tên file ngẫu nhiên và đường dẫn lưu file
                 $filename = uniqid('bien_lai_') . '.jpg';
                 $path = Yii::getAlias('@webroot/uploads/bien_lai/') . $filename;
-    
+
                 // Tạo thư mục nếu chưa tồn tại
                 if (!is_dir(dirname($path))) {
                     mkdir(dirname($path), 0755, true);
                 }
-    
+
                 // Lưu file vào thư mục
                 if (file_put_contents($path, $data) === false) {
                     $this->addError('bien_lai', 'Không thể lưu hình ảnh.');
                     return false;
                 }
-    
+
                 // Gán lại giá trị 'bien_lai' là đường dẫn của file đã lưu
                 $this->bien_lai = 'uploads/bien_lai/' . $filename;
-              
             } else {
                 // Nếu không phải Base64 (ví dụ chọn file bằng cách tải lên), giữ nguyên giá trị
                 $this->bien_lai = $this->bien_lai;
@@ -186,53 +191,61 @@ class NopHocPhi extends \app\models\HvNopHocPhi
         }
         return parent::beforeSave($insert);
     }
-    
-    
+
+
     public function afterSave($insert, $changedAttributes)
-     {
-         parent::afterSave($insert, $changedAttributes);
-         //if($this->so_tien_nop){
-            // $this->id_hoc_phi = 25;
-            // $this->updateAttributes(['id_hoc_phi']);
-         if($this->so_tien_con_lai == null){
-             $tongDaDong = NopHocPhi::find()->where(['id_hoc_vien'=>$this->id_hoc_vien])->sum('so_tien_nop');
-             $tongChietKhau = NopHocPhi::find()->where(['id_hoc_vien'=>$this->id_hoc_vien])->sum('chiet_khau');
-             $this->so_tien_con_lai = $this->hocVien->tienHocPhi - $tongChietKhau - $tongDaDong;
-             $this->updateAttributes(['so_tien_con_lai']);
-             
-             if($this->hocVien->thoi_gian_hoan_thanh_ho_so == null){
-                 if($this->so_tien_con_lai <= $this->hocVien->tienHocPhi/2){
-                     ///////////
-                     $this->hocVien->thoi_gian_hoan_thanh_ho_so = $this->thoi_gian_tao;
-                     $this->hocVien->updateAttributes(['thoi_gian_hoan_thanh_ho_so']);
-                 }
-             }
-         }
-         
-         if($this->co_thu_ho && $this->id_thu_ho == null){
-             $thuHo = ThuHo::find()->where([
-                 'id_hang' => $this->hocVien->id_hang,
-                 'active' => 1
-             ])->one();
-             if($thuHo!=NULL){
+    {
+        parent::afterSave($insert, $changedAttributes);
+        //if($this->so_tien_nop){
+        // $this->id_hoc_phi = 25;
+        // $this->updateAttributes(['id_hoc_phi']);
+        if ($this->so_tien_con_lai == null) {
+            $tongDaDong = NopHocPhi::find()->where(['id_hoc_vien' => $this->id_hoc_vien])->sum('so_tien_nop');
+            $tongChietKhau = NopHocPhi::find()->where(['id_hoc_vien' => $this->id_hoc_vien])->sum('chiet_khau');
+            $this->so_tien_con_lai = $this->hocVien->tienHocPhi - $tongChietKhau - $tongDaDong;
+            $this->updateAttributes(['so_tien_con_lai']);
+
+            if ($this->hocVien->thoi_gian_hoan_thanh_ho_so == null) {
+                if ($this->so_tien_con_lai <= $this->hocVien->tienHocPhi / 2) {
+                    ///////////
+                    $this->hocVien->thoi_gian_hoan_thanh_ho_so = $this->thoi_gian_tao;
+                    $this->hocVien->updateAttributes(['thoi_gian_hoan_thanh_ho_so']);
+                }
+            }
+        }
+
+        if ($this->co_thu_ho && $this->id_thu_ho == null) {
+            $thuHo = ThuHo::find()->where([
+                'id_hang' => $this->hocVien->id_hang,
+                'active' => 1
+            ])->one();
+            if ($thuHo != NULL) {
                 $this->id_thu_ho = $thuHo->id;
                 $this->so_tien_thu_ho = $thuHo->so_tien;
                 $this->ghi_chu_thu_ho = $thuHo->ghi_chu;
                 $this->hinh_thuc_thu_ho = 'TM';
-                $this->updateAttributes(['id_thu_ho', 'so_tien_thu_ho',
-                    'hinh_thuc_thu_ho', 'ghi_chu_thu_ho']);
-             }
-         }
-         
+                $this->updateAttributes([
+                    'id_thu_ho',
+                    'so_tien_thu_ho',
+                    'hinh_thuc_thu_ho',
+                    'ghi_chu_thu_ho'
+                ]);
+            }
+        }
+
+        History::addHistoryDongHocPhi(HocVienBase::MODEL_ID, $changedAttributes, $this, $insert);
+
+
+
         // }
-     }
-    
+    }
+
     public function getHangXe()
     {
         return $this->hasOne(HangDaoTao::class, ['id' => 'id_hang']);
-    } 
-    
-    
+    }
+
+
     /**
      * Danh muc loai nop
      * @return string[]
@@ -243,7 +256,7 @@ class NopHocPhi extends \app\models\HvNopHocPhi
             'NOP100' => 'Nộp 100%',
             'NOP50' => 'Nộp 50%',
             'COC1TR' => 'Cọc 1 triệu',
-            'KHAC'=>'Số tiền tùy chọn'            
+            'KHAC' => 'Số tiền tùy chọn'
         ];
     }
     /**
@@ -268,7 +281,7 @@ class NopHocPhi extends \app\models\HvNopHocPhi
                 break;
             case 'KHAC':
                 $label = 'Số tiền tùy chọn';
-                break;                
+                break;
             default:
                 $label = '';
         }
@@ -329,5 +342,4 @@ class NopHocPhi extends \app\models\HvNopHocPhi
         }
         return $label;
     }
-    
 }

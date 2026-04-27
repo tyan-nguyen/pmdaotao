@@ -2,6 +2,7 @@
 
 namespace app\modules\user\models;
 
+use app\custom\CustomFunc;
 use app\modules\banhang\models\HangHoa;
 use app\modules\banhang\models\HoaDon;
 use app\modules\banhang\models\HoaDonChiTiet;
@@ -9,8 +10,10 @@ use app\modules\banhang\models\KhachHang;
 use app\modules\demxe\models\DemXe;
 use app\modules\giaovien\models\GiaoVien;
 use app\modules\hocvien\models\HocVien;
+use app\modules\hocvien\models\NopHocPhi;
 use app\modules\thuexe\models\LichThue;
 use app\modules\thuexe\models\Xe;
+use app\modules\user\models\User;
 use Yii;
 
 class HistoryBase extends \app\models\UserHistory
@@ -251,7 +254,8 @@ class HistoryBase extends \app\models\UserHistory
             if ($model != null) {
                 foreach ($atr as $key => $value) {
                     if ($atr[$key] != $mod->$key) {
-                        if ($key == 'nguoi_giao_ao') {
+                        if ($key == 'trang_thai') {
+                        } else if ($key == 'nguoi_giao_ao') {
                             $tenOld = User::findOne($value) ? User::findOne($value)->shortName : '';
                             $tenNew = User::findOne($mod->$key) ? User::findOne($mod->$key)->shortName : '';
                             $noiDung .= '<p>Thay đổi ' . $mod->getAttributeLabel($key) . ' "' . $tenOld . '" thành "' . $tenNew . '"</p>';
@@ -267,6 +271,37 @@ class HistoryBase extends \app\models\UserHistory
             }
         } else {
             $noiDung = 'Thực hiện thêm mới dữ liệu';
+        }
+
+        //$his->noi_dung = var_dump($changedAttributes);
+        if ($noiDung != null) {
+            $his = new History();
+            $his->loai = $type;
+            $his->id_tham_chieu = $mod->id;
+            $his->noi_dung = $noiDung;
+            $his->save();
+        }
+    }
+    /** luu lai lich su cho model hocvien dong hoc phi*/
+    public static function addHistoryDongHocPhi($type, $atr, $mod, $isNew)
+    {
+        $noiDung = '';
+        $model = NopHocPhi::findOne($mod->id);
+        if ($isNew == false) {
+            if ($model != null) {
+                foreach ($atr as $key => $value) {
+                    if ($atr[$key] != $mod->$key) {
+                        $noiDung .= '<p>Thay đổi ' . $mod->getAttributeLabel($key) . ' "' . $value . '" thành "' . $mod->$key . '"</p>';
+                    }
+                }
+            }
+        } else {
+            $noiDung = 'Thực hiện thêm mới dữ liệu học phí: ';
+            $noiDung .= '<br/>Số phiếu: ' . $model->ma_so_phieu;
+            $noiDung .= '<br/>Ngày nộp: ' . CustomFunc::convertYMDHISToDMYHIS($model->ngay_nop);
+            $noiDung .= '<br/>Số tiền: ' . number_format($model->so_tien_nop, 0, ',', '.') . '(' . $model->hinh_thuc_thanh_toan . ')';
+            $noiDung .= ($model->nguoi_tao ? ('<br/>Người thu ' . (User::findOne($model->nguoi_tao) ? User::findOne($model->nguoi_tao)->shortName : '')) : '');
+            $noiDung .= '<br/>Ghi chú: ' . $model->ghi_chu;
         }
 
         //$his->noi_dung = var_dump($changedAttributes);
