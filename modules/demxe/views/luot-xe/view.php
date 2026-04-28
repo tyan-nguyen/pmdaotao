@@ -19,14 +19,21 @@ use yii\widgets\DetailView;
             ]) ?>
 
             <h3 class="mb-3"><?= $model->xe ? $model->xe->bien_so_xe : $model->bien_so_xe  ?></h3>
-            <p><strong>Mã cổng:</strong> <?= $model->ma_cong ?></p>
-            <p><strong>Bắt đầu:</strong> <?= CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_bd) ?></p>
-            <p><strong>Kết thúc:</strong> <?= CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_kt) ?></p>
-            <p><strong>Số phút:</strong> <?= $model->so_phut ?></p>
-            <p><strong>File:</strong> <?= $model->file->filename ?></p>
+            <p><strong>Mã cổng:</strong> <?= $model->ma_cong ?>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <strong>Số phút:</strong> <?= $model->so_phut ?>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <strong>File:</strong> <?= $model->file->filename ?>
+            </p>
+            <p><strong>Bắt đầu:</strong> <?= CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_bd) ?>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <strong>Kết thúc:</strong> <?= CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_kt) ?>
+            </p>
             <p><strong>Ghi chú:</strong> <?= $model->ghi_chu ?></p>
-            <p><strong>Ngày tạo:</strong> <?= CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_tao) ?></p>
-            <p><strong>Người tạo:</strong> <?= User::findOne($model->nguoi_tao)->ho_ten ?? '' ?></p>
+            <p><strong>Ngày tạo:</strong> <?= CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_tao) ?>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <strong>Người tạo:</strong> <?= User::findOne($model->nguoi_tao)->ho_ten ?? '' ?>
+            </p>
             <?php CardWidget::end() ?>
         </div>
         <div class="col-lg-6">
@@ -34,7 +41,7 @@ use yii\widgets\DetailView;
                 'title' => 'Hình ảnh xe',
             ]) ?>
             <?php if ($model->xe) { ?>
-                <img src="<?= Yii::$app->request->baseUrl ?>/images/hinh-xe/<?= $model->xe->anhDaiDien->hinh_anh ?>" alt="<?= $model->xe->bien_so_xe ?>" class="img-fluid" style="width: 100%; height: auto;">
+                <img src="<?= Yii::$app->request->baseUrl ?>/images/hinh-xe/<?= $model->xe->anhDaiDien->hinh_anh ?>" alt="<?= $model->xe->bien_so_xe ?>" class="img-fluid" style="width: 100%; height: 400px;">
             <?php } ?>
             <?php CardWidget::end() ?>
         </div>
