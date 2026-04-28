@@ -526,7 +526,7 @@ style for all grid
 
 
 .scrollspy-example-2 .table-responsive::-webkit-scrollbar {
-    height: 12px;
+    height: 8px;
     /* scroll ngang => dùng height */
 }
 
