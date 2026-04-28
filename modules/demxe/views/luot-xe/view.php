@@ -35,8 +35,7 @@ use yii\widgets\DetailView;
                 <strong>Người tạo:</strong> <?= User::findOne($model->nguoi_tao)->ho_ten ?? '' ?>
             </p>
             <?php CardWidget::end() ?>
-        </div>
-        <div class="col-lg-6">
+
             <?php CardWidget::begin([
                 'title' => 'Hình ảnh xe',
             ]) ?>
@@ -44,14 +43,17 @@ use yii\widgets\DetailView;
                 <img src="<?= Yii::$app->request->baseUrl ?>/images/hinh-xe/<?= $model->xe->anhDaiDien->hinh_anh ?>" alt="<?= $model->xe->bien_so_xe ?>" class="img-fluid" style="max-width: 400px; max-height: 400px;">
             <?php } ?>
             <?php CardWidget::end() ?>
+
         </div>
-        <div class="col-lg-12">
+        <div class="col-lg-6">
             <?php CardWidget::begin([
                 'title' => 'Lịch sử thay đổi',
             ]) ?>
             <?= History::showHistory(DemXe::MODEL_ID, $model->id) ?>
             <?php CardWidget::end() ?>
         </div>
+
+
 
     </div>
 
