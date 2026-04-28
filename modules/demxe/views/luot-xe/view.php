@@ -41,7 +41,7 @@ use yii\widgets\DetailView;
                 'title' => 'Hình ảnh xe',
             ]) ?>
             <?php if ($model->xe) { ?>
-                <img src="<?= Yii::$app->request->baseUrl ?>/images/hinh-xe/<?= $model->xe->anhDaiDien->hinh_anh ?>" alt="<?= $model->xe->bien_so_xe ?>" class="img-fluid" style="width: 100%; height: 400px;">
+                <img src="<?= Yii::$app->request->baseUrl ?>/images/hinh-xe/<?= $model->xe->anhDaiDien->hinh_anh ?>" alt="<?= $model->xe->bien_so_xe ?>" class="img-fluid" style="max-width: 400px; max-height: 400px;">
             <?php } ?>
             <?php CardWidget::end() ?>
         </div>
