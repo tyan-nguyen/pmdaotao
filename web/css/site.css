@@ -523,3 +523,23 @@ style for all grid
 .tbl-history td {
     border-block-start: 0px solid var(--border);
 }
+
+
+.scrollspy-example-2 .table-responsive::-webkit-scrollbar {
+    height: 12px;
+    /* scroll ngang => dùng height */
+}
+
+.scrollspy-example-2 .table-responsive::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.scrollspy-example-2.table-responsive::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+.scrollspy-example-2.table-responsive::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
