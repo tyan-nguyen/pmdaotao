@@ -154,8 +154,8 @@ class HistoryBase extends \app\models\UserHistory
             }
         } else {
             $model = PhieuThu::findOne($mod->id);
-            $noiDung = 'Thêm thanh toán vào lịch thuê xe: ';
-            $noiDung .= '<br/>Số phiếu: ' . $model->ma_so_phieu;
+            $noiDung = 'Thêm ' . $model->tenLoaiPhieu . ' vào lịch thuê xe: ';
+            $noiDung .= '<br/>Số phiếu: ' . CustomFunc::fillNumber($model->ma_so_phieu);
             $noiDung .= '<br/>Ngày nộp: ' . CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_tao);
             $noiDung .= '<br/>Số tiền: ' . number_format($model->so_tien, 0, ',', '.') . '(' . $model->hinh_thuc_thanh_toan . ')';
             $noiDung .= '<br/>Người thu: ' . (User::findOne($model->nguoi_tao) ? User::findOne($model->nguoi_tao)->shortName : '');
