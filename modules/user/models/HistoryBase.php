@@ -12,6 +12,7 @@ use app\modules\giaovien\models\GiaoVien;
 use app\modules\hocvien\models\HocVien;
 use app\modules\hocvien\models\NopHocPhi;
 use app\modules\thuexe\models\LichThue;
+use app\modules\thuexe\models\PhieuThu;
 use app\modules\thuexe\models\Xe;
 use app\modules\user\models\User;
 use Yii;
@@ -138,6 +139,39 @@ class HistoryBase extends \app\models\UserHistory
             $his->save();
         }
     }
+    /** luu lai lich su cho model lichthue (phieuthu) */
+    public static function addHistoryLichThuePhieuThu($type, $atr, $mod, $isNew)
+    {
+        $noiDung = '';
+        if ($isNew == false) {
+            $model = PhieuThu::findOne($mod->id);
+            if ($model != null) {
+                foreach ($atr as $key => $value) {
+                    if ($atr[$key] != $mod->$key) {
+                        $noiDung .= '<p>Thay đổi ' . $model->tenLoaiPhieu . ' ' . CustomFunc::fillNumber($model->ma_so_phieu) . ': ' . $mod->getAttributeLabel($key) . ' "' . $value . '" thành "' . $mod->$key . '"</p>';
+                    }
+                }
+            }
+        } else {
+            $model = PhieuThu::findOne($mod->id);
+            $noiDung = 'Thêm thanh toán vào lịch thuê xe: ';
+            $noiDung .= '<br/>Số phiếu: ' . $model->ma_so_phieu;
+            $noiDung .= '<br/>Ngày nộp: ' . CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_tao);
+            $noiDung .= '<br/>Số tiền: ' . number_format($model->so_tien, 0, ',', '.') . '(' . $model->hinh_thuc_thanh_toan . ')';
+            $noiDung .= '<br/>Người thu: ' . (User::findOne($model->nguoi_tao) ? User::findOne($model->nguoi_tao)->shortName : '');
+            $noiDung .= '<br/>Ghi chú: ' . $model->ghi_chu;
+        }
+
+        //$his->noi_dung = var_dump($changedAttributes);
+        if ($noiDung != null) {
+            $his = new History();
+            $his->loai = $type;
+            $his->id_tham_chieu = $mod->id_lich_thue;
+            $his->noi_dung = $noiDung;
+            $his->save();
+        }
+    }
+
     /** luu lai lich su cho model lichthue */
     public static function addHistoryHoaDon($type, $atr, $mod, $isNew)
     {

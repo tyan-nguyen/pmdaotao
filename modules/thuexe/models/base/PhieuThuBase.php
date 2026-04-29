@@ -8,6 +8,7 @@ use app\custom\CustomFunc;
 use app\models\PtxPhieuThu;
 use app\modules\thuexe\models\LichThue;
 use app\modules\thuexe\models\PhieuThu;
+use app\modules\user\models\History;
 
 /**
  * This is the model class for table "banle_phieu_thu".
@@ -29,12 +30,12 @@ use app\modules\thuexe\models\PhieuThu;
  */
 class PhieuThuBase extends PtxPhieuThu
 {
-    public $tongTienNop;//su dung trong report
-    public $tongChietKhau;//su dung trong report
-    
+    public $tongTienNop; //su dung trong report
+    public $tongChietKhau; //su dung trong report
+
     const PHIEUTHULABEL = 'PHIEUTHU';
     const PHIEUCHILABEL = 'PHIEUCHI';
-    
+
     /**
      * {@inheritdoc}
      */
@@ -51,7 +52,7 @@ class PhieuThuBase extends PtxPhieuThu
             [['id_lich_thue'], 'exist', 'skipOnError' => true, 'targetClass' => LichThue::class, 'targetAttribute' => ['id_lich_thue' => 'id']],
         ];
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -72,7 +73,7 @@ class PhieuThuBase extends PtxPhieuThu
             'ghi_chu' => 'Ghi chú',
         ];
     }
-    
+
     /**
      * Gets query for [[LichThue]].
      *
@@ -86,59 +87,63 @@ class PhieuThuBase extends PtxPhieuThu
      * get người tạo (bảng User)
      * @return \yii\db\ActiveQuery
      */
-    public function getNguoiTao(){
+    public function getNguoiTao()
+    {
         return $this->hasOne(User::class, ['id' => 'nguoi_tao']);
     }
-    
+
     public function getMaSoPhieu($loaiPhieu)
     {
-        if($loaiPhieu==null){
+        if ($loaiPhieu == null) {
             $loaiPhieu = self::PHIEUTHULABEL;
         }
-        $maxMaSoPhieu = self::find()->select('MAX(ma_so_phieu)')->where(['loai_phieu'=>$loaiPhieu])->scalar();
+        $maxMaSoPhieu = self::find()->select('MAX(ma_so_phieu)')->where(['loai_phieu' => $loaiPhieu])->scalar();
         $newMaSoPhieu = $maxMaSoPhieu ? $maxMaSoPhieu + 1 : 1;
         return $newMaSoPhieu;
     }
-    
-    public function beforeSave($insert) {
+
+    public function beforeSave($insert)
+    {
         //$this->ngay_nop = CustomFunc::convertDMYToYMD($this->ngay_nop);
         if ($this->isNewRecord) {
-            if($this->nguoi_tao == NULL)
+            if ($this->nguoi_tao == NULL)
                 $this->nguoi_tao = Yii::$app->user->identity->id;
             $this->thoi_gian_tao = date('Y-m-d H:i:s');
             $this->so_lan_in_phieu = 0;
-            if($this->chiet_khau==null){
+            if ($this->chiet_khau == null) {
                 $this->chiet_khau = 0;
             }
-            if($this->so_tien < 0){
+            if ($this->so_tien < 0) {
                 $this->loai_phieu = self::PHIEUCHILABEL;
-            } else{
+            } else {
                 $this->loai_phieu = self::PHIEUTHULABEL;
             }
             $this->ma_so_phieu = $this->getMaSoPhieu($this->loai_phieu);
         }
         return parent::beforeSave($insert);
     }
-    
+
     public function afterSave($insert, $changedAttributes)
     {
         parent::afterSave($insert, $changedAttributes);
 
-        if($this->so_tien_con_lai == null){
-            $tongDaDong = PhieuThu::find()->where(['id_lich_thue'=>$this->id_lich_thue])->sum('so_tien');
-            $tongChietKhau = PhieuThu::find()->where(['id_lich_thue'=>$this->id_lich_thue])->sum('chiet_khau');
+        if ($this->so_tien_con_lai == null) {
+            $tongDaDong = PhieuThu::find()->where(['id_lich_thue' => $this->id_lich_thue])->sum('so_tien');
+            $tongChietKhau = PhieuThu::find()->where(['id_lich_thue' => $this->id_lich_thue])->sum('chiet_khau');
             $this->so_tien_con_lai = $this->lichThue->tongTien - $tongChietKhau - $tongDaDong;
             $this->updateAttributes(['so_tien_con_lai']);
         }
-        if($this->so_tien_con_lai <= 0){
+        if ($this->so_tien_con_lai <= 0) {
             $lichThue = LichThue::findOne($this->id_lich_thue);
-            if($lichThue && $lichThue->trang_thai != LichThue::TT_XUATHOADON){
+            if ($lichThue && $lichThue->trang_thai != LichThue::TT_XUATHOADON) {
                 $lichThue->trang_thai = LichThue::TT_XUATHOADON;
                 $lichThue->updateAttributes(['trang_thai']);
             }
         }
+
+        History::addHistoryLichThuePhieuThu(LichThueBase::MODEL_ID, $changedAttributes, $this, $insert);
     }
-    
+
     /**
      * Danh muc hinh thuc chuyen khoan
      * @return string[]
@@ -150,7 +155,7 @@ class PhieuThuBase extends PtxPhieuThu
             'CK' => 'Chuyển khoản',
         ];
     }
-    
+
     /**
      * Danh muc trang thai label
      * @param int $val
@@ -173,7 +178,7 @@ class PhieuThuBase extends PtxPhieuThu
         }
         return $label;
     }
-    
+
     /**
      * Danh muc loai phieu label
      * @param int $val
@@ -196,5 +201,4 @@ class PhieuThuBase extends PtxPhieuThu
         }
         return $label;
     }
-    
 }
