@@ -29,9 +29,9 @@
 							</li>
 							<li class=""><a href="<?= Yii::getAlias('@web/demxe/cong-san-cam-bien?menu=demxe5') ?>" class="slide-item" data-menu="demxe5"><i class="fe fe-file-text"></i> Cổng sân cảm biến <i class="ion-ios7-star text-secondary"></i></a>
 							</li>
-							<li class=""><a href="<?= Yii::getAlias('@web/demxe/cong-phu-san-cam-bien?menu=demxe7') ?>" class="slide-item" data-menu="demxe7"><i class="fe fe-file-text"></i> Cổng sân cảm biến phụ</a>
+							<li class=""><a href="<?= Yii::getAlias('@web/demxe/cong-phu-san-cam-bien?menu=demxe7') ?>" class="slide-item" data-menu="demxe7"><i class="fe fe-file-text"></i> Cổng sân cảm biến phụ <i class="ion-ios7-star text-secondary"></i></a>
 							</li>
-							<li class=""><a href="<?= Yii::getAlias('@web/demxe/cong-chinh?menu=demxe6') ?>" class="slide-item" data-menu="demxe6"><i class="fe fe-file-text"></i> Cổng chính</a>
+							<li class=""><a href="<?= Yii::getAlias('@web/demxe/cong-chinh?menu=demxe6') ?>" class="slide-item" data-menu="demxe6"><i class="fe fe-file-text"></i> Cổng chính <i class="ion-ios7-star text-secondary"></i></a>
 							</li>
 							<li class=""><a href="<?= Yii::getAlias('@web/demxe/file-trich-xuat/index?menu=demxe1') ?>" class="slide-item" data-menu="demxe1"><i class="fe fe-file-text"></i> Danh sách file</a>
 							</li>
