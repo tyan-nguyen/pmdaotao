@@ -18,7 +18,7 @@ class DemXeSearch extends DemXe
     public $bd_den;
     public $kt_tu;
     public $kt_den;
-    public $status;//trang thai cua phien co day du gio di gio ve khong
+    public $status; //trang thai cua phien co day du gio di gio ve khong
     public $suKien;//su kien xe theo yeu cau: xe qua dem, xe khong co ke hoach...
     /**
      * @inheritdoc
@@ -27,9 +27,22 @@ class DemXeSearch extends DemXe
     {
         return [
             [['id', 'id_xe', 'nguoi_tao', 'id_file'], 'integer'],
-            [['ma_xe', 'ma_cong', 'thoi_gian_bd', 'thoi_gian_kt', 'so_phut', 
-                'thoi_gian_tao', 'ghi_chu', 'loaiXe', 'bd_tu', 'bd_den', 'kt_tu', 'kt_den', 
-                'status', 'suKien'], 'safe'],
+            [[
+                'ma_xe',
+                'ma_cong',
+                'thoi_gian_bd',
+                'thoi_gian_kt',
+                'so_phut',
+                'thoi_gian_tao',
+                'ghi_chu',
+                'loaiXe',
+                'bd_tu',
+                'bd_den',
+                'kt_tu',
+                'kt_den',
+                'status',
+                'suKien'
+            ], 'safe'],
             [['so_gio'], 'number']
         ];
     }
@@ -50,16 +63,17 @@ class DemXeSearch extends DemXe
      *
      * @return ActiveDataProvider
      */
-    public function search($params, $cusomSearch=NULL)
+    public function search($params, $cusomSearch = NULL, $cong = NULL)
     {
         $query = DemXe::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort'=> [
+            'sort' => [
                 'defaultOrder' => [
                     'id' => SORT_DESC
-            ]],
+                ]
+            ],
         ]);
 
         $this->load($params);
@@ -69,19 +83,21 @@ class DemXeSearch extends DemXe
             // $query->where('0=1');
             return $dataProvider;
         }
-		if($cusomSearch != NULL){
-			$query->andFilterWhere ( [ 'OR' ,['like', 'ma_xe', $cusomSearch],
-            ['like', 'ma_cong', $cusomSearch],
-            ['like', 'so_phut', $cusomSearch],
-            ['like', 'ghi_chu', $cusomSearch]] );
- 
-		} else {
-		    if(User::hasRole('nDaoTao',false)){
-		        $this->loaiXe = 'xeNha';
-		        $this->ma_cong = DemXe::CONG1;
-		    }
-		    
-        	$query->andFilterWhere([
+        if ($cusomSearch != NULL) {
+            $query->andFilterWhere([
+                'OR',
+                ['like', 'ma_xe', $cusomSearch],
+                ['like', 'ma_cong', $cusomSearch],
+                ['like', 'so_phut', $cusomSearch],
+                ['like', 'ghi_chu', $cusomSearch]
+            ]);
+        } else {
+            if (User::hasRole('nDaoTao', false)) {
+                $this->loaiXe = 'xeNha';
+                $this->ma_cong = DemXe::CONG1;
+            }
+
+            $query->andFilterWhere([
                 'id' => $this->id,
                 'id_xe' => $this->id_xe,
                 //'thoi_gian_bd' => $this->thoi_gian_bd,
@@ -91,55 +107,60 @@ class DemXeSearch extends DemXe
                 'thoi_gian_tao' => $this->thoi_gian_tao,
                 'id_file' => $this->id_file,
             ]);
-    
+
             $query->andFilterWhere(['like', 'ma_xe', $this->ma_xe])
                 ->andFilterWhere(['like', 'ma_cong', $this->ma_cong])
                 ->andFilterWhere(['like', 'so_phut', $this->so_phut])
                 ->andFilterWhere(['like', 'ghi_chu', $this->ghi_chu]);
-            
-                if($this->loaiXe){
-                    if($this->loaiXe == 'xeNha')
-                        $query->andWhere('id_xe IS NOT NULL');
-                    else
-                        $query->andWhere('id_xe IS NULL');
-                }
-                
-            if(!empty($this->thoi_gian_bd) || !empty($this->thoi_gian_kt)){
-                
+
+            //theo ma cong, chỉ lấy xe nhà
+            if ($cong == DemXe::CONG1 || $cong == DemXe::CONG2 || $cong == DemXe::CONG3 || $cong == DemXe::CONG4) {
+                $query->andWhere(['ma_cong' => $cong]);
+                $query->andWhere('id_xe IS NOT NULL');
+            }
+
+            if ($this->loaiXe) {
+                if ($this->loaiXe == 'xeNha')
+                    $query->andWhere('id_xe IS NOT NULL');
+                else
+                    $query->andWhere('id_xe IS NULL');
+            }
+
+            if (!empty($this->thoi_gian_bd) || !empty($this->thoi_gian_kt)) {
+
                 if (!empty($this->thoi_gian_bd)) {
-                    if(strlen($this->thoi_gian_bd)<=10){
+                    if (strlen($this->thoi_gian_bd) <= 10) {
                         $start = date('Y-m-d 00:00:00', strtotime($this->thoi_gian_bd));
-                        $end   = date('Y-m-d 23:59:59', strtotime($this->thoi_gian_bd));                        
+                        $end   = date('Y-m-d 23:59:59', strtotime($this->thoi_gian_bd));
                         $query->andWhere(['between', 'thoi_gian_bd', $start, $end]);
-                    }else{
+                    } else {
                         $query->andFilterWhere([
-                            'thoi_gian_bd'=> date('Y-m-d H:i:s', strtotime($this->thoi_gian_bd))
+                            'thoi_gian_bd' => date('Y-m-d H:i:s', strtotime($this->thoi_gian_bd))
                         ]);
                     }
                 }
-                
+
                 if (!empty($this->thoi_gian_kt)) {
-                    if(strlen($this->thoi_gian_kt)<=10){
+                    if (strlen($this->thoi_gian_kt) <= 10) {
                         $start = date('Y-m-d 00:00:00', strtotime($this->thoi_gian_kt));
                         $end   = date('Y-m-d 23:59:59', strtotime($this->thoi_gian_kt));
                         $query->andWhere(['between', 'thoi_gian_kt', $start, $end]);
-                    }else{
+                    } else {
                         $query->andFilterWhere([
                             'thoi_gian_bd' => date('Y-m-d H:i:s', strtotime($this->thoi_gian_kt))
                         ]);
                     }
                 }
-                
             } else {
-        
+
                 if (!empty($this->bd_tu)) {
-                    if(strlen($this->bd_tu)<=10){
+                    if (strlen($this->bd_tu) <= 10) {
                         $query->andWhere([
                             '>=',
                             'thoi_gian_bd',
                             date('Y-m-d 00:00:00', strtotime($this->bd_tu))
                         ]);
-                    }else{
+                    } else {
                         $query->andWhere([
                             '>=',
                             'thoi_gian_bd',
@@ -147,15 +168,15 @@ class DemXeSearch extends DemXe
                         ]);
                     }
                 }
-                
+
                 if (!empty($this->bd_den)) {
-                    if(strlen($this->bd_den)<=10){
+                    if (strlen($this->bd_den) <= 10) {
                         $query->andWhere([
                             '<=',
                             'thoi_gian_bd',
                             date('Y-m-d 23:59:59', strtotime($this->bd_den))
                         ]);
-                    }else{
+                    } else {
                         $query->andWhere([
                             '<=',
                             'thoi_gian_bd',
@@ -163,15 +184,15 @@ class DemXeSearch extends DemXe
                         ]);
                     }
                 }
-                
+
                 if (!empty($this->kt_tu)) {
-                    if(strlen($this->kt_tu)<=10){
+                    if (strlen($this->kt_tu) <= 10) {
                         $query->andWhere([
                             '>=',
                             'thoi_gian_kt',
                             date('Y-m-d 00:00:00', strtotime($this->kt_tu))
                         ]);
-                    }else{
+                    } else {
                         $query->andWhere([
                             '>=',
                             'thoi_gian_kt',
@@ -179,15 +200,15 @@ class DemXeSearch extends DemXe
                         ]);
                     }
                 }
-                
+
                 if (!empty($this->kt_den)) {
-                    if(strlen($this->kt_den)<=10){
+                    if (strlen($this->kt_den) <= 10) {
                         $query->andWhere([
                             '<=',
                             'thoi_gian_kt',
                             date('Y-m-d 23:59:59', strtotime($this->kt_den))
                         ]);
-                    } else{
+                    } else {
                         $query->andWhere([
                             '<=',
                             'thoi_gian_kt',
@@ -195,20 +216,18 @@ class DemXeSearch extends DemXe
                         ]);
                     }
                 }
-                
             }
-            
-            if(!empty($this->status)){
-                if($this->status == 'HasInNotOut'){
+
+            if (!empty($this->status)) {
+                if ($this->status == 'HasInNotOut') {
                     $query->andWhere('thoi_gian_bd IS NULL and thoi_gian_kt IS NOT NULL');
-                }else if($this->status == 'HasOutNotIn'){
+                } else if ($this->status == 'HasOutNotIn') {
                     $query->andWhere('thoi_gian_bd IS NOT NULL and thoi_gian_kt IS NULL');
-                }else if($this->status == 'HasInOut'){
+                } else if ($this->status == 'HasInOut') {
                     $query->andWhere('thoi_gian_bd IS NOT NULL and thoi_gian_kt IS NOT NULL');
                 }
             }
-                
-		}
+        }
         return $dataProvider;
     }
 }

@@ -21,6 +21,11 @@ class DemXe extends PtxXeDemXe
     const CONG2 = 'CONG2';
     const CONG2_START = 'CONG2_START';
     const CONG2_END = 'CONG2_END';
+    const CONG3 = 'CONG3';
+    const CONG3_START = 'CONG3_START';
+    const CONG3_END = 'CONG3_END';
+    const CONG4 = 'CONG4';
+    const CONG4_END = 'CONG4_END';
     /**
      * Danh muc cong
      * @return string[]
@@ -30,6 +35,8 @@ class DemXe extends PtxXeDemXe
         return [
             self::CONG1 => 'Trạm Căn tin',
             self::CONG2 => 'Trạm Sân CB',
+            self::CONG3 => 'Trạm Cổng chính',
+            self::CONG4 => 'Trạm phụ Sân CB',
         ];
     }
     public static function getTramIcon()
@@ -37,6 +44,8 @@ class DemXe extends PtxXeDemXe
         return [
             self::CONG1 => '<span class="badge bg-primary">Trạm Căn tin',
             self::CONG2 => '<span class="badge bg-info">Trạm Sân CB</span>',
+            self::CONG3 => '<span class="badge bg-info">Trạm Cổng chính</span>',
+            self::CONG4 => '<span class="badge bg-info">Trạm phụ Sân CB</span>',
         ];
     }
     /**
@@ -59,6 +68,15 @@ class DemXe extends PtxXeDemXe
             case self::CONG2_END:
                 $label = self::CONG2;
                 break;
+            case self::CONG3_START:
+                $label = self::CONG3;
+                break;
+            case self::CONG3_END:
+                $label = self::CONG3;
+                break;
+            case self::CONG4_END:
+                $label = self::CONG4;
+                break;
             default:
                 $label = '';
         }
@@ -71,6 +89,9 @@ class DemXe extends PtxXeDemXe
             self::CONG1_END => 'Cổng 1 Về',
             self::CONG2_START => 'Cổng 2 Vào',
             self::CONG2_END => 'Cổng 2 Ra',
+            self::CONG3_START => 'Cổng 3 Đi',
+            self::CONG3_END => 'Cổng 3 Về',
+            self::CONG4_END => 'Cổng 4 Đi qua',
         ];
     }
     /**
@@ -85,6 +106,9 @@ class DemXe extends PtxXeDemXe
             self::CONG1_END => 'Cổng 1 Vào',
             self::CONG2_START => 'Cổng 2 Vào',
             self::CONG2_END => 'Cổng 2 Ra',
+            self::CONG3_START => 'CAM RA CONG',
+            self::CONG3_END => 'CAM VAO CONG',
+            self::CONG4_END => 'CAMERA PSCB',
         ];
     }
 
@@ -93,6 +117,7 @@ class DemXe extends PtxXeDemXe
         return [
             self::CONG1_START,
             self::CONG2_START,
+            self::CONG3_START,
         ];
     }
     public static function getDmCongEndXeNha()
@@ -100,6 +125,8 @@ class DemXe extends PtxXeDemXe
         return [
             self::CONG1_END,
             self::CONG2_END,
+            self::CONG3_END,
+            self::CONG4_END,
         ];
     }
     public static function getDmCongStartXeLa()
@@ -109,6 +136,7 @@ class DemXe extends PtxXeDemXe
             //self::CONG2_END,
             self::CONG1_END,
             self::CONG2_START,
+            self::CONG3_END,
         ];
     }
     public static function getDmCongEndXeLa()
@@ -118,6 +146,8 @@ class DemXe extends PtxXeDemXe
             //self::CONG2_START,
             self::CONG1_START,
             self::CONG2_END,
+            self::CONG3_START,
+            self::CONG4_END,
         ];
     }
     /**
@@ -139,6 +169,15 @@ class DemXe extends PtxXeDemXe
                 break;
             case self::CONG2_END:
                 $label = "Cổng 2 Ra";
+                break;
+            case self::CONG3_START:
+                $label = "Cổng 3 Đi";
+                break;
+            case self::CONG3_END:
+                $label = "Cổng 3 Về";
+                break;
+            case self::CONG4_END:
+                $label = "Cổng 4 Đi qua";
                 break;
             default:
                 $label = '';
