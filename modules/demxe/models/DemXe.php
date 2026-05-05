@@ -9,6 +9,7 @@ use yii\helpers\Html;
 use app\custom\CustomFunc;
 use app\modules\daotao\models\KeHoach;
 use app\modules\daotao\models\TietHoc;
+use app\modules\thuexe\models\LichThue;
 use app\modules\user\models\History;
 
 class DemXe extends PtxXeDemXe
@@ -546,6 +547,54 @@ class DemXe extends PtxXeDemXe
             } else {
                 return false;
             }
+        }
+    }
+    public function getSuKienSanCamBien()
+    {
+        $text = '';
+        if ($this->vaoKhongMuaVe)
+            $text = 'Chưa mua vé';
+        return $text;
+    }
+
+    public function getSuKienSancamBienIcon()
+    {
+        $html = '';
+        if ($this->vaoKhongMuaVe)
+            $html .= Html::img('/libs/images/icons/location.gif', ['width' => '22', 'title' => 'VÀO KHÔNG MUA VÉ']);
+        return $html != '' ? $html : '-';
+    }
+    //su kien vao san cam bien khong dang ky ve
+    //check thoi gian vao san
+    //neu so sanh trong khoang thoi gian co ve dung xe thi ok, nguoc lai bao xe khong co ve
+    public function getVaoKhongMuaVe()
+    {
+        if (!$this->id_xe) { //xe la
+            return false;
+        } else {
+            $exists = false;
+
+            $start = $this->thoi_gian_bd;
+            $end   = $this->thoi_gian_kt;
+            if ($this->thoi_gian_bd && $this->thoi_gian_kt) {
+                $exists = LichThue::find()->alias('t')
+                    ->andWhere(['t.id_xe' => $this->id_xe])
+                    ->andWhere(['<=', 't.thoi_gian_bat_dau', $end])
+                    ->andWhere(['>=', 't.thoi_gian_ket_thuc', $start])
+                    ->exists();
+            } else if ($this->thoi_gian_bd != null && $this->thoi_gian_kt == null) {
+                $end = date('Y-m-d H:i:s');
+                $exists = LichThue::find()->alias('t')
+                    ->andWhere(['t.id_xe' => $this->id_xe])
+                    ->andWhere(['<=', 't.thoi_gian_bat_dau', $end])
+                    ->andWhere(['>=', 't.thoi_gian_ket_thuc', $start])
+                    ->exists();
+            }
+
+            if (!$exists)
+                return true;
+            else
+                return false;
         }
     }
 }

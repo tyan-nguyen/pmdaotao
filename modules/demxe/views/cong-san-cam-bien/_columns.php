@@ -105,7 +105,7 @@ return [
         'class' => '\kartik\grid\DataColumn',
         'label' => 'Sự kiện',
         'value' => function ($model) {
-            return $model->id_xe ? $model->suKienIcon : '-';
+            return $model->id_xe ? $model->suKienSanCamBienIcon : '-';
         },
         'format' => 'raw',
         'contentOptions' => ['style' => 'text-align:center'],
