@@ -432,7 +432,7 @@ class DemXe extends PtxXeDemXe
         if ($this->xeQuaDem)
             $html .= Html::img('/libs/images/icons/error.gif', ['width' => '20', 'title' => 'XE QUA ĐÊM']);
         if ($this->diKhongKeHoach)
-            $html .= Html::img('/libs/images/icons/location.gif', ['width' => '22', 'title' => 'ĐI KHÔNG KẾ HOẠCH']);
+            $html .= Html::img('/libs/images/icons/red-card.gif', ['width' => '22', 'title' => 'ĐI KHÔNG KẾ HOẠCH']);
         return $html != '' ? $html : '-';
     }
     /**
