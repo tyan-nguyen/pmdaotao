@@ -561,7 +561,7 @@ class DemXe extends PtxXeDemXe
     {
         $html = '';
         if ($this->vaoKhongMuaVe)
-            $html .= Html::img('/libs/images/icons/red-flag.gif', ['width' => '22', 'title' => 'VÀO KHÔNG MUA VÉ']);
+            $html .= Html::img('/libs/images/icons/red-card.gif', ['width' => '22', 'title' => 'VÀO KHÔNG MUA VÉ']);
         return $html != '' ? $html : '-';
     }
     //su kien vao san cam bien khong dang ky ve

@@ -101,7 +101,7 @@ return [
         'contentOptions' => ['style' => 'text-align:center'],
     ],
 
-    [
+    /*[
         'class' => '\kartik\grid\DataColumn',
         'label' => 'Sự kiện',
         'value' => function ($model) {
@@ -109,7 +109,8 @@ return [
         },
         'format' => 'raw',
         'contentOptions' => ['style' => 'text-align:center'],
-    ],
+    ],*/
+
     /* [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ma_xe',
