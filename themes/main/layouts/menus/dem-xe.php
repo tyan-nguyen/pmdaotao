@@ -35,9 +35,12 @@
 							</li>
 							<li class=""><a href="<?= Yii::getAlias('@web/demxe/file-trich-xuat/index?menu=demxe1') ?>" class="slide-item" data-menu="demxe1"><i class="fe fe-file-text"></i> Danh sách file</a>
 							</li>
-							<li class=""><a href="<?= Yii::getAlias('@web/file-upload/import?menu=demxe2') ?>" class="slide-item" data-menu="demxe2"><i class="fe fe-file-text"></i> Nhập file</a>
+							<li class=""><a href="<?= Yii::getAlias('@web/demxe/file-trich-xuat-content?menu=demxe8') ?>" class="slide-item" data-menu="demxe8"><i class="fe fe-file-text"></i> Dữ liệu file trích xuất</a>
+							</li>
+							<li class=""><a href="<?= Yii::getAlias('@web/file-upload/import?menu=demxe2') ?>" class="slide-item" data-menu="demxe2"><i class="fe fe-file-text"></i> Nhập file</a></li>
 							<li class=""><a href="<?= Yii::getAlias('@web/demxe/luot-xe?menu=demxe3') ?>" class="slide-item" data-menu="demxe3"><i class="fe fe-file-text"></i> Dữ liệu đếm xe</a>
 							</li>
+
 						</ul>
 						<div class="menutabs-content px-0">
 							<!-- menu tab here -->
