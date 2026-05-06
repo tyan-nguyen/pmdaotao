@@ -294,7 +294,7 @@ class LichXeController extends Controller
 
 
         $contactLog = DemXe::find()->where(['id_xe' => $model->id, 'ma_cong' => DemXe::CONG2])
-            ->andWhere(['>=', 'thoi_gian_bd', '2026-05-05 00:00:00']) //!!!!!!!!!!! tam de do roi cho du lieu cu, sau khi xu ly xong co thể bỏ hoặc ko
+            // ->andWhere(['>=', 'thoi_gian_bd', '2026-05-05 00:00:00']) //!!!!!!!!!!! tam de do roi cho du lieu cu, sau khi xu ly xong co thể bỏ hoặc ko
             ->andWhere(['>=', 'thoi_gian_bd', $fromDate])->all();
 
         $colorList = DemXe::getDmTrangThaiColor();
