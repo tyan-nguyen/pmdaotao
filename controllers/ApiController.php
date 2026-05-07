@@ -59,7 +59,7 @@ class ApiController extends Controller
 
         // Ví dụ: Lưu vào model LogBienSo
         $model = new XeLogApi();
-        $model->bien_so = $plate;
+        $model->ma_bien_so = $plate;
         $model->ma_camera = $cameraId;
         $model->thoi_gian = $timestamp;
         $model->save();
