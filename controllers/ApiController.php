@@ -12,6 +12,11 @@ class ApiController extends Controller
     // Bắt buộc: Tắt xác thực CSRF để tool Python có thể gọi POST vào API này mà không bị chặn
     public $enableCsrfValidation = false;
 
+    public function actionLpr1()
+    {
+        echo 'kkkkkkkkkkk';
+    }
+
     public function actionLpr()
     {
         // Yêu cầu framework trả kết quả về dưới dạng JSON
