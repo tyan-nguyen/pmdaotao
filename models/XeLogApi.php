@@ -30,7 +30,7 @@ class XeLogApi extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ma_camera', 'ma_bien_so', 'thoi_gian'], 'required'],
+            [['ma_camera', 'ma_bien_so'], 'required'],
             [['thoi_gian'], 'safe'],
             [['ma_camera', 'ma_bien_so'], 'string', 'max' => 20],
         ];
@@ -48,5 +48,4 @@ class XeLogApi extends \yii\db\ActiveRecord
             'thoi_gian' => 'Thoi Gian',
         ];
     }
-
 }
