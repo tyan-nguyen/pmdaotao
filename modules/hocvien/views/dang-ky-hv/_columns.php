@@ -359,7 +359,7 @@ return [
         'value' => function ($model) {
             return $model->khoaHoc ? $model->khoaHoc->ten_khoa_hoc : '';
         },
-        'width' => '120px',
+        'width' => '150px',
         'contentOptions' => ['style' => 'text-align:center'],
     ],
     [
