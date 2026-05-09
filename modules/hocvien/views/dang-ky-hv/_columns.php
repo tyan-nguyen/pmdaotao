@@ -350,7 +350,7 @@ return [
         'label' => 'Hạng ĐT',
         'pageSummary' => 'Tổng cộng (E=A-B-C+D)',
         'pageSummaryOptions' => ['class' => 'text-right text-end'],
-        //'contentOptions' => [ 'style' => 'text-align:center' ],
+        'contentOptions' => ['style' => 'width:120px'],
     ],
     [
         'class' => '\kartik\grid\DataColumn',
