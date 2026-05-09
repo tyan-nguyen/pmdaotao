@@ -342,7 +342,7 @@ return [
     [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'id_hang',
-        'width' => '100px',
+        'width' => '120px',
         'value' => function ($model) {
             return '<span title="' . ($model->hangDaoTao ? $model->hangDaoTao->ten_hang : 'N/A') . '">' . ($model->hangDaoTao ? $model->hangDaoTao->ma_hang : 'N/A') . '</span>';
         },
