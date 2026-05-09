@@ -4,8 +4,8 @@ use app\modules\hocvien\models\HocVien;
 
 ?>
 <li class="slide">
-	<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);">		
-		<span class="side-menu__label"><i class="fa fa-folder"></i> Tổng hợp - Thống kê</span><i class="angle fa fa-caret-right"></i>
+	<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);">
+		<span class="side-menu__label"><i class="fa fa-folder"></i> THỐNG KÊ - BÁO CÁO</span><i class="angle fa fa-caret-right"></i>
 	</a>
 	<ul class="slide-menu" data-menu="thongke">
 		<li class="panel sidetab-menu">
@@ -31,9 +31,9 @@ use app\modules\hocvien\models\HocVien;
 							<li><a href="/hocvien/hv-ho-so/index-simple?menu=thongke5" class="slide-item" data-menu="thongke5"> <i class="fe fe-file-text"></i> Danh sách học viên</a></li>
 							<li><a href="/hocvien/hv-ho-so?menu=thongke4" class="slide-item" data-menu="thongke4"> <i class="fe fe-file-text"></i> Hồ sơ học viên</a></li>
 							<li><a href="/hocvien/thong-ke/thong-ke-ho-so-moi?menu=thongke1" class="slide-item" data-menu="thongke1"> <i class="fe fe-file-text"></i>Thống kê đăng ký mới</a></li>
-							<li><a href="/hocvien/thong-ke/thong-ke-thu-tien?menu=thongke2" class="slide-item" data-menu="thongke2"> <i class="fe fe-file-text"></i> Thống kê thu tiền</a></li> 
+							<li><a href="/hocvien/thong-ke/thong-ke-thu-tien?menu=thongke2" class="slide-item" data-menu="thongke2"> <i class="fe fe-file-text"></i> Thống kê thu tiền</a></li>
 							<li><a href="/hocvien/thong-ke/thong-ke-cong-no?menu=thongke3" class="slide-item" data-menu="thongke3"> <i class="fe fe-file-text"></i> Công nợ</a></li>
-							
+
 						</ul>
 						<div class="menutabs-content px-0">
 							<!-- menu tab here -->

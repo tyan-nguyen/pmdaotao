@@ -2,7 +2,7 @@
 	<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);">
 		<!-- <span class="side-menu__icon"><i class="fa fa-graduation-cap side_menu_img"></i></span>
 		<span class="side-menu__label">Khóa học</span><i class="angle fe fe-chevron-right"></i> -->
-		<span class="side-menu__label"><i class="fa fa-folder"></i> Lịch sử dụng xe</span><i class="angle fa fa-caret-right"></i>
+		<span class="side-menu__label"><i class="fa fa-folder"></i> ĐĂNG KÝ SỬ DỤNG XE</span><i class="angle fa fa-caret-right"></i>
 	</a>
 	<ul class="slide-menu" data-menu="dungxe">
 		<li class="panel sidetab-menu">
@@ -27,7 +27,7 @@
 							</li>
 							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/lich-dung-xe/index?menu=dungxe1') ?>" class="slide-item" data-menu="dungxe1"><i class="fe fe-file-text"></i> Đăng ký sử dụng xe</a>
 							</li>
-							
+
 						</ul>
 						<div class="menutabs-content px-0">
 							<!-- menu tab here -->

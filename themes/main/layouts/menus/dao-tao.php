@@ -7,11 +7,11 @@ $slChoDuyet = KeHoach::slChoDuyet();
 ?>
 <li class="slide">
 	<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);">
-		
-		<span class="side-menu__label"><i class="fa fa-folder"></i> Quản lý đào tạo
-		<span class="badge bg-warning ms-2"><?= $slChoDuyet>0?$slChoDuyet:'' ?></span>
+
+		<span class="side-menu__label"><i class="fa fa-folder"></i> KẾ HOẠCH DẠY
+			<span class="badge bg-warning ms-2"><?= $slChoDuyet > 0 ? $slChoDuyet : '' ?></span>
 		</span>
-		
+
 		<i class="angle fa fa-caret-right"></i>
 	</a>
 	<ul class="slide-menu" data-menu="dt">
@@ -34,9 +34,9 @@ $slChoDuyet = KeHoach::slChoDuyet();
 					<div class="tab-pane active" id="side3">
 						<ul class="sidemenu-list">
 							<li class="side-menu__label1"><a href="javascript:void(0)">Danh mục chức năng</a></li>
-							<li><a href="/daotao/ke-hoach?menu=dt5" class="slide-item" data-menu="dt5"> <i class="fe fe-file-text"></i> Kế hoạch giảng dạy 
-							<span class="badge bg-warning ms-2"><?= $slChoDuyet>0?$slChoDuyet:'' ?></span>
-							</a></li>							
+							<li><a href="/daotao/ke-hoach?menu=dt5" class="slide-item" data-menu="dt5"> <i class="fe fe-file-text"></i> Kế hoạch giảng dạy
+									<span class="badge bg-warning ms-2"><?= $slChoDuyet > 0 ? $slChoDuyet : '' ?></span>
+								</a></li>
 							<li><a href="/hocvien/hoc-vien?menu=dt2" class="slide-item" data-menu="dt2"> <i class="fe fe-file-text"></i> Quản lý học viên</a></li>
 							<li><a href="/giaovien/giao-vien?menu=dt6" class="slide-item" data-menu="dt6"> <i class="fe fe-file-text"></i> Quản lý giáo viên</a></li>
 							<li><a href="/thuexe/xe?menu=dt3" class="slide-item" data-menu="dt3"> <i class="fe fe-file-text"></i> Quản lý xe</a></li>
@@ -56,4 +56,3 @@ $slChoDuyet = KeHoach::slChoDuyet();
 
 	</ul>
 </li>
-

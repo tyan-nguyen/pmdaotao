@@ -5,7 +5,7 @@ use app\modules\hocvien\models\HocVien;
 ?>
 <li class="slide">
 	<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);">
-		<span class="side-menu__label"><i class="fa fa-folder"></i> Đăng ký - Học phí</span><i class="angle fa fa-caret-right"></i>
+		<span class="side-menu__label"><i class="fa fa-folder"></i> TUYỂN SINH</span><i class="angle fa fa-caret-right"></i>
 	</a>
 	<ul class="slide-menu" data-menu="hv">
 		<li class="panel sidetab-menu">
@@ -30,7 +30,7 @@ use app\modules\hocvien\models\HocVien;
 							<li><a href="/hocvien/thong-ke/tong-hop?menu=hv8" class="slide-item" data-menu="hv8"> <i class="fe fe-file-text"></i>Thống kê - Công nợ</a></li>
 							<li><a href="/hocvien/thong-ke/luu-luong?menu=hv2" class="slide-item" data-menu="hv2"> <i class="fe fe-file-text"></i> Thống kê lưu lượng <span class="badge bg-warning">New</span></a></li>
 							<li><a href="/hocvien/thong-ke/hang-tang?menu=hvb" class="slide-item" data-menu="hvb"> <i class="fe fe-file-text"></i> Thống kê áo, tài liệu <span class="badge bg-warning">New</span></a></li>
-							<li><a href="/hocvien/dang-ky-hv?menu=hv1" class="slide-item" data-menu="hv1"> <strong><i class="fe fe-file-text"></i> HỌC VIÊN ĐĂNG KÝ</strong></a></li>
+							<li><a href="/hocvien/dang-ky-hv?menu=hv1" class="slide-item" data-menu="hv1"> <strong><i class="fe fe-file-text"></i> ĐĂNG KÝ HỌC VIÊN</strong></a></li>
 							<li><a href="/hocvien/dang-ky-hv/hoc-vien-doi-hang?menu=hv9&sort=-thoi_gian_thay_doi" class="slide-item" data-menu="hv9"> <i class="fe fe-file-text"></i> Học viên đổi hạng</a></li>
 							<li><a href="/hocvien/dang-ky-hv/index-huy-ho-so?menu=hve" class="slide-item" data-menu="hve"> <i class="fe fe-file-text"></i> Học viên hủy hồ sơ</a></li>
 							<li><a href="/hocvien/hoc-phi/phieu-thu?menu=hv6" class="slide-item" data-menu="hv6"> <i class="fe fe-file-text"></i> Phiếu thu</a></li>

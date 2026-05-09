@@ -2,7 +2,7 @@
 	<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);">
 		<!-- <span class="side-menu__icon"><i class="fe fe-file-text side_menu_img"></i></span>
 		<span class="side-menu__label">Văn bản</span><i class="angle fe fe-chevron-right"></i> -->
-		<span class="side-menu__label"><i class="fa fa-folder"></i> Quản lý văn bản</span><i class="angle fa fa-caret-right"></i>
+		<span class="side-menu__label"><i class="fa fa-folder"></i> QUẢN LÝ VĂN BẢN</span><i class="angle fa fa-caret-right"></i>
 	</a>
 	<ul class="slide-menu" data-menu="vb">
 		<li class="panel sidetab-menu">
@@ -30,18 +30,18 @@
 							<li><a href="/vanban/vb-den?menu=vb1" class="slide-item" data-menu="vb1"><i class="fe fe-file-text"></i> Danh sách văn bản đến</a></li>
 							<li><a href="/vanban/vb-di?menu=vb2" class="slide-item" data-menu="vb2"><i class="fe fe-file-text"></i> Danh sách văn bản đi</a></li>
 							<li><a href="/vanban/dm-loai-vb?menu=vb4" class="slide-item" data-menu="vb4"><i class="fe fe-file-text"></i> Danh mục loại văn bản</a></li>
-							</li>
-						</ul>
-						<div class="menutabs-content px-0">
-							<!-- menu tab here -->
-						</div>
-					</div>
-					<div class="tab-pane" id="side8">
-						<!-- activity here -->
-					</div>
-				</div>
-			</div>
 		</li>
-
 	</ul>
+	<div class="menutabs-content px-0">
+		<!-- menu tab here -->
+	</div>
+	</div>
+	<div class="tab-pane" id="side8">
+		<!-- activity here -->
+	</div>
+	</div>
+	</div>
+</li>
+
+</ul>
 </li>
