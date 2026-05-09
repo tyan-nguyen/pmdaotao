@@ -292,8 +292,8 @@ return [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'ho_ten',
         //'width' => '500px',
-        'headerOptions' => ['style' => 'width:150px;', 'class' => 'kv-sticky-column-5'],
-        'contentOptions' => ['style' => 'min-width:150px;', 'class' => 'kv-sticky-column-5'],
+        'headerOptions' => ['style' => 'width:170px;', 'class' => 'kv-sticky-column-5'],
+        'contentOptions' => ['style' => 'min-width:170px;', 'class' => 'kv-sticky-column-5'],
     ],
     [
         'class' => '\kartik\grid\DataColumn',
