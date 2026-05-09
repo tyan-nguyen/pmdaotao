@@ -1,4 +1,5 @@
 <?php
+
 use yii\widgets\ActiveForm;
 use app\modules\user\models\User;
 ?>
@@ -12,11 +13,11 @@ use app\modules\user\models\User;
 		<div class="main-header-left horizontal">
 			<a class="main-logo" href="<?= Yii::getAlias('@web/') ?>">
 				<!-- <img src="<?= Yii::getAlias('@web') ?>/assets/images/brand/logo.png" class="" alt="Trường lái Nguyễn Trình"> -->
-				<img src="<?= Yii::getAlias('@web') ?>/assets/images/brand/logo.png" class="desktop-logo desktop-logo-dark" alt="Trường lái Nguyễn Trình">
+				<img src="<?= Yii::getAlias('@web') ?>/assets/images/brand/logo.png?v=1" class="desktop-logo desktop-logo-dark" alt="Trường lái Nguyễn Trình">
 				<!-- <img src="<?= Yii::getAlias('@web') ?>/assets/images/brand/logo1.png" class="desktop-logo theme-logo" alt="Trường lái Nguyễn Trình"> -->
 			</a>
 		</div>
-		
+
 		<?php /*if(Yii::$app->params['showTopSearch'] != false):?>
 		<div class="">
 			<form class="myFilterForm input-icon" method="post">
@@ -100,7 +101,7 @@ use app\modules\user\models\User;
 								</div>
 							</div>
 						</li>
-						
+
 
 						<!-- FULL SCREEN -->
 						<li class="dropdown d-md-flex mt-1">
@@ -108,25 +109,25 @@ use app\modules\user\models\User;
 								<i class="fe fe-maximize fullscreen-button floating" id="fullscreen-button"></i>
 							</a>
 						</li>
-						
-						
-						
+
+
+
 						<!-- SETTINGS -->
 						<li class="dropdown d-md-flex mt-1">
 							<a class="nav-link icon" title="Thay đổi mật khẩu" href="<?= Yii::getAlias('@web/user/auth/change-own-password?menu=tk2') ?>">
 								<i class="fe fe-settings floating"></i>
 							</a>
 						</li>
-						
+
 						<!-- LOGOUT -->
 						<li class="dropdown d-md-flex mt-1">
 							<a class="nav-link icon" href="/user/auth/logout" title="Đăng xuất">
 								<i class="fe fe-power floating"></i>
 							</a>
 						</li>
-					
+
 						<!-- SHORTCUTS -->
-						
+
 						<!-- <li class="dropdown main-header-notification shortcuts d-flex">
 							<a class="nav-link icon" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside">
 								<i class="bi bi-card-heading"></i>
@@ -184,7 +185,7 @@ use app\modules\user\models\User;
 							</a>
 						</li>
 						 -->
-						 <?php /* ?>
+						<?php /* ?>
 						<li class="dropdown d-flex main-profile-menu">
 
 							<a class="main-img-user d-flex" href="javascript:void(0);"
@@ -220,11 +221,11 @@ use app\modules\user\models\User;
 					</ul>
 				</div>
 			</div>
-			
+
 			<!-- <div class="switcher-icon nav-link icon sidebar-right1  fe-spin">
 				<i class="bi bi-gear  floating"></i>
 			</div> -->
-	
+
 		</div>
 	</div>
 </div>
