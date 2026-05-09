@@ -350,8 +350,8 @@ return [
         'label' => 'Hạng ĐT',
         'pageSummary' => 'Tổng cộng (E=A-B-C+D)',
         'pageSummaryOptions' => ['class' => 'text-right text-end'],
-        'contentOptions' => ['style' => 'min-width:150px'],
-        'headerOptions' => ['style' => 'width:150px'],
+        'contentOptions' => ['style' => 'min-width:120px'],
+        'headerOptions' => ['style' => 'width:120px'],
     ],
     [
         'class' => '\kartik\grid\DataColumn',
