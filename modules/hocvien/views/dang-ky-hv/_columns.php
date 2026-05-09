@@ -7,10 +7,10 @@ use app\modules\user\models\User;
 use app\modules\hocvien\models\DangKyHv;
 
 return [
-    /* [
+    [
         'class' => 'kartik\grid\CheckboxColumn',
         'width' => '20px',
-    ], */
+    ],
 
     // [
     // 'class'=>'\kartik\grid\DataColumn',
@@ -284,16 +284,16 @@ return [
         },
         'format' => 'raw',
         'width' => '50px',
-        'contentOptions' => ['style' => 'text-align:center', 'class' => 'kv-sticky-column-3'],
-        'headerOptions' => ['class' => 'kv-sticky-column-3'],
+        'contentOptions' => ['style' => 'text-align:center', 'class' => 'kv-sticky-column-4'],
+        'headerOptions' => ['class' => 'kv-sticky-column-4'],
 
     ],
     [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'ho_ten',
         //'width' => '500px',
-        'headerOptions' => ['style' => 'width:150px;', 'class' => 'kv-sticky-column-4'],
-        'contentOptions' => ['style' => 'min-width:150px;', 'class' => 'kv-sticky-column-4'],
+        'headerOptions' => ['style' => 'width:150px;', 'class' => 'kv-sticky-column-5'],
+        'contentOptions' => ['style' => 'min-width:150px;', 'class' => 'kv-sticky-column-5'],
     ],
     [
         'class' => '\kartik\grid\DataColumn',

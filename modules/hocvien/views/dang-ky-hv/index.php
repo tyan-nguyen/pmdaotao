@@ -96,36 +96,34 @@ $totalFmt = number_format($dataProvider->getTotalCount(), 0, ',', '.');
     }
 
     /* Cột 2: NĐK */
-    .kv-sticky-column-3 {
+    .kv-sticky-column-4 {
         position: sticky !important;
         left: 0;
         /* Chỉnh lại cho khít với độ rộng cột 1 */
-
-        background-color: white !important;
+        /*background-color: white !important;*/
         box-shadow: inset -1px 0 0 #dee2e6;
     }
 
     /* Cột 2: NĐK */
-    .kv-sticky-column-4 {
+    .kv-sticky-column-5 {
         position: sticky !important;
         left: 50px;
         /* Chỉnh lại cho khít với độ rộng cột 1 */
 
-        background-color: white !important;
+        /* background-color: white !important;*/
         box-shadow: inset -1px 0 0 #dee2e6;
     }
 
     /* XỬ LÝ GIAO ĐIỂM: Để Header không bị chữ ở dưới trượt qua khi scroll cả 2 hướng */
 
-    thead th.kv-sticky-column-3,
-    thead th.kv-sticky-column-4 {
-
+    thead th.kv-sticky-column-4,
+    thead th.kv-sticky-column-5 {
         background-color: #f5f5f5 !important;
     }
 
     /* Ngăn chữ lọt qua viền khi cuộn */
-    .kv-sticky-column-3,
-    .kv-sticky-column-4 {
+    .kv-sticky-column-4,
+    .kv-sticky-column-5 {
         background-clip: padding-box;
     }
 
@@ -137,6 +135,11 @@ $totalFmt = number_format($dataProvider->getTotalCount(), 0, ',', '.');
     #ajaxCrudModal .modal-body {
         padding-bottom: 0;
     }
+
+    /*tr:has(td.kv-select) td {
+        border-top: 1px solid red !important;
+        font-weight: bold;
+    }*/
 </style>
 <div class="card border-default" id="divFilterExtend" <?= Yii::$app->request->get('DangKyHvSearch') ? 'style="display:block;"' : 'style="display:none;"' ?>>
     <div class="card-header rounded-bottom-0 card-header text-dark" id="simple">
@@ -342,7 +345,7 @@ $slVoucher = DangKyHv::find()->where(['label' => 'VOUCHERT11'])->count();
 <?php
 $js = <<<JS
     function addDoubleScroll() {
-        var container = $('.kv-grid-container');
+        var container = $('.kv-grid-container'); 
         // Xóa scrollbar cũ nếu đã tồn tại (để tránh lặp khi Pjax reload)
         $('.double-scroll-wrapper').remove();
         
