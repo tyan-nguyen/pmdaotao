@@ -6,6 +6,7 @@ use Yii;
 use yii\data\ActiveDataProvider;
 use app\modules\hocvien\models\DangKyHv;
 use app\custom\CustomFunc;
+use app\modules\hocvien\models\BaoLuu;
 use yii\db\Expression;
 use app\modules\user\models\User;
 
@@ -20,6 +21,7 @@ class DangKyHvSearch extends DangKyHv
     public $ngay_dang_ky_den;
     public $co_lien_ket; //checkbox có liên kết hay không
     public $co_nhan_ho_so_ho; //checkbox có nhận hồ sơ hộ hay không
+    public $co_bao_luu; //checkbox có bảo lưu hay không
 
     public function attributeLabels()
     {
@@ -61,7 +63,8 @@ class DangKyHvSearch extends DangKyHv
                 'noiNhanTaiLieu',
                 'label',
                 'co_lien_ket',
-                'co_nhan_ho_so_ho'
+                'co_nhan_ho_so_ho',
+                'co_bao_luu'
             ], 'safe'],
         ];
     }
@@ -192,6 +195,11 @@ class DangKyHvSearch extends DangKyHv
         }
         if ($this->co_nhan_ho_so_ho) {
             $query->andWhere('id_nhan_ho_so_ho > 0');
+        }
+
+        //check bao luu
+        if ($this->co_bao_luu) {
+            $query->andWhere(['exists', BaoLuu::find()->where('id_hoc_vien = t.id')]);
         }
         //load danh sách của cơ sở nhân viên nhận hồ sơ 
         /* $user = User::getCurrentUser();

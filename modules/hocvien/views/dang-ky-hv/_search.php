@@ -170,8 +170,12 @@ if ($model->id_nhan_ho_so_ho) {
         </div>
 
         <div class="col-md-1">
-            <label>&nbsp;</label>
-            <?= $form->field($model, 'huy_ho_so')->checkbox() ?>
+            <label>Hủy hồ sơ</label>
+            <?= $form->field($model, 'huy_ho_so')->checkbox(['label' => false]) ?>
+        </div>
+        <div class="col-md-1">
+            <label>Bảo lưu</label>
+            <?= $form->field($model, 'co_bao_luu')->checkbox(['label' => false]) ?>
         </div>
 
         <div class="col-md-1">
