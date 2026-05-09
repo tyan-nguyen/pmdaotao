@@ -216,7 +216,7 @@ $slVoucher = DangKyHv::find()->where(['label' => 'VOUCHERT11'])->count();
                             ['data-pjax' => 1, 'class' => 'dropdown-item', 'title' => 'Tải lại']
                         )
                         .
-                        Html::a(
+                        (User::canRoute('/hocvien/dang-ky-hv/bulkdelete') ? Html::a(
                             '<i class="fas fa fa-trash" aria-hidden="true"></i>&nbsp; Xóa danh sách',
                             ["bulkdelete"],
                             [
@@ -228,7 +228,7 @@ $slVoucher = DangKyHv::find()->where(['label' => 'VOUCHERT11'])->count();
                                 'data-confirm-title' => 'Xác nhận xóa?',
                                 'data-confirm-message' => 'Bạn có chắc muốn xóa?'
                             ]
-                        )
+                        ) : '')
                         . '<li><hr class="dropdown-divider"></li>'
                         . Html::a(
                             '<i class="fas fa-clipboard-list"></i> In DS theo ca',
