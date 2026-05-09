@@ -351,6 +351,9 @@ return [
         'pageSummary' => 'Tổng cộng (E=A-B-C+D)',
         'pageSummaryOptions' => ['class' => 'text-right text-end'],
         'contentOptions' => ['style' => 'width:150px'],
+        'headerOptions' => [
+            'style' => 'width:150px'
+        ],
     ],
     [
         'class' => '\kartik\grid\DataColumn',
