@@ -69,9 +69,9 @@ if ($model->id_nhan_ho_so_ho) {
             <?= $form->field($model, 'so_cccd')->textInput(['maxlength' => true]) ?>
         </div>
 
-        <div class="col-md-2">
+        <!-- <div class="col-md-2">
             <?= $form->field($model, 'dia_chi')->textInput(['maxlength' => true]) ?>
-        </div>
+        </div> -->
 
         <div class="col-md-2">
             <?= $form->field($model, 'so_dien_thoai')->textInput(['maxlength' => true]) ?>
@@ -178,6 +178,9 @@ if ($model->id_nhan_ho_so_ho) {
             <?= $form->field($model, 'co_bao_luu')->checkbox(['label' => false]) ?>
         </div>
 
+
+        <?php /*
+
         <div class="col-md-1">
             <?= $form->field($model, 'da_nhan_ao')->dropDownList([1 => 'Đã nhận', 0 => 'Chưa nhận',], ['prompt' => 'Tất cả'])->label('Nhận áo') ?>
         </div>
@@ -251,6 +254,8 @@ if ($model->id_nhan_ho_so_ho) {
                 ],
             ])->label(false); ?>
         </div>
+
+        <?php */ ?>
 
         <div class="col-md-2">
             <?= $form->field($model, 'label')->dropDownList(
