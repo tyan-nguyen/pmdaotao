@@ -342,7 +342,7 @@ return [
     [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'id_hang',
-        'width' => '120px',
+        'width' => '150px',
         'value' => function ($model) {
             return '<span title="' . ($model->hangDaoTao ? $model->hangDaoTao->ten_hang : 'N/A') . '">' . ($model->hangDaoTao ? $model->hangDaoTao->ma_hang : 'N/A') . '</span>';
         },
@@ -350,7 +350,7 @@ return [
         'label' => 'Hạng ĐT',
         'pageSummary' => 'Tổng cộng (E=A-B-C+D)',
         'pageSummaryOptions' => ['class' => 'text-right text-end'],
-        'contentOptions' => ['style' => 'width:120px'],
+        'contentOptions' => ['style' => 'width:150px'],
     ],
     [
         'class' => '\kartik\grid\DataColumn',
