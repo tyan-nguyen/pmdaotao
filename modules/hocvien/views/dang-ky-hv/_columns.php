@@ -556,8 +556,8 @@ return [
         'value' => function ($model) {
             return $model->lienKet ? $model->lienKet->ten_lien_ket : '';
         },
-        'headerOptions' => ['style' => 'width:150px;'],
-        'contentOptions' => ['style' => 'min-width:150px;'],
+        'headerOptions' => ['style' => 'width:300px;'],
+        'contentOptions' => ['style' => 'min-width:300px;'],
     ],
 
     /* [
