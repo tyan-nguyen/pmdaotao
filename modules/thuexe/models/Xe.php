@@ -9,6 +9,7 @@ use app\modules\giaovien\models\GiaoVien;
 use app\modules\daotao\models\GvXe;
 use app\custom\CustomFunc;
 use app\modules\banhang\models\HangHoa;
+
 /**
  * This is the model class for table "ptx_xe".
  *
@@ -36,6 +37,8 @@ use app\modules\banhang\models\HangHoa;
  * @property int|null $nguoi_tao
  * @property string|null $thoi_gian_tao
  * @property int|null $stt
+ * @property int|null $so_km_ban_dau 
+ * @property string|null $ngay_cap_nhat_km 
  *
  * @property PtxLoaiXe $loaiXe
  * @property PtxPhieuThueXe[] $ptxPhieuThueXes
@@ -46,11 +49,11 @@ class Xe extends \app\models\PtxXe
     const XE_HUHONG = 'HUHONG';
     const XE_SUACHUA = 'SUACHUA';
     const XE_BAOTRI = 'BAOTRI';
-    
+
     const PHANLOAI_SATHACH = 'SATHACH';
     const PHANLOAI_TAPLAI = 'DAOTAO';
     const PHANLOAI_CHUAPHANLOAI = 'CHUAPHANLOAI';
-    
+
     /**
      * Danh muc hinh thuc chuyen khoan
      * @return string[]
@@ -92,13 +95,13 @@ class Xe extends \app\models\PtxXe
         }
         return $label;
     }
-    
+
     /**
      * Danh muc trang thai label
      * @param int $val
      * @return string
      */
-    public static function getLabelTinhTrangXeOther($val=NULL)
+    public static function getLabelTinhTrangXeOther($val = NULL)
     {
         switch ($val) {
             case self::XE_BINHTHUONG:
@@ -118,13 +121,13 @@ class Xe extends \app\models\PtxXe
         }
         return $label;
     }
-    
+
     /**
      * Danh muc trang thai label
      * @param int $val
      * @return string
      */
-    public static function getLabelTinhTrangXeBadge($val=NULL)
+    public static function getLabelTinhTrangXeBadge($val = NULL)
     {
         switch ($val) {
             case self::XE_BINHTHUONG:
@@ -144,7 +147,7 @@ class Xe extends \app\models\PtxXe
         }
         return $label;
     }
-    
+
     /**
      * Danh muc phan loai xe
      * @return string[]
@@ -182,7 +185,7 @@ class Xe extends \app\models\PtxXe
         }
         return $label;
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -190,18 +193,30 @@ class Xe extends \app\models\PtxXe
     {
         return [
             [['id_loai_xe', 'bien_so_xe', 'ma_bien_so'], 'required'],
-            [['id_loai_xe', 'la_xe_cu', 'nguoi_tao', 'id_giao_vien', 'stt'], 'integer'],
+            [['id_loai_xe', 'la_xe_cu', 'nguoi_tao', 'id_giao_vien', 'stt', 'so_km_ban_dau'], 'integer'],
             [['ghi_chu', 'dac_diem'], 'string'],
             [['phan_loai', 'ma_so'], 'string', 'max' => 20],
             [['tinh_trang_xe'], 'string', 'max' => 20],
-            [['thoi_gian_tao', 'ngay_dang_kiem'], 'safe'],
+            [['thoi_gian_tao', 'ngay_dang_kiem', 'ngay_cap_nhat_km'], 'safe'],
             [['bien_so_xe', 'ma_bien_so'], 'string', 'max' => 50],
             [['trang_thai'], 'string', 'max' => 25],
             [['bien_so_xe'], 'unique'],
-            [['hieu_xe', 'so_khung', 'so_may', 'mau_sac', 'nha_cung_cap', 
-                'so_hoa_don', 'so_hop_dong'], 'string', 'max' => 250],
-            [['id_loai_xe'], 'exist', 'skipOnError' => true, 'targetClass' =>LoaiXe::class, 
-                'targetAttribute' => ['id_loai_xe' => 'id']],
+            [[
+                'hieu_xe',
+                'so_khung',
+                'so_may',
+                'mau_sac',
+                'nha_cung_cap',
+                'so_hoa_don',
+                'so_hop_dong'
+            ], 'string', 'max' => 250],
+            [
+                ['id_loai_xe'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => LoaiXe::class,
+                'targetAttribute' => ['id_loai_xe' => 'id']
+            ],
         ];
     }
 
@@ -234,7 +249,9 @@ class Xe extends \app\models\PtxXe
             'id_giao_vien' => 'Giáo viên phụ trách',
             'nguoi_tao' => 'Người Tạo',
             'thoi_gian_tao' => 'Thời Gian Tạo',
-            'stt' => 'STT'
+            'stt' => 'STT',
+            'so_km_ban_dau' => 'Số km ban đầu',
+            'ngay_cap_nhat_km' => 'Ngày cập nhật km',
         ];
     }
     /**
@@ -277,22 +294,22 @@ class Xe extends \app\models\PtxXe
     public static function getListAll()
     {
         $dsXe = Xe::find()
-        ->orderBy(['hieu_xe' => SORT_ASC])
-        ->all();
-        
-        return ArrayHelper::map($dsXe, 'id', function($model) {
+            ->orderBy(['hieu_xe' => SORT_ASC])
+            ->all();
+
+        return ArrayHelper::map($dsXe, 'id', function ($model) {
             return '+ ' . $model->bien_so_xe;
         });
     }
     public static function getList()
     {
         $dsXe = Xe::find()
-            ->where(['trang_thai' => 'Khả dụng']) 
+            ->where(['trang_thai' => 'Khả dụng'])
             ->orderBy(['hieu_xe' => SORT_ASC])
             ->all();
-    
-        return ArrayHelper::map($dsXe, 'id', function($model) {
-            return '+ ' . $model->hieu_xe; 
+
+        return ArrayHelper::map($dsXe, 'id', function ($model) {
+            return '+ ' . $model->hieu_xe;
         });
     }
 
@@ -301,29 +318,29 @@ class Xe extends \app\models\PtxXe
         $dsXe = Xe::find()
             ->orderBy(['hieu_xe' => SORT_ASC])
             ->all();
-    
-        return ArrayHelper::map($dsXe, 'id', function($model) {
-            return '+ ' . $model->hieu_xe; 
+
+        return ArrayHelper::map($dsXe, 'id', function ($model) {
+            return '+ ' . $model->hieu_xe;
         });
     }
-    
+
     public static function getListByGiaoVien($idgv)
     {
-        $dsXe = Xe::find()->where(['id_giao_vien'=>$idgv])
-        ->orderBy(['hieu_xe' => SORT_ASC])
-        ->all();
-        
-        return ArrayHelper::map($dsXe, 'id', function($model) {
+        $dsXe = Xe::find()->where(['id_giao_vien' => $idgv])
+            ->orderBy(['hieu_xe' => SORT_ASC])
+            ->all();
+
+        return ArrayHelper::map($dsXe, 'id', function ($model) {
             return '+ ' . $model->bien_so_xe;
         });
     }
     public static function getListByGiaoVienDay($idgv)
     {
-        $dsXe = GvXe::find()->where(['id_giao_vien'=>$idgv])->all();
-        
-        return ArrayHelper::map($dsXe, 'id_xe', function($model) {
+        $dsXe = GvXe::find()->where(['id_giao_vien' => $idgv])->all();
+
+        return ArrayHelper::map($dsXe, 'id_xe', function ($model) {
             return '+ ' . $model->xe->bien_so_xe;
-        },function($model) {
+        }, function ($model) {
             return $model->xe->loaiXe->ten_loai_xe;
         });
     }
@@ -332,62 +349,74 @@ class Xe extends \app\models\PtxXe
      */
     public function getListGiaoVienSuDung()
     {
-        $dsGv = GvXe::find()->where(['id_xe'=>$this->id])->all();
-        return $dsGv;        
+        $dsGv = GvXe::find()->where(['id_xe' => $this->id])->all();
+        return $dsGv;
     }
-    
+
     public function beforeSave($insert)
     {
         if ($this->isNewRecord) {
             $this->nguoi_tao = Yii::$app->user->identity->id;
-            $this->thoi_gian_tao = date('Y-m-d H:i:s'); 
-            if($this->la_xe_cu == null){
+            $this->thoi_gian_tao = date('Y-m-d H:i:s');
+            if ($this->la_xe_cu == null) {
                 $this->la_xe_cu = 0;
             }
-            if($this->stt==null){
+            if ($this->stt == null) {
                 $this->stt = 0;
             }
+            if ($this->so_km_ban_dau != null) {
+                $this->ngay_cap_nhat_km = date('Y-m-d H:i:s');
+            }
+        } else {
+            if ($this->isAttributeChanged('so_km_ban_dau')) {
+                $this->ngay_cap_nhat_km = date('Y-m-d H:i:s'); // field trang_thai đã thay đổi
+            }
         }
-        if($this->ngay_dang_kiem != null){
+        if ($this->ngay_dang_kiem != null) {
             $this->ngay_dang_kiem = CustomFunc::convertDMYToYMD($this->ngay_dang_kiem);
         }
         return parent::beforeSave($insert);
     }
-    
+
     /**
      * hien thi ten xe
      */
-    public function getTenXeShort(){
+    public function getTenXeShort()
+    {
         //return $this->bien_so_xe . ($this->ma_so?(' (Số '.$this->ma_so.')'):'');
-        return ($this->ma_so?(' Số '.$this->ma_so):'') . ' (' . $this->bien_so_xe . ')';
+        return ($this->ma_so ? (' Số ' . $this->ma_so) : '') . ' (' . $this->bien_so_xe . ')';
     }
     /**
      * hien thi ten xe with hang
      */
-    public function getTenXeShort2(){
+    public function getTenXeShort2()
+    {
         //return $this->bien_so_xe . ($this->ma_so?(' (Số '.$this->ma_so.')'):'');
-        return ($this->ma_so?(' Xe '.$this->ma_so):'') . ' (' . ($this->loaiXe?$this->loaiXe->ma_loai_xe:'') . ')';
+        return ($this->ma_so ? (' Xe ' . $this->ma_so) : '') . ' (' . ($this->loaiXe ? $this->loaiXe->ma_loai_xe : '') . ')';
     }
-    public function getTenXeLong(){
-        return ($this->ma_so ? ('Xe số ' . $this->ma_so) : '' ) . ' - ' . $this->bien_so_xe
-        . ($this->loaiXe ? (' - ' . $this->loaiXe->ten_loai_xe) : '' );
+    public function getTenXeLong()
+    {
+        return ($this->ma_so ? ('Xe số ' . $this->ma_so) : '') . ' - ' . $this->bien_so_xe
+            . ($this->loaiXe ? (' - ' . $this->loaiXe->ten_loai_xe) : '');
     }
     /**
      * lấy giá xe thuê theo mã
      */
-    public function getGiaXeThue(){
+    public function getGiaXeThue()
+    {
         $ma = $this->phan_loai . $this->id_loai_xe;
-        $hangHoa = HangHoa::find()->where(['ma_hang_hoa'=>$ma])->one();
-        if($hangHoa){
+        $hangHoa = HangHoa::find()->where(['ma_hang_hoa' => $ma])->one();
+        if ($hangHoa) {
             return $hangHoa->don_gia;
-        } else 
+        } else
             return 0;
     }
     /**
      * lay anh dai dien
      */
-    public function getAnhDaiDien(){
-        $hinhDaiDien = HinhXe::find()->where(['id_xe'=>$this->id, 'la_dai_dien'=>1])->one();
-        return $hinhDaiDien!=null ? $hinhDaiDien : HinhXe::find()->where(['id_xe'=>$this->id])->one();
+    public function getAnhDaiDien()
+    {
+        $hinhDaiDien = HinhXe::find()->where(['id_xe' => $this->id, 'la_dai_dien' => 1])->one();
+        return $hinhDaiDien != null ? $hinhDaiDien : HinhXe::find()->where(['id_xe' => $this->id])->one();
     }
 }
