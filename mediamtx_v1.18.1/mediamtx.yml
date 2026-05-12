@@ -1,0 +1,50 @@
+###############################################
+# Cấu hình chung
+###############################################
+api: yes
+apiAddress: 127.0.0.1:9997
+
+logLevel: info
+logDestinations: [stdout, file]
+logFile: C:\mediamtx\mediamtx.log
+
+###############################################
+# RTSP Server
+###############################################
+rtsp: yes
+rtspAddress: :8554
+
+###############################################
+# HLS Server
+###############################################
+hls: yes
+hlsAddress: :8888
+hlsAllowOrigins: ['*']        # ✅ đổi từ hlsAllowOrigin
+hlsSegmentCount: 5
+hlsSegmentDuration: 2s
+hlsPartDuration: 200ms
+
+###############################################
+# WebRTC
+###############################################
+webrtc: yes
+webrtcAddress: :8889
+webrtcAllowOrigins: ['*']     # ✅ đổi từ webrtcAllowOrigin
+
+###############################################
+# Danh sách camera
+###############################################
+paths:
+  cam1:
+    source: rtsp://admin:HAO%40041298%2E@14.238.118.58:5541/Streaming/Channels/501
+    rtspTransport: tcp
+    sourceOnDemand: yes
+    sourceOnDemandStartTimeout: 10s
+    sourceOnDemandCloseAfter: 30s
+
+  cam2:
+    source: rtsp://admin:HAO%40041298%2E@14.238.118.58:5541/Streaming/Channels/101
+    rtspTransport: tcp
+    sourceOnDemand: yes
+    sourceOnDemandStartTimeout: 10s
+    sourceOnDemandCloseAfter: 30s
