@@ -332,6 +332,23 @@ if ($model->id_xa) {
         </div>
 
         <div class="col-md-2">
+            <label>Nơi nhận tài liệu</label>
+            <?= $form->field($model, 'noiNhanTaiLieu')->widget(Select2::classname(), [
+                'data' => DangKyHv::getDmNoiDangKy(),
+                'language' => 'vi',
+                'options' => [
+                    'placeholder' => 'Nơi nhận tài liệu...',
+                    'class' => 'form-control dropdown-with-arrow',
+                    'id' => 'noi-nhan-tai-lieu-search-dropdown'
+                ],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                    'width' => '100%'
+                ],
+            ])->label(false); ?>
+        </div>
+
+        <div class="col-md-2">
             <?= $form->field($model, 'da_nhan_ao')->dropDownList([1 => 'Đã nhận', 0 => 'Chưa nhận',], ['prompt' => 'Tất cả'])->label('Nhận áo') ?>
         </div>
 
@@ -346,6 +363,23 @@ if ($model->id_xa) {
                     'todayBtn' => true
                 ]
             ]); ?>
+        </div>
+
+        <div class="col-md-2">
+            <label>Nơi nhận áo</label>
+            <?= $form->field($model, 'noiNhanAo')->widget(Select2::classname(), [
+                'data' => DangKyHv::getDmNoiDangKy(),
+                'language' => 'vi',
+                'options' => [
+                    'placeholder' => 'Nơi nhận áo...',
+                    'class' => 'form-control dropdown-with-arrow',
+                    'id' => 'noi-nhan-ao-search-dropdown'
+                ],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                    'width' => '100%'
+                ],
+            ])->label(false); ?>
         </div>
 
         <div class="col-md-2">
