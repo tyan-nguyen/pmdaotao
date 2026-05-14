@@ -6,7 +6,7 @@ use app\modules\hocvien\models\KhoaHoc;
 ?>
 <li class="slide">
 	<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);">
-		
+
 		<span class="side-menu__label"><i class="fa fa-folder"></i> CHỨC NĂNG</span><i class="angle fa fa-caret-right"></i>
 	</a>
 	<ul class="slide-menu" data-menu="hv">
@@ -30,7 +30,8 @@ use app\modules\hocvien\models\KhoaHoc;
 						<ul class="sidemenu-list">
 							<li><a href="/daotao/ke-hoach-giao-vien?menu=hv1" class="slide-item" data-menu="hv1"> <i class="fe fe-file-text"></i> Lập kế hoạch</a></li>
 							<li><a href="/daotao/ql-hoc-vien?menu=hv2" class="slide-item" data-menu="hv2"> <i class="fe fe-file-text"></i> Danh sách học viên</a></li>
-							
+							<li><a href="/thuexe/lich-dung-xe?menu=hv3" class="slide-item" data-menu="hv3"><i class="fe fe-file-text"></i> Lịch sử dụng xe</a></li>
+
 						</ul>
 						<div class="menutabs-content px-0">
 							<!-- menu tab here -->

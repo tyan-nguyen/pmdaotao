@@ -6,22 +6,24 @@ use yii\widgets\ActiveForm;
 use app\widgets\CardWidget;
 use kartik\select2\Select2;
 use app\modules\thuexe\models\LichDungXe;
+use app\modules\user\models\User;
 use kartik\date\DatePicker;
 use yii\web\JsExpression;
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\thuexe\models\LichDungXe */
 /* @var $form yii\widgets\ActiveForm */
+
 $disallowEdit = false;
 $nguoiPhuTrachValue = '';
 if ($model->id_nguoi_phu_trach) {
-    $nguoiPhuTrachValue = $model->nguoiPhuTrach ? 
-    ($model->nguoiPhuTrach->ho_ten . ' ('. $model->nguoiPhuTrach->dien_thoai . ')') : '';
-}else{
+    $nguoiPhuTrachValue = $model->nguoiPhuTrach ?
+        ($model->nguoiPhuTrach->ho_ten . ' (' . $model->nguoiPhuTrach->dien_thoai . ')') : '';
+} else {
     $nhanVienFromUser = NhanVien::getCurrentNhanVien();
     if ($nhanVienFromUser) {
         $model->id_nguoi_phu_trach = $nhanVienFromUser->id;
-        $nguoiPhuTrachValue = $nhanVienFromUser->ho_ten . ' ('. $nhanVienFromUser->dien_thoai . ')';
+        $nguoiPhuTrachValue = $nhanVienFromUser->ho_ten . ' (' . $nhanVienFromUser->dien_thoai . ')';
     }
 }
 ?>
@@ -29,84 +31,109 @@ if ($model->id_nguoi_phu_trach) {
 <div class="lich-dung-xe-form">
 
     <?php $form = ActiveForm::begin(); ?>
-    
+
     <?= $form->errorSummary($model); ?>
-    
-    <?php CardWidget::begin(['title'=>'THÔNG TIN XE']) ?>
-       <div class="row">  
-       		<div class="col-md-4">
-            	<?= $form->field($model, 'id_xe')->widget(Select2::class, [
-           		       'data' => LichDungXe::getDsXe(),
-                        'language' => 'vi',
-            	        'options' => ['placeholder' => 'Chọn xe...', 'disabled'=>$disallowEdit],
-                        'pluginOptions' => [
-                            'width'=>'100%',
-                            'allowClear' => true,
-                            'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
-                        ],
-            	    'pluginEvents' => [
-            	        /*"change" => "function(e) {
-                            $('#txtDonGia').val('');
-                        }",*/
-            	    ]
-                 ]);?>
-            </div> 
-            <div class="col-md-4">
-            	<?= $form->field($model, 'id_nguoi_phu_trach')->widget(Select2::class, [
-            	'initValueText' => $nguoiPhuTrachValue, // This shows selected text on form load
+
+    <?php CardWidget::begin(['title' => 'THÔNG TIN XE']) ?>
+    <div class="row">
+        <div class="col-md-5">
+            <?= $form->field($model, 'id_xe')->widget(Select2::class, [
+                'data' => LichDungXe::getDsXe(),
                 'language' => 'vi',
-                'options' => [
-                    'placeholder' => 'Chọn người phụ trách...',  
-                    'class' => 'form-control dropdown-with-arrow',
-                    'id' => 'idNguoiPhuTrach'
-                ],
+                'options' => ['placeholder' => 'Chọn xe...', 'disabled' => $disallowEdit],
                 'pluginOptions' => [
+                    'width' => '100%',
                     'allowClear' => true,
                     'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
-                    'width'=>'100%',
-                    'minimumInputLength' => 0, // ← allow fetch without typing
-                    'ajax' => [
-                        'url' => '/thuexe/lich-dung-xe/search-nhan-vien',
-                        'dataType' => 'json',
-                        'delay' => 250,
-                        /* 'data' => new JsExpression('function(params) {
+                ],
+                'pluginEvents' => [
+                    /*"change" => "function(e) {
+                            $('#txtDonGia').val('');
+                        }",*/]
+            ]); ?>
+        </div>
+
+        <div class="col-md-5">
+            <?php
+            if (User::hasRole('nGiaoVien', false)) {
+                $nhanVien = NhanVien::getCurrentNhanVien();
+                if ($nhanVien != null) {
+                    echo $form->field($model, 'id_nguoi_phu_trach')->widget(Select2::class, [
+                        'initValueText' => $nguoiPhuTrachValue, // This shows selected text on form load
+                        'language' => 'vi',
+                        'data' => [
+                            $nhanVien->id => ($nhanVien->ho_ten . ' (' . $nhanVien->dien_thoai . ')')
+                        ],
+                        'options' => [
+                            'placeholder' => 'Chọn người phụ trách...',
+                            'class' => 'form-control dropdown-with-arrow',
+                            'id' => 'idNguoiPhuTrach'
+                        ],
+                        'pluginOptions' => [
+                            'allowClear' => true,
+                            'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
+                            'width' => '100%',
+                            'minimumInputLength' => 0, // ← allow fetch without typing
+                        ],
+                    ]);
+                }
+            } else {
+                echo $form->field($model, 'id_nguoi_phu_trach')->widget(Select2::class, [
+                    'initValueText' => $nguoiPhuTrachValue, // This shows selected text on form load
+                    'language' => 'vi',
+                    'options' => [
+                        'placeholder' => 'Chọn người phụ trách...',
+                        'class' => 'form-control dropdown-with-arrow',
+                        'id' => 'idNguoiPhuTrach'
+                    ],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                        'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
+                        'width' => '100%',
+                        'minimumInputLength' => 0, // ← allow fetch without typing
+                        'ajax' => [
+                            'url' => '/thuexe/lich-dung-xe/search-nhan-vien',
+                            'dataType' => 'json',
+                            'delay' => 250,
+                            /* 'data' => new JsExpression('function(params) {
                             return {q:params.term};
                         }'), */
-                        'data' => new JsExpression('function(params) {
+                            'data' => new JsExpression('function(params) {
                             return {
                                 q: params.term || "", // if empty input, send empty string
                             };
                         }'),
-                        'processResults' => new JsExpression('function(data) {
+                            'processResults' => new JsExpression('function(data) {
                             return {results:data};
                         }'),
-                        'cache' => true
+                            'cache' => true
+                        ],
                     ],
+                ]);
+            } ?>
+        </div>
+        <div class="col-md-2">
+            <?= $form->field($model, 'trang_thai')->dropDownList(LichDungXe::getDmTrangThai(), [
+                'disabled' => $disallowEdit
+            ]) ?>
+        </div>
+    </div>
+    <?php CardWidget::end() ?>
+
+    <?php CardWidget::begin(['title' => 'THỜI GIAN']) ?>
+    <div class="row">
+        <div class="col-md-4">
+            <?= $form->field($model, 'ngay_bat_dau')->widget(DatePicker::class, [
+                'options' => ['id' => 'start-date', 'placeholder' => 'Chọn ngày  ...', 'disabled' => $disallowEdit],
+                'removeButton' => $disallowEdit ? false : [],
+                'pluginOptions' => [
+                    'autoclose' => true,
+                    'format' => 'dd/mm/yyyy',
+                    'todayHighlight' => true,
+                    'todayBtn' => true,
                 ],
-            ]);?>
-            </div>
-            <div class="col-md-2">
-            	<?= $form->field($model, 'trang_thai')->dropDownList(LichDungXe::getDmTrangThai(), [
-            	    'disabled'=>$disallowEdit
-            	]) ?>
-        	</div>
-       </div>
-        <?php CardWidget::end() ?>
-        
-       <?php CardWidget::begin(['title'=>'THỜI GIAN']) ?>
-       <div class="row">     
-            <div class="col-md-4">
-            	<?= $form->field($model, 'ngay_bat_dau')->widget(DatePicker::class, [
-            	    'options' => ['id' => 'start-date', 'placeholder' => 'Chọn ngày  ...', 'disabled'=>$disallowEdit],
-            	    'removeButton'=>$disallowEdit?false:[],
-                    'pluginOptions' => [
-                        'autoclose' => true,
-                        'format' => 'dd/mm/yyyy',
-                        'todayHighlight'=>true,
-                        'todayBtn'=>true,
-                    ],
-            	    'pluginEvents' => [
-            	        "changeDate" => "function(e) {
+                'pluginEvents' => [
+                    "changeDate" => "function(e) {
                             // Lấy ngày được chọn ở start-date
                             var startDate = e.format('dd/mm/yyyy');    
                             console.log('Ngày được chọn:', startDate);                	        
@@ -128,31 +155,31 @@ if ($model->id_nguoi_phu_trach) {
                                 $('#end-date').val(startDate).trigger('change');
                             }
                         }"
-            	    ]
-                ]); ?>
-            </div>
-            <div class="col-md-1">
-            	<?= $form->field($model, 'gio_bat_dau')->dropDownList(LichDungXe::getListHoursOfDay(), [
-            	    'disabled'=>$disallowEdit
-            	]) ?>
-            </div>
-            <div class="col-md-1">
-            	<?= $form->field($model, 'phut_bat_dau')->dropDownList(LichDungXe::getList15MinutesOfHour(), [
-            	    'disabled'=>$disallowEdit
-            	]) ?>
-            </div>
-        
-            <div class="col-md-4">
-            	<?= $form->field($model, 'ngay_ket_thuc')->widget(DatePicker::class, [
-            	    'options' => ['id' => 'end-date', 'placeholder' => 'Chọn ngày  ...', 'disabled'=>$disallowEdit],
-            	    'removeButton'=>$disallowEdit?false:[],
-                    'pluginOptions' => [
-                        'autoclose' => true,
-                        'format' => 'dd/mm/yyyy',
-                        'todayHighlight'=>true,
-                        'todayBtn'=>true
-                    ],
-            	   /* 'pluginEvents' => [
+                ]
+            ]); ?>
+        </div>
+        <div class="col-md-1">
+            <?= $form->field($model, 'gio_bat_dau')->dropDownList(LichDungXe::getListHoursOfDay(), [
+                'disabled' => $disallowEdit
+            ]) ?>
+        </div>
+        <div class="col-md-1">
+            <?= $form->field($model, 'phut_bat_dau')->dropDownList(LichDungXe::getList15MinutesOfHour(), [
+                'disabled' => $disallowEdit
+            ]) ?>
+        </div>
+
+        <div class="col-md-4">
+            <?= $form->field($model, 'ngay_ket_thuc')->widget(DatePicker::class, [
+                'options' => ['id' => 'end-date', 'placeholder' => 'Chọn ngày  ...', 'disabled' => $disallowEdit],
+                'removeButton' => $disallowEdit ? false : [],
+                'pluginOptions' => [
+                    'autoclose' => true,
+                    'format' => 'dd/mm/yyyy',
+                    'todayHighlight' => true,
+                    'todayBtn' => true
+                ],
+                /* 'pluginEvents' => [
             	        "changeDate" => "function(e) {
                             // Lấy ngày được chọn ở start-date
                             var endDate = e.format('dd/mm/yyyy');
@@ -168,39 +195,39 @@ if ($model->id_nguoi_phu_trach) {
                             }
                         }"
             	    ]*/
-                ]); ?>
-            </div>
-             <div class="col-md-1">
-            	<?= $form->field($model, 'gio_ket_thuc')->dropDownList(LichDungXe::getListHoursOfDay(), [
-            	    'disabled'=>$disallowEdit
-            	]) ?>
-            </div>
-             <div class="col-md-1">
-            	<?= $form->field($model, 'phut_ket_thuc')->dropDownList(LichDungXe::getList15MinutesOfHour(), [
-            	    'disabled'=>$disallowEdit
-            	]) ?>
-            </div>
-       </div>
+            ]); ?>
+        </div>
+        <div class="col-md-1">
+            <?= $form->field($model, 'gio_ket_thuc')->dropDownList(LichDungXe::getListHoursOfDay(), [
+                'disabled' => $disallowEdit
+            ]) ?>
+        </div>
+        <div class="col-md-1">
+            <?= $form->field($model, 'phut_ket_thuc')->dropDownList(LichDungXe::getList15MinutesOfHour(), [
+                'disabled' => $disallowEdit
+            ]) ?>
+        </div>
+    </div>
     <?php CardWidget::end() ?>
-        
-   <?php CardWidget::begin(['title'=>'NỘI DUNG']) ?>
-       <div class="row">     
-       		<div class="col-md-6">
-       			<?= $form->field($model, 'noi_dung')->textarea(['rows'=>3]) ?>
-       		</div>
-       		<div class="col-md-6">
-       			<?= $form->field($model, 'ghi_chu')->textarea(['rows'=>3]) ?>
-       		</div>
-       </div>
-	<?php CardWidget::end() ?>
-  
-	</div>
-	<?php if (!Yii::$app->request->isAjax){ ?>
-	  	<div class="form-group">
-	        <?= Html::submitButton($model->isNewRecord ? 'Thêm mới' : 'Cập nhật', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-	    </div>
-	<?php } ?>
 
-    <?php ActiveForm::end(); ?>
-    
+    <?php CardWidget::begin(['title' => 'NỘI DUNG']) ?>
+    <div class="row">
+        <div class="col-md-6">
+            <?= $form->field($model, 'noi_dung')->textarea(['rows' => 3]) ?>
+        </div>
+        <div class="col-md-6">
+            <?= $form->field($model, 'ghi_chu')->textarea(['rows' => 3]) ?>
+        </div>
+    </div>
+    <?php CardWidget::end() ?>
+
+</div>
+<?php if (!Yii::$app->request->isAjax) { ?>
+    <div class="form-group">
+        <?= Html::submitButton($model->isNewRecord ? 'Thêm mới' : 'Cập nhật', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+    </div>
+<?php } ?>
+
+<?php ActiveForm::end(); ?>
+
 </div>
