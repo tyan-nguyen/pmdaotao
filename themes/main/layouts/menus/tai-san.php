@@ -4,7 +4,7 @@
 		<span class="side-menu__label">Khóa học</span><i class="angle fe fe-chevron-right"></i> -->
 		<span class="side-menu__label"><i class="fa fa-folder"></i> TÀI SẢN</span><i class="angle fa fa-caret-right"></i>
 	</a>
-	<ul class="slide-menu" data-menu="dungxe">
+	<ul class="slide-menu" data-menu="taisan">
 		<li class="panel sidetab-menu">
 			<div class="tab-menu-heading p-0 pb-2 border-0">
 				<div class="tabs-menu ">
@@ -27,7 +27,8 @@
 							</li>
 							<li class=""><a href="<?= Yii::getAlias('@web/taisan/tai-san/index?menu=taisan1') ?>" class="slide-item" data-menu="taisan1"><i class="fe fe-file-text"></i> Danh mục tài sản</a>
 							</li>
-
+							<li class=""><a href="<?= Yii::getAlias('@web/taisan/phieu-de-nghi/index?menu=taisan2') ?>" class="slide-item" data-menu="taisan2"><i class="fe fe-file-text"></i> Phiếu đề nghị</a>
+							</li>
 						</ul>
 						<div class="menutabs-content px-0">
 							<!-- menu tab here -->

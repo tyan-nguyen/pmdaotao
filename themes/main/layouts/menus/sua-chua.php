@@ -4,7 +4,7 @@
 		<span class="side-menu__label">Khóa học</span><i class="angle fe fe-chevron-right"></i> -->
         <span class="side-menu__label"><i class="fa fa-folder"></i> SỬA CHỮA</span><i class="angle fa fa-caret-right"></i>
     </a>
-    <ul class="slide-menu" data-menu="dungxe">
+    <ul class="slide-menu" data-menu="suachua">
         <li class="panel sidetab-menu">
             <div class="tab-menu-heading p-0 pb-2 border-0">
                 <div class="tabs-menu ">
