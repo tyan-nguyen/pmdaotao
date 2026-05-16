@@ -146,7 +146,7 @@ class HocVien extends HocVienBase
         $dsHocVien = GvHv::find()->alias('t')->joinWith(['hocVien as hv', 'hocVien.khoaHoc as kh'])
             ->where(['t.id_giao_vien' => $idgv])
             ->andWhere('t.da_hoan_thanh = 0 OR t.da_hoan_thanh IS NULL')
-            ->orderBy(['hv.id_khoa_hoc' => SORT_ASC, 'hv.ho_ten' => SORT_ASC])
+            ->orderBy(['hv.id_khoa_hoc' => SORT_DESC, 'hv.ho_ten' => SORT_ASC])
             ->all();
 
         return ArrayHelper::map($dsHocVien, 'id_hoc_vien', function ($model) {
