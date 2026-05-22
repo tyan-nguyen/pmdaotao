@@ -11,7 +11,7 @@ class PhieuDeNghi extends PhieuDeNghiBase
     //ham lay tong so tien
     //kiem tra truong phieu_co_chi_tiet, neu =1 thi lay tong tien sum
     // tu bang phieudenghichitiet, neu =0 thì lấy gia tri tong_tien_thuc_te
-    public function getTongTien()
+    /* public function getTongTien()
     {
         if ($this->phieu_co_chi_tiet == 1) {
             $sum = 0;
@@ -22,6 +22,14 @@ class PhieuDeNghi extends PhieuDeNghiBase
         } else {
             return $this->tong_tien_thuc_te;
         }
+    } */
+   public function getTongTien()
+    {
+        $sum = 0;
+        foreach ($this->chiTiets as $ct) {
+            $sum += $ct->thanhTien;
+        }
+        return $sum;
     }
     public function dsChiTiet()
     {
