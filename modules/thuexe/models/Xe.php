@@ -472,7 +472,7 @@ class Xe extends \app\models\PtxXe
         ])->orderBy(['ngay_duyet' => SORT_DESC])->one();
         if ($phieuSuaChua) {
             if ($phieuSuaChua->so_km_luc_yeu_cau > $km_ban_dau) {
-                return $phieuSuaChua->ngay_cap_nhat;
+                return $phieuSuaChua->thoi_gian_tao;
             } else {
                 return $this->ngay_cap_nhat_km;
             }
