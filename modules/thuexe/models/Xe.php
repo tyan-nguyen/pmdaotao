@@ -444,7 +444,7 @@ class Xe extends \app\models\PtxXe
             ]
         ])->orderBy(['ngay_duyet' => SORT_DESC])->one();
         if ($phieuSuaChua) {
-            return $phieuSuaChua->so_km > $km_ban_dau ? $phieuSuaChua->so_km : $km_ban_dau;
+            return $phieuSuaChua->so_km_luc_yeu_cau > $km_ban_dau ? $phieuSuaChua->so_km_luc_yeu_cau : $km_ban_dau;
         } else {
             return $km_ban_dau;
         }
@@ -471,7 +471,7 @@ class Xe extends \app\models\PtxXe
             ]
         ])->orderBy(['ngay_duyet' => SORT_DESC])->one();
         if ($phieuSuaChua) {
-            if ($phieuSuaChua->so_km > $km_ban_dau) {
+            if ($phieuSuaChua->so_km_luc_yeu_cau > $km_ban_dau) {
                 return $phieuSuaChua->ngay_cap_nhat;
             } else {
                 return $this->ngay_cap_nhat_km;
