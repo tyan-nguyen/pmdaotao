@@ -6,6 +6,7 @@ use Yii;
 use app\modules\nhanvien\models\NhanVien;
 use app\modules\hocvien\models\HocVien;
 use app\modules\giaovien\models\GiaoVien;
+use app\modules\taisan\models\PhieuDeNghi;
 use app\modules\vanban\models\VanBanDen;
 use app\modules\vanban\models\VanBanDi;
 
@@ -25,7 +26,7 @@ use app\modules\vanban\models\VanBanDi;
 class LoaiFileBase extends \app\models\KhoLoaiFile
 {
     public static function listDoiTuong(){
-        return [NhanVien::MODEL_ID, HocVien::MODEL_ID, GiaoVien::MODEL_ID, VanBanDen::MODEL_ID];
+        return [NhanVien::MODEL_ID, HocVien::MODEL_ID, GiaoVien::MODEL_ID, VanBanDen::MODEL_ID, PhieuDeNghi::MODEL_ID];
     }
     public static function listDoiTuongLabel($doiTuong){
         if(in_array($doiTuong, LoaiFileBase::listDoiTuong())){
@@ -39,6 +40,8 @@ class LoaiFileBase extends \app\models\KhoLoaiFile
                 return 'Văn bản đến';
             else if($doiTuong == VanBanDi::MODEL_ID)
                 return 'Văn bản đi';
+            else if($doiTuong == PhieuDeNghi::MODEL_ID)
+                return 'Phiếu đề nghị';
             else 
                 return 'Không xác định';
         }

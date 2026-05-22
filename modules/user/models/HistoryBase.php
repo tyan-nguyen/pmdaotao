@@ -347,4 +347,48 @@ class HistoryBase extends \app\models\UserHistory
             $his->save();
         }
     }
+
+    /** luu lai lich su cho model phieu de nghi */
+    public static function addHistoryPhieuDeNghi($type, $atr, $mod, $isNew)
+    {
+        /* !!!!!!!!!!!!!!!!!!!!! chưa sửa !!!!!!!!!!!!!!!!!!!!!!!!!! */
+        $noiDung = '';
+        if ($isNew == false) {
+            $model = HoaDon::findOne($mod->id);
+            if ($model != null) {
+                foreach ($atr as $key => $value) {
+                    if ($atr[$key] != $mod->$key) {
+                        if ($key == 'id_khach_hang' && $model->loai_khach_hang == HoaDon::LOAI_HOCVIEN) {
+                            $hvold = HocVien::findOne($value);
+                            $hvnew = HocVien::findOne($mod->$key);
+                            $noiDung .= '<p>Thay đổi ' . $mod->getAttributeLabel($key) . ' Trung tâm' . ' "' . $hvold->ho_ten . '" thành "' . $hvnew->ho_ten . '"</p>';
+                        } else if ($key == 'id_khach_hang' && $model->loai_khach_hang == HoaDon::LOAI_KHACHLE) {
+                            $hvold = KhachHang::findOne($value);
+                            $hvnew = KhachHang::findOne($mod->$key);
+                            $noiDung .= '<p>Thay đổi ' . $mod->getAttributeLabel($key) . ' ngoài' . ' "' . $hvold->ho_ten . '" thành "' . $hvnew->ho_ten . '"</p>';
+                        } else if ($key == 'edit_mode') {
+                            if ($mod->$key == 1) {
+                                $noiDung .= '<p>Bật chế độ cho phép chỉnh sửa sau khi xuất</p>';
+                            } else {
+                                $noiDung .= '<p>Tắt chế độ cho phép chỉnh sửa sau khi xuất</p>';
+                            }
+                        } else {
+                            $noiDung .= '<p>Thay đổi ' . $mod->getAttributeLabel($key) . ' "' . $value . '" thành "' . $mod->$key . '"</p>';
+                        }
+                    }
+                }
+            }
+        } else {
+            $noiDung = 'Thực hiện thêm mới dữ liệu thành công.';
+        }
+
+        //$his->noi_dung = var_dump($changedAttributes);
+        if ($noiDung != null) {
+            $his = new History();
+            $his->loai = $type;
+            $his->id_tham_chieu = $mod->id;
+            $his->noi_dung = $noiDung;
+            $his->save();
+        }
+    }
 }

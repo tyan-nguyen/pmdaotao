@@ -125,7 +125,7 @@ class FileController extends Controller
                     'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
                     Html::a('Tiếp tục thêm',[
                         'upload-single', 
-                        'doiTuong'=>VanBanDen::MODEL_ID,
+                        'doiTuong'=>$doiTuong,
                         'idDoiTuong'=>$model->id
                     ],['class'=>'btn btn-primary','role'=>'modal-remote-2'])
                     

@@ -80,7 +80,7 @@ if (!$model->isNewRecord) {
             ) ?>
         </div>
 
-        <div class="col-lg-3 col-md-6">
+        <div class="col-lg-4 col-md-6">
             <?= $form->field($model, 'ngay_dang_kiem')->widget(DatePicker::classname(), [
                 'options' => [
                     'placeholder' => 'Ngày đăng kiểm...',

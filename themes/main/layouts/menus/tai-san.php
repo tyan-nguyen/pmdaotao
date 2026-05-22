@@ -1,8 +1,16 @@
+<?php
+
+use app\modules\taisan\models\PhieuDeNghi;
+
+$slChoDuyet = PhieuDeNghi::slChoDuyet();
+?>
 <li class="slide">
 	<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);">
 		<!-- <span class="side-menu__icon"><i class="fa fa-graduation-cap side_menu_img"></i></span>
 		<span class="side-menu__label">Khóa học</span><i class="angle fe fe-chevron-right"></i> -->
-		<span class="side-menu__label"><i class="fa fa-folder"></i> TÀI SẢN</span><i class="angle fa fa-caret-right"></i>
+		<span class="side-menu__label"><i class="fa fa-folder"></i> TÀI SẢN
+			<span class="badge bg-warning ms-2"><?= $slChoDuyet > 0 ? $slChoDuyet : '' ?></span>
+		</span><i class="angle fa fa-caret-right"></i>
 	</a>
 	<ul class="slide-menu" data-menu="taisan">
 		<li class="panel sidetab-menu">
@@ -27,7 +35,15 @@
 							</li>
 							<li class=""><a href="<?= Yii::getAlias('@web/taisan/tai-san/index?menu=taisan1') ?>" class="slide-item" data-menu="taisan1"><i class="fe fe-file-text"></i> Danh mục tài sản</a>
 							</li>
-							<li class=""><a href="<?= Yii::getAlias('@web/taisan/phieu-de-nghi/index?menu=taisan2') ?>" class="slide-item" data-menu="taisan2"><i class="fe fe-file-text"></i> Phiếu đề nghị</a>
+							<li class=""><a href="<?= Yii::getAlias('@web/taisan/phieu-de-nghi/index?menu=taisan2') ?>" class="slide-item" data-menu="taisan2"><i class="fe fe-file-text"></i> Phiếu đề nghị
+								<span class="badge bg-warning ms-2"><?= $slChoDuyet > 0 ? $slChoDuyet : '' ?></span>
+								</a>
+							</li>
+							<li class=""><a href="<?= Yii::getAlias('@web/taisan/dm-hang-muc/index?menu=taisan3') ?>" class="slide-item" data-menu="taisan3"><i class="fe fe-file-text"></i> Hạng mục sửa chữa</a>
+							</li>
+							<li class=""><a href="<?= Yii::getAlias('@web/taisan/dm-loai-hang-muc/index?menu=taisan4') ?>" class="slide-item" data-menu="taisan4"><i class="fe fe-file-text"></i> Danh mục loại hạng mục</a>
+							</li>
+							<li class=""><a href="<?= Yii::getAlias('@web/taisan/dot-tong-hop/index?menu=taisan5') ?>" class="slide-item" data-menu="taisan5"><i class="fe fe-file-text"></i> Đợt tổng hợp</a>
 							</li>
 						</ul>
 						<div class="menutabs-content px-0">

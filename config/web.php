@@ -55,6 +55,9 @@ $config = [
         'demxe' => [
             'class' => 'app\modules\demxe\Module',
         ],
+        'taisan' => [
+            'class' => 'app\modules\taisan\TaiSanModule',
+        ],
         /* 'dynamikjs' => [
             'class' => 'dastanaron\dropzone\DynamicJSModule'
         ], */

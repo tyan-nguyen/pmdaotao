@@ -9,6 +9,7 @@ use app\modules\giaovien\models\GiaoVien;
 use app\modules\daotao\models\GvXe;
 use app\custom\CustomFunc;
 use app\modules\banhang\models\HangHoa;
+use app\modules\taisan\models\PhieuDeNghi;
 
 /**
  * This is the model class for table "ptx_xe".
@@ -294,11 +295,13 @@ class Xe extends \app\models\PtxXe
     public static function getListAll()
     {
         $dsXe = Xe::find()
-            ->orderBy(['hieu_xe' => SORT_ASC])
+            ->orderBy(['id' => SORT_ASC])
             ->all();
 
         return ArrayHelper::map($dsXe, 'id', function ($model) {
             return '+ ' . $model->bien_so_xe;
+        }, function ($model) {
+            return $model->loaiXe->ten_loai_xe;
         });
     }
     public static function getList()
@@ -418,5 +421,63 @@ class Xe extends \app\models\PtxXe
     {
         $hinhDaiDien = HinhXe::find()->where(['id_xe' => $this->id, 'la_dai_dien' => 1])->one();
         return $hinhDaiDien != null ? $hinhDaiDien : HinhXe::find()->where(['id_xe' => $this->id])->one();
+    }
+    /**
+     * get km xe hien tai theo lan cap nhat gan nhat
+     * neu tim trong bang phieu sua chua cua xe thay thi lay cai sort theo phieu moi nhat
+     * neu khong co ban sua chua thi lay theo km ban dau trong bang ptx_xe
+     */
+    public function getKmHienTai()
+    {
+        $km_ban_dau = $this->so_km_ban_dau??0;
+        $phieuSuaChua = PhieuDeNghi::find()->where([
+            'id_tham_chieu' => $this->id,
+            'loai_phieu' => PhieuDeNghi::LOAIPHIEU_SUACHUA,
+            'loai_tai_san' => PhieuDeNghi::LOAITAISAN_XE,
+            'loai_yeu_cau' => PhieuDeNghi::LOAISUAXE_BAODUONG,
+        ])->andWhere([
+            'in',
+            'trang_thai',
+            [
+                PhieuDeNghi::TRANGTHAI_HOANTHANH,
+                PhieuDeNghi::TRANGTHAI_DADUYET
+            ]
+        ])->orderBy(['ngay_duyet' => SORT_DESC])->one();
+        if ($phieuSuaChua) {
+            return $phieuSuaChua->so_km > $km_ban_dau ? $phieuSuaChua->so_km : $km_ban_dau;
+        } else {
+            return $km_ban_dau;
+        }
+    }
+    /**
+     * get ngay lay km hien tai theo lan cap nhat gan nhat
+     * neu tim trong bang phieu sua chua cua xe thay thi lay cai sort theo phieu moi nhat
+     * neu khong co ban sua chua thi lay theo ngay nhap km ban dau trong bang ptx_xe
+     */
+    public function getNgayCapNhatKmHienTai()
+    {
+        $km_ban_dau = $this->so_km_ban_dau??0;
+        $phieuSuaChua = PhieuDeNghi::find()->where([
+            'id_tham_chieu' => $this->id,
+            'loai_phieu' => PhieuDeNghi::LOAIPHIEU_SUACHUA,
+            'loai_tai_san' => PhieuDeNghi::LOAITAISAN_XE,
+            'loai_yeu_cau' => PhieuDeNghi::LOAISUAXE_BAODUONG,
+        ])->andWhere([
+            'in',
+            'trang_thai',
+            [
+                PhieuDeNghi::TRANGTHAI_HOANTHANH,
+                PhieuDeNghi::TRANGTHAI_DADUYET
+            ]
+        ])->orderBy(['ngay_duyet' => SORT_DESC])->one();
+        if ($phieuSuaChua) {
+            if ($phieuSuaChua->so_km > $km_ban_dau) {
+                return $phieuSuaChua->ngay_cap_nhat;
+            } else {
+                return $this->ngay_cap_nhat_km;
+            }
+        } else {
+            return $this->ngay_cap_nhat_km;
+        }
     }
 }

@@ -25,7 +25,7 @@
                         <ul class="sidemenu-list">
                             <li class="side-menu__label1"><a href="javascript:void(0)">Danh mục chức năng</a>
                             </li>
-                            <li class=""><a href="<?= Yii::getAlias('@web/taisan/phieu-sua-chua/index?menu=suachua1') ?>" class="slide-item" data-menu="suachua1"><i class="fe fe-file-text"></i> Phiếu đề nghị sửa chữa</a>
+                            <li class=""><a href="<?= Yii::getAlias('@web/taisan/phieu-sua-xe/index?menu=suachua1') ?>" class="slide-item" data-menu="suachua1"><i class="fe fe-file-text"></i> Phiếu đề nghị sửa xe</a>
                             </li>
 
                         </ul>
