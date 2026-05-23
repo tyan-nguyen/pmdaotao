@@ -188,7 +188,7 @@ if (!$model->isNewRecord) {
                                                 <?= $form->field($model, 'edit_mode')->checkbox(['label' => false]) ?>
                                             </div>
 
-                                            
+
 
                                         </div>
                                         <?php if (!Yii::$app->request->isAjax) { ?>
@@ -332,6 +332,9 @@ if (!$model->isNewRecord) {
 
         <?php if ($model->trang_thai == PhieuDeNghi::TRANGTHAI_NHAP || $model->edit_mode) { ?>
             <a href="#" onClick="AddVatTu()" class="btn btn-primary btn-sm"><i class="fa-solid fa-plus"></i> Thêm chi tiết</a>
+            <a href="/taisan/dm-hang-muc/create-from-phieu" class="btn btn-primary btn-sm" data-bs-target="#ajaxCrudModal2"
+                role="modal-remote-2" data-bs-placement="top" data-bs-toggle="tooltip">
+                <i class="fa-solid fa-plus"></i> Thêm hạng mục</a>
         <?php } ?>
         <a href="#" onClick="InHoaDon()" class="btn btn-primary btn-sm"><i class="fa fa-print"></i> In Phiếu đề nghị (<span id="soLanIn"><?= $model->so_lan_in ?? 0 ?></span>)</a>
         <?php if ($model->trang_thai == PhieuDeNghi::TRANGTHAI_DADUYET || $model->trang_thai == PhieuDeNghi::TRANGTHAI_HOANTHANH) { ?>
