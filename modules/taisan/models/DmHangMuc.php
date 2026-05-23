@@ -91,4 +91,15 @@ class DmHangMuc extends CpDmHangMuc
     {
         return $this->hasOne(User::class, ['id' => 'nguoi_tao']);
     }
+    //ham lay so lan su dung
+    public function getSoLanSuDung()
+    {
+        $query = PhieuChiTiet::find()->alias('t')
+            ->joinWith(['phieuDeNghi as p'])
+            ->where(['IN', 'p.trang_thai', PhieuDeNghi::getDmTrangThaiCoSoVaoSo()])
+            ->andWhere(['t.id_hang_muc' => $this->id])
+            ->sum('t.so_luong');
+        return $query;
+
+    }
 }

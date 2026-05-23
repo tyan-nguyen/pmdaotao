@@ -77,7 +77,7 @@ return [
     [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'ten',
-        'width' => '25%'
+        'width' => '15%'
     ],
     [
         'class' => '\kartik\grid\DataColumn',
@@ -96,9 +96,14 @@ return [
     ],
     [
         'class' => '\kartik\grid\DataColumn',
-        'attribute' => 'ghi_chu',
-        'width' => '20%',
-        'vAlign' => 'middle',
+        'label' => 'Sử dụng',
+        'width' => '10%',
+        'value' => function ($model) {
+            return number_format($model->getSoLanSuDung()) . ' (' .$model->dvt . ')';
+        },
+        
+        'vAlign' => 'right',
+        'hAlign' => 'right'
     ],
     [
         'class' => '\kartik\grid\DataColumn',
@@ -118,4 +123,11 @@ return [
         'vAlign' => 'middle',
         'hAlign' => 'center',
     ],
+    [
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'ghi_chu',
+        'width' => '20%',
+        'vAlign' => 'middle',
+    ],
+    
 ];
