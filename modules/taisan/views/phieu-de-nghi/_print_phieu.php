@@ -93,7 +93,8 @@ if ($model->loai_phieu == PhieuDeNghi::LOAIPHIEU_MUASAM) {
 					<td style="width:12%">Tên hạng mục</td>
 					<td style="width:10%">ĐVT</td>
 					<td style="width:10%">Số lượng</td>
-					<td style="width:10%">Ghi chú</td>
+					<td style="width:12%">Sử dụng cho</td>
+					<td style="width:15%">Ghi chú</td>
 				</tr>
 			</thead>
 			<tbody>
@@ -105,10 +106,11 @@ if ($model->loai_phieu == PhieuDeNghi::LOAIPHIEU_MUASAM) {
 					<tr>
 						<td style="text-align:center"><?= $stt ?></td>
 						<td style="text-align:center"><?= $vt->hangMuc->loaiHangMuc->ten ?></td>
-						<td><?= $vt->hangMuc->ten ?></td>
+						<td style="text-align:left"><?= $vt->hangMuc->ten ?></td>
 						<td style="text-align:center"><?= $vt->hangMuc->dvt ?></td>
 						<td style="text-align:right"><?= $vt->so_luong ?></td>
-						<td style="text-align:center">
+						<td style="text-align:center"><?= $vt->phieuDeNghi->tenThamChieu ?? '' ?></td>
+						<td style="text-align:left">
 							<?= $vt->ghi_chu ?>
 						</td>
 					</tr>
