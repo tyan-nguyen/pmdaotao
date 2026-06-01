@@ -68,7 +68,8 @@
 					<div class="tab-pane active" id="side3">
 						<ul class="sidemenu-list">
 							<li><a href="<?= Yii::getAlias('@web/thuexe/lich-dung-xe/index?menu=dksdx1') ?>" class="slide-item" data-menu="dksdx1"> <i class="fe fe-file-text"></i> Đăng ký sử dụng xe <span class="badge bg-warning">New</span></a></li>
-						
+							<li class=""><a href="<?= Yii::getAlias('@web/taisan/phieu-sua-xe/index?menu=dksdx2') ?>" class="slide-item" data-menu="dksdx2"><i class="fe fe-file-text"></i> Phiếu đề nghị sửa xe - Bảo dưỡng</a>
+                            </li>
 						</ul>
 						<div class="menutabs-content px-0">
 							<!-- menu tab here -->
