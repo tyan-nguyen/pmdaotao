@@ -2,6 +2,7 @@
 
 use app\custom\CustomFunc;
 use app\modules\banhang\models\HoaDon;
+use app\modules\taisan\models\DmDonVi;
 use app\modules\taisan\models\PhieuDeNghi;
 use app\modules\thuexe\models\Xe;
 use app\modules\user\models\User;
@@ -12,7 +13,7 @@ use yii\widgets\ActiveForm;
 
 $model->ngay_bat_dau = CustomFunc::convertYMDToDMY($model->ngay_bat_dau);
 $model->ngay_hoan_thanh = CustomFunc::convertYMDToDMY($model->ngay_hoan_thanh);
-$model->ngay_thanh_toan = CustomFunc::convertYMDToDMY($model->ngay_thanh_toan);//ymd his nhưng theo search là Y-m-d
+$model->ngay_thanh_toan = CustomFunc::convertYMDToDMY($model->ngay_thanh_toan); //ymd his nhưng theo search là Y-m-d
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\taisan\models\PhieuDeNghi */
@@ -35,15 +36,35 @@ $model->ngay_thanh_toan = CustomFunc::convertYMDToDMY($model->ngay_thanh_toan);/
 		</div>
 
 		<div class="col-md-2">
-			<?= $form->field($model, 'loai_phieu')->dropDownList(PhieuDeNghi::getLoaiPhieuList(), [
-				'prompt' => '- Chọn loại phiếu -'
-			]) ?>
+			<?= $form->field($model, 'loai_phieu')->widget(Select2::class, [
+				'data' =>  PhieuDeNghi::getLoaiPhieuList(),
+				'language' => 'vi',
+				'options' => [
+					'placeholder' => 'Chọn loại phiếu...',
+					'class' => 'form-control dropdown-with-arrow',
+					'id' => 'idLoaiPhieu-search'
+				],
+				'pluginOptions' => [
+					'allowClear' => true,
+					'width' => '100%'
+				],
+			]); ?>
 		</div>
 
 		<div class="col-md-2">
-			<?= $form->field($model, 'loai_tai_san')->dropDownList(PhieuDeNghi::getLoaiTaiSanList(), [
-				'prompt' => '- Chọn loại tài sản -'
-			]) ?>
+			<?= $form->field($model, 'loai_tai_san')->widget(Select2::class, [
+				'data' =>  PhieuDeNghi::getLoaiTaiSanList(),
+				'language' => 'vi',
+				'options' => [
+					'placeholder' => 'Chọn loại tài sản...',
+					'class' => 'form-control dropdown-with-arrow',
+					'id' => 'idLoaiTaiSan-search'
+				],
+				'pluginOptions' => [
+					'allowClear' => true,
+					'width' => '100%'
+				],
+			]); ?>
 		</div>
 
 		<div class="col-md-2">
@@ -77,9 +98,20 @@ $model->ngay_thanh_toan = CustomFunc::convertYMDToDMY($model->ngay_thanh_toan);/
 		</div>
 
 		<div class="col-md-2">
-			<?= $form->field($model, 'loai_yeu_cau')->dropDownList(PhieuDeNghi::getLoaiSuaXeList(), [
-				'prompt' => '- Chọn yêu cầu sửa xe -'
-			]) ?>
+
+			<?= $form->field($model, 'loai_yeu_cau')->widget(Select2::class, [
+				'data' =>  PhieuDeNghi::getLoaiSuaXeList(),
+				'language' => 'vi',
+				'options' => [
+					'placeholder' => 'Chọn loại yêu cầu...',
+					'class' => 'form-control dropdown-with-arrow',
+					'id' => 'idLoaiYeuCau-search'
+				],
+				'pluginOptions' => [
+					'allowClear' => true,
+					'width' => '100%'
+				],
+			]); ?>
 		</div>
 
 		<!-- 
@@ -113,9 +145,19 @@ $model->ngay_thanh_toan = CustomFunc::convertYMDToDMY($model->ngay_thanh_toan);/
 		</div>
 
 		<div class="col-md-2">
-			<?= $form->field($model, 'trang_thai')->dropDownList(PhieuDeNghi::getTrangThaiList(), [
-				'prompt' => '- Chọn trạng thái -'
-			]) ?>
+			<?= $form->field($model, 'trang_thai')->widget(Select2::class, [
+				'data' =>  PhieuDeNghi::getTrangThaiList(),
+				'language' => 'vi',
+				'options' => [
+					'placeholder' => 'Chọn trạng thái...',
+					'class' => 'form-control dropdown-with-arrow',
+					'id' => 'idTrangThai-search'
+				],
+				'pluginOptions' => [
+					'allowClear' => true,
+					'width' => '100%'
+				],
+			]); ?>
 		</div>
 
 		<div class="col-md-2">
@@ -150,11 +192,20 @@ $model->ngay_thanh_toan = CustomFunc::convertYMDToDMY($model->ngay_thanh_toan);/
 		</div>
 
 		<div class="col-md-2">
-	 		<?= $form->field($model, 'hinh_thuc_thanh_toan')->dropDownList(
-	 		    HoaDon::getDmHinhThucThanhToan(),
-	 		    ['prompt'=>'-Chọn-']
-	 		) ?>
-	 	</div>
+			<?= $form->field($model, 'hinh_thuc_thanh_toan')->widget(Select2::class, [
+				'data' =>  HoaDon::getDmHinhThucThanhToan(),
+				'language' => 'vi',
+				'options' => [
+					'placeholder' => 'Chọn TM/CK...',
+					'class' => 'form-control dropdown-with-arrow',
+					'id' => 'idHinhThucThanhToan-search'
+				],
+				'pluginOptions' => [
+					'allowClear' => true,
+					'width' => '100%'
+				],
+			]); ?>
+		</div>
 
 		<div class="col-md-2">
 			<?= $form->field($model, 'ngay_thanh_toan')->widget(DatePicker::classname(), [
@@ -167,15 +218,28 @@ $model->ngay_thanh_toan = CustomFunc::convertYMDToDMY($model->ngay_thanh_toan);/
 				]
 			]) ?>
 		</div>
+		<div class="col-md-2">
+			<?= $form->field($model, 'id_don_vi_thuc_hien')->widget(Select2::class, [
+				'data' =>  DmDonVi::getList(),
+				'language' => 'vi',
+				'options' => [
+					'placeholder' => 'Chọn đơn vị...',
+					'class' => 'form-control dropdown-with-arrow',
+					'id' => 'idDonViThucHien-search'
+				],
+				'pluginOptions' => [
+					'allowClear' => true,
+					'width' => '100%'
+				],
+			]); ?>
+		</div>
+		<div class="col-md-4">
+			<br/>
+			<?= Html::submitButton('<i class="fe fe-search"></i> Tìm kiếm', ['class' => 'btn btn-primary', 'style'=>'margin-top:5px']) ?>
+			<?= Html::resetButton('<i class="fe fe-x"></i> Xóa tìm kiếm', ['class' => 'btn btn-outline-secondary', 'style'=>'margin-top:5px']) ?>
+		</div>
 
 	</div>
-
-	<?php if (!Yii::$app->request->isAjax) { ?>
-		<div class="form-group mb-0 mt-3">
-			<?= Html::submitButton('<i class="fe fe-search"></i> Tìm kiếm', ['class' => 'btn btn-primary']) ?>
-			<?= Html::resetButton('<i class="fe fe-x"></i> Xóa tìm kiếm', ['class' => 'btn btn-outline-secondary']) ?>
-		</div>
-	<?php } ?>
 
 	<?php ActiveForm::end(); ?>
 

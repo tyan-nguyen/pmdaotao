@@ -43,6 +43,8 @@ $slChoDuyet = PhieuDeNghi::slChoDuyet();
 							</li>
 							<li class=""><a href="<?= Yii::getAlias('@web/taisan/dm-loai-hang-muc/index?menu=taisan4') ?>" class="slide-item" data-menu="taisan4"><i class="fe fe-file-text"></i> Danh mục loại hạng mục</a>
 							</li>
+							<li class=""><a href="<?= Yii::getAlias('@web/taisan/dm-don-vi/index?menu=taisan6') ?>" class="slide-item" data-menu="taisan6"><i class="fe fe-file-text"></i> Danh mục đơn vị</a>
+							</li>
 							<li class=""><a href="<?= Yii::getAlias('@web/taisan/dot-tong-hop/index?menu=taisan5') ?>" class="slide-item" data-menu="taisan5"><i class="fe fe-file-text"></i> Đợt tổng hợp</a>
 							</li>
 						</ul>

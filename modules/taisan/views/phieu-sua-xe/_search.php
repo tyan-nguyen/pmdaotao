@@ -1,6 +1,7 @@
 <?php
 
 use app\custom\CustomFunc;
+use app\modules\taisan\models\DmDonVi;
 use app\modules\taisan\models\PhieuDeNghi;
 use app\modules\thuexe\models\Xe;
 use app\modules\user\models\User;
@@ -59,9 +60,19 @@ $model->ngay_hoan_thanh = CustomFunc::convertYMDToDMY($model->ngay_hoan_thanh);
 		</div>
 
 		<div class="col-md-2">
-			<?= $form->field($model, 'loai_yeu_cau')->dropDownList(PhieuDeNghi::getLoaiSuaXeList(), [
-				'prompt' => '- Chọn yêu cầu sửa xe -'
-			]) ?>
+			<?= $form->field($model, 'loai_yeu_cau')->widget(Select2::class, [
+				'data' =>  PhieuDeNghi::getLoaiSuaXeList(),
+				'language' => 'vi',
+				'options' => [
+					'placeholder' => 'Chọn loại yêu cầu...',
+					'class' => 'form-control dropdown-with-arrow',
+					'id' => 'idLoaiYeuCau-search'
+				],
+				'pluginOptions' => [
+					'allowClear' => true,
+					'width' => '100%'
+				],
+			]); ?>
 		</div>
 
 		<!-- 
@@ -95,19 +106,46 @@ $model->ngay_hoan_thanh = CustomFunc::convertYMDToDMY($model->ngay_hoan_thanh);
 		</div>
 
 		<div class="col-md-2">
-			<?= $form->field($model, 'trang_thai')->dropDownList(PhieuDeNghi::getTrangThaiList(), [
-				'prompt' => '- Chọn trạng thái -'
-			]) ?>
+			<?= $form->field($model, 'trang_thai')->widget(Select2::class, [
+				'data' =>  PhieuDeNghi::getTrangThaiList(),
+				'language' => 'vi',
+				'options' => [
+					'placeholder' => 'Chọn trạng thái...',
+					'class' => 'form-control dropdown-with-arrow',
+					'id' => 'idTrangThai-search'
+				],
+				'pluginOptions' => [
+					'allowClear' => true,
+					'width' => '100%'
+				],
+			]); ?>
 		</div>
 
-	</div>
-
-	<?php if (!Yii::$app->request->isAjax) { ?>
-		<div class="form-group mb-0 mt-3">
-			<?= Html::submitButton('<i class="fe fe-search"></i> Tìm kiếm', ['class' => 'btn btn-primary']) ?>
-			<?= Html::resetButton('<i class="fe fe-x"></i> Xóa tìm kiếm', ['class' => 'btn btn-outline-secondary']) ?>
+		<div class="col-md-2">
+			<?= $form->field($model, 'id_don_vi_thuc_hien')->widget(Select2::class, [
+				'data' =>  DmDonVi::getList('sua_chua'),
+				'language' => 'vi',
+				'options' => [
+					'placeholder' => 'Chọn đơn vị...',
+					'class' => 'form-control dropdown-with-arrow',
+					'id' => 'idDonViThucHien-search'
+				],
+				'pluginOptions' => [
+					'allowClear' => true,
+					'width' => '100%'
+				],
+			]); ?>
 		</div>
-	<?php } ?>
+
+	
+
+
+		<div class="col-md-2">
+			<br/>
+			<?= Html::submitButton('<i class="fe fe-search"></i> Tìm kiếm', ['class' => 'btn btn-primary', 'style'=>'margin-top:5px']) ?>
+			<?= Html::resetButton('<i class="fe fe-x"></i> Xóa tìm kiếm', ['class' => 'btn btn-outline-secondary', 'style'=>'margin-top:5px']) ?>
+		</div>
+</div>
 
 	<?php ActiveForm::end(); ?>
 

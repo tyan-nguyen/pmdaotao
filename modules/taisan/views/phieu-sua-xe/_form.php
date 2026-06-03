@@ -1,6 +1,7 @@
 <?php
 
 use app\custom\CustomFunc;
+use app\modules\taisan\models\DmDonVi;
 use app\modules\taisan\models\PhieuDeNghi;
 use app\modules\thuexe\models\Xe;
 use app\modules\user\models\User;
@@ -48,10 +49,12 @@ if (!$model->isNewRecord) {
                         <span aria-hidden="true">×</span></button>
                     <strong><span class="alert-inner--icon d-inline-block me-1"><i class="fe fe-bell"></i></span> Thêm phiếu đề nghị</strong>:
                     <ul>
-                        <li><i class="fa fa-angle-double-right mb-2 me-2"></i> Chọn loại yêu cầu.</li>
-                        <li><i class="fa fa-angle-double-right mb-2 me-2"></i> Nhập km lúc yêu cầu (đối với xe) và nội dung đề nghị.</li>
-                        <li><i class="fa fa-angle-double-right mb-2 me-2"></i> Chọn xe hoặc thiết bị.</li>
+                        <li><i class="fa fa-angle-double-right mb-2 me-2"></i> Chọn xe hoặc thiết bị (tham chiếu).</li>
+                        <li><i class="fa fa-angle-double-right mb-2 me-2"></i> Chọn người đề nghị.</li>
+                        <li><i class="fa fa-angle-double-right mb-2 me-2"></i> Chọn loại yêu cầu, Chọn đơn vị thực hiện.</li>
+                        <li><i class="fa fa-angle-double-right mb-2 me-2"></i> Nhập km hiện tại (đối với xe) và nội dung đề nghị.</li>                        
                         <li><i class="fa fa-angle-double-right mb-2 me-2"></i> Chọn ngày bắt đầu và ngày hoàn thành.</li>
+                        <li><i class="fa fa-angle-double-right mb-2 me-2"></i> Trạng thái để trống sẽ mặc định là nháp, chọn chờ duyệt nếu muốn gửi cho người duyệt luôn không lưu nháp.</li>
                         <li><i class="fa fa-angle-double-right mb-2 me-2"></i> Bấm lưu lại để xuất hiện danh sách chi tiết nội dung muốn đề nghị.</li>
                     </ul>
                 </div>
@@ -86,7 +89,7 @@ if (!$model->isNewRecord) {
             ]); ?>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
             <?= $form->field($model, 'nguoi_de_nghi')->widget(Select2::class, [
                 'initValueText' => $nguoiDeNghiValue, // This shows selected text on form load
                 'language' => 'vi',
@@ -106,10 +109,39 @@ if (!$model->isNewRecord) {
             ?>
         </div>
         <div class="col-md-3">
-            <?= $form->field($model, 'loai_yeu_cau')->dropDownList(PhieuDeNghi::getLoaiSuaXeList(), [
-                'prompt' => '- Chọn yêu cầu sửa xe -'
-            ]) ?>
+            <?= $form->field($model, 'loai_yeu_cau')->widget(Select2::class, [
+                'data' =>  PhieuDeNghi::getLoaiSuaXeList(),
+                'language' => 'vi',
+                'options' => [
+                    'placeholder' => 'Chọn loại yêu cầu...',
+                    'class' => 'form-control dropdown-with-arrow',
+                    'id' => 'idLoaiYeuCau'
+                ],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                    'width' => '100%',
+                    'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
+                ],
+            ]); ?>
         </div>
+
+        <div class="col-md-3">
+            <?= $form->field($model, 'id_don_vi_thuc_hien')->widget(Select2::class, [
+                'data' =>  DmDonVi::getList('sua_chua'),
+                'language' => 'vi',
+                'options' => [
+                    'placeholder' => 'Chọn đơn vị...',
+                    'class' => 'form-control dropdown-with-arrow',
+                    'id' => 'idDonViThucHien'
+                ],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                    'width' => '100%',
+                    'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
+                ],
+            ]); ?>
+		</div>
+
         <div class="col-md-2">
             <?= $form->field($model, 'so_km_luc_yeu_cau')->textInput()->label('KM hiện tại (B.dưỡng)') ?>
         </div>
@@ -137,12 +169,23 @@ if (!$model->isNewRecord) {
             ]); ?>
         </div>
         <div class="col-md-2">
-            <?= $form->field($model, 'trang_thai')->dropDownList(PhieuDeNghi::getTrangThaiForNhanVienList(), [
-                'prompt' => '- Chọn trạng thái -'
-            ]) ?>
+            <?= $form->field($model, 'trang_thai')->widget(Select2::class, [
+                'data' =>  PhieuDeNghi::getTrangThaiForNhanVienList(),
+                'language' => 'vi',
+                'options' => [
+                    'placeholder' => 'Chọn trạng thái...',
+                    'class' => 'form-control dropdown-with-arrow',
+                    'id' => 'idTrangThai'
+                ],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                    'width' => '100%',
+                    'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
+                ],
+            ]); ?>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-4">
             <?= $form->field($model, 'noi_dung_de_nghi')->textInput() ?>
         </div>
 

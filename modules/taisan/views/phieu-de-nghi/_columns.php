@@ -189,6 +189,16 @@ return [
         'vAlign' => 'middle',
     ],
 
+     [
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'id_don_vi_thuc_hien',
+        'value' => function ($model) {
+            return $model->donViThucHien ? $model->donViThucHien->ten    : '';
+        },
+        'hAlign' => 'center',
+        'vAlign' => 'middle',
+    ],
+
     [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'nguoi_duyet',

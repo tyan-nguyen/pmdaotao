@@ -2,6 +2,7 @@
 
 use app\custom\CustomFunc;
 use app\modules\banhang\models\HoaDon;
+use app\modules\taisan\models\DmDonVi;
 use app\modules\taisan\models\PhieuDeNghi;
 use app\modules\user\models\User;
 use app\widgets\CardWidget;
@@ -82,14 +83,36 @@ if (!$model->isNewRecord) {
                                             <?php } ?>
 
                                             <div class="col-md-2">
-                                                <?= $form->field($model, 'loai_phieu')->dropDownList(PhieuDeNghi::getLoaiPhieuList(), [
-                                                    'prompt' => '- Chọn loại phiếu -'
-                                                ]) ?>
+                                                <?= $form->field($model, 'loai_phieu')->widget(Select2::class, [
+                                                    'data' =>  PhieuDeNghi::getLoaiPhieuList(),
+                                                    'language' => 'vi',
+                                                    'options' => [
+                                                        'placeholder' => 'Chọn loại phiếu...',
+                                                        'class' => 'form-control dropdown-with-arrow',
+                                                        'id' => 'idLoaiPhieu-form'
+                                                    ],
+                                                    'pluginOptions' => [
+                                                        'allowClear' => true,
+                                                        'width' => '100%',
+                                                        'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
+                                                    ],
+                                                ]); ?>
                                             </div>
                                             <div class="col-md-2">
-                                                <?= $form->field($model, 'loai_tai_san')->dropDownList(PhieuDeNghi::getLoaiTaiSanList(), [
-                                                    'prompt' => '- Chọn loại tài sản -'
-                                                ]) ?>
+                                                <?= $form->field($model, 'loai_tai_san')->widget(Select2::class, [
+                                                    'data' =>  PhieuDeNghi::getLoaiTaiSanList(),
+                                                    'language' => 'vi',
+                                                    'options' => [
+                                                        'placeholder' => 'Chọn loại tài sản...',
+                                                        'class' => 'form-control dropdown-with-arrow',
+                                                        'id' => 'idLoaiTaiSan-form'
+                                                    ],
+                                                    'pluginOptions' => [
+                                                        'allowClear' => true,
+                                                        'width' => '100%',
+                                                        'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
+                                                    ],
+                                                ]); ?>
                                             </div>
 
                                             <div class="col-md-4">
@@ -100,7 +123,7 @@ if (!$model->isNewRecord) {
                                                     'options' => [
                                                         'placeholder' => 'Chọn người đề nghị...',
                                                         'class' => 'form-control dropdown-with-arrow',
-                                                        'id' => 'idNguoiDeNghi'
+                                                        'id' => 'idNguoiDeNghi-form'
                                                     ],
                                                     'pluginOptions' => [
                                                         'allowClear' => true,
@@ -112,9 +135,20 @@ if (!$model->isNewRecord) {
                                                 ?>
                                             </div>
                                             <div class="col-md-2">
-                                                <?= $form->field($model, 'loai_yeu_cau')->dropDownList(PhieuDeNghi::getLoaiSuaXeList(), [
-                                                    'prompt' => '- Chọn yêu cầu sửa xe -'
-                                                ]) ?>
+                                                <?= $form->field($model, 'loai_yeu_cau')->widget(Select2::class, [
+                                                    'data' =>  PhieuDeNghi::getLoaiSuaXeList(),
+                                                    'language' => 'vi',
+                                                    'options' => [
+                                                        'placeholder' => 'Chọn loại yêu cầu...',
+                                                        'class' => 'form-control dropdown-with-arrow',
+                                                        'id' => 'idLoaiYeuCau-form'
+                                                    ],
+                                                    'pluginOptions' => [
+                                                        'allowClear' => true,
+                                                        'width' => '100%',
+                                                        'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
+                                                    ],
+                                                ]); ?>
                                             </div>
                                             <div class="col-md-2">
                                                 <?= $form->field($model, 'so_km_luc_yeu_cau')->textInput()->label('Số Km') ?>
@@ -145,9 +179,36 @@ if (!$model->isNewRecord) {
                                                 ]); ?>
                                             </div>
                                             <div class="col-md-2">
-                                                <?= $form->field($model, 'trang_thai')->dropDownList(PhieuDeNghi::getTrangThaiList(), [
-                                                    'prompt' => '- Chọn trạng thái -'
-                                                ]) ?>
+                                                <?= $form->field($model, 'trang_thai')->widget(Select2::class, [
+                                                    'data' =>  PhieuDeNghi::getTrangThaiList(),
+                                                    'language' => 'vi',
+                                                    'options' => [
+                                                        'placeholder' => 'Chọn trạng thái...',
+                                                        'class' => 'form-control dropdown-with-arrow',
+                                                        'id' => 'idTrangThai-form'
+                                                    ],
+                                                    'pluginOptions' => [
+                                                        'allowClear' => true,
+                                                        'width' => '100%',
+                                                        'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
+                                                    ],
+                                                ]); ?>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <?= $form->field($model, 'id_don_vi_thuc_hien')->widget(Select2::class, [
+                                                    'data' =>  DmDonVi::getList(),
+                                                    'language' => 'vi',
+                                                    'options' => [
+                                                        'placeholder' => 'Chọn đơn vị...',
+                                                        'class' => 'form-control dropdown-with-arrow',
+                                                        'id' => 'idDonViThucHien-form'
+                                                    ],
+                                                    'pluginOptions' => [
+                                                        'allowClear' => true,
+                                                        'width' => '100%',
+                                                        'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
+                                                    ],
+                                                ]); ?>
                                             </div>
                                             <div class="col-md-2">
                                                 <?= $form->field($model, 'nguoi_duyet')->widget(Select2::class, [
@@ -157,7 +218,7 @@ if (!$model->isNewRecord) {
                                                     'options' => [
                                                         'placeholder' => 'Chọn người duyệt...',
                                                         'class' => 'form-control dropdown-with-arrow',
-                                                        'id' => 'idNguoiDuyet'
+                                                        'id' => 'idNguoiDuyet-form'
                                                     ],
                                                     'pluginOptions' => [
                                                         'allowClear' => true,
@@ -174,14 +235,24 @@ if (!$model->isNewRecord) {
                                                 <?= $form->field($model, 'ghi_chu_duyet')->textInput() ?>
                                             </div>
                                             <!-- <div class="col-md-2">
-            <label>Có chi tiết</label>
-            <?= $form->field($model, 'phieu_co_chi_tiet')->checkbox(['label' => false]) ?>
-        </div>-->
+                                    <label>Có chi tiết</label>
+                                    <?= $form->field($model, 'phieu_co_chi_tiet')->checkbox(['label' => false]) ?>
+                                </div>-->
                                             <div class="col-md-2">
-                                                <?= $form->field($model, 'hinh_thuc_thanh_toan')->dropDownList(
-                                                    HoaDon::getDmHinhThucThanhToan(),
-                                                    ['prompt' => '-Tất cả-']
-                                                )->label('HT.TT') ?>
+                                                <?= $form->field($model, 'hinh_thuc_thanh_toan')->widget(Select2::class, [
+                                                    'data' =>  HoaDon::getDmHinhThucThanhToan(),
+                                                    'language' => 'vi',
+                                                    'options' => [
+                                                        'placeholder' => 'Chọn TM/CK...',
+                                                        'class' => 'form-control dropdown-with-arrow',
+                                                        'id' => 'idHinhThucThanhToan-form'
+                                                    ],
+                                                    'pluginOptions' => [
+                                                        'allowClear' => true,
+                                                        'width' => '100%',
+                                                        'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
+                                                    ],
+                                                ])->label('HT.TT'); ?>
                                             </div>
                                             <div class="col-md-2">
                                                 <label><?= $model->getAttributeLabel('edit_mode') ?></label>

@@ -23,7 +23,7 @@ class PhieuDeNghiSearch extends PhieuDeNghi
                 'so_phieu', 'nam', 'so_vao_so', 'da_thanh_toan', 'so_lan_in', 'edit_mode', 'nguoi_thanh_toan'], 'integer'],
             [['loai_phieu', 'loai_tai_san', 'loai_yeu_cau', 'noi_dung_de_nghi', 'ngay_bat_dau', 'ngay_hoan_thanh', 
             'trang_thai', 'ngay_duyet', 'ghi_chu_duyet', 'phieu_co_chi_tiet', 'thoi_gian_tao',
-            'hinh_thuc_thanh_toan', 'loai_thanh_toan', 'ngay_thanh_toan'], 'safe'],
+            'hinh_thuc_thanh_toan', 'loai_thanh_toan', 'ngay_thanh_toan', 'id_don_vi_thuc_hien'], 'safe'],
             [['tong_tien_du_kien', 'tong_tien_thuc_te'], 'number'],
         ];
     }
@@ -108,7 +108,8 @@ class PhieuDeNghiSearch extends PhieuDeNghi
                 'nguoi_thanh_toan' => $this->nguoi_thanh_toan,
                 'hinh_thuc_thanh_toan' => $this->hinh_thuc_thanh_toan,
                 'loai_thanh_toan' => $this->loai_thanh_toan,
-                'ngay_thanh_toan' => $this->ngay_thanh_toan
+                'ngay_thanh_toan' => $this->ngay_thanh_toan,
+                'id_don_vi_thuc_hien' => $this->id_don_vi_thuc_hien,
             ]);
 
             $query->andFilterWhere(['like', 'loai_phieu', $this->loai_phieu])
