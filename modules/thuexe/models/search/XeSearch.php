@@ -54,13 +54,17 @@ class XeSearch extends Xe
             'id_giao_vien' => $this->id_giao_vien,
             'tinh_trang_xe' => $this->tinh_trang_xe,
             'phan_loai' => $this->phan_loai,
-            'ma_so' => $this->ma_so
+            'nam_san_xuat' => $this->nam_san_xuat,
+            'nam_mua' => $this->nam_mua,
+            
         ]);
 
         $query->andFilterWhere(['like', 'hieu_xe', $this->hieu_xe])
         ->andFilterWhere(['like', 'bien_so_xe', $this->bien_so_xe])
         ->andFilterWhere(['like', 'ma_bien_so', $this->ma_bien_so])
         ->andFilterWhere(['like', 'ghi_chu', $this->ghi_chu])
+        ->andFilterWhere(['like', 'so_hop_dong', $this->so_hop_dong])
+        ->andFilterWhere(['like', 'so_hoa_don', $this->so_hoa_don])
         ->andFilterWhere(['like', 'trang_thai', $this->trang_thai]);
 
         return $dataProvider;
@@ -100,12 +104,16 @@ class XeSearch extends Xe
             'thoi_gian_tao' => $this->thoi_gian_tao,
             'id_giao_vien' => $this->id_giao_vien,
             'tinh_trang_xe' => $this->tinh_trang_xe,
-            'phan_loai' => Xe::PHANLOAI_SATHACH //important
+            'phan_loai' => Xe::PHANLOAI_SATHACH, //important
+            'nam_san_xuat' => $this->nam_san_xuat,
+            'nam_mua' => $this->nam_mua,
         ]);
         
         $query->andFilterWhere(['like', 'hieu_xe', $this->hieu_xe])
         ->andFilterWhere(['like', 'bien_so_xe', $this->bien_so_xe])
         ->andFilterWhere(['like', 'ghi_chu', $this->ghi_chu])
+         ->andFilterWhere(['like', 'so_hop_dong', $this->so_hop_dong])
+        ->andFilterWhere(['like', 'so_hoa_don', $this->so_hoa_don])
         ->andFilterWhere(['like', 'trang_thai', $this->trang_thai]);
         
         return $dataProvider;
