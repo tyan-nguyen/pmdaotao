@@ -56,6 +56,7 @@ class XeSearch extends Xe
             'phan_loai' => $this->phan_loai,
             'nam_san_xuat' => $this->nam_san_xuat,
             'nam_mua' => $this->nam_mua,
+            'ma_so' => $this->ma_so,
             
         ]);
 
@@ -107,6 +108,7 @@ class XeSearch extends Xe
             'phan_loai' => Xe::PHANLOAI_SATHACH, //important
             'nam_san_xuat' => $this->nam_san_xuat,
             'nam_mua' => $this->nam_mua,
+            'ma_so' => $this->ma_so,
         ]);
         
         $query->andFilterWhere(['like', 'hieu_xe', $this->hieu_xe])
