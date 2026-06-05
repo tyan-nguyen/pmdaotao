@@ -40,6 +40,8 @@ use app\modules\taisan\models\PhieuDeNghi;
  * @property int|null $stt
  * @property int|null $so_km_ban_dau 
  * @property string|null $ngay_cap_nhat_km 
+ * @property int|null $nam_san_xuat
+ * @property int|null $nam_mua
  *
  * @property PtxLoaiXe $loaiXe
  * @property PtxPhieuThueXe[] $ptxPhieuThueXes
@@ -194,7 +196,8 @@ class Xe extends \app\models\PtxXe
     {
         return [
             [['id_loai_xe', 'bien_so_xe', 'ma_bien_so'], 'required'],
-            [['id_loai_xe', 'la_xe_cu', 'nguoi_tao', 'id_giao_vien', 'stt', 'so_km_ban_dau'], 'integer'],
+            [['id_loai_xe', 'la_xe_cu', 'nguoi_tao', 'id_giao_vien', 'stt', 'so_km_ban_dau',
+                'nam_san_xuat', 'nam_mua'], 'integer'],
             [['ghi_chu', 'dac_diem'], 'string'],
             [['phan_loai', 'ma_so'], 'string', 'max' => 20],
             [['tinh_trang_xe'], 'string', 'max' => 20],
@@ -253,6 +256,8 @@ class Xe extends \app\models\PtxXe
             'stt' => 'STT',
             'so_km_ban_dau' => 'Số km ban đầu',
             'ngay_cap_nhat_km' => 'Ngày cập nhật km',
+            'nam_san_xuat' => 'Năm sản xuất',
+            'nam_mua' => 'Năm mua',
         ];
     }
     /**

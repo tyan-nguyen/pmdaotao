@@ -153,11 +153,11 @@ return [
         'attribute'=>'bien_so_xe',
         'contentOptions' => [ 'style' => 'text-align:center' ],
     ],
-    [
+    /* [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ma_bien_so',
         'contentOptions' => [ 'style' => 'text-align:center' ],
-    ],
+    ], */
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'hieu_xe',
@@ -243,7 +243,14 @@ return [
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'ghi_chu',
+        'attribute'=>'nam_san_xuat',
+        'label'=>'Năm SX',
+        'contentOptions' => [ 'style' => 'text-align:center' ],
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'nam_mua',
+        'contentOptions' => [ 'style' => 'text-align:center' ],
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
@@ -251,6 +258,11 @@ return [
         'width' => '50px',
         'contentOptions' => [ 'style' => 'text-align:center' ],
     ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'ghi_chu',
+    ],
+   
     /* [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'trang_thai',

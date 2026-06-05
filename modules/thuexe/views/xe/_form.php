@@ -136,8 +136,14 @@ if (!$model->isNewRecord) {
         <div class="col-lg-6 col-md-6">
             <?= $form->field($model, 'dac_diem')->textInput(['maxlength' => true]) ?>
         </div>
-        <div class="col-lg-12 col-md-12">
-            <?= $form->field($model, 'ghi_chu')->textarea(['rows' => 4]) ?>
+        <div class="col-lg-2 col-md-3">
+            <?= $form->field($model, 'nam_san_xuat')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-lg-2 col-md-3">
+            <?= $form->field($model, 'nam_mua')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-lg-8 col-md-6">
+            <?= $form->field($model, 'ghi_chu')->textarea(['rows' =>2]) ?>
         </div>
     </div>
     <?php CardWidget::end() ?>
