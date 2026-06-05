@@ -48,6 +48,8 @@ use app\modules\taisan\models\PhieuDeNghi;
  */
 class Xe extends \app\models\PtxXe
 {
+    const MODEL_ID = 'xe';
+
     const XE_BINHTHUONG = 'BINHTHUONG';
     const XE_HUHONG = 'HUHONG';
     const XE_SUACHUA = 'SUACHUA';

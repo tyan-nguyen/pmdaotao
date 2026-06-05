@@ -2,6 +2,8 @@
 
 use app\modules\thuexe\models\HinhXe;
 use app\custom\CustomFunc;
+use app\modules\thuexe\models\Xe;
+use app\widgets\FileDisplayWidget;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\HvHocVien */
@@ -21,20 +23,19 @@ $hinhXeList = HinhXe::find()->where(['id_xe' => $model->id])->all();
                 </div>
                 <div class="card-body">
                     <div class="skill-tags">
-                        <p><strong>Loại xe:</strong> <?= $model->loaiXe->ten_loai_xe ?></p>
+                        <p><strong>Loại xe:</strong> <?= $model->loaiXe->ten_loai_xe ?> 
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <strong>Biển số xe:</strong> <?= $model->bien_so_xe ?></p>
                         <p><strong>Tên xe:</strong> <?= $model->hieu_xe ?></p>
-                        <p><strong>Biển số xe:</strong> <?= $model->bien_so_xe ?></p>
-                        <p><strong>Phân loại:</strong> <?= $model->getLabelPhanLoaiXe() ?><strong>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                Mã số (ký hiệu xe sát hạch):</strong> <?= $model->ma_so ?></p>
+                        <p><strong>Phân loại:</strong> <?= $model->getLabelPhanLoaiXe() ?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Mã số:</strong> <?= $model->ma_so ?></p>
                         <p><strong>Màu sắc:</strong> <?= $model->mau_sac ?></p>
-                        <p><strong>Tình trạng xe:</strong> <?= $model->tinh_trang_xe ?></p>
-                        <p><strong>Trạng thái:</strong> <?= $model->trang_thai ?></p>
+                        <p><strong>Tình trạng xe:</strong> <?= $model->tinh_trang_xe ?>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <strong>Trạng thái:</strong> <?= $model->trang_thai ?></p>
                         <p><strong>Người phụ trách:</strong> <?= $model->giaoVien ? $model->giaoVien->ho_ten : '' ?></p>
                         <p><strong>Số KM cập nhật gần nhất: <?= $model->getKMHienTai() ?> km</strong>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            Ngày cập nhật KM: <?= CustomFunc::convertYMDHISToDMY($model->getNgayCapNhatKMHienTai()) ?>
-                        </p>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                         Ngày cập nhật KM:</strong> <?= CustomFunc::convertYMDHISToDMY($model->getNgayCapNhatKMHienTai()) ?></p>
                     </div>
                 </div>
             </div>
@@ -54,13 +55,40 @@ $hinhXeList = HinhXe::find()->where(['id_xe' => $model->id])->all();
                     </div>
 
                     <div class="skill-tags">
-                        <p><strong>Số khung:</strong> <?= $model->so_khung ?></p>
-                        <p><strong>Số máy/Số động cơ:</strong> <?= $model->so_may ?></p>
-                        <p><strong>Ngày đăng kiểm:</strong> <?= CustomFunc::convertYMDToDMY($model->ngay_dang_kiem) ?></p>
-                        <p><strong>Xe mới/Đã qua sử dụng:</strong> <?= $model->la_xe_cu == 1 ? 'Xe đã qua sử dụng' : 'Xe mới' ?></p>
-                        <p><strong>Giá trị xe:</strong> <?= number_format($model->so_tien) . ' đ' ?></p>
+                        <p><strong>Số khung:</strong> <?= $model->so_khung ?>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <strong>Số máy/Số động cơ:</strong> <?= $model->so_may ?></p>
+                        <p><strong>Xe mới/Đã qua sử dụng:</strong> <?= $model->la_xe_cu == 1 ? 'Xe đã qua sử dụng' : 'Xe mới' ?>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <strong>Ngày đăng kiểm:</strong> <?= CustomFunc::convertYMDToDMY($model->ngay_dang_kiem) ?>
+                    </p>
+                        <p><strong>Giá trị xe:</strong> <?= number_format($model->so_tien) . ' đ' ?>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <strong>Số hóa đơn:</strong> <?= $model->so_hoa_don ?></p>
+                        <p><strong>Năm sản xuất:</strong> <?= $model->nam_san_xuat ?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Năm mua:</strong> <?= $model->nam_mua ?></p>
                         <p><strong>Nhà cung cấp:</strong> <?= $model->nha_cung_cap ?></p>
-                        <p><strong>Số hóa đơn:</strong> <?= $model->so_hoa_don ?></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+         <div class="col-xl-12 col-md-12">
+            <div class="card custom-card">
+                <div class="card-header custom-card-header rounded-bottom-0">
+                    <div>
+                        <h6 class="card-title mb-0 text-center" style="color: red;">File đính kèm</h6>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="skill-tags">
+                    
+                     <?= FileDisplayWidget::widget([
+                        'type' => 'ALL',
+                        'doiTuong' => Xe::MODEL_ID,
+                        'idDoiTuong' => $model->id,
+                    ]) ?>
+
+
                     </div>
                 </div>
             </div>
