@@ -13,7 +13,8 @@ return [
     [
         'class' => 'kartik\grid\ActionColumn',
         'header'=>'',
-        'template' => '{lichXeGv} {lichXeThue} {lichXeLive} {lichTrongSan} {lichSoSanh} {capNhapGiaoVien} {image} {view} {update} {delete}',
+       /*  'template' => '{view} {lichSoSanh} {image} {update} {capNhapGiaoVien}<li><hr class="dropdown-divider"></li>  {lichXeGv} {lichXeThue} {lichXeLive} {lichTrongSan} <li><hr class="dropdown-divider"></li>{delete}', */
+        'template' => '{view} {lichSoSanh} {image} {update}<li><hr class="dropdown-divider"></li>  {lichXeGv} {lichXeThue} {lichXeLive} {lichTrongSan} <li><hr class="dropdown-divider"></li>{delete}',
         'dropdown' => true,
         'dropdownOptions' => ['class' => 'float-right'],
         'dropdownButton'=>[
@@ -47,6 +48,15 @@ return [
             return Url::to([$action,'id'=>$key]);
         },        
         'buttons' => [
+            'view' => function ($url, $model, $key) {
+                return Html::a('<i class="fa-solid fa-eye"></i> Xem chi tiết', $url, [
+                    'title' => 'Xem chi tiết',
+                    'role' => 'modal-remote',
+                    'class' => 'btn ripple btn-primary dropdown-item',
+                    'data-bs-placement' => 'top',
+                    'data-bs-toggle' => 'tooltip',
+                ]);
+            },
             'lichXeGv' => function ($url, $model, $key) {
                 return Html::a('<i class="fa-solid fa-list-check"></i> Xem lịch dạy', $url, [
                     'title' => 'Lịch dạy của xe',
@@ -107,7 +117,7 @@ return [
                 
             },
         ],
-        'viewOptions'=>['role'=>'modal-remote','title'=>'View','title'=>'Xem',
+        'viewOptions'=>['role'=>'modal-remote','title'=>'Xem chi tiết',
             'class'=>'btn ripple btn-primary btn-sm',
             'data-bs-placement'=>'top',
             'data-bs-toggle'=>'tooltip-primary'],
@@ -121,7 +131,7 @@ return [
                       'data-toggle'=>'tooltip',
                       'data-confirm-title'=>'Xác nhận xóa dữ liệu?',
                       'data-confirm-message'=>'Bạn có chắc chắn thực hiện hành động này?',
-                       'class'=>'btn ripple btn-secondary btn-sm',
+                       'class'=>'btn ripple btn-secondary btn-sm text-danger',
                        'data-bs-placement'=>'top',
                        'data-bs-toggle'=>'tooltip-secondary'], 
     ],
