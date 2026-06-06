@@ -117,7 +117,7 @@ return [
         'hAlign' => 'center',
         'vAlign' => 'middle',
     ],
-    [
+    /* [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'loai_tai_san',
         'value' => function ($model) {
@@ -126,7 +126,7 @@ return [
         'format' => 'html',
         'hAlign' => 'center',
         'vAlign' => 'middle',
-    ],
+    ], */
     [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'id_tham_chieu',
@@ -239,15 +239,15 @@ return [
         'pageSummary' => true,
         'pageSummaryOptions' => ['class' => 'text-right text-end'],
     ],
-    [
+    /* [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'id_dot_tong_hop',
-    ],
+    ], */
     [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'thoi_gian_tao',
         'value' => function ($model) {
-            return CustomFunc::convertYMDHISToDMYHI($model->thoi_gian_tao);
+            return CustomFunc::convertYMDHISToDMY($model->thoi_gian_tao);
         },
         'hAlign' => 'center',
         'vAlign' => 'middle',
