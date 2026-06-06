@@ -28,6 +28,7 @@ use app\modules\taisan\models\PhieuDeNghi;
  * @property string|null $so_may
  * @property string|null $ngay_dang_kiem
  * @property string|null $mau_sac
+ * @property string|null $ma_mau
  * @property string|null $dac_diem
  * @property int|null $la_xe_cu
  * @property float|null $so_tien
@@ -204,7 +205,7 @@ class Xe extends \app\models\PtxXe
             [['phan_loai', 'ma_so'], 'string', 'max' => 20],
             [['tinh_trang_xe'], 'string', 'max' => 20],
             [['thoi_gian_tao', 'ngay_dang_kiem', 'ngay_cap_nhat_km'], 'safe'],
-            [['bien_so_xe', 'ma_bien_so'], 'string', 'max' => 50],
+            [['bien_so_xe', 'ma_bien_so', 'ma_mau'], 'string', 'max' => 50],
             [['trang_thai'], 'string', 'max' => 25],
             [['bien_so_xe'], 'unique'],
             [[
@@ -245,6 +246,7 @@ class Xe extends \app\models\PtxXe
             'so_may' => 'Số máy/Số động cơ',
             'ngay_dang_kiem' => 'Ngày đăng kiểm',
             'mau_sac' => 'Màu sắc',
+            'ma_mau' => 'Mã màu',
             'dac_diem' => 'Đặc điểm',
             'la_xe_cu' => 'Xe đã qua sử dụng',
             'so_tien' => 'Giá trị(VND)',

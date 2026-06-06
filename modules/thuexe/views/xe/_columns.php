@@ -156,25 +156,56 @@ return [
             ]) : '<span class="badge bg-warning">Chưa có hình</span>';
         },
         'format'=>'raw',
-        'contentOptions' => [ 'style' => 'text-align:center' ],
+        //'contentOptions' => [ 'style' => 'text-align:center' ],
+       // 'width' => '100px',
+        'headerOptions' => ['style' => 'width:100px;'],
+        'contentOptions' => ['style' => 'min-width:100px;text-align:center'],
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'bien_so_xe',
-        'contentOptions' => [ 'style' => 'text-align:center' ],
+        //'contentOptions' => [ 'style' => 'text-align:center' ],
+        //'width' => '100px',
+        'headerOptions' => ['style' => 'width:100px;'],
+        'contentOptions' => ['style' => 'min-width:100px;text-align:center'],
     ],
-    /* [
+    [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ma_bien_so',
-        'contentOptions' => [ 'style' => 'text-align:center' ],
-    ], */
+        //'contentOptions' => [ 'style' => 'text-align:center' ],
+       // 'width' => '100px',
+        'headerOptions' => ['style' => 'width:100px;'],
+        'contentOptions' => ['style' => 'min-width:100px;text-align:center'],
+    ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'hieu_xe',
+        'headerOptions' => ['style' => 'width:200px;'],
+        'contentOptions' => ['style' => 'min-width:200px;'],
+    ],
+    /* [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'mau_sac',
+    ], */
+     [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'ma_mau',
+        'label'=>'Màu',
+        'value'=>function($model){
+            return !$model->ma_mau ? '-' : '<span title="'. $model->mau_sac .'" style="background-color:'. $model->ma_mau .'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>';
+        },
+        'format'=>'raw',
+        'headerOptions' => ['style' => 'width:40px;'],
+        'contentOptions' => ['style' => 'min-width:40px;text-align:center;'],
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'mau_sac',
+        'label'=>'Số Km đã đi',
+        'value'=>function($model){
+            return number_format($model->getKMHienTai());
+        },
+        'headerOptions' => ['style' => 'width:100px;'],
+        'contentOptions' => ['style' => 'min-width:100px;text-align:center;'],
     ],
     [
        'class'=>'\kartik\grid\DataColumn',
@@ -184,6 +215,23 @@ return [
             return $loaiXe ? $loaiXe->ten_loai_xe : '<span style="color: red;">Trống </span>'; 
        },
        'contentOptions' => [ 'style' => 'text-align:center' ],
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'label'=>'GV đang sử dụng',
+        'value'=>function($model){
+            $text = '';
+            foreach ($model->getListGiaoVienSuDung() as $iGv=>$gv){
+                if($iGv > 0){
+                    $text .= '<br/>';
+                }
+                $text .= '- ' . $gv->giaoVien->ho_ten;
+            }
+            return $text;
+        },
+        'format'=>'raw',
+        'headerOptions' => ['style' => 'width:175px;'],
+        'contentOptions' => ['style' => 'min-width:175px;'],
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
@@ -207,49 +255,6 @@ return [
         },
         'format'=>'raw',
         'contentOptions' => [ 'style' => 'text-align:center' ],
-      ],
-    
-    /* [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'ngay_dang_kiem',
-        'value'=>function($model){
-            return CustomFunc::convertYMDToDMY($model->ngay_dang_kiem);
-        },
-        'contentOptions' => [ 'style' => 'text-align:center' ],
-    ], */
-    /* [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'so_hop_dong',
-        'contentOptions' => [ 'style' => 'text-align:center' ],
-    ], */
-   /*  [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'id_giao_vien',
-        'label' => 'Người phụ trách',
-        'value'=>function($model){
-            return $model->giaoVien?$model->giaoVien->ho_ten:'';
-        },
-        //'width' => '150px',
-    ], */
-    
-    /* [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'hieu_xe',
-    ], */
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'label'=>'GV phụ trách',
-        'value'=>function($model){
-            $text = '';
-            foreach ($model->getListGiaoVienSuDung() as $iGv=>$gv){
-                if($iGv > 0){
-                    $text .= '<br/>';
-                }
-                $text .= '- ' . $gv->giaoVien->ho_ten;
-            }
-            return $text;
-        },
-        'format'=>'raw'
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
@@ -262,6 +267,38 @@ return [
         'attribute'=>'nam_mua',
         'contentOptions' => [ 'style' => 'text-align:center' ],
     ],
+    
+    /* [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'ngay_dang_kiem',
+        'value'=>function($model){
+            return CustomFunc::convertYMDToDMY($model->ngay_dang_kiem);
+        },
+        'contentOptions' => [ 'style' => 'text-align:center' ],
+    ], */
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'so_hop_dong',
+        'headerOptions' => ['style' => 'width:200px;'],
+        'contentOptions' => ['style' => 'min-width:200px;text-align:center;'],
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'so_hoa_don',
+        'headerOptions' => ['style' => 'width:100px;'],
+        'contentOptions' => ['style' => 'min-width:100px;text-align:center;'],
+    ],
+   /*  [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'id_giao_vien',
+        'label' => 'Người phụ trách',
+        'value'=>function($model){
+            return $model->giaoVien?$model->giaoVien->ho_ten:'';
+        },
+        //'width' => '150px',
+    ], */
+    
+    
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'stt',
@@ -271,9 +308,11 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ghi_chu',
+        'headerOptions' => ['style' => 'width:250px;'],
+        'contentOptions' => ['style' => 'min-width:250px;'],
     ],
    
-    /* [
+   /*  [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'trang_thai',
         'value' => function ($model) {

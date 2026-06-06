@@ -22,6 +22,42 @@ Yii::$app->params['showExport'] = true;
 }
 </style>
 
+<style>
+    /* 1. Thiết lập chiều cao cố định cho cả 2 trạng thái */
+    .double-scroll-wrapper::-webkit-scrollbar,
+    .kv-grid-container::-webkit-scrollbar {
+        height: 14px;
+        /* Đây là chiều cao tối đa khi nở ra */
+    }
+
+    /* 2. Phần nền (Track) - nên để trong suốt hoặc màu rất nhẹ */
+    .double-scroll-wrapper::-webkit-scrollbar-track,
+    .kv-grid-container::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    /* 3. Cục kéo (Thumb) - Đây là nơi xử lý hiệu ứng mượt */
+    .double-scroll-wrapper::-webkit-scrollbar-thumb,
+    .kv-grid-container::-webkit-scrollbar-thumb {
+        background-color: #eae9f1;
+        border-radius: 20px;
+        /* MẸO: Dùng border dày cùng màu với nền trang (ví dụ màu trắng #ffffff) 
+       để ép cục kéo trông nhỏ lại khi ở trạng thái nghỉ */
+        border: 4px solid #ffffff;
+        transition: all 0.4s ease-in-out;
+        /* Tạo độ trễ mượt mà */
+    }
+
+    /* 4. Khi Hover vào vùng chứa (Container) */
+    .double-scroll-wrapper:hover::-webkit-scrollbar-thumb,
+    .kv-grid-container:hover::-webkit-scrollbar-thumb {
+        background-color: #b3b1b1;
+        /* Đậm hơn một chút cho rõ */
+        /* Khi hover, giảm độ dày border để cục kéo "nở" ra */
+        border: 1px solid #ffffff;
+    }
+</style>
+
 <div class="card border-default" id="divFilterExtend">
 	<div class="card-header rounded-bottom-0 card-header text-dark" id="simple">
 		<h5 class="mt-2"><i class="fe fe-search"></i> Tìm kiếm</h5>
@@ -49,6 +85,10 @@ Yii::$app->params['showExport'] = true;
             'id'=>'crud-datatable',
             'dataProvider' => $dataProvider,
             //'filterModel' => $searchModel,
+            'containerOptions' => [
+                'style' => 'min-height:500px;',
+                'class' => 'kv-grid-container'
+            ],
             'pjax'=>true,
             'columns' => require(__DIR__.'/_columns.php'),
             'toolbar'=> [
@@ -87,7 +127,8 @@ Yii::$app->params['showExport'] = true;
             ],          
             'striped' => false,
             'condensed' => true,
-            'responsive' => false,
+            'responsive' => true,
+            'perfectScrollbar' => true,
             'panelHeadingTemplate'=>'<div style="width:100%;"><div class="float-start mt-2 text-primary">{title}</div> <div class="float-end">{toolbar}</div></div>',
             'panelFooterTemplate'=>'<div style="width:100%;"><div class="float-start">{summary}</div><div class="float-end">{pager}</div></div>',
             'summary'=>'Tổng: {totalCount} dòng dữ liệu',
@@ -170,6 +211,41 @@ Yii::$app->params['showExport'] = true;
 <?php
     /* $searchContent = $this->render("_search", ["model" => $searchModel]);
     echo FilterFormWidget::widget(["content"=>$searchContent, "description"=>"Nhập thông tin tìm kiếm."])  */
+?>
+
+<?php
+$js = <<<JS
+    function addDoubleScroll() {
+        var container = $('.kv-grid-container'); 
+        // Xóa scrollbar cũ nếu đã tồn tại (để tránh lặp khi Pjax reload)
+        $('.double-scroll-wrapper').remove();
+        
+        // Tạo một div giả lập có chiều rộng bằng với table bên trong
+        var tableWidth = container.find('table').outerWidth();
+        var topScroll = $('<div class="double-scroll-wrapper" style="overflow-x:auto; overflow-y:hidden; height:20px; width:100%;">' +
+                          '<div style="width:' + tableWidth + 'px; height:20px;"></div></div>');
+        
+        // Chèn vào phía trên container của Grid
+        container.before(topScroll);
+        
+        // Đồng bộ hóa 2 thanh cuộn
+        topScroll.scroll(function(){
+            container.scrollLeft(topScroll.scrollLeft());
+        });
+        container.scroll(function(){
+            topScroll.scrollLeft(container.scrollLeft());
+        });
+    }
+
+    // Chạy khi load trang
+    addDoubleScroll();
+    
+    // Nếu bạn có dùng Pjax, hãy chạy lại sau khi Pjax hoàn tất
+    $(document).on('pjax:complete', function() {
+        addDoubleScroll();
+    });
+JS;
+$this->registerJs($js);
 ?>
 
 

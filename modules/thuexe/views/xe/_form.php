@@ -16,6 +16,11 @@ use kartik\date\DatePicker;
 if (!$model->isNewRecord) {
     $model->ngay_dang_kiem = CustomFunc::convertYMDToDMY($model->ngay_dang_kiem);
 }
+$checkKhongChon = false;
+if($model->ma_mau === null){
+    $checkKhongChon = true;
+    $model->ma_mau = '#ffffff';
+}
 ?>
 
 <div class="xe-form">
@@ -114,6 +119,19 @@ if (!$model->isNewRecord) {
         </div>
 
         <div class="col-lg-3 col-md-6">
+            <?= $form->field($model, 'ma_mau')->input('color', [
+                'id' => 'color-picker',
+                'disabled' => ($model->ma_mau === null) ? true : false // Khóa lại nếu đang là null
+            ]) ?>
+
+            <label>
+                <input type="checkbox" id="no-color-checkbox" name="no_color" <?= $checkKhongChon ? 'checked' : '' ?>>
+                Không sử dụng màu (Mặc định)
+            </label>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6">
             <?= $form->field($model, 'so_hoa_don')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-lg-3 col-md-6">
@@ -143,7 +161,7 @@ if (!$model->isNewRecord) {
             <?= $form->field($model, 'nam_mua')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-lg-8 col-md-6">
-            <?= $form->field($model, 'ghi_chu')->textarea(['rows' =>2]) ?>
+            <?= $form->field($model, 'ghi_chu')->textarea(['rows' => 2]) ?>
         </div>
     </div>
     <?php CardWidget::end() ?>
@@ -174,3 +192,16 @@ if (!$model->isNewRecord) {
         font-weight: bold;
     }
 </style>
+
+<?php
+$this->registerJs("
+    $('#no-color-checkbox').on('change', function() {
+        if($(this).is(':checked')) {
+            $('#color-picker').prop('disabled', true);
+            // Bạn có thể gán một giá trị trống hoặc reset thông qua js nếu cần
+        } else {
+            $('#color-picker').prop('disabled', false);
+        }
+    });
+");
+?>
