@@ -66,7 +66,7 @@ return [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ten_sort',
-        'width'=>'10%',
+        'width'=>'15%',
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
