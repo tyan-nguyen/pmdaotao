@@ -192,7 +192,7 @@ return [
         'attribute'=>'ma_mau',
         'label'=>'Màu',
         'value'=>function($model){
-            return !$model->ma_mau ? '-' : '<span title="'. $model->mau_sac .'" style="background-color:'. $model->ma_mau .'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>';
+            return !$model->ma_mau ? '-' : '<span title="'. $model->mau_sac .'" style="background-color:'. $model->ma_mau .' border: 1px solid blue">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>';
         },
         'format'=>'raw',
         'headerOptions' => ['style' => 'width:40px;'],
