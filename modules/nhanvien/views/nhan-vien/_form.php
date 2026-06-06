@@ -6,6 +6,8 @@ use app\modules\user\models\User;
 use yii\helpers\ArrayHelper;
 use app\widgets\CardWidget;
 use kartik\date\DatePicker;
+use kartik\select2\Select2;
+
 /* @var $this yii\web\View */
 /* @var $model app\modules\nhanvien\models\NhanVien */
 /* @var $form yii\widgets\ActiveForm */
@@ -62,11 +64,20 @@ $listTaiKhoan = ArrayHelper::map($taiKhoans, 'id', 'username');
             <?= $form->field($model, 'dien_thoai')->textInput(['maxlength' => true]) ?>
           </div>
           <div class="col-lg-3 col-md-6">
-              <?= $form->field($model, 'tai_khoan')->dropDownList(
-                $listTaiKhoan,
-                ['prompt' => 'Chọn tài khoản...']
-           ) ?>
-      
+           <label>Tài khoản</label>
+           <?= $form->field($model, 'tai_khoan')->widget(Select2::classname(), [
+                    'data' => $listTaiKhoan,
+                    'language' => 'vi',
+                    'options' => [
+                        'placeholder' => 'Chọn tài khoản...',
+                        'id' => 'tai-khoan-dropdown'
+                    ],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                        'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
+                        'width' => '100%'
+                    ],
+                ])->label(false); ?>      
         </div>
         </div>
         <?php CardWidget::end() ?>

@@ -59,6 +59,16 @@ class NhanVien extends NhanVienBase
         $model = NhanVien::findOne($id);
         return $model?$model->ho_ten:'-';
     }
+    /* get array id_user cua nhan vien trong 1 phong */
+    public function getListTaiKhoanChungPhong($room_id = null){
+        if(!$room_id){
+            $room_id = $this->id_phong_ban;
+        }
+        return self::find()
+            ->select(['tai_khoan'])
+            ->where(['id_phong_ban' => $room_id])
+            ->column();
+    }
 
     
 }

@@ -3,6 +3,7 @@
 namespace app\modules\taisan\models\search;
 
 use app\custom\CustomFunc;
+use app\modules\nhanvien\models\NhanVien;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -83,14 +84,19 @@ class PhieuSuaXeSearch extends PhieuDeNghi
             }
 
             $user = User::getcurrentUser();
+            $nhanVien = NhanVien::findOne(['tai_khoan'=>Yii::$app->user->id]);
             if ($user->superadmin || User::hasRole('Admin')) {
                 $query->andFilterWhere([
                     'nguoi_tao' => $this->nguoi_tao,
                 ]);
             } else {
-                 $query->andFilterWhere([
-                    'nguoi_tao' => Yii::$app->user->id, //chỉ lấy của người đang đăng nhập
-                ]);
+                if($nhanVien != null && $nhanVien->id_phong_ban){
+                    $query->andWhere(['IN', 'nguoi_tao', $nhanVien->getListTaiKhoanChungPhong()]);
+                } else {
+                    $query->andFilterWhere([
+                        'nguoi_tao' => Yii::$app->user->id, //chỉ lấy của người đang đăng nhập
+                    ]);
+                }
             }
 
             $query->andFilterWhere([

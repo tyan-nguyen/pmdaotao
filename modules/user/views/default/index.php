@@ -195,7 +195,24 @@ $dash = new Dashboard();
 						</div>
 						<div class="item-box-wrap">
 							<h5 class="mb-2">
-								<a href="/hocvien/hv-ho-so?menu=hv4">Quản lý học viên</a>
+								<a href="/taisan/phieu-sua-xe/index?menu=dksdx2">PHIẾU SỬA XE</a>
+							</h5>
+							<p class="text-muted mb-0">Đăng ký sửa xe, bảo dưỡng</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
+			<div class="card custom-card service">
+				<div class="card-body">
+					<div class="item-box text-center">
+						<div class=" text-center text-primary mb-2"><i class="fa fa-users"></i>
+						</div>
+						<div class="item-box-wrap">
+							<h5 class="mb-2">
+								<a href="/hocvien/hv-ho-so?menu=hv4">QUẢN LÝ HỌC VIÊN</a>
 							</h5>
 							<p class="text-muted mb-0">Quản lý thông tin học viên,
 								học phí</p>
@@ -213,7 +230,7 @@ $dash = new Dashboard();
 						</div>
 						<div class="item-box-wrap">
 							<h5 class="mb-2">
-								<a href="/daotao/ke-hoach?menu=hv5">Kế hoạch giảng dạy</a>
+								<a href="/daotao/ke-hoach?menu=hv5">KẾ HOẠCH DẠY</a>
 							</h5>
 							<p class="text-muted mb-0">Sắp xếp lịch học thực hành GV-HV</p>
 						</div>
@@ -230,7 +247,7 @@ $dash = new Dashboard();
 						</div>
 						<div class="item-box-wrap">
 							<h5 class="mb-2">
-								<a href="/user/auth/change-own-password">Đổi mật khẩu</a>
+								<a href="/user/auth/change-own-password">ĐỔI MẬT KHẨU</a>
 							</h5>
 							<p class="text-muted mb-0">Thay đổi mật khẩu</p>
 						</div>
