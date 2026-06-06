@@ -52,6 +52,7 @@ class PhieuDeNghiSearch extends PhieuDeNghi
             'query' => $query,
             'sort'=>[
                 'defaultOrder'=>[
+                    'ngay_bat_dau' => SORT_DESC,
                     'id' => SORT_DESC
                 ]
             ]
