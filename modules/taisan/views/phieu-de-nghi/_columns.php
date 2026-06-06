@@ -107,7 +107,7 @@ return [
         'vAlign' => 'middle',
     ],
 
-    [
+   /*  [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'loai_phieu',
         'value' => function ($model) {
@@ -116,7 +116,18 @@ return [
         'format' => 'html',
         'hAlign' => 'center',
         'vAlign' => 'middle',
+    ], */
+     [
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'loai_yeu_cau',
+        'value' => function ($model) {
+            return PhieuDeNghi::getLoaiSuaXeLabel($model->loai_yeu_cau);
+        },
+        'format' => 'html',
+        'hAlign' => 'center',
+        'vAlign' => 'middle',
     ],
+
     /* [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'loai_tai_san',
@@ -152,16 +163,7 @@ return [
             return $model->nguoiDeNghi ? $model->nguoiDeNghi->hoTen : '';
         },
     ],
-    [
-        'class' => '\kartik\grid\DataColumn',
-        'attribute' => 'loai_yeu_cau',
-        'value' => function ($model) {
-            return PhieuDeNghi::getLoaiSuaXeLabel($model->loai_yeu_cau);
-        },
-        'format' => 'html',
-        'hAlign' => 'center',
-        'vAlign' => 'middle',
-    ],
+   
     // [
     // 'class'=>'\kartik\grid\DataColumn',
     // 'attribute'=>'so_km_luc_yeu_cau',
