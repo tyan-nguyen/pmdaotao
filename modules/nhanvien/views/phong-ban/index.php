@@ -11,7 +11,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\modules\nhanvien\models\search\PhongBan */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Phong Bans';
+$this->title = 'Phòng ban';
 $this->params['breadcrumbs'][] = $this->title;
 Yii::$app->params['showSearch'] = false;
 Yii::$app->params['showView'] = false;
