@@ -17,14 +17,6 @@ class PhongBan extends \app\models\NvPhongBan
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
-    {
-        return 'nv_phong_ban';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function rules()
     {
         return [

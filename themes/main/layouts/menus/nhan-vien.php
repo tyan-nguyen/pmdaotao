@@ -34,6 +34,8 @@ use app\modules\nhanvien\models\NhanVien;
 							</li>
 							<li class=""><a href="<?= Yii::getAlias('@web/nhanvien/nhan-vien?menu=nv1') ?>" class="slide-item" data-menu="nv1"><i class="fe fe-file-text"></i> Danh sách nhân viên</a>
 							</li>
+							<li class=""><a href="<?= Yii::getAlias('@web/nhanvien/phong-ban?menu=nv3') ?>" class="slide-item" data-menu="nv3"><i class="fe fe-file-text"></i> DM Phòng ban</a>
+							</li>
 							<li><a href="/kholuutru/loai-file/index?doiTuong=<?= NhanVien::MODEL_ID ?>&menu=nv2" class="slide-item" data-menu="nv2"><i class="fe fe-file-text"></i> Loại hồ sơ</a></li>
 						</ul>
 						<div class="menutabs-content px-0">

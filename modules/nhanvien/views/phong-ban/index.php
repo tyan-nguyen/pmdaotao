@@ -5,65 +5,111 @@ use yii\bootstrap5\Modal;
 use kartik\grid\GridView;
 use cangak\ajaxcrud\CrudAsset; 
 use cangak\ajaxcrud\BulkButtonWidget;
+use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\modules\nhanvien\models\search\PhongBanSearch */
+/* @var $searchModel app\modules\nhanvien\models\search\PhongBan */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Phong Bans';
 $this->params['breadcrumbs'][] = $this->title;
-
-CrudAsset::register($this);
+Yii::$app->params['showSearch'] = false;
+Yii::$app->params['showView'] = false;
+//CrudAsset::register($this);
 
 ?>
+<?php if(Yii::$app->params['showSearch']):?><div class="card border-default" id="divFilterExtend">
+	<div class="card-header rounded-bottom-0 card-header text-dark" id="simple">
+		<h5 class="mt-2"><i class="fe fe-search"></i> Tìm kiếm</h5>
+	</div>
+	<div class="card-body">
+		<div class="expanel expanel-default">
+			<div class="expanel-body">
+				<?php 
+                    echo $this->render("_search", ["model" => $searchModel]);
+                ?>			</div>
+		</div>
+	</div>
+</div>
+<?php endif; ?>
+<?php Pjax::begin([
+    'id'=>'myGrid',
+    'timeout' => 10000,
+    'formSelector' => '.myFilterForm'
+]); ?>
+
 <div class="phong-ban-index">
     <div id="ajaxCrudDatatable">
         <?=GridView::widget([
             'id'=>'crud-datatable',
             'dataProvider' => $dataProvider,
-            'filterModel' => $searchModel,
+            //'filterModel' => $searchModel,
             'pjax'=>true,
             'columns' => require(__DIR__.'/_columns.php'),
             'toolbar'=> [
                 ['content'=>
-                    Html::a('<i class="fas fa fa-plus" aria-hidden="true"></i>', ['create'],
-                    ['role'=>'modal-remote','title'=> 'Tambah Phong Bans','class'=>'btn btn-default']).
-                    Html::a('<i class="fas fa fa-sync" aria-hidden="true"></i>', [''],
-                    ['data-pjax'=>1, 'class'=>'btn btn-default', 'title'=>'Reset Grid']).
-                    '{toggleData}'.
+                    '
+                    <div class="dropdown">
+						<button aria-expanded="false" aria-haspopup="true" class="btn dropdown-toggle" data-bs-toggle="dropdown" type="button"><i class="fa fa-navicon"></i></button>
+						<div class="dropdown-menu tx-13" style="">
+							<h6 class="dropdown-header tx-uppercase tx-11 tx-bold bg-info tx-spacing-1">
+								Chọn chức năng</h6>'
+                    .
+                    Html::a('<i class="fas fa fa-plus" aria-hiddi="true"></i> Thêm mới', ['create'],
+                        ['role'=>'modal-remote','title'=> 'Thêm mới','class'=>'dropdown-item'])
+                    .
+                    Html::a('<i class="fas fa fa-sync" aria-hidden="true"></i> Tải lại', [''],
+                        ['data-pjax'=>1, 'class'=>'dropdown-item', 'title'=>'Tải lại'])
+                    .
+                    Html::a('<i class="fas fa fa-trash" aria-hidden="true"></i>&nbsp; Xóa danh sách',
+                        ["bulkdelete"],
+                        [
+                            'class'=>'dropdown-item text-secondary',
+                            'role'=>'modal-remote-bulk',
+                            'data-confirm'=>false, 'data-method'=>false,// for overide yii data api
+                            'data-request-method'=>'post',
+                            'data-confirm-title'=>'Xác nhận xóa?',
+                            'data-confirm-message'=>'Bạn có chắc muốn xóa?'
+                        ])
+                    .
+                    '
+						</div>
+					</div>
+                    '.
                     '{export}'
                 ],
-            ],          
-            'striped' => true,
+            ],             
+            'striped' => false,
             'condensed' => true,
-            'responsive' => true,          
+            'responsive' => false,
+            'panelHeadingTemplate'=>'<div style="width:100%;"><div class="float-start mt-2 text-primary">{title}</div> <div class="float-end">{toolbar}</div></div>',
+            'panelFooterTemplate'=>'<div style="width:100%;"><div class="float-start">{summary}</div><div class="float-end">{pager}</div></div>',
+            'summary'=>'Tổng: {totalCount} dòng dữ liệu',
             'panel' => [
-                'type' => 'primary', 
-                'heading' => '<i class="fas fa fa-list" aria-hidden="true"></i> Phong Bans listing',
-                'before'=>'<em>* Resize kolom table  serte kolom kanan dan kiri.</em>',
-                'after'=>BulkButtonWidget::widget([
-                            'buttons'=>Html::a('<i class="fas fa fa-trash" aria-hidden="true"></i>&nbsp; Hapus semua',
-                                ["bulkdelete"] ,
-                                [
-                                    "class"=>"btn btn-danger btn-xs",
-                                    'role'=>'modal-remote-bulk',
-                                    'data-confirm'=>false, 'data-method'=>false,// for overide yii data api
-                                    'data-request-method'=>'post',
-                                    'data-confirm-title'=>'Aapakah anda yakin?',
-                                    'data-confirm-message'=>'Apakah Anda yakin akan menghapus data ini?'
-                                ]),
-                        ]).                        
-                        '<div class="clearfix"></div>',
-            ]
+                'headingOptions'=>['class'=>'card-header rounded-bottom-0 card-header text-dark'],
+                'heading' => '<i class="typcn typcn-folder-open"></i> DANH SÁCH PHÒNG BAN',
+                'before'=>false,
+            ],
+            'export'=>[
+                'options' => [
+                    'class' => 'btn'
+                ]
+            ]          
         ])?>
     </div>
 </div>
+
+<?php Pjax::end(); ?>
+
 <?php Modal::begin([
-   "options" => [
-    "id"=>"ajaxCrudModal",
-    "tabindex" => false // important for Select2 to work properly
-],
-   "id"=>"ajaxCrudModal",
-    "footer"=>"",// always need it for jquery plugin
+   'options' => [
+        'id'=>'ajaxCrudModal',
+        'tabindex' => false // important for Select2 to work properly
+   ],
+   'dialogOptions'=>['class'=>'modal-lg'],
+   'closeButton'=>['label'=>'<span aria-hidden=\'true\'>×</span>'],
+   'id'=>'ajaxCrudModal',
+    'footer'=>'',// always need it for jquery plugin
 ])?>
+
 <?php Modal::end(); ?>
