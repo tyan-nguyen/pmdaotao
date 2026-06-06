@@ -126,7 +126,7 @@ if($model->ma_mau === null){
 
             <label>
                 <input type="checkbox" id="no-color-checkbox" name="no_color" <?= $checkKhongChon ? 'checked' : '' ?>>
-                Không sử dụng màu
+                <span style="color:var(--primary-bg-color);">Không sử dụng màu</span>
             </label>
 
         </div>
