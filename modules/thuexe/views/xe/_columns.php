@@ -183,10 +183,10 @@ return [
         'headerOptions' => ['style' => 'width:200px;'],
         'contentOptions' => ['style' => 'min-width:200px;'],
     ],
-    [
+    /* [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'mau_sac',
-    ],
+    ], */
      [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ma_mau',
