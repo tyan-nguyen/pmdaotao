@@ -6,6 +6,7 @@ use app\custom\CustomFunc;
 use app\modules\daotao\models\KeHoach;
 use app\modules\daotao\models\TietHoc;
 use app\modules\demxe\models\DemXe;
+use app\modules\taisan\models\PhieuDeNghi;
 use app\modules\thuexe\models\LichDungXe;
 use app\modules\thuexe\models\LichThue;
 use Yii;
@@ -198,6 +199,30 @@ class LichXeController extends Controller
                 'backgroundColor' => '#212121',
                 'resourceId' => 'collich'
             ];
+        }
+
+        //lịch sửa chữa, bảo dưỡng add to list lịch (sét màu đỏ)
+        $lichSuaXes = PhieuDeNghi::find()->where([
+            'loai_tai_san' => PhieuDeNghi::LOAITAISAN_XE,
+            'id_tham_chieu' => $model->id,
+        ])->andWhere(['IN', 'trang_thai', PhieuDeNghi::getDmTrangThaiCoSoVaoSo()])->all();
+
+        foreach ($lichSuaXes as $item) {
+            if ($item->ngay_bat_dau != null && $item->ngay_hoan_thanh!= null) {
+                $eventData[] = [
+                    'title' => PhieuDeNghi::getLoaiSuaXeList()[$item->loai_yeu_cau]
+                        . ': ' . ($item->nguoiDeNghi ? $item->nguoiDeNghi->hoTen : ''),
+                    'description' => 'Xe:' .( $item->tenThamChieu ? $item->tenThamChieu : '') . '<br>'
+                        . 'Từ ' . CustomFunc::convertYMDHISToDMY($item->ngay_bat_dau)
+                        . ' đến ' . CustomFunc::convertYMDHISToDMY($item->ngay_hoan_thanh)
+                        . '<br>Nội dung: ' . $item->noi_dung_de_nghi
+                        . '<br>Trạng thái: ' . PhieuDeNghi::getTrangThaiList()[$item->trang_thai],
+                    'start' => $item->ngay_bat_dau ? (date('Y-m-d', strtotime($item->ngay_bat_dau)) . ' 07:00:00') : '',
+                    'end' => $item->ngay_hoan_thanh ? (date('Y-m-d', strtotime($item->ngay_hoan_thanh)) . ' 17:00:00') : '',
+                    'backgroundColor' => '#ff0000',
+                    'resourceId' => 'collich'
+                ];
+            }
         }
 
 
