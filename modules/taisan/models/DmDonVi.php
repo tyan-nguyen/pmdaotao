@@ -11,6 +11,7 @@ use Yii;
  * @property int $id
  * @property string|null $code
  * @property string $ten
+ * @property string $ten_sort
  * @property int|null $co_sua_chua
  * @property int|null $co_ban_hang
  * @property string|null $ghi_chu
@@ -31,7 +32,7 @@ class DmDonVi extends CpDmDonVi
             [['ten'], 'required'],
             [['co_sua_chua', 'co_ban_hang', 'stt', 'nguoi_tao'], 'integer'],
             [['ghi_chu'], 'string'],
-            [['code'], 'string', 'max' => 50],
+            [['code', 'ten_sort'], 'string', 'max' => 50],
             [['thoi_gian_tao'], 'safe'],
             [['ten'], 'string', 'max' => 200],
         ];
@@ -46,6 +47,7 @@ class DmDonVi extends CpDmDonVi
             'id' => 'ID',
             'code' => 'Code',
             'ten' => 'Tên',
+            'ten_sort' => 'Tên ngắn',
             'co_sua_chua' => 'Sửa chữa',
             'co_ban_hang' => 'Bán hàng',
             'ghi_chu' => 'Ghi chú',
@@ -63,6 +65,11 @@ class DmDonVi extends CpDmDonVi
             $this->thoi_gian_tao = date('Y-m-d H:i:s');
         }
         return parent::beforeSave($insert);
+    }
+
+    //lấy tên ngắn hiển thị trên danh sách
+    public function getTenSort(){
+        return $this->ten_sort ? $this->ten_sort : $this->ten;
     }
 
     //get list đơn vị để điền vào dropdown

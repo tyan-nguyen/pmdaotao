@@ -28,9 +28,11 @@ use yii\widgets\ActiveForm;
         <div class="col-md-4">
             <?= $form->field($model, 'co_ban_hang')->checkbox() ?>
         </div>
-        
-        <div class="col-md-12">
-            <?= $form->field($model, 'ghi_chu')->textarea(['rows' => 3]) ?>
+        <div class="col-md-6">
+            <?= $form->field($model, 'ten_sort')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-md-6">
+            <?= $form->field($model, 'ghi_chu')->textarea(['rows' => 1]) ?>
         </div>
 
     </div>

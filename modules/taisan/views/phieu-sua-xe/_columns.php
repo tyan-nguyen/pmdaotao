@@ -190,7 +190,7 @@ return [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'id_don_vi_thuc_hien',
         'value' => function ($model) {
-            return $model->donViThucHien ? $model->donViThucHien->ten    : '';
+            return $model->donViThucHien ? $model->donViThucHien->tenSort    : '';
         },
         'hAlign' => 'center',
         'vAlign' => 'middle',

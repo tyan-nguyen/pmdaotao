@@ -65,6 +65,11 @@ return [
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'ten_sort',
+        'width'=>'10%',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'co_sua_chua',
         'value' => function($model) {
             return $model->co_sua_chua ? '<i class="ion-checkmark-round text-success"></i>' : '';
