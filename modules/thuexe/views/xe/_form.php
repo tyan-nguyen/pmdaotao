@@ -118,7 +118,7 @@ if($model->ma_mau === null){
             <?= $form->field($model, 'mau_sac')->textInput(['maxlength' => true]) ?>
         </div>
 
-        <div class="col-lg-1 col-md-6">
+        <div class="col-lg-2 col-md-6">
             <?= $form->field($model, 'ma_mau')->input('color', [
                 'id' => 'color-picker',
                 'disabled' => ($model->ma_mau === null) ? true : false // Khóa lại nếu đang là null
@@ -131,7 +131,7 @@ if($model->ma_mau === null){
 
         </div>
 
-        <div class="col-lg-3 col-md-6">
+        <div class="col-lg-2 col-md-6">
             <?= $form->field($model, 'so_hoa_don')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-lg-3 col-md-6">
