@@ -78,7 +78,7 @@ class FileController extends Controller
      * @param int $idDoiTuong: id của đối tượng thuộc bảng của mã đối tượng
      * upload single file
      */
-    public function actionUploadSingle($loaiFile=NULL, $doiTuong, $idDoiTuong){
+    public function actionUploadSingle($loaiFile=NULL, $doiTuong=NULL, $idDoiTuong=NULL){
         $request = Yii::$app->request;
         Yii::$app->response->format = Response::FORMAT_JSON;
         $model = new File();
