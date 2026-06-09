@@ -143,6 +143,10 @@ return [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'nhom_co_so',
         'width' => '75px',
+        'format'=> 'raw',
+        'value'=>function($model){
+            return $model->getChiNhanhForKhoaHocLabel($model->nhom_co_so);
+        }
     ],
 
     [

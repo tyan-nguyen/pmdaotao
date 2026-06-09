@@ -75,7 +75,7 @@ $model->ngay_ket_thuc = CustomFunc::convertYMDToDMY($model->ngay_ket_thuc);
         </div>
 
         <div class="col-lg-2 col-md-6">
-            <?= $form->field($model, 'nhom_co_so')->dropDownList(['TRAVINH' => 'Trà Vinh', 'BENTRE' => 'Bến Tre'], [
+            <?= $form->field($model, 'nhom_co_so')->dropDownList(KhoaHoc::getChiNhanhForKhoaHocList(), [
                 'prompt' => '-Chọn-'
             ]) ?>
         </div>

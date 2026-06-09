@@ -344,13 +344,20 @@ class KhoaHocController extends Controller
     public function actionDelete($id)
     {
         $request = Yii::$app->request;
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        $content = '';
+        if($model->getSoLuongHocVien() <= 0){
+            $model->delete();
+            $content = 'Xóa thành công';
+        } else {
+            $content = "Xóa không thành công do khóa học đang tồn tại học viên!";
+        }
         if($request->isAjax){
             /*
             *   Process for ajax request
             */
             Yii::$app->response->format = Response::FORMAT_JSON;
-            return ['forceClose'=>true,'forceReload'=>'#crud-datatable-pjax'];
+            return ['forceClose'=>true,'forceReload'=>'#crud-datatable-pjax', 'tcontent'=>$content];
         }else{
             /*
             *   Process for non-ajax request
@@ -372,9 +379,16 @@ class KhoaHocController extends Controller
     {        
         $request = Yii::$app->request;
         $pks = explode(',', $request->post( 'pks' )); // Array or selected records primary keys
+        $content = '';
         foreach ( $pks as $pk ) {
             $model = $this->findModel($pk);
-            $model->delete();
+
+            if($model->getSoLuongHocVien() <= 0){
+                $model->delete();
+                $content .= $model->ten_khoa_hoc . 'Xóa thành công<br/>';
+            } else {
+                $content .= $model->ten_khoa_hoc . "Xóa không thành công do khóa học đang tồn tại học viên!<br/>";
+            }
         }
 
         if($request->isAjax){
@@ -382,7 +396,7 @@ class KhoaHocController extends Controller
             *   Process for ajax request
             */
             Yii::$app->response->format = Response::FORMAT_JSON;
-            return ['forceClose'=>true,'forceReload'=>'#crud-datatable-pjax'];
+            return ['forceClose'=>true,'forceReload'=>'#crud-datatable-pjax', 'tcontent'=>$content];
         }else{
             /*
             *   Process for non-ajax request

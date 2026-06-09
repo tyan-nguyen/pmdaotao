@@ -35,8 +35,37 @@ class KhoaHocBase extends \app\models\HvKhoaHoc
     const TRANGTHAI_DAHOANTHANH = 'DA_HOAN_THANH'; //ĐÃ KẾT THÚC KHÓA HỌC
     const TRANGTHAI_DANGHOC = 'DANG_HOC'; //KHÓA HỌC ĐANG HỌC HOẶC ĐÃ ĐỦ HỌC VIÊN
 
+
+
     public $listIdHocVien; //dung trong form phan cong giang day
     public $idGiaoVien; //dung trong form phan cong giang day
+
+    public const CHINHANH_TRAVINH = 'TRAVINH';
+    public const CHINHANH_BENTRE = 'BENTRE';
+    public static function getChiNhanhForKhoaHocList()
+    {
+        return [
+            self::CHINHANH_TRAVINH => 'Trà Vinh',
+            self::CHINHANH_BENTRE => 'Bến Tre',
+        ];
+    }
+    public static function getChiNhanhForKhoaHocLabel($machinhanh)
+    {
+        $list = self::getChiNhanhForKhoaHocList();
+        $class = [
+            self::CHINHANH_TRAVINH => 'bg-primary',
+            self::CHINHANH_BENTRE => 'bg-info',
+        ];
+
+        $label = $list[$machinhanh] ?? 'Chưa phân loại';
+        $css = $class[$machinhanh] ?? 'bg-danger';
+
+        if($machinhanh != null){
+            return "<span class=\"badge {$css}\">{$label}</span>";
+        } else {
+            return '';
+        }
+    }
 
     //show list trang thai
     public function getListTrangThai()
