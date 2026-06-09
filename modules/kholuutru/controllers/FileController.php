@@ -203,7 +203,7 @@ class FileController extends Controller
     /**
      * upload multi file process
      */
-    public function actionUploadMultiProcess($loaiFile=NULL, $doiTuong, $idDoiTuong){
+    public function actionUploadMultiProcess($loaiFile=NULL, $doiTuong=NULL, $idDoiTuong=NULL){
         Yii::$app->response->format = Response::FORMAT_JSON;
         if(!empty($_FILES)){
             $file = $_FILES['file']['tmp_name'];
