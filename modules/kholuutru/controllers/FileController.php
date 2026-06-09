@@ -164,7 +164,7 @@ class FileController extends Controller
     /**
      * upload multi file
      */
-    public function actionUploadMulti($loaiFile=NULL, $doiTuong, $idDoiTuong){
+    public function actionUploadMulti($loaiFile=NULL, $doiTuong=NULL, $idDoiTuong=MULL){
         $request = Yii::$app->request;
         Yii::$app->response->format = Response::FORMAT_JSON;
         $model = new File();
@@ -186,7 +186,7 @@ class FileController extends Controller
     /**
      * reload block file
      */
-    public function actionReload($loaiFile=NULL, $doiTuong, $idDoiTuong){
+    public function actionReload($loaiFile=NULL, $doiTuong=NULL, $idDoiTuong=NULL){
         Yii::$app->response->format = Response::FORMAT_JSON;
         return [
             'forceClose'=>true,
