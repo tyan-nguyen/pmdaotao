@@ -78,6 +78,12 @@ class ApiController extends Controller
         ];
     }
 
+    private function isValidDate($date)
+    {
+        $d = \DateTime::createFromFormat('Y-m-d', $date);
+
+        return $d && $d->format('Y-m-d') === $date;
+    }
     /**
      * kiem tra xe vao ra
      * GET /api/xe/ke-hoach?bien_so=84A-111.11&ngay=2026-06-10
@@ -94,7 +100,7 @@ class ApiController extends Controller
         }
 
         if (empty($ngay)) {
-            throw new BadRequestHttpException('Thiếu tham số ngày.');
+            $ngay = date('Y-m-d');
         }
 
         if (!$this->isValidDate($ngay)) {
