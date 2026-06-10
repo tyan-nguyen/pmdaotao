@@ -110,7 +110,7 @@ class ApiController extends Controller
         $xe = Xe::find()
             ->where([
                 'or',
-                ['bien_so' => $bienSo],
+                ['bien_so_xe' => $bienSo],
                 ['ma_bien_so' => $bienSo],
             ])
             ->one();
