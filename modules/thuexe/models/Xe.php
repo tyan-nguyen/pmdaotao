@@ -628,10 +628,10 @@ class Xe extends \app\models\PtxXe
 
         //lịch sửa chữa, bảo dưỡng add to list lịch (sét màu đỏ)
         $lichSuaXes = PhieuDeNghi::find()->where([
-            'loai_tai_san' => PhieuDeNghi::LOAITAISAN_XE,
-            'loai_phieu' => PhieuDeNghi::LOAIPHIEU_SUACHUA,
+            // 'loai_tai_san' => PhieuDeNghi::LOAITAISAN_XE,
+            // 'loai_phieu' => PhieuDeNghi::LOAIPHIEU_SUACHUA,
             'id_tham_chieu' => $this->id,
-        ])/* ->andWhere(['IN', 'trang_thai', PhieuDeNghi::getDmTrangThaiCoSoVaoSo()]) */
+        ])->andWhere(['IN', 'trang_thai', PhieuDeNghi::getDmTrangThaiCoSoVaoSo()])
             ->andWhere(['>=', 'ngay_bat_dau', $start])
             ->andWhere(['<=', 'ngay_hoan_thanh', $end])->all();
 
