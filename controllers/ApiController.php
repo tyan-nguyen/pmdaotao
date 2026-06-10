@@ -3,7 +3,9 @@
 namespace app\controllers; // Đổi lại thành frontend\controllers hoặc backend\controllers nếu dùng Advanced Template
 
 use app\models\XeLogApi;
+use app\modules\thuexe\models\Xe;
 use Yii;
+use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\web\Response;
 
@@ -74,5 +76,74 @@ class ApiController extends Controller
                 'time' => $timestamp
             ]
         ];
+    }
+
+    /**
+     * kiem tra xe vao ra
+     * GET /api/xe/ke-hoach?bien_so=84A-111.11&ngay=2026-06-10
+     */
+    public function actionCheckCar()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        $bienSo = Yii::$app->request->get('bien_so');
+        $ngay = Yii::$app->request->get('ngay');
+
+        if (empty($bienSo)) {
+            throw new BadRequestHttpException('Thiếu tham số biển số xe.');
+        }
+
+        if (empty($ngay)) {
+            throw new BadRequestHttpException('Thiếu tham số ngày.');
+        }
+
+        if (!$this->isValidDate($ngay)) {
+            throw new BadRequestHttpException('Ngày không đúng định dạng Y-m-d.');
+        }
+
+        $xe = Xe::find()
+            ->where([
+                'or',
+                ['bien_so' => $bienSo],
+                ['ma_bien_so' => $bienSo],
+            ])
+            ->one();
+        if (!$xe) {
+            return [
+                'success' => false,
+                'message' => 'Không tìm thấy xe theo biển số.',
+                'data' => null,
+            ];
+        } else {
+            return [
+                'success' => true,
+                'message' => 'Lấy thông tin kế hoạch xe thành công.',
+                'data' => [
+                    'bien_so_xe' => '84A-111.11',
+                    'nguoi_quan_ly' => [
+                        'Nguyễn Văn A',
+                        'Nguyễn Văn B',
+                    ],
+                    'ngay_tra_cuu' => $ngay,
+                    'ke_hoach' => [
+                        [
+                            'thoi_gian' => '07:00 - 09:00',
+                            'noi_dung' => 'Dạy thực hành lái xe hạng B',
+                            'nguoi_phu_trach' => 'Nguyễn Văn A',
+                        ],
+                        [
+                            'thoi_gian' => '09:30 - 11:30',
+                            'noi_dung' => 'Ôn tập sa hình',
+                            'nguoi_phu_trach' => 'Nguyễn Văn B',
+                        ],
+                        [
+                            'thoi_gian' => '14:00 - 16:00',
+                            'noi_dung' => 'Kiểm tra xe trước sát hạch',
+                            'nguoi_phu_trach' => 'Nguyễn Văn A',
+                        ],
+                    ],
+                ],
+            ];
+        }
     }
 }
