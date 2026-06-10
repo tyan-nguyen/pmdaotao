@@ -9,6 +9,8 @@ use app\modules\giaovien\models\GiaoVien;
 use app\modules\daotao\models\GvXe;
 use app\custom\CustomFunc;
 use app\modules\banhang\models\HangHoa;
+use app\modules\daotao\models\KeHoach;
+use app\modules\daotao\models\TietHoc;
 use app\modules\demxe\models\DemXe;
 use app\modules\taisan\models\PhieuDeNghi;
 
@@ -517,6 +519,110 @@ class Xe extends \app\models\PtxXe
             $ngay = date('Y-m-d');
         $start = $ngay . ' 00:00:00';
         $end = $ngay . ' 23:59:59';
+
+        $contactLog = TietHoc::find()->alias('t')
+            ->joinWith(['keHoach k'])
+            ->andWhere(['t.id_xe' => $this->id])
+            ->andWhere(['>=', 't.thoi_gian_bd', $start])
+            ->andWhere(['<=', 't.thoi_gian_kt', $end])
+            ->andWhere(['k.trang_thai_duyet' => KeHoach::getDmTrangThaiForLichSuDungXe()])
+            ->orderBy(['t.thoi_gian_bd' => SORT_ASC])->all();
+
+
+
+
+        $merged = [];
+        $current = null;
+
+        foreach ($contactLog as $item) {
+            $start = $item->thoi_gian_bd;
+            $end   = $item->thoi_gian_kt;
+
+            $gv = $item->giaoVien ? $item->giaoVien->ho_ten : '';
+            $hv = $item->hocVien ? $item->hocVien->ho_ten : '';
+            $idHv = $item->id_hoc_vien;
+            $trangThai = $item->trang_thai;
+            $bienSoXe = $item->xe->bien_so_xe;
+            $monHoc = $item->monHoc->ten_mon;
+
+            if ($current === null) {
+                // bắt nhóm đầu tiên
+                $current = [
+                    'start' => $start,
+                    'end' => $end,
+                    'giao_vien' => $gv,
+                    'hoc_vien' => $hv,
+                    'id_hoc_vien' => $idHv,
+                    'trang_thai' => $trangThai,
+                    'mon_hoc' => $monHoc,
+                    'bien_so_xe' => $bienSoXe
+                ];
+            } else {
+                // Điều kiện gộp:
+                // 1. Liền kề về thời gian
+                // 2. Cùng học viên
+                // 3. Cùng trạng thái
+                // 4. Cùng môn học
+                if (
+                    $start == $current['end'] &&
+                    $idHv == $current['id_hoc_vien'] &&
+                    $trangThai == $current['trang_thai'] &&
+                    $monHoc = $current['mon_hoc']
+                ) {
+                    // gộp: tăng giờ kết thúc
+                    $current['end'] = $end;
+                } else {
+                    // đóng nhóm cũ, mở nhóm mới
+                    $merged[] = $current;
+
+                    $current = [
+                        'start' => $start,
+                        'end' => $end,
+                        'giao_vien' => $gv,
+                        'hoc_vien' => $hv,
+                        'id_hoc_vien' => $idHv,
+                        'trang_thai' => $trangThai,
+                        'mon_hoc' => $monHoc,
+                        'bien_so_xe' => $bienSoXe
+                    ];
+                }
+            }
+        }
+
+        // đẩy nhóm cuối
+        if ($current !== null) {
+            $merged[] = $current;
+        }
+
+        $eventData = [];
+
+        foreach ($merged as $m) {
+            $eventData[] = [
+                'title' => 'GV: ' . $m['giao_vien'] . '<br>HV: ' . $m['hoc_vien'],
+                'description' => 'Xe:' . $m['bien_so_xe'] . '<br>GV: ' . $m['giao_vien'] . ' - HV: ' . $m['hoc_vien']
+                    . ' dạy từ ' . CustomFunc::convertYMDHISToDMYHI($m['start'])
+                    . ' đến ' . CustomFunc::convertYMDHISToDMYHI($m['end'])
+                    . '<br>Môn học: ' . $m['mon_hoc']
+                    . '<br>Trạng thái: ' . TietHoc::getDmTrangThai()[$m['trang_thai']],
+                'start' => $m['start'],
+                'end' => $m['end'],
+                'backgroundColor' => $m['color'],
+                'resourceId' => 'collich'
+            ];
+
+            $arr[] =  [
+                'thoi_gian' => 'Từ ' . CustomFunc::convertYMDHISToDMYHI($m['start'])
+                    . ' đến ' . CustomFunc::convertYMDHISToDMYHI($m['end']),
+                'noi_dung' => 'Xe:' . $m['bien_so_xe'] . '<br>GV: ' . $m['giao_vien'] . ' - HV: ' . $m['hoc_vien']
+                    . ' dạy từ ' . CustomFunc::convertYMDHISToDMYHI($m['start'])
+                    . ' đến ' . CustomFunc::convertYMDHISToDMYHI($m['end'])
+                    . '<br>Môn học: ' . $m['mon_hoc']
+                    . '<br>Trạng thái: ' . TietHoc::getDmTrangThai()[$m['trang_thai']],
+                'nguoi_phu_trach' => 'GV: ' . $m['giao_vien'],
+            ];
+        }
+
+
         $lichDungXes = LichDungXe::find()->where([
             'id_xe' => $this->id,
             'trang_thai' => LichDungXe::TT_ACTIVE
@@ -548,6 +654,32 @@ class Xe extends \app\models\PtxXe
                 ];
             }
         }
+
+        //$contactLog = ContactLogPolicy::getContactLogByStaff();
+        $contactLog = LichThue::find()
+            //->joinWith(['xe as x'])
+            ->andWhere(['id_xe' => $this->id])
+            ->andWhere(['>=', 'thoi_gian_bat_dau', $start])->andWhere(['<=', 'thoi_gian_bat_dau', $end])
+            ->orderBy(['thoi_gian_tao' => SORT_DESC])
+            //->andWhere(['x.id_loai_xe'=>$model->id])
+            ->all();
+
+        //$colorList = ContactLogForm::getStatusColorHexList();
+        $colorList = LichThue::getTrangThaiColor();
+        //$eventData = [];
+        foreach ($contactLog as $item) {
+            $calendarTitle = 'Xe ' . $item->xe->ma_so;
+            //$calendarDescription = $item->so_gio >=2 ? '' : ('Biển số ' .$item->xe->bien_so_xe . ' - ');
+            $calendarDescription = 'Biển số ' . $item->xe->bien_so_xe . ' - ';
+            $calendarDescription .= 'GV: ' . ($item->giaoVien ? $item->giaoVien->ho_ten : '') . ' - HV: '
+                . ($item->khachHang ? $item->khachHang->ho_ten : '') . ' thuê từ ' . CustomFunc::convertDMYToYMD($item->thoi_gian_bat_dau) . ' đến ' . CustomFunc::convertDMYToYMD($item->thoi_gian_ket_thuc);
+            $arr[] =  [
+                'thoi_gian' => 'Từ ' . CustomFunc::convertDMYToYMD($item->thoi_gian_bat_dau) . ' đến ' . CustomFunc::convertDMYToYMD($item->thoi_gian_ket_thuc),
+                'noi_dung' => $calendarDescription,
+                'nguoi_phu_trach' => ($item->giaoVien ? $item->giaoVien->ho_ten : ''),
+            ];
+        }
+
 
         return $arr;
     }
