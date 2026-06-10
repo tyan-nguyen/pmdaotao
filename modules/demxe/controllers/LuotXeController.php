@@ -372,6 +372,7 @@ class LuotXeController extends Controller
         foreach ($listXe as $iXe => $xe) {
             $demXe = DemXe::find()->alias('t')->joinWith(['xe as x'])->where([
                 't.id_xe' => $xe->id,
+                't.ma_cong' => DemXe::CONG1
             ])->andWhere(['>=', 't.thoi_gian_bd', $start])
                 ->andWhere([
                     'or',
