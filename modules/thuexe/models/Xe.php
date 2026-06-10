@@ -604,8 +604,8 @@ class Xe extends \app\models\PtxXe
                 'noi_dung' => 'Xe:' . $m['bien_so_xe'] . ' - GV: ' . $m['giao_vien'] . ' - HV: ' . $m['hoc_vien']
                     . ' dạy từ ' . CustomFunc::convertYMDHISToDMYHI($m['start'])
                     . ' đến ' . CustomFunc::convertYMDHISToDMYHI($m['end'])
-                    . 'Môn học: ' . $m['mon_hoc']
-                    . 'Trạng thái: ' . TietHoc::getDmTrangThai()[$m['trang_thai']],
+                    . ' Môn học: ' . $m['mon_hoc']
+                    . ' Trạng thái: ' . TietHoc::getDmTrangThai()[$m['trang_thai']],
                 'nguoi_phu_trach' => 'GV: ' . $m['giao_vien'],
             ];
         }
