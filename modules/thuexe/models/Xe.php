@@ -597,18 +597,6 @@ class Xe extends \app\models\PtxXe
         $eventData = [];
 
         foreach ($merged as $m) {
-            $eventData[] = [
-                'title' => 'GV: ' . $m['giao_vien'] . '<br>HV: ' . $m['hoc_vien'],
-                'description' => 'Xe:' . $m['bien_so_xe'] . '<br>GV: ' . $m['giao_vien'] . ' - HV: ' . $m['hoc_vien']
-                    . ' dạy từ ' . CustomFunc::convertYMDHISToDMYHI($m['start'])
-                    . ' đến ' . CustomFunc::convertYMDHISToDMYHI($m['end'])
-                    . '<br>Môn học: ' . $m['mon_hoc']
-                    . '<br>Trạng thái: ' . TietHoc::getDmTrangThai()[$m['trang_thai']],
-                'start' => $m['start'],
-                'end' => $m['end'],
-                'backgroundColor' => $m['color'],
-                'resourceId' => 'collich'
-            ];
 
             $arr[] =  [
                 'thoi_gian' => 'Từ ' . CustomFunc::convertYMDHISToDMYHI($m['start'])
