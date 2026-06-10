@@ -133,23 +133,7 @@ class ApiController extends Controller
                     'trang_thai' => $xe->getXeDangSuDungQuaCamera() ? "Hoạt động" : "Không hoạt động", //!!!!
                     'nguoi_quan_ly' => $listGvName,
                     'ngay_tra_cuu' => $ngay,
-                    'ke_hoach' => [
-                        [
-                            'thoi_gian' => '07:00 - 09:00',
-                            'noi_dung' => 'Dạy thực hành lái xe hạng B',
-                            'nguoi_phu_trach' => 'Nguyễn Văn A',
-                        ],
-                        [
-                            'thoi_gian' => '09:30 - 11:30',
-                            'noi_dung' => 'Ôn tập sa hình',
-                            'nguoi_phu_trach' => 'Nguyễn Văn B',
-                        ],
-                        [
-                            'thoi_gian' => '14:00 - 16:00',
-                            'noi_dung' => 'Kiểm tra xe trước sát hạch',
-                            'nguoi_phu_trach' => 'Nguyễn Văn A',
-                        ],
-                    ],
+                    'ke_hoach' => $xe->getListHoatDongTheoNgay($ngay),
                 ],
             ];
             /* return [
