@@ -121,11 +121,43 @@ class ApiController extends Controller
                 'data' => null,
             ];
         } else {
+            $listGvName = [];
+            foreach ($xe->getListGiaoVienSuDung() as $gv) {
+                $listGvName[] = $gv->giaoVien->ho_ten;
+            }
             return [
                 'success' => true,
                 'message' => 'Lấy thông tin kế hoạch xe thành công.',
                 'data' => [
+                    'bien_so_xe' => $xe->bien_so_xe,
+                    'trang_thai' => 'Không hoạt động', //!!!!
+                    'nguoi_quan_ly' => $listGvName,
+                    'ngay_tra_cuu' => $ngay,
+                    'ke_hoach' => [
+                        [
+                            'thoi_gian' => '07:00 - 09:00',
+                            'noi_dung' => 'Dạy thực hành lái xe hạng B',
+                            'nguoi_phu_trach' => 'Nguyễn Văn A',
+                        ],
+                        [
+                            'thoi_gian' => '09:30 - 11:30',
+                            'noi_dung' => 'Ôn tập sa hình',
+                            'nguoi_phu_trach' => 'Nguyễn Văn B',
+                        ],
+                        [
+                            'thoi_gian' => '14:00 - 16:00',
+                            'noi_dung' => 'Kiểm tra xe trước sát hạch',
+                            'nguoi_phu_trach' => 'Nguyễn Văn A',
+                        ],
+                    ],
+                ],
+            ];
+            /* return [
+                'success' => true,
+                'message' => 'Lấy thông tin kế hoạch xe thành công.',
+                'data' => [
                     'bien_so_xe' => '84A-111.11',
+                    'trang_thai' => 'Không hoạt động',
                     'nguoi_quan_ly' => [
                         'Nguyễn Văn A',
                         'Nguyễn Văn B',
@@ -149,7 +181,7 @@ class ApiController extends Controller
                         ],
                     ],
                 ],
-            ];
+            ]; */
         }
     }
 }
