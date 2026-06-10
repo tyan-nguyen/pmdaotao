@@ -9,6 +9,7 @@ use app\modules\giaovien\models\GiaoVien;
 use app\modules\daotao\models\GvXe;
 use app\custom\CustomFunc;
 use app\modules\banhang\models\HangHoa;
+use app\modules\demxe\models\DemXe;
 use app\modules\taisan\models\PhieuDeNghi;
 
 /**
@@ -199,8 +200,16 @@ class Xe extends \app\models\PtxXe
     {
         return [
             [['id_loai_xe', 'bien_so_xe', 'ma_bien_so'], 'required'],
-            [['id_loai_xe', 'la_xe_cu', 'nguoi_tao', 'id_giao_vien', 'stt', 'so_km_ban_dau',
-                'nam_san_xuat', 'nam_mua'], 'integer'],
+            [[
+                'id_loai_xe',
+                'la_xe_cu',
+                'nguoi_tao',
+                'id_giao_vien',
+                'stt',
+                'so_km_ban_dau',
+                'nam_san_xuat',
+                'nam_mua'
+            ], 'integer'],
             [['ghi_chu', 'dac_diem'], 'string'],
             [['phan_loai', 'ma_so'], 'string', 'max' => 20],
             [['tinh_trang_xe'], 'string', 'max' => 20],
@@ -438,7 +447,7 @@ class Xe extends \app\models\PtxXe
      */
     public function getKmHienTai()
     {
-        $km_ban_dau = $this->so_km_ban_dau??0;
+        $km_ban_dau = $this->so_km_ban_dau ?? 0;
         $phieuSuaChua = PhieuDeNghi::find()->where([
             'id_tham_chieu' => $this->id,
             'loai_phieu' => PhieuDeNghi::LOAIPHIEU_SUACHUA,
@@ -465,7 +474,7 @@ class Xe extends \app\models\PtxXe
      */
     public function getNgayCapNhatKmHienTai()
     {
-        $km_ban_dau = $this->so_km_ban_dau??0;
+        $km_ban_dau = $this->so_km_ban_dau ?? 0;
         $phieuSuaChua = PhieuDeNghi::find()->where([
             'id_tham_chieu' => $this->id,
             'loai_phieu' => PhieuDeNghi::LOAIPHIEU_SUACHUA,
@@ -487,6 +496,17 @@ class Xe extends \app\models\PtxXe
             }
         } else {
             return $this->ngay_cap_nhat_km;
+        }
+    }
+
+    /** for api xe */
+    public function getXeDangSuDungQuaCamera()
+    {
+        $demXe = DemXe::find()->where(['id_xe' => $this->id])->orderBy('ID DESC')->one();
+        if ($demXe != null && $demXe->thoi_gian_kt == null) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

@@ -130,7 +130,7 @@ class ApiController extends Controller
                 'message' => 'Lấy thông tin kế hoạch xe thành công.',
                 'data' => [
                     'bien_so_xe' => $xe->bien_so_xe,
-                    'trang_thai' => 'Không hoạt động', //!!!!
+                    'trang_thai' => $xe->getXeDangSuDungQuaCamera() ? "Hoạt động" : "Không hoạt động", //!!!!
                     'nguoi_quan_ly' => $listGvName,
                     'ngay_tra_cuu' => $ngay,
                     'ke_hoach' => [
