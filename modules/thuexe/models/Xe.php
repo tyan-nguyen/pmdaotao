@@ -601,11 +601,11 @@ class Xe extends \app\models\PtxXe
             $arr[] =  [
                 'thoi_gian' => 'Từ ' . CustomFunc::convertYMDHISToDMYHI($m['start'])
                     . ' đến ' . CustomFunc::convertYMDHISToDMYHI($m['end']),
-                'noi_dung' => 'Xe:' . $m['bien_so_xe'] . '<br>GV: ' . $m['giao_vien'] . ' - HV: ' . $m['hoc_vien']
+                'noi_dung' => 'Xe:' . $m['bien_so_xe'] . ' - GV: ' . $m['giao_vien'] . ' - HV: ' . $m['hoc_vien']
                     . ' dạy từ ' . CustomFunc::convertYMDHISToDMYHI($m['start'])
                     . ' đến ' . CustomFunc::convertYMDHISToDMYHI($m['end'])
-                    . '<br>Môn học: ' . $m['mon_hoc']
-                    . '<br>Trạng thái: ' . TietHoc::getDmTrangThai()[$m['trang_thai']],
+                    . 'Môn học: ' . $m['mon_hoc']
+                    . 'Trạng thái: ' . TietHoc::getDmTrangThai()[$m['trang_thai']],
                 'nguoi_phu_trach' => 'GV: ' . $m['giao_vien'],
             ];
         }
