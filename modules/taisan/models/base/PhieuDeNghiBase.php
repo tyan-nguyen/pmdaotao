@@ -31,7 +31,7 @@ use Yii;
  * @property float|null $tong_tien_du_kien
  * @property float|null $tong_tien_thuc_te
  * @property int|null $id_dot_tong_hop
-  * @property int|null $da_thanh_toan
+ * @property int|null $da_thanh_toan
  * @property string|null $ngay_thanh_toan
  * @property string|null $hinh_thuc_thanh_toan
  * @property int|null $nguoi_thanh_toan
@@ -209,8 +209,31 @@ class PhieuDeNghiBase extends CpPhieuDeNghi
     public function rules()
     {
         return [
-            [['so_phieu', 'so_vao_so', 'nam', 'loai_phieu', 'loai_tai_san', 'nguoi_de_nghi', 'loai_yeu_cau', 'so_km_luc_yeu_cau', 'ngay_bat_dau', 'ngay_hoan_thanh', 'nguoi_duyet', 'ngay_duyet', 'ghi_chu_duyet', 'phieu_co_chi_tiet', 'id_dot_tong_hop', 'ngay_thanh_toan', 'hinh_thuc_thanh_toan', 'nguoi_thanh_toan', 'loai_thanh_toan', 'so_lan_in', 'edit_mode', 'nguoi_tao', 'thoi_gian_gui_duyet',
-            'id_don_vi_thuc_hien'
+            [[
+                'so_phieu',
+                'so_vao_so',
+                'nam',
+                'loai_phieu',
+                'loai_tai_san',
+                'nguoi_de_nghi',
+                'loai_yeu_cau',
+                'so_km_luc_yeu_cau',
+                'ngay_bat_dau',
+                'ngay_hoan_thanh',
+                'nguoi_duyet',
+                'ngay_duyet',
+                'ghi_chu_duyet',
+                'phieu_co_chi_tiet',
+                'id_dot_tong_hop',
+                'ngay_thanh_toan',
+                'hinh_thuc_thanh_toan',
+                'nguoi_thanh_toan',
+                'loai_thanh_toan',
+                'so_lan_in',
+                'edit_mode',
+                'nguoi_tao',
+                'thoi_gian_gui_duyet',
+                'id_don_vi_thuc_hien'
             ], 'default', 'value' => null],
             [['trang_thai'], 'default', 'value' => 'NHAP'],
             [['tong_tien_thuc_te'], 'default', 'value' => 0.00],
@@ -345,7 +368,15 @@ class PhieuDeNghiBase extends CpPhieuDeNghi
     public function beforeSave($insert)
     {
         $this->ngay_bat_dau = CustomFunc::convertDMYToYMD($this->ngay_bat_dau);
-        $this->ngay_hoan_thanh = CustomFunc::convertDMYToYMD($this->ngay_hoan_thanh);
+        //$this->ngay_hoan_thanh = CustomFunc::convertDMYToYMD($this->ngay_hoan_thanh);
+        //ngay hoan thanh them 23:59:59
+        if (!empty($this->ngay_hoan_thanh)) {
+            $date = \DateTime::createFromFormat('d/m/Y', $this->ngay_hoan_thanh);
+
+            if ($date !== false) {
+                $this->ngay_hoan_thanh = $date->format('Y-m-d') . ' 23:59:59';
+            }
+        }
         $this->ngay_duyet = CustomFunc::convertDMYHISToYMDHIS($this->ngay_duyet);
         if ($this->isNewRecord) {
             $this->nguoi_tao = Yii::$app->user->id;

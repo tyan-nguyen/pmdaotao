@@ -9,6 +9,8 @@ use yii\helpers\Html;
 use app\custom\CustomFunc;
 use app\modules\daotao\models\KeHoach;
 use app\modules\daotao\models\TietHoc;
+use app\modules\taisan\models\PhieuDeNghi;
+use app\modules\thuexe\models\LichDungXe;
 use app\modules\thuexe\models\LichThue;
 use app\modules\user\models\History;
 
@@ -533,6 +535,7 @@ class DemXe extends PtxXeDemXe
             if ($phutDi >= 30) { //30 phút
                 $start = $ngayDi . ' 00:00:00';
                 $end   = $ngayDi . ' 23:59:59';
+                //tiết học
                 $exists = TietHoc::find()->alias('t')
                     ->joinWith(['keHoach k'])
                     ->andWhere(['<=', 't.thoi_gian_bd', $end])
@@ -540,7 +543,24 @@ class DemXe extends PtxXeDemXe
                     ->andWhere(['t.id_xe' => $this->id_xe])
                     ->andWhere(['k.trang_thai_duyet' => KeHoach::getDmTrangThaiForLichSuDungXe()])
                     ->exists();
-                if (!$exists)
+                //đăng ký dùng xe
+                $existsDungXe = LichDungXe::find()->alias('t')
+                    ->andWhere(['<=', 't.thoi_gian_bat_dau', $end])
+                    ->andWhere(['>=', 't.thoi_gian_ket_thuc', $start])
+                    ->andWhere(['t.id_xe' => $this->id_xe])
+                    ->andWhere(['t.trang_thai' => LichDungXe::TT_ACTIVE])
+                    ->exists();
+                //sữa chữa bảo dưỡng
+                $existsPhieuSuaXe = PhieuDeNghi::find()->alias('t')
+                    ->andWhere(['<=', 't.ngay_hoan_thanh', $end])
+                    ->andWhere(['>=', 't.ngay_bat_dau', $start])
+                    ->andWhere(['t.loai_tai_san' => PhieuDeNghi::LOAITAISAN_XE])
+                    ->andWhere(['t.loai_phieu' => PhieuDeNghi::LOAIPHIEU_SUACHUA])
+                    ->andWhere(['t.id_tham_chieu' => $this->id_xe])
+                    ->andWhere(['IN', 't.trang_thai', PhieuDeNghi::getDmTrangThaiCoSoVaoSo()])
+                    ->exists();
+
+                if (!$exists && !$existsDungXe && !$existsPhieuSuaXe)
                     return true;
                 else
                     return false;

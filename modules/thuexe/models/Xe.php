@@ -619,7 +619,8 @@ class Xe extends \app\models\PtxXe
 
         foreach ($lichDungXes as $item) {
             $arr[] =  [
-                'thoi_gian' => 'Từ ' . CustomFunc::convertYMDHISToDMYHI($item->thoi_gian_bat_dau) . ' đến ' . CustomFunc::convertYMDHISToDMYHI($item->thoi_gian_ket_thuc),
+                'thoi_gian' => 'Từ ' . CustomFunc::convertYMDHISToDMYHI($item->thoi_gian_bat_dau)
+                    . ' đến ' . CustomFunc::convertYMDHISToDMYHI($item->thoi_gian_ket_thuc),
                 'noi_dung' => $item->noi_dung,
                 'nguoi_phu_trach' => $item->nguoiPhuTrach->ho_ten,
             ];
@@ -629,7 +630,8 @@ class Xe extends \app\models\PtxXe
         $lichSuaXes = PhieuDeNghi::find()->where([
             'loai_tai_san' => PhieuDeNghi::LOAITAISAN_XE,
             'id_tham_chieu' => $this->id,
-        ])->andWhere(['IN', 'trang_thai', PhieuDeNghi::getDmTrangThaiCoSoVaoSo()])->andWhere(['>=', 'ngay_bat_dau', $start])
+        ])->andWhere(['IN', 'trang_thai', PhieuDeNghi::getDmTrangThaiCoSoVaoSo()])
+            ->andWhere(['>=', 'ngay_bat_dau', $start])
             ->andWhere(['<=', 'ngay_bat_dau', $end])->all();
 
         foreach ($lichSuaXes as $item) {
@@ -660,9 +662,11 @@ class Xe extends \app\models\PtxXe
             //$calendarDescription = $item->so_gio >=2 ? '' : ('Biển số ' .$item->xe->bien_so_xe . ' - ');
             $calendarDescription = 'Biển số ' . $item->xe->bien_so_xe . ' - ';
             $calendarDescription .= 'GV: ' . ($item->giaoVien ? $item->giaoVien->ho_ten : '') . ' - HV: '
-                . ($item->khachHang ? $item->khachHang->ho_ten : '') . ' thuê từ ' . CustomFunc::convertDMYToYMD($item->thoi_gian_bat_dau) . ' đến ' . CustomFunc::convertDMYToYMD($item->thoi_gian_ket_thuc);
+                . ($item->khachHang ? $item->khachHang->ho_ten : '') . ' thuê từ '
+                . CustomFunc::convertYMDHISToDMYHI($item->thoi_gian_bat_dau) . ' đến '
+                . CustomFunc::convertYMDHISToDMYHI($item->thoi_gian_ket_thuc);
             $arr[] =  [
-                'thoi_gian' => 'Từ ' . CustomFunc::convertDMYToYMD($item->thoi_gian_bat_dau) . ' đến ' . CustomFunc::convertDMYToYMD($item->thoi_gian_ket_thuc),
+                'thoi_gian' => 'Từ ' . CustomFunc::convertYMDHISToDMYHI($item->thoi_gian_bat_dau) . ' đến ' . CustomFunc::convertYMDHISToDMYHI($item->thoi_gian_ket_thuc),
                 'noi_dung' => $calendarDescription,
                 'nguoi_phu_trach' => ($item->giaoVien ? $item->giaoVien->ho_ten : ''),
             ];
