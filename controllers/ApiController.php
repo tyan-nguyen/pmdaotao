@@ -86,17 +86,17 @@ class ApiController extends Controller
     }
     /**
      * kiem tra xe vao ra
-     * GET /api/xe/ke-hoach?bien_so=84A-111.11&ngay=2026-06-10
+     * GET /api/xe/ke-hoach?code=84A-111.11&ngay=2026-06-10
      */
     public function actionCheckCar()
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
 
-        $bienSo = Yii::$app->request->get('bien_so');
+        $code = Yii::$app->request->get('code');
         $ngay = Yii::$app->request->get('ngay');
 
-        if (empty($bienSo)) {
-            throw new BadRequestHttpException('Thiếu tham số biển số xe.');
+        if (empty($code)) {
+            throw new BadRequestHttpException('Thiếu tham số code.');
         }
 
         if (empty($ngay)) {
@@ -110,8 +110,8 @@ class ApiController extends Controller
         $xe = Xe::find()
             ->where([
                 'or',
-                ['bien_so_xe' => $bienSo],
-                ['ma_bien_so' => $bienSo],
+                ['bien_so_xe' => $code],
+                ['ma_bien_so' => $code],
             ])
             ->one();
         if (!$xe) {
