@@ -313,11 +313,11 @@ class FixController extends Controller
         print_r($errorByRow1);
     }
 
-    public function actionFixQrXe()
+    /* public function actionFixQrXe()
     {
         $xe = Xe::find()->all();
         foreach ($xe as $model) {
             $model->save();
         }
-    }
+    } */
 }
