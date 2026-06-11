@@ -570,6 +570,41 @@ class Xe extends \app\models\PtxXe
         $start = $ngay . ' 00:00:00';
         $end = $ngay . ' 23:59:59';
 
+        $lichDungXes = LichDungXe::find()->where([
+            'id_xe' => $this->id,
+            'trang_thai' => LichDungXe::TT_ACTIVE
+        ])->andWhere(['>=', 'thoi_gian_ket_thuc', $start])
+            ->andWhere(['<=', 'thoi_gian_bat_dau', $end])->all();
+
+        foreach ($lichDungXes as $item) {
+            $arr[] =  [
+                'thoi_gian' => 'Từ ' . CustomFunc::convertYMDHISToDMYHI($item->thoi_gian_bat_dau)
+                    . ' đến ' . CustomFunc::convertYMDHISToDMYHI($item->thoi_gian_ket_thuc),
+                'noi_dung' => $item->noi_dung,
+                'nguoi_phu_trach' => $item->nguoiPhuTrach->ho_ten,
+            ];
+        }
+
+        //lịch sửa chữa, bảo dưỡng add to list lịch (sét màu đỏ)
+        $lichSuaXes = PhieuDeNghi::find()->where([
+            'loai_tai_san' => PhieuDeNghi::LOAITAISAN_XE,
+            //'loai_phieu' => PhieuDeNghi::LOAIPHIEU_SUACHUA,
+            'id_tham_chieu' => $this->id,
+        ])->andWhere(['IN', 'trang_thai', PhieuDeNghi::getDmTrangThaiCoSoVaoSo()])
+            ->andWhere(['>=', 'ngay_hoan_thanh', $start])
+            ->andWhere(['<=', 'ngay_bat_dau', $end])->all();
+
+        foreach ($lichSuaXes as $item) {
+            if ($item->ngay_bat_dau != null && $item->ngay_hoan_thanh != null) {
+                $arr[] =  [
+                    'thoi_gian' => CustomFunc::convertYMDHISToDMY($item->ngay_bat_dau),
+                    'noi_dung' => 'Nội dung: ' . $item->noi_dung_de_nghi
+                        . ' - Trạng thái: ' . PhieuDeNghi::getTrangThaiList()[$item->trang_thai],
+                    'nguoi_phu_trach' => ($item->nguoiDeNghi ? $item->nguoiDeNghi->hoTen : ''),
+                ];
+            }
+        }
+        //giảng dạy
         $contactLog = TietHoc::find()->alias('t')
             ->joinWith(['keHoach k'])
             ->andWhere(['t.id_xe' => $this->id])
@@ -660,42 +695,7 @@ class Xe extends \app\models\PtxXe
             ];
         }
 
-
-        $lichDungXes = LichDungXe::find()->where([
-            'id_xe' => $this->id,
-            'trang_thai' => LichDungXe::TT_ACTIVE
-        ])->andWhere(['>=', 'thoi_gian_ket_thuc', $start])
-            ->andWhere(['<=', 'thoi_gian_bat_dau', $end])->all();
-
-        foreach ($lichDungXes as $item) {
-            $arr[] =  [
-                'thoi_gian' => 'Từ ' . CustomFunc::convertYMDHISToDMYHI($item->thoi_gian_bat_dau)
-                    . ' đến ' . CustomFunc::convertYMDHISToDMYHI($item->thoi_gian_ket_thuc),
-                'noi_dung' => $item->noi_dung,
-                'nguoi_phu_trach' => $item->nguoiPhuTrach->ho_ten,
-            ];
-        }
-
-        //lịch sửa chữa, bảo dưỡng add to list lịch (sét màu đỏ)
-        $lichSuaXes = PhieuDeNghi::find()->where([
-            'loai_tai_san' => PhieuDeNghi::LOAITAISAN_XE,
-            //'loai_phieu' => PhieuDeNghi::LOAIPHIEU_SUACHUA,
-            'id_tham_chieu' => $this->id,
-        ])->andWhere(['IN', 'trang_thai', PhieuDeNghi::getDmTrangThaiCoSoVaoSo()])
-            ->andWhere(['>=', 'ngay_hoan_thanh', $start])
-            ->andWhere(['<=', 'ngay_bat_dau', $end])->all();
-
-        foreach ($lichSuaXes as $item) {
-            if ($item->ngay_bat_dau != null && $item->ngay_hoan_thanh != null) {
-                $arr[] =  [
-                    'thoi_gian' => CustomFunc::convertYMDHISToDMY($item->ngay_bat_dau),
-                    'noi_dung' => 'Nội dung: ' . $item->noi_dung_de_nghi
-                        . ' - Trạng thái: ' . PhieuDeNghi::getTrangThaiList()[$item->trang_thai],
-                    'nguoi_phu_trach' => ($item->nguoiDeNghi ? $item->nguoiDeNghi->hoTen : ''),
-                ];
-            }
-        }
-
+        //thue xe cam bien
         //$contactLog = ContactLogPolicy::getContactLogByStaff();
         $contactLog = LichThue::find()
             //->joinWith(['xe as x'])
