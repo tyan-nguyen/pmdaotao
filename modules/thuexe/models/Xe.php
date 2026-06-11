@@ -664,8 +664,8 @@ class Xe extends \app\models\PtxXe
         $lichDungXes = LichDungXe::find()->where([
             'id_xe' => $this->id,
             'trang_thai' => LichDungXe::TT_ACTIVE
-        ])->andWhere(['>=', 'thoi_gian_bat_dau', $start])
-            ->andWhere(['<=', 'thoi_gian_ket_thuc', $end])->all();
+        ])->andWhere(['>=', 'thoi_gian_ket_thuc', $start])
+            ->andWhere(['<=', 'thoi_gian_bat_dau', $end])->all();
 
         foreach ($lichDungXes as $item) {
             $arr[] =  [
@@ -682,8 +682,8 @@ class Xe extends \app\models\PtxXe
             //'loai_phieu' => PhieuDeNghi::LOAIPHIEU_SUACHUA,
             'id_tham_chieu' => $this->id,
         ])->andWhere(['IN', 'trang_thai', PhieuDeNghi::getDmTrangThaiCoSoVaoSo()])
-            ->andWhere(['>=', 'ngay_bat_dau', $start])
-            ->andWhere(['<=', 'ngay_hoan_thanh', $end])->all();
+            ->andWhere(['>=', 'ngay_hoan_thanh', $start])
+            ->andWhere(['<=', 'ngay_bat_dau', $end])->all();
 
         foreach ($lichSuaXes as $item) {
             if ($item->ngay_bat_dau != null && $item->ngay_hoan_thanh != null) {
