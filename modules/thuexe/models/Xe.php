@@ -573,8 +573,8 @@ class Xe extends \app\models\PtxXe
         $contactLog = TietHoc::find()->alias('t')
             ->joinWith(['keHoach k'])
             ->andWhere(['t.id_xe' => $this->id])
-            ->andWhere(['>=', 't.thoi_gian_bd', $start])
-            ->andWhere(['<=', 't.thoi_gian_kt', $end])
+            ->andWhere(['>=', 't.thoi_gian_kt', $start])
+            ->andWhere(['<=', 't.thoi_gian_bd', $end])
             ->andWhere(['k.trang_thai_duyet' => KeHoach::getDmTrangThaiForLichSuDungXe()])
             ->orderBy(['t.thoi_gian_bd' => SORT_ASC])->all();
 
@@ -700,7 +700,7 @@ class Xe extends \app\models\PtxXe
         $contactLog = LichThue::find()
             //->joinWith(['xe as x'])
             ->andWhere(['id_xe' => $this->id])
-            ->andWhere(['>=', 'thoi_gian_bat_dau', $start])->andWhere(['<=', 'thoi_gian_bat_dau', $end])
+            ->andWhere(['>=', 'thoi_gian_ket_thuc', $start])->andWhere(['<=', 'thoi_gian_bat_dau', $end])
             ->orderBy(['thoi_gian_tao' => SORT_DESC])
             //->andWhere(['x.id_loai_xe'=>$model->id])
             ->all();
