@@ -197,7 +197,7 @@ class ApiController extends Controller
             $listGvName[] = $gv->giaoVien->ho_ten;
         }
         $listHinhAnh = [];
-        foreach ($taiSan->getHinhAnhs() as $ha) {
+        foreach ($taiSan->hinhAnhs as $ha) {
             $listHinhAnh[] = $ha->urlAnh;
         }
         return [
@@ -214,6 +214,7 @@ class ApiController extends Controller
                 'hinh_anh' => $listHinhAnh
             ],
         ];
+
         /*  return [
             'success' => true,
             'message' => 'Lấy danh sách tài sản thành công.',
