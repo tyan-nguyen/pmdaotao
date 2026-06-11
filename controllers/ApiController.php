@@ -168,4 +168,38 @@ class ApiController extends Controller
             ]; */
         }
     }
+
+    /**
+     * kiem tra xe vao ra
+     * GET /api/xe/ke-hoach?code=84A-111.11&ngay=2026-06-10
+     */
+    public function actionGetTaiSan($code)
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        $code = Yii::$app->request->get('code');
+
+        if (empty($code)) {
+            throw new BadRequestHttpException('Thiếu tham số code.');
+        }
+
+        return [
+            'success' => true,
+            'message' => 'Lấy danh sách tài sản thành công.',
+            'data' => [
+                'ma_tai_san' => 'TS001',
+                'ten_tai_san' => 'Xe 84A-111.11',
+                'trang_thai' => 'Hoạt động',
+                'nguoi_quan_ly' => [
+                    'Nguyễn Văn A',
+                    'Nguyễn Văn B',
+                ],
+                'hinh_anh' => [
+                    'https://qltl.nguyentrinh.com.vn/images/hinh-xe/6916d0650dd17.jpg',
+                    'https://qltl.nguyentrinh.com.vn/images/hinh-xe/6916d0650f7b7.jpg',
+                    'https://qltl.nguyentrinh.com.vn/images/hinh-xe/694b3fed2f53e.jpg'
+                ]
+            ],
+        ];
+    }
 }
