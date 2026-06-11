@@ -53,7 +53,7 @@ use app\modules\taisan\models\PhieuDeNghi;
 class Xe extends \app\models\PtxXe
 {
     const MODEL_ID = 'xe';
-
+    const QR_FOLDER = '/uploads/qrxe/';
     const XE_BINHTHUONG = 'BINHTHUONG';
     const XE_HUHONG = 'HUHONG';
     const XE_SUACHUA = 'SUACHUA';
@@ -402,6 +402,56 @@ class Xe extends \app\models\PtxXe
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+        //create qr code
+        if (empty($this->ma_bien_so)) {
+            return;
+        }
+
+        $qrFile = Yii::getAlias('@webroot') . self::QR_FOLDER . $this->ma_bien_so . '.png';
+
+        // Chỉ xử lý khi thêm mới hoặc mã biển số có thay đổi
+        if (!$insert && !array_key_exists('ma_bien_so', $changedAttributes) && file_exists($qrFile)) {
+            return;
+        }
+        // Chưa có file QR thì mới tạo
+        if (!file_exists($qrFile)) {
+            CustomFunc::createQRcode(self::QR_FOLDER, $this->ma_bien_so);
+        }
+    }
+
+    /**
+     * xoa file QR code
+     */
+    private function deleleQr()
+    {
+        $filePath = Yii::getAlias('@webroot') . $this::QR_FOLDER . $this->ma_bien_so . '.png';
+        if (file_exists($filePath)) {
+            unlink($filePath);
+        }
+    }
+    /**
+     * {@inheritdoc}
+     * xoa file anh, tai lieu, lich su sau khi xoa du lieu
+     */
+    public function afterDelete()
+    {
+        //xoa qr
+        $this->deleleQr();
+        return parent::afterDelete();
+    }
+
+    public function getQrLink()
+    {
+        $filePath = Yii::getAlias('@webroot') . $this::QR_FOLDER . $this->ma_bien_so . '.png';
+        $fileWeb = Yii::getAlias('@web') . $this::QR_FOLDER . $this->ma_bien_so . '.png';
+        return file_exists($filePath) ? $fileWeb : '';
+    }
+    /**
      * hien thi ten xe
      */
     public function getTenXeShort()
@@ -615,7 +665,7 @@ class Xe extends \app\models\PtxXe
             'id_xe' => $this->id,
             'trang_thai' => LichDungXe::TT_ACTIVE
         ])->andWhere(['>=', 'thoi_gian_bat_dau', $start])
-            ->andWhere(['<=', 'thoi_gian_bat_dau', $end])->all();
+            ->andWhere(['<=', 'thoi_gian_ket_thuc', $end])->all();
 
         foreach ($lichDungXes as $item) {
             $arr[] =  [
@@ -632,8 +682,8 @@ class Xe extends \app\models\PtxXe
             'loai_phieu' => PhieuDeNghi::LOAIPHIEU_SUACHUA,
             'id_tham_chieu' => $this->id,
         ])->andWhere(['IN', 'trang_thai', PhieuDeNghi::getDmTrangThaiCoSoVaoSo()])
-            /*  ->andWhere(['>=', 'ngay_bat_dau', $start])
-            ->andWhere(['<=', 'ngay_hoan_thanh', $end]) */->all();
+            ->andWhere(['>=', 'ngay_bat_dau', $start])
+            ->andWhere(['<=', 'ngay_hoan_thanh', $end])->all();
 
         foreach ($lichSuaXes as $item) {
             if ($item->ngay_bat_dau != null && $item->ngay_hoan_thanh != null) {
