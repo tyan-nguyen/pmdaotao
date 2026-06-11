@@ -55,7 +55,7 @@ class HinhXe extends \app\models\PtxHinhXe
 
     public function getUrlAnh()
     {
-        return Yii::getAlias('@web/images/hinh-xe/') . $$this->hinh_anh;
+        return Yii::getAlias('@web/images/hinh-xe/') . $this->hinh_anh;
     }
 
     public function beforeSave($insert)
