@@ -30,7 +30,7 @@ class HinhXe extends \app\models\PtxHinhXe
     public function rules()
     {
         return [
-   
+
             [['id', 'id_xe', 'nguoi_tao', 'la_dai_dien'], 'integer'],
             [['hinh_anh'], 'string'],
             [['thoi_gian_tao'], 'safe'],
@@ -52,22 +52,28 @@ class HinhXe extends \app\models\PtxHinhXe
             'la_dai_dien' => 'Là ảnh đại diện'
         ];
     }
+
+    public function getUrlAnh()
+    {
+        return Yii::getAlias('@web/images/hinh-xe/') . $$this->hinh_anh;
+    }
+
     public function beforeSave($insert)
-    {        
+    {
         if ($this->isNewRecord) {
             $this->nguoi_tao = Yii::$app->user->identity->id;
-            $this->thoi_gian_tao = date('Y-m-d H:i:s'); 
-            if($this->la_dai_dien == null){
+            $this->thoi_gian_tao = date('Y-m-d H:i:s');
+            if ($this->la_dai_dien == null) {
                 $this->la_dai_dien = 0;
             }
         }
         return parent::beforeSave($insert);
     }
-    
+
     public function afterDelete()
     {
         parent::afterDelete();
-        
+
         // Xóa file đính kèm
         if (!empty(Yii::getAlias('@webroot') . '/images/hinh-xe/' . $this->hinh_anh)) {
             if (file_exists(Yii::getAlias('@webroot') . '/images/hinh-xe/' . $this->hinh_anh)) {

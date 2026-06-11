@@ -493,6 +493,13 @@ class Xe extends \app\models\PtxXe
         return $hinhDaiDien != null ? $hinhDaiDien : HinhXe::find()->where(['id_xe' => $this->id])->one();
     }
     /**
+     * lay danh sach hinh anh xe
+     */
+    public function getHinhAnhs()
+    {
+        return $this->hasMany(HinhXe::class, ['id_xe' => 'id']);
+    }
+    /**
      * get km xe hien tai theo lan cap nhat gan nhat
      * neu tim trong bang phieu sua chua cua xe thay thi lay cai sort theo phieu moi nhat
      * neu khong co ban sua chua thi lay theo km ban dau trong bang ptx_xe

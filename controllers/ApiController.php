@@ -191,25 +191,46 @@ class ApiController extends Controller
                 'message' => 'Không tìm thấy xe.',
             ];
         }
+
+        $listGvName = [];
+        foreach ($taiSan->getListGiaoVienSuDung() as $gv) {
+            $listGvName[] = $gv->giaoVien->ho_ten;
+        }
+        $listHinhAnh = [];
+        foreach ($taiSan->getHinhAnhs() as $ha) {
+            $listHinhAnh[] = $ha->urlAnh;
+        }
         return [
             'success' => true,
             'message' => 'Lấy danh sách tài sản thành công.',
             'data' => [
                 'ma_tai_san' => $taiSan->ma_bien_so,
                 'ten_tai_san' => $taiSan->bien_so_xe,
-                'trang_thai' => 'Hoạt động',
-                'ngay_mua' => '20/12/2026',
-                'ngay_dua_vao_su_dung' => '21/12/2026',
-                'nguoi_quan_ly' => [
-                    'Nguyễn Văn A',
-                    'Nguyễn Văn B',
-                ],
+                'trang_thai' => $taiSan->getXeDangSuDungQuaCamera() ? "Hoạt động" : "Không hoạt động", //!!!!
+                'ngay_san_xua' => $taiSan->nam_san_xuat,
+                'ngay_mua' => $taiSan->nam_mua,
+                'ngay_dua_vao_su_dung' => '',
+                'nguoi_quan_ly' => $listGvName,
+                'hinh_anh' => $listHinhAnh
+            ],
+        ];
+        /*  return [
+            'success' => true,
+            'message' => 'Lấy danh sách tài sản thành công.',
+            'data' => [
+                'ma_tai_san' => $taiSan->ma_bien_so,
+                'ten_tai_san' => $taiSan->bien_so_xe,
+                'trang_thai' => $taiSan->getXeDangSuDungQuaCamera() ? "Hoạt động" : "Không hoạt động", //!!!!
+                'ngay_san_xua' => $taiSan->nam_san_xuat,
+                'ngay_mua' => $taiSan->nam_mua,
+                'ngay_dua_vao_su_dung' => '',
+                'nguoi_quan_ly' => $listGvName,
                 'hinh_anh' => [
                     'https://qltl.nguyentrinh.com.vn/images/hinh-xe/6916d0650dd17.jpg',
                     'https://qltl.nguyentrinh.com.vn/images/hinh-xe/6916d0650f7b7.jpg',
                     'https://qltl.nguyentrinh.com.vn/images/hinh-xe/694b3fed2f53e.jpg'
                 ]
             ],
-        ];
+        ]; */
     }
 }
