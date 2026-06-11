@@ -198,7 +198,7 @@ class ApiController extends Controller
         }
         $listHinhAnh = [];
         foreach ($taiSan->hinhAnhs as $ha) {
-            $listHinhAnh[] = $ha->urlAnh;
+            $listHinhAnh[] = 'https://qltl.nguyentrinh.com.vn' . $ha->urlAnh;
         }
         return [
             'success' => true,
