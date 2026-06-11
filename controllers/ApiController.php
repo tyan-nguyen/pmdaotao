@@ -183,13 +183,23 @@ class ApiController extends Controller
             throw new BadRequestHttpException('Thiếu tham số code.');
         }
 
+        //lay xe truoc
+        $taiSan = Xe::find()->where(['ma_bien_so' => $code])->one();
+        if (empty($taiSan)) {
+            return [
+                'success' => false,
+                'message' => 'Không tìm thấy xe.',
+            ];
+        }
         return [
             'success' => true,
             'message' => 'Lấy danh sách tài sản thành công.',
             'data' => [
-                'ma_tai_san' => 'TS001',
-                'ten_tai_san' => 'Xe 84A-111.11',
+                'ma_tai_san' => $taiSan->ma_bien_so,
+                'ten_tai_san' => $taiSan->bien_so_xe,
                 'trang_thai' => 'Hoạt động',
+                'ngay_mua' => '20/12/2026',
+                'ngay_dua_vao_su_dung' => '21/12/2026',
                 'nguoi_quan_ly' => [
                     'Nguyễn Văn A',
                     'Nguyễn Văn B',
