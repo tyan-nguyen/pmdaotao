@@ -64,7 +64,7 @@ if ($model->loai_phieu == PhieuDeNghi::LOAIPHIEU_MUASAM) {
 					Bộ phận: Trung tâm GDNN & SHLX Nguyễn Trình
 				</td>
 				<td width="10%">
-					Số phiếu: <?= $model->soVaoSo ?>
+					Số phiếu: <?= 'P' . str_pad($model->so_phieu, 6, '0', STR_PAD_LEFT); ?>
 				</td>
 			</tr>
 			<tr>
