@@ -232,7 +232,7 @@ class ApiController extends Controller
                 'message' => 'Lấy danh sách tài sản thành công.',
                 'data' => [
                     'ma_tai_san' => $taiSan->autoid,
-                    'ten_tai_san' => $taiSan->ten,
+                    'ten_tai_san' => $taiSan->ten_tai_san,
                     'trang_thai' => $taiSan->trang_thai == 1 ? "Hoạt động" : "Không hoạt động", //!!!!
                     'ngay_san_xua' => '',
                     'ngay_mua' => $taiSan->ngay_mua,
