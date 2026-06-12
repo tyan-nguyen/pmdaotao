@@ -3,6 +3,7 @@
 namespace app\controllers; // Đổi lại thành frontend\controllers hoặc backend\controllers nếu dùng Advanced Template
 
 use app\models\XeLogApi;
+use app\modules\taisan\models\TaiSan;
 use app\modules\thuexe\models\Xe;
 use Yii;
 use yii\web\BadRequestHttpException;
@@ -185,35 +186,64 @@ class ApiController extends Controller
 
         //lay xe truoc
         $taiSan = Xe::find()->where(['ma_bien_so' => $code])->one();
-        if (empty($taiSan)) {
+        if (!empty($taiSan)) {
+            $listGvName = [];
+            foreach ($taiSan->getListGiaoVienSuDung() as $gv) {
+                $listGvName[] = $gv->giaoVien->ho_ten;
+            }
+            $listHinhAnh = [];
+            foreach ($taiSan->hinhAnhs as $ha) {
+                $listHinhAnh[] = 'https://qltl.nguyentrinh.com.vn' . $ha->urlAnh;
+            }
             return [
-                'success' => false,
-                'message' => 'Không tìm thấy xe.',
+                'success' => true,
+                'message' => 'Lấy danh sách tài sản thành công.',
+                'data' => [
+                    'ma_tai_san' => $taiSan->ma_bien_so,
+                    'ten_tai_san' => $taiSan->bien_so_xe,
+                    'trang_thai' => $taiSan->getXeDangSuDungQuaCamera() ? "Hoạt động" : "Không hoạt động", //!!!!
+                    'ngay_san_xua' => $taiSan->nam_san_xuat,
+                    'ngay_mua' => $taiSan->nam_mua,
+                    'ngay_dua_vao_su_dung' => '',
+                    'nguoi_quan_ly' => $listGvName,
+                    'hinh_anh' => $listHinhAnh
+                ],
+            ];
+        } else {
+            $taiSan = TaiSan::find()->where([
+                'autoid' => $code,
+            ])->one();
+            if (empty($taiSan)) {
+                return [
+                    'success' => false,
+                    'message' => 'Không tìm thấy.',
+                ];
+            }
+            $listGvName = [];
+            /* foreach ($taiSan->getListGiaoVienSuDung() as $gv) {
+                $listGvName[] = $gv->giaoVien->ho_ten;
+            } */
+            $listHinhAnh = [];
+            /*  foreach ($taiSan->hinhAnhs as $ha) {
+                $listHinhAnh[] = 'https://qltl.nguyentrinh.com.vn' . $ha->urlAnh;
+            } */
+            return [
+                'success' => true,
+                'message' => 'Lấy danh sách tài sản thành công.',
+                'data' => [
+                    'ma_tai_san' => $taiSan->autoid,
+                    'ten_tai_san' => $taiSan->ten,
+                    'trang_thai' => $taiSan->trang_thai == 1 ? "Hoạt động" : "Không hoạt động", //!!!!
+                    'ngay_san_xua' => '',
+                    'ngay_mua' => $taiSan->ngay_mua,
+                    'ngay_dua_vao_su_dung' => $taiSan->ngay_dua_vao_su_dung,
+                    'nguoi_quan_ly' => $listGvName,
+                    'hinh_anh' => $listHinhAnh
+                ],
             ];
         }
 
-        $listGvName = [];
-        foreach ($taiSan->getListGiaoVienSuDung() as $gv) {
-            $listGvName[] = $gv->giaoVien->ho_ten;
-        }
-        $listHinhAnh = [];
-        foreach ($taiSan->hinhAnhs as $ha) {
-            $listHinhAnh[] = 'https://qltl.nguyentrinh.com.vn' . $ha->urlAnh;
-        }
-        return [
-            'success' => true,
-            'message' => 'Lấy danh sách tài sản thành công.',
-            'data' => [
-                'ma_tai_san' => $taiSan->ma_bien_so,
-                'ten_tai_san' => $taiSan->bien_so_xe,
-                'trang_thai' => $taiSan->getXeDangSuDungQuaCamera() ? "Hoạt động" : "Không hoạt động", //!!!!
-                'ngay_san_xua' => $taiSan->nam_san_xuat,
-                'ngay_mua' => $taiSan->nam_mua,
-                'ngay_dua_vao_su_dung' => '',
-                'nguoi_quan_ly' => $listGvName,
-                'hinh_anh' => $listHinhAnh
-            ],
-        ];
+
 
         /*  return [
             'success' => true,
@@ -233,5 +263,12 @@ class ApiController extends Controller
                 ]
             ],
         ]; */
+
+        /* if (empty($taiSan)) {
+            return [
+                'success' => false,
+                'message' => 'Không tìm thấy.',
+            ];
+        } */
     }
 }

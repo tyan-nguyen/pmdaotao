@@ -38,7 +38,7 @@ $slChoDuyet = PhieuDeNghi::slChoDuyet();
 							<li class=""><a href="<?= Yii::getAlias('@web/taisan/tai-san/index?menu=taisan1') ?>" class="slide-item" data-menu="taisan1"><i class="fe fe-file-text"></i> Tài sản khác</a>
 							</li>
 							<li class=""><a href="<?= Yii::getAlias('@web/taisan/phieu-de-nghi/index?menu=taisan2') ?>" class="slide-item" data-menu="taisan2"><i class="fe fe-file-text"></i> Phiếu đề nghị
-								<span class="badge bg-warning ms-2"><?= $slChoDuyet > 0 ? $slChoDuyet : '' ?></span>
+									<span class="badge bg-warning ms-2"><?= $slChoDuyet > 0 ? $slChoDuyet : '' ?></span>
 								</a>
 							</li>
 							<li class=""><a href="<?= Yii::getAlias('@web/taisan/dm-hang-muc/index?menu=taisan3') ?>" class="slide-item" data-menu="taisan3"><i class="fe fe-file-text"></i> Hạng mục sửa chữa</a>
@@ -47,7 +47,12 @@ $slChoDuyet = PhieuDeNghi::slChoDuyet();
 							</li>
 							<li class=""><a href="<?= Yii::getAlias('@web/taisan/dm-don-vi/index?menu=taisan6') ?>" class="slide-item" data-menu="taisan6"><i class="fe fe-file-text"></i> Danh mục đơn vị</a>
 							</li>
-							<li class=""><a href="<?= Yii::getAlias('@web/taisan/dot-tong-hop/index?menu=taisan5') ?>" class="slide-item" data-menu="taisan5"><i class="fe fe-file-text"></i> Đợt tổng hợp</a>
+							<li class=""><a href="<?= Yii::getAlias('@web/taisan/dot-tong-hop/index?menu=taisan5') ?>" class="
+							slide-item" data-menu="taisan5"><i class="fe fe-file-text"></i> Đợt tổng hợp</a>
+							</li>
+							<li class=""><a href="<?= Yii::getAlias('@web/taisan/danh-muc-tai-san/index?menu=taisan8') ?>" class="slide-item" data-menu="taisan8"><i class="fe fe-file-text"></i> Danh mục tài sản</a>
+							</li>
+							<li class=""><a href="<?= Yii::getAlias('@web/taisan/loai-tai-san/index?menu=taisan9') ?>" class="slide-item" data-menu="taisan9"><i class="fe fe-file-text"></i> Loại tài sản</a>
 							</li>
 						</ul>
 						<div class="menutabs-content px-0">
