@@ -52,13 +52,13 @@ if ($model->loai_phieu == PhieuDeNghi::LOAIPHIEU_MUASAM) {
 			</tr>
 		</table>
 
-		<table style="width: 100%; margin-top:5px;">
+		<table style="width: 100%; margin-top:10px;margin-bottom:10px;">
 			<tr>
 				<td style="text-align: center"><span style="font-size:20pt;font-weight:bold"><?= $tenPhieu ?></span></td>
 			</tr>
 		</table>
 
-		<table id="table-info" style="width: 100%; margin-top:0px;font-size: 13pt">
+		<table id="table-info" style="width: 100%; margin-top:0px;font-size: 14pt">
 			<tr>
 				<td width="90%">
 					Bộ phận: Trung tâm GDNN & SHLX Nguyễn Trình
@@ -69,7 +69,7 @@ if ($model->loai_phieu == PhieuDeNghi::LOAIPHIEU_MUASAM) {
 			</tr>
 			<tr>
 				<td width="90%">
-					Hạng mục:
+					Hạng mục: <?= $model->getLoaiSuaXeList()[$model->loai_yeu_cau] ?? '' ?>
 				</td>
 				<td width="10%">
 					Trạng thái: <?= $model->getTrangThaiList()[$model->trang_thai] ?>
@@ -77,48 +77,61 @@ if ($model->loai_phieu == PhieuDeNghi::LOAIPHIEU_MUASAM) {
 			</tr>
 			<tr>
 				<td width="90%">
-					Địa điểm thực hiện:
+					Địa điểm thực hiện: <?= $model->donViThucHien ? $model->donViThucHien->ten : '' ?>
 				</td>
 				<td width="10%">
 					Ngày duyệt: <?= CustomFunc::convertYMDHISToDMY($model->ngay_duyet) ?>
 				</td>
 			</tr>
+			<tr>
+				<td width="100%" colspan="2">
+					Xe/Thiết bị: <?= $model->tenThamChieu ?>
+				</td>
+			</tr>
+			<tr>
+				<td width="100%" colspan="2">
+					Nội dung đề nghị: <?= $model->noi_dung_de_nghi ?>
+				</td>
+
+			</tr>
 		</table>
 
-		<table id="table-content" style="width: 100%; margin-top:5px;font-size: 12pt">
-			<thead>
-				<tr style="font-weight:bold">
-					<td style="width:3%">STT</td>
-					<td style="width:12%">Loại hạng mục</td>
-					<td style="width:12%">Tên hạng mục</td>
-					<td style="width:10%">ĐVT</td>
-					<td style="width:10%">Số lượng</td>
-					<td style="width:12%">Sử dụng cho</td>
-					<td style="width:15%">Ghi chú</td>
-				</tr>
-			</thead>
-			<tbody>
-				<?php
-				$stt = 0;
-				foreach ($model->chiTiets as $iVT => $vt) {
-					$stt++;
-				?>
-					<tr>
-						<td style="text-align:center"><?= $stt ?></td>
-						<td style="text-align:center"><?= $vt->hangMuc->loaiHangMuc->ten ?></td>
-						<td><?= $vt->hangMuc->ten ?></td>
-						<td style="text-align:center"><?= $vt->hangMuc->dvt ?></td>
-						<td style="text-align:right"><?= $vt->so_luong ?></td>
-						<td style="text-align:center"><?= $vt->phieuDeNghi->tenThamChieu ?? '' ?></td>
-						<td style="text-align:center">
-							<?= $vt->ghi_chu ?>
-						</td>
+		<?php if ($model->chiTiets != null) { ?>
+			<table id="table-content" style="width: 100%; margin-top:5px;font-size: 12pt">
+				<thead>
+					<tr style="font-weight:bold">
+						<td style="width:3%">STT</td>
+						<td style="width:12%">Loại hạng mục</td>
+						<td style="width:12%">Tên hạng mục</td>
+						<td style="width:10%">ĐVT</td>
+						<td style="width:10%">Số lượng</td>
+						<td style="width:12%">Sử dụng cho</td>
+						<td style="width:15%">Ghi chú</td>
 					</tr>
-				<?php
-				}
-				?>
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					<?php
+					$stt = 0;
+					foreach ($model->chiTiets as $iVT => $vt) {
+						$stt++;
+					?>
+						<tr>
+							<td style="text-align:center"><?= $stt ?></td>
+							<td style="text-align:center"><?= $vt->hangMuc->loaiHangMuc->ten ?></td>
+							<td><?= $vt->hangMuc->ten ?></td>
+							<td style="text-align:center"><?= $vt->hangMuc->dvt ?></td>
+							<td style="text-align:right"><?= $vt->so_luong ?></td>
+							<td style="text-align:center"><?= $vt->phieuDeNghi->tenThamChieu ?? '' ?></td>
+							<td style="text-align:center">
+								<?= $vt->ghi_chu ?>
+							</td>
+						</tr>
+					<?php
+					}
+					?>
+				</tbody>
+			</table>
+		<?php } ?>
 
 		<table id="table-ky-ten" style="width: 100%; margin-top:5px;font-size: 11pt">
 			<tr>
