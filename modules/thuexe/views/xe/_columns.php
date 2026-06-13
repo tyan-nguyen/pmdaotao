@@ -1,9 +1,11 @@
 <?php
+
 use yii\helpers\Url;
 use app\modules\thuexe\models\LoaiXe;
 use yii\bootstrap5\Html;
 use app\modules\thuexe\models\Xe;
 use app\custom\CustomFunc;
+
 return [
     [
         'class' => 'kartik\grid\CheckboxColumn',
@@ -12,32 +14,32 @@ return [
 
     [
         'class' => 'kartik\grid\ActionColumn',
-        'header'=>'',
-       /*  'template' => '{view} {lichSoSanh} {image} {update} {capNhapGiaoVien}<li><hr class="dropdown-divider"></li>  {lichXeGv} {lichXeThue} {lichXeLive} {lichTrongSan} <li><hr class="dropdown-divider"></li>{delete}', */
+        'header' => '',
+        /*  'template' => '{view} {lichSoSanh} {image} {update} {capNhapGiaoVien}<li><hr class="dropdown-divider"></li>  {lichXeGv} {lichXeThue} {lichXeLive} {lichTrongSan} <li><hr class="dropdown-divider"></li>{delete}', */
         'template' => '{view} {lichSoSanh} {image} {update}<li><hr class="dropdown-divider"></li>  {lichXeGv} {lichXeThue} {lichXeLive} {lichTrongSan} <li><hr class="dropdown-divider"></li>{delete}',
         'dropdown' => true,
         'dropdownOptions' => ['class' => 'float-right'],
-        'dropdownButton'=>[
-            'label'=>'<i class="fe fe-settings floating"></i>',
-            'class'=>'btn dropdown-toggle p-0'
+        'dropdownButton' => [
+            'label' => '<i class="fe fe-settings floating"></i>',
+            'class' => 'btn dropdown-toggle p-0'
         ],
-        'vAlign'=>'middle',
-        'width' => '20px',   
-        'urlCreator' => function($action, $model, $key, $index) { 
+        'vAlign' => 'middle',
+        'width' => '20px',
+        'urlCreator' => function ($action, $model, $key, $index) {
             if ($action === 'lichXeGv') {
-                return Url::to(['lich-xe/lich-xe-gv', 'idxe' => $key, 'menu'=>'dt3']);
+                return Url::to(['lich-xe/lich-xe-gv', 'idxe' => $key, 'menu' => 'dt3']);
             }
             if ($action === 'lichXeThue') {
-                return Url::to(['lich-thue/xe-schedule', 'id' => $key, 'menu'=>'dt3']);
+                return Url::to(['lich-thue/xe-schedule', 'id' => $key, 'menu' => 'dt3']);
             }
             if ($action === 'lichXeLive') {
-                return Url::to(['lich-xe/xe-live', 'idxe' => $key, 'menu'=>'dt3']);
+                return Url::to(['lich-xe/xe-live', 'idxe' => $key, 'menu' => 'dt3']);
             }
             if ($action === 'lichTrongSan') {
-                return Url::to(['lich-xe/xe-live-trong-san', 'idxe' => $key, 'menu'=>'dt3']);
+                return Url::to(['lich-xe/xe-live-trong-san', 'idxe' => $key, 'menu' => 'dt3']);
             }
             if ($action === 'lichSoSanh') {
-                return Url::to(['lich-xe/lich-xe-gv-so-sanh', 'idxe' => $key, 'menu'=>'dt3']);
+                return Url::to(['lich-xe/lich-xe-gv-so-sanh', 'idxe' => $key, 'menu' => 'dt3']);
             }
             if ($action === 'capNhapGiaoVien') {
                 return Url::to(['phan-cong-giao-vien', 'id' => $key]);
@@ -45,8 +47,8 @@ return [
             if ($action === 'image') {
                 return Url::to(['add-image', 'id' => $key]);
             }
-            return Url::to([$action,'id'=>$key]);
-        },        
+            return Url::to([$action, 'id' => $key]);
+        },
         'buttons' => [
             'view' => function ($url, $model, $key) {
                 return Html::a('<i class="fa-solid fa-eye"></i> Xem chi tiết', $url, [
@@ -60,7 +62,7 @@ return [
             'lichXeGv' => function ($url, $model, $key) {
                 return Html::a('<i class="fa-solid fa-list-check"></i> Xem lịch dạy', $url, [
                     'title' => 'Lịch dạy của xe',
-                    'target'=>'_blank',
+                    'target' => '_blank',
                     'data-pjax' => '0',
                     'class' => 'btn ripple btn-warning dropdown-item',
                 ]);
@@ -68,7 +70,7 @@ return [
             'lichXeThue' => function ($url, $model, $key) {
                 return Html::a('<i class="fa-solid fa-list-check"></i> Xem lịch thuê', $url, [
                     'title' => 'Lịch thuê của xe',
-                    'target'=>'_blank',
+                    'target' => '_blank',
                     'data-pjax' => '0',
                     'class' => 'btn ripple btn-warning dropdown-item',
                 ]);
@@ -76,7 +78,7 @@ return [
             'lichXeLive' => function ($url, $model, $key) {
                 return Html::a('<i class="fa-solid fa-list-check"></i> Xem hoạt động<br/> đường trường', $url, [
                     'title' => 'Lịch live đường trường',
-                    'target'=>'_blank',
+                    'target' => '_blank',
                     'data-pjax' => '0',
                     'class' => 'btn ripple btn-warning dropdown-item',
                 ]);
@@ -84,7 +86,7 @@ return [
             'lichTrongSan' => function ($url, $model, $key) {
                 return Html::a('<i class="fa-solid fa-list-check"></i> Xem hoạt động<br/> trong sân', $url, [
                     'title' => 'Lịch live trong sân',
-                    'target'=>'_blank',
+                    'target' => '_blank',
                     'data-pjax' => '0',
                     'class' => 'btn ripple btn-warning dropdown-item',
                 ]);
@@ -92,7 +94,7 @@ return [
             'lichSoSanh' => function ($url, $model, $key) {
                 return Html::a('<i class="fa-solid fa-list-check"></i> So sánh hoạt<br/> động xe', $url, [
                     'title' => 'So sánh lịch xe',
-                    'target'=>'_blank',
+                    'target' => '_blank',
                     'data-pjax' => '0',
                     'class' => 'btn ripple btn-warning dropdown-item',
                 ]);
@@ -106,7 +108,7 @@ return [
                     'data-bs-toggle' => 'tooltip',
                 ]);
             },
-            'image' => function($url, $model, $key) {
+            'image' => function ($url, $model, $key) {
                 return Html::a('<i class="fa fa-image"></i> Thêm hình ảnh', $url, [
                     'title' => 'Thêm hình ảnh',
                     'role' => 'modal-remote-2',
@@ -114,72 +116,81 @@ return [
                     'data-bs-placement' => 'top',
                     'data-bs-toggle' => 'tooltip-success',
                 ]);
-                
             },
         ],
-        'viewOptions'=>['role'=>'modal-remote','title'=>'Xem chi tiết',
-            'class'=>'btn ripple btn-primary btn-sm',
-            'data-bs-placement'=>'top',
-            'data-bs-toggle'=>'tooltip-primary'],
-        'updateOptions'=>['role'=>'modal-remote','title'=>'Sửa', 
-            'class'=>'btn ripple btn-info btn-sm',
-            'data-bs-placement'=>'top',
-            'data-bs-toggle'=>'tooltip-info'],
-        'deleteOptions'=>['role'=>'modal-remote','title'=>'Xóa', 
-                      'data-confirm'=>false, 'data-method'=>false,// for overide yii data api
-                      'data-request-method'=>'post',
-                      'data-toggle'=>'tooltip',
-                      'data-confirm-title'=>'Xác nhận xóa dữ liệu?',
-                      'data-confirm-message'=>'Bạn có chắc chắn thực hiện hành động này?',
-                       'class'=>'btn ripple btn-secondary btn-sm text-danger',
-                       'data-bs-placement'=>'top',
-                       'data-bs-toggle'=>'tooltip-secondary'], 
+        'viewOptions' => [
+            'role' => 'modal-remote',
+            'title' => 'Xem chi tiết',
+            'class' => 'btn ripple btn-primary btn-sm',
+            'data-bs-placement' => 'top',
+            'data-bs-toggle' => 'tooltip-primary'
+        ],
+        'updateOptions' => [
+            'role' => 'modal-remote',
+            'title' => 'Sửa',
+            'class' => 'btn ripple btn-info btn-sm',
+            'data-bs-placement' => 'top',
+            'data-bs-toggle' => 'tooltip-info'
+        ],
+        'deleteOptions' => [
+            'role' => 'modal-remote',
+            'title' => 'Xóa',
+            'data-confirm' => false,
+            'data-method' => false, // for overide yii data api
+            'data-request-method' => 'post',
+            'data-toggle' => 'tooltip',
+            'data-confirm-title' => 'Xác nhận xóa dữ liệu?',
+            'data-confirm-message' => 'Bạn có chắc chắn thực hiện hành động này?',
+            'class' => 'btn ripple btn-secondary btn-sm text-danger',
+            'data-bs-placement' => 'top',
+            'data-bs-toggle' => 'tooltip-secondary'
+        ],
     ],
     [
         'class' => 'kartik\grid\SerialColumn',
         'width' => '30px',
     ],
-        // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'id',
+    // [
+    // 'class'=>'\kartik\grid\DataColumn',
+    // 'attribute'=>'id',
     // ],
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'label'=>'Hình ảnh',
-        'value'=>function($model){
-        return $model->anhDaiDien ? Html::img(Yii::getAlias('@web/images/hinh-xe/' . $model->anhDaiDien->hinh_anh), [
+        'class' => '\kartik\grid\DataColumn',
+        'label' => 'Hình ảnh',
+        'value' => function ($model) {
+            return $model->anhDaiDien ? Html::img(Yii::getAlias('@web/images/hinh-xe/' . $model->anhDaiDien->hinh_anh), [
                 'alt' => $model->bien_so_xe,
-                'class'=>'img-fluid rounded uniform-img',
-                'data-fancybox'=>'gallery',
-                'data-caption'=>$model->anhDaiDien->hinh_anh,
-                'style'=>'max-height:50px'
+                'class' => 'img-fluid rounded uniform-img',
+                'data-fancybox' => 'gallery',
+                'data-caption' => $model->anhDaiDien->hinh_anh,
+                'style' => 'max-height:50px'
             ]) : '<span class="badge bg-warning">Chưa có hình</span>';
         },
-        'format'=>'raw',
+        'format' => 'raw',
         //'contentOptions' => [ 'style' => 'text-align:center' ],
-       // 'width' => '100px',
+        // 'width' => '100px',
         'headerOptions' => ['style' => 'width:100px;'],
         'contentOptions' => ['style' => 'min-width:100px;text-align:center'],
     ],
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'bien_so_xe',
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'bien_so_xe',
         //'contentOptions' => [ 'style' => 'text-align:center' ],
         //'width' => '100px',
         'headerOptions' => ['style' => 'width:100px;'],
         'contentOptions' => ['style' => 'min-width:100px;text-align:center'],
     ],
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'ma_bien_so',
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'ma_bien_so',
         //'contentOptions' => [ 'style' => 'text-align:center' ],
-       // 'width' => '100px',
+        // 'width' => '100px',
         'headerOptions' => ['style' => 'width:100px;'],
         'contentOptions' => ['style' => 'min-width:100px;text-align:center'],
     ],
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'hieu_xe',
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'hieu_xe',
         'headerOptions' => ['style' => 'width:200px;'],
         'contentOptions' => ['style' => 'min-width:200px;'],
     ],
@@ -187,87 +198,87 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'mau_sac',
     ], */
-     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'ma_mau',
-        'label'=>'Màu',
-        'value'=>function($model){
-            return !$model->ma_mau ? '-' : '<span title="'. $model->mau_sac .'" style="background-color:'. $model->ma_mau .'; border: 1px solid var(--primary-bg-color)">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>';
+    [
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'ma_mau',
+        'label' => 'Màu',
+        'value' => function ($model) {
+            return !$model->ma_mau ? '-' : '<span class="rounded-circle" title="' . $model->mau_sac . '" style="background-color:' . $model->ma_mau . '; border: 1px solid var(--primary-bg-color);padding:5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>';
         },
-        'format'=>'raw',
+        'format' => 'raw',
         'headerOptions' => ['style' => 'width:40px;'],
         'contentOptions' => ['style' => 'min-width:40px;text-align:center;'],
     ],
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'label'=>'Số Km đã đi',
-        'value'=>function($model){
+        'class' => '\kartik\grid\DataColumn',
+        'label' => 'Số Km đã đi',
+        'value' => function ($model) {
             return number_format($model->getKMHienTai());
         },
         'headerOptions' => ['style' => 'width:100px;'],
         'contentOptions' => ['style' => 'min-width:100px;text-align:center;'],
     ],
     [
-       'class'=>'\kartik\grid\DataColumn',
-       'attribute'=>'id_loai_xe',
-       'value' => function($model) {
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'id_loai_xe',
+        'value' => function ($model) {
             $loaiXe = LoaiXe::findOne($model->id_loai_xe);
-            return $loaiXe ? $loaiXe->ten_loai_xe : '<span style="color: red;">Trống </span>'; 
-       },
-       'contentOptions' => [ 'style' => 'text-align:center' ],
+            return $loaiXe ? $loaiXe->ten_loai_xe : '<span style="color: red;">Trống </span>';
+        },
+        'contentOptions' => ['style' => 'text-align:center'],
     ],
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'label'=>'GV đang sử dụng',
-        'value'=>function($model){
+        'class' => '\kartik\grid\DataColumn',
+        'label' => 'GV đang sử dụng',
+        'value' => function ($model) {
             $text = '';
-            foreach ($model->getListGiaoVienSuDung() as $iGv=>$gv){
-                if($iGv > 0){
+            foreach ($model->getListGiaoVienSuDung() as $iGv => $gv) {
+                if ($iGv > 0) {
                     $text .= '<br/>';
                 }
                 $text .= '- ' . $gv->giaoVien->ho_ten;
             }
             return $text;
         },
-        'format'=>'raw',
+        'format' => 'raw',
         'headerOptions' => ['style' => 'width:175px;'],
         'contentOptions' => ['style' => 'min-width:175px;'],
     ],
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'ma_so',
-        'label'=>'Mã số (SH)',
-        'contentOptions' => [ 'style' => 'text-align:center' ],
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'ma_so',
+        'label' => 'Mã số (SH)',
+        'contentOptions' => ['style' => 'text-align:center'],
     ],
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'phan_loai',
-        'value' => function($model) {
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'phan_loai',
+        'value' => function ($model) {
             return $model->getLabelPhanLoaiXe();
         },
-        'contentOptions' => [ 'style' => 'text-align:center' ],
+        'contentOptions' => ['style' => 'text-align:center'],
     ],
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'tinh_trang_xe',
-        'value'=>function($model){
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'tinh_trang_xe',
+        'value' => function ($model) {
             return Xe::getLabelTinhTrangXeBadge($model->tinh_trang_xe);
         },
-        'format'=>'raw',
-        'contentOptions' => [ 'style' => 'text-align:center' ],
+        'format' => 'raw',
+        'contentOptions' => ['style' => 'text-align:center'],
     ],
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'nam_san_xuat',
-        'label'=>'Năm SX',
-        'contentOptions' => [ 'style' => 'text-align:center' ],
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'nam_san_xuat',
+        'label' => 'Năm SX',
+        'contentOptions' => ['style' => 'text-align:center'],
     ],
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'nam_mua',
-        'contentOptions' => [ 'style' => 'text-align:center' ],
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'nam_mua',
+        'contentOptions' => ['style' => 'text-align:center'],
     ],
-    
+
     /* [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ngay_dang_kiem',
@@ -277,18 +288,18 @@ return [
         'contentOptions' => [ 'style' => 'text-align:center' ],
     ], */
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'so_hop_dong',
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'so_hop_dong',
         'headerOptions' => ['style' => 'width:200px;'],
         'contentOptions' => ['style' => 'min-width:200px;text-align:center;'],
     ],
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'so_hoa_don',
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'so_hoa_don',
         'headerOptions' => ['style' => 'width:100px;'],
         'contentOptions' => ['style' => 'min-width:100px;text-align:center;'],
     ],
-   /*  [
+    /*  [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'id_giao_vien',
         'label' => 'Người phụ trách',
@@ -297,22 +308,22 @@ return [
         },
         //'width' => '150px',
     ], */
-    
-    
+
+
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'stt',
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'stt',
         'width' => '50px',
-        'contentOptions' => [ 'style' => 'text-align:center' ],
+        'contentOptions' => ['style' => 'text-align:center'],
     ],
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'ghi_chu',
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'ghi_chu',
         'headerOptions' => ['style' => 'width:250px;'],
         'contentOptions' => ['style' => 'min-width:250px;'],
     ],
-   
-   /*  [
+
+    /*  [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'trang_thai',
         'value' => function ($model) {
@@ -325,14 +336,14 @@ return [
             ];
         },
     ], */
-    
+
     // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'nguoi_tao',
+    // 'class'=>'\kartik\grid\DataColumn',
+    // 'attribute'=>'nguoi_tao',
     // ],
     // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'thoi_gian_tao',
+    // 'class'=>'\kartik\grid\DataColumn',
+    // 'attribute'=>'thoi_gian_tao',
     // ],
 
-];   
+];
