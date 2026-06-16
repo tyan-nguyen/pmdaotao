@@ -259,6 +259,8 @@ class ThongKeHangTangSearch extends DangKyHv
             'gioi_tinh' => $this->gioi_tinh,
             'id_hang' => $this->id_hang,
             'nguoi_tao' => $this->nguoi_tao,
+            'nguoi_giao_tai_lieu' => $this->nguoi_giao_tai_lieu,
+            'nguoi_giao_ao' => $this->nguoi_giao_ao,
             'da_nhan_ao' => $this->da_nhan_ao,
             'ngay_nhan_ao' => $this->ngay_nhan_ao,
             'ngay_nhan_tai_lieu' => $this->ngay_nhan_tai_lieu,

@@ -315,7 +315,7 @@ if ($model->id_xa) {
         </div>
 
         <div class="col-md-2">
-            <label class="text-primary">NV tiếp nhận</label>
+            <label class="text-primary">NV tiếp nhận Hồ sơ</label>
             <?= $form->field($model, 'nguoi_tao')->dropDownList(User::getListNvNhanHoSo(), ['prompt' => 'Tất cả'])->label(false) ?>
         </div>
 
@@ -368,6 +368,10 @@ if ($model->id_xa) {
                     'todayBtn' => true
                 ]
             ])->label(false); ?>
+        </div>
+        <div class="col-md-2">
+            <label class="text-info">NV giao tài liệu</label>
+            <?= $form->field($model, 'nguoi_giao_tai_lieu')->dropDownList(User::getListNvNhanHoSo(), ['prompt' => 'Tất cả'])->label(false) ?>
         </div>
 
         <div class="col-md-2">
@@ -437,6 +441,11 @@ if ($model->id_xa) {
                     'todayBtn' => true
                 ]
             ])->label(false); ?>
+        </div>
+
+        <div class="col-md-2">
+            <label class="text-warning">NV giao áo</label>
+            <?= $form->field($model, 'nguoi_giao_ao')->dropDownList(User::getListNvNhanHoSo(), ['prompt' => 'Tất cả'])->label(false) ?>
         </div>
 
         <div class="col-md-2">
