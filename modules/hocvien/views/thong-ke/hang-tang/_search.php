@@ -281,7 +281,7 @@ if ($model->id_xa) {
         </div>
 
         <div class="col-md-2">
-            <label>Nhận hồ sơ từ</label>
+            <label class="text-primary">Nhận hồ sơ từ</label>
             <?= $form->field($model, 'ngay_dang_ky_tu')->widget(DatePicker::classname(), [
                 'options' => [
                     'placeholder' => 'Chọn ngày ĐK  ...',
@@ -298,7 +298,7 @@ if ($model->id_xa) {
         </div>
 
         <div class="col-md-2">
-            <label>Nhận hồ sơ đến</label>
+            <label class="text-primary">Nhận hồ sơ đến</label>
             <?= $form->field($model, 'ngay_dang_ky_den')->widget(DatePicker::classname(), [
                 'options' => [
                     'placeholder' => 'Chọn ngày ĐK  ...',
@@ -315,11 +315,13 @@ if ($model->id_xa) {
         </div>
 
         <div class="col-md-2">
-            <?= $form->field($model, 'nguoi_tao')->dropDownList(User::getListNvNhanHoSo(), ['prompt' => 'Tất cả'])->label('NV tiếp nhận') ?>
+            <label class="text-primary">NV tiếp nhận</label>
+            <?= $form->field($model, 'nguoi_tao')->dropDownList(User::getListNvNhanHoSo(), ['prompt' => 'Tất cả'])->label(false) ?>
         </div>
 
         <div class="col-md-2">
-            <?= $form->field($model, 'da_nhan_tai_lieu')->dropDownList([1 => 'Đã nhận', 0 => 'Chưa nhận',], ['prompt' => 'Tất cả'])->label('Nhận tài liệu') ?>
+            <label class="text-info">Nhận tài liệu</label>
+            <?= $form->field($model, 'da_nhan_tai_lieu')->dropDownList([1 => 'Đã nhận', 0 => 'Chưa nhận',], ['prompt' => 'Tất cả'])->label(false) ?>
         </div>
 
         <!-- <div class="col-md-2">
@@ -335,7 +337,7 @@ if ($model->id_xa) {
             ]); ?>
         </div> -->
         <div class="col-md-2">
-            <label>Ngày nhận tài liệu từ</label>
+            <label class="text-info">Ngày nhận tài liệu từ</label>
             <?= $form->field($model, 'ngay_nhan_tai_lieu_tu')->widget(DatePicker::classname(), [
                 'options' => [
                     'placeholder' => 'Chọn ngày nhận tài liệu ...',
@@ -352,7 +354,7 @@ if ($model->id_xa) {
         </div>
 
         <div class="col-md-2">
-            <label>Ngày nhận tài liệu đến</label>
+            <label class="text-info">Ngày nhận tài liệu đến</label>
             <?= $form->field($model, 'ngay_nhan_tai_lieu_den')->widget(DatePicker::classname(), [
                 'options' => [
                     'placeholder' => 'Chọn ngày nhận tài liệu ...',
@@ -369,7 +371,7 @@ if ($model->id_xa) {
         </div>
 
         <div class="col-md-2">
-            <label>Nơi nhận tài liệu</label>
+            <label class="text-info">Nơi nhận tài liệu</label>
             <?= $form->field($model, 'noiNhanTaiLieu')->widget(Select2::classname(), [
                 'data' => DangKyHv::getDmNoiDangKy(),
                 'language' => 'vi',
@@ -386,7 +388,8 @@ if ($model->id_xa) {
         </div>
 
         <div class="col-md-2">
-            <?= $form->field($model, 'da_nhan_ao')->dropDownList([1 => 'Đã nhận', 0 => 'Chưa nhận',], ['prompt' => 'Tất cả'])->label('Nhận áo') ?>
+            <label class="text-warning">Nhận áo</label>
+            <?= $form->field($model, 'da_nhan_ao')->dropDownList([1 => 'Đã nhận', 0 => 'Chưa nhận',], ['prompt' => 'Tất cả'])->label(false) ?>
         </div>
 
         <!--  <div class="col-md-2">
@@ -403,7 +406,7 @@ if ($model->id_xa) {
         </div> -->
 
         <div class="col-md-2">
-            <label>Ngày nhận áo từ</label>
+            <label class="text-warning">Ngày nhận áo từ</label>
             <?= $form->field($model, 'ngay_nhan_ao_tu')->widget(DatePicker::classname(), [
                 'options' => [
                     'placeholder' => 'Chọn ngày nhận áo ...',
@@ -420,7 +423,7 @@ if ($model->id_xa) {
         </div>
 
         <div class="col-md-2">
-            <label>Ngày nhận áo đến</label>
+            <label class="text-warning">Ngày nhận áo đến</label>
             <?= $form->field($model, 'ngay_nhan_ao_den')->widget(DatePicker::classname(), [
                 'options' => [
                     'placeholder' => 'Chọn ngày nhận áo ...',
@@ -437,7 +440,7 @@ if ($model->id_xa) {
         </div>
 
         <div class="col-md-2">
-            <label>Nơi nhận áo</label>
+            <label class="text-warning">Nơi nhận áo</label>
             <?= $form->field($model, 'noiNhanAo')->widget(Select2::classname(), [
                 'data' => DangKyHv::getDmNoiDangKy(),
                 'language' => 'vi',
@@ -454,6 +457,7 @@ if ($model->id_xa) {
         </div>
 
         <div class="col-md-2">
+            <label class="text-warning">Size</label>
             <?= $form->field($model, 'size')->dropDownList([
                 'S' => 'Size S',
                 'M' => 'Size M',
@@ -462,7 +466,7 @@ if ($model->id_xa) {
                 '2XL' => 'Size 2XL',
                 '3XL' => 'Size 3XL',
                 '4XL' => 'Size 4XL'
-            ], ['prompt' => 'Tất cả'])->label('Size') ?>
+            ], ['prompt' => 'Tất cả'])->label(false) ?>
         </div>
 
 
