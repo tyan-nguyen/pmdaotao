@@ -322,7 +322,7 @@ if ($model->id_xa) {
             <?= $form->field($model, 'da_nhan_tai_lieu')->dropDownList([1 => 'Đã nhận', 0 => 'Chưa nhận',], ['prompt' => 'Tất cả'])->label('Nhận tài liệu') ?>
         </div>
 
-        <div class="col-md-2">
+        <!-- <div class="col-md-2">
             <?= $form->field($model, 'ngay_nhan_tai_lieu')->widget(DatePicker::classname(), [
                 'options' => ['placeholder' => 'Chọn ngày nhận ...', 'autocomplete' => 'off'],
                 'pluginOptions' => [
@@ -333,6 +333,39 @@ if ($model->id_xa) {
                     'todayBtn' => true
                 ]
             ]); ?>
+        </div> -->
+        <div class="col-md-3">
+            <label>Ngày nhận tài liệu từ</label>
+            <?= $form->field($model, 'ngay_nhan_tai_lieu_tu')->widget(DatePicker::classname(), [
+                'options' => [
+                    'placeholder' => 'Chọn ngày nhận tài liệu ...',
+                    'autocomplete' => 'off'
+                ],
+                'pluginOptions' => [
+                    'autoclose' => true,
+                    'format' => 'dd/mm/yyyy',
+                    'zIndexOffset' => '9999',
+                    'todayHighlight' => true,
+                    'todayBtn' => true
+                ]
+            ])->label(false); ?>
+        </div>
+
+        <div class="col-md-3">
+            <label>Ngày nhận tài liệu đến</label>
+            <?= $form->field($model, 'ngay_nhan_tai_lieu_den')->widget(DatePicker::classname(), [
+                'options' => [
+                    'placeholder' => 'Chọn ngày nhận tài liệu ...',
+                    'autocomplete' => 'off'
+                ],
+                'pluginOptions' => [
+                    'autoclose' => true,
+                    'format' => 'dd/mm/yyyy',
+                    'zIndexOffset' => '9999',
+                    'todayHighlight' => true,
+                    'todayBtn' => true
+                ]
+            ])->label(false); ?>
         </div>
 
         <div class="col-md-2">
@@ -356,7 +389,7 @@ if ($model->id_xa) {
             <?= $form->field($model, 'da_nhan_ao')->dropDownList([1 => 'Đã nhận', 0 => 'Chưa nhận',], ['prompt' => 'Tất cả'])->label('Nhận áo') ?>
         </div>
 
-        <div class="col-md-2">
+        <!--  <div class="col-md-2">
             <?= $form->field($model, 'ngay_nhan_ao')->widget(DatePicker::classname(), [
                 'options' => ['placeholder' => 'Chọn ngày nhận ...', 'autocomplete' => 'off'],
                 'pluginOptions' => [
@@ -367,6 +400,40 @@ if ($model->id_xa) {
                     'todayBtn' => true
                 ]
             ]); ?>
+        </div> -->
+
+        <div class="col-md-3">
+            <label>Ngày nhận áo từ</label>
+            <?= $form->field($model, 'ngay_nhan_ao_tu')->widget(DatePicker::classname(), [
+                'options' => [
+                    'placeholder' => 'Chọn ngày nhận áo ...',
+                    'autocomplete' => 'off'
+                ],
+                'pluginOptions' => [
+                    'autoclose' => true,
+                    'format' => 'dd/mm/yyyy',
+                    'zIndexOffset' => '9999',
+                    'todayHighlight' => true,
+                    'todayBtn' => true
+                ]
+            ])->label(false); ?>
+        </div>
+
+        <div class="col-md-3">
+            <label>Ngày nhận áo đến</label>
+            <?= $form->field($model, 'ngay_nhan_ao_den')->widget(DatePicker::classname(), [
+                'options' => [
+                    'placeholder' => 'Chọn ngày nhận áo ...',
+                    'autocomplete' => 'off'
+                ],
+                'pluginOptions' => [
+                    'autoclose' => true,
+                    'format' => 'dd/mm/yyyy',
+                    'zIndexOffset' => '9999',
+                    'todayHighlight' => true,
+                    'todayBtn' => true
+                ]
+            ])->label(false); ?>
         </div>
 
         <div class="col-md-2">
