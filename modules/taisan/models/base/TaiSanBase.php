@@ -65,7 +65,7 @@ class TaiSanBase extends CpTaiSan
             'so_hoa_don' => 'Số hóa đơn',
             'so_hop_dong' => 'Số hợp đồng',
             'ngay_mua' => 'Ngày mua',
-            'thoi_han_bao_hanh' => 'Thơi hạn bảo hành',
+            'thoi_han_bao_hanh' => 'Thời hạn bảo hành',
             'ghi_chu_bao_hanh' => 'Ghi chú bảo hành',
             'vi_tri_id' => 'Vị trí',
             'phong_ban_id' => 'Phòng ban',

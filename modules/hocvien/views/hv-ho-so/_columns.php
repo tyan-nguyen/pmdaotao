@@ -99,13 +99,16 @@ return [
         },
         'format' => 'raw',
         'width' => '50px',
-        'contentOptions' => ['style' => 'text-align:center'],
+        'contentOptions' => ['style' => 'text-align:center', 'class' => 'kv-sticky-column-4'],
+        'headerOptions' => ['class' => 'kv-sticky-column-4'],
     ],
 
     [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'ho_ten',
         'width' => '150px',
+        'headerOptions' => ['style' => 'width:170px;', 'class' => 'kv-sticky-column-5'],
+        'contentOptions' => ['style' => 'min-width:170px;', 'class' => 'kv-sticky-column-5'],
     ],
     [
         'class' => '\kartik\grid\DataColumn',
@@ -127,7 +130,16 @@ return [
         'width' => '150px',
         'contentOptions' => ['style' => 'text-align:center'],
     ],
-
+    [
+        'class' => '\kartik\grid\DataColumn',
+        'label' => 'L.Kết',
+        'format' => 'html',
+        'value' => function ($model) {
+            return $model->id_lien_ket > 0 ? '<i class="fa fa-chain text-danger"></i>' : '';
+        },
+        'width' => '30px',
+        'contentOptions' => ['style' => 'text-align:center'],
+    ],
 
     [
         'class' => '\kartik\grid\DataColumn',
@@ -273,7 +285,19 @@ return [
     [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'ghi_chu',
-        'width' => '200px',
+        'headerOptions' => ['style' => 'width:200px;'],
+        'contentOptions' => ['style' => 'min-width:200px;'],
+    ],
+
+    [
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'id_lien_ket',
+        'label' => 'ĐV L.Kết',
+        'value' => function ($model) {
+            return $model->lienKet ? $model->lienKet->ten_lien_ket : '';
+        },
+        'headerOptions' => ['style' => 'width:300px;'],
+        'contentOptions' => ['style' => 'min-width:300px;'],
     ],
     /* [
         'class'=>'\kartik\grid\DataColumn',

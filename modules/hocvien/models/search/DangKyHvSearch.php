@@ -252,6 +252,7 @@ class DangKyHvSearch extends DangKyHv
             't.id_hang' => $this->id_hang,
             't.noi_dang_ky' => $this->noi_dang_ky,
             //'t.nguoi_tao'=>$this->nguoi_tao,
+            't.id_lien_ket' => $this->id_lien_ket,
         ]);
 
         if ($this->huy_ho_so) {
@@ -262,6 +263,10 @@ class DangKyHvSearch extends DangKyHv
             $query->andFilterWhere([
                 't.huy_ho_so' => 0,
             ]);
+        }
+
+        if ($this->co_lien_ket) {
+            $query->andWhere('id_lien_ket > 0');
         }
 
         $query->andFilterWhere(['like', 't.ho_ten', $this->ho_ten])

@@ -20,35 +20,36 @@ class TaiSanController extends Controller
     /**
      * @inheritdoc
      */
-    public function behaviors() {
-    		return [
-    			'ghost-access'=> [
-    			'class' => 'webvimark\modules\UserManagement\components\GhostAccessControl',
-        		],
-    			'verbs' => [
-    				'class' => VerbFilter::className(),
-    				'actions' => [
-    					'delete' => ['POST'],
-    				],
-    			],
-		];
-	}
+    public function behaviors()
+    {
+        return [
+            'ghost-access' => [
+                'class' => 'webvimark\modules\UserManagement\components\GhostAccessControl',
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ];
+    }
 
     /**
      * Lists all TaiSan models.
      * @return mixed
      */
     public function actionIndex()
-    {    
+    {
         $searchModel = new TaiSanSearch();
-  		if(isset($_POST['search']) && $_POST['search'] != null){
+        if (isset($_POST['search']) && $_POST['search'] != null) {
             $dataProvider = $searchModel->search(Yii::$app->request->post(), $_POST['search']);
         } else if ($searchModel->load(Yii::$app->request->post())) {
             $searchModel = new TaiSanSearch(); // "reset"
             $dataProvider = $searchModel->search(Yii::$app->request->post());
         } else {
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        }    
+        }
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -62,19 +63,19 @@ class TaiSanController extends Controller
      * @return mixed
      */
     public function actionView($id)
-    {   
+    {
         $request = Yii::$app->request;
-        if($request->isAjax){
+        if ($request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "TaiSan",
-                    'content'=>$this->renderAjax('view', [
-                        'model' => $this->findModel($id),
-                    ]),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::a('Sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
-                ];    
-        }else{
+                'title' => "Tài sản",
+                'content' => $this->renderAjax('view', [
+                    'model' => $this->findModel($id),
+                ]),
+                'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                    Html::a('Sửa', ['update', 'id' => $id], ['class' => 'btn btn-primary', 'role' => 'modal-remote'])
+            ];
+        } else {
             return $this->render('view', [
                 'model' => $this->findModel($id),
             ]);
@@ -90,45 +91,45 @@ class TaiSanController extends Controller
     public function actionCreate()
     {
         $request = Yii::$app->request;
-        $model = new TaiSan();  
+        $model = new TaiSan();
 
-        if($request->isAjax){
+        if ($request->isAjax) {
             /*
             *   Process for ajax request
             */
             Yii::$app->response->format = Response::FORMAT_JSON;
-            if($request->isGet){
+            if ($request->isGet) {
                 return [
-                    'title'=> "Thêm mới TaiSan",
-                    'content'=>$this->renderAjax('create', [
+                    'title' => "Thêm mới Tài sản",
+                    'content' => $this->renderAjax('create', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
-        
-                ];         
-            }else if($model->load($request->post()) && $model->save()){
+                    'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                        Html::button('Lưu lại', ['class' => 'btn btn-primary', 'type' => "submit"])
+
+                ];
+            } else if ($model->load($request->post()) && $model->save()) {
                 return [
-                    'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Thêm mới TaiSan",
-                    'content'=>'<span class="text-success">Thêm mới thành công</span>',
-                    'tcontent'=>'Thêm mới thành công!',
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                            Html::a('Tiếp tục thêm',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
-        
-                ];         
-            }else{           
+                    'forceReload' => '#crud-datatable-pjax',
+                    'title' => "Thêm mới Tài sản",
+                    'content' => '<span class="text-success">Thêm mới thành công</span>',
+                    'tcontent' => 'Thêm mới thành công!',
+                    'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                        Html::a('Tiếp tục thêm', ['create'], ['class' => 'btn btn-primary', 'role' => 'modal-remote'])
+
+                ];
+            } else {
                 return [
-                    'title'=> "Thêm mới TaiSan",
-                    'content'=>$this->renderAjax('create', [
+                    'title' => "Thêm mới Tài sản",
+                    'content' => $this->renderAjax('create', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
-        
-                ];         
+                    'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                        Html::button('Lưu lại', ['class' => 'btn btn-primary', 'type' => "submit"])
+
+                ];
             }
-        }else{
+        } else {
             /*
             *   Process for non-ajax request
             */
@@ -140,7 +141,6 @@ class TaiSanController extends Controller
                 ]);
             }
         }
-       
     }
 
     /**
@@ -153,48 +153,48 @@ class TaiSanController extends Controller
     public function actionUpdate($id)
     {
         $request = Yii::$app->request;
-        $model = $this->findModel($id);       
+        $model = $this->findModel($id);
 
-        if($request->isAjax){
+        if ($request->isAjax) {
             /*
             *   Process for ajax request
             */
             Yii::$app->response->format = Response::FORMAT_JSON;
-            if($request->isGet){
+            if ($request->isGet) {
                 return [
-                    'title'=> "Cập nhật TaiSan",
-                    'content'=>$this->renderAjax('update', [
+                    'title' => "Cập nhật Tài sản",
+                    'content' => $this->renderAjax('update', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
-                ];         
-            }else if($model->load($request->post()) && $model->save()){
-            	if(Yii::$app->params['showView']){
+                    'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                        Html::button('Lưu lại', ['class' => 'btn btn-primary', 'type' => "submit"])
+                ];
+            } else if ($model->load($request->post()) && $model->save()) {
+                if (Yii::$app->params['showView']) {
                     return [
-                        'forceReload'=>'#crud-datatable-pjax',
-                        'title'=> "TaiSan",
-                        'content'=>$this->renderAjax('view', [
+                        'forceReload' => '#crud-datatable-pjax',
+                        'title' => "Tài sản",
+                        'content' => $this->renderAjax('view', [
                             'model' => $model,
                         ]),
-                        'tcontent'=>'Cập nhật thành công!',
-                        'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::a('Sửa',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
-                    ];    
-                }else{
-                	return ['forceClose'=>true,'forceReload'=>'#crud-datatable-pjax','tcontent'=>'Cập nhật thành công!',];
+                        'tcontent' => 'Cập nhật thành công!',
+                        'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                            Html::a('Sửa', ['update', 'id' => $id], ['class' => 'btn btn-primary', 'role' => 'modal-remote'])
+                    ];
+                } else {
+                    return ['forceClose' => true, 'forceReload' => '#crud-datatable-pjax', 'tcontent' => 'Cập nhật thành công!',];
                 }
-            }else{
-                 return [
-                    'title'=> "Cập nhật TaiSan",
-                    'content'=>$this->renderAjax('update', [
+            } else {
+                return [
+                    'title' => "Cập nhật Tài sản",
+                    'content' => $this->renderAjax('update', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Đóng lại',['class'=>'btn btn-default pull-left','data-bs-dismiss'=>"modal"]).
-                                Html::button('Lưu lại',['class'=>'btn btn-primary','type'=>"submit"])
-                ];        
+                    'footer' => Html::button('Đóng lại', ['class' => 'btn btn-default pull-left', 'data-bs-dismiss' => "modal"]) .
+                        Html::button('Lưu lại', ['class' => 'btn btn-primary', 'type' => "submit"])
+                ];
             }
-        }else{
+        } else {
             /*
             *   Process for non-ajax request
             */
@@ -220,23 +220,21 @@ class TaiSanController extends Controller
         $request = Yii::$app->request;
         $this->findModel($id)->delete();
 
-        if($request->isAjax){
+        if ($request->isAjax) {
             /*
             *   Process for ajax request
             */
             Yii::$app->response->format = Response::FORMAT_JSON;
-            return ['forceClose'=>true,'forceReload'=>'#crud-datatable-pjax'];
-        }else{
+            return ['forceClose' => true, 'forceReload' => '#crud-datatable-pjax'];
+        } else {
             /*
             *   Process for non-ajax request
             */
             return $this->redirect(['index']);
         }
-
-
     }
 
-     /**
+    /**
      * Delete multiple existing TaiSan model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
@@ -244,36 +242,37 @@ class TaiSanController extends Controller
      * @return mixed
      */
     public function actionBulkdelete()
-    {        
+    {
         $request = Yii::$app->request;
-        $pks = explode(',', $request->post( 'pks' )); // Array or selected records primary keys
+        $pks = explode(',', $request->post('pks')); // Array or selected records primary keys
         $delOk = true;
         $fList = array();
-        foreach ( $pks as $pk ) {
+        foreach ($pks as $pk) {
             $model = $this->findModel($pk);
-            try{
-            	$model->delete();
-            }catch(\Exception $e) {
-            	$delOk = false;
-            	$fList[] = $model->id;
+            try {
+                $model->delete();
+            } catch (\Exception $e) {
+                $delOk = false;
+                $fList[] = $model->id;
             }
         }
 
-        if($request->isAjax){
+        if ($request->isAjax) {
             /*
             *   Process for ajax request
             */
             Yii::$app->response->format = Response::FORMAT_JSON;
-            return ['forceClose'=>true,'forceReload'=>'#crud-datatable-pjax',
-            			'tcontent'=>$delOk==true?'Xóa thành công!':('Không thể xóa:'.implode('</br>', $fList)),
+            return [
+                'forceClose' => true,
+                'forceReload' => '#crud-datatable-pjax',
+                'tcontent' => $delOk == true ? 'Xóa thành công!' : ('Không thể xóa:' . implode('</br>', $fList)),
             ];
-        }else{
+        } else {
             /*
             *   Process for non-ajax request
             */
             return $this->redirect(['index']);
         }
-       
     }
 
     /**

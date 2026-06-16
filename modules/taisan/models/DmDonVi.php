@@ -57,7 +57,7 @@ class DmDonVi extends CpDmDonVi
         ];
     }
 
-     //hàm beforeSave, set nguoi_tao
+    //hàm beforeSave, set nguoi_tao
     public function beforeSave($insert)
     {
         if ($this->isNewRecord) {
@@ -68,24 +68,24 @@ class DmDonVi extends CpDmDonVi
     }
 
     //lấy tên ngắn hiển thị trên danh sách
-    public function getTenSort(){
+    public function getTenSort()
+    {
         return $this->ten_sort ? $this->ten_sort : $this->ten;
     }
 
     //get list đơn vị để điền vào dropdown
     public static function getList($type = null)
     {
-        if($type == null)
+        if ($type == null)
             $donViList = self::find()->orderBy(['stt' => SORT_DESC])->all();
-        else if($type == 'ban_hang')
+        else if ($type == 'ban_hang')
             $donViList = self::find()->where(['co_ban_hang' => 1])->orderBy(['stt' => SORT_DESC])->all();
-        else if($type == 'sua_chua')
+        else if ($type == 'sua_chua')
             $donViList = self::find()->where(['co_sua_chua' => 1])->orderBy(['stt' => SORT_DESC])->all();
-        else 
+        else
             return [];
-        return \yii\helpers\ArrayHelper::map($donViList, 'id', function($model) {
+        return \yii\helpers\ArrayHelper::map($donViList, 'id', function ($model) {
             return '+ ' . $model->ten . ($model->code ? ' (' . $model->code . ')' : '');
         });
     }
-
 }
