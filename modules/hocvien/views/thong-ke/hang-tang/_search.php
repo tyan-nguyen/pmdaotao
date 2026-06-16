@@ -334,7 +334,7 @@ if ($model->id_xa) {
                 ]
             ]); ?>
         </div> -->
-        <div class="col-md-3">
+        <div class="col-md-2">
             <label>Ngày nhận tài liệu từ</label>
             <?= $form->field($model, 'ngay_nhan_tai_lieu_tu')->widget(DatePicker::classname(), [
                 'options' => [
@@ -351,7 +351,7 @@ if ($model->id_xa) {
             ])->label(false); ?>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-2">
             <label>Ngày nhận tài liệu đến</label>
             <?= $form->field($model, 'ngay_nhan_tai_lieu_den')->widget(DatePicker::classname(), [
                 'options' => [
@@ -402,7 +402,7 @@ if ($model->id_xa) {
             ]); ?>
         </div> -->
 
-        <div class="col-md-3">
+        <div class="col-md-2">
             <label>Ngày nhận áo từ</label>
             <?= $form->field($model, 'ngay_nhan_ao_tu')->widget(DatePicker::classname(), [
                 'options' => [
@@ -419,7 +419,7 @@ if ($model->id_xa) {
             ])->label(false); ?>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-2">
             <label>Ngày nhận áo đến</label>
             <?= $form->field($model, 'ngay_nhan_ao_den')->widget(DatePicker::classname(), [
                 'options' => [
