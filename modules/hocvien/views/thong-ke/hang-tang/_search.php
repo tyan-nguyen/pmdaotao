@@ -258,28 +258,6 @@ if ($model->id_xa) {
             </div>
             -->
 
-        <div class="col-md-7">
-            <?php // $form->field($model, 'id_hang')->dropDownList(HangDaoTao::getList(), ['prompt'=>'Tất cả']) 
-            ?>
-            <label>Hạng đào tạo(s)</label>
-            <?= $form->field($model, 'id_hangs')->widget(Select2::classname(), [
-                'data' => HangDaoTao::getList(),
-                'language' => 'vi',
-                'options' => [
-                    'placeholder' => 'Chọn hạng...',
-                    'class' => 'form-control-fix-select-multiple',
-                    'id' => 'hangs-search-dropdown',
-                    'multiple' => true
-                ],
-                'pluginOptions' => [
-                    'allowClear' => true,
-                    'width' => '100%',
-                    'containerCssClass' => 'hang-select2-container',
-                    'closeOnSelect' => false,
-                ],
-            ])->label(false); ?>
-        </div>
-
         <div class="col-md-2">
             <label class="text-primary">Nhận hồ sơ từ</label>
             <?= $form->field($model, 'ngay_dang_ky_tu')->widget(DatePicker::classname(), [
@@ -314,9 +292,22 @@ if ($model->id_xa) {
             ])->label(false); ?>
         </div>
 
-        <div class="col-md-2">
+        <div class="col-md-3">
             <label class="text-primary">NV tiếp nhận Hồ sơ</label>
-            <?= $form->field($model, 'nguoi_tao')->dropDownList(User::getListNvNhanHoSo(), ['prompt' => 'Tất cả'])->label(false) ?>
+
+            <?= $form->field($model, 'nguoi_tao')->widget(Select2::classname(), [
+                'data' => User::getListNvNhanHoSo(),
+                'language' => 'vi',
+                'options' => [
+                    'placeholder' => 'Người nhận hồ sơ...',
+                    'class' => 'form-control dropdown-with-arrow',
+                    'id' => 'nguoi-nhan-ho-so-search-dropdown'
+                ],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                    'width' => '100%'
+                ],
+            ])->label(false); ?>
         </div>
 
         <div class="col-md-2">
@@ -369,13 +360,25 @@ if ($model->id_xa) {
                 ]
             ])->label(false); ?>
         </div>
-        <div class="col-md-2">
-            <label class="text-info">NV giao tài liệu</label>
-            <?= $form->field($model, 'nguoi_giao_tai_lieu')->dropDownList(User::getListNvNhanHoSo(), ['prompt' => 'Tất cả'])->label(false) ?>
+        <div class="col-md-3">
+            <label class="text-info">Nhân viên giao T.liệu</label>
+            <?= $form->field($model, 'nguoi_giao_tai_lieu')->widget(Select2::classname(), [
+                'data' => User::getListNvNhanHoSo(),
+                'language' => 'vi',
+                'options' => [
+                    'placeholder' => 'Người giao tài liệu...',
+                    'class' => 'form-control dropdown-with-arrow',
+                    'id' => 'nguoi-giao-tai-lieu-search-dropdown'
+                ],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                    'width' => '100%'
+                ],
+            ])->label(false); ?>
         </div>
 
-        <div class="col-md-2">
-            <label class="text-info">Nơi nhận tài liệu</label>
+        <div class="col-md-3">
+            <label class="text-info">Nơi giao tài liệu</label>
             <?= $form->field($model, 'noiNhanTaiLieu')->widget(Select2::classname(), [
                 'data' => DangKyHv::getDmNoiDangKy(),
                 'language' => 'vi',
@@ -444,12 +447,27 @@ if ($model->id_xa) {
         </div>
 
         <div class="col-md-2">
-            <label class="text-warning">NV giao áo</label>
-            <?= $form->field($model, 'nguoi_giao_ao')->dropDownList(User::getListNvNhanHoSo(), ['prompt' => 'Tất cả'])->label(false) ?>
+            <label class="text-warning">Nhân viên giao áo</label>
+
+            <?= $form->field($model, 'nguoi_giao_ao')->widget(Select2::classname(), [
+                'data' => User::getListNvNhanHoSo(),
+                'language' => 'vi',
+                'options' => [
+                    'placeholder' => 'Người giao áo...',
+                    'class' => 'form-control dropdown-with-arrow',
+                    'id' => 'nguoi-giao-ao-search-dropdown'
+                ],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                    'width' => '100%'
+                ],
+            ])->label(false); ?>
+
+
         </div>
 
         <div class="col-md-2">
-            <label class="text-warning">Nơi nhận áo</label>
+            <label class="text-warning">Nơi giao áo</label>
             <?= $form->field($model, 'noiNhanAo')->widget(Select2::classname(), [
                 'data' => DangKyHv::getDmNoiDangKy(),
                 'language' => 'vi',
@@ -478,19 +496,38 @@ if ($model->id_xa) {
             ], ['prompt' => 'Tất cả'])->label(false) ?>
         </div>
 
+        <div class="col-md-8">
+            <?php // $form->field($model, 'id_hang')->dropDownList(HangDaoTao::getList(), ['prompt'=>'Tất cả']) 
+            ?>
+            <label>Hạng đào tạo(s)</label>
+            <?= $form->field($model, 'id_hangs')->widget(Select2::classname(), [
+                'data' => HangDaoTao::getList(),
+                'language' => 'vi',
+                'options' => [
+                    'placeholder' => 'Chọn hạng...',
+                    'class' => 'form-control-fix-select-multiple',
+                    'id' => 'hangs-search-dropdown',
+                    'multiple' => true
+                ],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                    'width' => '100%',
+                    'containerCssClass' => 'hang-select2-container',
+                    'closeOnSelect' => false,
+                ],
+            ])->label(false); ?>
+        </div>
+
+        <div class="col-md-4">
+            <br />
+            <?= Html::submitButton('<i class="fe fe-search"></i> Thống kê', ['class' => 'btn btn-primary', 'style' => 'margin-top:5px']) ?>
+            <?= Html::resetButton('<i class="fe fe-x"></i> Reset tìm kiếm', ['class' => 'btn btn-info', 'style' => 'margin-top:5px']) ?>
+        </div>
+
 
 
 
     </div>
-
-    <?php if (!Yii::$app->request->isAjax) { ?>
-        <div class="col-md-12 text-center">
-            <div class="form-group mb-0">
-                <?= Html::submitButton('<i class="fe fe-search"></i> Thống kê', ['class' => 'btn btn-primary']) ?>
-                <?= Html::resetButton('<i class="fe fe-x"></i> Reset dữ liệu', ['class' => 'btn btn-info']) ?>
-            </div>
-        </div>
-    <?php } ?>
 
 
     <?php ActiveForm::end(); ?>

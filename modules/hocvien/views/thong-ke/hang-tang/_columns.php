@@ -1,18 +1,20 @@
 <?php
+
 use yii\helpers\Url;
 use yii\bootstrap5\Html;
 use app\custom\CustomFunc;
 use app\modules\user\models\User;
 use app\modules\hocvien\models\DangKyHv;
+
 return [
     /* [
         'class' => 'kartik\grid\CheckboxColumn',
         'width' => '20px',
     ], */
 
-        // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'id',
+    // [
+    // 'class'=>'\kartik\grid\DataColumn',
+    // 'attribute'=>'id',
     // ],
     /*[
         'class' => 'kartik\grid\ActionColumn',
@@ -51,36 +53,36 @@ return [
             
         ],                
     ],*/
-    
+
     [
         'class' => 'kartik\grid\SerialColumn',
         'width' => '30px',
     ],
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'noi_dang_ky',
-        'label'=>'NĐK',
-        'value'=>function($model){
-            return DangKyHv::getLabelNoiDangKyBadge($model->noi_dang_ky) 
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'noi_dang_ky',
+        'label' => 'NĐK',
+        'value' => function ($model) {
+            return DangKyHv::getLabelNoiDangKyBadge($model->noi_dang_ky)
                 /*. '<span class="badge bg-success">' . DangKyHv::getLabelNoiDangKyOther($model->noi_dang_ky) . '</span>'*/;
-            },
-        'format'=>'raw',
+        },
+        'format' => 'raw',
         'width' => '50px',
-        'contentOptions' => [ 'style' => 'text-align:center' ],
+        'contentOptions' => ['style' => 'text-align:center'],
     ],
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'ho_ten',
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'ho_ten',
         'width' => '120px',
     ],
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'ngay_sinh',
-        'value'=>function($model){
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'ngay_sinh',
+        'value' => function ($model) {
             return $model->getNgaySinh();
         },
         'width' => '40px',
-        'contentOptions' => [ 'style' => 'text-align:center' ],
+        'contentOptions' => ['style' => 'text-align:center'],
     ],
     // [
     //     'class'=>'\kartik\grid\DataColumn',
@@ -97,72 +99,64 @@ return [
         'width' => '200px',
     ],*/
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'so_cccd',
-        'label'=>'CCCD (Mã KH)',
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'so_cccd',
+        'label' => 'CCCD (Mã KH)',
         'width' => '150px',
-        'contentOptions' => [ 'style' => 'text-align:center' ],
+        'contentOptions' => ['style' => 'text-align:center'],
     ],
 
- 
+
     [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'id_hang',
         'width' => '100px',
-        'value' => function($model) {
-        return '<span title="'. ($model->hangDaoTao ? $model->hangDaoTao->ten_hang : 'N/A') .'">' . ($model->hangDaoTao ? $model->hangDaoTao->ma_hang : 'N/A') . '</span>';
+        'value' => function ($model) {
+            return '<span title="' . ($model->hangDaoTao ? $model->hangDaoTao->ten_hang : 'N/A') . '">' . ($model->hangDaoTao ? $model->hangDaoTao->ma_hang : 'N/A') . '</span>';
         },
-        'format'=>'html',
-        'label' => 'H.Đào tạo',        
+        'format' => 'html',
+        'label' => 'H.Đào tạo',
         /* 'pageSummary' => 'Tổng cộng (E=A-B-C+D)',
         'pageSummaryOptions' => ['class' => 'text-right text-end'], */
         //'contentOptions' => [ 'style' => 'text-align:center' ],
     ],
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'id_khoa_hoc',
-        'label'=>'Khóa học',
-        'value' => function($model) {
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'id_khoa_hoc',
+        'label' => 'Khóa học',
+        'value' => function ($model) {
             return $model->khoaHoc ? $model->khoaHoc->ten_khoa_hoc : '';
         },
         'width' => '100px',
-        'contentOptions' => [ 'style' => 'text-align:center' ],
+        'contentOptions' => ['style' => 'text-align:center'],
     ],
-    
+
     // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'trang_thai',
+    // 'class'=>'\kartik\grid\DataColumn',
+    // 'attribute'=>'trang_thai',
     // ],
-     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'thoi_gian_tao',
-        'label'=>'Ngày đăng ký',
-        'value'=>function($model){
+    [
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'thoi_gian_tao',
+        'label' => 'Ngày đăng ký',
+        'value' => function ($model) {
             return CustomFunc::convertYMDHISToDMY($model->thoi_gian_tao);
         },
         'width' => '70px',
-        'contentOptions' => [ 'style' => 'text-align:center'],
-     ],
-     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'thoi_gian_hoan_thanh_ho_so',
-        'label'=>'H.Thành HS',
-        'value'=>function($model){
-        return CustomFunc::convertYMDHISToDMY($model->thoi_gian_hoan_thanh_ho_so);
+        'contentOptions' => ['style' => 'text-align:center'],
+    ],
+    [
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'thoi_gian_hoan_thanh_ho_so',
+        'label' => 'H.Thành HS',
+        'value' => function ($model) {
+            return CustomFunc::convertYMDHISToDMY($model->thoi_gian_hoan_thanh_ho_so);
         },
         'width' => '70px',
-        'contentOptions' => [ 'style' => 'text-align:center'],
-     ],
-     [
-         'class'=>'\kartik\grid\DataColumn',
-         'attribute'=>'nguoi_tao',
-         'value'=>function($model){
-             return $model->nguoiTao->shortName;
-         },
-         'width' => '80px',
-         'contentOptions' => [ 'style' => 'text-align:center'],
-     ],
-     /*[
+        'contentOptions' => ['style' => 'text-align:center'],
+    ],
+
+    /*[
          'class'=>'\kartik\grid\DataColumn',
          'attribute'=>'thoi_gian_tao',
          'label'=>'Ngày đăng ký',
@@ -174,36 +168,56 @@ return [
     ],*/
 
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'da_nhan_ao',
-        'label'=>'Áo',
-        'format'=>'html',
-        'value'=>function($model){
-        return $model->da_nhan_ao==1?'<i class="ion-checkmark-round text-primary"></i>':'';
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'da_nhan_ao',
+        'label' => 'Áo',
+        'format' => 'html',
+        'value' => function ($model) {
+            return $model->da_nhan_ao == 1 ? '<i class="ion-checkmark-round text-primary"></i>' : '';
         },
         'width' => '30px',
-        'contentOptions' => [ 'style' => 'text-align:center'],
-   ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'size',
-        'label'=>'Size',
-        'format'=>'html',
-        'width' => '30px',
-        'contentOptions' => [ 'style' => 'text-align:center'],
+        'contentOptions' => ['style' => 'text-align:center'],
     ],
-    
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'da_nhan_tai_lieu',
-        'label'=>'TLiệu',
-        'format'=>'html',
-        'value'=>function($model){
-            return $model->da_nhan_tai_lieu==1?'<i class="ion-checkmark-round text-primary"></i>':'';
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'size',
+        'label' => 'Size',
+        'format' => 'html',
+        'width' => '30px',
+        'contentOptions' => ['style' => 'text-align:center'],
+    ],
+    [
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'nguoi_giao_ao',
+        'label' => 'Giao áo',
+        'value' => function ($model) {
+            return $model->nguoiGiaoAo->shortName ?? '';
+        },
+        'width' => '80px',
+        'contentOptions' => ['style' => 'text-align:center'],
+    ],
+
+    [
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'da_nhan_tai_lieu',
+        'label' => 'TLiệu',
+        'format' => 'html',
+        'value' => function ($model) {
+            return $model->da_nhan_tai_lieu == 1 ? '<i class="ion-checkmark-round text-primary"></i>' : '';
         },
         'width' => '30px',
-        'contentOptions' => [ 'style' => 'text-align:center'],
-],
-   
-    
-];   
+        'contentOptions' => ['style' => 'text-align:center'],
+    ],
+    [
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'nguoi_giao_tai_lieu',
+        'label' => 'Giao TLiệu',
+        'value' => function ($model) {
+            return $model->nguoiGiaoTaiLieu->shortName ?? '';
+        },
+        'width' => '80px',
+        'contentOptions' => ['style' => 'text-align:center'],
+    ],
+
+
+];

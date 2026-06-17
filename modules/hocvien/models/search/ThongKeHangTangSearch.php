@@ -74,8 +74,10 @@ class ThongKeHangTangSearch extends DangKyHv
                 'id_hangs',
                 'ngay_nhan_tai_lieu_tu',
                 'ngay_nhan_tai_lieu_den',
+                'nguoi_giao_tai_lieu',
                 'ngay_nhan_ao_tu',
-                'ngay_nhan_ao_den'
+                'ngay_nhan_ao_den',
+                'nguoi_giao_ao'
             ], 'safe'],
         ];
     }
@@ -89,7 +91,7 @@ class ThongKeHangTangSearch extends DangKyHv
      */
     public function search($params)
     {
-        $query = DangKyHv::find();
+        $query = DangKyHv::find()->alias('t');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -266,7 +268,7 @@ class ThongKeHangTangSearch extends DangKyHv
             'ngay_nhan_tai_lieu' => $this->ngay_nhan_tai_lieu,
             'size' => $this->size,
             'da_nhan_tai_lieu' => $this->da_nhan_tai_lieu,
-            'noi_dang_ky' => $this->noi_dang_ky,
+            't.noi_dang_ky' => $this->noi_dang_ky,
 
             'id_xa' => $this->id_xa,
             'id_tinh' => $this->id_tinh,
