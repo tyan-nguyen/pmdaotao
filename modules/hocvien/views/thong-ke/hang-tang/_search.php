@@ -520,8 +520,8 @@ if ($model->id_xa) {
 
         <div class="col-md-4">
             <br />
-            <?= Html::submitButton('<i class="fe fe-search"></i> Thống kê', ['class' => 'btn btn-primary', 'style' => 'margin-top:5px']) ?>
-            <?= Html::resetButton('<i class="fe fe-x"></i> Reset tìm kiếm', ['class' => 'btn btn-info', 'style' => 'margin-top:5px']) ?>
+            <?= Html::submitButton('<i class="fe fe-search"></i> Thống kê', ['class' => 'btn btn-primary', 'style' => 'margin-top:9px']) ?>
+            <?= Html::resetButton('<i class="fe fe-x"></i> Reset tìm kiếm', ['class' => 'btn btn-info', 'style' => 'margin-top:9px']) ?>
         </div>
 
 
