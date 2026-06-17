@@ -446,7 +446,7 @@ if ($model->id_xa) {
             ])->label(false); ?>
         </div>
 
-        <div class="col-md-2">
+        <div class="col-md-3">
             <label class="text-warning">Nhân viên giao áo</label>
 
             <?= $form->field($model, 'nguoi_giao_ao')->widget(Select2::classname(), [
@@ -483,7 +483,7 @@ if ($model->id_xa) {
             ])->label(false); ?>
         </div>
 
-        <div class="col-md-2">
+        <div class="col-md-1">
             <label class="text-warning">Size</label>
             <?= $form->field($model, 'size')->dropDownList([
                 'S' => 'Size S',
