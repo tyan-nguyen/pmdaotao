@@ -944,7 +944,7 @@ class DangKyHvController extends Controller
         }
     }
 
-    public function actionGetPhieuInReportListAjax($startdate, $starttime, $enddate, $endtime, $byuser, $typereport, $byaddress, $byreceivemoney) //0 for all
+    public function actionGetPhieuInReportListAjax11($startdate, $starttime, $enddate, $endtime, $byuser, $typereport, $byaddress, $byreceivemoney) //0 for all
     {
         if ($byuser == null) {
             $byuser = 0;
@@ -1140,6 +1140,169 @@ class DangKyHvController extends Controller
             'content' => $content,
         ]);
     }
+    // tối ưu lại hàm trên !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    public function actionGetPhieuInReportListAjax($startdate, $starttime, $enddate, $endtime, $byuser, $typereport, $byaddress, $byreceivemoney) //0 for all
+    {
+        if ($byuser == null) {
+            $byuser = 0;
+        }
+        // $startStr = $startdate . ' ' .$starttime;//add second
+        // $endStr = $enddate . ' ' .$endtime;//add second
+        if ($starttime == null)
+            $starttime = '00:00:00';
+        if ($endtime == null)
+            $endtime = '23:59:59';
+        $start = CustomFunc::convertDMYToYMD($startdate) . ' ' . $starttime;
+        $end = CustomFunc::convertDMYToYMD($enddate) . ' ' . $endtime;;
+
+        // $start = '2025-03-31 06:00:00';
+        //$end = '2025-04-01 11:00:00';
+
+        //list all nộp học phí
+
+        // Truy vấn điều kiện chung
+        $query = NopHocPhi::find()
+            ->alias('t')
+            ->joinWith(['hocVien hv']);
+
+        // Chỉ join người tạo khi cần lọc nơi thu tiền
+        if ($byreceivemoney !== null && $byreceivemoney !== '') {
+            $query->joinWith(['nguoiTao ngt']);
+        }
+
+        // Nếu $start và $end đã có dạng Y-m-d H:i:s thì không cần STR_TO_DATE
+        $query->andFilterWhere(['>=', 't.thoi_gian_tao', $start])
+            ->andFilterWhere(['<=', 't.thoi_gian_tao', $end]);
+
+        if ((int) $byuser > 0) {
+            $query->andWhere([
+                't.nguoi_tao' => (int) $byuser,
+            ]);
+        }
+
+        if ($byaddress !== null && $byaddress !== '') {
+            $query->andWhere([
+                'hv.noi_dang_ky' => $byaddress,
+            ]);
+        }
+
+        if ($byreceivemoney !== null && $byreceivemoney !== '') {
+            $query->andWhere([
+                'ngt.noi_dang_ky' => $byreceivemoney,
+            ]);
+        }
+
+        // Danh sách dữ liệu
+        $model = (clone $query)
+            ->select(['t.*'])
+            ->all();
+
+        // Tổng số phiếu
+        $modelCount = (clone $query)->count('t.id');
+
+        // Thống kê tất cả trong một truy vấn
+        $thongKe = (clone $query)
+            ->select([
+                'tong_tien_nop' => new Expression(
+                    'COALESCE(SUM(t.so_tien_nop), 0)'
+                ),
+
+                'tong_chuyen_khoan' => new Expression(
+                    "COALESCE(SUM(
+                CASE
+                    WHEN t.hinh_thuc_thanh_toan = 'CK'
+                    THEN t.so_tien_nop
+                    ELSE 0
+                END
+            ), 0)"
+                ),
+
+                'tong_tien_mat' => new Expression(
+                    "COALESCE(SUM(
+                CASE
+                    WHEN t.hinh_thuc_thanh_toan = 'TM'
+                    THEN t.so_tien_nop
+                    ELSE 0
+                END
+            ), 0)"
+                ),
+
+                'tong_chiet_khau' => new Expression(
+                    'COALESCE(SUM(t.chiet_khau), 0)'
+                ),
+
+                'tong_thu_ho' => new Expression(
+                    'COALESCE(SUM(t.so_tien_thu_ho), 0)'
+                ),
+            ])
+            ->asArray()
+            ->one();
+
+        $modelSoTienNop = $thongKe['tong_tien_nop'];
+        $modelSoTienNopCK = $thongKe['tong_chuyen_khoan'];
+        $modelSoTienNopTM = $thongKe['tong_tien_mat'];
+        $modelSoTienChietKhau = $thongKe['tong_chiet_khau'];
+        $modelSoTienThuHo = $thongKe['tong_thu_ho'];
+
+        if ($typereport == 0) {
+            $content = $this->renderPartial('_print_report_list_0', [
+                'model' => $model,
+                'start' => $start,
+                'end' => $end,
+                'modelCount' => $modelCount,
+                'modelSoTienNop' => $modelSoTienNop,
+                'modelSoTienNopTM' => $modelSoTienNopTM,
+                'modelSoTienNopCK' => $modelSoTienNopCK,
+                'modelSoTienChietKhau' => $modelSoTienChietKhau,
+                'modelSoTienThuHo' => $modelSoTienThuHo,
+                'byuser' => $byuser
+            ]);
+        } else if ($typereport == 1) {
+            $content = $this->renderPartial('_print_report_list_1', [
+                'model' => $model,
+                'start' => $start,
+                'end' => $end,
+                'modelCount' => $modelCount,
+                'modelSoTienNop' => $modelSoTienNop,
+                'modelSoTienNopTM' => $modelSoTienNopTM,
+                'modelSoTienNopCK' => $modelSoTienNopCK,
+                'modelSoTienChietKhau' => $modelSoTienChietKhau,
+                'modelSoTienThuHo' => $modelSoTienThuHo,
+                'byuser' => $byuser
+            ]);
+        } else if ($typereport == 2) {
+            $content = $this->renderPartial('_print_report_list_2', [
+                'model' => $model,
+                'start' => $start,
+                'end' => $end,
+                'modelCount' => $modelCount,
+                'modelSoTienNop' => $modelSoTienNop,
+                'modelSoTienNopTM' => $modelSoTienNopTM,
+                'modelSoTienNopCK' => $modelSoTienNopCK,
+                'modelSoTienChietKhau' => $modelSoTienChietKhau,
+                'modelSoTienThuHo' => $modelSoTienThuHo,
+                'byuser' => $byuser
+            ]);
+        } else if ($typereport == 3) {
+            $content = $this->renderPartial('_print_report_list_3', [
+                'model' => $model,
+                'start' => $start,
+                'end' => $end,
+                'modelCount' => $modelCount,
+                'modelSoTienNop' => $modelSoTienNop,
+                'modelSoTienNopTM' => $modelSoTienNopTM,
+                'modelSoTienNopCK' => $modelSoTienNopCK,
+                'modelSoTienChietKhau' => $modelSoTienChietKhau,
+                'modelSoTienThuHo' => $modelSoTienThuHo,
+                'byuser' => $byuser
+            ]);
+        }
+        return $this->asJson([
+            'status' => 'success',
+            'content' => $content,
+        ]);
+    }
+
 
     /**
      * in danh sách báo cáo tổng
