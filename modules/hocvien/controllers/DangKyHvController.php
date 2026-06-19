@@ -944,7 +944,7 @@ class DangKyHvController extends Controller
         }
     }
 
-    public function actionGetPhieuInReportListAjax($startdate, $starttime, $enddate, $endtime, $byuser, $typereport, $byaddress) //0 for all
+    public function actionGetPhieuInReportListAjax($startdate, $starttime, $enddate, $endtime, $byuser, $typereport, $byaddress, $byreceivemoney) //0 for all
     {
         if ($byuser == null) {
             $byuser = 0;
@@ -960,8 +960,18 @@ class DangKyHvController extends Controller
 
         // $start = '2025-03-31 06:00:00';
         //$end = '2025-04-01 11:00:00';
-        $query = NopHocPhi::find()->alias('t')->joinWith(['hocVien as hv'])->select(['t.*', 'hv.noi_dang_ky'])
-            ->andFilterWhere(['>=', 't.thoi_gian_tao', new Expression("STR_TO_DATE('" . $start . "','%Y-%m-%d %H:%i:%s')")])
+
+        //list all nộp học phí
+
+        $query = NopHocPhi::find()->alias('t');
+        if ($byreceivemoney == null) {
+            $query = $query->joinWith(['hocVien as hv'])
+                ->select(['t.*', 'hv.noi_dang_ky']);
+        } else {
+            $query = $query->joinWith(['hocVien as hv', 'nguoiTao as ngt'])
+                ->select(['t.*', 'hv.noi_dang_ky', 'ngt.noi_dang_ky']);
+        }
+        $query = $query->andFilterWhere(['>=', 't.thoi_gian_tao', new Expression("STR_TO_DATE('" . $start . "','%Y-%m-%d %H:%i:%s')")])
             ->andFilterWhere(['<=', 't.thoi_gian_tao', new Expression("STR_TO_DATE('" . $end . "','%Y-%m-%d %H:%i:%s')")]);
         if ($byuser > 0) {
             $query = $query->andFilterWhere(['t.nguoi_tao' => $byuser]);
@@ -969,12 +979,24 @@ class DangKyHvController extends Controller
         if ($byaddress > 0) {
             $query = $query->andFilterWhere(['hv.noi_dang_ky' => $byaddress]);
         }
+        if ($byreceivemoney != null) {
+            $query = $query->andFilterWhere(['ngt.noi_dang_ky' => $byreceivemoney]);
+        }
         $model = $query->all();
         $modelCount = $query->count();
         $modelSoTienNop = $query->sum('t.so_tien_nop');
 
-        $queryCK = NopHocPhi::find()->alias('t')->joinWith(['hocVien as hv'])->select(['t.*', 'hv.noi_dang_ky'])
-            ->andFilterWhere(['>=', 't.thoi_gian_tao', new Expression("STR_TO_DATE('" . $start . "','%Y-%m-%d %H:%i:%s')")])
+        //theo chuyển khoản
+
+        $queryCK = NopHocPhi::find()->alias('t');
+        if ($byreceivemoney == null) {
+            $queryCK = $queryCK->joinWith(['hocVien as hv'])
+                ->select(['t.*', 'hv.noi_dang_ky']);
+        } else {
+            $queryCK = $queryCK->joinWith(['hocVien as hv', 'nguoiTao as ngt'])
+                ->select(['t.*', 'hv.noi_dang_ky', 'ngt.noi_dang_ky']);
+        }
+        $queryCK = $queryCK->andFilterWhere(['>=', 't.thoi_gian_tao', new Expression("STR_TO_DATE('" . $start . "','%Y-%m-%d %H:%i:%s')")])
             ->andFilterWhere(['<=', 't.thoi_gian_tao', new Expression("STR_TO_DATE('" . $end . "','%Y-%m-%d %H:%i:%s')")]);
         if ($byuser > 0) {
             $queryCK = $queryCK->andFilterWhere(['t.nguoi_tao' => $byuser]);
@@ -982,11 +1004,23 @@ class DangKyHvController extends Controller
         if ($byaddress > 0) {
             $queryCK = $queryCK->andFilterWhere(['hv.noi_dang_ky' => $byaddress]);
         }
+        if ($byreceivemoney != null) {
+            $queryCK = $queryCK->andFilterWhere(['ngt.noi_dang_ky' => $byreceivemoney]);
+        }
         $queryCK = $queryCK->andFilterWhere(['t.hinh_thuc_thanh_toan' => 'CK']);
         $modelSoTienNopCK = $queryCK->sum('t.so_tien_nop');
 
-        $queryTM = NopHocPhi::find()->alias('t')->joinWith(['hocVien as hv'])->select(['t.*', 'hv.noi_dang_ky'])
-            ->andFilterWhere(['>=', 't.thoi_gian_tao', new Expression("STR_TO_DATE('" . $start . "','%Y-%m-%d %H:%i:%s')")])
+        //theo tiền mặt
+
+        $queryTM = NopHocPhi::find()->alias('t');
+        if ($byreceivemoney == null) {
+            $queryTM = $queryTM->joinWith(['hocVien as hv'])
+                ->select(['t.*', 'hv.noi_dang_ky']);
+        } else {
+            $queryTM = $queryTM->joinWith(['hocVien as hv', 'nguoiTao as ngt'])
+                ->select(['t.*', 'hv.noi_dang_ky', 'ngt.noi_dang_ky']);
+        }
+        $queryTM = $queryTM->andFilterWhere(['>=', 't.thoi_gian_tao', new Expression("STR_TO_DATE('" . $start . "','%Y-%m-%d %H:%i:%s')")])
             ->andFilterWhere(['<=', 't.thoi_gian_tao', new Expression("STR_TO_DATE('" . $end . "','%Y-%m-%d %H:%i:%s')")]);
         if ($byuser > 0) {
             $queryTM = $queryTM->andFilterWhere(['t.nguoi_tao' => $byuser]);
@@ -994,12 +1028,25 @@ class DangKyHvController extends Controller
         if ($byaddress > 0) {
             $queryTM = $queryTM->andFilterWhere(['hv.noi_dang_ky' => $byaddress]);
         }
+        if ($byreceivemoney != null) {
+            $queryTM = $queryTM->andFilterWhere(['ngt.noi_dang_ky' => $byreceivemoney]);
+        }
+
         $queryTM = $queryTM->andFilterWhere(['t.hinh_thuc_thanh_toan' => 'TM']);
 
         $modelSoTienNopTM = $queryTM->sum('t.so_tien_nop');
 
-        $queryChietKhau = NopHocPhi::find()->alias('t')->joinWith(['hocVien as hv'])->select(['t.*', 'hv.noi_dang_ky'])
-            ->andFilterWhere(['>=', 't.thoi_gian_tao', new Expression("STR_TO_DATE('" . $start . "','%Y-%m-%d %H:%i:%s')")])
+        //theo chiếu khấu
+
+        $queryChietKhau = NopHocPhi::find()->alias('t');
+        if ($byreceivemoney == null) {
+            $queryChietKhau = $queryChietKhau->joinWith(['hocVien as hv'])
+                ->select(['t.*', 'hv.noi_dang_ky']);
+        } else {
+            $queryChietKhau = $queryChietKhau->joinWith(['hocVien as hv', 'nguoiTao as ngt'])
+                ->select(['t.*', 'hv.noi_dang_ky', 'ngt.noi_dang_ky']);
+        }
+        $queryChietKhau = $queryChietKhau->andFilterWhere(['>=', 't.thoi_gian_tao', new Expression("STR_TO_DATE('" . $start . "','%Y-%m-%d %H:%i:%s')")])
             ->andFilterWhere(['<=', 't.thoi_gian_tao', new Expression("STR_TO_DATE('" . $end . "','%Y-%m-%d %H:%i:%s')")]);
         if ($byuser > 0) {
             $queryChietKhau = $queryChietKhau->andFilterWhere(['t.nguoi_tao' => $byuser]);
@@ -1007,16 +1054,31 @@ class DangKyHvController extends Controller
         if ($byaddress > 0) {
             $queryChietKhau = $queryChietKhau->andFilterWhere(['hv.noi_dang_ky' => $byaddress]);
         }
+        if ($byreceivemoney != null) {
+            $queryChietKhau = $queryChietKhau->andFilterWhere(['ngt.noi_dang_ky' => $byreceivemoney]);
+        }
         $modelSoTienChietKhau = $queryChietKhau->sum('t.chiet_khau');
 
-        $queryThuHo = NopHocPhi::find()->alias('t')->joinWith(['hocVien as hv'])->select(['t.*', 'hv.noi_dang_ky'])
-            ->andFilterWhere(['>=', 't.thoi_gian_tao', new Expression("STR_TO_DATE('" . $start . "','%Y-%m-%d %H:%i:%s')")])
+        //theo thu hộ
+
+        $queryThuHo = NopHocPhi::find()->alias('t');
+        if ($byreceivemoney == null) {
+            $queryThuHo = $queryThuHo->joinWith(['hocVien as hv'])
+                ->select(['t.*', 'hv.noi_dang_ky']);
+        } else {
+            $queryThuHo = $queryThuHo->joinWith(['hocVien as hv', 'nguoiTao as ngt'])
+                ->select(['t.*', 'hv.noi_dang_ky', 'ngt.noi_dang_ky']);
+        }
+        $queryThuHo = $queryThuHo->andFilterWhere(['>=', 't.thoi_gian_tao', new Expression("STR_TO_DATE('" . $start . "','%Y-%m-%d %H:%i:%s')")])
             ->andFilterWhere(['<=', 't.thoi_gian_tao', new Expression("STR_TO_DATE('" . $end . "','%Y-%m-%d %H:%i:%s')")]);
         if ($byuser > 0) {
             $queryThuHo = $queryThuHo->andFilterWhere(['t.nguoi_tao' => $byuser]);
         }
         if ($byaddress > 0) {
             $queryThuHo = $queryThuHo->andFilterWhere(['hv.noi_dang_ky' => $byaddress]);
+        }
+        if ($byreceivemoney != null) {
+            $queryThuHo = $queryThuHo->andFilterWhere(['ngt.noi_dang_ky' => $byreceivemoney]);
         }
         $modelSoTienThuHo = $queryThuHo->sum('t.so_tien_thu_ho');
 

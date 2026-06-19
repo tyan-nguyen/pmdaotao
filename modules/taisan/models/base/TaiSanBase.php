@@ -4,7 +4,10 @@ namespace app\modules\taisan\models\base;
 
 use app\custom\CustomFunc;
 use app\models\CpTaiSan;
+use app\modules\nhanvien\models\NhanVien;
+use app\modules\nhanvien\models\PhongBan;
 use app\modules\taisan\models\DanhMucTaiSan;
+use app\modules\taisan\models\DmDonVi;
 use app\modules\taisan\models\LoaiTaiSan;
 use Yii;
 
@@ -39,10 +42,10 @@ class TaiSanBase extends CpTaiSan
             [['ma_tai_san', 'autoid'], 'unique'],
             [['loai_tai_san_id'], 'exist', 'skipOnError' => true, 'targetClass' => LoaiTaiSan::class, 'targetAttribute' => ['loai_tai_san_id' => 'id']],
             [['danh_muc_id'], 'exist', 'skipOnError' => true, 'targetClass' => DanhMucTaiSan::class, 'targetAttribute' => ['danh_muc_id' => 'id']],
-            [['nha_cung_cap_id'], 'exist', 'skipOnError' => true, 'targetClass' => CpDmDonVi::class, 'targetAttribute' => ['nha_cung_cap_id' => 'id']],
+            [['nha_cung_cap_id'], 'exist', 'skipOnError' => true, 'targetClass' => DmDonVi::class, 'targetAttribute' => ['nha_cung_cap_id' => 'id']],
             [['vi_tri_id'], 'exist', 'skipOnError' => true, 'targetClass' => CpViTri::class, 'targetAttribute' => ['vi_tri_id' => 'id']],
-            [['phong_ban_id'], 'exist', 'skipOnError' => true, 'targetClass' => NvPhongBan::class, 'targetAttribute' => ['phong_ban_id' => 'id']],
-            [['nguoi_chiu_trach_nhiem_id'], 'exist', 'skipOnError' => true, 'targetClass' => NvNhanVien::class, 'targetAttribute' => ['nguoi_chiu_trach_nhiem_id' => 'id']],
+            [['phong_ban_id'], 'exist', 'skipOnError' => true, 'targetClass' => PhongBan::class, 'targetAttribute' => ['phong_ban_id' => 'id']],
+            [['nguoi_chiu_trach_nhiem_id'], 'exist', 'skipOnError' => true, 'targetClass' => NhanVien::class, 'targetAttribute' => ['nguoi_chiu_trach_nhiem_id' => 'id']],
         ];
     }
 
@@ -83,9 +86,10 @@ class TaiSanBase extends CpTaiSan
     {
         $autoid = null;
         do {
-            $autoid = 'TS'
+            /*  $autoid = 'TS'
                 . date('YmdHis')
-                . rand(100, 999);
+                . rand(100, 999); */
+            $autoid = 'Ts' . \Yii::$app->security->generateRandomString(8);
         } while (self::find()->where(['autoid' => $autoid])->exists());
 
         return $autoid;
@@ -192,7 +196,7 @@ class TaiSanBase extends CpTaiSan
      */
     public function getNguoiChiuTrachNhiem()
     {
-        return $this->hasOne(NvNhanVien::class, ['id' => 'nguoi_chiu_trach_nhiem_id']);
+        return $this->hasOne(NhanVien::class, ['id' => 'nguoi_chiu_trach_nhiem_id']);
     }
 
     /**
@@ -202,7 +206,7 @@ class TaiSanBase extends CpTaiSan
      */
     public function getNhaCungCap()
     {
-        return $this->hasOne(CpDmDonVi::class, ['id' => 'nha_cung_cap_id']);
+        return $this->hasOne(DmDonVi::class, ['id' => 'nha_cung_cap_id']);
     }
 
     /**
@@ -212,7 +216,7 @@ class TaiSanBase extends CpTaiSan
      */
     public function getPhongBan()
     {
-        return $this->hasOne(NvPhongBan::class, ['id' => 'phong_ban_id']);
+        return $this->hasOne(PhongBan::class, ['id' => 'phong_ban_id']);
     }
 
     /**

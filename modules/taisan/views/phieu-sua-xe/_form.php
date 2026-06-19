@@ -33,7 +33,7 @@ if (!$model->isNewRecord) {
 
 <div class="phieu-de-nghi-form">
 
-    <?php $form = ActiveForm::begin(['action' => $model->isNewRecord?'':['/taisan/phieu-sua-xe/update', 'id'=>$model->id]]); ?>
+    <?php $form = ActiveForm::begin(['action' => $model->isNewRecord ? '' : ['/taisan/phieu-sua-xe/update', 'id' => $model->id]]); ?>
 
     <?php CardWidget::begin(['title' => 'THÔNG TIN PHIẾU ĐỀ NGHỊ']) ?>
 
@@ -52,7 +52,7 @@ if (!$model->isNewRecord) {
                         <li><i class="fa fa-angle-double-right mb-2 me-2"></i> Chọn xe hoặc thiết bị (tham chiếu).</li>
                         <li><i class="fa fa-angle-double-right mb-2 me-2"></i> Chọn người đề nghị.</li>
                         <li><i class="fa fa-angle-double-right mb-2 me-2"></i> Chọn loại yêu cầu, Chọn đơn vị thực hiện.</li>
-                        <li><i class="fa fa-angle-double-right mb-2 me-2"></i> Nhập km hiện tại (đối với xe) và nội dung đề nghị.</li>                        
+                        <li><i class="fa fa-angle-double-right mb-2 me-2"></i> Nhập km hiện tại (đối với xe) và nội dung đề nghị.</li>
                         <li><i class="fa fa-angle-double-right mb-2 me-2"></i> Chọn ngày bắt đầu và ngày hoàn thành.</li>
                         <li><i class="fa fa-angle-double-right mb-2 me-2"></i> Trạng thái để trống sẽ mặc định là nháp, chọn chờ duyệt nếu muốn gửi cho người duyệt luôn không lưu nháp.</li>
                         <li><i class="fa fa-angle-double-right mb-2 me-2"></i> Bấm lưu lại để xuất hiện danh sách chi tiết nội dung muốn đề nghị.</li>
@@ -140,12 +140,12 @@ if (!$model->isNewRecord) {
                     'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
                 ],
             ]); ?>
-		</div>
+        </div>
 
         <div class="col-md-2">
             <?= $form->field($model, 'so_km_luc_yeu_cau')->textInput()->label('KM hiện tại (B.dưỡng)') ?>
         </div>
-        
+
         <div class="col-md-2">
             <?= $form->field($model, 'ngay_bat_dau')->widget(DatePicker::classname(), [
                 'options' => ['placeholder' => 'Chọn ngày  ...', 'autocomplete' => 'off'],

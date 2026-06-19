@@ -168,16 +168,16 @@ Yii::$app->params['showView'] = false;
 <?php Modal::end(); ?>
 
 <?php Modal::begin([
-   'options' => [
-        'id'=>'ajaxCrudModal2',
-        'tabindex' => false 
-   ],
-  // 'dialogOptions'=>['class'=>'modal-lg'],
-   'closeButton'=>['label'=>'<span aria-hidden=\'true\'>×</span>'],
-   'id'=>'ajaxCrudModal2',
-    'footer'=>'',
-    'size'=>Modal::SIZE_EXTRA_LARGE
-])?>
+    'options' => [
+        'id' => 'ajaxCrudModal2',
+        'tabindex' => false
+    ],
+    // 'dialogOptions'=>['class'=>'modal-lg'],
+    'closeButton' => ['label' => '<span aria-hidden=\'true\'>×</span>'],
+    'id' => 'ajaxCrudModal2',
+    'footer' => '',
+    'size' => Modal::SIZE_EXTRA_LARGE
+]) ?>
 <?php Modal::end(); ?>
 
 <?php

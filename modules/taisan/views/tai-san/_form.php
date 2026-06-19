@@ -112,7 +112,7 @@ use yii\widgets\ActiveForm;
     </div>
     <?php CardWidget::end() ?>
 
-    <?php CardWidget::begin(['title' => 'THÔNG TIN QUẢN LÝ']) ?>
+    <?php CardWidget::begin(['title' => 'THÔNG TIN SỬ DỤNG']) ?>
     <div class="row">
         <div class="col-md-3">
             <?= $form->field($model, 'ngay_dua_vao_su_dung')->textInput() ?>
