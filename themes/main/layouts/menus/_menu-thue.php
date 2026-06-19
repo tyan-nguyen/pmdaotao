@@ -1,11 +1,14 @@
 <?php
 
 use app\modules\hocvien\models\HocVien;
+use app\modules\taisan\models\PhieuDeNghi;
+
+$slChoDuyet = PhieuDeNghi::slChoDuyet();
 
 ?>
 <li class="slide">
 	<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);">
-		
+
 		<span class="side-menu__label"><i class="fa fa-folder"></i> Quản lý học viên</span><i class="angle fa fa-caret-right"></i>
 	</a>
 	<ul class="slide-menu" data-menu="hv">
@@ -53,7 +56,7 @@ use app\modules\hocvien\models\HocVien;
 
 <li class="slide">
 	<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);">
-		
+
 		<span class="side-menu__label"><i class="fa fa-folder"></i> Thuê xe cảm biến</span><i class="angle fa fa-caret-right"></i>
 	</a>
 	<ul class="slide-menu" data-menu="tx">
@@ -171,6 +174,54 @@ use app\modules\hocvien\models\HocVien;
 							<li class="side-menu__label1"><a href="javascript:void(0)">Danh mục chức năng</a>
 							</li>
 							<li><a href="<?= Yii::getAlias('@web/thuexe/xe?menu=xe1') ?>" class="slide-item" data-menu="xe1"><i class="fe fe-file-text"></i> Thông tin xe</a></li>
+						</ul>
+						<div class="menutabs-content px-0">
+							<!-- menu tab here -->
+						</div>
+					</div>
+					<div class="tab-pane" id="side6">
+						<!-- activity here -->
+					</div>
+				</div>
+			</div>
+		</li>
+
+	</ul>
+</li>
+
+<li class="slide">
+	<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);">
+		<!-- <span class="side-menu__icon"><i class="fa fa-graduation-cap side_menu_img"></i></span>
+		<span class="side-menu__label">Khóa học</span><i class="angle fe fe-chevron-right"></i> -->
+		<span class="side-menu__label"><i class="fa fa-folder"></i> SỬA CHỮA
+			<span class="badge bg-warning ms-2"><?= $slChoDuyet > 0 ? $slChoDuyet : '' ?></span>
+		</span><i class="angle fa fa-caret-right"></i>
+	</a>
+	<ul class="slide-menu" data-menu="taisan">
+		<li class="panel sidetab-menu">
+			<div class="tab-menu-heading p-0 pb-2 border-0">
+				<div class="tabs-menu ">
+					<ul class="nav panel-tabs">
+						<li><a href="#side5" class="active" data-bs-toggle="tab"><i
+									class="bi bi-house"></i>
+								<p>Home</p>
+							</a></li>
+						<li><a href="#side6" data-bs-toggle="tab"><i class="bi bi-box"></i>
+								<p>Activity</p>
+							</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="panel-body tabs-menu-body p-0 border-0">
+				<div class="tab-content">
+					<div class="tab-pane active" id="side5">
+						<ul class="sidemenu-list">
+							<li class="side-menu__label1"><a href="javascript:void(0)">Danh mục chức năng</a>
+							</li>
+							<li class=""><a href="<?= Yii::getAlias('@web/taisan/phieu-de-nghi/index?menu=taisan2') ?>" class="slide-item" data-menu="taisan2"><i class="fe fe-file-text"></i> Phiếu đề nghị
+									<span class="badge bg-warning ms-2"><?= $slChoDuyet > 0 ? $slChoDuyet : '' ?></span>
+								</a>
+							</li>
 						</ul>
 						<div class="menutabs-content px-0">
 							<!-- menu tab here -->
