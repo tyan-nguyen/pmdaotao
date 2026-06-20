@@ -1093,7 +1093,8 @@ class DangKyHvController extends Controller
                 'modelSoTienNopCK' => $modelSoTienNopCK,
                 'modelSoTienChietKhau' => $modelSoTienChietKhau,
                 'modelSoTienThuHo' => $modelSoTienThuHo,
-                'byuser' => $byuser
+                'byuser' => $byuser,
+                'byreceivemoney' => $byreceivemoney
             ]);
         } else if ($typereport == 1) {
             $content = $this->renderPartial('_print_report_list_1', [
@@ -1106,7 +1107,8 @@ class DangKyHvController extends Controller
                 'modelSoTienNopCK' => $modelSoTienNopCK,
                 'modelSoTienChietKhau' => $modelSoTienChietKhau,
                 'modelSoTienThuHo' => $modelSoTienThuHo,
-                'byuser' => $byuser
+                'byuser' => $byuser,
+                'byreceivemoney' => $byreceivemoney
             ]);
         } else if ($typereport == 2) {
             $content = $this->renderPartial('_print_report_list_2', [
@@ -1119,7 +1121,8 @@ class DangKyHvController extends Controller
                 'modelSoTienNopCK' => $modelSoTienNopCK,
                 'modelSoTienChietKhau' => $modelSoTienChietKhau,
                 'modelSoTienThuHo' => $modelSoTienThuHo,
-                'byuser' => $byuser
+                'byuser' => $byuser,
+                'byreceivemoney' => $byreceivemoney
             ]);
         } else if ($typereport == 3) {
             $content = $this->renderPartial('_print_report_list_3', [
@@ -1132,7 +1135,8 @@ class DangKyHvController extends Controller
                 'modelSoTienNopCK' => $modelSoTienNopCK,
                 'modelSoTienChietKhau' => $modelSoTienChietKhau,
                 'modelSoTienThuHo' => $modelSoTienThuHo,
-                'byuser' => $byuser
+                'byuser' => $byuser,
+                'byreceivemoney' => $byreceivemoney
             ]);
         }
         return $this->asJson([
@@ -1255,7 +1259,8 @@ class DangKyHvController extends Controller
                 'modelSoTienNopCK' => $modelSoTienNopCK,
                 'modelSoTienChietKhau' => $modelSoTienChietKhau,
                 'modelSoTienThuHo' => $modelSoTienThuHo,
-                'byuser' => $byuser
+                'byuser' => $byuser,
+                'byreceivemoney' => $byreceivemoney
             ]);
         } else if ($typereport == 1) {
             $content = $this->renderPartial('_print_report_list_1', [
@@ -1268,7 +1273,8 @@ class DangKyHvController extends Controller
                 'modelSoTienNopCK' => $modelSoTienNopCK,
                 'modelSoTienChietKhau' => $modelSoTienChietKhau,
                 'modelSoTienThuHo' => $modelSoTienThuHo,
-                'byuser' => $byuser
+                'byuser' => $byuser,
+                'byreceivemoney' => $byreceivemoney
             ]);
         } else if ($typereport == 2) {
             $content = $this->renderPartial('_print_report_list_2', [
@@ -1281,7 +1287,8 @@ class DangKyHvController extends Controller
                 'modelSoTienNopCK' => $modelSoTienNopCK,
                 'modelSoTienChietKhau' => $modelSoTienChietKhau,
                 'modelSoTienThuHo' => $modelSoTienThuHo,
-                'byuser' => $byuser
+                'byuser' => $byuser,
+                'byreceivemoney' => $byreceivemoney
             ]);
         } else if ($typereport == 3) {
             $content = $this->renderPartial('_print_report_list_3', [
@@ -1294,7 +1301,8 @@ class DangKyHvController extends Controller
                 'modelSoTienNopCK' => $modelSoTienNopCK,
                 'modelSoTienChietKhau' => $modelSoTienChietKhau,
                 'modelSoTienThuHo' => $modelSoTienThuHo,
-                'byuser' => $byuser
+                'byuser' => $byuser,
+                'byreceivemoney' => $byreceivemoney
             ]);
         }
         return $this->asJson([
