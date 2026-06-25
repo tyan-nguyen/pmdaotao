@@ -21,7 +21,7 @@ function showError(mess) {
 	return $.growl({
 		style: "error",
 		title: "Lỗi!",
-		duration: 2000,
+		duration: 5000,
 		message: mess
 	});
 }

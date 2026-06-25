@@ -489,11 +489,11 @@ if (!$model->isNewRecord) {
         formRow += '<td><div style="display:none"><input type="text" name="loaiVatTu" id="lvtNew" value="VAT-TU" /></div><span id="loaiVatTuNew">Loại hàng hóa</span></td>';
         formRow += '<td><select id="idVatTuAdd" name="idVatTu" required></select></td>';
         formRow += '<td><span id="donViTinhNew">Đơn vị tính</span></td>';
-        formRow += '<td><input type="number" name="soLuong" id="soLuongNew" required class="form-control" step="any" style="width:80px"/></td>';
-        formRow += '<td><input type="text" name="donGia" id="donGiaNew" required class="form-control" style="width:80px"/></td>';
-        formRow += '<td><input type="text" name="chietKhau" id="chietKhauNew" class="form-control" style="width:80px"/></td>';
+        formRow += '<td><input type="text" name="soLuong" id="soLuongNew" required style="width:80px"/></td>';
+        formRow += '<td><input type="text" name="donGia" id="donGiaNew" required style="width:80px"/></td>';
+        formRow += '<td><input type="text" name="chietKhau" id="chietKhauNew" style="width:80px"/></td>';
         formRow += '<td><span id="thanhTienNew">Thành tiền</span></td>';
-        formRow += '<td><input type="text" name="ghiChu" class="form-control" /></td>';
+        formRow += '<td><input type="text" name="ghiChu" /></td>';
         formRow += '<td><button type="submit" form="idForm" value="Submit" class="lbtn-remove btn btn-warning btn-sm"><i class="fa-solid fa-database"></i> Lưu</button> <span class="lbtn-remove btn btn-secondary btn-sm" onClick="remove()"><i class="fa-solid fa-xmark"></i> Bỏ qua</span></td>';
         formRow += '</tr>';
 
@@ -532,30 +532,27 @@ if (!$model->isNewRecord) {
                $('#thanhTienNew').text(($(this).val()*$('#soLuongNew').val()-$('#chietKhauNew').val()).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
             });*/
         } else {
-            //alert('Vui lòng lưu dữ liệu đang nhập trước!');
-            showError('Bạn đang thêm dữ liệu dở dang, vui lòng lưu dữ liệu hoặc hủy bỏ để tránh sai số, nhầm lẫn!');
+            alert('Vui lòng lưu dữ liệu đang nhập trước!');
         }
     }
 
     function editVatTu(arr) {
         if ($("#idTrUpdate").length > 0) {
-            //alert('Bạn đang chỉnh sửa chi tiết hàng hóa, vui lòng lưu dữ liệu hoặc hủy bỏ để tránh sai số, nhầm lẫn!');
-            showError('Vui lòng lưu dữ liệu hoặc bấm nút hủy bỏ tại dòng đang chỉnh sửa để tránh sai số, nhầm lẫn!');
+            alert('Bạn đang chỉnh sửa chi tiết hàng hóa, vui lòng lưu dữ liệu hoặc hủy bỏ để tránh sai số, nhầm lẫn!');
         } else {
             //alert(arr['slyc']);
-            var formRow = '<tr id="idTrUpdate" style="background-color:red">';
-            /* formRow += '<td><input type="text" name="id" value="' + arr['id'] + '" style="display:none" />' + arr['id'] + '</td>'; */
-            formRow += '<td><input type="text" name="id" value="' + arr['id'] + '" style="display:none" /><i class="fa fa-edit"></i></td>';
-            formRow += '<td>' + arr['tenLoaiHangMuc'] + '</td>';
-            formRow += '<td>' + arr['tenHangMuc'] + '</td>';
+            var formRow = '<tr id="idTrUpdate">';
+            formRow += '<td><input type="text" name="id" value="' + arr['id'] + '" style="display:none" />' + arr['id'] + '</td>';
+            formRow += '<td>' + arr['loaiVatTu'] + '</td>';
+            formRow += '<td>' + arr['tenVatTu'] + '</td>';
             //formRow += '<td><select id="idVatTuEdit" name="idVatTu"></select></td>';
             formRow += '<td>' + arr['dvt'] + '</td>';
-            formRow += '<td><input type="number" name="soLuong" value="' + (arr['loaiVatTu'] == 'NHOM' ? arr['soLuongCayNhom'] : arr['soLuong']) + '" id="soLuongEdit" required class="form-control" step="any" style="width:80px"/></td>';
-            formRow += '<td><input type="text" name="donGia" value="' + arr['donGia'] + '" id="donGiaEdit" required class="form-control" style="width:80px"/></td>';
-            formRow += '<td><input type="text" name="chietKhau" value="' + arr['chietKhau'] + '" id="chietKhauEdit" class="form-control" style="width:80px"/></td>';
+            formRow += '<td><input type="text" name="soLuong" value="' + (arr['loaiVatTu'] == 'NHOM' ? arr['soLuongCayNhom'] : arr['soLuong']) + '" id="soLuongEdit" required  style="width:80px"/></td>';
+            formRow += '<td><input type="text" name="donGia" value="' + arr['donGia'] + '" id="donGiaEdit" required  style="width:80px"/></td>';
+            formRow += '<td><input type="text" name="chietKhau" value="' + arr['chietKhau'] + '" id="chietKhauEdit"  style="width:80px"/></td>';
             formRow += '<td><span id="thanhTienEdit">' + arr['thanhTien'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' </span></td>';
             /*formRow += '<td><span id="chietKhauEdit">'+ arr['chietKhau'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") +' </span></td>';*/
-            formRow += '<td><input type="text" name="ghiChu" value="' + arr['ghiChu'] + '" class="form-control" /></td>';
+            formRow += '<td><input type="text" name="ghiChu" value="' + arr['ghiChu'] + '" /></td>';
             formRow += '<td><button type="submit" form="idForm" value="Submit" class="lbtn-remove btn btn-warning btn-sm"><i class="fa-solid fa-database"></i> Lưu</button> <span class="lbtn-remove btn btn-secondary btn-sm" onClick="removeEdit()"><i class="fa-solid fa-xmark"></i> Bỏ qua</span> </td>';
             formRow += '</tr>';
 
@@ -621,8 +618,7 @@ if (!$model->isNewRecord) {
                     }
                     vue1.results = data.results
                 } else if (data.status == 'error') {
-                    //alert(data.message);
-                    showError(data.message);
+                    alert(data.message);
                 }
             },
             error: function(data) {
