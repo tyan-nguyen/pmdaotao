@@ -543,7 +543,7 @@ if (!$model->isNewRecord) {
             showError('Vui lòng lưu dữ liệu hoặc bấm nút hủy bỏ tại dòng đang chỉnh sửa để tránh sai số, nhầm lẫn!');
         } else {
             //alert(arr['slyc']);
-            var formRow = '<tr id="idTrUpdate" style="background-color:red">';
+            var formRow = '<tr id="idTrUpdate">';
             /* formRow += '<td><input type="text" name="id" value="' + arr['id'] + '" style="display:none" />' + arr['id'] + '</td>'; */
             formRow += '<td><input type="text" name="id" value="' + arr['id'] + '" style="display:none" /><i class="fa fa-edit"></i></td>';
             formRow += '<td>' + arr['tenLoaiHangMuc'] + '</td>';
