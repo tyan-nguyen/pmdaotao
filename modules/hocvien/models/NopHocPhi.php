@@ -151,6 +151,14 @@ class NopHocPhi extends \app\models\HvNopHocPhi
             $this->ma_so_phieu = $this->getMaSoPhieu($this->loai_phieu);
             if ($this->co_thu_ho == null) {
                 $this->co_thu_ho = 0;
+            } else {
+                $thuHo = ThuHo::find()->where([
+                    'id_hang' => $this->hocVien->id_hang,
+                    'active' => 1
+                ])->one();
+                if ($thuHo == null) {
+                    $this->co_thu_ho = 0;
+                }
             }
         }
         // Xử lý trường 'bien_lai'  khi giá trị là Base64 (webcam)

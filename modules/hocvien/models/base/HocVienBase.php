@@ -770,6 +770,13 @@ class HocVienBase extends \app\models\HvHocVien
         else
             return true;
     }
+    /**
+     * check hạng A, A1, chưa có thu hộ thì true, ngược lại đã có thì false
+     */
+    public function tongTienThuHo()
+    {
+        return NopHocPhi::find()->where(['id_hoc_vien' => $this->id, 'co_thu_ho' => 1])->sum('so_tien_thu_ho');
+    }
 
     /**
      * {@inheritdoc}

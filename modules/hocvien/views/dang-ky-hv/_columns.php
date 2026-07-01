@@ -432,11 +432,15 @@ return [
         'class' => '\kartik\grid\DataColumn',
         'label' => 'Thu hộ',
         'value' => function ($model) {
-            return !$model->checkThuHo() ? '<i class="ion-checkmark-circled text-success"></i>' : '';
+            //return !$model->checkThuHo() ? '<i class="ion-checkmark-circled text-success"></i>' : '';
+            return !$model->checkThuHo() ? $model->tongTienThuHo() : '';
         },
         'width' => '30px',
-        'format' => 'html',
-        'contentOptions' => ['style' => 'text-align:center'],
+        'format' => ['decimal', 0],
+        //format' => 'html',
+        'contentOptions' => ['style' => 'text-align:right'],
+        'pageSummary' => true,
+        'pageSummaryOptions' => ['class' => 'text-right text-end'],
     ],
     [
         'class' => '\kartik\grid\DataColumn',
