@@ -10,7 +10,7 @@ class TaiSan extends TaiSanBase
     public function getListHinhAnh()
     {
         $listImg = [];
-        $files = File::getAllByDoiTuongAndImages(self::MODEL_ID, $this->idDoiTuong);
+        $files = File::getAllByDoiTuongAndImages(self::MODEL_ID, $this->id);
         foreach ($files as $fileVB) {
             $listImg[] = File::FOLDER_DOCUMENTS . $fileVB->fileSaveName;
         }
