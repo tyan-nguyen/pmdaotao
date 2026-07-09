@@ -240,7 +240,7 @@ class ApiController extends Controller
                     'ngay_san_xua' => '',
                     'ngay_mua' => $taiSan->ngay_mua,
                     'ngay_dua_vao_su_dung' => $taiSan->ngay_dua_vao_su_dung,
-                    'nguoi_quan_ly' => $listGvName,
+                    'nguoi_quan_ly' => $taiSan->nguoiChiuTrachNhiem ? $taiSan->nguoiChiuTrachNhiem->ho_ten : '',
                     'hinh_anh' => $listHinhAnh
                 ],
             ];
