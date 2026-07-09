@@ -12,7 +12,7 @@ class TaiSan extends TaiSanBase
         $listImg = [];
         $files = File::getAllByDoiTuongAndImages(self::MODEL_ID, $this->id);
         foreach ($files as $fileVB) {
-            $listImg[] = 'https://qltl.nguyentrinh.com.vn' . File::FOLDER_DOCUMENTS . $fileVB->fileSaveName;
+            $listImg[] = File::FOLDER_DOCUMENTS . $fileVB->fileSaveName;
         }
         return $listImg;
     }
