@@ -223,7 +223,7 @@ class ApiController extends Controller
             /* foreach ($taiSan->getListGiaoVienSuDung() as $gv) {
                 $listGvName[] = $gv->giaoVien->ho_ten;
             } */
-            $listHinhAnh = [];
+            $listHinhAnh = $taiSan->getListHinhAnh();
             /*  foreach ($taiSan->hinhAnhs as $ha) {
                 $listHinhAnh[] = 'https://qltl.nguyentrinh.com.vn' . $ha->urlAnh;
             } */

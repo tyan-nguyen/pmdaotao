@@ -9,6 +9,7 @@ use app\modules\nhanvien\models\PhongBan;
 use app\modules\taisan\models\DanhMucTaiSan;
 use app\modules\taisan\models\DmDonVi;
 use app\modules\taisan\models\LoaiTaiSan;
+use app\modules\user\models\History;
 use Yii;
 
 class TaiSanBase extends CpTaiSan
@@ -114,6 +115,9 @@ class TaiSanBase extends CpTaiSan
     public function afterSave($insert, $changedAttributes)
     {
         parent::afterSave($insert, $changedAttributes);
+
+        History::addHistoryTaiSan($this::MODEL_ID, $changedAttributes, $this, $insert);
+
         //create qr code
         if (empty($this->autoid)) {
             return;

@@ -12,10 +12,6 @@ use app\modules\hocvien\models\HocVien;
 use app\modules\user\models\User;
 use app\modules\hocvien\models\base\HocVienBase;
 use app\modules\hocvien\models\DangKyHv;
-use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
-use PhpOffice\PhpSpreadsheet\Style\Alignment;
-use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
-use kartik\export\ExportMenu;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\modules\vanban\models\search\VBDenSearch */
@@ -35,208 +31,10 @@ Yii::$app->params['showExport'] = false;
 
 //format total count of dataprovider
 $totalFmt = number_format($dataProvider->getTotalCount(), 0, ',', '.');
-
-$pageSize = $dataProvider->pagination->pageSize ?? 20;
-
-$exportDataProvider = clone $dataProvider;
-
-$exportDataProvider->pagination = [
-    'pageSize' => $pageSize,
-    'page' => 0,
-];
-
-$exportXlsx = ExportMenu::widget([
-    'dataProvider' => $exportDataProvider,
-    'columns' => require(__DIR__ . '/_columns_export.php'),
-    'filename' => 'ds_hoc_vien_' . date('Y-m-d'),
-    'showColumnSelector' => true,
-    'columnSelectorOptions' => [
-        'label' => 'Select',
-        'class' => 'btn btn-outline-secondary',
-        'encodeLabel' => false,
-    ],
-    'columnBatchToggleSettings' => [
-        'label' => 'Dữ liệu cần xuất file',
-    ],
-    'contentBefore' => [
-        [
-            'value' => 'DANH SÁCH HỌC VIÊN',
-            'options' => [
-                'colspan' => 12, // sửa bằng số cột thực tế
-                'style' => [
-                    'font' => [
-                        'bold' => true,
-                        'size' => 20,
-                    ],
-                    'alignment' => [
-                        'horizontal' => Alignment::HORIZONTAL_CENTER,
-                    ],
-                ],
-            ],
-        ],
-        [
-            'value' => 'Ngày xuất: ' . date('d/m/Y'),
-            'options' => [
-                'colspan' => 12, // sửa bằng số cột thực tế
-                'style' => [
-                    'alignment' => [
-                        'horizontal' => Alignment::HORIZONTAL_RIGHT,
-                    ],
-                ],
-            ],
-        ],
-    ],
-
-    'exportConfig' => [
-        ExportMenu::FORMAT_TEXT => false,
-        //ExportMenu::FORMAT_TEXT_UTF8 => false,
-        ExportMenu::FORMAT_HTML => false,
-        ExportMenu::FORMAT_CSV => false,
-        //ExportMenu::FORMAT_PDF => false,
-        ExportMenu::FORMAT_EXCEL => false,
-
-        ExportMenu::FORMAT_EXCEL_X => [
-            'label' => 'Xuất Excel (*.xlsx)',
-            'icon' => 'fas fa-file-excel',
-        ],
-
-        ExportMenu::FORMAT_PDF => [
-            'label' => 'Xuất PDF (*.pdf)',
-            'icon' => 'fas fa-file-pdf',
-
-            'pdfConfig' => [
-                'mode' => 'UTF-8',
-                'format' => 'A4-L',
-                'orientation' => 'L',
-                'destination' => 'D',
-
-                'methods' => [
-                    'SetTitle' => 'Danh sách học viên',
-
-                    'SetHeader' => [
-                        '<strong>DANH SÁCH HỌC VIÊN</strong>'
-                            . '|'
-                            . 'Ngày xuất: ' . date('d/m/Y')
-                    ],
-
-                    'SetFooter' => [
-                        '|Trang {PAGENO}/{nbpg}|'
-                    ],
-                ],
-
-                'options' => [
-                    'title' => 'Danh sách học viên',
-                    'subject' => 'Danh sách học viên đăng ký',
-                    'author' => Yii::$app->name,
-                    'keywords' => 'học viên, đăng ký, danh sách',
-                ],
-            ],
-
-            'options' => [
-                'title' => 'Xuất danh sách PDF',
-            ],
-        ], //end pdf
-    ],
-
-    'target' => ExportMenu::TARGET_BLANK,
-    'showConfirmAlert' => false,
-
-    'dropdownOptions' => [
-        'label' => 'Export new',
-        'class' => 'btn btn-success',
-        'encodeLabel' => false,
-    ],
-
-    'onRenderSheet' => function ($sheet, $widget) {
-        // Tên sheet XLSX
-        $sheet->setTitle('Học viên');
-
-        // Thiết lập trang PDF
-        $sheet->getPageSetup()
-            ->setOrientation(PageSetup::ORIENTATION_LANDSCAPE)
-            ->setPaperSize(PageSetup::PAPERSIZE_A4)
-            ->setFitToWidth(1)
-            ->setFitToHeight(0);
-
-        $sheet->getStyle($sheet->calculateWorksheetDimension())
-            ->getFont()
-            ->setName('Times New Roman')
-            ->setSize(13);
-
-        // Căn lề khi xuất PDF
-        $sheet->getPageMargins()
-            ->setTop(0.5)
-            ->setRight(0.3)
-            ->setBottom(0.5)
-            ->setLeft(0.3);
-
-        // Lặp lại dòng tiêu đề cột trên mỗi trang PDF.
-        // Nếu beforeContent chiếm dòng 1 và 2 thì header bảng thường ở dòng 3.
-        $sheet->getPageSetup()->setRowsToRepeatAtTopByStartAndEnd(3, 3);
-        $sheet->getStyle('A1')
-            ->getAlignment()
-            ->setHorizontal(Alignment::HORIZONTAL_CENTER);
-        $sheet->getStyle('A1')->getFont()
-            ->setBold(true)
-            ->setSize(20);
-        $sheet->getStyle('A2')
-            ->getAlignment()
-            ->setHorizontal(Alignment::HORIZONTAL_CENTER);
-        $sheet->getStyle('A2')->getFont()
-            ->setBold(true)
-            ->setSize(20);
-        //cột SĐT
-        $sheet->getStyle('E:E')
-            ->getNumberFormat()
-            ->setFormatCode(NumberFormat::FORMAT_TEXT);
-        // cột CCCD
-        $sheet->getStyle('F:F')
-            ->getNumberFormat()
-            ->setFormatCode(NumberFormat::FORMAT_TEXT);
-
-        $sheet->getStyle('J:J')
-            ->getAlignment()
-            ->setHorizontal(Alignment::HORIZONTAL_RIGHT);
-        $sheet->getStyle('K:k')
-            ->getAlignment()
-            ->setHorizontal(Alignment::HORIZONTAL_RIGHT);
-        $sheet->getStyle('L:L')
-            ->getAlignment()
-            ->setHorizontal(Alignment::HORIZONTAL_RIGHT);
-        $sheet->getStyle('M:M')
-            ->getAlignment()
-            ->setHorizontal(Alignment::HORIZONTAL_RIGHT);
-        $sheet->getStyle('N:N')
-            ->getAlignment()
-            ->setHorizontal(Alignment::HORIZONTAL_RIGHT);
-
-        // Footer PDF
-        $sheet->getHeaderFooter()
-            ->setOddFooter('&CTrang &P / &N');
-    },
-
-]);
-
 ?>
 <style>
     #crud-datatable-togdata-page {
         border: 0px !important;
-    }
-
-    .dtoolbar .dropdown-toggle {
-        border: 0px !important;
-        color: black !important;
-    }
-
-    .dtoolbar .dropdown-toggle:hover,
-    .dtoolbar .dropdown-toggle.show {
-        border: 0px !important;
-        background-color: white !important;
-        color: red !important;
-    }
-
-    .dtoolbar .kv-checkbox-list.show {
-        padding: 10px !important;
     }
 
     .thay-doi-hang td {
@@ -453,15 +251,13 @@ $slVoucher = DangKyHv::find()->where(['label' => 'VOUCHERT11'])->count();
                     ' .
                         '{toggleData}'
                         . '{export}'
-                        // . ' <span style="margin-top:5px">|| Xuất file mới</span> '
-                        . $exportXlsx
                 ],
             ],
             'striped' => false,
             'condensed' => true,
             'responsive' => true,
             'perfectScrollbar' => true,
-            'panelHeadingTemplate' => '<div style="width:100%;"><div class="float-start mt-2 text-primary">{title}</div> <div class="float-end dtoolbar">{toolbar}</div></div>',
+            'panelHeadingTemplate' => '<div style="width:100%;"><div class="float-start mt-2 text-primary">{title}</div> <div class="float-end">{toolbar}</div></div>',
             'panelFooterTemplate' => '<div style="width:100%;"><div class="float-start">{summary}</div><div class="float-end">{pager}</div></div>',
             'summary' => 'Tổng: <strong>' . $totalFmt . '</strong> dòng dữ liệu',
             'panel' => [
@@ -470,7 +266,6 @@ $slVoucher = DangKyHv::find()->where(['label' => 'VOUCHERT11'])->count();
                 'heading' => '<i class="typcn typcn-folder-open"></i> DANH SÁCH HỌC VIÊN ĐĂNG KÝ',
                 'before' => false,
             ],
-            //'export' => false,
             'export' => [
                 'fontAwesome' => true,
                 'showConfirmAlert' => false,

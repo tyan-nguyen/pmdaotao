@@ -1,9 +1,11 @@
 <?php
+
 namespace app\widgets;
 
 use Yii;
 use yii\base\Widget;
 use app\modules\kholuutru\models\File;
+
 /**
  * This is widget display file by doiTuong and idDoiTuong
  *
@@ -14,36 +16,43 @@ use app\modules\kholuutru\models\File;
  * @property string $typeUpload (BOTH-2 option, SINGLE-just upload single file, MULTI-just upload multiple file)
  * 
  */
-class FileDisplayWidget extends Widget{    
+class FileDisplayWidget extends Widget
+{
     public $type = 'ALL';
     public $doiTuong;
     public $idDoiTuong;
     public $display = 'THUMB';
     public $typeUpload = 'BOTH';
-    
-    public function init(){
+
+    public function init()
+    {
         parent::init();
     }
-    
-    public function run(){
+
+    public function run()
+    {
         $blockButton = $this->render('@app/widgets/views/files/buttons', [
-            'doiTuong'=>$this->doiTuong,
-            'idDoiTuong'=>$this->idDoiTuong,
+            'doiTuong' => $this->doiTuong,
+            'idDoiTuong' => $this->idDoiTuong,
         ]);
         $html = '<div id="blockVanBan' . $this->idDoiTuong . '" class="">';
-        if($this->type == 'ALL'){
+        if ($this->type == 'ALL') {
             $html .= FileDisplayAllWidget::widget([
-                'doiTuong'=>$this->doiTuong,
-                'idDoiTuong'=>$this->idDoiTuong,
+                'doiTuong' => $this->doiTuong,
+                'idDoiTuong' => $this->idDoiTuong,
             ]);
-        } else if($this->type == 'LOAIHOSO'){
+        } else if ($this->type == 'LOAIHOSO') {
             $html .= FileDisplayTypeWidget::widget([
-                'doiTuong'=>$this->doiTuong,
-                'idDoiTuong'=>$this->idDoiTuong,
+                'doiTuong' => $this->doiTuong,
+                'idDoiTuong' => $this->idDoiTuong,
+            ]);
+        } else if ($this->type == 'IMAGE') {
+            $html .= FileDisplayImagesWidget::widget([
+                'doiTuong' => $this->doiTuong,
+                'idDoiTuong' => $this->idDoiTuong,
             ]);
         }
-        $html .= '</div>';        
-        return $blockButton . $html;
+        $html .= '</div>';
+        return ($this->type == 'IMAGE' ? '' : $blockButton) . $html;
     }
 }
-?>
