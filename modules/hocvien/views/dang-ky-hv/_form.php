@@ -211,10 +211,11 @@ if ($model->id_nhan_ho_so_ho > 0) {
                 [
                     'prompt' => 'Chọn hạng',
                     'class' => 'form-control dropdown-with-arrow',
-                    'disabled' => !$model->isNewRecord,
+                    // 'disabled' => !$model->isNewRecord,
                 ]
             ) ?>
-            <?= !$model->isNewRecord ? Html::activeHiddenInput($model, 'id_hang') : '' ?>
+            <?php /* !$model->isNewRecord ? Html::activeHiddenInput($model, 'id_hang') : '' */
+            ?>
         </div>
         <div class="col-lg-3 col-md-6">
             <label><?= $model->getAttributeLabel('id_khoa_hoc') ?></label>
