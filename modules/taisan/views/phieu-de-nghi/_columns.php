@@ -106,8 +106,18 @@ return [
         'hAlign' => 'center',
         'vAlign' => 'middle',
     ],
+    [
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'da_thanh_toan',
+        'value' => function ($model) {
+            return PhieuDeNghi::getTrangThaiThanhToanLabel($model->da_thanh_toan);
+        },
+        'format' => 'html',
+        'hAlign' => 'center',
+        'vAlign' => 'middle',
+    ],
 
-   /*  [
+    /*  [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'loai_phieu',
         'value' => function ($model) {
@@ -117,7 +127,7 @@ return [
         'hAlign' => 'center',
         'vAlign' => 'middle',
     ], */
-     [
+    [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'loai_yeu_cau',
         'value' => function ($model) {
@@ -149,7 +159,7 @@ return [
                 //'class' => 'btn ripple btn-primary btn-sm',
                 'data-bs-placement' => 'top',
                 'data-bs-toggle' => 'tooltip-primary',
-                'style'=>'font-weight:bold'
+                'style' => 'font-weight:bold'
             ]);
         },
         'format' => 'raw',
@@ -163,7 +173,7 @@ return [
             return $model->nguoiDeNghi ? $model->nguoiDeNghi->hoTen : '';
         },
     ],
-   
+
     // [
     // 'class'=>'\kartik\grid\DataColumn',
     // 'attribute'=>'so_km_luc_yeu_cau',
@@ -191,7 +201,7 @@ return [
         'vAlign' => 'middle',
     ],
 
-     [
+    [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'id_don_vi_thuc_hien',
         'value' => function ($model) {
