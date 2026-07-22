@@ -168,7 +168,7 @@ class PhieuDeNghiSearch extends PhieuDeNghi
                 'nguoi_thanh_toan' => $this->nguoi_thanh_toan,
                 'hinh_thuc_thanh_toan' => $this->hinh_thuc_thanh_toan,
                 'loai_thanh_toan' => $this->loai_thanh_toan,
-                'ngay_thanh_toan' => $this->ngay_thanh_toan,
+                //'ngay_thanh_toan' => $this->ngay_thanh_toan,
                 'id_don_vi_thuc_hien' => $this->id_don_vi_thuc_hien,
             ]);
 
