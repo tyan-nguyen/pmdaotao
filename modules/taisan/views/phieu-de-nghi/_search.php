@@ -132,7 +132,7 @@ $model->ngay_thanh_toan = CustomFunc::convertYMDToDMY($model->ngay_thanh_toan); 
 			]) ?>
 		</div>
 
-		<div class="col-md-2">
+		<!-- <div class="col-md-2">
 			<?= $form->field($model, 'ngay_hoan_thanh')->widget(DatePicker::classname(), [
 				'options' => ['placeholder' => 'Chọn ngày  ...', 'autocomplete' => 'off'],
 				'pluginOptions' => [
@@ -142,6 +142,40 @@ $model->ngay_thanh_toan = CustomFunc::convertYMDToDMY($model->ngay_thanh_toan); 
 					'todayBtn' => true
 				]
 			]) ?>
+		</div> -->
+
+		<div class="col-md-2">
+			<label>Ngày hoàn thành từ</label>
+			<?= $form->field($model, 'ngay_hoan_thanh_tu')->widget(DatePicker::classname(), [
+				'options' => [
+					'placeholder' => 'Chọn ngày ...',
+					'autocomplete' => 'off'
+				],
+				'pluginOptions' => [
+					'autoclose' => true,
+					'format' => 'dd/mm/yyyy',
+					'zIndexOffset' => '9999',
+					'todayHighlight' => true,
+					'todayBtn' => true
+				]
+			])->label(false); ?>
+		</div>
+
+		<div class="col-md-2">
+			<label>Ngày hoàn thành đến</label>
+			<?= $form->field($model, 'ngay_hoan_thanh_den')->widget(DatePicker::classname(), [
+				'options' => [
+					'placeholder' => 'Chọn ngày ...',
+					'autocomplete' => 'off'
+				],
+				'pluginOptions' => [
+					'autoclose' => true,
+					'format' => 'dd/mm/yyyy',
+					'zIndexOffset' => '9999',
+					'todayHighlight' => true,
+					'todayBtn' => true
+				]
+			])->label(false); ?>
 		</div>
 
 		<div class="col-md-2">
