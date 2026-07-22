@@ -203,6 +203,14 @@ class PhieuDeNghiBase extends CpPhieuDeNghi
 
         return "<span class=\"badge {$css}\">{$label}</span>";
     }
+    public static function getTrangThaiThanhToanLabel($trangthai)
+    {
+        $label = $trangthai == 1 ? 'Đã TT' : 'Chưa TT';
+        $css = $trangthai == 1 ? 'bg-success' : 'bg-default';
+        $icon = $trangthai == 1 ? 'ion-checkmark' : 'ion-close-circled';
+
+        return "<span class=\"badge {$css}\"><i class=\"{$icon}\"></i> {$label}</span>";
+    }
     /**
      * {@inheritdoc}
      */

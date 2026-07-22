@@ -408,9 +408,12 @@ if (!$model->isNewRecord) {
                 <i class="fa-solid fa-plus"></i> Thêm hạng mục</a>
         <?php } ?>
         <a href="#" onClick="InHoaDon()" class="btn btn-primary btn-sm"><i class="fa fa-print"></i> In Phiếu đề nghị (<span id="soLanIn"><?= $model->so_lan_in ?? 0 ?></span>)</a>
-        <?php if ($model->trang_thai == PhieuDeNghi::TRANGTHAI_DADUYET || $model->trang_thai == PhieuDeNghi::TRANGTHAI_HOANTHANH) { ?>
-            <a class="btn btn-primary btn-sm" href="/taisan/phieu-de-nghi/thanh-toan?id=<?= $model->id ?>" role="modal-remote"><i class="fa-solid fa-file-export"></i> Thanh toán</a>
+        <?php if (($model->trang_thai == PhieuDeNghi::TRANGTHAI_DADUYET || $model->trang_thai == PhieuDeNghi::TRANGTHAI_HOANTHANH) && $model->da_thanh_toan == 0) { ?>
+            <a class="btn btn-primary btn-sm" href="/taisan/phieu-de-nghi/thanh-toan?id=<?= $model->id ?>" role="modal-remote"
+                data-confirm-message='Bạn có chắc muốn đánh dấu đã thanh toán phiếu này?'><i class="fa-solid fa-file-export"></i> Thanh toán</a>
+        <?php } ?>
 
+        <?php if ($model->trang_thai == PhieuDeNghi::TRANGTHAI_DADUYET || $model->trang_thai == PhieuDeNghi::TRANGTHAI_HOANTHANH) { ?>
             <a href="#" onClick="InHoaDonChiPhi()" class="btn btn-primary btn-sm"><i class="fa fa-print"></i> In Phiếu chi phí</a>
         <?php } ?>
 

@@ -192,6 +192,22 @@ $model->ngay_thanh_toan = CustomFunc::convertYMDToDMY($model->ngay_thanh_toan); 
 		</div>
 
 		<div class="col-md-2">
+			<?= $form->field($model, 'da_thanh_toan')->widget(Select2::class, [
+				'data' =>  [1 => 'Đã thanh toán', 0 => 'Chưa thanh toán'],
+				'language' => 'vi',
+				'options' => [
+					'placeholder' => 'Chọn...',
+					'class' => 'form-control dropdown-with-arrow',
+					'id' => 'idDaThanhToan-search'
+				],
+				'pluginOptions' => [
+					'allowClear' => true,
+					'width' => '100%'
+				],
+			]); ?>
+		</div>
+
+		<div class="col-md-2">
 			<?= $form->field($model, 'hinh_thuc_thanh_toan')->widget(Select2::class, [
 				'data' =>  HoaDon::getDmHinhThucThanhToan(),
 				'language' => 'vi',
@@ -234,9 +250,9 @@ $model->ngay_thanh_toan = CustomFunc::convertYMDToDMY($model->ngay_thanh_toan); 
 			]); ?>
 		</div>
 		<div class="col-md-4">
-			<br/>
-			<?= Html::submitButton('<i class="fe fe-search"></i> Tìm kiếm', ['class' => 'btn btn-primary', 'style'=>'margin-top:5px']) ?>
-			<?= Html::resetButton('<i class="fe fe-x"></i> Xóa tìm kiếm', ['class' => 'btn btn-outline-secondary', 'style'=>'margin-top:5px']) ?>
+			<br />
+			<?= Html::submitButton('<i class="fe fe-search"></i> Tìm kiếm', ['class' => 'btn btn-primary', 'style' => 'margin-top:5px']) ?>
+			<?= Html::resetButton('<i class="fe fe-x"></i> Xóa tìm kiếm', ['class' => 'btn btn-outline-secondary', 'style' => 'margin-top:5px']) ?>
 		</div>
 
 	</div>
