@@ -20,6 +20,10 @@ Yii::$app->params['showView'] = false;
 
 ?>
 <style>
+    #crud-datatable-togdata-page {
+        border: 0px !important;
+    }
+
     /* 1. Thiết lập chiều cao cố định cho cả 2 trạng thái */
     .double-scroll-wrapper::-webkit-scrollbar,
     .kv-grid-container::-webkit-scrollbar {
@@ -128,6 +132,7 @@ Yii::$app->params['showView'] = false;
 						</div>
 					</div>
                     ' .
+                        '{toggleData}' .
                         '{export}'
                 ],
             ],
