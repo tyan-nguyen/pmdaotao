@@ -12,6 +12,7 @@ use app\modules\hocvien\models\HangDaoTao;
 use kartik\select2\Select2;
 use app\modules\danhmuc\models\DmXa;
 use app\modules\danhmuc\models\DmTinh;
+use app\modules\hocvien\models\DmLienKet;
 use yii\web\JsExpression;
 /* @var $this yii\web\View */
 /* @var $model app\modules\vanban\models\VanBanDen */
@@ -21,6 +22,11 @@ $model->thoi_gian_hoan_thanh_ho_so = CustomFunc::convertYMDToDMY($model->thoi_gi
 $initValue = '';
 if ($model->id_xa) {
     $initValue = $model->xa ? $model->xa->tenXaWithTinh : '';
+}
+$initValueLienKet = '';
+if ($model->id_lien_ket) {
+    $lienKet = DmLienKet::findOne($model->id_lien_ket);
+    $initValueLienKet = $lienKet ? $lienKet->ten_lien_ket : '';
 }
 ?>
 
@@ -310,6 +316,52 @@ if ($model->id_xa) {
                 ]
             ])->label(false); ?>
         </div>
+
+        <div class="col-md-1">
+            <label>&nbsp;</label>
+            <?= $form->field($model, 'co_lien_ket')->checkbox([
+                'itemOptions' => [
+                    'label' => 'Chữ hiển thị mới',
+                ]
+            ]) ?>
+        </div>
+        <div class="col-md-3">
+            <label>DM ĐV liên kết</label>
+            <?= $form->field($model, 'id_lien_ket')->widget(Select2::classname(), [
+                'initValueText' => $initValueLienKet, // This shows selected text on form load
+                'language' => 'vi',
+                'options' => [
+                    'placeholder' => 'Chọn dm liên kết...',
+                    'class' => 'form-control dropdown-with-arrow',
+                    'id' => 'idLienKetSearch'
+                ],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                    //'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
+                    'width' => '100%',
+                    'minimumInputLength' => 0, // ← allow fetch without typing
+                    'ajax' => [
+                        'url' => '/hocvien/dm-lien-ket/search-dm-lien-ket',
+                        'dataType' => 'json',
+                        'delay' => 250,
+                        /* 'data' => new JsExpression('function(params) {
+                            return {q:params.term};
+                        }'), */
+                        'data' => new JsExpression('function(params) {
+                            return {
+                                q: params.term || "", // if empty input, send empty string
+                            };
+                        }'),
+                        'processResults' => new JsExpression('function(data) {
+                            return {results:data};
+                        }'),
+                        'cache' => true
+                    ],
+                ],
+            ])->label(false); ?>
+
+        </div>
+
         <div class="col-md-4">
             <br>
             <?= Html::submitButton('<i class="fe fe-search"></i> Thống kê', ['class' => 'btn btn-primary', 'style' => 'margin-top:7px']) ?>
