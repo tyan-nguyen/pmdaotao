@@ -503,7 +503,7 @@ $exportXlsx = ExportMenu::widget([
             'striped' => false,
             'condensed' => true,
             'responsive' => false,
-            'panelHeadingTemplate' => '<div style="width:100%;"><div class="float-start mt-2 text-primary">{title}</div> <div class="float-end">{toolbar}</div></div>',
+            'panelHeadingTemplate' => '<div style="width:100%;"><div class="float-start mt-2 text-primary">{title}</div> <div class="float-end dtoolbar">{toolbar}</div></div>',
             'panelFooterTemplate' => '<div style="width:100%;"><div class="float-start">{summary}</div><div class="float-end">{pager}</div></div>',
             'summary' => 'Tổng: <strong>' . $totalFmt . '</strong> dòng dữ liệu',
             'panel' => [
