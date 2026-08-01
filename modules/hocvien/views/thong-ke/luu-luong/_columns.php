@@ -114,6 +114,8 @@ return [
             return $model->diaChiText;
         },
         'width' => '200px',
+        'contentOptions' => ['style' => 'min-width:250px'],
+        'headerOptions' => ['style' => 'width:250px'],
     ],
     /* [
         'class'=>'\kartik\grid\DataColumn',
