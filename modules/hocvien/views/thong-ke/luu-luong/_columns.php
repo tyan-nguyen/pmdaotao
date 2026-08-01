@@ -199,7 +199,7 @@ return [
         'label' => 'L.Kết',
         'format' => 'html',
         'value' => function ($model) {
-            return $model->id_lien_ket > 0 ? '<i class="fa fa-chain text-danger"></i>' : '';
+            return $model->id_lien_ket > 0 ? 'LK' : '';
         },
         'width' => '30px',
         'contentOptions' => ['style' => 'text-align:center'],
