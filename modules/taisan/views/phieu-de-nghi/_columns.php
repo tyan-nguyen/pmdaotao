@@ -178,10 +178,12 @@ return [
     // 'class'=>'\kartik\grid\DataColumn',
     // 'attribute'=>'so_km_luc_yeu_cau',
     // ],
-    // [
-    // 'class'=>'\kartik\grid\DataColumn',
-    // 'attribute'=>'noi_dung_de_nghi',
-    // ],
+    [
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'noi_dung_de_nghi',
+        'headerOptions' => ['style' => 'width: 200px; min-width: 200px; max-width: 200px;'],
+        'contentOptions' => ['style' => 'width: 200px; min-width: 200px; max-width: 200px; white-space: normal;'],
+    ],
     [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'ngay_bat_dau',
