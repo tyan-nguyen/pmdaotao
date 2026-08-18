@@ -86,7 +86,7 @@ class LichXeController extends Controller
         $model = Xe::findOne($idxe);
         //$contactLog = ContactLogPolicy::getContactLogByStaff();
         //lấy từ 30 ngày gần nhất ->tương lai
-        $fromDate = date('Y-m-d 00:00:00', strtotime('-30 days'));
+        $fromDate = date('Y-m-d 00:00:00', strtotime('-60 days'));
         // SORT_ASC quan trọng để tính gộp
         $contactLog = TietHoc::find()->alias('t')
             ->joinWith(['keHoach k'])
@@ -208,11 +208,11 @@ class LichXeController extends Controller
         ])->andWhere(['IN', 'trang_thai', PhieuDeNghi::getDmTrangThaiCoSoVaoSo()])->all();
 
         foreach ($lichSuaXes as $item) {
-            if ($item->ngay_bat_dau != null && $item->ngay_hoan_thanh!= null) {
+            if ($item->ngay_bat_dau != null && $item->ngay_hoan_thanh != null) {
                 $eventData[] = [
                     'title' => PhieuDeNghi::getLoaiSuaXeList()[$item->loai_yeu_cau]
                         . ': ' . ($item->nguoiDeNghi ? $item->nguoiDeNghi->hoTen : ''),
-                    'description' => 'Xe:' .( $item->tenThamChieu ? $item->tenThamChieu : '') . '<br>'
+                    'description' => 'Xe:' . ($item->tenThamChieu ? $item->tenThamChieu : '') . '<br>'
                         . 'Từ ' . CustomFunc::convertYMDHISToDMY($item->ngay_bat_dau)
                         . ' đến ' . CustomFunc::convertYMDHISToDMY($item->ngay_hoan_thanh)
                         . '<br>Nội dung: ' . $item->noi_dung_de_nghi
