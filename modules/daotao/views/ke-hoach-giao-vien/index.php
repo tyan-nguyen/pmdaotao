@@ -133,3 +133,28 @@ Yii::$app->params['showView'] = true;
 ])?>
 
 <?php Modal::end(); ?>
+
+<!-- Modal Popup xem hình ảnh -->
+<div class="modal fade" id="hinhAnhPopupModal" tabindex="-1" aria-labelledby="hinhAnhPopupModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-lg">
+		<div class="modal-content">
+			<div class="modal-header d-flex justify-content-between align-items-center">
+				<h5 class="modal-title m-0" id="hinhAnhPopupModalLabel"><i class="fa fa-image me-2 text-primary"></i>Hình ảnh đã chụp</h5>
+				<button type="button" class="btn-close ms-auto" data-bs-dismiss="modal" aria-label="Đóng">&times;</button>
+			</div>
+			<div class="modal-body text-center p-3">
+				<img id="popup-hinh-anh-img" src="" class="img-fluid rounded shadow" alt="Hình ảnh" style="max-height: 75vh;">
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+function showHinhAnhPopup(imgUrl) {
+	if (!imgUrl) return;
+	document.getElementById('popup-hinh-anh-img').src = imgUrl;
+	var modalEl = document.getElementById('hinhAnhPopupModal');
+	var myModal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+	myModal.show();
+}
+</script>

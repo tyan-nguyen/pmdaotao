@@ -4,6 +4,7 @@ use app\modules\user\models\Dashboard;
 use yii\bootstrap5\Modal;
 use cangak\ajaxcrud\CrudAsset;
 use app\modules\user\models\User;
+use app\modules\daotao\models\HinhAnh;
 
 Yii::$app->params['showTopSearch'] = false;
 Yii::$app->params['moduleID'] = 'Home';
@@ -27,8 +28,92 @@ $dash = new Dashboard();
 <?php Modal::end(); ?>
 
 <?php if (User::hasRole('nGiaoVien', false)): ?>
+	<?php
+	$userModel = User::findOne(Yii::$app->user->id);
+	$idGiaoVien = ($userModel && method_exists($userModel, 'getIdGiaoVien')) ? $userModel->getIdGiaoVien() : null;
+	$hinhAnhDi = null;
+	$hinhAnhVe = null;
+	if ($idGiaoVien) {
+		$hinhAnhDi = HinhAnh::find()
+			->where([
+				'id_giao_vien' => $idGiaoVien,
+				'date' => date('Y-m-d'),
+				'loai' => HinhAnh::LOAI_KEHOACH,
+				'luot' => HinhAnh::LUOT_DI
+			])
+			->orderBy(['id' => SORT_DESC])
+			->one();
+		$hinhAnhVe = HinhAnh::find()
+			->where([
+				'id_giao_vien' => $idGiaoVien,
+				'date' => date('Y-m-d'),
+				'loai' => HinhAnh::LOAI_KEHOACH,
+				'luot' => HinhAnh::LUOT_VE
+			])
+			->orderBy(['id' => SORT_DESC])
+			->one();
+	}
+	?>
 	<div class="row">
-		<div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
+		<!-- Khối Chụp ảnh đi -->
+		<div class="col-sm-12 col-md-6 col-lg-6 col-xl-3 ">
+			<div class="card custom-card service">
+				<div class="card-body">
+					<div class="item-box text-center">
+						<?php if (empty($hinhAnhDi)): ?>
+							<div class="text-center mb-2 text-primary"><i class="ion-camera"></i></div>
+							<div class="item-box-wrap">
+								<h5 class="mb-2">
+									<a href="/daotao/cham-cong-anh?loai=KEHOACH&luot=DI">Chụp ảnh đi</a>
+								</h5>
+								<p class="text-muted mb-0">Hình ảnh xe đi</p>
+							</div>
+						<?php else: ?>
+							<div class="text-center mb-2 text-success"><i class="fa fa-check-circle fs-3"></i></div>
+							<div class="item-box-wrap">
+								<h5 class="mb-2">
+									<a href="javascript:void(0);" class="text-success fw-bold" onclick="showHinhAnhPopup('<?= $hinhAnhDi->getUrlAnh() ?>')">Đã chấm công đi</a>
+								</h5>
+								<p class="text-muted mb-0">
+									<a href="/daotao/cham-cong-anh?loai=KEHOACH&luot=DI" class="text-primary"><i class="fa fa-camera me-1" style="font-size:12px"></i> Chụp ảnh lại</a>
+								</p>
+							</div>
+						<?php endif; ?>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Khối Chụp ảnh về -->
+		<div class="col-sm-12 col-md-6 col-lg-6 col-xl-3 ">
+			<div class="card custom-card service">
+				<div class="card-body">
+					<div class="item-box text-center">
+						<?php if (empty($hinhAnhVe)): ?>
+							<div class="text-center mb-2 text-primary"><i class="ion-camera"></i></div>
+							<div class="item-box-wrap">
+								<h5 class="mb-2">
+									<a href="/daotao/cham-cong-anh?loai=KEHOACH&luot=VE">Chụp ảnh về</a>
+								</h5>
+								<p class="text-muted mb-0">Hình ảnh xe về</p>
+							</div>
+						<?php else: ?>
+							<div class="text-center mb-2 text-success"><i class="fa fa-check-circle fs-3"></i></div>
+							<div class="item-box-wrap">
+								<h5 class="mb-2">
+									<a href="javascript:void(0);" class="text-success fw-bold" onclick="showHinhAnhPopup('<?= $hinhAnhVe->getUrlAnh() ?>')">Đã chấm công về</a>
+								</h5>
+								<p class="text-muted mb-0">
+									<a href="/daotao/cham-cong-anh?loai=KEHOACH&luot=VE" class="text-primary"><i class="fa fa-camera me-1" style="font-size:12px"></i>Chụp ảnh lại</a>
+								</p>
+							</div>
+						<?php endif; ?>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--<div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
 			<div class="card custom-card service">
 				<div class="card-body">
 					<div class="item-box text-center">
@@ -43,7 +128,7 @@ $dash = new Dashboard();
 					</div>
 				</div>
 			</div>
-		</div>
+		</div>-->
 
 		<div class="col-sm-12 col-md-6 col-lg-6 col-xl-3 ">
 			<div class="card custom-card service">
@@ -79,7 +164,7 @@ $dash = new Dashboard();
 			</div>
 		</div>
 
-		<div class="col-sm-12 col-md-6 col-lg-6 col-xl-3 ">
+		<!--<div class="col-sm-12 col-md-6 col-lg-6 col-xl-3 ">
 			<div class="card custom-card service">
 				<div class="card-body">
 					<div class="item-box text-center">
@@ -94,7 +179,7 @@ $dash = new Dashboard();
 					</div>
 				</div>
 			</div>
-		</div>
+		</div>-->
 
 	</div>
 <?php elseif (User::hasRole('nToThueXe', false)): ?>
@@ -392,3 +477,28 @@ $dash = new Dashboard();
 		</div>
 	</div>
 </div>
+
+<!-- Modal Popup xem hình ảnh chấm công -->
+<div class="modal fade" id="hinhAnhPopupModal" tabindex="-1" aria-labelledby="hinhAnhPopupModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-lg">
+		<div class="modal-content">
+			<div class="modal-header d-flex justify-content-between align-items-center">
+				<h5 class="modal-title m-0" id="hinhAnhPopupModalLabel"><i class="fa fa-image me-2 text-primary"></i>Hình ảnh đã chấm công</h5>
+				<button type="button" class="btn-close ms-auto" data-bs-dismiss="modal" aria-label="Đóng">&times;</button>
+			</div>
+			<div class="modal-body text-center p-3">
+				<img id="popup-hinh-anh-img" src="" class="img-fluid rounded shadow" alt="Hình ảnh chấm công" style="max-height: 75vh;">
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	function showHinhAnhPopup(imgUrl) {
+		if (!imgUrl) return;
+		document.getElementById('popup-hinh-anh-img').src = imgUrl;
+		var modalEl = document.getElementById('hinhAnhPopupModal');
+		var myModal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+		myModal.show();
+	}
+</script>
