@@ -86,7 +86,7 @@ class LichXeController extends Controller
         $model = Xe::findOne($idxe);
         //$contactLog = ContactLogPolicy::getContactLogByStaff();
         //lấy từ 30 ngày gần nhất ->tương lai
-        $fromDate = date('Y-m-d 00:00:00', strtotime('-1000 days'));
+        $fromDate = date('Y-m-d 00:00:00', strtotime('-60 days'));
         // SORT_ASC quan trọng để tính gộp
         $contactLog = TietHoc::find()->alias('t')
             ->joinWith(['keHoach k'])
