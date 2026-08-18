@@ -378,12 +378,11 @@ $script = <<<'JS'
         return `${d}/${m}/${y} ${h}:${i}:${s}`;
     }
 
-    // Vẽ Watermark tem với 4 Label (Ngày giờ, Tọa độ, Tên user, Tên thiết bị chụp) lên Canvas 2D
+    // Vẽ Watermark tem với 3 Label (Ngày giờ, Tọa độ, Tên user) lên Canvas 2D
     function drawWatermarkOnCanvas(ctx, width, height) {
         const dateTimeStr = 'Ngày giờ: ' + getCurrentDateTimeString();
         const locationStr = 'Tọa độ: ' + currentGeoLocation;
         const userStr = 'Tên user: ' + (TEN_USER || 'Chưa xác định');
-        const deviceStr = 'Tên thiết bị chụp: ' + getDeviceName();
 
         // Tính kích thước chữ và dải nền tỉ lệ theo độ phân giải ảnh
         const fontSize = Math.max(14, Math.floor(height / 36));
@@ -391,7 +390,7 @@ $script = <<<'JS'
         // Lùi từ mép trái vào ít nhất 30px hoặc 5% chiều rộng của hình ảnh
         const startX = Math.max(30, Math.floor(width * 0.05));
         const lineHeight = fontSize + 8;
-        const totalLines = 4;
+        const totalLines = 3;
         const barHeight = lineHeight * totalLines + padding * 2;
 
         // Vẽ dải nền đen mờ ở góc dưới ảnh
@@ -410,11 +409,10 @@ $script = <<<'JS'
 
         let startY = height - barHeight + padding + fontSize;
 
-        // In 4 dòng nhãn thông tin lùi vào từ mép trái startX
+        // In 3 dòng nhãn thông tin lùi vào từ mép trái startX
         ctx.fillText(dateTimeStr, startX, startY);
         ctx.fillText(locationStr, startX, startY + lineHeight);
         ctx.fillText(userStr, startX, startY + lineHeight * 2);
-        ctx.fillText(deviceStr, startX, startY + lineHeight * 3);
     }
 
     // Khởi tạo Stream Camera từ HTML5 MediaDevices

@@ -103,7 +103,7 @@ return [
     ],
     [
         'class' => '\kartik\grid\DataColumn',
-        'label' => 'Ảnh lấy xe',
+        'label' => 'Ảnh xe đi',
         'value' => function ($model) {
             $hinhAnh = HinhAnh::find()->where([
                 'id_giao_vien' => $model->id_giao_vien,
@@ -123,7 +123,7 @@ return [
     ],
     [
         'class' => '\kartik\grid\DataColumn',
-        'label' => 'Ảnh trả xe',
+        'label' => 'Ảnh xe về',
         'value' => function ($model) {
             $hinhAnh = HinhAnh::find()->where([
                 'id_giao_vien' => $model->id_giao_vien,
