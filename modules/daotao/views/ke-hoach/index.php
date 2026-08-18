@@ -1,9 +1,10 @@
 <?php
+
 use yii\helpers\Url;
 use yii\bootstrap5\Html;
 use yii\bootstrap5\Modal;
 use kartik\grid\GridView;
-use cangak\ajaxcrud\CrudAsset; 
+use cangak\ajaxcrud\CrudAsset;
 use cangak\ajaxcrud\BulkButtonWidget;
 use yii\widgets\Pjax;
 
@@ -19,136 +20,171 @@ Yii::$app->params['showView'] = true;
 
 ?>
 
-<?php if(Yii::$app->params['showSearch']):?><div class="card border-default" id="divFilterExtend">
-	<div class="card-header rounded-bottom-0 card-header text-dark" id="simple">
-		<h5 class="mt-2"><i class="fe fe-search"></i> Tìm kiếm</h5>
-	</div>
-	<div class="card-body">
-		<div class="expanel expanel-default">
-			<div class="expanel-body">
-				<?php 
+<?php if (Yii::$app->params['showSearch']): ?><div class="card border-default" id="divFilterExtend">
+        <div class="card-header rounded-bottom-0 card-header text-dark" id="simple">
+            <h5 class="mt-2"><i class="fe fe-search"></i> Tìm kiếm</h5>
+        </div>
+        <div class="card-body">
+            <div class="expanel expanel-default">
+                <div class="expanel-body">
+                    <?php
                     echo $this->render("_search", ["model" => $searchModel]);
-                ?>			</div>
-		</div>
-	</div>
-</div>
+                    ?> </div>
+            </div>
+        </div>
+    </div>
 <?php endif; ?>
 <?php Pjax::begin([
-    'id'=>'myGrid',
+    'id' => 'myGrid',
     'timeout' => 10000,
     'formSelector' => '.myFilterForm'
 ]); ?>
 
 <div class="ke-hoach-index">
     <div id="ajaxCrudDatatable">
-        <?=GridView::widget([
-            'id'=>'crud-datatable',
+        <?= GridView::widget([
+            'id' => 'crud-datatable',
             'dataProvider' => $dataProvider,
             //'filterModel' => $searchModel,
-            'pjax'=>true,
-            'columns' => require(__DIR__.'/_columns.php'),
-            'toolbar'=> [
-                ['content'=>
+            'pjax' => true,
+            'columns' => require(__DIR__ . '/_columns.php'),
+            'toolbar' => [
+                [
+                    'content' =>
                     '
-                    <div class="dropdown">
+                    <div class="dropdown d-inline-block">
 						<button aria-expanded="false" aria-haspopup="true" class="btn dropdown-toggle" data-bs-toggle="dropdown" type="button"><i class="fa fa-navicon"></i></button>
 						<div class="dropdown-menu tx-13" style="">
 							<h6 class="dropdown-header tx-uppercase tx-11 tx-bold bg-info tx-spacing-1">
 								Chọn chức năng</h6>'
-                    .
-                    Html::a('<i class="fas fa fa-plus" aria-hiddi="true"></i> Thêm mới', ['create'],
-                        ['role'=>'modal-remote','title'=> 'Thêm mới','class'=>'dropdown-item'])
-                    .
-                    Html::a('<i class="fas fa fa-sync" aria-hidden="true"></i> Tải lại', [''],
-                        ['data-pjax'=>1, 'class'=>'dropdown-item', 'title'=>'Tải lại'])
-                    .
-                    Html::a('<i class="fas fa fa-trash" aria-hidden="true"></i>&nbsp; Xóa danh sách',
-                        ["bulkdelete"],
-                        [
-                            'class'=>'dropdown-item text-secondary',
-                            'role'=>'modal-remote-bulk',
-                            'data-confirm'=>false, 'data-method'=>false,// for overide yii data api
-                            'data-request-method'=>'post',
-                            'data-confirm-title'=>'Xác nhận xóa?',
-                            'data-confirm-message'=>'Bạn có chắc muốn xóa?'
-                        ])
-                    .
-                    '
+                        .
+                        Html::a(
+                            '<i class="fas fa fa-plus" aria-hiddi="true"></i> Thêm mới',
+                            ['create'],
+                            ['role' => 'modal-remote', 'title' => 'Thêm mới', 'class' => 'dropdown-item']
+                        )
+                        .
+                        Html::a(
+                            '<i class="fas fa fa-sync" aria-hidden="true"></i> Tải lại',
+                            [''],
+                            ['data-pjax' => 1, 'class' => 'dropdown-item', 'title' => 'Tải lại']
+                        )
+                        .
+                        '
 						</div>
 					</div>
-                    '.
-                    '{export}'
+                    <button type="button" class="btn btn-sm ms-2" id="btn-toggle-delete-img" onclick="toggleDeleteImgMode()" style="border: 0px" title="Bật/Tắt chế độ xóa hình ảnh">
+                        <i class="ion-minus-circled me-1"></i> Bật xóa ảnh
+                    </button>
+                    ' .
+                        '{export}'
                 ],
-            ],             
+            ],
             'striped' => false,
             'condensed' => true,
             'responsive' => false,
-            'panelHeadingTemplate'=>'<div style="width:100%;"><div class="float-start mt-2 text-primary">{title}</div> <div class="float-end">{toolbar}</div></div>',
-            'panelFooterTemplate'=>'<div style="width:100%;"><div class="float-start">{summary}</div><div class="float-end">{pager}</div></div>',
-            'summary'=>'Tổng: {totalCount} dòng dữ liệu',
+            'panelHeadingTemplate' => '<div style="width:100%;"><div class="float-start mt-2 text-primary">{title}</div> <div class="float-end">{toolbar}</div></div>',
+            'panelFooterTemplate' => '<div style="width:100%;"><div class="float-start">{summary}</div><div class="float-end">{pager}</div></div>',
+            'summary' => 'Tổng: {totalCount} dòng dữ liệu',
             'panel' => [
-                'headingOptions'=>['class'=>'card-header rounded-bottom-0 card-header text-dark'],
+                'headingOptions' => ['class' => 'card-header rounded-bottom-0 card-header text-dark'],
                 'heading' => '<i class="typcn typcn-folder-open"></i> DANH SÁCH KẾ HOẠCH GIẢNG DẠY',
-                'before'=>false,
+                'before' => false,
             ],
-            'export'=>[
+            'export' => [
                 'options' => [
                     'class' => 'btn'
                 ]
-            ]          
-        ])?>
+            ]
+        ]) ?>
     </div>
 </div>
 
 <?php Pjax::end(); ?>
 
 <?php Modal::begin([
-   'options' => [
-        'id'=>'ajaxCrudModal',
+    'options' => [
+        'id' => 'ajaxCrudModal',
         'tabindex' => false // important for Select2 to work properly
-   ],
-   'dialogOptions'=>['class'=>'modal-xl modal-xxl'],
-   'closeButton'=>['label'=>'<span aria-hidden=\'true\'>×</span>'],
-   'id'=>'ajaxCrudModal',
-    'footer'=>'',// always need it for jquery plugin
-])?>
+    ],
+    'dialogOptions' => ['class' => 'modal-xl modal-xxl'],
+    'closeButton' => ['label' => '<span aria-hidden=\'true\'>×</span>'],
+    'id' => 'ajaxCrudModal',
+    'footer' => '', // always need it for jquery plugin
+]) ?>
 
 <?php Modal::end(); ?>
 
 <?php Modal::begin([
-   'options' => [
-        'id'=>'ajaxCrudModal2',
+    'options' => [
+        'id' => 'ajaxCrudModal2',
         'tabindex' => false // important for Select2 to work properly
-   ],
-   'dialogOptions'=>['class'=>'modal-lg'],
-   'closeButton'=>['label'=>'<span aria-hidden=\'true\'>×</span>'],
-   'id'=>'ajaxCrudModal2',
-    'footer'=>'',// always need it for jquery plugin
-])?>
+    ],
+    'dialogOptions' => ['class' => 'modal-lg'],
+    'closeButton' => ['label' => '<span aria-hidden=\'true\'>×</span>'],
+    'id' => 'ajaxCrudModal2',
+    'footer' => '', // always need it for jquery plugin
+]) ?>
 
 <?php Modal::end(); ?>
 
 <!-- Modal Popup xem hình ảnh -->
 <div class="modal fade" id="hinhAnhPopupModal" tabindex="-1" aria-labelledby="hinhAnhPopupModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered modal-lg">
-		<div class="modal-content">
-			<div class="modal-header d-flex justify-content-between align-items-center">
-				<h5 class="modal-title m-0" id="hinhAnhPopupModalLabel"><i class="fa fa-image me-2 text-primary"></i>Hình ảnh đã chụp</h5>
-				<button type="button" class="btn-close ms-auto" data-bs-dismiss="modal" aria-label="Đóng">&times;</button>
-			</div>
-			<div class="modal-body text-center p-3">
-				<img id="popup-hinh-anh-img" src="" class="img-fluid rounded shadow" alt="Hình ảnh" style="max-height: 75vh;">
-			</div>
-		</div>
-	</div>
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header d-flex justify-content-between align-items-center">
+                <h5 class="modal-title m-0" id="hinhAnhPopupModalLabel"><i class="fa fa-image me-2 text-primary"></i>Hình ảnh đã chụp</h5>
+                <button type="button" class="btn-close ms-auto" data-bs-dismiss="modal" aria-label="Đóng">&times;</button>
+            </div>
+            <div class="modal-body text-center p-3">
+                <img id="popup-hinh-anh-img" src="" class="img-fluid rounded shadow" alt="Hình ảnh" style="max-height: 75vh;">
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
-function showHinhAnhPopup(imgUrl) {
-	if (!imgUrl) return;
-	document.getElementById('popup-hinh-anh-img').src = imgUrl;
-	var modalEl = document.getElementById('hinhAnhPopupModal');
-	var myModal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
-	myModal.show();
-}
+    function showHinhAnhPopup(imgUrl) {
+        if (!imgUrl) return;
+        document.getElementById('popup-hinh-anh-img').src = imgUrl;
+        var modalEl = document.getElementById('hinhAnhPopupModal');
+        var myModal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+        myModal.show();
+    }
+
+    var isDeleteImgModeActive = false;
+
+    function toggleDeleteImgMode() {
+        isDeleteImgModeActive = !isDeleteImgModeActive;
+        applyDeleteImgMode();
+    }
+
+    function applyDeleteImgMode() {
+        var btns = document.querySelectorAll('.btn-delete-hinh-anh');
+        var toggleBtn = document.getElementById('btn-toggle-delete-img');
+
+        btns.forEach(function(btn) {
+            if (isDeleteImgModeActive) {
+                btn.classList.remove('d-none');
+            } else {
+                btn.classList.add('d-none');
+            }
+        });
+
+        if (toggleBtn) {
+            if (isDeleteImgModeActive) {
+                toggleBtn.innerHTML = '<i class="fa fa-times me-1"></i> Tắt xóa ảnh';
+                toggleBtn.classList.add('active', 'btn-danger', 'text-white');
+                toggleBtn.classList.remove('btn-outline-danger');
+            } else {
+                toggleBtn.innerHTML = '<i class="ion-minus-circled me-1"></i> Bật xóa ảnh';
+                toggleBtn.classList.remove('active', 'btn-danger', 'text-white');
+                toggleBtn.classList.add('btn-outline-danger');
+            }
+        }
+    }
+
+    $(document).on('pjax:end pjax:complete', function() {
+        applyDeleteImgMode();
+    });
 </script>

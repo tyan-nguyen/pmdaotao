@@ -125,7 +125,19 @@ return [
             ])->orderBy(['id' => SORT_DESC])->one();
 
             if ($hinhAnh && !empty($hinhAnh->file_name)) {
-                return '<a href="javascript:void(0);" onclick="showHinhAnhPopup(\'' . $hinhAnh->getUrlAnh() . '\')"><span class="badge bg-success" style="cursor:pointer;"><i class="fa fa-camera me-1"></i>Đã có</span></a>';
+                $viewBtn = '<a href="javascript:void(0);" onclick="showHinhAnhPopup(\'' . $hinhAnh->getUrlAnh() . '\')"><span class="badge bg-success" style="cursor:pointer;"><i class="fa fa-camera me-1"></i>Đã có</span></a>';
+                $deleteBtn = Html::a('<i class="fa fa-trash text-danger"></i>', Url::to(['xoa-anh', 'id' => $hinhAnh->id]), [
+                    'role' => 'modal-remote',
+                    'title' => 'Xóa ảnh xe đi',
+                    'data-confirm' => false,
+                    'data-method' => false,
+                    'data-request-method' => 'post',
+                    'data-toggle' => 'tooltip',
+                    'data-confirm-title' => 'Xác nhận xóa dữ liệu?',
+                    'data-confirm-message' => 'Bạn có chắc chắn muốn xóa ảnh xe đi này không?',
+                    'class' => 'ms-2 text-danger btn-delete-hinh-anh d-none',
+                ]);
+                return $viewBtn . ' ' . $deleteBtn;
             }
             return '<span class="badge bg-default">Chưa có</span>';
         },
@@ -145,7 +157,19 @@ return [
             ])->orderBy(['id' => SORT_DESC])->one();
 
             if ($hinhAnh && !empty($hinhAnh->file_name)) {
-                return '<a href="javascript:void(0);" onclick="showHinhAnhPopup(\'' . $hinhAnh->getUrlAnh() . '\')"><span class="badge bg-success" style="cursor:pointer;"><i class="fa fa-camera me-1"></i>Đã có</span></a>';
+                $viewBtn = '<a href="javascript:void(0);" onclick="showHinhAnhPopup(\'' . $hinhAnh->getUrlAnh() . '\')"><span class="badge bg-success" style="cursor:pointer;"><i class="fa fa-camera me-1"></i>Đã có</span></a>';
+                $deleteBtn = Html::a('<i class="fa fa-trash text-danger"></i>', Url::to(['xoa-anh', 'id' => $hinhAnh->id]), [
+                    'role' => 'modal-remote',
+                    'title' => 'Xóa ảnh xe về',
+                    'data-confirm' => false,
+                    'data-method' => false,
+                    'data-request-method' => 'post',
+                    'data-toggle' => 'tooltip',
+                    'data-confirm-title' => 'Xác nhận xóa dữ liệu?',
+                    'data-confirm-message' => 'Bạn có chắc chắn muốn xóa ảnh xe về này không?',
+                    'class' => 'ms-2 text-danger btn-delete-hinh-anh d-none',
+                ]);
+                return $viewBtn . ' ' . $deleteBtn;
             }
             return '<span class="badge bg-default">Chưa có</span>';
         },

@@ -12,6 +12,7 @@ use \yii\web\Response;
 use yii\helpers\Html;
 use yii\filters\AccessControl;
 use app\modules\daotao\models\base\KeHoachBase;
+use app\modules\daotao\models\HinhAnh;
 
 /**
  * KeHoachController implements the CRUD actions for KeHoach model.
@@ -31,6 +32,7 @@ class KeHoachController extends Controller
     				'class' => VerbFilter::className(),
     				'actions' => [
     					'delete' => ['POST'],
+    					'xoa-anh' => ['POST'],
     				],
     			],
 		];
@@ -357,6 +359,46 @@ class KeHoachController extends Controller
             return $this->redirect(['index']);
         }
        
+    }
+
+    /**
+     * Xóa hình ảnh chấm công (ảnh xe đi hoặc ảnh xe về)
+     * @param integer $id ID của HinhAnh
+     * @return mixed
+     */
+    public function actionXoaAnh($id)
+    {
+        $request = Yii::$app->request;
+        $model = HinhAnh::findOne($id);
+
+        if ($request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            if ($model) {
+                if ($model->delete()) {
+                    return [
+                        'forceClose' => true,
+                        'forceReload' => '#crud-datatable-pjax',
+                        'tcontent' => 'Xóa hình ảnh thành công!',
+                    ];
+                } else {
+                    return [
+                        'forceClose' => true,
+                        'forceReload' => '#crud-datatable-pjax',
+                        'tcontent' => 'Không thể xóa hình ảnh!',
+                    ];
+                }
+            }
+            return [
+                'forceClose' => true,
+                'forceReload' => '#crud-datatable-pjax',
+                'tcontent' => 'Hình ảnh không tồn tại hoặc đã bị xóa!',
+            ];
+        } else {
+            if ($model) {
+                $model->delete();
+            }
+            return $this->redirect(['index']);
+        }
     }
 
     /**

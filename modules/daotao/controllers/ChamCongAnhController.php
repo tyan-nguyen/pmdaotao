@@ -15,6 +15,20 @@ use app\modules\daotao\models\HinhAnh;
  */
 class ChamCongAnhController extends Controller
 {
+    public function behaviors()
+    {
+        return [
+            'ghost-access' => [
+                'class' => 'webvimark\modules\UserManagement\components\GhostAccessControl',
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ];
+    }
     /**
      * Action hiển thị giao diện chụp ảnh từ camera
      * @param string|null $loai KEHOACH | LICHDUNGXE
