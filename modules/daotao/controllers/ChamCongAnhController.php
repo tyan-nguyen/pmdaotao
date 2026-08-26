@@ -9,6 +9,7 @@ use yii\helpers\FileHelper;
 use yii\web\UploadedFile;
 use app\modules\user\models\User;
 use app\modules\daotao\models\HinhAnh;
+use yii\filters\VerbFilter;
 
 /**
  * ChamCongAnhController hỗ trợ chụp ảnh từ camera thiết bị và lưu hình ảnh giảng dạy
