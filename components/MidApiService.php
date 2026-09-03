@@ -60,10 +60,10 @@ class MidApiService extends Component
         // Ví dụ trong tài liệu: GET|JSON.stringify({ imei: "12345" })|timestamp|x-api-key
         $inputString = strtoupper($method) . '|' . $dataStr . '|' . $timestamp . '|' . $this->apiKey;
 
-        // 2. [B1] Nếu có secretKeyHash, dùng HMAC-SHA256 để tạo hash
-        // hmac = crypto.createHmac("SHA256", SECRET_KEY_HASH)
+        // 2. [B1] Nếu có secretKeyHash, dùng HMAC-SHA256 để tạo hash dạng Base64
+        // hmac = crypto.createHmac("SHA256", SECRET_KEY_HASH); hmac.digest("base64");
         if (!empty($this->secretKeyHash)) {
-            $dataToSign = hash_hmac('sha256', $inputString, $this->secretKeyHash);
+            $dataToSign = base64_encode(hash_hmac('sha256', $inputString, $this->secretKeyHash, true));
         } else {
             $dataToSign = $inputString;
         }
@@ -72,9 +72,18 @@ class MidApiService extends Component
         // sign = crypto.createSign("SHA256"); sign.sign(privateKey, "base64");
         $privateKeyPath = Yii::getAlias($this->privateKeyPath);
         if (!file_exists($privateKeyPath)) {
-            throw new \Exception("File Private Key không tồn tại: " . $privateKeyPath);
+            $altPath1 = Yii::getAlias('@app/config/keys/privateNTTV.pem');
+            $altPath2 = Yii::getAlias('@app/configs/keys/privateNTTV.pem');
+            if (file_exists($altPath1)) {
+                $privateKeyPath = $altPath1;
+            } elseif (file_exists($altPath2)) {
+                $privateKeyPath = $altPath2;
+            } else {
+                throw new \Exception("File Private Key không tồn tại tại: " . $privateKeyPath . " (đã tìm thử cả config/keys và configs/keys)");
+            }
         }
         $privateKey = file_get_contents($privateKeyPath);
+
         if (!$privateKey) {
             throw new \Exception("Không thể đọc được file Private Key: " . $privateKeyPath);
         }
@@ -151,6 +160,9 @@ class MidApiService extends Component
 
         if ($response->isOk) {
             $data = $response->data;
+            if (isset($data['data'][0]['token'])) {
+                return $data['data'][0]['token'];
+            }
             if (isset($data['data']['token'])) {
                 return $data['data']['token'];
             }
