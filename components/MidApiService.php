@@ -10,6 +10,7 @@ class MidApiService extends Component
 {
     public $baseUrl = 'https://api-gw.midvietnam.net';
     public $apiKey = 'YOUR_API_KEY';
+    public $secretKeyHash = 'YOUR_SECRET_KEY_HASH';
     public $username = 'YOUR_USERNAME';
     public $password = 'YOUR_PASSWORD';
 
@@ -31,22 +32,28 @@ class MidApiService extends Component
     {
         $timestamp = $this->getTimestamp();
 
-        // Convert array sang chuỗi JSON (giống hệt chuẩn JSON.stringify trong NodeJS)
         $dataStr = empty($payloadData) ? '' : json_encode($payloadData, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 
-        // Tạo chuỗi đầu vào theo tài liệu: METHOD JSON\timestamp|x-api-key
-        $inputHash = strtoupper($method) . ' ' . $dataStr . '\\' . $timestamp . '|' . $this->apiKey;
+        // 1. Tạo chuỗi dữ liệu gốc
+        $inputString = strtoupper($method) . ' ' . $dataStr . '\\' . $timestamp . '|' . $this->apiKey;
 
-        // Đọc private key từ file .pem
+        // 2. [B1] Dùng SECRET_KEY_HASH để tạo hash (HMAC-SHA256) từ chuỗi dữ liệu gốc
+        // Đây chính là bước: hmac = crypto.createHmac("SHA256", SECRET_KEY_HASH);
+        $hmacHash = hash_hmac('sha256', $inputString, $this->secretKeyHash);
+
+        // Đọc file private key
         $privateKey = file_get_contents(Yii::getAlias($this->privateKeyPath));
         if (!$privateKey) {
             throw new \Exception("Không thể đọc được file Private Key");
         }
 
-        // Ký điện tử SHA256
+        // 3. [B2 & B3] Ký điện tử chuỗi HMAC bằng Private Key (file .pem)
+        // Đây chính là bước: sign = crypto.createSign("SHA256"); sign.sign(privateKey, "base64");
         $signature = '';
         $pkeyId = openssl_pkey_get_private($privateKey);
-        openssl_sign($inputHash, $signature, $pkeyId, OPENSSL_ALGO_SHA256);
+
+        // Truyền $hmacHash vào để ký
+        openssl_sign($hmacHash, $signature, $pkeyId, OPENSSL_ALGO_SHA256);
 
         // Mã hóa base64 chữ ký
         $base64Signature = base64_encode($signature);
