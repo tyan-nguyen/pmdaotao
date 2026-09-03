@@ -9,10 +9,10 @@ use yii\httpclient\Client;
 class MidApiService extends Component
 {
     public $baseUrl = 'https://api-gw.midvietnam.net';
-    public $apiKey = 'YOUR_API_KEY';
-    public $secretKeyHash = 'YOUR_SECRET_KEY_HASH';
-    public $username = 'YOUR_USERNAME';
-    public $password = 'YOUR_PASSWORD';
+    public $apiKey = 'e551d9c3f64b9a9faf15456a4160ac06';
+    public $secretKeyHash = '333b1b248c847416b03b96bc6c9c5c86';
+    public $username = 'nguyentrinh';
+    public $password = 'Nguyentrinh2026';
 
     // Đường dẫn tới file privateNTTV.pem
     public $privateKeyPath = '@app/config/keys/privateNTTV.pem';
