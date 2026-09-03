@@ -197,6 +197,14 @@ $config = [
                 ],
             ],
         ],
+        'midApi' => [
+            'class' => 'app\components\MidApiService',
+            'baseUrl' => 'https://api-gw.midvietnam.net', // URL môi trường Production
+            'apiKey' => 'e551d9c3f64b9a9faf15456a4160ac06', // Lấy từ MID
+            'username' => 'nguyentrinh',
+            'password' => 'Nguyentrinh2026',
+            'privateKeyPath' => '@app/config/keys/privateNTTV.pem', // Path đến file .pem
+        ],
 
     ],
     'params' => $params,
