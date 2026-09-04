@@ -17,7 +17,7 @@ if (!$model->isNewRecord) {
     $model->ngay_dang_kiem = CustomFunc::convertYMDToDMY($model->ngay_dang_kiem);
 }
 $checkKhongChon = false;
-if($model->ma_mau === null){
+if ($model->ma_mau === null) {
     $checkKhongChon = true;
     $model->ma_mau = '#ffffff';
 }
@@ -114,6 +114,7 @@ if($model->ma_mau === null){
             <?= $form->field($model, 'so_may')->textInput(['maxlength' => true]) ?>
         </div>
 
+
         <div class="col-lg-3 col-md-6">
             <?= $form->field($model, 'mau_sac')->textInput(['maxlength' => true]) ?>
         </div>
@@ -160,7 +161,11 @@ if($model->ma_mau === null){
         <div class="col-lg-2 col-md-3">
             <?= $form->field($model, 'nam_mua')->textInput(['maxlength' => true]) ?>
         </div>
-        <div class="col-lg-8 col-md-6">
+        <div class="col-lg-3 col-md-3">
+            <?= $form->field($model, 'imei_gps')->textInput(['maxlength' => true, 'placeholder' => 'Nhập số IMEI GPS...']) ?>
+        </div>
+
+        <div class="col-lg-5 col-md-3">
             <?= $form->field($model, 'ghi_chu')->textarea(['rows' => 2]) ?>
         </div>
     </div>
