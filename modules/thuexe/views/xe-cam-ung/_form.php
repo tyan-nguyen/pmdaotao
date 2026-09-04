@@ -93,6 +93,10 @@ if(!$model->isNewRecord){
          </div>
          
          <div class="col-lg-3 col-md-6">
+             <?= $form->field($model, 'imei_gps')->textInput(['maxlength' => true, 'placeholder' => 'Nhập số IMEI GPS...']) ?>
+         </div>
+
+         <div class="col-lg-3 col-md-6">
              <?= $form->field($model, 'mau_sac')->textInput(['maxlength' => true]) ?>
          </div>
         

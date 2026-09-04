@@ -139,6 +139,13 @@ return [
         'attribute'=>'bien_so_xe',
         'contentOptions' => [ 'style' => 'text-align:center' ],
     ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'imei_gps',
+        'label'=>'IMEI GPS',
+        'headerOptions' => ['style' => 'width:130px;'],
+        'contentOptions' => [ 'style' => 'min-width:130px;text-align:center' ],
+    ],
     
     [
         'class'=>'\kartik\grid\DataColumn',

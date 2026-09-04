@@ -19,7 +19,7 @@ class XeSearch extends Xe
         return [
             [['id', 'id_loai_xe', 'nguoi_tao', 'id_giao_vien', 'ma_so', 'stt', 'nam_san_xuat', 'nam_mua'], 'integer'],
             [['hieu_xe', 'bien_so_xe', 'ma_bien_so', 'tinh_trang_xe', 'trang_thai', 'thoi_gian_tao', 
-                'ghi_chu', 'phan_loai', 'dac_diem', 'so_hop_dong', 'so_hoa_don'], 'safe'],
+                'ghi_chu', 'phan_loai', 'dac_diem', 'so_hop_dong', 'so_hoa_don', 'imei_gps'], 'safe'],
         ];
     }
 
@@ -63,6 +63,7 @@ class XeSearch extends Xe
         $query->andFilterWhere(['like', 'hieu_xe', $this->hieu_xe])
         ->andFilterWhere(['like', 'bien_so_xe', $this->bien_so_xe])
         ->andFilterWhere(['like', 'ma_bien_so', $this->ma_bien_so])
+        ->andFilterWhere(['like', 'imei_gps', $this->imei_gps])
         ->andFilterWhere(['like', 'ghi_chu', $this->ghi_chu])
         ->andFilterWhere(['like', 'so_hop_dong', $this->so_hop_dong])
         ->andFilterWhere(['like', 'so_hoa_don', $this->so_hoa_don])
@@ -113,6 +114,7 @@ class XeSearch extends Xe
         
         $query->andFilterWhere(['like', 'hieu_xe', $this->hieu_xe])
         ->andFilterWhere(['like', 'bien_so_xe', $this->bien_so_xe])
+        ->andFilterWhere(['like', 'imei_gps', $this->imei_gps])
         ->andFilterWhere(['like', 'ghi_chu', $this->ghi_chu])
          ->andFilterWhere(['like', 'so_hop_dong', $this->so_hop_dong])
         ->andFilterWhere(['like', 'so_hoa_don', $this->so_hoa_don])

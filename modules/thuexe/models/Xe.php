@@ -46,6 +46,7 @@ use app\modules\taisan\models\PhieuDeNghi;
  * @property string|null $ngay_cap_nhat_km 
  * @property int|null $nam_san_xuat
  * @property int|null $nam_mua
+ * @property string|null $imei_gps
  *
  * @property PtxLoaiXe $loaiXe
  * @property PtxPhieuThueXe[] $ptxPhieuThueXes
@@ -213,7 +214,8 @@ class Xe extends \app\models\PtxXe
                 'nam_mua'
             ], 'integer'],
             [['ghi_chu', 'dac_diem'], 'string'],
-            [['phan_loai', 'ma_so'], 'string', 'max' => 20],
+            [['imei_gps'], 'trim'],
+            [['phan_loai', 'ma_so', 'imei_gps'], 'string', 'max' => 20],
             [['tinh_trang_xe'], 'string', 'max' => 20],
             [['thoi_gian_tao', 'ngay_dang_kiem', 'ngay_cap_nhat_km'], 'safe'],
             [['bien_so_xe', 'ma_bien_so', 'ma_mau'], 'string', 'max' => 50],
@@ -273,6 +275,7 @@ class Xe extends \app\models\PtxXe
             'ngay_cap_nhat_km' => 'Ngày cập nhật km',
             'nam_san_xuat' => 'Năm sản xuất',
             'nam_mua' => 'Năm mua',
+            'imei_gps' => 'Số IMEI GPS',
         ];
     }
     /**

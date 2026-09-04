@@ -190,6 +190,13 @@ return [
     ],
     [
         'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'imei_gps',
+        'label' => 'IMEI GPS',
+        'headerOptions' => ['style' => 'width:130px;'],
+        'contentOptions' => ['style' => 'min-width:130px;text-align:center'],
+    ],
+    [
+        'class' => '\kartik\grid\DataColumn',
         'attribute' => 'hieu_xe',
         'headerOptions' => ['style' => 'width:200px;'],
         'contentOptions' => ['style' => 'min-width:200px;'],
@@ -250,6 +257,7 @@ return [
         'label' => 'Mã số (SH)',
         'contentOptions' => ['style' => 'text-align:center'],
     ],
+
     [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'phan_loai',

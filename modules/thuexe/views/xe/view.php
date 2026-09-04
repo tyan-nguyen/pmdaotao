@@ -39,7 +39,10 @@ $hinhXeList = HinhXe::find()->where(['id_xe' => $model->id])->all();
                             </div>
                         </div>
 
-                        <p><strong>Màu sắc:</strong> <?= $model->mau_sac ?></p>
+                        <p><strong>Màu sắc:</strong> <?= $model->mau_sac ?>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <strong>Số IMEI GPS:</strong> <?= $model->imei_gps ? $model->imei_gps : '<span class="text-muted">Chưa có</span>' ?>
+                        </p>
                         <p><strong>Tình trạng xe:</strong> <?= $model->tinh_trang_xe ?>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <strong>Trạng thái:</strong> <?= $model->trang_thai ?>
