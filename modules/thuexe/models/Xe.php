@@ -755,4 +755,41 @@ class Xe extends \app\models\PtxXe
     {
         return $this->hasOne(PtxXeVitriGps::class, ['id_xe' => 'id'])->orderBy(['id' => SORT_DESC]);
     }
+
+    /**
+     * Lấy vùng giới hạn hiện tại của xe dựa trên vị trí GPS gần nhất
+     * @return \app\models\PtxXeVungGioiHan|null
+     */
+    public function getVungHienTai()
+    {
+        $vt = $this->viTriGpsMoiNhat;
+        if (!$vt || !$vt->latitude || !$vt->longitude) {
+            return null;
+        }
+        $zones = \app\models\PtxXeVungGioiHan::getDanhSachVungDangApDung();
+        foreach ($zones as $zone) {
+            if ($zone->isPointInside($vt->latitude, $vt->longitude)) {
+                return $zone;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Trả về HTML Badge trạng thái vùng của xe (Khuôn viên, Vùng X, hoặc Ngoài đường)
+     * @return string
+     */
+    public function getTrangThaiVungBadge()
+    {
+        $vt = $this->viTriGpsMoiNhat;
+        if (!$vt || !$vt->latitude || !$vt->longitude) {
+            return '<span class="badge bg-secondary">Chưa có GPS</span>';
+        }
+        $vung = $this->getVungHienTai();
+        if ($vung) {
+            $color = $vung->mau_sac ?: '#2563eb';
+            return '<span class="badge" style="background-color:' . $color . '; color:#fff;"><i class="fa fa-building"></i> ' . \yii\helpers\Html::encode($vung->ten_vung) . '</span>';
+        }
+        return '<span class="badge bg-warning text-dark"><i class="fa fa-road"></i> Ngoài đường</span>';
+    }
 }

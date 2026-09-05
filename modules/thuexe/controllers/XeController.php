@@ -15,12 +15,14 @@ use yii\web\UploadedFile;
 use app\modules\thuexe\models\HinhXe;
 use app\custom\CustomFunc;
 use app\models\PtxXeVitriGps;
+use app\models\PtxXeVungGioiHan;
 
 /**
  * XeController implements the CRUD actions for Xe model.
  */
 class XeController extends Controller
 {
+    public $freeAccessActions = ['luu-vung-gioi-han', 'xoa-vung-gioi-han'];
     /**
      * @inheritdoc
      */
@@ -47,8 +49,8 @@ class XeController extends Controller
     {
         Yii::$app->params['moduleID'] = 'Module Quản lý thuê xe';
         Yii::$app->params['modelID'] = 'Danh sách Xe';
-        //disable crsf for action upload images
-        if ($action->id === 'upload-images') {
+        //disable csrf for ajax actions
+        if (in_array($action->id, ['upload-images', 'luu-vung-gioi-han', 'xoa-vung-gioi-han'])) {
             $this->enableCsrfValidation = false;
         }
         return parent::beforeAction($action);
@@ -262,44 +264,154 @@ class XeController extends Controller
             ->andWhere(['!=', 'imei_gps', ''])
             ->all();
 
-        $vehicleData = [];
-        foreach ($vehicles as $xe) {
-            $vt = $xe->viTriGpsMoiNhat;
-            if ($vt && $vt->latitude && $vt->longitude) {
-                $vehicleData[] = [
-                    'id' => $xe->id,
-                    'bien_so_xe' => $xe->bien_so_xe,
-                    'hieu_xe' => $xe->hieu_xe,
-                    'ma_so' => $xe->ma_so,
-                    'imei' => $xe->imei_gps,
-                    'lat' => (float)$vt->latitude,
-                    'lng' => (float)$vt->longitude,
-                    'speed' => $vt->speed,
-                    'rotation' => $vt->rotation,
-                    'acc' => $vt->acc,
-                    'is_dang_chay' => $vt->isDangChay(),
-                    'marker_color' => $vt->getMarkerColor(),
-                    'badge' => $vt->getTrangThaiBadge(),
-                    'time_ago' => $vt->getTimeAgo(),
-                    'time_record' => $vt->time_record ? date('d/m/Y H:i:s', strtotime($vt->time_record)) : '',
-                ];
-            }
-        }
+        $classified = PtxXeVungGioiHan::phanLoaiVaThongKeXe($vehicles);
 
         if ($request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
                 'title' => '<i class="fa-solid fa-map text-primary"></i> Bản đồ giám sát vị trí tất cả các xe',
                 'content' => $this->renderAjax('ban-do-tong-quan', [
-                    'vehicleData' => $vehicleData,
+                    'vehicleData' => $classified['vehicleData'],
+                    'vungList' => $classified['vungList'],
+                    'stats' => $classified['stats'],
                 ]),
                 'footer' => Html::button('Đóng lại', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"])
             ];
         }
 
         return $this->render('ban-do-tong-quan', [
-            'vehicleData' => $vehicleData,
+            'vehicleData' => $classified['vehicleData'],
+            'vungList' => $classified['vungList'],
+            'stats' => $classified['stats'],
         ]);
+    }
+
+    /**
+     * Lưu hoặc cập nhật vùng giới hạn (đa giác)
+     */
+    public function actionLuuVungGioiHan()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $request = Yii::$app->request;
+
+        $id = $request->post('id');
+        $tenVung = trim($request->post('ten_vung', ''));
+        $loaiVung = $request->post('loai_vung', 'KHUON_VIEN');
+        $mauSac = $request->post('mau_sac', '#2563eb');
+        $coords = $request->post('coords'); // Mảng [[lat, lng], ...]
+
+        if (empty($tenVung)) {
+            return [
+                'status' => 'error',
+                'message' => 'Tên vùng giới hạn không được để trống.',
+            ];
+        }
+
+        if (!is_array($coords) || count($coords) < 3) {
+            return [
+                'status' => 'error',
+                'message' => 'Đa giác phải có ít nhất 3 điểm tọa độ để tạo thành vùng khép kín.',
+            ];
+        }
+
+        // Chuẩn hóa tọa độ các đỉnh
+        $cleanCoords = [];
+        foreach ($coords as $pt) {
+            if (isset($pt[0], $pt[1]) && is_numeric($pt[0]) && is_numeric($pt[1])) {
+                $cleanCoords[] = [(float)$pt[0], (float)$pt[1]];
+            }
+        }
+
+        if (count($cleanCoords) < 3) {
+            return [
+                'status' => 'error',
+                'message' => 'Tọa độ các đỉnh của đa giác không hợp lệ.',
+            ];
+        }
+
+        if ($id) {
+            $model = PtxXeVungGioiHan::findOne($id);
+            if (!$model) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Vùng giới hạn cần sửa không tồn tại.',
+                ];
+            }
+            $model->thoi_gian_cap_nhat = date('Y-m-d H:i:s');
+        } else {
+            $model = new PtxXeVungGioiHan();
+            $model->thoi_gian_tao = date('Y-m-d H:i:s');
+            $model->trang_thai = 1;
+        }
+
+        $model->ten_vung = $tenVung;
+        $model->loai_vung = $loaiVung;
+        $model->mau_sac = $mauSac;
+        $model->setCoordinates($cleanCoords);
+
+        if ($model->save()) {
+            // Tính toán lại thống kê cho tất cả các xe
+            $vehicles = Xe::find()
+                ->where(['not', ['imei_gps' => null]])
+                ->andWhere(['!=', 'imei_gps', ''])
+                ->all();
+            $classified = PtxXeVungGioiHan::phanLoaiVaThongKeXe($vehicles);
+
+            return [
+                'status' => 'success',
+                'message' => 'Lưu vùng giới hạn "' . $model->ten_vung . '" thành công!',
+                'vung' => [
+                    'id' => $model->id,
+                    'ten_vung' => $model->ten_vung,
+                    'loai_vung' => $model->loai_vung,
+                    'mau_sac' => $model->mau_sac,
+                    'coords' => $model->getCoordinates(),
+                ],
+                'stats' => $classified['stats'],
+                'vehicleData' => $classified['vehicleData'],
+                'vungList' => $classified['vungList'],
+            ];
+        } else {
+            $errors = [];
+            foreach ($model->errors as $err) {
+                $errors[] = implode(', ', $err);
+            }
+            return [
+                'status' => 'error',
+                'message' => 'Lỗi khi lưu vùng: ' . implode('; ', $errors),
+            ];
+        }
+    }
+
+    /**
+     * Xóa vùng giới hạn
+     */
+    public function actionXoaVungGioiHan()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $id = Yii::$app->request->post('id');
+        $model = PtxXeVungGioiHan::findOne($id);
+
+        if (!$model) {
+            return ['status' => 'error', 'message' => 'Vùng không tồn tại hoặc đã bị xóa trước đó.'];
+        }
+
+        $tenVung = $model->ten_vung;
+        $model->delete();
+
+        $vehicles = Xe::find()
+            ->where(['not', ['imei_gps' => null]])
+            ->andWhere(['!=', 'imei_gps', ''])
+            ->all();
+        $classified = PtxXeVungGioiHan::phanLoaiVaThongKeXe($vehicles);
+
+        return [
+            'status' => 'success',
+            'message' => 'Đã xóa vùng giới hạn "' . $tenVung . '" thành công!',
+            'stats' => $classified['stats'],
+            'vehicleData' => $classified['vehicleData'],
+            'vungList' => $classified['vungList'],
+        ];
     }
     /**
      * cập nhật giáo viên phụ trách xe

@@ -94,6 +94,9 @@ $accText = $hasGps ? ($viTri->acc == 1 ? '<span class="badge bg-success"><i clas
                 <div id="gps-acc-badge" class="d-inline-block me-2">
                     <?= $accText ?>
                 </div>
+                <div id="gps-zone-badge" class="d-inline-block me-2">
+                    <?= $model->getTrangThaiVungBadge() ?>
+                </div>
                 <div class="d-inline-block text-muted fs-13 mt-1">
                     <i class="fa fa-clock"></i> <span id="gps-time-ago"><?= $timeAgo ?></span>
                 </div>

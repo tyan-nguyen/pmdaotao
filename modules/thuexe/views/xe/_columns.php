@@ -210,16 +210,18 @@ return [
             }
             $vt = $model->viTriGpsMoiNhat;
             $statusDot = '';
+            $zoneBadge = '';
             if ($vt) {
                 $color = $vt->isDangChay() ? '#10b981' : '#ef4444';
                 $title = $vt->isDangChay() ? 'Vị trí mới / Đang chạy (' . $vt->speed . ' km/h)' : 'Vị trí cũ / Đã dừng (' . $vt->getTimeAgo() . ')';
                 $statusDot = '<span class="rounded-circle d-inline-block me-1" style="width:9px;height:9px;background-color:' . $color . ';vertical-align:middle;" title="' . $title . '"></span> ';
+                $zoneBadge = '<div class="mt-1">' . $model->getTrangThaiVungBadge() . '</div>';
             }
             return Html::a($statusDot . '<code>' . Html::encode($model->imei_gps) . '</code>', Url::to(['xem-vi-tri-gps', 'id' => $model->id]), [
                 'role' => 'modal-remote',
                 'title' => 'Xem vị trí GPS xe ' . $model->bien_so_xe . ' trên bản đồ',
                 'data-bs-toggle' => 'tooltip',
-            ]);
+            ]) . $zoneBadge;
         },
         'format' => 'raw',
         'headerOptions' => ['style' => 'width:150px;'],
