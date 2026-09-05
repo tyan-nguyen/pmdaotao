@@ -16,7 +16,7 @@ return [
         'class' => 'kartik\grid\ActionColumn',
         'header' => '',
         /*  'template' => '{view} {lichSoSanh} {image} {update} {capNhapGiaoVien}<li><hr class="dropdown-divider"></li>  {lichXeGv} {lichXeThue} {lichXeLive} {lichTrongSan} <li><hr class="dropdown-divider"></li>{delete}', */
-        'template' => '{view} {xemViTriGps} {lichSoSanh} {image} {update}<li><hr class="dropdown-divider"></li>  {lichXeGv} {lichXeThue} {lichXeLive} {lichTrongSan} <li><hr class="dropdown-divider"></li>{delete}',
+        'template' => '{view} {lichSoSanh} {image} {update}<li><hr class="dropdown-divider"></li>  {lichXeGv} {lichXeThue} {lichXeLive} {lichTrongSan} <li><hr class="dropdown-divider"></li>{delete}',
         'dropdown' => true,
         'dropdownOptions' => ['class' => 'float-right'],
         'dropdownButton' => [
@@ -26,9 +26,9 @@ return [
         'vAlign' => 'middle',
         'width' => '20px',
         'urlCreator' => function ($action, $model, $key, $index) {
-            if ($action === 'xemViTriGps') {
+            /* if ($action === 'xemViTriGps') {
                 return Url::to(['xem-vi-tri-gps', 'id' => $key]);
-            }
+            } */
             if ($action === 'lichXeGv') {
                 return Url::to(['lich-xe/lich-xe-gv', 'idxe' => $key, 'menu' => 'dt3']);
             }
@@ -62,7 +62,7 @@ return [
                     'data-bs-toggle' => 'tooltip',
                 ]);
             },
-            'xemViTriGps' => function ($url, $model, $key) {
+            /* 'xemViTriGps' => function ($url, $model, $key) {
                 return Html::a('<i class="fa-solid fa-map-location-dot text-primary"></i> Xem vị trí GPS', $url, [
                     'title' => 'Xem vị trí GPS trên bản đồ',
                     'role' => 'modal-remote',
@@ -70,7 +70,7 @@ return [
                     'data-bs-placement' => 'top',
                     'data-bs-toggle' => 'tooltip',
                 ]);
-            },
+            }, */
             'lichXeGv' => function ($url, $model, $key) {
                 return Html::a('<i class="fa-solid fa-list-check"></i> Xem lịch dạy', $url, [
                     'title' => 'Lịch dạy của xe',
