@@ -14,6 +14,7 @@ use yii\filters\AccessControl;
 use yii\web\UploadedFile;
 use app\modules\thuexe\models\HinhXe;
 use app\custom\CustomFunc;
+use app\models\PtxXeVitriGps;
 
 /**
  * XeController implements the CRUD actions for Xe model.
@@ -61,6 +62,243 @@ class XeController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
+     * Lấy vị trí GPS của các xe từ MidApiService và lưu vào bảng ptx_xe_vi_tri_gps
+     */
+    public function actionLayViTriGps()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        try {
+            // 1. Gọi API MID để lấy danh sách thiết bị GPS realtime
+            $gpsResult = Yii::$app->midApi->fetchRealtimeGps();
+            $devices = $gpsResult['data'] ?? [];
+
+            if (empty($devices) || !is_array($devices)) {
+                return [
+                    'status' => 'warning',
+                    'title' => 'Thông báo',
+                    'message' => 'API MID không trả về dữ liệu thiết bị GPS nào.',
+                ];
+            }
+
+            // 2. Lấy danh sách tất cả xe có cấu hình imei_gps
+            $vehicles = Xe::find()
+                ->where(['not', ['imei_gps' => null]])
+                ->andWhere(['!=', 'imei_gps', ''])
+                ->all();
+
+            if (empty($vehicles)) {
+                return [
+                    'status' => 'warning',
+                    'title' => 'Chưa có cấu hình IMEI',
+                    'message' => 'Hiện chưa có xe nào được cấu hình Số IMEI GPS trong danh sách xe.',
+                ];
+            }
+
+            $updatedCount = 0;
+            $updatedList = [];
+            $now = date('Y-m-d H:i:s');
+
+            foreach ($vehicles as $xe) {
+                $imei = trim($xe->imei_gps);
+                if (isset($devices[$imei])) {
+                    $item = $devices[$imei];
+                    $viTri = new PtxXeVitriGps();
+                    $viTri->id_xe = $xe->id;
+                    $viTri->imei = $imei;
+                    $viTri->latitude = (float)($item['latitude'] ?? 0);
+                    $viTri->longitude = (float)($item['longitude'] ?? 0);
+                    $viTri->speed = isset($item['speed']) ? (float)$item['speed'] : 0;
+                    $viTri->rotation = isset($item['rotation']) ? (float)$item['rotation'] : 0;
+                    $viTri->acc = isset($item['acc']) ? (int)$item['acc'] : 0;
+                    $viTri->status = isset($item['status']) ? (int)$item['status'] : null;
+                    $viTri->status_device = isset($item['status_device']) ? (int)$item['status_device'] : null;
+                    $viTri->signal_quality = isset($item['signal_quality']) ? (int)$item['signal_quality'] : null;
+                    $viTri->fuel_lit = (!empty($item['fuel_lit']) && is_numeric($item['fuel_lit'])) ? (float)$item['fuel_lit'] : null;
+                    $viTri->fuel_percent = (!empty($item['fuel_percent']) && is_numeric($item['fuel_percent'])) ? (float)$item['fuel_percent'] : null;
+
+                    if (!empty($item['time_record']) && is_numeric($item['time_record'])) {
+                        $viTri->time_record = date('Y-m-d H:i:s', (int)$item['time_record']);
+                    } elseif (!empty($item['time']) && is_numeric($item['time'])) {
+                        $viTri->time_record = date('Y-m-d H:i:s', (int)$item['time']);
+                    } else {
+                        $viTri->time_record = $now;
+                    }
+
+                    $viTri->thoi_gian_tao = $now;
+                    $viTri->du_lieu_json = json_encode($item, JSON_UNESCAPED_UNICODE);
+
+                    if ($viTri->save(false)) {
+                        $updatedCount++;
+                        $updatedList[] = $xe->bien_so_xe;
+                    }
+                }
+            }
+
+            return [
+                'status' => 'success',
+                'title' => 'Thành công',
+                'message' => "Đã cập nhật vị trí GPS cho {$updatedCount}/" . count($vehicles) . " xe (" . implode(', ', $updatedList) . ").",
+                'forceReload' => '#crud-datatable-pjax',
+            ];
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'title' => 'Lỗi kết nối GPS',
+                'message' => 'Lỗi khi gọi API MID: ' . $e->getMessage(),
+            ];
+        }
+    }
+
+    /**
+     * Xem vị trí GPS của xe trên bản đồ popup
+     * @param int $id ID xe
+     */
+    public function actionXemViTriGps($id)
+    {
+        $request = Yii::$app->request;
+        $model = $this->findModel($id);
+
+        // Nếu yêu cầu refresh trực tiếp từ popup
+        if ($request->get('refresh')) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            if (!empty($model->imei_gps)) {
+                try {
+                    $gpsResult = Yii::$app->midApi->fetchRealtimeGps();
+                    $devices = $gpsResult['data'] ?? [];
+                    $imei = trim($model->imei_gps);
+                    if (isset($devices[$imei])) {
+                        $item = $devices[$imei];
+                        $now = date('Y-m-d H:i:s');
+                        $viTri = new PtxXeVitriGps();
+                        $viTri->id_xe = $model->id;
+                        $viTri->imei = $imei;
+                        $viTri->latitude = (float)($item['latitude'] ?? 0);
+                        $viTri->longitude = (float)($item['longitude'] ?? 0);
+                        $viTri->speed = isset($item['speed']) ? (float)$item['speed'] : 0;
+                        $viTri->rotation = isset($item['rotation']) ? (float)$item['rotation'] : 0;
+                        $viTri->acc = isset($item['acc']) ? (int)$item['acc'] : 0;
+                        $viTri->status = isset($item['status']) ? (int)$item['status'] : null;
+                        $viTri->status_device = isset($item['status_device']) ? (int)$item['status_device'] : null;
+                        $viTri->signal_quality = isset($item['signal_quality']) ? (int)$item['signal_quality'] : null;
+                        $viTri->fuel_lit = (!empty($item['fuel_lit']) && is_numeric($item['fuel_lit'])) ? (float)$item['fuel_lit'] : null;
+                        $viTri->fuel_percent = (!empty($item['fuel_percent']) && is_numeric($item['fuel_percent'])) ? (float)$item['fuel_percent'] : null;
+
+                        if (!empty($item['time_record']) && is_numeric($item['time_record'])) {
+                            $viTri->time_record = date('Y-m-d H:i:s', (int)$item['time_record']);
+                        } elseif (!empty($item['time']) && is_numeric($item['time'])) {
+                            $viTri->time_record = date('Y-m-d H:i:s', (int)$item['time']);
+                        } else {
+                            $viTri->time_record = $now;
+                        }
+
+                        $viTri->thoi_gian_tao = $now;
+                        $viTri->du_lieu_json = json_encode($item, JSON_UNESCAPED_UNICODE);
+                        $viTri->save(false);
+
+                        return [
+                            'success' => true,
+                            'message' => 'Đã cập nhật vị trí GPS mới nhất!',
+                            'data' => [
+                                'lat' => (float)$viTri->latitude,
+                                'lng' => (float)$viTri->longitude,
+                                'speed' => $viTri->speed,
+                                'rotation' => $viTri->rotation,
+                                'acc' => $viTri->acc,
+                                'time_record' => $viTri->time_record ? date('d/m/Y H:i:s', strtotime($viTri->time_record)) : '',
+                                'thoi_gian_tao' => date('d/m/Y H:i:s', strtotime($viTri->thoi_gian_tao)),
+                                'is_dang_chay' => $viTri->isDangChay(),
+                                'marker_color' => $viTri->getMarkerColor(),
+                                'badge' => $viTri->getTrangThaiBadge(),
+                                'time_ago' => $viTri->getTimeAgo(),
+                            ]
+                        ];
+                    } else {
+                        return ['success' => false, 'message' => "Không tìm thấy dữ liệu GPS từ thiết bị IMEI {$imei} trên MID."];
+                    }
+                } catch (\Exception $e) {
+                    return ['success' => false, 'message' => 'Lỗi kết nối API MID: ' . $e->getMessage()];
+                }
+            }
+            return ['success' => false, 'message' => 'Xe chưa được cấu hình IMEI GPS.'];
+        }
+
+        $viTriMoiNhat = $model->viTriGpsMoiNhat;
+
+        if ($request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return [
+                'title' => '<i class="fa-solid fa-map-location-dot text-primary"></i> Vị trí GPS - Xe ' . $model->bien_so_xe . ($model->hieu_xe ? ' (' . $model->hieu_xe . ')' : ''),
+                'content' => $this->renderAjax('xem-vi-tri-gps', [
+                    'model' => $model,
+                    'viTri' => $viTriMoiNhat,
+                ]),
+                'footer' => Html::button('<i class="fa fa-sync"></i> Cập nhật vị trí', [
+                    'class' => 'btn btn-success btn-refresh-gps',
+                    'data-id' => $model->id,
+                    'title' => 'Lấy vị trí GPS mới nhất từ thiết bị'
+                ]) . '&nbsp;' .
+                Html::button('Đóng lại', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"])
+            ];
+        }
+
+        return $this->render('xem-vi-tri-gps', [
+            'model' => $model,
+            'viTri' => $viTriMoiNhat,
+        ]);
+    }
+
+    /**
+     * Xem bản đồ tổng quan toàn bộ xe
+     */
+    public function actionBanDoTongQuan()
+    {
+        $request = Yii::$app->request;
+        $vehicles = Xe::find()
+            ->where(['not', ['imei_gps' => null]])
+            ->andWhere(['!=', 'imei_gps', ''])
+            ->all();
+
+        $vehicleData = [];
+        foreach ($vehicles as $xe) {
+            $vt = $xe->viTriGpsMoiNhat;
+            if ($vt && $vt->latitude && $vt->longitude) {
+                $vehicleData[] = [
+                    'id' => $xe->id,
+                    'bien_so_xe' => $xe->bien_so_xe,
+                    'hieu_xe' => $xe->hieu_xe,
+                    'ma_so' => $xe->ma_so,
+                    'imei' => $xe->imei_gps,
+                    'lat' => (float)$vt->latitude,
+                    'lng' => (float)$vt->longitude,
+                    'speed' => $vt->speed,
+                    'rotation' => $vt->rotation,
+                    'acc' => $vt->acc,
+                    'is_dang_chay' => $vt->isDangChay(),
+                    'marker_color' => $vt->getMarkerColor(),
+                    'badge' => $vt->getTrangThaiBadge(),
+                    'time_ago' => $vt->getTimeAgo(),
+                    'time_record' => $vt->time_record ? date('d/m/Y H:i:s', strtotime($vt->time_record)) : '',
+                ];
+            }
+        }
+
+        if ($request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return [
+                'title' => '<i class="fa-solid fa-map text-primary"></i> Bản đồ giám sát vị trí tất cả các xe',
+                'content' => $this->renderAjax('ban-do-tong-quan', [
+                    'vehicleData' => $vehicleData,
+                ]),
+                'footer' => Html::button('Đóng lại', ['class' => 'btn btn-secondary pull-left', 'data-bs-dismiss' => "modal"])
+            ];
+        }
+
+        return $this->render('ban-do-tong-quan', [
+            'vehicleData' => $vehicleData,
         ]);
     }
     /**
