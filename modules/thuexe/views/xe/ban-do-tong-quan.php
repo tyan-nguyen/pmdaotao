@@ -389,9 +389,9 @@ $statsJson = json_encode($stats, JSON_UNESCAPED_UNICODE);
                 var color = vung.mau_sac || '#2563eb';
                 var poly = L.polygon(vung.coords, {
                     color: color,
-                    fillColor: color,
-                    fillOpacity: 0.16,
-                    weight: 2,
+                    fill: false,
+                    fillOpacity: 0,
+                    weight: 2.5,
                     dashArray: '6, 6'
                 }).addTo(map);
 
@@ -557,10 +557,10 @@ $statsJson = json_encode($stats, JSON_UNESCAPED_UNICODE);
         var c = $(this).val();
         $('#zone-color-code').text(c);
         if (tempPolygon) {
-            tempPolygon.setStyle({ color: c, fillColor: c });
+            tempPolygon.setStyle({ color: c, fill: false, fillOpacity: 0 });
         }
         if (drawingPolygonPreview) {
-            drawingPolygonPreview.setStyle({ color: c, fillColor: c });
+            drawingPolygonPreview.setStyle({ color: c, fill: false, fillOpacity: 0 });
         }
         if (drawingPolyline) {
             drawingPolyline.setStyle({ color: c });
@@ -677,8 +677,8 @@ $statsJson = json_encode($stats, JSON_UNESCAPED_UNICODE);
         var color = $('#input-zone-color').val() || '#2563eb';
         tempPolygon = L.polygon(tempCoords, {
             color: color,
-            fillColor: color,
-            fillOpacity: 0.25,
+            fill: false,
+            fillOpacity: 0,
             weight: 3,
             dashArray: '4, 6'
         }).addTo(map);
@@ -823,9 +823,9 @@ $statsJson = json_encode($stats, JSON_UNESCAPED_UNICODE);
             if (!drawingPolygonPreview) {
                 drawingPolygonPreview = L.polygon(tempCoords, {
                     color: color,
-                    fillColor: color,
-                    fillOpacity: 0.2,
-                    weight: 2,
+                    fill: false,
+                    fillOpacity: 0,
+                    weight: 2.5,
                     dashArray: '4, 4'
                 }).addTo(map);
             } else {
