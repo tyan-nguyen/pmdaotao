@@ -284,13 +284,24 @@ $accText = $hasGps ? ($viTri->acc == 1 ? '<span class="badge bg-success"><i clas
                         marker.bindPopup(newPopup).openPopup();
                         map.flyTo([newLat, newLng], 17, { duration: 1.2 });
                     }
+                    if (typeof showNotif === 'function') {
+                        showNotif(res.message || 'Cập nhật vị trí GPS thành công!');
+                    }
                 } else {
-                    alert(res.message || 'Không thể lấy vị trí xe!');
+                    if (typeof showError === 'function') {
+                        showError(res.message || 'Không thể lấy vị trí xe!');
+                    } else {
+                        alert(res.message || 'Không thể lấy vị trí xe!');
+                    }
                 }
             },
             error: function(xhr) {
                 $btn.prop('disabled', false).html(origHtml);
-                alert('Lỗi kết nối máy chủ hoặc API MID.');
+                if (typeof showError === 'function') {
+                    showError('Lỗi kết nối máy chủ hoặc API MID.');
+                } else {
+                    alert('Lỗi kết nối máy chủ hoặc API MID.');
+                }
             }
         });
     });

@@ -324,17 +324,33 @@ $(document).on('click', '.btn-lay-vi-tri-gps', function(e) {
         success: function(res) {
             $btn.prop('disabled', false).html(origHtml);
             if (res.status === 'success') {
-                alert(res.message);
+                if (typeof showNotif === 'function') {
+                    showNotif(res.message);
+                } else {
+                    alert(res.message);
+                }
                 $.pjax.reload({container: '#myGrid', timeout: 8000});
             } else if (res.status === 'warning') {
-                alert(res.message);
+                if (typeof showNotif === 'function') {
+                    showNotif(res.message);
+                } else {
+                    alert(res.message);
+                }
             } else {
-                alert(res.message || 'Có lỗi xảy ra khi lấy vị trí GPS từ MID.');
+                if (typeof showError === 'function') {
+                    showError(res.message || 'Có lỗi xảy ra khi lấy vị trí GPS từ MID.');
+                } else {
+                    alert(res.message || 'Có lỗi xảy ra khi lấy vị trí GPS từ MID.');
+                }
             }
         },
         error: function(xhr) {
             $btn.prop('disabled', false).html(origHtml);
-            alert('Lỗi kết nối máy chủ khi gọi API lấy vị trí GPS.');
+            if (typeof showError === 'function') {
+                showError('Lỗi kết nối máy chủ khi gọi API lấy vị trí GPS.');
+            } else {
+                alert('Lỗi kết nối máy chủ khi gọi API lấy vị trí GPS.');
+            }
         }
     });
 });
