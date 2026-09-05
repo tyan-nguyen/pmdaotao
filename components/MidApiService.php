@@ -198,4 +198,15 @@ class MidApiService extends Component
         Yii::error("Lỗi lấy GPS: " . $errMsg . " | Data: " . json_encode($response->data));
         throw new \Exception($errMsg);
     }
+
+    /**
+     * Tự động đăng nhập và lấy dữ liệu GPS Realtime
+     * @return array
+     * @throws \Exception
+     */
+    public function fetchRealtimeGps()
+    {
+        $token = $this->login();
+        return $this->getRealtimeGps($token);
+    }
 }

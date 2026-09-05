@@ -11,6 +11,9 @@ use yii\helpers\Html;
 // Giả sử $id là ID của xe đang xem
 $hinhXeList = HinhXe::find()->where(['id_xe' => $model->id])->all();
 
+// Preload Leaflet map library
+$this->registerCssFile('https://unpkg.com/leaflet@1.9.4/dist/leaflet.css', ['position' => \yii\web\View::POS_HEAD]);
+$this->registerJsFile('https://unpkg.com/leaflet@1.9.4/dist/leaflet.js', ['position' => \yii\web\View::POS_HEAD]);
 ?>
 <div class="hv-hoc-vien-view">
 
@@ -39,9 +42,17 @@ $hinhXeList = HinhXe::find()->where(['id_xe' => $model->id])->all();
                             </div>
                         </div>
 
-                        <p><strong>Màu sắc:</strong> <?= $model->mau_sac ?>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <strong>Số IMEI GPS:</strong> <?= $model->imei_gps ? $model->imei_gps : '<span class="text-muted">Chưa có</span>' ?>
+                        <p style="display: flex; justify-content: space-between; align-items: center;">
+                            <span>
+                                <strong>Màu sắc:</strong> <?= $model->mau_sac ?>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <strong>Số IMEI GPS:</strong> <?= $model->imei_gps ? Html::encode($model->imei_gps) : 'Chưa có' ?>
+                            </span>
+                            <?php if ($model->imei_gps): ?>
+                                <span>
+                                    <?= Html::a('<i class="fa fa-map-marker-alt"></i> Xem bản đồ', ['xem-vi-tri-gps', 'id' => $model->id], ['role' => 'modal-remote', 'class' => 'btn btn-outline-primary btn-sm']) ?>
+                                </span>
+                            <?php endif; ?>
                         </p>
                         <p><strong>Tình trạng xe:</strong> <?= $model->tinh_trang_xe ?>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

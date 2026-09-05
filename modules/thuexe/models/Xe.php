@@ -13,6 +13,7 @@ use app\modules\daotao\models\KeHoach;
 use app\modules\daotao\models\TietHoc;
 use app\modules\demxe\models\DemXe;
 use app\modules\taisan\models\PhieuDeNghi;
+use app\models\PtxXeVitriGps;
 
 /**
  * This is the model class for table "ptx_xe".
@@ -735,5 +736,23 @@ class Xe extends \app\models\PtxXe
 
 
         return $arr;
+    }
+
+    /**
+     * Gets query for all GPS positions of this vehicle
+     * @return \yii\db\ActiveQuery
+     */
+    public function getViTriGpsList()
+    {
+        return $this->hasMany(PtxXeVitriGps::class, ['id_xe' => 'id'])->orderBy(['id' => SORT_DESC]);
+    }
+
+    /**
+     * Gets query for the latest GPS position of this vehicle
+     * @return \yii\db\ActiveQuery
+     */
+    public function getViTriGpsMoiNhat()
+    {
+        return $this->hasOne(PtxXeVitriGps::class, ['id_xe' => 'id'])->orderBy(['id' => SORT_DESC]);
     }
 }

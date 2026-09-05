@@ -3,6 +3,7 @@ use yii\bootstrap5\Html;
 use yii\bootstrap5\Modal;
 use kartik\grid\GridView;
 use yii\widgets\Pjax;
+use yii\helpers\Url;
 
 
 /* @var $this yii\web\View */
@@ -14,6 +15,10 @@ $this->params['breadcrumbs'][] = $this->title;
 //CrudAsset::register($this);
 Yii::$app->params['showSearch'] = true;
 Yii::$app->params['showExport'] = true;
+
+// Preload Leaflet map library
+$this->registerCssFile('https://unpkg.com/leaflet@1.9.4/dist/leaflet.css', ['position' => \yii\web\View::POS_HEAD]);
+$this->registerJsFile('https://unpkg.com/leaflet@1.9.4/dist/leaflet.js', ['position' => \yii\web\View::POS_HEAD]);
 ?>
 
 <style>
@@ -93,8 +98,17 @@ Yii::$app->params['showExport'] = true;
             'columns' => require(__DIR__.'/_columns.php'),
             'toolbar'=> [
                 ['content'=>
+                    Html::button('<i class="fa-solid fa-satellite-dish"></i> Lấy vị trí GPS', [
+                        'class' => 'btn btn-success btn-sm btn-lay-vi-tri-gps me-1',
+                        'title' => 'Kết nối API MID để lấy và lưu vị trí GPS mới nhất cho các xe',
+                    ]) .
+                    Html::a('<i class="fa-solid fa-map-marked-alt"></i> Bản đồ xe', ['ban-do-tong-quan'], [
+                        'role' => 'modal-remote',
+                        'class' => 'btn btn-primary btn-sm me-1',
+                        'title' => 'Xem bản đồ vị trí tất cả các xe',
+                    ]) .
                     '
-                    <div class="dropdown">
+                    <div class="dropdown d-inline-block">
 						<button aria-expanded="false" aria-haspopup="true" class="btn dropdown-toggle" data-bs-toggle="dropdown" type="button"><i class="fa fa-navicon"></i></button>
 						<div class="dropdown-menu tx-13" style="">
 							<h6 class="dropdown-header tx-uppercase tx-11 tx-bold bg-info tx-spacing-1">
@@ -105,6 +119,12 @@ Yii::$app->params['showExport'] = true;
                     .
                     Html::a('<i class="fas fa fa-sync" aria-hidden="true"></i> Tải lại', [''],
                         ['data-pjax'=>1, 'class'=>'dropdown-item', 'title'=>'Tải lại'])
+                    .
+                    Html::a('<i class="fa-solid fa-satellite-dish text-success"></i> Lấy vị trí GPS', ['#'],
+                        ['class'=>'dropdown-item btn-lay-vi-tri-gps', 'title'=>'Lấy vị trí GPS từ MID'])
+                    .
+                    Html::a('<i class="fa-solid fa-map-marked-alt text-primary"></i> Bản đồ xe', ['ban-do-tong-quan'],
+                        ['role'=>'modal-remote', 'class'=>'dropdown-item', 'title'=>'Xem bản đồ toàn bộ xe'])
                     .
                     Html::a('<i class="fas fa fa-trash" aria-hidden="true"></i>&nbsp; Xóa danh sách',
                         ["bulkdelete"],
@@ -288,6 +308,35 @@ $(document).on('click', '.btn-make-primary', function () {
             },
         });
     }
+});
+
+// Xử lý nút Lấy vị trí GPS từ MID
+$(document).on('click', '.btn-lay-vi-tri-gps', function(e) {
+    e.preventDefault();
+    var $btn = $(this);
+    var origHtml = $btn.html();
+    $btn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Đang lấy GPS...');
+
+    $.ajax({
+        url: '<?= \yii\helpers\Url::to(['lay-vi-tri-gps']) ?>',
+        type: 'POST',
+        dataType: 'json',
+        success: function(res) {
+            $btn.prop('disabled', false).html(origHtml);
+            if (res.status === 'success') {
+                alert(res.message);
+                $.pjax.reload({container: '#myGrid', timeout: 8000});
+            } else if (res.status === 'warning') {
+                alert(res.message);
+            } else {
+                alert(res.message || 'Có lỗi xảy ra khi lấy vị trí GPS từ MID.');
+            }
+        },
+        error: function(xhr) {
+            $btn.prop('disabled', false).html(origHtml);
+            alert('Lỗi kết nối máy chủ khi gọi API lấy vị trí GPS.');
+        }
+    });
 });
 
 </script>

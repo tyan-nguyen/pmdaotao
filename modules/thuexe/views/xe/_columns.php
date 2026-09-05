@@ -16,7 +16,7 @@ return [
         'class' => 'kartik\grid\ActionColumn',
         'header' => '',
         /*  'template' => '{view} {lichSoSanh} {image} {update} {capNhapGiaoVien}<li><hr class="dropdown-divider"></li>  {lichXeGv} {lichXeThue} {lichXeLive} {lichTrongSan} <li><hr class="dropdown-divider"></li>{delete}', */
-        'template' => '{view} {lichSoSanh} {image} {update}<li><hr class="dropdown-divider"></li>  {lichXeGv} {lichXeThue} {lichXeLive} {lichTrongSan} <li><hr class="dropdown-divider"></li>{delete}',
+        'template' => '{view} {xemViTriGps} {lichSoSanh} {image} {update}<li><hr class="dropdown-divider"></li>  {lichXeGv} {lichXeThue} {lichXeLive} {lichTrongSan} <li><hr class="dropdown-divider"></li>{delete}',
         'dropdown' => true,
         'dropdownOptions' => ['class' => 'float-right'],
         'dropdownButton' => [
@@ -26,6 +26,9 @@ return [
         'vAlign' => 'middle',
         'width' => '20px',
         'urlCreator' => function ($action, $model, $key, $index) {
+            if ($action === 'xemViTriGps') {
+                return Url::to(['xem-vi-tri-gps', 'id' => $key]);
+            }
             if ($action === 'lichXeGv') {
                 return Url::to(['lich-xe/lich-xe-gv', 'idxe' => $key, 'menu' => 'dt3']);
             }
@@ -53,6 +56,15 @@ return [
             'view' => function ($url, $model, $key) {
                 return Html::a('<i class="fa-solid fa-eye"></i> Xem chi tiết', $url, [
                     'title' => 'Xem chi tiết',
+                    'role' => 'modal-remote',
+                    'class' => 'btn ripple btn-primary dropdown-item',
+                    'data-bs-placement' => 'top',
+                    'data-bs-toggle' => 'tooltip',
+                ]);
+            },
+            'xemViTriGps' => function ($url, $model, $key) {
+                return Html::a('<i class="fa-solid fa-map-location-dot text-primary"></i> Xem vị trí GPS', $url, [
+                    'title' => 'Xem vị trí GPS trên bản đồ',
                     'role' => 'modal-remote',
                     'class' => 'btn ripple btn-primary dropdown-item',
                     'data-bs-placement' => 'top',
@@ -192,8 +204,26 @@ return [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'imei_gps',
         'label' => 'IMEI GPS',
-        'headerOptions' => ['style' => 'width:130px;'],
-        'contentOptions' => ['style' => 'min-width:130px;text-align:center'],
+        'value' => function ($model) {
+            if (empty($model->imei_gps)) {
+                return '<span class="text-muted">-</span>';
+            }
+            $vt = $model->viTriGpsMoiNhat;
+            $statusDot = '';
+            if ($vt) {
+                $color = $vt->isDangChay() ? '#10b981' : '#ef4444';
+                $title = $vt->isDangChay() ? 'Vị trí mới / Đang chạy (' . $vt->speed . ' km/h)' : 'Vị trí cũ / Đã dừng (' . $vt->getTimeAgo() . ')';
+                $statusDot = '<span class="rounded-circle d-inline-block me-1" style="width:9px;height:9px;background-color:' . $color . ';vertical-align:middle;" title="' . $title . '"></span> ';
+            }
+            return Html::a($statusDot . '<code>' . Html::encode($model->imei_gps) . '</code>', Url::to(['xem-vi-tri-gps', 'id' => $model->id]), [
+                'role' => 'modal-remote',
+                'title' => 'Xem vị trí GPS xe ' . $model->bien_so_xe . ' trên bản đồ',
+                'data-bs-toggle' => 'tooltip',
+            ]);
+        },
+        'format' => 'raw',
+        'headerOptions' => ['style' => 'width:150px;'],
+        'contentOptions' => ['style' => 'min-width:150px;text-align:center'],
     ],
     [
         'class' => '\kartik\grid\DataColumn',
