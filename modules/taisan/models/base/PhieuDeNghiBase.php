@@ -96,11 +96,13 @@ class PhieuDeNghiBase extends CpPhieuDeNghi
     //loại yêu cầu cho xe (bảo dưởng/sửa chữa)
     public const LOAISUAXE_BAODUONG = 'BAO_DUONG';
     public const LOAISUAXE_SUACHUA = 'SUA_CHUA';
+    public const LOAISUAXE_LAPDAT = 'LAP_DAT';
     public static function getLoaiSuaXeList()
     {
         return [
             self::LOAISUAXE_BAODUONG => 'Bảo dưỡng',
             self::LOAISUAXE_SUACHUA => 'Sửa chữa',
+            self::LOAISUAXE_LAPDAT => 'Lắp đặt',
         ];
     }
     public static function getLoaiSuaXeLabel($loai)
@@ -109,6 +111,7 @@ class PhieuDeNghiBase extends CpPhieuDeNghi
         $class = [
             self::LOAISUAXE_BAODUONG => 'bg-primary',
             self::LOAISUAXE_SUACHUA => 'bg-warning',
+            self::LOAISUAXE_LAPDAT => 'bg-info',
         ];
 
         $label = $list[$loai] ?? 'Chưa phân loại';
