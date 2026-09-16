@@ -25,6 +25,9 @@ $model->ngay_het_han_cccd = CustomFunc::convertYMDToDMY($model->ngay_het_han_ccc
 $model->ngay_cap_cmnd = CustomFunc::convertYMDToDMY($model->ngay_cap_cmnd);
 $model->ngay_nhan_ao = CustomFunc::convertYMDToDMY($model->ngay_nhan_ao);
 $model->ngay_nhan_tai_lieu = CustomFunc::convertYMDToDMY($model->ngay_nhan_tai_lieu);
+$model->ngay_tt_gplx = CustomFunc::convertYMDToDMY($model->ngay_tt_gplx);
+$model->ngay_cap_gplx = CustomFunc::convertYMDToDMY($model->ngay_cap_gplx);
+$model->ngay_hh_gplx = CustomFunc::convertYMDToDMY($model->ngay_hh_gplx);
 
 if ($model->isNewRecord) {
     $user = User::getCurrentUser();
@@ -218,6 +221,102 @@ if ($model->id_nhan_ho_so_ho > 0) {
             ) ?>
         </div>
 
+    </div>
+    <div class="row">
+        <div class="col-lg-3 col-md-4">
+            <?= $form->field($model, 'hang_gplx_da_co')->dropDownList(
+                [
+                    'Mới' => [
+                        'A.01' => 'A.01',
+                        'A.02' => 'A.02',
+                        'A.03' => 'A.03',
+                        'A.04' => 'A.04',
+                        'A1m' => 'A1m',
+                        'Am' => 'Am',
+                        'B' => 'B',
+                        'B.01' => 'B.01',
+                        'B.02' => 'B.02',
+                        'B.03' => 'B.03',
+                        'B.04' => 'B.04',
+                        'B.05' => 'B.05',
+                        'B1m' => 'B1m',
+                        'BE' => 'BE',
+                        'C1' => 'C1',
+                        'C1E' => 'C1E',
+                        'CE' => 'CE',
+                        'Cm' => 'Cm',
+                        'D1' => 'D1',
+                        'D1E' => 'D1E',
+                        'D2' => 'D2',
+                        'D2E' => 'D2E',
+                        'DE' => 'DE',
+                        'Dm' => 'Dm',
+                    ],
+                    'Cũ' => [
+                        'A1' => 'A1',
+                        'A2' => 'A2',
+                        'A3' => 'A3',
+                        'B1' => 'B1',
+                        'B11' => 'B11',
+                        'B12' => 'B12',
+                        'B13' => 'B13',
+                        'B14' => 'B14',
+                        'B15' => 'B15',
+                        'B2' => 'B2',
+                        'C' => 'C',
+                        'D' => 'D',
+                        'E' => 'E',
+                        'FB2' => 'FB2',
+                        'FC' => 'FC',
+                        'FD' => 'FD',
+                        'FE' => 'FE',
+                    ]
+                ],
+                ['prompt' => 'Hạng GPLX đã có...']
+            ) ?>
+        </div>
+        <div class="col-lg-3 col-md-4">
+            <?= $form->field($model, 'so_gplx_da_co')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-lg-3 col-md-4">
+            <?= $form->field($model, 'ngay_cap_gplx')->widget(DatePicker::classname(), [
+                'options' => ['placeholder' => 'Chọn ngày  ...', 'autocomplete' => 'off'],
+                'pluginOptions' => [
+                    'autoclose' => true,
+                    'format' => 'dd/mm/yyyy',
+                    'todayHighlight' => true,
+                    'todayBtn' => true
+                ]
+            ]); ?>
+        </div>
+        <div class="col-lg-3 col-md-4">
+            <?= $form->field($model, 'ngay_hh_gplx')->widget(DatePicker::classname(), [
+                'options' => ['placeholder' => 'Chọn ngày  ...', 'autocomplete' => 'off'],
+                'pluginOptions' => [
+                    'autoclose' => true,
+                    'format' => 'dd/mm/yyyy',
+                    'todayHighlight' => true,
+                    'todayBtn' => true
+                ]
+            ]); ?>
+        </div>
+        <div class="col-lg-3 col-md-4">
+            <?= $form->field($model, 'ngay_tt_gplx')->widget(DatePicker::classname(), [
+                'options' => ['placeholder' => 'Chọn ngày  ...', 'autocomplete' => 'off'],
+                'pluginOptions' => [
+                    'autoclose' => true,
+                    'format' => 'dd/mm/yyyy',
+                    'todayHighlight' => true,
+                    'todayBtn' => true
+                ]
+            ]); ?>
+        </div>
+        <div class="col-lg-3 col-md-4">
+            <?= $form->field($model, 'don_vi_cap_gplx')->dropDownList(
+                DangKyHv::getDmNoiCapGplx(),
+                ['prompt' => 'Chọn nơi cấp...']
+            ) ?>
+        </div>
     </div>
     <?php CardWidget::end() ?>
 

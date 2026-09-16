@@ -819,12 +819,12 @@ class HvHoSoController extends Controller
             //$chiTietThuongTru = method_exists($model, 'getDiaChiXaTinhText') ? $model->getDiaChiXaTinhText() : '';
             $chiTietThuongTru = '';
             $soDienThoai = $model->so_dien_thoai ?? '';
-            $soGplx = '';
-            $hangGplx = '';
-            $ngayTtGplx = '';
-            $ngayCapGplx = '';
-            $ngayHhGplx = '';
-            $donViCapGplx = '';
+            $soGplx = $model->so_gplx_da_co ?? '';
+            $hangGplx = $model->hang_gplx_da_co ?? '';
+            $ngayTtGplx = !empty($model->ngay_tt_gplx) ? CustomFunc::convertYMDToDMY($model->ngay_tt_gplx) : '';
+            $ngayCapGplx = !empty($model->ngay_cap_gplx) ? CustomFunc::convertYMDToDMY($model->ngay_cap_gplx) : '';
+            $ngayHhGplx = !empty($model->ngay_hh_gplx) ? CustomFunc::convertYMDToDMY($model->ngay_hh_gplx) : '';
+            $donViCapGplx = $model->don_vi_cap_gplx ?? '';
             $ghiChu = '';
 
             $sheet->setCellValue('A' . $row, $stt);

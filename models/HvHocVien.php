@@ -59,6 +59,12 @@ use Yii;
  * @property string|null $ngay_nhap_ho_so_ho
  * @property string|null $ngay_cap_cmnd
  * @property string|null $noi_cap_cmnd
+ * @property string|null $so_gplx_da_co
+ * @property string|null $hang_gplx_da_co
+ * @property string|null $ngay_tt_gplx
+ * @property string|null $ngay_cap_gplx
+ * @property string|null $ngay_hh_gplx
+ * @property string|null $don_vi_cap_gplx
  *
  * @property GdGvHv[] $gdGvHvs
  * @property HvHangDaoTao $hang
@@ -88,10 +94,10 @@ class HvHocVien extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_khoa_hoc', 'id_hoc_phi', 'so_cccd', 'ngay_het_han_cccd', 'nguoi_tao', 'thoi_gian_tao', 'gioi_tinh', 'dia_chi', 'dia_chi_chi_tiet', 'id_xa', 'id_tinh', 'ngay_sinh', 'nguoi_lap_phieu', 'ma_so_phieu', 'so_lan_in_phieu', 'check_hoc_phi', 'id_nhom', 'loai_dang_ky', 'noi_dang_ky', 'nguoi_duyet', 'trang_thai_duyet', 'ghi_chu', 'thoi_gian_hoan_thanh_ho_so', 'co_ho_so_thue', 'da_nhan_ao', 'size', 'ngay_nhan_ao', 'nguoi_giao_ao', 'da_nhan_tai_lieu', 'ngay_nhan_tai_lieu', 'nguoi_giao_tai_lieu', 'id_giao_vien', 'huy_ho_so', 'thoi_gian_huy_ho_so', 'ly_do_huy_ho_so', 'loai_ly_do', 'le_phi', 'da_nop_du', 'label', 'id_lien_ket', 'ngay_lien_ket', 'id_nguoi_nhap_lien_ket', 'id_nhan_ho_so_ho', 'id_nguoi_nhap_nhan_ho_so_ho', 'ngay_cap_cmnd', 'noi_cap_cmnd'], 'default', 'value' => null],
+            [['id_khoa_hoc', 'id_hoc_phi', 'so_cccd', 'ngay_het_han_cccd', 'nguoi_tao', 'thoi_gian_tao', 'gioi_tinh', 'dia_chi', 'dia_chi_chi_tiet', 'id_xa', 'id_tinh', 'ngay_sinh', 'nguoi_lap_phieu', 'ma_so_phieu', 'so_lan_in_phieu', 'check_hoc_phi', 'id_nhom', 'loai_dang_ky', 'noi_dang_ky', 'nguoi_duyet', 'trang_thai_duyet', 'ghi_chu', 'thoi_gian_hoan_thanh_ho_so', 'co_ho_so_thue', 'da_nhan_ao', 'size', 'ngay_nhan_ao', 'nguoi_giao_ao', 'da_nhan_tai_lieu', 'ngay_nhan_tai_lieu', 'nguoi_giao_tai_lieu', 'id_giao_vien', 'huy_ho_so', 'thoi_gian_huy_ho_so', 'ly_do_huy_ho_so', 'loai_ly_do', 'le_phi', 'da_nop_du', 'label', 'id_lien_ket', 'ngay_lien_ket', 'id_nguoi_nhap_lien_ket', 'id_nhan_ho_so_ho', 'id_nguoi_nhap_nhan_ho_so_ho', 'ngay_cap_cmnd', 'noi_cap_cmnd', 'so_gplx_da_co', 'hang_gplx_da_co', 'ngay_tt_gplx', 'ngay_cap_gplx', 'ngay_hh_gplx', 'don_vi_cap_gplx'], 'default', 'value' => null],
             [['id_khoa_hoc', 'id_hoc_phi', 'nguoi_tao', 'gioi_tinh', 'id_xa', 'id_tinh', 'ma_so_phieu', 'so_lan_in_phieu', 'id_hang', 'id_nhom', 'nguoi_duyet', 'co_ho_so_thue', 'da_nhan_ao', 'nguoi_giao_ao', 'da_nhan_tai_lieu', 'nguoi_giao_tai_lieu', 'id_giao_vien', 'huy_ho_so', 'da_nop_du', 'id_lien_ket', 'id_nguoi_nhap_lien_ket', 'id_nhan_ho_so_ho', 'id_nguoi_nhap_nhan_ho_so_ho'], 'integer'],
             [['ho_ten', 'so_dien_thoai', 'trang_thai', 'id_hang'], 'required'],
-            [['ngay_het_han_cccd', 'thoi_gian_tao', 'ngay_sinh', 'thoi_gian_hoan_thanh_ho_so', 'ngay_nhan_ao', 'ngay_nhan_tai_lieu', 'thoi_gian_huy_ho_so', 'ngay_lien_ket','ngay_nhap_ho_so_ho', 'ngay_cap_cmnd'], 'safe'],
+            [['ngay_het_han_cccd', 'thoi_gian_tao', 'ngay_sinh', 'thoi_gian_hoan_thanh_ho_so', 'ngay_nhan_ao', 'ngay_nhan_tai_lieu', 'thoi_gian_huy_ho_so', 'ngay_lien_ket','ngay_nhap_ho_so_ho', 'ngay_cap_cmnd', 'ngay_tt_gplx', 'ngay_cap_gplx', 'ngay_hh_gplx'], 'safe'],
             [['ghi_chu', 'ly_do_huy_ho_so'], 'string'],
             [['le_phi'], 'number'],
             [['ho_ten', 'so_dien_thoai', 'so_cccd', 'trang_thai', 'dia_chi'], 'string', 'max' => 255],
@@ -100,7 +106,8 @@ class HvHocVien extends \yii\db\ActiveRecord
             [['check_hoc_phi'], 'string', 'max' => 25],
             [['loai_dang_ky', 'trang_thai_duyet'], 'string', 'max' => 15],
             [['noi_dang_ky', 'size'], 'string', 'max' => 50],
-            [['loai_ly_do', 'label', 'noi_cap_cmnd'], 'string', 'max' => 20],
+            [['loai_ly_do', 'label', 'noi_cap_cmnd', 'so_gplx_da_co'], 'string', 'max' => 20],
+            [['hang_gplx_da_co', 'don_vi_cap_gplx'], 'string', 'max' => 10],
             [['id_hang'], 'exist', 'skipOnError' => true, 'targetClass' => HvHangDaoTao::class, 'targetAttribute' => ['id_hang' => 'id']],
             [['id_khoa_hoc'], 'exist', 'skipOnError' => true, 'targetClass' => HvKhoaHoc::class, 'targetAttribute' => ['id_khoa_hoc' => 'id']],
             [['id_nhom'], 'exist', 'skipOnError' => true, 'targetClass' => HvNhom::class, 'targetAttribute' => ['id_nhom' => 'id']],
@@ -166,6 +173,12 @@ class HvHocVien extends \yii\db\ActiveRecord
             'ngay_nhap_ho_so_ho' => 'Ngay Nhap Ho So Ho',
             'ngay_cap_cmnd' => 'Ngày cấp CMND/CCCD',
             'noi_cap_cmnd' => 'Nơi cấp CMND/CCCD',
+            'so_gplx_da_co' => 'Số GPLX đã có',
+            'hang_gplx_da_co' => 'Hạng GPLX đã có',
+            'ngay_tt_gplx' => 'Ngày TT GPLX',
+            'ngay_cap_gplx' => 'Ngày cấp GPLX',
+            'ngay_hh_gplx' => 'Ngày HH GPLX',
+            'don_vi_cap_gplx' => 'Đơn vị cấp GPLX',
         ];
     }
 

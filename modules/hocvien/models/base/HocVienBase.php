@@ -79,6 +79,12 @@ use app\modules\user\models\History;
  * @property string|null $ngay_nhap_ho_so_ho
  * @property string|null $ngay_cap_cmnd
  * @property string|null $noi_cap_cmnd
+ * @property string|null $so_gplx_da_co
+ * @property string|null $hang_gplx_da_co
+ * @property string|null $ngay_tt_gplx
+ * @property string|null $ngay_cap_gplx
+ * @property string|null $ngay_hh_gplx
+ * @property string|null $don_vi_cap_gplx
  *
  * @property GdGvHv[] $gdGvHvs
  * @property HvHangDaoTao $hang
@@ -426,6 +432,93 @@ class HocVienBase extends \app\models\HvHocVien
     }
 
     /**
+     * Danh muc noi cap gplx
+     * @return string[]
+     */
+    public static function getDmNoiCapGplx()
+    {
+        return [
+            '84' => 'Trà Vinh',
+            '86' => 'Vĩnh Long',
+            '83' => 'Bến Tre',
+            '00' => 'Tổng cục đường bộ Việt Nam',
+            '99' => 'Cục Cảnh sát giao thông',
+            '01' => 'Hà Nội',
+            '02' => 'Hà Giang',
+            '04' => 'Cao Bằng',
+            '06' => 'Bắc Kạn',
+            '08' => 'Tuyên Quang',
+            '10' => 'Lào Cai',
+            '11' => 'Điện Biên',
+            '12' => 'Lai Châu',
+            '14' => 'Sơn La',
+            '15' => 'Yên Bái',
+            '17' => 'Hoà Bình',
+            '19' => 'Thái Nguyên',
+            '20' => 'Lạng Sơn',
+            '22' => 'Quảng Ninh',
+            '24' => 'Bắc Giang',
+            '25' => 'Phú Thọ',
+            '26' => 'Vĩnh Phúc',
+            '27' => 'Bắc Ninh',
+            '30' => 'Hải Dương',
+            '31' => 'Hải Phòng',
+            '33' => 'Hưng Yên',
+            '34' => 'Thái Bình',
+            '35' => 'Hà Nam',
+            '36' => 'Nam Định',
+            '37' => 'Ninh Bình',
+            '38' => 'Thanh Hóa',
+            '40' => 'Nghệ An',
+            '42' => 'Hà Tĩnh',
+            '44' => 'Quảng Bình',
+            '45' => 'Quảng Trị',
+            '46' => 'Thừa Thiên Huế',
+            '48' => 'Đà Nẵng',
+            '49' => 'Quảng Nam',
+            '51' => 'Quảng Ngãi',
+            '52' => 'Bình Định',
+            '54' => 'Phú Yên',
+            '56' => 'Khánh Hoà',
+            '58' => 'Ninh Thuận',
+            '60' => 'Bình Thuận',
+            '62' => 'Kon Tum',
+            '64' => 'Gia Lai',
+            '66' => 'Đắc Lắk',
+            '67' => 'Đắk Nông',
+            '68' => 'Lâm Đồng',
+            '70' => 'Bình Phước',
+            '72' => 'Tây Ninh',
+            '74' => 'Bình Dương',
+            '75' => 'Đồng Nai',
+            '77' => 'Bà Rịa - Vũng Tàu',
+            '79' => 'Hồ Chí Minh',
+            '80' => 'Long An',
+            '82' => 'Tiền Giang',
+            '87' => 'Đồng Tháp',
+            '89' => 'An Giang',
+            '91' => 'Kiên Giang',
+            '92' => 'Cần Thơ',
+            '93' => 'Hậu Giang',
+            '94' => 'Sóc Trăng',
+            '95' => 'Bạc Liêu',
+            '96' => 'Cà Mau',
+
+        ];
+    }
+
+    /**
+     * Danh muc noi cap gplx label
+     * @param string|null $val
+     * @return string
+     */
+    public static function getNoiCapGPLXLabel($val = NULL)
+    {
+        $list = self::getDmNoiCapGplx();
+        return isset($list[$val]) ? $list[$val] : '';
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function rules()
@@ -434,12 +527,13 @@ class HocVienBase extends \app\models\HvHocVien
             /*[['id_hang', 'ho_ten', 'so_cccd','id_hang'], 'required'],*/
             [['id_hang', 'ho_ten', 'noi_dang_ky'], 'required'],
             [['id_khoa_hoc', 'id_hoc_phi', 'nguoi_tao', 'gioi_tinh', 'id_hang', 'id_nhom', 'nguoi_duyet', 'ma_so_phieu', 'so_lan_in_phieu', 'co_ho_so_thue', 'da_nhan_ao', 'id_giao_vien', 'huy_ho_so', 'da_nhan_tai_lieu', 'da_nop_du', 'nguoi_giao_ao', 'nguoi_giao_tai_lieu', 'id_xa', 'id_tinh', 'id_lien_ket', 'id_nguoi_nhap_lien_ket', 'id_nhan_ho_so_ho', 'id_nguoi_nhap_nhan_ho_so_ho'], 'integer'],
-            [['thoi_gian_tao', 'thoi_gian_hoan_thanh_ho_so', 'thoi_gian_huy_ho_so', 'ngay_sinh', 'ngay_het_han_cccd', 'ngay_nhan_ho_so_ho', 'ngay_cap_cmnd'], 'safe'],
+            [['thoi_gian_tao', 'thoi_gian_hoan_thanh_ho_so', 'thoi_gian_huy_ho_so', 'ngay_sinh', 'ngay_het_han_cccd', 'ngay_nhan_ho_so_ho', 'ngay_cap_cmnd', 'ngay_tt_gplx', 'ngay_cap_gplx', 'ngay_hh_gplx'], 'safe'],
             [['ho_ten', 'so_dien_thoai', 'so_cccd', 'trang_thai', 'dia_chi', 'dia_chi_chi_tiet', 'trang_thai_duyet'], 'string', 'max' => 255],
             [['check_hoc_phi'], 'string', 'max' => 25],
             [['nguoi_lap_phieu'], 'string', 'max' => 55],
             [['noi_dang_ky', 'size'], 'string', 'max' => 50],
-            [['loai_ly_do', 'label', 'noi_cap_cmnd'], 'string', 'max' => 20],
+            [['loai_ly_do', 'label', 'noi_cap_cmnd', 'so_gplx_da_co'], 'string', 'max' => 20],
+            [['hang_gplx_da_co', 'don_vi_cap_gplx'], 'string', 'max' => 10],
             [['loai_dang_ky'], 'string', 'max' => 15],
             [['tongtiennop', 'le_phi'], 'number'], //virtual attribute select when report
             [['id_khoa_hoc'], 'exist', 'skipOnError' => true, 'targetClass' => KhoaHoc::class, 'targetAttribute' => ['id_khoa_hoc' => 'id']],
@@ -512,6 +606,12 @@ class HocVienBase extends \app\models\HvHocVien
             'ngay_nhap_ho_so_ho' => 'Ngày nhập HS hộ',
             'ngay_cap_cmnd' => 'Ngày cấp',
             'noi_cap_cmnd' => 'Nơi cấp',
+            'so_gplx_da_co' => 'Số GPLX đã có',
+            'hang_gplx_da_co' => 'Hạng GPLX đã có',
+            'ngay_tt_gplx' => 'Ngày TT GPLX',
+            'ngay_cap_gplx' => 'Ngày cấp GPLX',
+            'ngay_hh_gplx' => 'Ngày Hết hạn GPLX',
+            'don_vi_cap_gplx' => 'Đơn vị cấp GPLX',
         ];
     }
 
