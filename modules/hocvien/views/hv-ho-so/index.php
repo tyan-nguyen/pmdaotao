@@ -152,6 +152,16 @@ Yii::$app->params['showExport'] = true;
             'toolbar' => [
                 [
                     'content' =>
+                    (!empty($searchModel->id_khoa_hoc) ? Html::a(
+                        '<i class="fas fa-file-excel"></i> Xuất DS Import PMĐT',
+                        ['export-pm-dao-tao', 'id_khoa_hoc' => $searchModel->id_khoa_hoc],
+                        [
+                            'class' => 'btn btn-success me-1',
+                            'title' => 'Xuất Danh sách import Phần mềm đào tạo',
+                            'data-pjax' => '0',
+                            'target' => '_blank'
+                        ]
+                    ) : '') .
                     '
                     <div class="dropdown">
 						<button aria-expanded="false" aria-haspopup="true" class="btn dropdown-toggle" data-bs-toggle="dropdown" type="button"><i class="fa fa-navicon"></i></button>

@@ -77,6 +77,8 @@ use app\modules\user\models\History;
  * @property int|null $id_nhan_ho_so_ho
  * @property int|null $id_nguoi_nhap_nhan_ho_so_ho
  * @property string|null $ngay_nhap_ho_so_ho
+ * @property string|null $ngay_cap_cmnd
+ * @property string|null $noi_cap_cmnd
  *
  * @property GdGvHv[] $gdGvHvs
  * @property HvHangDaoTao $hang
@@ -394,6 +396,36 @@ class HocVienBase extends \app\models\HvHocVien
     }
 
     /**
+     * Danh muc noi cap cccd
+     * @return string[]
+     */
+    public static function getDmNoiCapCccd()
+    {
+        return [
+            '00' => 'Cục QLHC',
+            'other' => 'Khác/Không xác định'
+        ];
+    }
+    /**
+     * Danh muc noi cap cccd label
+     * @return string[]
+     */
+    public static function getNoiCapCccdLablel($val = NULL)
+    {
+        switch ($val) {
+            case '00':
+                $label = 'Cục QLHC';
+                break;
+            case 'other':
+                $label = 'Khác/Không xác định';
+                break;
+            default:
+                $label = '';
+        }
+        return $label;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function rules()
@@ -402,12 +434,12 @@ class HocVienBase extends \app\models\HvHocVien
             /*[['id_hang', 'ho_ten', 'so_cccd','id_hang'], 'required'],*/
             [['id_hang', 'ho_ten', 'noi_dang_ky'], 'required'],
             [['id_khoa_hoc', 'id_hoc_phi', 'nguoi_tao', 'gioi_tinh', 'id_hang', 'id_nhom', 'nguoi_duyet', 'ma_so_phieu', 'so_lan_in_phieu', 'co_ho_so_thue', 'da_nhan_ao', 'id_giao_vien', 'huy_ho_so', 'da_nhan_tai_lieu', 'da_nop_du', 'nguoi_giao_ao', 'nguoi_giao_tai_lieu', 'id_xa', 'id_tinh', 'id_lien_ket', 'id_nguoi_nhap_lien_ket', 'id_nhan_ho_so_ho', 'id_nguoi_nhap_nhan_ho_so_ho'], 'integer'],
-            [['thoi_gian_tao', 'thoi_gian_hoan_thanh_ho_so', 'thoi_gian_huy_ho_so', 'ngay_sinh', 'ngay_het_han_cccd', 'ngay_nhan_ho_so_ho'], 'safe'],
+            [['thoi_gian_tao', 'thoi_gian_hoan_thanh_ho_so', 'thoi_gian_huy_ho_so', 'ngay_sinh', 'ngay_het_han_cccd', 'ngay_nhan_ho_so_ho', 'ngay_cap_cmnd'], 'safe'],
             [['ho_ten', 'so_dien_thoai', 'so_cccd', 'trang_thai', 'dia_chi', 'dia_chi_chi_tiet', 'trang_thai_duyet'], 'string', 'max' => 255],
             [['check_hoc_phi'], 'string', 'max' => 25],
             [['nguoi_lap_phieu'], 'string', 'max' => 55],
             [['noi_dang_ky', 'size'], 'string', 'max' => 50],
-            [['loai_ly_do', 'label'], 'string', 'max' => 20],
+            [['loai_ly_do', 'label', 'noi_cap_cmnd'], 'string', 'max' => 20],
             [['loai_dang_ky'], 'string', 'max' => 15],
             [['tongtiennop', 'le_phi'], 'number'], //virtual attribute select when report
             [['id_khoa_hoc'], 'exist', 'skipOnError' => true, 'targetClass' => KhoaHoc::class, 'targetAttribute' => ['id_khoa_hoc' => 'id']],
@@ -478,6 +510,8 @@ class HocVienBase extends \app\models\HvHocVien
             'id_nhan_ho_so_ho' => 'Nhận HS hộ',
             'id_nguoi_nhap_nhan_ho_so_ho' => 'Người nhập nhận HS hộ',
             'ngay_nhap_ho_so_ho' => 'Ngày nhập HS hộ',
+            'ngay_cap_cmnd' => 'Ngày cấp',
+            'noi_cap_cmnd' => 'Nơi cấp',
         ];
     }
 
@@ -596,6 +630,19 @@ class HocVienBase extends \app\models\HvHocVien
             return $this->diaChiText;
         } else {
             return $this->dia_chi;
+        }
+    }
+
+    /**
+     * lấy địa chỉ động theo id_xa va id_tinh
+     */
+    public function getDiaChiXaTinhText()
+    {
+        if ($this->id_tinh != null && $this->id_xa != null) {
+            return ($this->xa ? ($this->xa->ten_xa_full . ', ') : '') .
+                ($this->tinh ? $this->tinh->ten_tinh_full : '');
+        } else {
+            return '';
         }
     }
 

@@ -22,6 +22,7 @@ $this->registerCssFile('@web/css/dkHocVien.css', [
 <?php
 $model->ngay_sinh = CustomFunc::convertYMDToDMY($model->ngay_sinh);
 $model->ngay_het_han_cccd = CustomFunc::convertYMDToDMY($model->ngay_het_han_cccd);
+$model->ngay_cap_cmnd = CustomFunc::convertYMDToDMY($model->ngay_cap_cmnd);
 $model->ngay_nhan_ao = CustomFunc::convertYMDToDMY($model->ngay_nhan_ao);
 $model->ngay_nhan_tai_lieu = CustomFunc::convertYMDToDMY($model->ngay_nhan_tai_lieu);
 
@@ -178,10 +179,27 @@ if ($model->id_nhan_ho_so_ho > 0) {
         <?php } //end if id_xa
         ?>
 
-        <div class="col-lg-4 col-md-6">
+        <div class="col-lg-2 col-md-4">
             <?= $form->field($model, 'so_cccd')->textInput(['maxlength' => true]) ?>
         </div>
-        <div class="col-lg-4 col-md-6">
+        <div class="col-lg-3 col-md-4">
+            <?= $form->field($model, 'ngay_cap_cmnd')->widget(DatePicker::classname(), [
+                'options' => ['placeholder' => 'Chọn ngày  ...', 'autocomplete' => 'off'],
+                'pluginOptions' => [
+                    'autoclose' => true,
+                    'format' => 'dd/mm/yyyy',
+                    'todayHighlight' => true,
+                    'todayBtn' => true
+                ]
+            ]); ?>
+        </div>
+        <div class="col-lg-2 col-md-4">
+            <?= $form->field($model, 'noi_cap_cmnd')->dropDownList(
+                DangKyHv::getDmNoiCapCccd(),
+                ['prompt' => 'Chọn nơi cấp...']
+            ) ?>
+        </div>
+        <div class="col-lg-3 col-md-4">
             <?= $form->field($model, 'ngay_het_han_cccd')->widget(DatePicker::classname(), [
                 'options' => ['placeholder' => 'Chọn ngày  ...', 'autocomplete' => 'off'],
                 'pluginOptions' => [
@@ -193,7 +211,7 @@ if ($model->id_nhan_ho_so_ho > 0) {
             ]); ?>
         </div>
 
-        <div class="col-lg-4 col-md-6">
+        <div class="col-lg-2 col-md-4">
             <?= $form->field($model, 'noi_dang_ky')->dropDownList(
                 DangKyHv::getDmNoiDangKy(),
                 ['prompt' => '- Nơi đăng ký -']

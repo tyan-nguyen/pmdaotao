@@ -28,6 +28,8 @@ use app\widgets\CardWidget;
                         <p><strong>Số ĐT:</strong> <?= $model->so_dien_thoai ?></p>
                         <p><strong>Địa chỉ:</strong> <?= $model->diaChi ?></p>
                         <p><strong>Số CCCD:</strong> <?= $model->so_cccd ?></p>
+                        <p><strong>Ngày cấp:</strong> <?= $model->ngay_cap_cmnd ?></p>
+                        <p><strong>Nơi cấp:</strong> <?= HocVien::getNoiCapCccdLablel($model->noi_cap_cmnd) ?></p>
                         <p><strong>Ngày hết hạn CCCD:</strong> <?= $model->getNgayHetHanCccd() ?></p>
                         <p><strong>Nơi đăng ký:</strong> <?= $model->getLabelNoiDangKy() ?></p>
                         <p><strong>Ghi chú thêm:</strong> <?= $model->ghi_chu ?></p>

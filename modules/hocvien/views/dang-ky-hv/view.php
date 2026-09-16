@@ -35,7 +35,11 @@ use app\modules\hocvien\models\DangKyHv;
                         </p>
                         <p><strong>Số CCCD:</strong> <?= $model->so_cccd ?>
                             <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                            <strong>Ngày hết hạn CCCD:</strong> <?= $model->getNgayHetHanCccd() ?>
+                            <strong>Ngày cấp:</strong> <?= CustomFunc::convertYMDToDMY($model->ngay_cap_cmnd) ?>
+                            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <strong>Nơi cấp:</strong> <?= DangKyHv::getNoiCapCccdLablel($model->noi_cap_cmnd) ?>
+                            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <strong>Ngày hết hạn:</strong> <?= $model->getNgayHetHanCccd() ?>
                         </p>
                         <p>
                             <strong>Nơi đăng ký:</strong> <?= $model->getLabelNoiDangKy() ?>

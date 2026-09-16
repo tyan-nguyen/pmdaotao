@@ -733,4 +733,151 @@ class HvHoSoController extends Controller
             ];
         }
     }
+
+    /**
+     * Export danh sách học viên theo mẫu Import Phần mềm đào tạo (17 cột)
+     * @param int|null $id_khoa_hoc
+     */
+    public function actionExportPmDaoTao($id_khoa_hoc = null)
+    {
+        if (empty($id_khoa_hoc)) {
+            $id_khoa_hoc = Yii::$app->request->get('id_khoa_hoc');
+        }
+
+        $searchModel = new DangKyHvSearch();
+        $queryParams = Yii::$app->request->queryParams;
+        if (!isset($queryParams['DangKyHvSearch']['id_khoa_hoc']) && $id_khoa_hoc) {
+            $queryParams['DangKyHvSearch']['id_khoa_hoc'] = $id_khoa_hoc;
+        }
+
+        $dataProvider = $searchModel->searchHoSo($queryParams);
+        $dataProvider->pagination = false;
+        $models = $dataProvider->models;
+
+        $khoaHoc = \app\modules\hocvien\models\KhoaHoc::findOne($id_khoa_hoc);
+        $tenKhoaHoc = $khoaHoc ? $khoaHoc->ten_khoa_hoc : 'Danh_Sach_Hoc_Vien';
+
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setTitle('Import PMDT');
+
+        $headers = [
+            'A' => 'STT',
+            'B' => 'HỌ VÀ TÊN (*)',
+            'C' => 'NGÀY SINH (*)',
+            'D' => 'GIỚI TÍNH (*)',
+            'E' => 'SỐ CCCD/CMND (*)',
+            'F' => 'NGÀY CẤP CCCD',
+            'G' => 'NƠI CẤP CCCD',
+            'H' => 'MÃ ĐVHC (*)',
+            'I' => 'CHI TIẾT NƠI THƯỜNG TRÚ (CCCD)',
+            'J' => 'SỐ ĐIỆN THOẠI',
+            'K' => 'SỐ GPLX ĐÃ CÓ',
+            'L' => 'HẠNG GPLX ĐÃ CÓ',
+            'M' => 'NGÀY TT GPLX',
+            'N' => 'NGÀY CẤP GPLX',
+            'O' => 'NGÀY HH GPLX',
+            'P' => 'ĐƠN VỊ CẤP GPLX',
+            'Q' => 'GHI CHÚ',
+        ];
+
+        // Format Header
+        foreach ($headers as $col => $title) {
+            $cell = $col . '1';
+            $sheet->setCellValue($cell, $title);
+
+            $fillColor = ($col === 'H') ? 'C00000' : '1F4E79';
+
+            $sheet->getStyle($cell)->applyFromArray([
+                'font' => [
+                    'bold' => true,
+                    'color' => ['rgb' => 'FFFFFF'],
+                    'size' => 10,
+                ],
+                'fill' => [
+                    'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                    'startColor' => ['rgb' => $fillColor],
+                ],
+                'alignment' => [
+                    'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                    'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+                    'wrapText' => true,
+                ],
+            ]);
+        }
+
+        $row = 2;
+        foreach ($models as $index => $model) {
+            $stt = $index + 1;
+            $hoTen = $model->ho_ten ?? '';
+            $ngaySinh = !empty($model->ngay_sinh) ? CustomFunc::convertYMDHISToDMY($model->ngay_sinh) : '';
+            $gioiTinh = ($model->gioi_tinh == 1) ? 'Nam' : (($model->gioi_tinh === 0 || $model->gioi_tinh === '0') ? 'Nữ' : '');
+            $soCccd = $model->so_cccd ?? '';
+            $ngayCapCccd = !empty($model->ngay_cap_cmnd) ? CustomFunc::convertYMDHISToDMY($model->ngay_cap_cmnd) : '';
+            $noiCapCccd = $model->noi_cap_cmnd ?? '';
+            $maDvhc = $model->xa ? $model->xa->ma_xa : '';
+            //$chiTietThuongTru = method_exists($model, 'getDiaChiXaTinhText') ? $model->getDiaChiXaTinhText() : '';
+            $chiTietThuongTru = '';
+            $soDienThoai = $model->so_dien_thoai ?? '';
+            $soGplx = '';
+            $hangGplx = '';
+            $ngayTtGplx = '';
+            $ngayCapGplx = '';
+            $ngayHhGplx = '';
+            $donViCapGplx = '';
+            $ghiChu = '';
+
+            $sheet->setCellValue('A' . $row, $stt);
+            $sheet->setCellValue('B' . $row, $hoTen);
+            $sheet->setCellValueExplicit('C' . $row, (string)$ngaySinh, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
+            $sheet->setCellValue('D' . $row, $gioiTinh);
+            $sheet->setCellValueExplicit('E' . $row, (string)$soCccd, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
+            $sheet->setCellValueExplicit('F' . $row, (string)$ngayCapCccd, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
+            $sheet->setCellValueExplicit('G' . $row, (string)$noiCapCccd, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
+            $sheet->setCellValueExplicit('H' . $row, (string)$maDvhc, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
+            $sheet->setCellValue('I' . $row, $chiTietThuongTru);
+            $sheet->setCellValueExplicit('J' . $row, (string)$soDienThoai, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
+            $sheet->setCellValueExplicit('K' . $row, (string)$soGplx, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
+            $sheet->setCellValue('L' . $row, $hangGplx);
+            $sheet->setCellValueExplicit('M' . $row, (string)$ngayTtGplx, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
+            $sheet->setCellValueExplicit('N' . $row, (string)$ngayCapGplx, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
+            $sheet->setCellValueExplicit('O' . $row, (string)$ngayHhGplx, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
+            $sheet->setCellValueExplicit('P' . $row, (string)$donViCapGplx, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
+            $sheet->setCellValue('Q' . $row, $ghiChu);
+
+            // Alignment & Style for row cells
+            $sheet->getStyle('A' . $row)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle('C' . $row)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle('D' . $row)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle('E' . $row)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle('H' . $row)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle('J' . $row)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+            // Set red text color for Column H (MÃ ĐVHC) in data row
+            $sheet->getStyle('H' . $row)->getFont()->getColor()->setRGB('C00000');
+
+            $row++;
+        }
+
+        // Auto-size columns
+        foreach (range('A', 'Q') as $col) {
+            $sheet->getColumnDimension($col)->setAutoSize(true);
+        }
+
+        // Sanitize filename
+        $cleanFileName = preg_replace('/[^\w\s\d\-_]/u', '', $tenKhoaHoc);
+        $cleanFileName = trim(preg_replace('/\s+/', '_', $cleanFileName));
+        if (empty($cleanFileName)) {
+            $cleanFileName = 'Export_PMDT';
+        }
+        $fileName = $cleanFileName . '_' . date('dmY') . '.xlsx';
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="' . $fileName . '"');
+        header('Cache-Control: max-age=0');
+
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $writer->save('php://output');
+        exit;
+    }
 }
