@@ -92,12 +92,12 @@ if ($model->id_nhan_ho_so_ho > 0) {
                 'language' => 'vi',
                 'options' => [
                     'placeholder' => 'Chọn dm liên kết...',
-                    'class' => 'form-control dropdown-with-arrow',
+                    'class' => 'form-control',
                     'id' => 'idLienKet'
                 ],
                 'pluginOptions' => [
                     'allowClear' => true,
-                    'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
+                    'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal .modal-body")'),
                     'width' => '100%',
                     'minimumInputLength' => 0, // ← allow fetch without typing
                     'ajax' => [
@@ -135,12 +135,12 @@ if ($model->id_nhan_ho_so_ho > 0) {
                     'language' => 'vi',
                     'options' => [
                         'placeholder' => 'Chọn xã/phường...',
-                        'class' => 'form-control dropdown-with-arrow',
+                        'class' => 'form-control',
                         'id' => 'xa-dropdown'
                     ],
                     'pluginOptions' => [
                         'allowClear' => true,
-                        'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
+                        'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal .modal-body")'),
                         'width' => '100%',
                         'minimumInputLength' => 0, // ← allow fetch without typing
                         'ajax' => [
@@ -174,7 +174,7 @@ if ($model->id_nhan_ho_so_ho > 0) {
                     ],
                     'pluginOptions' => [
                         'allowClear' => true,
-                        'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
+                        'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal .modal-body")'),
                         'width' => '100%'
                     ],
                 ])->label(false); ?>
@@ -222,6 +222,7 @@ if ($model->id_nhan_ho_so_ho > 0) {
         </div>
 
     </div>
+
     <div class="row">
         <div class="col-lg-3 col-md-4">
             <?= $form->field($model, 'hang_gplx_da_co')->dropDownList(
@@ -318,6 +319,7 @@ if ($model->id_nhan_ho_so_ho > 0) {
             ) ?>
         </div>
     </div>
+
     <?php CardWidget::end() ?>
 
     <?php CardWidget::begin(['title' => 'Thông tin hạng đào tạo']) ?>
@@ -343,12 +345,12 @@ if ($model->id_nhan_ho_so_ho > 0) {
                 'language' => 'vi',
                 'options' => [
                     'placeholder' => 'Chọn Khóa học...',
-                    'class' => 'form-control dropdown-with-arrow',
+                    'class' => 'form-control',
                     'id' => 'khoa-hoc-dropdown'
                 ],
                 'pluginOptions' => [
                     'allowClear' => true,
-                    'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
+                    'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal .modal-body")'),
                     'width' => '100%'
                 ],
             ])->label(false); ?>
@@ -360,12 +362,12 @@ if ($model->id_nhan_ho_so_ho > 0) {
                 'language' => 'vi',
                 'options' => [
                     'placeholder' => 'Chọn dm nhận hs hộ...',
-                    'class' => 'form-control dropdown-with-arrow',
+                    'class' => 'form-control',
                     'id' => 'idNhanHoSoHo'
                 ],
                 'pluginOptions' => [
                     'allowClear' => true,
-                    'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
+                    'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal .modal-body")'),
                     'width' => '100%',
                     'minimumInputLength' => 0, // ← allow fetch without typing
                     'ajax' => [
@@ -403,6 +405,120 @@ if ($model->id_nhan_ho_so_ho > 0) {
     </div> -->
 
 
+    </div>
+    <?php CardWidget::end() ?>
+
+    <?php CardWidget::begin(['title' => 'Thông tin Giấy phép lái xe đã có']) ?>
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-end align-items-center mb-3">
+                <button type="button" class="btn btn-sm btn-outline-primary" id="btn-add-gplx">
+                    <i class="fa fa-plus"></i> Thêm giấy phép lái xe đã có
+                </button>
+            </div>
+
+            <?php
+            $existingGplxs = !$model->isNewRecord ? $model->hocVienGplxs : [];
+            ?>
+
+            <?php if (!empty($existingGplxs)): ?>
+                <div class="table-responsive mb-3">
+                    <table class="table table-sm table-bordered table-hover align-middle text-center mb-0" id="tbl-existing-gplx">
+                        <thead class="table-light">
+                            <tr>
+                                <th style="width: 40px;">STT</th>
+                                <th style="width: 120px;">Hạng GPLX</th>
+                                <th style="width: 140px;">Số GPLX</th>
+                                <th style="width: 130px;">Ngày cấp</th>
+                                <th style="width: 130px;">Ngày TT</th>
+                                <th style="width: 130px;">Ngày HH</th>
+                                <th>Nơi cấp</th>
+                                <th style="width: 60px;">Xóa</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($existingGplxs as $idx => $gplx): ?>
+                                <tr id="gplx-exist-row-<?= $gplx->id ?>">
+                                    <td><?= $idx + 1 ?></td>
+                                    <td>
+                                        <?= Html::dropDownList("HocVienGplx[{$gplx->id}][hang_gplx]", $gplx->hang_gplx, [
+                                            'Mới' => [
+                                                'A.01' => 'A.01',
+                                                'A.02' => 'A.02',
+                                                'A.03' => 'A.03',
+                                                'A.04' => 'A.04',
+                                                'A1m' => 'A1m',
+                                                'Am' => 'Am',
+                                                'B' => 'B',
+                                                'B.01' => 'B.01',
+                                                'B.02' => 'B.02',
+                                                'B.03' => 'B.03',
+                                                'B.04' => 'B.04',
+                                                'B.05' => 'B.05',
+                                                'B1m' => 'B1m',
+                                                'BE' => 'BE',
+                                                'C1' => 'C1',
+                                                'C1E' => 'C1E',
+                                                'CE' => 'CE',
+                                                'Cm' => 'Cm',
+                                                'D1' => 'D1',
+                                                'D1E' => 'D1E',
+                                                'D2' => 'D2',
+                                                'D2E' => 'D2E',
+                                                'DE' => 'DE',
+                                                'Dm' => 'Dm',
+                                            ],
+                                            'Cũ' => [
+                                                'A1' => 'A1',
+                                                'A2' => 'A2',
+                                                'A3' => 'A3',
+                                                'B1' => 'B1',
+                                                'B11' => 'B11',
+                                                'B12' => 'B12',
+                                                'B13' => 'B13',
+                                                'B14' => 'B14',
+                                                'B15' => 'B15',
+                                                'B2' => 'B2',
+                                                'C' => 'C',
+                                                'D' => 'D',
+                                                'E' => 'E',
+                                                'FB2' => 'FB2',
+                                                'FC' => 'FC',
+                                                'FD' => 'FD',
+                                                'FE' => 'FE',
+                                            ]
+                                        ], ['class' => 'form-select form-select-sm', 'prompt' => 'Chọn hạng...']) ?>
+                                    </td>
+                                    <td>
+                                        <input type="text" name="HocVienGplx[<?= $gplx->id ?>][so_gplx]" value="<?= Html::encode($gplx->so_gplx) ?>" class="form-control form-control-sm text-center" placeholder="Số GPLX...">
+                                    </td>
+                                    <td>
+                                        <input type="text" name="HocVienGplx[<?= $gplx->id ?>][ngay_cap_gplx]" value="<?= CustomFunc::convertYMDToDMY($gplx->ngay_cap_gplx) ?>" class="form-control form-control-sm text-center date-input-gplx" placeholder="dd/mm/yyyy" autocomplete="off">
+                                    </td>
+                                    <td>
+                                        <input type="text" name="HocVienGplx[<?= $gplx->id ?>][ngay_tt_gplx]" value="<?= CustomFunc::convertYMDToDMY($gplx->ngay_tt_gplx) ?>" class="form-control form-control-sm text-center date-input-gplx" placeholder="dd/mm/yyyy" autocomplete="off">
+                                    </td>
+                                    <td>
+                                        <input type="text" name="HocVienGplx[<?= $gplx->id ?>][ngay_hh_gplx]" value="<?= CustomFunc::convertYMDToDMY($gplx->ngay_hh_gplx) ?>" class="form-control form-control-sm text-center date-input-gplx" placeholder="dd/mm/yyyy" autocomplete="off">
+                                    </td>
+                                    <td>
+                                        <?= Html::dropDownList("HocVienGplx[{$gplx->id}][don_vi_cap_gplx]", $gplx->don_vi_cap_gplx, DangKyHv::getDmNoiCapGplx(), ['class' => 'form-select form-select-sm', 'prompt' => 'Chọn nơi cấp...']) ?>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-outline-danger btn-delete-existing-gplx" data-id="<?= $gplx->id ?>" title="Xóa giấy này">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            <?php endif; ?>
+
+            <!-- Container cho dòng GPLX thêm mới động -->
+            <div id="gplx-dynamic-container"></div>
+        </div>
     </div>
     <?php CardWidget::end() ?>
 
@@ -485,6 +601,68 @@ if ($model->id_nhan_ho_so_ho > 0) {
 
 </div>
 
+<?php
+$hangGplxSelectTemplate = Html::dropDownList(
+    'HocVienGplx[INDEX_KEY][hang_gplx]',
+    null,
+    [
+        'Mới' => [
+            'A.01' => 'A.01',
+            'A.02' => 'A.02',
+            'A.03' => 'A.03',
+            'A.04' => 'A.04',
+            'A1m' => 'A1m',
+            'Am' => 'Am',
+            'B' => 'B',
+            'B.01' => 'B.01',
+            'B.02' => 'B.02',
+            'B.03' => 'B.03',
+            'B.04' => 'B.04',
+            'B.05' => 'B.05',
+            'B1m' => 'B1m',
+            'BE' => 'BE',
+            'C1' => 'C1',
+            'C1E' => 'C1E',
+            'CE' => 'CE',
+            'Cm' => 'Cm',
+            'D1' => 'D1',
+            'D1E' => 'D1E',
+            'D2' => 'D2',
+            'D2E' => 'D2E',
+            'DE' => 'DE',
+            'Dm' => 'Dm',
+        ],
+        'Cũ' => [
+            'A1' => 'A1',
+            'A2' => 'A2',
+            'A3' => 'A3',
+            'B1' => 'B1',
+            'B11' => 'B11',
+            'B12' => 'B12',
+            'B13' => 'B13',
+            'B14' => 'B14',
+            'B15' => 'B15',
+            'B2' => 'B2',
+            'C' => 'C',
+            'D' => 'D',
+            'E' => 'E',
+            'FB2' => 'FB2',
+            'FC' => 'FC',
+            'FD' => 'FD',
+            'FE' => 'FE',
+        ]
+    ],
+    ['class' => 'form-select form-select-sm', 'prompt' => 'Chọn hạng...']
+);
+
+$donViCapGplxSelectTemplate = Html::dropDownList(
+    'HocVienGplx[INDEX_KEY][don_vi_cap_gplx]',
+    null,
+    DangKyHv::getDmNoiCapGplx(),
+    ['class' => 'form-select form-select-sm', 'prompt' => 'Chọn nơi cấp...']
+);
+?>
+
 <script>
     $('#xa-dropdown').on("select2:select", function(e) {
         if (this.value != '') {
@@ -506,5 +684,109 @@ if ($model->id_nhan_ho_so_ho > 0) {
     });
     $('#xa-dropdown').on('select2:clear', function(e) {
         $('#tinh-dropdown').val(null).trigger('change');
+    });
+
+    /* --- Logic Quản lý GPLX Động --- */
+    var gplxCounter = 0;
+    var hangGplxTpl = <?= json_encode($hangGplxSelectTemplate) ?>;
+    var donViCapTpl = <?= json_encode($donViCapGplxSelectTemplate) ?>;
+
+    $(document).off('click', '#btn-add-gplx').on('click', '#btn-add-gplx', function() {
+        gplxCounter++;
+        var key = 'new_' + gplxCounter;
+        var hangSelect = hangGplxTpl.replace(/INDEX_KEY/g, key);
+        var donViSelect = donViCapTpl.replace(/INDEX_KEY/g, key);
+
+        var html = '<div class="card card-body bg-light border p-2 mb-2 gplx-dynamic-item" id="gplx-item-' + key + '">' +
+            '<div class="d-flex justify-content-between align-items-center mb-2">' +
+            '<span class="fw-bold text-primary small"><i class="fa fa-id-card text-success me-1"></i> Thêm mới GPLX số #' + gplxCounter + '</span>' +
+            '<button type="button" class="btn btn-sm btn-link text-danger p-0 btn-remove-dynamic-gplx" data-target="#gplx-item-' + key + '">' +
+            '<i class="fa fa-times-circle"></i> Xóa dòng' +
+            '</button>' +
+            '</div>' +
+            '<div class="row g-2">' +
+            '<div class="col-lg-2 col-md-4">' +
+            '<label class="form-label small mb-1">Hạng GPLX</label>' +
+            hangSelect +
+            '</div>' +
+            '<div class="col-lg-2 col-md-4">' +
+            '<label class="form-label small mb-1">Số GPLX</label>' +
+            '<input type="text" name="HocVienGplx[' + key + '][so_gplx]" class="form-control form-control-sm" placeholder="Nhập số GPLX...">' +
+            '</div>' +
+            '<div class="col-lg-2 col-md-4">' +
+            '<label class="form-label small mb-1">Ngày cấp</label>' +
+            '<input type="text" name="HocVienGplx[' + key + '][ngay_cap_gplx]" class="form-control form-control-sm date-input-gplx" placeholder="dd/mm/yyyy" autocomplete="off">' +
+            '</div>' +
+            '<div class="col-lg-2 col-md-4">' +
+            '<label class="form-label small mb-1">Ngày trúng tuyển</label>' +
+            '<input type="text" name="HocVienGplx[' + key + '][ngay_tt_gplx]" class="form-control form-control-sm date-input-gplx" placeholder="dd/mm/yyyy" autocomplete="off">' +
+            '</div>' +
+            '<div class="col-lg-2 col-md-4">' +
+            '<label class="form-label small mb-1">Ngày hết hạn</label>' +
+            '<input type="text" name="HocVienGplx[' + key + '][ngay_hh_gplx]" class="form-control form-control-sm date-input-gplx" placeholder="dd/mm/yyyy" autocomplete="off">' +
+            '</div>' +
+            '<div class="col-lg-2 col-md-4">' +
+            '<label class="form-label small mb-1">Nơi cấp</label>' +
+            donViSelect +
+            '</div>' +
+            '</div>' +
+            '</div>';
+
+        $('#gplx-dynamic-container').append(html);
+        initGplxDatePicker('#gplx-item-' + key + ' .date-input-gplx');
+    });
+
+    $(document).off('click', '.btn-remove-dynamic-gplx').on('click', '.btn-remove-dynamic-gplx', function() {
+        var target = $(this).data('target');
+        $(target).remove();
+    });
+
+    $(document).off('click', '.btn-delete-existing-gplx').on('click', '.btn-delete-existing-gplx', function() {
+        var id = $(this).data('id');
+        if (confirm('Bạn có chắc chắn muốn xóa giấy phép lái xe này không?')) {
+            $.ajax({
+                url: '/hocvien/dang-ky-hv/delete-gplx-ajax?id=' + id,
+                type: 'POST',
+                dataType: 'json',
+                success: function(res) {
+                    if (res.success) {
+                        $('#gplx-exist-row-' + id).fadeOut(300, function() {
+                            $(this).remove();
+                        });
+                    } else {
+                        alert(res.message || 'Xóa thất bại');
+                    }
+                },
+                error: function() {
+                    alert('Có lỗi xảy ra khi xóa!');
+                }
+            });
+        }
+    });
+
+    function initGplxDatePicker(selector) {
+        if (typeof $.fn.kvDatepicker !== 'undefined') {
+            $(selector).kvDatepicker({
+                autoclose: true,
+                format: 'dd/mm/yyyy',
+                todayHighlight: true,
+                todayBtn: true,
+                language: 'vi'
+            });
+        } else if (typeof $.fn.datepicker !== 'undefined') {
+            $(selector).datepicker({
+                autoclose: true,
+                format: 'dd/mm/yyyy',
+                todayHighlight: true,
+                todayBtn: true,
+                language: 'vi'
+            });
+        }
+    }
+
+    initGplxDatePicker('.date-input-gplx');
+
+    $('#ajaxCrudModal .modal-body').off('scroll.select2Fix').on('scroll.select2Fix', function() {
+        $('.select2-hidden-accessible').select2('close');
     });
 </script>

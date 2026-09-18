@@ -206,6 +206,7 @@ class DangKyHvController extends Controller
                 }
 
                 if ($model->save()) {
+                    $this->saveHocVienGplxs($model->id, $request->post('HocVienGplx'));
                     if ($model->da_nhan_ao) {
                         $model->nguoi_giao_ao = Yii::$app->user->id;
                     }
@@ -236,6 +237,7 @@ class DangKyHvController extends Controller
             *   Process for non-ajax request
             */
                 if ($model->load($request->post()) && $model->save()) {
+                    $this->saveHocVienGplxs($model->id, $request->post('HocVienGplx'));
                     return $this->redirect(['view', 'id' => $model->id]);
                 } else {
                     return $this->render('create', [
@@ -280,6 +282,7 @@ class DangKyHvController extends Controller
                     $model->nguoi_giao_tai_lieu = Yii::$app->user->id;
                 }
                 if ($model->save()) {
+                    $this->saveHocVienGplxs($model->id, $request->post('HocVienGplx'));
                     return [
                         'forceReload' => '#crud-datatable-pjax',
                         'title' => "Học viên #" . $id,
@@ -314,12 +317,66 @@ class DangKyHvController extends Controller
             *   Process for non-ajax request
             */
             if ($model->load($request->post()) && $model->save()) {
+                $this->saveHocVienGplxs($model->id, $request->post('HocVienGplx'));
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
                 return $this->render('update', [
                     'model' => $model,
                 ]);
             }
+        }
+    }
+
+    /**
+     * Delete an existing GPLX record via AJAX
+     * @param integer $id
+     * @return array
+     */
+    public function actionDeleteGplxAjax($id)
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $model = \app\modules\hocvien\models\HocVienGplx::findOne($id);
+        if ($model && $model->delete()) {
+            return ['success' => true, 'message' => 'Đã xóa giấy phép lái xe'];
+        }
+        return ['success' => false, 'message' => 'Xóa giấy phép lái xe thất bại'];
+    }
+
+    /**
+     * Save dynamic GPLX list for a student
+     * @param integer $id_hoc_vien
+     * @param array|null $gplxData
+     */
+    protected function saveHocVienGplxs($id_hoc_vien, $gplxData)
+    {
+        if (empty($gplxData) || !is_array($gplxData)) {
+            return;
+        }
+        foreach ($gplxData as $key => $row) {
+            // Skip if essential fields are empty
+            if (empty($row['hang_gplx']) && empty($row['so_gplx'])) {
+                continue;
+            }
+
+            $gplxModel = null;
+            if (is_numeric($key)) {
+                $gplxModel = \app\modules\hocvien\models\HocVienGplx::findOne(['id' => $key, 'id_hoc_vien' => $id_hoc_vien]);
+            }
+            if (!$gplxModel) {
+                $gplxModel = new \app\modules\hocvien\models\HocVienGplx();
+                $gplxModel->id_hoc_vien = $id_hoc_vien;
+                $gplxModel->nguoi_tao = Yii::$app->user->id ?? null;
+                $gplxModel->thoi_gian_tao = date('Y-m-d H:i:s');
+            }
+
+            $gplxModel->hang_gplx = isset($row['hang_gplx']) ? trim($row['hang_gplx']) : null;
+            $gplxModel->so_gplx = isset($row['so_gplx']) ? trim($row['so_gplx']) : null;
+            $gplxModel->ngay_cap_gplx = !empty($row['ngay_cap_gplx']) ? CustomFunc::convertDMYToYMD($row['ngay_cap_gplx']) : null;
+            $gplxModel->ngay_tt_gplx = !empty($row['ngay_tt_gplx']) ? CustomFunc::convertDMYToYMD($row['ngay_tt_gplx']) : null;
+            $gplxModel->ngay_hh_gplx = !empty($row['ngay_hh_gplx']) ? CustomFunc::convertDMYToYMD($row['ngay_hh_gplx']) : null;
+            $gplxModel->don_vi_cap_gplx = isset($row['don_vi_cap_gplx']) ? trim($row['don_vi_cap_gplx']) : null;
+
+            $gplxModel->save(false);
         }
     }
 

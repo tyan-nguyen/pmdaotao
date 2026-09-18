@@ -272,4 +272,18 @@ class HvHocVien extends \yii\db\ActiveRecord
         return $this->hasOne(HvNhom::class, ['id' => 'id_nhom']);
     }
 
+    /**
+     * Gets query for [[HvHocVienGplxs]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getHvHocVienGplxs()
+    {
+        return $this->hasMany(HvHocVienGplx::class, ['id_hoc_vien' => 'id'])->orderBy(['stt' => SORT_ASC, 'id' => SORT_ASC]);
+    }
+
+    public function getHocVienGplxs()
+    {
+        return $this->getHvHocVienGplxs();
+    }
 }

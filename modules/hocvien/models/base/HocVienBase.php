@@ -959,4 +959,14 @@ class HocVienBase extends \app\models\HvHocVien
         }
         return $listMuaHang;
     }
+
+    /**
+     * Gets query for [[HocVienGplxs]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getHocVienGplxs()
+    {
+        return $this->hasMany(\app\modules\hocvien\models\HocVienGplx::class, ['id_hoc_vien' => 'id'])->orderBy(['stt' => SORT_ASC, 'id' => SORT_ASC]);
+    }
 }

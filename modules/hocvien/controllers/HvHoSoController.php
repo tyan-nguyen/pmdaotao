@@ -772,13 +772,25 @@ class HvHoSoController extends Controller
             'H' => 'MÃ ĐVHC (*)',
             'I' => 'CHI TIẾT NƠI THƯỜNG TRÚ (CCCD)',
             'J' => 'SỐ ĐIỆN THOẠI',
-            'K' => 'SỐ GPLX ĐÃ CÓ',
-            'L' => 'HẠNG GPLX ĐÃ CÓ',
-            'M' => 'NGÀY TT GPLX',
-            'N' => 'NGÀY CẤP GPLX',
-            'O' => 'NGÀY HH GPLX',
-            'P' => 'ĐƠN VỊ CẤP GPLX',
-            'Q' => 'GHI CHÚ',
+            'K' => 'SỐ GPLX 1',
+            'L' => 'HẠNG GPLX 1',
+            'M' => 'NGÀY TT GPLX 1',
+            'N' => 'NGÀY CẤP GPLX 1',
+            'O' => 'NGÀY HH GPLX 1',
+            'P' => 'ĐƠN VỊ CẤP GPLX 1',
+            'Q' => 'SỐ GPLX 2',
+            'R' => 'HẠNG GPLX 2',
+            'S' => 'NGÀY TT GPLX 2',
+            'T' => 'NGÀY CẤP GPLX 2',
+            'U' => 'NGÀY HH GPLX 2',
+            'V' => 'ĐƠN VỊ CẤP GPLX 2',
+            'W' => 'SỐ GPLX 3',
+            'X' => 'HẠNG GPLX 3',
+            'Y' => 'NGÀY TT GPLX 3',
+            'Z' => 'NGÀY CẤP GPLX 3',
+            'AA' => 'NGÀY HH GPLX 3',
+            'AB' => 'ĐƠN VỊ CẤP GPLX 3',
+            'AC' => 'GHI CHÚ',
         ];
 
         // Format Header
@@ -786,7 +798,17 @@ class HvHoSoController extends Controller
             $cell = $col . '1';
             $sheet->setCellValue($cell, $title);
 
-            $fillColor = ($col === 'H') ? 'C00000' : '1F4E79';
+            if ($col === 'H') {
+                $fillColor = 'C00000';
+            } elseif (in_array($col, ['K', 'L', 'M', 'N', 'O', 'P'])) {
+                $fillColor = '006666';
+            } elseif (in_array($col, ['Q', 'R', 'S', 'T', 'U', 'V'])) {
+                $fillColor = '1E3A8A';
+            } elseif (in_array($col, ['W', 'X', 'Y', 'Z', 'AA', 'AB'])) {
+                $fillColor = '4C1D95';
+            } else {
+                $fillColor = '1F4E79';
+            }
 
             $sheet->getStyle($cell)->applyFromArray([
                 'font' => [
@@ -819,13 +841,37 @@ class HvHoSoController extends Controller
             //$chiTietThuongTru = method_exists($model, 'getDiaChiXaTinhText') ? $model->getDiaChiXaTinhText() : '';
             $chiTietThuongTru = '';
             $soDienThoai = $model->so_dien_thoai ?? '';
-            $soGplx = $model->so_gplx_da_co ?? '';
-            $hangGplx = $model->hang_gplx_da_co ?? '';
-            $ngayTtGplx = !empty($model->ngay_tt_gplx) ? CustomFunc::convertYMDToDMY($model->ngay_tt_gplx) : '';
-            $ngayCapGplx = !empty($model->ngay_cap_gplx) ? CustomFunc::convertYMDToDMY($model->ngay_cap_gplx) : '';
-            $ngayHhGplx = !empty($model->ngay_hh_gplx) ? CustomFunc::convertYMDToDMY($model->ngay_hh_gplx) : '';
-            $donViCapGplx = $model->don_vi_cap_gplx ?? '';
             $ghiChu = '';
+
+            // Lấy tối đa 3 giấy phép lái xe từ bảng hv_hoc_vien_gplx
+            $gplxs = method_exists($model, 'getHocVienGplxs') ? $model->hocVienGplxs : [];
+            $gplx1 = $gplxs[0] ?? null;
+            $gplx2 = $gplxs[1] ?? null;
+            $gplx3 = $gplxs[2] ?? null;
+
+            // GPLX 1
+            $soGplx1 = $gplx1 ? ($gplx1->so_gplx ?? '') : '';
+            $hangGplx1 = $gplx1 ? ($gplx1->hang_gplx ?? '') : '';
+            $ngayTtGplx1 = ($gplx1 && !empty($gplx1->ngay_tt_gplx)) ? CustomFunc::convertYMDToDMY($gplx1->ngay_tt_gplx) : '';
+            $ngayCapGplx1 = ($gplx1 && !empty($gplx1->ngay_cap_gplx)) ? CustomFunc::convertYMDToDMY($gplx1->ngay_cap_gplx) : '';
+            $ngayHhGplx1 = ($gplx1 && !empty($gplx1->ngay_hh_gplx)) ? CustomFunc::convertYMDToDMY($gplx1->ngay_hh_gplx) : '';
+            $donViCapGplx1 = $gplx1 ? ($gplx1->don_vi_cap_gplx ?? '') : '';
+
+            // GPLX 2
+            $soGplx2 = $gplx2 ? ($gplx2->so_gplx ?? '') : '';
+            $hangGplx2 = $gplx2 ? ($gplx2->hang_gplx ?? '') : '';
+            $ngayTtGplx2 = ($gplx2 && !empty($gplx2->ngay_tt_gplx)) ? CustomFunc::convertYMDToDMY($gplx2->ngay_tt_gplx) : '';
+            $ngayCapGplx2 = ($gplx2 && !empty($gplx2->ngay_cap_gplx)) ? CustomFunc::convertYMDToDMY($gplx2->ngay_cap_gplx) : '';
+            $ngayHhGplx2 = ($gplx2 && !empty($gplx2->ngay_hh_gplx)) ? CustomFunc::convertYMDToDMY($gplx2->ngay_hh_gplx) : '';
+            $donViCapGplx2 = $gplx2 ? ($gplx2->don_vi_cap_gplx ?? '') : '';
+
+            // GPLX 3
+            $soGplx3 = $gplx3 ? ($gplx3->so_gplx ?? '') : '';
+            $hangGplx3 = $gplx3 ? ($gplx3->hang_gplx ?? '') : '';
+            $ngayTtGplx3 = ($gplx3 && !empty($gplx3->ngay_tt_gplx)) ? CustomFunc::convertYMDToDMY($gplx3->ngay_tt_gplx) : '';
+            $ngayCapGplx3 = ($gplx3 && !empty($gplx3->ngay_cap_gplx)) ? CustomFunc::convertYMDToDMY($gplx3->ngay_cap_gplx) : '';
+            $ngayHhGplx3 = ($gplx3 && !empty($gplx3->ngay_hh_gplx)) ? CustomFunc::convertYMDToDMY($gplx3->ngay_hh_gplx) : '';
+            $donViCapGplx3 = $gplx3 ? ($gplx3->don_vi_cap_gplx ?? '') : '';
 
             $sheet->setCellValue('A' . $row, $stt);
             $sheet->setCellValue('B' . $row, $hoTen);
@@ -837,13 +883,39 @@ class HvHoSoController extends Controller
             $sheet->setCellValueExplicit('H' . $row, (string)$maDvhc, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
             $sheet->setCellValue('I' . $row, $chiTietThuongTru);
             $sheet->setCellValueExplicit('J' . $row, (string)$soDienThoai, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
-            $sheet->setCellValueExplicit('K' . $row, (string)$soGplx, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
-            $sheet->setCellValue('L' . $row, $hangGplx);
-            $sheet->setCellValueExplicit('M' . $row, (string)$ngayTtGplx, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
-            $sheet->setCellValueExplicit('N' . $row, (string)$ngayCapGplx, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
-            $sheet->setCellValueExplicit('O' . $row, (string)$ngayHhGplx, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
-            $sheet->setCellValueExplicit('P' . $row, (string)$donViCapGplx, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
-            $sheet->setCellValue('Q' . $row, $ghiChu);
+
+            // GPLX 1 (K - P)
+            $sheet->setCellValueExplicit('K' . $row, (string)$soGplx1, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
+            $sheet->setCellValue('L' . $row, $hangGplx1);
+            $sheet->setCellValueExplicit('M' . $row, (string)$ngayTtGplx1, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
+            $sheet->setCellValueExplicit('N' . $row, (string)$ngayCapGplx1, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
+            $sheet->setCellValueExplicit('O' . $row, (string)$ngayHhGplx1, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
+            $sheet->setCellValueExplicit('P' . $row, (string)$donViCapGplx1, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
+
+            // GPLX 2 (Q - V)
+            $sheet->setCellValueExplicit('Q' . $row, (string)$soGplx2, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
+            $sheet->setCellValue('R' . $row, $hangGplx2);
+            $sheet->setCellValueExplicit('S' . $row, (string)$ngayTtGplx2, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
+            $sheet->setCellValueExplicit('T' . $row, (string)$ngayCapGplx2, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
+            $sheet->setCellValueExplicit('U' . $row, (string)$ngayHhGplx2, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
+            $sheet->setCellValueExplicit('V' . $row, (string)$donViCapGplx2, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
+
+            // GPLX 3 (W - AB)
+            $sheet->setCellValueExplicit('W' . $row, (string)$soGplx3, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
+            $sheet->setCellValue('X' . $row, $hangGplx3);
+            $sheet->setCellValueExplicit('Y' . $row, (string)$ngayTtGplx3, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
+            $sheet->setCellValueExplicit('Z' . $row, (string)$ngayCapGplx3, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
+            $sheet->setCellValueExplicit('AA' . $row, (string)$ngayHhGplx3, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
+            $sheet->setCellValueExplicit('AB' . $row, (string)$donViCapGplx3, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
+
+            // Ghi chú (AC)
+            $sheet->setCellValue('AC' . $row, $ghiChu);
+
+            // Format explicit text format code (@) to keep leading zeros in Excel
+            $textCols = ['C', 'E', 'F', 'G', 'H', 'J', 'K', 'M', 'N', 'O', 'P', 'Q', 'S', 'T', 'U', 'V', 'W', 'Y', 'Z', 'AA', 'AB'];
+            foreach ($textCols as $tCol) {
+                $sheet->getStyle($tCol . $row)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
+            }
 
             // Alignment & Style for row cells
             $sheet->getStyle('A' . $row)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
@@ -852,6 +924,9 @@ class HvHoSoController extends Controller
             $sheet->getStyle('E' . $row)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
             $sheet->getStyle('H' . $row)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
             $sheet->getStyle('J' . $row)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle('K' . $row)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle('Q' . $row)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle('W' . $row)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
 
             // Set red text color for Column H (MÃ ĐVHC) in data row
             $sheet->getStyle('H' . $row)->getFont()->getColor()->setRGB('C00000');
@@ -860,7 +935,8 @@ class HvHoSoController extends Controller
         }
 
         // Auto-size columns
-        foreach (range('A', 'Q') as $col) {
+        $allCols = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA', 'AB', 'AC'];
+        foreach ($allCols as $col) {
             $sheet->getColumnDimension($col)->setAutoSize(true);
         }
 
