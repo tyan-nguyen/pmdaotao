@@ -56,7 +56,7 @@ if ($model->id_nhan_ho_so_ho > 0) {
 
 <style>
     .form-select {
-        color: black !important;
+        color: var(--color) !important;
     }
 </style>
 
