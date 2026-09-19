@@ -223,6 +223,7 @@ if ($model->id_nhan_ho_so_ho > 0) {
 
     </div>
 
+    <!--
     <div class="row">
         <div class="col-lg-3 col-md-4">
             <?= $form->field($model, 'hang_gplx_da_co')->dropDownList(
@@ -318,7 +319,7 @@ if ($model->id_nhan_ho_so_ho > 0) {
                 ['prompt' => 'Chọn nơi cấp...']
             ) ?>
         </div>
-    </div>
+    </div> -->
 
     <?php CardWidget::end() ?>
 
