@@ -53,6 +53,13 @@ if ($model->id_nhan_ho_so_ho > 0) {
     $model->id_nhan_ho_so_ho = '';
 }
 ?>
+
+<style>
+    .form-select {
+        color: black !important;
+    }
+</style>
+
 <div class="hv-hoc-vien-form">
 
     <?php $form = ActiveForm::begin(); ?>
@@ -431,8 +438,8 @@ if ($model->id_nhan_ho_so_ho > 0) {
                                 <th style="width: 120px;">Hạng GPLX</th>
                                 <th style="width: 140px;">Số GPLX</th>
                                 <th style="width: 130px;">Ngày cấp</th>
-                                <th style="width: 130px;">Ngày TT</th>
-                                <th style="width: 130px;">Ngày HH</th>
+                                <th style="width: 130px;">Ngày T.tuyển</th>
+                                <th style="width: 130px;">Ngày hết hạn</th>
                                 <th>Nơi cấp</th>
                                 <th style="width: 60px;">Xóa</th>
                             </tr>
