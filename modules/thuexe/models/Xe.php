@@ -523,7 +523,7 @@ class Xe extends \app\models\PtxXe
                 PhieuDeNghi::TRANGTHAI_HOANTHANH,
                 PhieuDeNghi::TRANGTHAI_DADUYET
             ]
-        ])->orderBy(['ngay_duyet' => SORT_DESC])->one();
+        ])->orderBy(['id' => SORT_DESC])->one();
         if ($phieuSuaChua) {
             return $phieuSuaChua->so_km_luc_yeu_cau > $km_ban_dau ? $phieuSuaChua->so_km_luc_yeu_cau : $km_ban_dau;
         } else {
