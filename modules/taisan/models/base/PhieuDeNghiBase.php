@@ -99,6 +99,7 @@ class PhieuDeNghiBase extends CpPhieuDeNghi
     public const LOAISUAXE_LAPDAT = 'LAP_DAT';
     public const LOAISUAXE_BAOHIEM = 'BAO_HIEM';
     public const LOAISUAXE_DANGKIEM = 'DANG_KIEM';
+    public const LOAISUAXE_BAOHANH = 'BAO_HANH';
     public static function getLoaiSuaXeList()
     {
         return [
@@ -107,6 +108,7 @@ class PhieuDeNghiBase extends CpPhieuDeNghi
             self::LOAISUAXE_LAPDAT => 'Lắp đặt',
             self::LOAISUAXE_BAOHIEM => 'Bảo hiểm',
             self::LOAISUAXE_DANGKIEM => 'Đăng kiểm',
+            self::LOAISUAXE_BAOHANH => 'Bảo hành',
         ];
     }
     public static function getLoaiSuaXeLabel($loai)
@@ -118,6 +120,7 @@ class PhieuDeNghiBase extends CpPhieuDeNghi
             self::LOAISUAXE_LAPDAT => 'bg-info',
             self::LOAISUAXE_BAOHIEM => 'bg-danger',
             self::LOAISUAXE_DANGKIEM => 'bg-success',
+            self::LOAISUAXE_BAOHANH => 'bg-info',
         ];
 
         $label = $list[$loai] ?? 'Chưa phân loại';

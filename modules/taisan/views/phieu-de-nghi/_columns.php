@@ -168,6 +168,24 @@ return [
     ],
     [
         'class' => '\kartik\grid\DataColumn',
+        'label' => 'Số Km hiện tại',
+        'value' => function ($model) {
+            return $model->xe ? number_format($model->xe->kmHienTai) : '';
+        },
+        'hAlign' => 'center',
+        'vAlign' => 'middle',
+    ],
+    [
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'so_km_luc_yeu_cau',
+        'value' => function ($model) {
+            return number_format($model->so_km_luc_yeu_cau);
+        },
+        'hAlign' => 'center',
+        'vAlign' => 'middle',
+    ],
+    [
+        'class' => '\kartik\grid\DataColumn',
         'attribute' => 'nguoi_de_nghi',
         'value' => function ($model) {
             return $model->nguoiDeNghi ? $model->nguoiDeNghi->hoTen : '';

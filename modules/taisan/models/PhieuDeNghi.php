@@ -23,7 +23,7 @@ class PhieuDeNghi extends PhieuDeNghiBase
             return $this->tong_tien_thuc_te;
         }
     } */
-   public function getTongTien()
+    public function getTongTien()
     {
         $sum = 0;
         foreach ($this->chiTiets as $ct) {
@@ -54,7 +54,19 @@ class PhieuDeNghi extends PhieuDeNghiBase
             'dsVatTu' => $result
         ];
     }
-
+    //get tham chieu
+    public function getXe()
+    {
+        if ($this->id_tham_chieu) {
+            if ($this->loai_tai_san == self::LOAITAISAN_XE) {
+                $thamChieu = Xe::findOne($this->id_tham_chieu);
+                return $thamChieu;
+            } else if ($this->loai_tai_san == self::LOAITAISAN_THIETBI) {
+                return null;
+            }
+        }
+        return null;
+    }
 
     //lay ten thiet bi tham chieu
     public function getTenThamChieu()
@@ -93,8 +105,9 @@ class PhieuDeNghi extends PhieuDeNghiBase
     /**
      * get so luong ke hoach dang cho duyet
      */
-    public static function slChoDuyet(){
-        return self::find()->where(['trang_thai'=>self::TRANGTHAI_CHODUYET])->count();
+    public static function slChoDuyet()
+    {
+        return self::find()->where(['trang_thai' => self::TRANGTHAI_CHODUYET])->count();
     }
 
     //ham lay nguoi de nghi
