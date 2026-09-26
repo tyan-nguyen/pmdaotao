@@ -173,7 +173,7 @@ return [
         'value' => function ($model) {
             return $model->so_km_truoc ? number_format($model->so_km_truoc) : '';
         },
-        'hAlign' => 'right',
+        'hAlign' => 'center',
         'vAlign' => 'middle',
     ],
 
