@@ -21,7 +21,7 @@ class PhieuSuaXeSearch extends PhieuDeNghi
     public function rules()
     {
         return [
-            [['id', 'id_tham_chieu', 'nguoi_de_nghi', 'so_km_luc_yeu_cau', 'nguoi_duyet', 'id_dot_tong_hop', 'nguoi_tao'], 'integer'],
+            [['id', 'id_tham_chieu', 'nguoi_de_nghi', 'so_km_luc_yeu_cau', 'so_km_truoc', 'nguoi_duyet', 'id_dot_tong_hop', 'nguoi_tao'], 'integer'],
             [['loai_phieu', 'loai_tai_san', 'loai_yeu_cau', 'noi_dung_de_nghi', 'ngay_bat_dau', 'ngay_hoan_thanh', 'trang_thai', 
             'ngay_duyet', 'ghi_chu_duyet', 'phieu_co_chi_tiet', 'thoi_gian_tao', 'id_don_vi_thuc_hien'], 'safe'],
             [['tong_tien_du_kien', 'tong_tien_thuc_te'], 'number'],
@@ -110,6 +110,7 @@ class PhieuSuaXeSearch extends PhieuDeNghi
                 'id_tham_chieu' => $this->id_tham_chieu,
                 'nguoi_de_nghi' => $this->nguoi_de_nghi,
                 'so_km_luc_yeu_cau' => $this->so_km_luc_yeu_cau,
+                'so_km_truoc' => $this->so_km_truoc,
                 'ngay_bat_dau' => $this->ngay_bat_dau,
                 'ngay_hoan_thanh' => $this->ngay_hoan_thanh,
                 'nguoi_duyet' => $this->nguoi_duyet,

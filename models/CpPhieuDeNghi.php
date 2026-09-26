@@ -17,6 +17,7 @@ use Yii;
  * @property int|null $nguoi_de_nghi
  * @property string|null $loai_yeu_cau
  * @property int|null $so_km_luc_yeu_cau
+ * @property int|null $so_km_truoc
  * @property string $noi_dung_de_nghi
  * @property string|null $ngay_bat_dau
  * @property string|null $ngay_hoan_thanh
@@ -60,11 +61,11 @@ class CpPhieuDeNghi extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['so_phieu', 'so_vao_so', 'nam', 'loai_phieu', 'loai_tai_san', 'nguoi_de_nghi', 'loai_yeu_cau', 'so_km_luc_yeu_cau', 'ngay_bat_dau', 'ngay_hoan_thanh', 'thoi_gian_gui_duyet', 'nguoi_duyet', 'ngay_duyet', 'ghi_chu_duyet', 'phieu_co_chi_tiet', 'id_dot_tong_hop', 'ngay_thanh_toan', 'hinh_thuc_thanh_toan', 'nguoi_thanh_toan', 'loai_thanh_toan', 'so_lan_in', 'edit_mode', 'nguoi_tao'], 'default', 'value' => null],
+            [['so_phieu', 'so_vao_so', 'nam', 'loai_phieu', 'loai_tai_san', 'nguoi_de_nghi', 'loai_yeu_cau', 'so_km_luc_yeu_cau', 'so_km_truoc', 'ngay_bat_dau', 'ngay_hoan_thanh', 'thoi_gian_gui_duyet', 'nguoi_duyet', 'ngay_duyet', 'ghi_chu_duyet', 'phieu_co_chi_tiet', 'id_dot_tong_hop', 'ngay_thanh_toan', 'hinh_thuc_thanh_toan', 'nguoi_thanh_toan', 'loai_thanh_toan', 'so_lan_in', 'edit_mode', 'nguoi_tao'], 'default', 'value' => null],
             [['trang_thai'], 'default', 'value' => 'NHAP'],
             [['tong_tien_thuc_te'], 'default', 'value' => 0.00],
             [['da_thanh_toan'], 'default', 'value' => 0],
-            [['so_phieu', 'so_vao_so', 'nam', 'id_tham_chieu', 'nguoi_de_nghi', 'so_km_luc_yeu_cau', 'nguoi_duyet', 'phieu_co_chi_tiet', 'id_dot_tong_hop', 'da_thanh_toan', 'nguoi_thanh_toan', 'so_lan_in', 'edit_mode', 'nguoi_tao'], 'integer'],
+            [['so_phieu', 'so_vao_so', 'nam', 'id_tham_chieu', 'nguoi_de_nghi', 'so_km_luc_yeu_cau', 'so_km_truoc', 'nguoi_duyet', 'phieu_co_chi_tiet', 'id_dot_tong_hop', 'da_thanh_toan', 'nguoi_thanh_toan', 'so_lan_in', 'edit_mode', 'nguoi_tao'], 'integer'],
             [['id_tham_chieu', 'noi_dung_de_nghi'], 'required'],
             [['noi_dung_de_nghi', 'ghi_chu_duyet'], 'string'],
             [['ngay_bat_dau', 'ngay_hoan_thanh', 'thoi_gian_gui_duyet', 'ngay_duyet', 'ngay_thanh_toan', 'thoi_gian_tao'], 'safe'],
@@ -90,6 +91,7 @@ class CpPhieuDeNghi extends \yii\db\ActiveRecord
             'nguoi_de_nghi' => 'Nguoi De Nghi',
             'loai_yeu_cau' => 'Loai Yeu Cau',
             'so_km_luc_yeu_cau' => 'So Km Luc Yeu Cau',
+            'so_km_truoc' => 'Số Km Trước',
             'noi_dung_de_nghi' => 'Noi Dung De Nghi',
             'ngay_bat_dau' => 'Ngay Bat Dau',
             'ngay_hoan_thanh' => 'Ngay Hoan Thanh',

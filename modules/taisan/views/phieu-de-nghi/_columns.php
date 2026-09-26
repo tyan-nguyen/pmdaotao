@@ -168,13 +168,15 @@ return [
     ],
     [
         'class' => '\kartik\grid\DataColumn',
-        'label' => 'Số Km hiện tại',
+        'attribute' => 'so_km_truoc',
+        'label' => 'Số KM trước',
         'value' => function ($model) {
-            return $model->xe ? number_format($model->xe->kmHienTai) : '';
+            return $model->so_km_truoc ? number_format($model->so_km_truoc) : '';
         },
-        'hAlign' => 'center',
+        'hAlign' => 'right',
         'vAlign' => 'middle',
     ],
+
     [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'so_km_luc_yeu_cau',

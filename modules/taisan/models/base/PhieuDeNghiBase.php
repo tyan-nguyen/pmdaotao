@@ -6,6 +6,7 @@ use app\custom\CustomFunc;
 use app\models\CpPhieuDeNghi;
 use app\modules\taisan\models\DmDonVi;
 use app\modules\taisan\models\PhieuChiTiet;
+use app\modules\thuexe\models\Xe;
 use app\modules\user\models\History;
 use Yii;
 
@@ -19,6 +20,7 @@ use Yii;
  * @property int|null $nguoi_de_nghi
  * @property string|null $loai_yeu_cau
  * @property int|null $so_km_luc_yeu_cau
+ * @property int|null $so_km_truoc
  * @property string $noi_dung_de_nghi
  * @property string|null $ngay_bat_dau
  * @property string|null $ngay_hoan_thanh
@@ -238,6 +240,7 @@ class PhieuDeNghiBase extends CpPhieuDeNghi
                 'nguoi_de_nghi',
                 'loai_yeu_cau',
                 'so_km_luc_yeu_cau',
+                'so_km_truoc',
                 'ngay_bat_dau',
                 'ngay_hoan_thanh',
                 'nguoi_duyet',
@@ -258,7 +261,7 @@ class PhieuDeNghiBase extends CpPhieuDeNghi
             [['trang_thai'], 'default', 'value' => 'NHAP'],
             [['tong_tien_thuc_te'], 'default', 'value' => 0.00],
             [['da_thanh_toan'], 'default', 'value' => 0],
-            [['so_phieu', 'so_vao_so', 'nam', 'id_tham_chieu', 'nguoi_de_nghi', 'so_km_luc_yeu_cau', 'nguoi_duyet', 'phieu_co_chi_tiet', 'id_dot_tong_hop', 'da_thanh_toan', 'nguoi_thanh_toan', 'so_lan_in', 'edit_mode', 'nguoi_tao', 'id_don_vi_thuc_hien'], 'integer'],
+            [['so_phieu', 'so_vao_so', 'nam', 'id_tham_chieu', 'nguoi_de_nghi', 'so_km_luc_yeu_cau', 'so_km_truoc', 'nguoi_duyet', 'phieu_co_chi_tiet', 'id_dot_tong_hop', 'da_thanh_toan', 'nguoi_thanh_toan', 'so_lan_in', 'edit_mode', 'nguoi_tao', 'id_don_vi_thuc_hien'], 'integer'],
             [['id_tham_chieu', 'noi_dung_de_nghi'], 'required'],
             [['noi_dung_de_nghi', 'ghi_chu_duyet'], 'string'],
             [['ngay_bat_dau', 'ngay_hoan_thanh', 'ngay_duyet', 'ngay_thanh_toan', 'thoi_gian_tao', 'thoi_gian_gui_duyet'], 'safe'],
@@ -355,6 +358,7 @@ class PhieuDeNghiBase extends CpPhieuDeNghi
             'nguoi_de_nghi' => 'Người đề nghị',
             'loai_yeu_cau' => 'Loại yêu cầu',
             'so_km_luc_yeu_cau' => 'Số KM lúc yêu cầu',
+            'so_km_truoc' => 'Số KM trước',
             'noi_dung_de_nghi' => 'Nội dung đề nghị',
             'ngay_bat_dau' => 'Ngày bắt đầu',
             'ngay_hoan_thanh' => 'Ngày hoàn thành',
@@ -409,6 +413,35 @@ class PhieuDeNghiBase extends CpPhieuDeNghi
                 $this->so_phieu = $this->soPhieuCuoi + 1;
             if ($this->edit_mode == NULL)
                 $this->edit_mode = 0;
+
+            //nếu là phiếu sửa xe bảo dưỡng thì lấy số km hiện tại của xe
+            if (
+                $this->loai_phieu == self::LOAIPHIEU_SUACHUA &&
+                $this->loai_tai_san == self::LOAITAISAN_XE &&
+                $this->loai_yeu_cau == self::LOAISUAXE_BAODUONG
+            ) {
+                if ($this->id_tham_chieu != null) {
+                    $xe = Xe::findOne($this->id_tham_chieu);
+                    if ($xe != null) {
+                        $this->so_km_truoc = $xe->kmHienTai;
+                    }
+                }
+            }
+        } else {
+            //nếu là bảo dưỡng và cập nhật thông tin, nếu có thay đổi $this->trang_thai = self::TRANGTHAI_CHODUYET và số km hiện tại của xe ($xe->kmHienTai) != $this->so_km_truoc thì cập nhật số km hiện tại lại là số km xe
+            if (
+                $this->loai_phieu == self::LOAIPHIEU_SUACHUA &&
+                $this->loai_tai_san == self::LOAITAISAN_XE &&
+                $this->loai_yeu_cau == self::LOAISUAXE_BAODUONG &&
+                in_array($this->trang_thai, [self::TRANGTHAI_NHAP, self::TRANGTHAI_CHODUYET])
+            ) {
+                if ($this->id_tham_chieu != null) {
+                    $xe = Xe::findOne($this->id_tham_chieu);
+                    if ($xe != null && $this->so_km_truoc != $xe->kmHienTai) {
+                        $this->so_km_truoc = $xe->kmHienTai;
+                    }
+                }
+            }
         }
         return parent::beforeSave($insert);
     }
