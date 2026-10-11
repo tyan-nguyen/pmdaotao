@@ -792,4 +792,143 @@ class Xe extends \app\models\PtxXe
         }
         return '<span class="badge bg-warning text-dark"><i class="fa fa-road"></i> Ngoài đường</span>';
     }
+
+    /**
+     * Danh sách giấy tờ của xe
+     * @return \yii\db\ActiveQuery
+     */
+    public function getXeGiayTos()
+    {
+        return $this->hasMany(\app\modules\thuexe\models\XeGiayTo::class, ['id_xe' => 'id']);
+    }
+
+    /**
+     * Lấy danh sách giấy tờ mới nhất cho từng loại giấy tờ của xe
+     * Mỗi id_loai_giay_to chỉ lấy 1 bản ghi có id lớn nhất
+     * @return \app\modules\thuexe\models\XeGiayTo[]
+     */
+    public function getGiayTosMoiNhat()
+    {
+        $subQuery = \app\modules\thuexe\models\XeGiayTo::find()
+            ->select(['MAX(id)'])
+            ->where(['id_xe' => $this->id])
+            ->groupBy('id_loai_giay_to');
+
+        return \app\modules\thuexe\models\XeGiayTo::find()
+            ->where(['id' => $subQuery])
+            ->with(['loaiGiayTo'])
+            ->orderBy(['id' => SORT_DESC])
+            ->all();
+    }
+
+    /**
+     * Tổng hợp tình trạng hạn các giấy tờ của xe
+     * Duyệt qua các loại giấy tờ có check_het_han = 1:
+     * - Tìm giấy tờ active mới nhất (is_active = 1, id DESC).
+     * - Nếu xe thiếu loại giấy tờ đó -> ghi nhận thiếu.
+     * - Nếu có, kiểm tra trạng thái hạn của giấy tờ đó.
+     *
+     * @param bool $detailed Nếu true trả về mảng chi tiết
+     * @return string|array Trả về mã trạng thái hoặc mảng thông tin chi tiết
+     */
+    public function getTrangThaiGiayToXe($detailed = false)
+    {
+        static $cachedLoaiGiayTos = null;
+        if ($cachedLoaiGiayTos === null) {
+            $cachedLoaiGiayTos = \app\modules\thuexe\models\LoaiGiayTo::find()
+                ->where(['check_het_han' => \app\modules\thuexe\models\base\LoaiGiayToBase::CHECK_HET_HAN_CO])
+                ->all();
+        }
+        $loaiGiayTos = $cachedLoaiGiayTos;
+
+        if (empty($loaiGiayTos)) {
+            $res = [
+                'status' => 'KHONG_YEU_CAU',
+                'expired' => [],
+                'warning' => [],
+                'missing' => [],
+                'valid' => [],
+            ];
+            return $detailed ? $res : 'KHONG_YEU_CAU';
+        }
+
+        $expired = [];
+        $warning = [];
+        $missing = [];
+        $valid = [];
+
+        foreach ($loaiGiayTos as $loai) {
+            $latest = \app\modules\thuexe\models\XeGiayTo::find()
+                ->where([
+                    'id_xe' => $this->id,
+                    'id_loai_giay_to' => $loai->id,
+                    'is_active' => \app\modules\thuexe\models\base\XeGiayToBase::STATUS_ACTIVE,
+                ])
+                ->orderBy(['id' => SORT_DESC])
+                ->one();
+
+            if (!$latest) {
+                $missing[] = $loai;
+            } else {
+                $han = $latest->getTrangThaiHan();
+                if ($han === \app\modules\thuexe\models\base\XeGiayToBase::HAN_DA_HET) {
+                    $expired[] = ['loai' => $loai, 'giay_to' => $latest];
+                } elseif ($han === \app\modules\thuexe\models\base\XeGiayToBase::HAN_SAP_HET) {
+                    $warning[] = ['loai' => $loai, 'giay_to' => $latest];
+                } else {
+                    $valid[] = ['loai' => $loai, 'giay_to' => $latest];
+                }
+            }
+        }
+
+        if (!empty($expired)) {
+            $status = \app\modules\thuexe\models\base\XeGiayToBase::HAN_DA_HET;
+        } elseif (!empty($warning)) {
+            $status = \app\modules\thuexe\models\base\XeGiayToBase::HAN_SAP_HET;
+        } elseif (!empty($missing)) {
+            $status = 'THIEU_GIAY_TO';
+        } else {
+            $status = \app\modules\thuexe\models\base\XeGiayToBase::HAN_CON_HAN;
+        }
+
+        if ($detailed) {
+            return [
+                'status' => $status,
+                'expired' => $expired,
+                'warning' => $warning,
+                'missing' => $missing,
+                'valid' => $valid,
+            ];
+        }
+
+        return $status;
+    }
+
+    /**
+     * Badge hiển thị tổng hợp tình trạng hạn giấy tờ xe
+     * @return string
+     */
+    public function getTrangThaiGiayToBadge()
+    {
+        $info = $this->getTrangThaiGiayToXe(true);
+        $status = $info['status'];
+        switch ($status) {
+            case \app\modules\thuexe\models\base\XeGiayToBase::HAN_DA_HET:
+                $names = array_map(function($item) { return $item['loai']->ten_loai_giay_to; }, $info['expired']);
+                $title = 'Giấy tờ hết hạn: ' . implode(', ', $names);
+                return '<span class="badge bg-danger" title="' . \yii\helpers\Html::encode($title) . '"><i class="fa fa-times-circle"></i> Có giấy tờ hết hạn (' . count($info['expired']) . ')</span>';
+            case \app\modules\thuexe\models\base\XeGiayToBase::HAN_SAP_HET:
+                $names = array_map(function($item) { return $item['loai']->ten_loai_giay_to; }, $info['warning']);
+                $title = 'Giấy tờ sắp hết hạn: ' . implode(', ', $names);
+                return '<span class="badge bg-warning text-dark" title="' . \yii\helpers\Html::encode($title) . '"><i class="fa fa-exclamation-triangle"></i> Sắp hết hạn (' . count($info['warning']) . ')</span>';
+            case 'THIEU_GIAY_TO':
+                $names = array_map(function($loai) { return $loai->ten_loai_giay_to; }, $info['missing']);
+                $title = 'Chưa có: ' . implode(', ', $names);
+                return '<span class="badge bg-secondary" title="' . \yii\helpers\Html::encode($title) . '"><i class="fa fa-question-circle"></i> Chưa đủ giấy tờ (' . count($info['missing']) . ')</span>';
+            case \app\modules\thuexe\models\base\XeGiayToBase::HAN_CON_HAN:
+                return '<span class="badge bg-success"><i class="fa fa-check-circle"></i> Giấy tờ hợp lệ</span>';
+            default:
+                return '<span class="badge bg-secondary">Không yêu cầu</span>';
+        }
+    }
 }

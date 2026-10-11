@@ -168,6 +168,31 @@ return [
     // ],
     [
         'class' => '\kartik\grid\DataColumn',
+        'header' => '',
+        'value' => function ($model) {
+            $status = $model->getTrangThaiGiayToXe();
+            if ($status === \app\modules\thuexe\models\base\XeGiayToBase::HAN_SAP_HET || $status === \app\modules\thuexe\models\base\XeGiayToBase::HAN_DA_HET) {
+                return Html::a('<i class="fa fa-exclamation-triangle text-warning" style="font-size: 16px;"></i>', 
+                    ['/thuexe/xe/view', 'id' => $model->id], 
+                    ['role' => 'modal-remote', 'title' => 'Có giấy tờ hết hạn', 'data-bs-toggle' => 'tooltip', 'style' => 'text-decoration:none;']
+                );
+            }
+            $count = count($model->xeGiayTos);
+            if ($count > 0) {
+                return Html::a('<i class="fa fa-paperclip text-info" style="font-size: 16px;"></i>', 
+                    ['/thuexe/xe/view', 'id' => $model->id], 
+                    ['role' => 'modal-remote', 'title' => 'Có ' . $count . ' giấy tờ xe', 'data-bs-toggle' => 'tooltip', 'style' => 'text-decoration:none;']
+                );
+            }
+            return '';
+        },
+        'format' => 'raw',
+        'width' => '30px',
+        'headerOptions' => ['style' => 'width:30px;text-align:center;'],
+        'contentOptions' => ['style' => 'width:30px;text-align:center;vertical-align:middle;'],
+    ],
+    [
+        'class' => '\kartik\grid\DataColumn',
         'label' => 'Hình ảnh',
         'value' => function ($model) {
             return $model->anhDaiDien ? Html::img(Yii::getAlias('@web/images/hinh-xe/' . $model->anhDaiDien->hinh_anh), [

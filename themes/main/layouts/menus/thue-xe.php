@@ -44,9 +44,11 @@ use app\modules\user\models\User;
 							 -->
 							<!--  <li class=""><a href="<?= Yii::getAlias('@web/thuexe/muon-xe?menu=dc5') ?>" class="slide-item" data-menu="dc5"><i class="fe fe-file-text"></i> Mượn xe</a></li> -->
 							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/xe?menu=dc1') ?>" class="slide-item" data-menu="dc1"><i class="fe fe-file-text"></i> Quản lý tất cả xe</a></li>
+							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/xe-giay-to?menu=dc_gt') ?>" class="slide-item" data-menu="dc_gt"><i class="fe fe-file-text"></i> Quản lý giấy tờ xe</a></li>
 							<!--   <li class=""><a href="<?= Yii::getAlias('@web/thuexe/loai-hinh-thue?menu=dc2') ?>" class="slide-item" data-menu="dc2"><i class="fe fe-file-text"></i> Loại hình thuê</a></li> -->
 							<?php if (User::getCurrentUser() && User::getCurrentUser()->superadmin) { ?>
 								<li class=""><a href="<?= Yii::getAlias('@web/thuexe/loai-xe?menu=dc3') ?>" class="slide-item" data-menu="dc3"><i class="fe fe-file-text"></i> Loại Xe</a></li>
+								<li class=""><a href="<?= Yii::getAlias('@web/thuexe/loai-giay-to?menu=dc_lgt') ?>" class="slide-item" data-menu="dc_lgt"><i class="fe fe-file-text"></i> Loại giấy tờ xe</a></li>
 							<?php } ?>
 
 						</ul>

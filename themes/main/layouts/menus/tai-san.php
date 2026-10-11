@@ -1,15 +1,19 @@
 <?php
 
 use app\modules\taisan\models\PhieuDeNghi;
+use app\modules\thuexe\models\XeGiayTo;
 
 $slChoDuyet = PhieuDeNghi::slChoDuyet();
+
+$thongKeHanGiayTo = XeGiayTo::getThongKeHetHan();
+$tongCanhBaoGiayTo = $thongKeHanGiayTo['tong'];
 ?>
 <li class="slide">
 	<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);">
 		<!-- <span class="side-menu__icon"><i class="fa fa-graduation-cap side_menu_img"></i></span>
 		<span class="side-menu__label">Khóa học</span><i class="angle fe fe-chevron-right"></i> -->
 		<span class="side-menu__label"><i class="fa fa-folder"></i> TÀI SẢN
-			<span class="badge bg-warning ms-2"><?= $slChoDuyet > 0 ? $slChoDuyet : '' ?></span>
+			<span class="badge bg-warning ms-2"><?= ($slChoDuyet + $tongCanhBaoGiayTo) > 0 ? ($slChoDuyet + $tongCanhBaoGiayTo) : '' ?></span>
 		</span><i class="angle fa fa-caret-right"></i>
 	</a>
 	<ul class="slide-menu" data-menu="taisan">
@@ -35,6 +39,8 @@ $slChoDuyet = PhieuDeNghi::slChoDuyet();
 							</li>
 							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/xe/index?menu=taisan7') ?>" class="slide-item" data-menu="taisan7"><i class="fe fe-file-text"></i> Quản lý xe</a>
 							</li>
+							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/xe-giay-to/index?menu=taisane') ?>" class="slide-item" data-menu="taisane"><i class="fe fe-file-text"></i> Quản lý giấy tờ <span class="badge bg-warning ms-2"><?= $tongCanhBaoGiayTo > 0 ? $tongCanhBaoGiayTo : '' ?></span></a>
+							</li>
 							<li class=""><a href="<?= Yii::getAlias('@web/taisan/tai-san/index?menu=taisan1') ?>" class="slide-item" data-menu="taisan1"><i class="fe fe-file-text"></i> Tài sản khác</a>
 							</li>
 							<li class=""><a href="<?= Yii::getAlias('@web/taisan/phieu-de-nghi/index?menu=taisan2') ?>" class="slide-item" data-menu="taisan2"><i class="fe fe-file-text"></i> Phiếu đề nghị
@@ -53,6 +59,14 @@ $slChoDuyet = PhieuDeNghi::slChoDuyet();
 							<li class=""><a href="<?= Yii::getAlias('@web/taisan/danh-muc-tai-san/index?menu=taisan8') ?>" class="slide-item" data-menu="taisan8"><i class="fe fe-file-text"></i> Danh mục tài sản</a>
 							</li>
 							<li class=""><a href="<?= Yii::getAlias('@web/taisan/loai-tai-san/index?menu=taisan9') ?>" class="slide-item" data-menu="taisan9"><i class="fe fe-file-text"></i> Loại tài sản</a>
+							</li>
+							<li class=""><a href="<?= Yii::getAlias('@web/taisan/loai-chi-tiet/index?menu=taisana') ?>" class="slide-item" data-menu="taisana"><i class="fe fe-file-text"></i> Loại chi tiết</a>
+							</li>
+							<li class=""><a href="<?= Yii::getAlias('@web/taisan/nhom-chi-tiet/index?menu=taisanb') ?>" class="slide-item" data-menu="taisanb"><i class="fe fe-file-text"></i> Nhóm chi tiết</a>
+							</li>
+							<li class=""><a href="<?= Yii::getAlias('@web/taisan/chi-tiet/index?menu=taisanc') ?>" class="slide-item" data-menu="taisanc"><i class="fe fe-file-text"></i> Chi tiết</a>
+							</li>
+							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/loai-giay-to/index?menu=taisand') ?>" class="slide-item" data-menu="taisand"><i class="fe fe-file-text"></i> Loại giấy tờ xe</a>
 							</li>
 						</ul>
 						<div class="menutabs-content px-0">

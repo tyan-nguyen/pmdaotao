@@ -13,7 +13,7 @@ use yii\helpers\Url;
 
 $this->title = 'Xe';
 $this->params['breadcrumbs'][] = $this->title;
-//CrudAsset::register($this);
+\kartik\date\DatePickerAsset::register($this);
 Yii::$app->params['showSearch'] = true;
 Yii::$app->params['showExport'] = true;
 
