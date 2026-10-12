@@ -1,4 +1,5 @@
 <?php
+
 use yii\bootstrap5\Html;
 use yii\bootstrap5\Modal;
 use kartik\grid\GridView;
@@ -12,7 +13,7 @@ $this->title = 'Loại giấy tờ xe';
 $this->params['breadcrumbs'][] = $this->title;
 Yii::$app->params['showSearch'] = false;
 Yii::$app->params['showExport'] = false;
-Yii::$app->params['showView'] = true;
+Yii::$app->params['showView'] = false;
 ?>
 
 <?php Pjax::begin([
@@ -30,38 +31,48 @@ Yii::$app->params['showView'] = true;
             'pjax' => true,
             'columns' => require(__DIR__ . '/_columns.php'),
             'toolbar' => [
-                ['content' =>
+                [
+                    'content' =>
                     '
                     <div class="dropdown">
 						<button aria-expanded="false" aria-haspopup="true" class="btn dropdown-toggle" data-bs-toggle="dropdown" type="button"><i class="fa fa-navicon"></i></button>
 						<div class="dropdown-menu tx-13">
 							<h6 class="dropdown-header tx-uppercase tx-11 tx-bold bg-info tx-spacing-1">
 								Chọn chức năng</h6>'
-                    .
-                    Html::a('<i class="fas fa fa-plus" aria-hidden="true"></i> Thêm mới', ['create'],
-                        ['role' => 'modal-remote', 'title' => 'Thêm mới loại giấy tờ', 'class' => 'dropdown-item'])
-                    .
-                    Html::a('<i class="fas fa fa-sync" aria-hidden="true"></i> Tải lại', [''],
-                        ['data-pjax' => 1, 'class' => 'dropdown-item', 'title' => 'Tải lại'])
-                    .
-                    Html::a('<i class="fas fa fa-trash" aria-hidden="true"></i>&nbsp; Xóa danh sách',
-                        ["bulkdelete"],
-                        [
-                            'class' => 'dropdown-item text-secondary',
-                            'role' => 'modal-remote-bulk',
-                            'data-confirm' => false, 'data-method' => false,
-                            'data-request-method' => 'post',
-                            'data-confirm-title' => 'Xác nhận xóa?',
-                            'data-confirm-message' => 'Bạn có chắc muốn xóa các mục đã chọn?'
-                        ])
-                    .
-                    '
+                        .
+                        Html::a(
+                            '<i class="fas fa fa-plus" aria-hidden="true"></i> Thêm mới',
+                            ['create'],
+                            ['role' => 'modal-remote', 'title' => 'Thêm mới loại giấy tờ', 'class' => 'dropdown-item']
+                        )
+                        .
+                        Html::a(
+                            '<i class="fas fa fa-sync" aria-hidden="true"></i> Tải lại',
+                            [''],
+                            ['data-pjax' => 1, 'class' => 'dropdown-item', 'title' => 'Tải lại']
+                        )
+                        .
+                        Html::a(
+                            '<i class="fas fa fa-trash" aria-hidden="true"></i>&nbsp; Xóa danh sách',
+                            ["bulkdelete"],
+                            [
+                                'class' => 'dropdown-item text-secondary',
+                                'role' => 'modal-remote-bulk',
+                                'data-confirm' => false,
+                                'data-method' => false,
+                                'data-request-method' => 'post',
+                                'data-confirm-title' => 'Xác nhận xóa?',
+                                'data-confirm-message' => 'Bạn có chắc muốn xóa các mục đã chọn?'
+                            ]
+                        )
+                        .
+                        '
 						</div>
 					</div>
                     ' .
-                    '{export}'
+                        '{export}'
                 ],
-            ],          
+            ],
             'striped' => false,
             'condensed' => true,
             'responsive' => false,
@@ -85,13 +96,13 @@ Yii::$app->params['showView'] = true;
 <?php Pjax::end(); ?>
 
 <?php Modal::begin([
-   'options' => [
+    'options' => [
         'id' => 'ajaxCrudModal',
         'tabindex' => false
-   ],
-   'closeButton' => ['label' => '<span aria-hidden=\'true\'>×</span>'],
-   'id' => 'ajaxCrudModal',
-   'footer' => '',
-   'size' => Modal::SIZE_LARGE
+    ],
+    'closeButton' => ['label' => '<span aria-hidden=\'true\'>×</span>'],
+    'id' => 'ajaxCrudModal',
+    'footer' => '',
+    'size' => Modal::SIZE_LARGE
 ]) ?>
 <?php Modal::end(); ?>
