@@ -10,6 +10,7 @@ use Yii;
  * @property int $id
  * @property string $ten_loai_giay_to
  * @property int $check_het_han
+ * @property int $la_bat_buoc
  * @property string|null $ghi_chu
  * @property int|null $so_ngay_bao_truoc
  * @property string|null $thoi_gian_tao
@@ -34,11 +35,12 @@ class PtxXeLoaiGiayTo extends \yii\db\ActiveRecord
     {
         return [
             [['ten_loai_giay_to'], 'required'],
-            [['check_het_han', 'so_ngay_bao_truoc', 'nguoi_tao'], 'integer'],
+            [['check_het_han', 'so_ngay_bao_truoc', 'nguoi_tao', 'la_bat_buoc'], 'integer'],
             [['ghi_chu'], 'string'],
             [['thoi_gian_tao'], 'safe'],
             [['ten_loai_giay_to'], 'string', 'max' => 200],
             [['check_het_han'], 'default', 'value' => 1],
+            [['la_bat_buoc'], 'default', 'value' => 0],
         ];
     }
 
@@ -51,6 +53,7 @@ class PtxXeLoaiGiayTo extends \yii\db\ActiveRecord
             'id' => 'ID',
             'ten_loai_giay_to' => 'Tên Loại Giấy Tờ',
             'check_het_han' => 'Kiểm Tra Hết Hạn',
+            'la_bat_buoc' => 'Bắt Buộc',
             'so_ngay_bao_truoc' => 'Số Ngày Báo Trước',
             'ghi_chu' => 'Ghi Chú',
             'thoi_gian_tao' => 'Thời Gian Tạo',

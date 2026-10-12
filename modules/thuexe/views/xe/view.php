@@ -43,7 +43,10 @@ $this->registerJsFile('https://unpkg.com/leaflet@1.9.4/dist/leaflet.js', ['posit
                                     <strong>Loại xe:</strong> <?= $model->loaiXe->ten_loai_xe ?>
                                     <span style="margin-left: 30px;"></span> <strong>Biển số xe:</strong> <?= $model->bien_so_xe ?>
                                 </p>
-                                <p><strong>Tên xe:</strong> <?= $model->hieu_xe ?></p>
+                                <p>
+                                    <strong>Tên xe:</strong> <?= $model->hieu_xe ?>
+
+                                </p>
                                 <p><strong>Phân loại:</strong> <?= $model->getLabelPhanLoaiXe() ?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Mã số:</strong> <?= $model->ma_so ?></p>
                             </div>
 
@@ -60,7 +63,7 @@ $this->registerJsFile('https://unpkg.com/leaflet@1.9.4/dist/leaflet.js', ['posit
                             </span>
                             <?php if ($model->imei_gps): ?>
                                 <span>
-                                    <?= Html::a('<i class="fa fa-map-marker-alt"></i> Xem bản đồ', ['xem-vi-tri-gps', 'id' => $model->id], ['role' => 'modal-remote', 'class' => 'btn btn-outline-primary btn-sm']) ?>
+                                    <?= Html::a('<i class="fa fa-map-marker-alt"></i> Xem bản đồ', ['xem-vi-tri-gps', 'id' => $model->id], ['role' => 'modal-remote', 'class' => 'btn btn-outline-primary btn-sm', 'style' => 'margin-top:0px; margin-bottom:0px']) ?>
                                 </span>
                             <?php endif; ?>
                         </p>
@@ -76,6 +79,7 @@ $this->registerJsFile('https://unpkg.com/leaflet@1.9.4/dist/leaflet.js', ['posit
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <strong>Ngày cập nhật KM:</strong> <?= CustomFunc::convertYMDHISToDMY($model->getNgayCapNhatKMHienTai()) ?>
                         </p>
+                        <p><strong>Ghi chú:</strong> <?= $model->ghi_chu ?></p>
                     </div>
                 </div>
             </div>
@@ -109,6 +113,9 @@ $this->registerJsFile('https://unpkg.com/leaflet@1.9.4/dist/leaflet.js', ['posit
                         </p>
                         <p><strong>Năm sản xuất:</strong> <?= $model->nam_san_xuat ?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Năm mua:</strong> <?= $model->nam_mua ?></p>
                         <p><strong>Nhà cung cấp:</strong> <?= $model->nha_cung_cap ?></p>
+                        <p>
+                            <strong>Đơn vị sở hữu:</strong> <?= $model->donViSoHuu ? Html::encode($model->donViSoHuu->ten_don_vi) : '' ?>
+                        </p>
                     </div>
                 </div>
             </div>

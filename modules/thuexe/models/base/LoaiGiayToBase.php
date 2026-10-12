@@ -15,6 +15,8 @@ class LoaiGiayToBase extends PtxXeLoaiGiayTo
 {
     const CHECK_HET_HAN_CO = 1;
     const CHECK_HET_HAN_KHONG = 0;
+    const BAT_BUOC_CO = 1;
+    const BAT_BUOC_KHONG = 0;
     const DEFAULT_SO_NGAY_BAO_TRUOC = 30;
 
     /**
@@ -53,12 +55,41 @@ class LoaiGiayToBase extends PtxXeLoaiGiayTo
     }
 
     /**
+     * Danh mục bắt buộc
+     * @return array
+     */
+    public static function getDmLaBatBuoc()
+    {
+        return [
+            self::BAT_BUOC_CO => 'Bắt buộc',
+            self::BAT_BUOC_KHONG => 'Không bắt buộc',
+        ];
+    }
+
+    /**
+     * Nhãn badge bắt buộc
+     * @return string
+     */
+    public function getLaBatBuocLabel()
+    {
+        if ($this->la_bat_buoc == self::BAT_BUOC_CO) {
+            return '<span class="badge bg-danger"><i class="fa fa-asterisk me-1" style="font-size: 8px;"></i>Bắt buộc</span>';
+        }
+        return '<span class="badge bg-secondary">Không bắt buộc</span>';
+    }
+
+    /**
      * Danh sách loại giấy tờ key-value cho dropdown
      * @return array
      */
     public static function getListLoaiGiayTo()
     {
-        return ArrayHelper::map(self::find()->orderBy(['ten_loai_giay_to' => SORT_ASC])->all(), 'id', 'ten_loai_giay_to');
+        $list = self::find()->orderBy(['la_bat_buoc' => SORT_DESC, 'ten_loai_giay_to' => SORT_ASC])->all();
+        $res = [];
+        foreach ($list as $item) {
+            $res[$item->id] = $item->ten_loai_giay_to . ($item->la_bat_buoc == self::BAT_BUOC_CO ? ' (Bắt buộc)' : '');
+        }
+        return $res;
     }
 
     /**

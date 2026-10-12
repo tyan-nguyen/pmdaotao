@@ -1,4 +1,5 @@
 <?php
+
 use yii\bootstrap5\Html;
 use yii\widgets\ActiveForm;
 use app\widgets\CardWidget;
@@ -15,22 +16,24 @@ use app\modules\thuexe\models\base\XeGiayToBase;
 
 <div class="xe-giay-to-form">
 
-    <?php $form = ActiveForm::begin(); ?>  
+    <?php $form = ActiveForm::begin(); ?>
 
     <?php CardWidget::begin(['title' => 'Thông tin Giấy tờ xe']) ?>
-    
+
     <?php if (Yii::$app->request->get('modalType')): ?>
         <input type="hidden" name="modalType" value="<?= Html::encode(Yii::$app->request->get('modalType')) ?>">
     <?php endif; ?>
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <?php if ($model->id_xe && Yii::$app->request->get('id_xe')): ?>
-                <?= $form->field($model, 'id_xe')->hiddenInput()->label(false) ?>
+
                 <div class="mb-3">
                     <label class="form-label font-weight-bold">Xe</label>
                     <input type="text" class="form-control" value="<?= $model->xe ? $model->xe->bien_so_xe . ' - ' . $model->xe->hieu_xe : '' ?>" readonly disabled>
                 </div>
+                <?= $form->field($model, 'id_xe')->hiddenInput()->label(false) ?>
+
             <?php else: ?>
                 <?= $form->field($model, 'id_xe')->dropDownList(
                     XeGiayTo::getListXe(),
@@ -43,6 +46,9 @@ use app\modules\thuexe\models\base\XeGiayToBase;
                 LoaiGiayTo::getListLoaiGiayTo(),
                 ['prompt' => '-- Chọn loại giấy tờ --', 'class' => 'form-select']
             ) ?>
+        </div>
+        <div class="col-md-6">
+            <?= $form->field($model, 'is_active')->dropDownList(XeGiayToBase::getDmIsActive()) ?>
         </div>
     </div>
 
@@ -72,9 +78,7 @@ use app\modules\thuexe\models\base\XeGiayToBase;
     </div>
 
     <div class="row">
-        <div class="col-md-12">
-            <?= $form->field($model, 'is_active')->dropDownList(XeGiayToBase::getDmIsActive()) ?>
-        </div>
+
         <div class="col-md-12">
             <?= $form->field($model, 'ghi_chu')->textarea(['rows' => 4, 'placeholder' => 'Ghi chú thêm...']) ?>
         </div>
@@ -89,15 +93,16 @@ use app\modules\thuexe\models\base\XeGiayToBase;
     <?php } ?>
 
     <?php ActiveForm::end(); ?>
-    
+
 </div>
 <style>
-.xe-giay-to-form label {
-    font-weight: bold;
-}
-.xe-giay-to-form .input-group-text {
-    cursor: pointer;
-}
+    .xe-giay-to-form label {
+        font-weight: bold;
+    }
+
+    .xe-giay-to-form .input-group-text {
+        cursor: pointer;
+    }
 </style>
 <?php
 $js = <<<JS

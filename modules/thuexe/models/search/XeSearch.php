@@ -17,7 +17,7 @@ class XeSearch extends Xe
     public function rules()
     {
         return [
-            [['id', 'id_loai_xe', 'nguoi_tao', 'id_giao_vien', 'ma_so', 'stt', 'nam_san_xuat', 'nam_mua'], 'integer'],
+            [['id', 'id_loai_xe', 'id_don_vi_so_huu', 'nguoi_tao', 'id_giao_vien', 'ma_so', 'stt', 'nam_san_xuat', 'nam_mua'], 'integer'],
             [['hieu_xe', 'bien_so_xe', 'ma_bien_so', 'tinh_trang_xe', 'trang_thai', 'thoi_gian_tao', 
                 'ghi_chu', 'phan_loai', 'dac_diem', 'so_hop_dong', 'so_hoa_don', 'imei_gps'], 'safe'],
         ];
@@ -49,6 +49,7 @@ class XeSearch extends Xe
         $query->andFilterWhere([
             'id' => $this->id,
             'id_loai_xe' => $this->id_loai_xe,
+            'id_don_vi_so_huu' => $this->id_don_vi_so_huu,
             'nguoi_tao' => $this->nguoi_tao,
             'thoi_gian_tao' => $this->thoi_gian_tao,
             'id_giao_vien' => $this->id_giao_vien,

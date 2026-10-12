@@ -3,6 +3,7 @@
 use yii\bootstrap5\Html;
 use yii\widgets\ActiveForm;
 use app\modules\thuexe\models\LoaiXe;
+use app\modules\thuexe\models\DonViSoHuu;
 use kartik\select2\Select2;
 use app\modules\giaovien\models\GiaoVien;
 use app\modules\thuexe\models\Xe;
@@ -25,6 +26,20 @@ use app\modules\thuexe\models\Xe;
                 'data' => LoaiXe::getList(),
                 'language' => 'vi',
                 'options' => ['placeholder' => 'Chọn loại xe...'],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                ],
+            ]); ?>
+        </div>
+        <div class="col-md-2">
+            <?= $form->field($model, 'id_don_vi_so_huu')->widget(Select2::classname(), [
+                'data' => DonViSoHuu::getList(),
+                'language' => 'vi',
+                'options' => [
+                    'placeholder' => 'Đơn vị sở hữu...',
+                    'class' => 'form-control dropdown-with-arrow',
+                    'id' => 'dvsh-dropdown'
+                ],
                 'pluginOptions' => [
                     'allowClear' => true,
                 ],
@@ -79,7 +94,7 @@ use app\modules\thuexe\models\Xe;
                 ['prompt' => 'Chọn trạng thái']  // 
             ) ?>
     </div> -->
-        <div class="col-md-2">
+        <!--     <div class="col-md-2">
             <?= $form->field($model, 'id_giao_vien')->widget(Select2::classname(), [
                 'data' => GiaoVien::getList(),
                 'language' => 'vi',
@@ -92,7 +107,7 @@ use app\modules\thuexe\models\Xe;
                     'allowClear' => true
                 ],
             ]); ?>
-        </div>
+        </div> -->
     </div>
 
     <?php if (!Yii::$app->request->isAjax) { ?>

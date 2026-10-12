@@ -21,10 +21,13 @@ use app\modules\thuexe\models\base\LoaiGiayToBase;
     ]); ?>
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
             <?= $form->field($model, 'ten_loai_giay_to') ?>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
+            <?= $form->field($model, 'la_bat_buoc')->dropDownList(LoaiGiayToBase::getDmLaBatBuoc(), ['prompt' => '-- Tất cả --']) ?>
+        </div>
+        <div class="col-md-4">
             <?= $form->field($model, 'check_het_han')->dropDownList(LoaiGiayToBase::getDmCheckHetHan(), ['prompt' => '-- Tất cả --']) ?>
         </div>
     </div>

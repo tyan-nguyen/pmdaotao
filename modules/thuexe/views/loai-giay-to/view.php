@@ -14,6 +14,11 @@ use app\custom\CustomFunc;
             'id',
             'ten_loai_giay_to',
             [
+                'attribute' => 'la_bat_buoc',
+                'format' => 'raw',
+                'value' => $model->getLaBatBuocLabel(),
+            ],
+            [
                 'attribute' => 'check_het_han',
                 'format' => 'raw',
                 'value' => $model->getCheckHetHanLabel(),

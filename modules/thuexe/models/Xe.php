@@ -48,8 +48,10 @@ use app\models\PtxXeVitriGps;
  * @property int|null $nam_san_xuat
  * @property int|null $nam_mua
  * @property string|null $imei_gps
+ * @property int|null $id_don_vi_so_huu
  *
  * @property PtxLoaiXe $loaiXe
+ * @property \app\modules\thuexe\models\DonViSoHuu $donViSoHuu
  * @property PtxPhieuThueXe[] $ptxPhieuThueXes
  */
 class Xe extends \app\models\PtxXe
@@ -212,7 +214,8 @@ class Xe extends \app\models\PtxXe
                 'stt',
                 'so_km_ban_dau',
                 'nam_san_xuat',
-                'nam_mua'
+                'nam_mua',
+                'id_don_vi_so_huu'
             ], 'integer'],
             [['ghi_chu', 'dac_diem'], 'string'],
             [['imei_gps'], 'trim'],
@@ -277,6 +280,7 @@ class Xe extends \app\models\PtxXe
             'nam_san_xuat' => 'Năm sản xuất',
             'nam_mua' => 'Năm mua',
             'imei_gps' => 'Số IMEI GPS',
+            'id_don_vi_so_huu' => 'Đơn vị sở hữu',
         ];
     }
     /**
@@ -823,10 +827,8 @@ class Xe extends \app\models\PtxXe
 
     /**
      * Tổng hợp tình trạng hạn các giấy tờ của xe
-     * Duyệt qua các loại giấy tờ có check_het_han = 1:
-     * - Tìm giấy tờ active mới nhất (is_active = 1, id DESC).
-     * - Nếu xe thiếu loại giấy tờ đó -> ghi nhận thiếu.
-     * - Nếu có, kiểm tra trạng thái hạn của giấy tờ đó.
+     * - Chỉ check thiếu giấy tờ đối với các loại giấy tờ có la_bat_buoc = 1.
+     * - Đối với các giấy tờ hiện có trên xe, nếu loại có check_het_han = 1 thì kiểm tra ngày hết hạn.
      *
      * @param bool $detailed Nếu true trả về mảng chi tiết
      * @return string|array Trả về mã trạng thái hoặc mảng thông tin chi tiết
@@ -835,9 +837,7 @@ class Xe extends \app\models\PtxXe
     {
         static $cachedLoaiGiayTos = null;
         if ($cachedLoaiGiayTos === null) {
-            $cachedLoaiGiayTos = \app\modules\thuexe\models\LoaiGiayTo::find()
-                ->where(['check_het_han' => \app\modules\thuexe\models\base\LoaiGiayToBase::CHECK_HET_HAN_CO])
-                ->all();
+            $cachedLoaiGiayTos = \app\modules\thuexe\models\LoaiGiayTo::find()->all();
         }
         $loaiGiayTos = $cachedLoaiGiayTos;
 
@@ -868,13 +868,20 @@ class Xe extends \app\models\PtxXe
                 ->one();
 
             if (!$latest) {
-                $missing[] = $loai;
+                // Chỉ check chưa đủ giấy tờ đối với loại giấy tờ có la_bat_buoc = 1 / true
+                if ($loai->la_bat_buoc == \app\modules\thuexe\models\base\LoaiGiayToBase::BAT_BUOC_CO) {
+                    $missing[] = $loai;
+                }
             } else {
-                $han = $latest->getTrangThaiHan();
-                if ($han === \app\modules\thuexe\models\base\XeGiayToBase::HAN_DA_HET) {
-                    $expired[] = ['loai' => $loai, 'giay_to' => $latest];
-                } elseif ($han === \app\modules\thuexe\models\base\XeGiayToBase::HAN_SAP_HET) {
-                    $warning[] = ['loai' => $loai, 'giay_to' => $latest];
+                if ($loai->check_het_han == \app\modules\thuexe\models\base\LoaiGiayToBase::CHECK_HET_HAN_CO) {
+                    $han = $latest->getTrangThaiHan();
+                    if ($han === \app\modules\thuexe\models\base\XeGiayToBase::HAN_DA_HET) {
+                        $expired[] = ['loai' => $loai, 'giay_to' => $latest];
+                    } elseif ($han === \app\modules\thuexe\models\base\XeGiayToBase::HAN_SAP_HET) {
+                        $warning[] = ['loai' => $loai, 'giay_to' => $latest];
+                    } else {
+                        $valid[] = ['loai' => $loai, 'giay_to' => $latest];
+                    }
                 } else {
                     $valid[] = ['loai' => $loai, 'giay_to' => $latest];
                 }
@@ -887,8 +894,10 @@ class Xe extends \app\models\PtxXe
             $status = \app\modules\thuexe\models\base\XeGiayToBase::HAN_SAP_HET;
         } elseif (!empty($missing)) {
             $status = 'THIEU_GIAY_TO';
-        } else {
+        } elseif (!empty($valid)) {
             $status = \app\modules\thuexe\models\base\XeGiayToBase::HAN_CON_HAN;
+        } else {
+            $status = 'KHONG_YEU_CAU';
         }
 
         if ($detailed) {
@@ -914,21 +923,37 @@ class Xe extends \app\models\PtxXe
         $status = $info['status'];
         switch ($status) {
             case \app\modules\thuexe\models\base\XeGiayToBase::HAN_DA_HET:
-                $names = array_map(function($item) { return $item['loai']->ten_loai_giay_to; }, $info['expired']);
+                $names = array_map(function ($item) {
+                    return $item['loai']->ten_loai_giay_to;
+                }, $info['expired']);
                 $title = 'Giấy tờ hết hạn: ' . implode(', ', $names);
                 return '<span class="badge bg-danger" title="' . \yii\helpers\Html::encode($title) . '"><i class="fa fa-times-circle"></i> Có giấy tờ hết hạn (' . count($info['expired']) . ')</span>';
             case \app\modules\thuexe\models\base\XeGiayToBase::HAN_SAP_HET:
-                $names = array_map(function($item) { return $item['loai']->ten_loai_giay_to; }, $info['warning']);
+                $names = array_map(function ($item) {
+                    return $item['loai']->ten_loai_giay_to;
+                }, $info['warning']);
                 $title = 'Giấy tờ sắp hết hạn: ' . implode(', ', $names);
                 return '<span class="badge bg-warning text-dark" title="' . \yii\helpers\Html::encode($title) . '"><i class="fa fa-exclamation-triangle"></i> Sắp hết hạn (' . count($info['warning']) . ')</span>';
             case 'THIEU_GIAY_TO':
-                $names = array_map(function($loai) { return $loai->ten_loai_giay_to; }, $info['missing']);
-                $title = 'Chưa có: ' . implode(', ', $names);
+                $names = array_map(function ($loai) {
+                    return $loai->ten_loai_giay_to;
+                }, $info['missing']);
+                $title = 'Thiếu giấy tờ bắt buộc: ' . implode(', ', $names);
                 return '<span class="badge bg-secondary" title="' . \yii\helpers\Html::encode($title) . '"><i class="fa fa-question-circle"></i> Chưa đủ giấy tờ (' . count($info['missing']) . ')</span>';
             case \app\modules\thuexe\models\base\XeGiayToBase::HAN_CON_HAN:
                 return '<span class="badge bg-success"><i class="fa fa-check-circle"></i> Giấy tờ hợp lệ</span>';
             default:
                 return '<span class="badge bg-secondary">Không yêu cầu</span>';
         }
+    }
+
+    /**
+     * Gets query for [[DonViSoHuu]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDonViSoHuu()
+    {
+        return $this->hasOne(\app\modules\thuexe\models\DonViSoHuu::class, ['id' => 'id_don_vi_so_huu']);
     }
 }

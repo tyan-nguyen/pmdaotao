@@ -61,6 +61,17 @@ return [
     ],
     [
         'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'la_bat_buoc',
+        'format' => 'raw',
+        'value' => function ($model) {
+            return $model->getLaBatBuocLabel();
+        },
+        'filter' => LoaiGiayToBase::getDmLaBatBuoc(),
+        'hAlign' => 'center',
+        'width' => '140px',
+    ],
+    [
+        'class' => '\kartik\grid\DataColumn',
         'attribute' => 'check_het_han',
         'format' => 'raw',
         'value' => function ($model) {

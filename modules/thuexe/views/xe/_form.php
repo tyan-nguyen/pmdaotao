@@ -5,6 +5,7 @@ use yii\widgets\ActiveForm;
 use app\widgets\CardWidget;
 use kartik\select2\Select2;
 use app\modules\thuexe\models\LoaiXe;
+use app\modules\thuexe\models\DonViSoHuu;
 use yii\bootstrap5\Modal;
 use app\modules\thuexe\models\Xe;
 use app\custom\CustomFunc;
@@ -42,6 +43,18 @@ if ($model->ma_mau === null) {
         </div>
 
         <div class="col-lg-3 col-md-6">
+            <?= $form->field($model, 'id_don_vi_so_huu')->widget(Select2::classname(), [
+                'data' => DonViSoHuu::getList(),
+                'language' => 'vi',
+                'options' => ['placeholder' => '-- Chọn đơn vị sở hữu (không bắt buộc) --'],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                    'dropdownParent' => new yii\web\JsExpression('$("#ajaxCrudModal")'),
+                ],
+            ]); ?>
+        </div>
+
+        <div class="col-lg-2 col-md-6">
             <?= $form->field($model, 'phan_loai')->widget(Select2::classname(), [
                 'data' => Xe::getDmPhanLoaiXe(),
                 'language' => 'vi',
@@ -52,7 +65,6 @@ if ($model->ma_mau === null) {
                 ],
             ]); ?>
         </div>
-
 
         <div class="col-lg-3 col-md-6">
             <?= $form->field($model, 'hieu_xe')->textInput(['maxlength' => true]) ?>
@@ -69,19 +81,19 @@ if ($model->ma_mau === null) {
         <div class="col-lg-1 col-md-6">
             <?= $form->field($model, 'stt')->textInput(['maxlength' => true]) ?>
         </div>
-        <div class="col-lg-3 col-md-6">
+        <div class="col-lg-2 col-md-6">
             <?= $form->field($model, 'tinh_trang_xe')->dropDownList(
                 Xe::getDmTinhTrangXe(),
-                ['prompt' => 'Chọn tình trạng xe']  // 
+                ['prompt' => 'Chọn tình trạng xe']
             ) ?>
         </div>
-        <div class="col-lg-3 col-md-6">
+        <div class="col-lg-2 col-md-6">
             <?= $form->field($model, 'trang_thai')->dropDownList(
                 [
                     'Khả dụng' => 'Khả dụng',
                     'Không khả dụng' => 'Không khả dụng'
                 ],
-                ['prompt' => 'Chọn trạng thái']  // 
+                ['prompt' => 'Chọn trạng thái']
             ) ?>
         </div>
 

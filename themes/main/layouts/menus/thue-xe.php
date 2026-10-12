@@ -49,6 +49,7 @@ use app\modules\user\models\User;
 							<?php if (User::getCurrentUser() && User::getCurrentUser()->superadmin) { ?>
 								<li class=""><a href="<?= Yii::getAlias('@web/thuexe/loai-xe?menu=dc3') ?>" class="slide-item" data-menu="dc3"><i class="fe fe-file-text"></i> Loại Xe</a></li>
 								<li class=""><a href="<?= Yii::getAlias('@web/thuexe/loai-giay-to?menu=dc_lgt') ?>" class="slide-item" data-menu="dc_lgt"><i class="fe fe-file-text"></i> Loại giấy tờ xe</a></li>
+								<li class=""><a href="<?= Yii::getAlias('@web/thuexe/don-vi-so-huu?menu=dc_dvsh') ?>" class="slide-item" data-menu="dc_dvsh"><i class="fe fe-file-text"></i> Đơn vị sở hữu xe</a></li>
 							<?php } ?>
 
 						</ul>

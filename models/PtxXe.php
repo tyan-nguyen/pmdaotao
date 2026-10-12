@@ -36,9 +36,11 @@ use Yii;
  * @property int|null $nam_san_xuat
  * @property int|null $nam_mua
  * @property string|null $imei_gps
+ * @property int|null $id_don_vi_so_huu
  *
  * @property GdGvXe[] $gdGvXes
  * @property PtxLoaiXe $loaiXe
+ * @property PtxXeDonViSoHuu $donViSoHuu
  * @property PtxLichThue[] $ptxLichThues
  * @property PtxPhieuThueXe[] $ptxPhieuThueXes
  */
@@ -60,9 +62,9 @@ class PtxXe extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ma_so', 'phan_loai', 'hieu_xe', 'bien_so_xe', 'ma_bien_so', 'tinh_trang_xe', 'trang_thai', 'ghi_chu', 'so_khung', 'so_may', 'ngay_dang_kiem', 'mau_sac', 'dac_diem', 'la_xe_cu', 'so_tien', 'nha_cung_cap', 'so_hoa_don', 'so_hop_dong', 'id_giao_vien', 'nguoi_tao', 'thoi_gian_tao', 'stt', 'so_km_ban_dau', 'ngay_cap_nhat_km', 'imei_gps'], 'default', 'value' => null],
+            [['ma_so', 'phan_loai', 'hieu_xe', 'bien_so_xe', 'ma_bien_so', 'tinh_trang_xe', 'trang_thai', 'ghi_chu', 'so_khung', 'so_may', 'ngay_dang_kiem', 'mau_sac', 'dac_diem', 'la_xe_cu', 'so_tien', 'nha_cung_cap', 'so_hoa_don', 'so_hop_dong', 'id_giao_vien', 'nguoi_tao', 'thoi_gian_tao', 'stt', 'so_km_ban_dau', 'ngay_cap_nhat_km', 'imei_gps', 'id_don_vi_so_huu'], 'default', 'value' => null],
             [['id_loai_xe'], 'required'],
-            [['id_loai_xe', 'la_xe_cu', 'id_giao_vien', 'nguoi_tao', 'stt', 'so_km_ban_dau', 'nam_san_xuat', 'nam_mua'], 'integer'],
+            [['id_loai_xe', 'la_xe_cu', 'id_giao_vien', 'nguoi_tao', 'stt', 'so_km_ban_dau', 'nam_san_xuat', 'nam_mua', 'id_don_vi_so_huu'], 'integer'],
             [['tinh_trang_xe', 'ghi_chu', 'dac_diem'], 'string'],
             [['ngay_dang_kiem', 'thoi_gian_tao', 'ngay_cap_nhat_km'], 'safe'],
             [['so_tien'], 'number'],
@@ -71,6 +73,7 @@ class PtxXe extends \yii\db\ActiveRecord
             [['trang_thai'], 'string', 'max' => 25],
             [['so_khung', 'so_may', 'mau_sac', 'nha_cung_cap', 'so_hoa_don', 'so_hop_dong'], 'string', 'max' => 250],
             [['id_loai_xe'], 'exist', 'skipOnError' => true, 'targetClass' => PtxLoaiXe::class, 'targetAttribute' => ['id_loai_xe' => 'id']],
+            [['id_don_vi_so_huu'], 'exist', 'skipOnError' => true, 'targetClass' => PtxXeDonViSoHuu::class, 'targetAttribute' => ['id_don_vi_so_huu' => 'id']],
         ];
     }
 
@@ -109,7 +112,18 @@ class PtxXe extends \yii\db\ActiveRecord
             'nam_san_xuat' => 'Nam San Xuat',
             'nam_mua' => 'Nam Mua',
             'imei_gps' => 'Số IMEI GPS',
+            'id_don_vi_so_huu' => 'Đơn vị sở hữu',
         ];
+    }
+
+    /**
+     * Gets query for [[DonViSoHuu]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDonViSoHuu()
+    {
+        return $this->hasOne(PtxXeDonViSoHuu::class, ['id' => 'id_don_vi_so_huu']);
     }
 
     /**

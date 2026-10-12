@@ -68,6 +68,8 @@ $tongCanhBaoGiayTo = $thongKeHanGiayTo['tong'];
 							</li>
 							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/loai-giay-to/index?menu=taisand') ?>" class="slide-item" data-menu="taisand"><i class="fe fe-file-text"></i> Loại giấy tờ xe</a>
 							</li>
+							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/don-vi-so-huu/index?menu=taisane') ?>" class="slide-item" data-menu="taisane"><i class="fe fe-file-text"></i> Đơn vị sở hữu xe</a>
+							</li>
 						</ul>
 						<div class="menutabs-content px-0">
 							<!-- menu tab here -->

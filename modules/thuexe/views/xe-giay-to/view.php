@@ -22,6 +22,7 @@ use app\modules\thuexe\models\XeGiayTo;
                     <strong>Xe:</strong> <?= $model->xe ? Html::encode($model->xe->bien_so_xe . ' - ' . $model->xe->hieu_xe) : '<span class="text-muted">Chưa rõ</span>' ?>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <strong>Loại giấy tờ:</strong> <?= $model->loaiGiayTo ? Html::encode($model->loaiGiayTo->ten_loai_giay_to) : '<span class="text-muted">Chưa rõ</span>' ?>
+                    <?= ($model->loaiGiayTo && $model->loaiGiayTo->la_bat_buoc == 1) ? ' <span class="badge bg-danger ms-1">Bắt buộc</span>' : '' ?>
                 </p>
                 <p>
                     <strong>Ngày bắt đầu:</strong> <?= $model->ngay_bat_dau ? CustomFunc::convertYMDToDMY($model->ngay_bat_dau) : '-' ?>

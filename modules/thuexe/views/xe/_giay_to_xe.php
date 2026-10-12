@@ -7,19 +7,28 @@ use app\custom\CustomFunc;
 /* @var $model app\modules\thuexe\models\Xe */
 
 $giayTos = $model->getGiayTosMoiNhat();
+$infoGiayTo = $model->getTrangThaiGiayToXe(true);
 
 ?>
+
+<?php if (!empty($infoGiayTo['missing'])): ?>
+    <div class="alert alert-warning py-2 px-3 mb-3 d-flex align-items-center justify-content-between">
+        <div>
+            <i class="fa fa-exclamation-triangle text-warning me-2"></i>
+            <span><strong>Chưa đủ giấy tờ bắt buộc:</strong> <?= Html::encode(implode(', ', array_map(function ($loai) {
+                                                                    return $loai->ten_loai_giay_to;
+                                                                }, $infoGiayTo['missing']))) ?></span>
+        </div>
+
+    </div>
+<?php endif; ?>
 
 <?php if (empty($giayTos)): ?>
     <div class="alert alert-info d-flex align-items-center justify-content-between" role="alert">
         <div>
             <i class="fa fa-info-circle me-2"></i> Xe này hiện chưa có thông tin giấy tờ nào được cập nhật.
         </div>
-        <?= Html::a(
-            '<i class="fa fa-plus"></i> Thêm ngay',
-            ['/thuexe/xe-giay-to/create', 'id_xe' => $model->id, 'modalType' => 'modal-remote-2'],
-            ['role' => 'modal-remote-2', 'class' => 'btn btn-outline-primary btn-sm']
-        ) ?>
+
     </div>
 <?php else: ?>
     <div class="table-responsive">
@@ -42,6 +51,7 @@ $giayTos = $model->getGiayTosMoiNhat();
                         <td class="text-center"><?= $index + 1 ?></td>
                         <td class="font-weight-bold">
                             <?= $gt->loaiGiayTo ? Html::encode($gt->loaiGiayTo->ten_loai_giay_to) : '<span class="text-muted">Chưa rõ</span>' ?>
+                            <?= ($gt->loaiGiayTo && $gt->loaiGiayTo->la_bat_buoc == \app\modules\thuexe\models\base\LoaiGiayToBase::BAT_BUOC_CO) ? '<span class="badge bg-danger ms-1" style="font-size: 11px;">Bắt buộc</span>' : '' ?>
                         </td>
                         <td class="text-center">
                             <?= $gt->ngay_bat_dau ? CustomFunc::convertYMDToDMY($gt->ngay_bat_dau) : '-' ?>

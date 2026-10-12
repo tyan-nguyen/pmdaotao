@@ -170,17 +170,32 @@ return [
         'class' => '\kartik\grid\DataColumn',
         'header' => '',
         'value' => function ($model) {
-            $status = $model->getTrangThaiGiayToXe();
+            $rtButton = '';
+            $info = $model->getTrangThaiGiayToXe(true);
+            if (!empty($info['missing'])) {
+                $names = array_map(function ($loai) {
+                    return $loai->ten_loai_giay_to;
+                }, $info['missing']);
+                $title = 'Chưa đủ giấy tờ bắt buộc' . (!empty($names) ? (': ' . implode(', ', $names)) : '');
+                $rtButton = Html::a(
+                    '<i class="fa fa-exclamation-triangle text-danger" style="font-size: 16px;"></i>',
+                    ['/thuexe/xe/view', 'id' => $model->id],
+                    ['role' => 'modal-remote', 'title' => $title, 'data-bs-toggle' => 'tooltip', 'style' => 'text-decoration:none;']
+                );
+            }
+            $status = $info['status'];
             if ($status === \app\modules\thuexe\models\base\XeGiayToBase::HAN_SAP_HET || $status === \app\modules\thuexe\models\base\XeGiayToBase::HAN_DA_HET) {
-                return Html::a('<i class="fa fa-exclamation-triangle text-warning" style="font-size: 16px;"></i>', 
-                    ['/thuexe/xe/view', 'id' => $model->id], 
+                return $rtButton . Html::a(
+                    '<i class="fa fa-exclamation-triangle text-warning" style="font-size: 16px;"></i>',
+                    ['/thuexe/xe/view', 'id' => $model->id],
                     ['role' => 'modal-remote', 'title' => 'Có giấy tờ hết hạn', 'data-bs-toggle' => 'tooltip', 'style' => 'text-decoration:none;']
                 );
             }
             $count = count($model->xeGiayTos);
             if ($count > 0) {
-                return Html::a('<i class="fa fa-paperclip text-info" style="font-size: 16px;"></i>', 
-                    ['/thuexe/xe/view', 'id' => $model->id], 
+                return $rtButton . Html::a(
+                    '<i class="fa fa-paperclip text-info" style="font-size: 16px;"></i>',
+                    ['/thuexe/xe/view', 'id' => $model->id],
                     ['role' => 'modal-remote', 'title' => 'Có ' . $count . ' giấy tờ xe', 'data-bs-toggle' => 'tooltip', 'style' => 'text-decoration:none;']
                 );
             }
@@ -290,6 +305,18 @@ return [
             return $loaiXe ? $loaiXe->ten_loai_xe : '<span style="color: red;">Trống </span>';
         },
         'contentOptions' => ['style' => 'text-align:center'],
+    ],
+    [
+        'class' => '\kartik\grid\DataColumn',
+        'attribute' => 'id_don_vi_so_huu',
+        'label' => 'Đơn vị sở hữu',
+        'value' => function ($model) {
+            return $model->donViSoHuu ? Html::encode($model->donViSoHuu->ten_don_vi) : '<span class="text-muted">-</span>';
+        },
+        'format' => 'raw',
+        'filter' => \app\modules\thuexe\models\DonViSoHuu::getList(),
+        'contentOptions' => ['style' => 'text-align:center'],
+        'headerOptions' => ['style' => 'width:150px;text-align:center;'],
     ],
     [
         'class' => '\kartik\grid\DataColumn',

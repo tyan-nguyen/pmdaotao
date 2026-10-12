@@ -71,8 +71,16 @@ return [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'id_loai_giay_to',
         'label' => 'Loại giấy tờ',
+        'format' => 'raw',
         'value' => function ($model) {
-            return $model->loaiGiayTo ? $model->loaiGiayTo->ten_loai_giay_to : '';
+            if (!$model->loaiGiayTo) {
+                return '';
+            }
+            $txt = Html::encode($model->loaiGiayTo->ten_loai_giay_to);
+            if ($model->loaiGiayTo->la_bat_buoc == \app\modules\thuexe\models\base\LoaiGiayToBase::BAT_BUOC_CO) {
+                $txt .= ' <span class="badge bg-danger ms-1" style="font-size: 10px;">Bắt buộc</span>';
+            }
+            return $txt;
         },
         'filter' => LoaiGiayTo::getListLoaiGiayTo(),
     ],

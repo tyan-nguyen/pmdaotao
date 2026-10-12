@@ -14,7 +14,7 @@ $giayTos = $model->getGiayTosMoiNhat();
         <?= Html::a(
             '<i class="fa fa-plus"></i> Thêm giấy tờ cho xe',
             ['/thuexe/xe-giay-to/create', 'id_xe' => $model->id, 'modalType' => 'modal-remote-2'],
-            ['role' => 'modal-remote-2', 'class' => 'btn btn-primary btn-sm', 'title' => 'Thêm giấy tờ']
+            ['role' => 'modal-remote-2', 'class' => 'btn btn-primary btn-sm', 'title' => 'Thêm giấy tờ', 'style' => 'color:white']
         ) ?>
     </div>
 

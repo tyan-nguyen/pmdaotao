@@ -18,7 +18,7 @@ class LoaiGiayToSearch extends LoaiGiayTo
     public function rules()
     {
         return [
-            [['id', 'check_het_han', 'so_ngay_bao_truoc', 'nguoi_tao'], 'integer'],
+            [['id', 'check_het_han', 'la_bat_buoc', 'so_ngay_bao_truoc', 'nguoi_tao'], 'integer'],
             [['ten_loai_giay_to', 'ghi_chu', 'thoi_gian_tao'], 'safe'],
         ];
     }
@@ -57,6 +57,7 @@ class LoaiGiayToSearch extends LoaiGiayTo
         $query->andFilterWhere([
             'id' => $this->id,
             'check_het_han' => $this->check_het_han,
+            'la_bat_buoc' => $this->la_bat_buoc,
             'so_ngay_bao_truoc' => $this->so_ngay_bao_truoc,
             'nguoi_tao' => $this->nguoi_tao,
         ]);
