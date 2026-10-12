@@ -44,7 +44,7 @@ class LoaiGiayToSearch extends LoaiGiayTo
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => [
-                'defaultOrder' => ['id' => SORT_DESC],
+                'defaultOrder' => ['id' => SORT_ASC],
             ],
         ]);
 

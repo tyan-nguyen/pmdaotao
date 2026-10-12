@@ -44,7 +44,7 @@ class DonViSoHuuSearch extends DonViSoHuu
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => [
-                'defaultOrder' => ['id' => SORT_DESC],
+                'defaultOrder' => ['id' => SORT_ASC],
             ],
         ]);
 
