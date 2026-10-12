@@ -16,7 +16,7 @@ return [
     [
         'class' => 'kartik\grid\ActionColumn',
         'header' => '',
-        'template' => '{view} {update} {delete}',
+        'template' => '{update} {delete}',
         'dropdown' => true,
         'dropdownOptions' => ['class' => 'float-right'],
         'dropdownButton' => [

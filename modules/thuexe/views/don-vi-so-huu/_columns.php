@@ -1,4 +1,5 @@
 <?php
+
 use yii\helpers\Url;
 use yii\bootstrap5\Html;
 use app\custom\CustomFunc;
@@ -15,7 +16,7 @@ return [
     [
         'class' => 'kartik\grid\ActionColumn',
         'header' => '',
-        'template' => '{view} {update} {delete}',
+        'template' => '{update} {delete}',
         'dropdown' => true,
         'dropdownOptions' => ['class' => 'float-right'],
         'dropdownButton' => [
@@ -24,7 +25,7 @@ return [
         ],
         'vAlign' => 'middle',
         'width' => '20px',
-        'urlCreator' => function($action, $model, $key, $index) {
+        'urlCreator' => function ($action, $model, $key, $index) {
             return Url::to([$action, 'id' => $key]);
         },
         'viewOptions' => [
@@ -36,14 +37,14 @@ return [
         ],
         'updateOptions' => [
             'role' => 'modal-remote',
-            'title' => 'Sửa', 
+            'title' => 'Sửa',
             'class' => 'btn ripple btn-info btn-sm',
             'data-bs-placement' => 'top',
             'data-bs-toggle' => 'tooltip-info'
         ],
         'deleteOptions' => [
             'role' => 'modal-remote',
-            'title' => 'Xóa', 
+            'title' => 'Xóa',
             'data-confirm' => false,
             'data-method' => false,
             'data-request-method' => 'post',
@@ -53,7 +54,7 @@ return [
             'class' => 'btn ripple btn-secondary btn-sm',
             'data-bs-placement' => 'top',
             'data-bs-toggle' => 'tooltip-secondary'
-        ], 
+        ],
     ],
     [
         'class' => '\kartik\grid\DataColumn',
