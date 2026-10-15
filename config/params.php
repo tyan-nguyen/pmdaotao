@@ -20,5 +20,6 @@ return [
         'nguyenvantyan@gmail.com',
         'nguyenvantyan@yahoo.com'
     ],
+    'camera_api_token' => 'truonglai_camera_secure_token_2026',
     //'bsDependencyEnabled' => false,
 ];
