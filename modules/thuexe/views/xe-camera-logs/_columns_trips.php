@@ -114,7 +114,7 @@ return [
             if ($xe) {
                 return Html::encode($model->bien_so_xe ?: $model->ma_xe);
             } else {
-                return '';
+                return $model->ma_xe;
             }
         },
         'contentOptions' => ['style' => 'text-align:center'],
