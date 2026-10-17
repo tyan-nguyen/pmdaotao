@@ -956,4 +956,14 @@ class Xe extends \app\models\PtxXe
     {
         return $this->hasOne(\app\modules\thuexe\models\DonViSoHuu::class, ['id' => 'id_don_vi_so_huu']);
     }
+
+    /**
+     * Gets query for [[CameraLogs]].
+     * Liên kết với bảng ptx_xe_camera_logs qua ma_xe = ma_bien_so
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCameraLogs()
+    {
+        return $this->hasMany(\app\modules\thuexe\models\XeCameraLogs::class, ['ma_xe' => 'ma_bien_so']);
+    }
 }

@@ -6,6 +6,7 @@ use Yii;
 use app\models\PtxXeLuotRaVao;
 use app\modules\thuexe\models\Xe;
 use app\modules\thuexe\models\XeCameraLogs;
+use yii\helpers\Html;
 
 /**
  * Class XeLuotRaVaoBase
@@ -159,11 +160,25 @@ class XeLuotRaVaoBase extends PtxXeLuotRaVao
             case self::KE_HOACH_APPROVED:
                 return '<span class="badge bg-success">Có kế hoạch</span>';
             case self::KE_HOACH_UNPLANNED:
-                return '<span class="badge bg-danger">Không kế hoạch</span>';
+                return '<span class="badge bg-secondary">Không kế hoạch</span>';
             case self::KE_HOACH_INFO:
-                return '<span class="badge bg-secondary">Xe ngoài</span>';
+                return '<span class="badge bg-info">Xe ngoài</span>';
             default:
                 return '<span class="badge bg-light text-dark">N/A</span>';
+        }
+    }
+
+    public function getSuKienIcon()
+    {
+        switch ($this->trang_thai_ke_hoach) {
+            case self::KE_HOACH_APPROVED:
+                return '';
+            case self::KE_HOACH_UNPLANNED:
+                return Html::img('/libs/images/icons/red-card.gif', ['width' => '22', 'title' => 'ĐI KHÔNG KẾ HOẠCH']);
+            case self::KE_HOACH_INFO:
+                return '';
+            default:
+                return '';
         }
     }
 
@@ -189,7 +204,8 @@ class XeLuotRaVaoBase extends PtxXeLuotRaVao
             $desc = "{$minutes} phút";
         }
 
-        return "{$timeStr} ({$desc})";
+        //return "{$timeStr} ({$desc})";
+        return "{$timeStr}";
     }
 
     /**
@@ -211,6 +227,18 @@ class XeLuotRaVaoBase extends PtxXeLuotRaVao
             return $this->hasOne(Xe::class, ['id' => 'id_xe']);
         }
         return $this->hasOne(Xe::class, ['ma_bien_so' => 'ma_xe']);
+    }
+
+    /**
+     * get loiạ xe theo id_xe
+     */
+    public function getLoaiXe()
+    {
+        if ($this->id_xe) {
+            return '<span class="badge bg-primary">' . $this->xe->labelPhanLoaiXe . '</span>';
+        } else {
+            return '<span class="badge bg-info">Xe khách</span>';
+        }
     }
 
     /**
@@ -238,7 +266,7 @@ class XeLuotRaVaoBase extends PtxXeLuotRaVao
     public function getTenCameraDi()
     {
         if (empty($this->camera_di)) {
-            return 'N/A';
+            return '';
         }
         $dm = XeCameraLogs::getDmCamera();
         return $dm[$this->camera_di] ?? $this->camera_di;
@@ -251,7 +279,7 @@ class XeLuotRaVaoBase extends PtxXeLuotRaVao
     public function getTenCameraVe()
     {
         if (empty($this->camera_ve)) {
-            return 'N/A';
+            return '';
         }
         $dm = XeCameraLogs::getDmCamera();
         return $dm[$this->camera_ve] ?? $this->camera_ve;
@@ -264,7 +292,8 @@ class XeLuotRaVaoBase extends PtxXeLuotRaVao
     public function getQuaDemBadge()
     {
         if ($this->qua_dem) {
-            return '<span class="badge bg-purple text-white"><i class="fa fa-moon-o me-1"></i> Qua đêm</span>';
+            // return '<span class="badge bg-purple"><i class="fa fa-moon-o me-1"></i>Qua đêm</span>';
+            return Html::img('/libs/images/icons/night.gif', ['width' => '20', 'title' => 'XE QUA ĐÊM']);
         }
         return '';
     }

@@ -25,6 +25,8 @@
 						<ul class="sidemenu-list">
 							<li class="side-menu__label1"><a href="javascript:void(0)">Danh mục chức năng</a>
 							</li>
+							<li class=""><a href="<?= Yii::getAlias('@web/thuexe/xe-camera-logs?menu=demxe9') ?>" class="slide-item" data-menu="demxe9"><i class="fe fe-video"></i> Camera tự động</a></li>
+
 							<li class=""><a href="<?= Yii::getAlias('@web/demxe/cong-can-tin?menu=demxe4') ?>" class="slide-item" data-menu="demxe4"><i class="fe fe-file-text"></i> Cổng căn tin <i class="ion-ios7-star text-secondary"></i></a>
 							</li>
 							<li class=""><a href="<?= Yii::getAlias('@web/demxe/cong-san-cam-bien?menu=demxe5') ?>" class="slide-item" data-menu="demxe5"><i class="fe fe-file-text"></i> Cổng sân cảm biến <i class="ion-ios7-star text-secondary"></i></a>

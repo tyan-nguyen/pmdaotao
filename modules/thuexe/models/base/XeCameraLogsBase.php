@@ -35,11 +35,16 @@ class XeCameraLogsBase extends PtxXeCameraLogs
     public static function getDmCamera()
     {
         return [
-            self::CAMERA_CONG_CAN_TIN => 'Cổng căn tin (cong_can_tin)',
+            /* self::CAMERA_CONG_CAN_TIN => 'Cổng căn tin (cong_can_tin)',
             self::CAMERA_CONG_SAN_CAM_BIEN => 'Cổng sân cảm biến (cong_san_cam_bien)',
             'cong_cantin' => 'Cổng căn tin (cong_cantin)',
             self::CAMERA_CONG_SAN_CAM_BIEN_RA => 'Cổng sân cảm biến - Làn Ra (cong_san_cam_bien_ra)',
-            self::CAMERA_CONG_SAN_CAM_BIEN_VAO => 'Cổng sân cảm biến - Làn Vào (cong_san_cam_bien_vao)',
+            self::CAMERA_CONG_SAN_CAM_BIEN_VAO => 'Cổng sân cảm biến - Làn Vào (cong_san_cam_bien_vao)', */
+            self::CAMERA_CONG_CAN_TIN => 'Cổng căn tin', //cong_can_tin
+            self::CAMERA_CONG_SAN_CAM_BIEN => 'Cổng sân cảm biến', //cong_san_cam_bien
+            'cong_cantin' => 'Cổng căn tin', //cong_cantin
+            self::CAMERA_CONG_SAN_CAM_BIEN_RA => 'Cổng sân cảm biến - Làn Ra', //cong_san_cam_bien_ra
+            self::CAMERA_CONG_SAN_CAM_BIEN_VAO => 'Cổng sân cảm biến - Làn Vào', //cong_san_cam_bien_vao
         ];
     }
 
