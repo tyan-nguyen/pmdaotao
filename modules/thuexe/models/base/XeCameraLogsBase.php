@@ -21,6 +21,8 @@ class XeCameraLogsBase extends PtxXeCameraLogs
     const CAMERA_CONG_SAN_CAM_BIEN = 'cong_san_cam_bien';
     const CAMERA_CONG_SAN_CAM_BIEN_RA = 'cong_san_cam_bien_ra';
     const CAMERA_CONG_SAN_CAM_BIEN_VAO = 'cong_san_cam_bien_vao';
+    const CAMERA_SAN_XUAT_PHAT = 'camera_san_xuat_phat';
+    const CAMERA_SAN_KET_THUC = 'camera_san_ket_thuc';
 
     const SU_KIEN_MAT_TRUOC = 'mat_truoc';
     const SU_KIEN_MAT_SAU = 'mat_sau';
@@ -45,6 +47,10 @@ class XeCameraLogsBase extends PtxXeCameraLogs
             'cong_cantin' => 'Cổng căn tin', //cong_cantin
             self::CAMERA_CONG_SAN_CAM_BIEN_RA => 'Cổng sân cảm biến - Làn Ra', //cong_san_cam_bien_ra
             self::CAMERA_CONG_SAN_CAM_BIEN_VAO => 'Cổng sân cảm biến - Làn Vào', //cong_san_cam_bien_vao
+            self::CAMERA_SAN_XUAT_PHAT => 'Sân xuất phát',
+            self::CAMERA_SAN_KET_THUC => 'Sân kết thúc',
+            'san_xuat_phat' => 'Sân xuất phát',
+            'san_ket_thuc' => 'Sân kết thúc',
         ];
     }
 
@@ -109,6 +115,24 @@ class XeCameraLogsBase extends PtxXeCameraLogs
 
         $str = strtolower(trim((string)$input));
         if (
+            $str === self::CAMERA_SAN_XUAT_PHAT
+            || $str === 'san_xuat_phat'
+            || str_contains($str, 'xuat_phat')
+            || str_contains($str, 'xuất phát')
+        ) {
+            return self::CAMERA_SAN_XUAT_PHAT;
+        }
+
+        if (
+            $str === self::CAMERA_SAN_KET_THUC
+            || $str === 'san_ket_thuc'
+            || str_contains($str, 'ket_thuc')
+            || str_contains($str, 'kết thúc')
+        ) {
+            return self::CAMERA_SAN_KET_THUC;
+        }
+
+        if (
             $str === self::CAMERA_CONG_CAN_TIN
             || $str === 'cong_cantin'
             || $str === self::CAMERA_CONG_SAN_CAM_BIEN
@@ -121,12 +145,14 @@ class XeCameraLogsBase extends PtxXeCameraLogs
             return $str;
         }
 
-        // Nếu gửi số nguyên: 1 -> Căn tin, 2 -> Sân cảm biến Ra (hoặc chung), 3 -> Sân cảm biến Vào
+        // Nếu gửi số nguyên: 1 -> Căn tin, 2 -> Sân cảm biến Ra (hoặc chung), 3 -> Sân cảm biến Vào, 4 -> Sân xuất phát, 5 -> Sân kết thúc
         if (is_numeric($input)) {
             $num = (int)$input;
             if ($num === 1) return self::CAMERA_CONG_CAN_TIN;
             if ($num === 2) return self::CAMERA_CONG_SAN_CAM_BIEN_RA;
             if ($num === 3) return self::CAMERA_CONG_SAN_CAM_BIEN_VAO;
+            if ($num === 4) return self::CAMERA_SAN_XUAT_PHAT;
+            if ($num === 5) return self::CAMERA_SAN_KET_THUC;
             return self::CAMERA_CONG_SAN_CAM_BIEN;
         }
 

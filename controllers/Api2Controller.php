@@ -36,6 +36,8 @@ class Api2Controller extends Controller
         'camera-san-cam-bien',
         'camera-san-cam-bien-vao',
         'camera-san-cam-bien-ra',
+        'camera-san-xuat-phat',
+        'camera-san-ket-thuc',
     ];
 
     /**
@@ -224,6 +226,8 @@ class Api2Controller extends Controller
             $parsedCam === XeCameraLogs::CAMERA_CONG_SAN_CAM_BIEN
             || $parsedCam === XeCameraLogs::CAMERA_CONG_SAN_CAM_BIEN_VAO
             || $parsedCam === XeCameraLogs::CAMERA_CONG_SAN_CAM_BIEN_RA
+            || $parsedCam === XeCameraLogs::CAMERA_SAN_XUAT_PHAT
+            || $parsedCam === XeCameraLogs::CAMERA_SAN_KET_THUC
         ) {
             $check = XeCameraTripService::kiemTraLichThueXe($inputPlate, $timeStr);
         } else {
@@ -333,6 +337,193 @@ class Api2Controller extends Controller
     }
 
     /**
+     * Dedicated API tiếp nhận Camera SÂN XUẤT PHÁT
+     * Route: POST /api2/camera-san-xuat-phat
+     * Kiểm tra vé / lịch thuê xe realtime, không lưu database, không ghép cặp
+     *
+     * @return array
+     */
+    public function actionCameraSanXuatPhat()
+    {
+        return $this->processKiemTraVeSanTap('xuat_phat');
+    }
+
+    /**
+     * Dedicated API tiếp nhận Camera SÂN KẾT THÚC
+     * Route: POST /api2/camera-san-ket-thuc
+     * Kiểm tra vé / lịch thuê xe realtime, không lưu database, không ghép cặp
+     *
+     * @return array
+     */
+    public function actionCameraSanKetThuc()
+    {
+        return $this->processKiemTraVeSanTap('ket_thuc');
+    }
+
+    /**
+     * Xử lý kiểm tra vé xe tại Sân tập (Sân xuất phát / Sân kết thúc)
+     * - Chỉ phát hiện xe trong ptx_xe có đăng ký lịch thuê trong ptx_lich_thue hay không
+     * - Không lưu dữ liệu vào CSDL
+     * - Không ghép cặp chuyến đi/về
+     * - Trả về dữ liệu chuẩn xác cho ứng dụng camera ANPR phát loa và cảnh báo
+     *
+     * @param string $diemKiemSoat 'xuat_phat' hoặc 'ket_thuc'
+     * @return array
+     */
+    public function processKiemTraVeSanTap($diemKiemSoat = 'xuat_phat')
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $request = Yii::$app->request;
+
+        // Lấy dữ liệu từ JSON Raw Body hoặc Form POST/GET
+        $data = [];
+        $rawBody = $request->getRawBody();
+        if (!empty($rawBody)) {
+            $jsonData = json_decode($rawBody, true);
+            if (is_array($jsonData)) {
+                $data = $jsonData;
+            }
+        }
+
+        // 1. Trích xuất Biển số xe gốc
+        $plateNumber = $data['plate_number']
+            ?? $data['bien_so_xe']
+            ?? $data['bien_so']
+            ?? $data['bienSo']
+            ?? $data['bienSoXe']
+            ?? $request->post('plate_number')
+            ?? $request->post('bien_so_xe')
+            ?? $request->post('bien_so')
+            ?? $request->get('plate_number')
+            ?? $request->get('bien_so_xe')
+            ?? $request->get('bien_so');
+
+        // 2. Trích xuất Mã xe đã làm sạch (nếu có)
+        $cleanPlateInput = $data['clean_plate']
+            ?? $data['ma_xe']
+            ?? $request->post('clean_plate')
+            ?? $request->post('ma_xe')
+            ?? $request->get('clean_plate')
+            ?? $request->get('ma_xe');
+
+        $cleanPlate = !empty($cleanPlateInput)
+            ? XeCameraLogs::chuanHoaMaXe($cleanPlateInput)
+            : XeCameraLogs::chuanHoaMaXe($plateNumber);
+
+        if (empty($cleanPlate)) {
+            Yii::$app->response->statusCode = 422;
+            return [
+                'success' => false,
+                'status' => 'error',
+                'message' => 'Thiếu thông tin biển số xe (plate_number hoặc bien_so_xe).',
+            ];
+        }
+
+        $displayPlate = !empty($plateNumber) ? trim((string)$plateNumber) : $cleanPlate;
+
+        // 3. Trích xuất Thời gian quét
+        $detectedAt = $data['detected_at']
+            ?? $data['thoi_gian']
+            ?? $data['time']
+            ?? $request->post('detected_at')
+            ?? $request->post('thoi_gian')
+            ?? $request->get('detected_at')
+            ?? date('Y-m-d H:i:s');
+
+        // Cấu hình theo điểm kiểm soát
+        if ($diemKiemSoat === 'ket_thuc') {
+            $cameraCode = XeCameraLogs::CAMERA_SAN_KET_THUC;
+            $diemKey = 'ket_thuc';
+            $tenDiem = 'điểm kết thúc';
+        } else {
+            $cameraCode = XeCameraLogs::CAMERA_SAN_XUAT_PHAT;
+            $diemKey = 'xuat_phat';
+            $tenDiem = 'điểm xuất phát';
+        }
+
+        // 4. Kiểm tra xe trong danh sách ptx_xe và lịch thuê trong ptx_lich_thue
+        $check = XeCameraTripService::kiemTraLichThueXe($cleanPlate, $detectedAt);
+        $isXeNoiBo = (bool)$check['thuoc_danh_sach_xe'];
+        $hasLichThue = (bool)$check['co_ke_hoach'];
+        $lichThue = $check['lich_thue'];
+
+        // =========================================================================
+        // PHÂN NHÁNH 3 TRƯỜNG HỢP CHUẨN XÁC THEO HỆ THỐNG ANPR CAMERA
+        // =========================================================================
+        if ($isXeNoiBo) {
+            if ($hasLichThue && $lichThue) {
+                // TH 1: Xe nội bộ CÓ lịch thuê hợp lệ
+                return [
+                    'success' => true,
+                    'status' => 'success',
+                    'action_status' => 'APPROVED',
+                    'vehicle_classification' => 'INTERNAL_VALID',
+                    'alert_level' => 'normal',
+                    'summary' => 'Xe có lịch thuê sân',
+                    'message' => "Xe {$displayPlate} hợp lệ",
+                    'voice_message' => "Xe {$displayPlate} hợp lệ",
+                    'webhook_result_bool' => true,
+                    'data' => [
+                        'camera' => $cameraCode,
+                        'diem_kiem_soat' => $diemKey,
+                        'plate_number' => $displayPlate,
+                        'clean_plate' => $cleanPlate,
+                        'thuoc_danh_sach_xe' => true,
+                        'co_lich_thue' => true,
+                        'rental_schedule' => [
+                            'id' => $lichThue->id,
+                            'thoi_gian_bat_dau' => $lichThue->thoi_gian_bat_dau,
+                            'thoi_gian_ket_thuc' => $lichThue->thoi_gian_ket_thuc,
+                        ],
+                    ],
+                ];
+            } else {
+                // TH 2: Xe nội bộ KHÔNG có lịch thuê (Vi phạm xe trường)
+                return [
+                    'success' => false,
+                    'status' => 'error',
+                    'action_status' => 'UNPLANNED',
+                    'vehicle_classification' => 'INTERNAL_UNPLANNED',
+                    'alert_level' => 'warning',
+                    'summary' => 'Xe không có lịch thuê',
+                    'message' => "Phát hiện xe {$displayPlate} vào sân không mua vé tại {$tenDiem}",
+                    'voice_message' => "Phát hiện xe {$displayPlate} vào sân không mua vé tại {$tenDiem}",
+                    'webhook_result_bool' => false,
+                    'data' => [
+                        'camera' => $cameraCode,
+                        'diem_kiem_soat' => $diemKey,
+                        'plate_number' => $displayPlate,
+                        'clean_plate' => $cleanPlate,
+                        'thuoc_danh_sach_xe' => true,
+                        'co_lich_thue' => false,
+                    ],
+                ];
+            }
+        } else {
+            // TH 3: XE LẠ ngoài danh sách (Chưa mua vé / Không có trong ptx_xe)
+            return [
+                'success' => false,
+                'status' => 'error',
+                'action_status' => 'INFO',
+                'vehicle_classification' => 'EXTERNAL_UNKNOWN',
+                'alert_level' => 'warning',
+                'summary' => 'Xe lạ ngoài danh sách',
+                'message' => "Phát hiện xe lạ {$displayPlate} vào sân không mua vé tại {$tenDiem}",
+                'voice_message' => "Phát hiện xe lạ {$displayPlate} vào sân không mua vé tại {$tenDiem}",
+                'webhook_result_bool' => false,
+                'data' => [
+                    'camera' => $cameraCode,
+                    'diem_kiem_soat' => $diemKey,
+                    'plate_number' => $displayPlate,
+                    'clean_plate' => $cleanPlate,
+                    'thuoc_danh_sach_xe' => false,
+                    'co_lich_thue' => false,
+                ],
+            ];
+        }
+    }
+
+    /**
      * Xử lý lõi tiếp nhận log camera
      *
      * @param string|null $forcedView Ép cố định góc chụp nếu gọi từ endpoint chuyên biệt (mat_truoc / mat_sau)
@@ -401,6 +592,13 @@ class Api2Controller extends Controller
                 ?? $request->post('camera');
         }
         $maCamera = XeCameraLogs::parseMaCamera($maCamera);
+
+        // Nếu là camera Sân xuất phát hoặc Sân kết thúc -> chuyển hướng sang processKiemTraVeSanTap (không lưu CSDL, không ghép cặp)
+        if ($maCamera === XeCameraLogs::CAMERA_SAN_XUAT_PHAT) {
+            return $this->processKiemTraVeSanTap('xuat_phat');
+        } elseif ($maCamera === XeCameraLogs::CAMERA_SAN_KET_THUC) {
+            return $this->processKiemTraVeSanTap('ket_thuc');
+        }
 
         // 2. Trích xuất Biển số xe gốc (hỗ trợ plate_number từ ANPR hoặc bien_so_xe)
         $bienSoXe = $data['plate_number']

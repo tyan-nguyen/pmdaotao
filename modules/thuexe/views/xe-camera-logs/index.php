@@ -33,7 +33,7 @@ $isTabLogs = ($activeTab === 'logs');
                     <h5 class="card-title mb-1 text-primary">
                         <i class="fe fe-video me-1"></i> <?= Html::encode($this->title) ?>
                     </h5>
-                    <p class="text-muted small mb-0">Hệ thống tự động ghép cặp xe Đi (Mặt trước) - Về (Mặt sau) và tính toán thời gian ở ngoài.</p>
+                    <p class="text-muted small mb-0">Hệ thống tự động ghép cặp xe Đi (Mặt trước) - Về (Mặt sau) cho cổng kiểm soát.</p>
                 </div>
                 <div class="d-flex gap-2">
                     <?= Html::a(
@@ -77,12 +77,12 @@ $isTabLogs = ($activeTab === 'logs');
             <ul class="nav nav-tabs card-header-tabs" id="cameraLogsTabs" role="tablist">
                 <li class="nav-item" role="presentation">
                     <a class="nav-link <?= !$isTabLogs ? 'active' : '' ?>" id="trips-tab" data-bs-toggle="tab" href="#pane-trips" role="tab" aria-selected="<?= !$isTabLogs ? 'true' : 'false' ?>">
-                        <i class="fa fa-exchange me-1 text-primary"></i> <strong>LƯỢT XE ĐI - VỀ (BLOCK TÍNH GIỜ)</strong>
+                        <i class="fa fa-exchange me-1 text-primary"></i> <strong>LƯỢT XE</strong>
                     </a>
                 </li>
                 <li class="nav-item" role="presentation">
                     <a class="nav-link <?= $isTabLogs ? 'active' : '' ?>" id="logs-tab" data-bs-toggle="tab" href="#pane-logs" role="tab" aria-selected="<?= $isTabLogs ? 'true' : 'false' ?>">
-                        <i class="fa fa-list me-1 text-info"></i> <strong>NHẬT KÝ CHI TIẾT TỪNG MẮT ĐỌC (RAW LOGS)</strong>
+                        <i class="fa fa-list me-1 text-info"></i> <strong>NHẬT KÝ CAMERA</strong>
                     </a>
                 </li>
             </ul>
