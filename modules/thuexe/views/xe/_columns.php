@@ -42,7 +42,7 @@ return [
                 return Url::to(['lich-xe/xe-live-trong-san', 'idxe' => $key, 'menu' => 'dt3']);
             }
             if ($action === 'lichSoSanh') {
-                return Url::to(['lich-xe/lich-xe-gv-so-sanh', 'idxe' => $key, 'menu' => 'dt3']);
+                return Url::to(['lich-xe2/lich-xe-gv-so-sanh', 'idxe' => $key, 'menu' => 'dt3']);
             }
             if ($action === 'capNhapGiaoVien') {
                 return Url::to(['phan-cong-giao-vien', 'id' => $key]);
