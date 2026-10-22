@@ -92,6 +92,24 @@ class XeLuotRaVaoBase extends PtxXeLuotRaVao
     }
 
     /**
+     * Danh muc trang thai color
+     * @return string[]
+     */
+    public static function getDmTrangThaiColor()
+    {
+        return [
+            '' => '#ddd',
+            self::TRANG_THAI_HOAN_THANH => 'var(--success)',
+            self::TRANG_THAI_DANG_O_NGOAI => 'var(--warning)',
+            self::TRANG_THAI_DANG_TRONG_SAN => 'var(--warning)',
+            self::TRANG_THAI_LOI_DI_KHONG_VE => 'var(--warning)',
+            self::TRANG_THAI_LOI_VE_KHONG_DI => 'var(--danger)',
+            self::TRANG_THAI_LOI_VAO_KHONG_RA => 'var(--danger)',
+            self::TRANG_THAI_LOI_RA_KHONG_VAO => 'var(--danger)',
+        ];
+    }
+
+    /**
      * Danh mục trạng thái kế hoạch
      * @return array
      */
