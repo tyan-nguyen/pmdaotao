@@ -57,7 +57,7 @@ $this->registerJsFile('https://unpkg.com/leaflet@1.9.4/dist/leaflet.js', ['posit
 
                         <p style="display: flex; justify-content: space-between; align-items: center;">
                             <span>
-                                <strong>Màu sắc:</strong> <?= $model->mau_sac ?>
+                                <strong>Màu sắc:</strong> <?= $model->renderBadgeMauSac(18) ?> <?= $model->mau_sac ? Html::encode($model->mau_sac) : '' ?>
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <strong>Số IMEI GPS:</strong> <?= $model->imei_gps ? Html::encode($model->imei_gps) : 'Chưa có' ?>
                             </span>

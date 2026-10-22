@@ -18,9 +18,8 @@ if (!$model->isNewRecord) {
     $model->ngay_dang_kiem = CustomFunc::convertYMDToDMY($model->ngay_dang_kiem);
 }
 $checkKhongChon = false;
-if ($model->ma_mau === null) {
+if (empty($model->ma_mau)) {
     $checkKhongChon = true;
-    $model->ma_mau = '#ffffff';
 }
 ?>
 
@@ -128,20 +127,34 @@ if ($model->ma_mau === null) {
 
 
         <div class="col-lg-3 col-md-6">
-            <?= $form->field($model, 'mau_sac')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'mau_sac')->textInput(['maxlength' => true, 'placeholder' => 'Ví dụ: Trắng - Đen, Đỏ...']) ?>
         </div>
 
-        <div class="col-lg-2 col-md-6">
-            <?= $form->field($model, 'ma_mau')->input('color', [
-                'id' => 'color-picker',
-                'disabled' => ($model->ma_mau === null) ? true : false // Khóa lại nếu đang là null
-            ]) ?>
+        <div class="col-lg-4 col-md-6">
+            <label class="form-label" style="font-weight:bold;">Mã màu (Chọn 1 hoặc nhiều màu)</label>
+            <?= $form->field($model, 'ma_mau', ['options' => ['style' => 'margin-bottom:0']])->hiddenInput(['id' => 'xe-ma-mau-input'])->label(false) ?>
 
-            <label>
+            <div id="xe-color-palette-wrapper" style="<?= $checkKhongChon ? 'display:none;' : '' ?>">
+                <div class="d-flex align-items-center mb-2">
+                    <input type="color" id="picker-add-color" value="#ffffff" class="form-control form-control-color" style="width:40px; height:32px; padding:2px; cursor:pointer;" title="Chọn mã màu">
+                    <button type="button" class="btn btn-sm btn-outline-primary ms-2" id="btn-add-color" title="Thêm màu vào danh sách">
+                        <i class="fa fa-plus"></i> Thêm màu
+                    </button>
+                    <div class="ms-3 d-flex align-items-center">
+                        <span style="font-size:12px; color:#64748b; margin-right:6px;">Xem trước:</span>
+                        <span id="color-preview-circle" style="width:26px; height:26px; border-radius:50%; display:inline-block; border:1px solid #cbd5e1; box-shadow:0 1px 2px rgba(0,0,0,0.2);"></span>
+                    </div>
+                </div>
+
+                <div id="selected-colors-list" class="d-flex flex-wrap align-items-center mb-1" style="min-height:28px;">
+                    <!-- Chips màu được render tự động qua JS -->
+                </div>
+            </div>
+
+            <label class="mt-1 d-block">
                 <input type="checkbox" id="no-color-checkbox" name="no_color" <?= $checkKhongChon ? 'checked' : '' ?>>
-                <span style="color:var(--primary-bg-color);">Không sử dụng màu</span>
+                <span style="color:var(--primary-bg-color); font-size:13px;">Không sử dụng màu</span>
             </label>
-
         </div>
 
         <div class="col-lg-2 col-md-6">
@@ -211,13 +224,96 @@ if ($model->ma_mau === null) {
 </style>
 
 <?php
+$currentColorsJson = json_encode($model->getDanhSachMaMau());
 $this->registerJs("
-    $('#no-color-checkbox').on('change', function() {
-        if($(this).is(':checked')) {
-            $('#color-picker').prop('disabled', true);
-            // Bạn có thể gán một giá trị trống hoặc reset thông qua js nếu cần
+    var currentColors = {$currentColorsJson};
+
+    function updateMultiColorUI() {
+        $('#xe-ma-mau-input').val(currentColors.join(','));
+        var container = $('#selected-colors-list');
+        container.empty();
+
+        if (currentColors.length === 0) {
+            container.html('<span class=\"text-muted\" style=\"font-size:12px;\">Chưa chọn màu nào</span>');
         } else {
-            $('#color-picker').prop('disabled', false);
+            $.each(currentColors, function(idx, hex) {
+                var chip = $('<span class=\"badge bg-light text-dark border me-1 mb-1\" style=\"font-size:11px; padding:4px 7px; display:inline-flex; align-items:center;\">' +
+                    '<span style=\"width:13px; height:13px; border-radius:50%; background:' + hex + '; border:1px solid #94a3b8; display:inline-block; margin-right:5px;\"></span>' +
+                    hex +
+                    '<a href=\"javascript:void(0)\" class=\"text-danger ms-2 btn-remove-color\" data-index=\"' + idx + '\" style=\"text-decoration:none; font-weight:bold; font-size:14px; line-height:1;\" title=\"Xóa màu\">&times;</a>' +
+                '</span>');
+                container.append(chip);
+            });
+        }
+
+        // Cập nhật vòng tròn xem trước (Preview)
+        var preview = $('#color-preview-circle');
+        var n = currentColors.length;
+        if (n === 0) {
+            preview.css({
+                'background': '#f8fafc',
+                'border': '1px dashed #94a3b8'
+            });
+            preview.attr('title', 'Chưa có màu');
+        } else if (n === 1) {
+            preview.css({
+                'background': currentColors[0],
+                'border': '1px solid #cbd5e1'
+            });
+            preview.attr('title', currentColors[0]);
+        } else {
+            // Chia đều 360 độ góc cho N màu
+            var step = 360 / n;
+            var segments = [];
+            for (var i = 0; i < n; i++) {
+                var startDeg = Math.round(i * step * 10) / 10;
+                var endDeg = Math.round((i + 1) * step * 10) / 10;
+                segments.push(currentColors[i] + ' ' + startDeg + 'deg ' + endDeg + 'deg');
+            }
+            preview.css({
+                'background': 'conic-gradient(' + segments.join(', ') + ')',
+                'border': '1px solid #cbd5e1'
+            });
+            preview.attr('title', currentColors.join(', '));
+        }
+    }
+
+    updateMultiColorUI();
+
+    $('#btn-add-color').on('click', function(e) {
+        e.preventDefault();
+        var hex = $('#picker-add-color').val();
+        if (hex) {
+            hex = hex.toLowerCase();
+            if (currentColors.indexOf(hex) === -1) {
+                currentColors.push(hex);
+            }
+            $('#no-color-checkbox').prop('checked', false);
+            $('#xe-color-palette-wrapper').show();
+            updateMultiColorUI();
+        }
+    });
+
+    $(document).off('click', '.btn-remove-color').on('click', '.btn-remove-color', function(e) {
+        e.preventDefault();
+        var idx = $(this).data('index');
+        if (idx !== undefined && idx >= 0 && idx < currentColors.length) {
+            currentColors.splice(idx, 1);
+            updateMultiColorUI();
+        }
+    });
+
+    $('#no-color-checkbox').on('change', function() {
+        if ($(this).is(':checked')) {
+            currentColors = [];
+            $('#xe-color-palette-wrapper').hide();
+            updateMultiColorUI();
+        } else {
+            $('#xe-color-palette-wrapper').show();
+            if (currentColors.length === 0) {
+                currentColors.push('#ffffff');
+            }
+            updateMultiColorUI();
         }
     });
 ");

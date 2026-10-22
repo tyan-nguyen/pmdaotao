@@ -282,11 +282,11 @@ return [
         'attribute' => 'ma_mau',
         'label' => 'Màu',
         'value' => function ($model) {
-            return !$model->ma_mau ? '-' : '<span class="rounded-circle" title="' . $model->mau_sac . '" style="background-color:' . $model->ma_mau . '; border: 1px solid var(--primary-bg-color);padding:5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>';
+            return $model->renderBadgeMauSac(22);
         },
         'format' => 'raw',
-        'headerOptions' => ['style' => 'width:40px;'],
-        'contentOptions' => ['style' => 'min-width:40px;text-align:center;'],
+        'headerOptions' => ['style' => 'width:50px; text-align:center;'],
+        'contentOptions' => ['style' => 'min-width:50px; text-align:center; vertical-align:middle;'],
     ],
     [
         'class' => '\kartik\grid\DataColumn',

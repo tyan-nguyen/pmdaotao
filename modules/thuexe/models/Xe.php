@@ -222,7 +222,7 @@ class Xe extends \app\models\PtxXe
             [['phan_loai', 'ma_so', 'imei_gps'], 'string', 'max' => 20],
             [['tinh_trang_xe'], 'string', 'max' => 20],
             [['thoi_gian_tao', 'ngay_dang_kiem', 'ngay_cap_nhat_km'], 'safe'],
-            [['bien_so_xe', 'ma_bien_so', 'ma_mau'], 'string', 'max' => 50],
+            [['bien_so_xe', 'ma_bien_so'], 'string', 'max' => 50],
             [['trang_thai'], 'string', 'max' => 25],
             [['bien_so_xe'], 'unique'],
             [[
@@ -230,6 +230,7 @@ class Xe extends \app\models\PtxXe
                 'so_khung',
                 'so_may',
                 'mau_sac',
+                'ma_mau',
                 'nha_cung_cap',
                 'so_hoa_don',
                 'so_hop_dong'
@@ -965,5 +966,58 @@ class Xe extends \app\models\PtxXe
     public function getCameraLogs()
     {
         return $this->hasMany(\app\modules\thuexe\models\XeCameraLogs::class, ['ma_xe' => 'ma_bien_so']);
+    }
+
+    /**
+     * Lấy danh sách các mã màu của xe dưới dạng mảng
+     * @return array
+     */
+    public function getDanhSachMaMau()
+    {
+        if (empty($this->ma_mau)) {
+            return [];
+        }
+        $colors = explode(',', $this->ma_mau);
+        $res = [];
+        foreach ($colors as $c) {
+            $c = trim($c);
+            if (!empty($c)) {
+                $res[] = $c;
+            }
+        }
+        return array_values(array_unique($res));
+    }
+
+    /**
+     * Render vòng tròn màu sắc cho xe (hỗ trợ cả 1 màu và nhiều màu dạng conic-gradient)
+     * @param int $size Kích thước đường kính vòng tròn (pixel)
+     * @return string
+     */
+    public function renderBadgeMauSac($size = 20)
+    {
+        $colors = $this->getDanhSachMaMau();
+        if (empty($colors)) {
+            return '-';
+        }
+
+        $title = !empty($this->mau_sac) ? \yii\helpers\Html::encode($this->mau_sac) : implode(', ', $colors);
+        $n = count($colors);
+        $baseStyle = "width:{$size}px; height:{$size}px; border-radius:50%; display:inline-block; vertical-align:middle; border:1px solid #cbd5e1; box-shadow:0 1px 3px rgba(0,0,0,0.15); cursor:pointer;";
+
+        if ($n === 1) {
+            $bgStyle = "background-color: {$colors[0]};";
+        } else {
+            // Chia đều góc 360 độ cho N màu bằng conic-gradient
+            $step = 360 / $n;
+            $segments = [];
+            for ($i = 0; $i < $n; $i++) {
+                $startDeg = round($i * $step, 1);
+                $endDeg = round(($i + 1) * $step, 1);
+                $segments[] = "{$colors[$i]} {$startDeg}deg {$endDeg}deg";
+            }
+            $bgStyle = "background: conic-gradient(" . implode(', ', $segments) . ");";
+        }
+
+        return '<span class="xe-color-badge" title="' . $title . '" data-bs-toggle="tooltip" style="' . $baseStyle . ' ' . $bgStyle . '"></span>';
     }
 }

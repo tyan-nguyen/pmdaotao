@@ -525,8 +525,11 @@ class XeController extends Controller
                 ];
             } else if ($model->load($request->post())) {
                 // Kiểm tra nếu request gửi lên có chọn không màu, hoặc ô input bị disable không gửi dữ liệu
-                if (!isset($_POST['Xe']['ma_mau']) || Yii::$app->request->post('no_color')) {
+                if (!isset($_POST['Xe']['ma_mau']) || Yii::$app->request->post('no_color') || empty(trim($model->ma_mau))) {
                     $model->ma_mau = null;
+                } else {
+                    $colors = array_filter(array_map('trim', explode(',', $model->ma_mau)));
+                    $model->ma_mau = !empty($colors) ? implode(',', array_unique($colors)) : null;
                 }
                 if ($model->save()) {
                     return [
@@ -609,8 +612,11 @@ class XeController extends Controller
                 ];
             } else if ($model->load($request->post())) {
                 // Kiểm tra nếu request gửi lên có chọn không màu, hoặc ô input bị disable không gửi dữ liệu
-                if (!isset($_POST['Xe']['ma_mau']) || Yii::$app->request->post('no_color')) {
+                if (!isset($_POST['Xe']['ma_mau']) || Yii::$app->request->post('no_color') || empty(trim($model->ma_mau))) {
                     $model->ma_mau = null;
+                } else {
+                    $colors = array_filter(array_map('trim', explode(',', $model->ma_mau)));
+                    $model->ma_mau = !empty($colors) ? implode(',', array_unique($colors)) : null;
                 }
                 if ($model->save()) {
                     return [
