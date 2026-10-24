@@ -274,4 +274,141 @@ class ApiController extends Controller
             ];
         } */
     }
+
+    /**
+     * Lấy token hợp lệ của hệ thống từ config/params.php (fallback về token mặc định)
+     * @return string
+     */
+    public function getValidToken()
+    {
+        return Yii::$app->params['camera_api_token'] ?? 'truonglai_camera_secure_token_2026';
+    }
+
+    /**
+     * Trích xuất token từ request (Header Authorization Bearer, X-API-Key, X-Token, Body JSON hoặc Query/Post param)
+     * @return string|null
+     */
+    protected function getRequestToken()
+    {
+        $request = Yii::$app->request;
+
+        // 1. Kiểm tra header Authorization: Bearer <token>
+        $authHeader = $request->headers->get('Authorization');
+        if ($authHeader && preg_match('/^Bearer\s+(.*?)$/i', $authHeader, $matches)) {
+            return trim($matches[1]);
+        }
+
+        // 2. Kiểm tra header X-API-Key hoặc X-Token
+        $apiKey = $request->headers->get('X-API-Key') ?: $request->headers->get('X-Token');
+        if (!empty($apiKey)) {
+            return trim($apiKey);
+        }
+
+        // 3. Kiểm tra trong Raw JSON body (token hoặc api_token)
+        $rawBody = $request->getRawBody();
+        if (!empty($rawBody)) {
+            $jsonData = json_decode($rawBody, true);
+            if (is_array($jsonData)) {
+                if (!empty($jsonData['token'])) {
+                    return trim($jsonData['token']);
+                }
+                if (!empty($jsonData['api_token'])) {
+                    return trim($jsonData['api_token']);
+                }
+            }
+        }
+
+        // 4. Kiểm tra trong POST hoặc GET param
+        return $request->post('token')
+            ?: $request->post('api_token')
+            ?: $request->get('token')
+            ?: $request->get('api_token');
+    }
+
+    /**
+     * Kiểm tra tính hợp lệ của token
+     * @return bool
+     */
+    protected function validateApiToken()
+    {
+        $requestToken = $this->getRequestToken();
+        $validToken = $this->getValidToken();
+
+        if (empty($requestToken) || empty($validToken)) {
+            return false;
+        }
+
+        return hash_equals((string)$validToken, (string)$requestToken);
+    }
+
+    /**
+     * API Tìm biển số xe theo mã số xe
+     * Tìm trong bảng ptx_xe theo ma_so, nếu có trả về ma_bien_so, nếu không có trả về null
+     * Yêu cầu xác thực API token theo cấu hình config/params['camera_api_token']
+     * 
+     * Hỗ trợ GET / POST:
+     * GET  /api/take-plate-by-number?number=01&token=xxx
+     * POST /api/take-plate-by-number {"number": "01", "token": "xxx"}
+     * Hoặc truyền qua Header:
+     * Authorization: Bearer xxx
+     * X-API-Key: xxx
+     * 
+     * @param string|null $number
+     * @param string|null $ma_so
+     * @return string|null|array
+     */
+    public function actionTakePlateByNumber($number = null, $ma_so = null)
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        // Kiểm tra xác thực API token từ config param
+        if (!$this->validateApiToken()) {
+            Yii::$app->response->statusCode = 401; // Unauthorized
+            return [
+                'success' => false,
+                'status' => 'error',
+                'message' => 'Xác thực thất bại: Token API không hợp lệ hoặc chưa được cung cấp.',
+            ];
+        }
+
+        $param = $number !== null ? $number : ($ma_so !== null ? $ma_so : null);
+        if ($param === null) {
+            $param = Yii::$app->request->get('number', Yii::$app->request->get('ma_so'));
+        }
+        if ($param === null) {
+            $rawBody = Yii::$app->request->getRawBody();
+            $data = json_decode($rawBody, true);
+            if (is_array($data)) {
+                $param = isset($data['number']) ? $data['number'] : (isset($data['ma_so']) ? $data['ma_so'] : null);
+            }
+        }
+        if ($param === null) {
+            $param = Yii::$app->request->post('number', Yii::$app->request->post('ma_so'));
+        }
+
+        if ($param === null || trim((string)$param) === '') {
+            return null;
+        }
+
+        $param = trim((string)$param);
+
+        // Tìm trong bảng ptx_xe theo ma_so
+        $xe = Xe::find()->where(['ma_so' => $param])->one();
+
+        // Fallback: nếu không tìm thấy và là dạng số, thử tìm dạng đệm 2 chữ số ('01') hoặc dạng thường ('1')
+        if (!$xe && is_numeric($param)) {
+            $intVal = (int)$param;
+            $padded = sprintf('%02d', $intVal);
+            $unpadded = (string)$intVal;
+            $xe = Xe::find()
+                ->where(['or', ['ma_so' => $padded], ['ma_so' => $unpadded]])
+                ->one();
+        }
+
+        if ($xe && !empty($xe->ma_bien_so)) {
+            return $xe->ma_bien_so;
+        }
+
+        return null;
+    }
 }

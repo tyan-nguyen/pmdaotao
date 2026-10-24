@@ -38,6 +38,7 @@ class Api2Controller extends Controller
         'camera-san-cam-bien-ra',
         'camera-san-xuat-phat',
         'camera-san-ket-thuc',
+        'take-plate-by-number',
     ];
 
     /**
@@ -358,6 +359,64 @@ class Api2Controller extends Controller
     public function actionCameraSanKetThuc()
     {
         return $this->processKiemTraVeSanTap('ket_thuc');
+    }
+
+    /**
+     * API Tìm biển số xe theo mã số xe
+     * Tìm trong bảng ptx_xe theo ma_so, nếu có trả về ma_bien_so, nếu không có trả về null
+     * Yêu cầu xác thực API token cấu hình trong config/params['camera_api_token']
+     * (Tự động xác thực qua beforeAction vì đã khai báo trong $tokenActions)
+     *
+     * Hỗ trợ GET / POST:
+     * GET  /api2/take-plate-by-number?number=01&token=xxx
+     * POST /api2/take-plate-by-number {"number": "01", "token": "xxx"}
+     * Hoặc qua Header Authorization: Bearer xxx / X-API-Key: xxx
+     *
+     * @param string|null $number
+     * @param string|null $ma_so
+     * @return string|null
+     */
+    public function actionTakePlateByNumber($number = null, $ma_so = null)
+    {
+        $param = $number !== null ? $number : ($ma_so !== null ? $ma_so : null);
+        if ($param === null) {
+            $param = Yii::$app->request->get('number', Yii::$app->request->get('ma_so'));
+        }
+        if ($param === null) {
+            $rawBody = Yii::$app->request->getRawBody();
+            $data = json_decode($rawBody, true);
+            if (is_array($data)) {
+                $param = isset($data['number']) ? $data['number'] : (isset($data['ma_so']) ? $data['ma_so'] : null);
+            }
+        }
+        if ($param === null) {
+            $param = Yii::$app->request->post('number', Yii::$app->request->post('ma_so'));
+        }
+
+        if ($param === null || trim((string)$param) === '') {
+            return null;
+        }
+
+        $param = trim((string)$param);
+
+        // Tìm trong bảng ptx_xe theo ma_so
+        $xe = PtxXe::find()->where(['ma_so' => $param])->one();
+
+        // Fallback: nếu không tìm thấy và là dạng số, thử tìm dạng đệm 2 chữ số ('01') hoặc dạng thường ('1')
+        if (!$xe && is_numeric($param)) {
+            $intVal = (int)$param;
+            $padded = sprintf('%02d', $intVal);
+            $unpadded = (string)$intVal;
+            $xe = PtxXe::find()
+                ->where(['or', ['ma_so' => $padded], ['ma_so' => $unpadded]])
+                ->one();
+        }
+
+        if ($xe && !empty($xe->ma_bien_so)) {
+            return $xe->ma_bien_so;
+        }
+
+        return null;
     }
 
     /**
