@@ -16,6 +16,12 @@ use app\modules\thuexe\models\XeLuotRaVao;
  */
 class XeCameraTripService
 {
+    /** Dung sai cho phép xe vào sớm tối đa (phút) trước khi ca thuê bắt đầu */
+    const TOLERANCE_EARLY_MINUTES = 15;
+
+    /** Dung sai cho phép xe ra trễ tối đa (phút) sau khi ca thuê kết thúc */
+    const TOLERANCE_LATE_MINUTES = 5;
+
     /**
      * Logic kiểm tra kế hoạch đi của xe tại Cổng Căn Tin (tìm xe nội bộ và lịch học trong gd_tiet_hoc)
      *
@@ -76,8 +82,8 @@ class XeCameraTripService
 
     /**
      * Logic kiểm tra lịch thuê xe tại Cổng Sân Cảm Biến (tìm xe nội bộ và lịch thuê trong ptx_lich_thue)
-     * Kiểm tra giờ vào có thuộc record nào trong bảng [ptx_lich_thue] không trong khoảng thoi_gian_bat_dau - thoi_gian_ket_thuc.
-     * Cho phép dung sai xe vào sớm tối đa 15 phút trước khi ca thuê bắt đầu.
+     * Kiểm tra giờ vào/ra có thuộc record nào trong bảng [ptx_lich_thue] không trong khoảng thoi_gian_bat_dau - thoi_gian_ket_thuc.
+     * Cho phép dung sai xe vào sớm tối đa 15 phút và ra trễ tối đa 15 phút so với ca thuê.
      *
      * @param string|null $bienSo
      * @param string|null $checkTime Định dạng 'Y-m-d H:i:s' (mặc định là ngày giờ hiện tại)
@@ -122,15 +128,21 @@ class XeCameraTripService
         }
 
         $timeStr = !empty($checkTime) ? date('Y-m-d H:i:s', strtotime($checkTime)) : date('Y-m-d H:i:s');
-        // Dung sai: Cho phép xe vào sớm tối đa 15 phút trước khi ca thuê bắt đầu
-        $maxEarlyTime = date('Y-m-d H:i:s', strtotime($timeStr . ' +15 minutes'));
+        $earlyMinutes = Yii::$app->params['camera_tolerance_early_minutes'] ?? self::TOLERANCE_EARLY_MINUTES;
+        $lateMinutes = Yii::$app->params['camera_tolerance_late_minutes'] ?? self::TOLERANCE_LATE_MINUTES;
 
-        // Tìm lịch thuê trong [ptx_lich_thue] thỏa mãn khung giờ vào
+        // Dung sai: Cho phép xe vào sớm tối đa trước khi ca thuê bắt đầu
+        $maxStartTime = date('Y-m-d H:i:s', strtotime($timeStr . " +{$earlyMinutes} minutes"));
+
+        // Dung sai: Cho phép xe ra trễ tối đa sau khi ca thuê kết thúc
+        $minEndTime = date('Y-m-d H:i:s', strtotime($timeStr . " -{$lateMinutes} minutes"));
+
+        // Tìm lịch thuê trong [ptx_lich_thue] thỏa mãn khung giờ cho phép (bao gồm dung sai vào sớm / ra trễ)
         $lichThue = LichThue::find()
             ->where(['id_xe' => $xe->id])
             ->andWhere(['in', 'trang_thai', [LichThue::TT_LENLICH, LichThue::TT_XUATHOADON]])
-            ->andWhere(['<=', 'thoi_gian_bat_dau', $maxEarlyTime])
-            ->andWhere(['>=', 'thoi_gian_ket_thuc', $timeStr])
+            ->andWhere(['<=', 'thoi_gian_bat_dau', $maxStartTime])
+            ->andWhere(['>=', 'thoi_gian_ket_thuc', $minEndTime])
             ->orderBy(['thoi_gian_bat_dau' => SORT_ASC])
             ->one();
 
@@ -236,7 +248,6 @@ class XeCameraTripService
                     $newTrip->trang_thai = XeLuotRaVao::TRANG_THAI_DANG_TRONG_SAN;
 
                     $pendingByGate[$cong] = $newTrip;
-
                 } elseif ($chieu === 'RA') {
                     // Sự kiện RỜI KHỎI SÂN CẢM BIẾN (cong_san_cam_bien_ra)
                     if (isset($pendingByGate[$cong]) && $pendingByGate[$cong] !== null) {
@@ -276,7 +287,6 @@ class XeCameraTripService
                         $createdTripsCount++;
                     }
                 }
-
             } else {
                 // =========================================================================
                 // CHU TRÌNH CỔNG CĂN TIN (VÀ CÁC CỔNG NGOÀI KHÁC)
@@ -316,7 +326,6 @@ class XeCameraTripService
                         $newTrip->trang_thai = XeLuotRaVao::TRANG_THAI_DANG_O_NGOAI;
 
                         $pendingByGate[$cong] = $newTrip;
-
                     } elseif ($chieu === 'VAO') {
                         // Sự kiện VỀ BÃI
                         if ($log->hasAttribute('trang_thai_ke_hoach') && $log->trang_thai_ke_hoach === XeLuotRaVao::KE_HOACH_INFO) {
@@ -389,7 +398,6 @@ class XeCameraTripService
                         $newTrip->trang_thai = XeLuotRaVao::TRANG_THAI_DANG_TRONG_SAN;
 
                         $pendingByGate[$cong] = $newTrip;
-
                     } elseif ($chieu === 'RA') {
                         // Sự kiện XE LẠ RỜI TRƯỜNG
                         if (isset($pendingByGate[$cong]) && $pendingByGate[$cong] !== null) {
@@ -485,4 +493,3 @@ class XeCameraTripService
         ];
     }
 }
-
