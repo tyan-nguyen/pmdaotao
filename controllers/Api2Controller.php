@@ -142,17 +142,25 @@ class Api2Controller extends Controller
     }
 
     /**
-     * Logic kiểm tra kế hoạch đi của xe (dùng chung cho actionKiemTraDiKhongKeHoach và actionCameraLogs)
-     * - Tìm trong bảng [ptx_xe] theo biển số (loại bỏ dấu ., -, khoảng trắng).
-     * - Nếu tìm thấy, tìm trong bảng [gd_tiet_hoc] dựa vào id của xe (id_xe) và ngày kiểm tra (thoi_gian_bd).
+     * Logic kiểm tra kế hoạch đi của xe (dùng chung cho actionKiemTraDiKhongKeHoach và actionCameraLogs):
+     * - Tầng 1: Tìm trong bảng [gd_tiet_hoc] dựa vào id của xe (id_xe) và ngày kiểm tra (thoi_gian_bd).
+     * - Tầng 2: Nếu không có tiết dạy, kiểm tra tiếp trong vé thuê xe [ptx_lich_thue].
+     * - Tầng 3: Nếu vẫn chưa có, kiểm tra tiếp trong phiếu đề nghị sửa xe / bảo dưỡng [cp_phieu_de_nghi].
+     * - Tầng 4: Nếu vẫn chưa có, kiểm tra tiếp trong lịch dùng xe nội bộ [ptx_xe_lich_dung_xe].
+     * - Chỉ khi cả 4 tầng đều không có thì mới xác định là đi không kế hoạch.
      *
      * @param string|null $bienSo
      * @param string|null $checkDate Định dạng 'Y-m-d' hoặc 'Y-m-d H:i:s' (mặc định là ngày hôm nay)
      * @return array [
      *     'thuoc_danh_sach_xe' => bool,
      *     'co_ke_hoach' => bool,
-     *     'di_khong_ke_hoach' => bool, // Có lịch return false, không có lịch return true
-     *     'xe' => PtxXe|null
+     *     'di_khong_ke_hoach' => bool, // Có kế hoạch ở bất kỳ tầng nào return false, không có return true
+     *     'xe' => PtxXe|null,
+     *     'loai_ke_hoach' => string|null ('tiet_hoc', 'lich_thue', 'phieu_de_nghi', 'lich_dung_xe'),
+     *     'chi_tiet_ke_hoach' => mixed,
+     *     'lich_thue' => LichThue|null,
+     *     'phieu_de_nghi' => PhieuDeNghi|null,
+     *     'lich_dung_xe' => LichDungXe|null
      * ]
      */
     public function kiemTraKeHoachXe($bienSo, $checkDate = null)
@@ -911,6 +919,9 @@ class Api2Controller extends Controller
             $coKeHoach = false;
             $diKhongKeHoach = false;
             $lichThueInfo = null;
+            $phieuDeNghiInfo = null;
+            $lichDungXeInfo = null;
+            $loaiKeHoach = null;
 
             // =========================================================================
             // PHÂN NHÁNH THEO CỔNG KIỂM SOÁT
@@ -988,24 +999,74 @@ class Api2Controller extends Controller
                 }
             } else {
                 // =========================================================================
-                // 2. CỔNG CĂN TIN (Kiểm tra kế hoạch giảng dạy trong gd_tiet_hoc khi xe ĐI RA)
+                // 2. CỔNG CĂN TIN (Kiểm tra kế hoạch 4 tầng khi xe ĐI RA)
                 // =========================================================================
                 $checkKeHoach = $this->kiemTraKeHoachXe($log->ma_xe, $log->thoi_gian);
                 $xe = $checkKeHoach['xe'];
                 $isNoiBo = $checkKeHoach['thuoc_danh_sach_xe'];
                 $coKeHoach = $checkKeHoach['co_ke_hoach'];
                 $diKhongKeHoach = $checkKeHoach['di_khong_ke_hoach'];
+                $loaiKeHoach = $checkKeHoach['loai_ke_hoach'] ?? null;
+                $lichThue = $checkKeHoach['lich_thue'] ?? null;
+                $phieuDeNghi = $checkKeHoach['phieu_de_nghi'] ?? null;
+                $lichDungXe = $checkKeHoach['lich_dung_xe'] ?? null;
+
+                if ($lichThue) {
+                    $lichThueInfo = [
+                        'id' => $lichThue->id,
+                        'thoi_gian_bat_dau' => $lichThue->thoi_gian_bat_dau,
+                        'thoi_gian_ket_thuc' => $lichThue->thoi_gian_ket_thuc,
+                        'trang_thai' => $lichThue->trang_thai,
+                        'so_gio' => $lichThue->so_gio,
+                    ];
+                }
+
+                if ($phieuDeNghi) {
+                    $phieuDeNghiInfo = [
+                        'id' => $phieuDeNghi->id,
+                        'so_phieu' => $phieuDeNghi->so_phieu ?? $phieuDeNghi->id,
+                        'loai_yeu_cau' => $phieuDeNghi->loai_yeu_cau,
+                        'trang_thai' => $phieuDeNghi->trang_thai,
+                        'ngay_bat_dau' => $phieuDeNghi->ngay_bat_dau,
+                        'ngay_hoan_thanh' => $phieuDeNghi->ngay_hoan_thanh,
+                        'noi_dung_de_nghi' => $phieuDeNghi->noi_dung_de_nghi,
+                    ];
+                }
+
+                if ($lichDungXe) {
+                    $lichDungXeInfo = [
+                        'id' => $lichDungXe->id,
+                        'trang_thai' => $lichDungXe->trang_thai,
+                        'thoi_gian_bat_dau' => $lichDungXe->thoi_gian_bat_dau,
+                        'thoi_gian_ket_thuc' => $lichDungXe->thoi_gian_ket_thuc,
+                        'noi_dung' => $lichDungXe->noi_dung,
+                    ];
+                }
 
                 if ($isNoiBo) {
                     if ($chieu === 'RA') {
-                        // Kịch bản 1: Xe nội bộ ĐI RA - BẮT BUỘC CHECK KẾ HOẠCH
+                        // Kịch bản 1: Xe nội bộ ĐI RA - BẮT BUỘC CHECK KẾ HOẠCH (4 TẦNG)
                         if ($coKeHoach) {
                             $actionStatus = 'APPROVED';
                             $vehicleClassification = 'INTERNAL_VALID';
                             $alertLevel = 'normal';
-                            $summary = ($eventAction === 'RESTORE') ? 'Xe có kế hoạch hợp lệ (Đã khôi phục)' : 'Xe có kế hoạch hợp lệ';
-                            $message = "Xe {$maXe} hợp lệ";
-                            $voiceMessage = "Xe {$maXe} đi có kế hoạch";
+                            if ($loaiKeHoach === 'phieu_de_nghi') {
+                                $summary = ($eventAction === 'RESTORE') ? 'Xe đi theo phiếu đề nghị sửa xe (Đã khôi phục)' : 'Xe đi theo phiếu đề nghị sửa xe / bảo dưỡng';
+                                $message = "Xe {$maXe} hợp lệ theo phiếu đề nghị sửa xe";
+                                $voiceMessage = "Xe {$maXe} đi theo phiếu sửa chữa";
+                            } elseif ($loaiKeHoach === 'lich_dung_xe') {
+                                $summary = ($eventAction === 'RESTORE') ? 'Xe đi theo lịch dùng xe (Đã khôi phục)' : 'Xe đi theo lịch dùng xe hợp lệ';
+                                $message = "Xe {$maXe} hợp lệ theo lịch dùng xe";
+                                $voiceMessage = "Xe {$maXe} đi có lịch dùng xe";
+                            } elseif ($loaiKeHoach === 'lich_thue') {
+                                $summary = ($eventAction === 'RESTORE') ? 'Xe đi theo vé thuê xe (Đã khôi phục)' : 'Xe có lịch thuê hợp lệ';
+                                $message = "Xe {$maXe} hợp lệ theo lịch thuê";
+                                $voiceMessage = "Xe {$maXe} đi có lịch thuê";
+                            } else {
+                                $summary = ($eventAction === 'RESTORE') ? 'Xe có kế hoạch hợp lệ (Đã khôi phục)' : 'Xe có kế hoạch hợp lệ';
+                                $message = "Xe {$maXe} hợp lệ";
+                                $voiceMessage = "Xe {$maXe} đi có kế hoạch";
+                            }
                             $webhookResultBool = false;
                         } else {
                             $actionStatus = 'UNPLANNED';
@@ -1099,7 +1160,10 @@ class Api2Controller extends Controller
                     'thuoc_danh_sach_xe' => $isNoiBo,
                     'co_ke_hoach' => $coKeHoach,
                     'di_khong_ke_hoach' => $diKhongKeHoach,
+                    'loai_ke_hoach' => $loaiKeHoach,
                     'rental_schedule' => $lichThueInfo,
+                    'phieu_de_nghi' => $phieuDeNghiInfo,
+                    'lich_dung_xe' => $lichDungXeInfo,
                 ],
             ];
         } else {

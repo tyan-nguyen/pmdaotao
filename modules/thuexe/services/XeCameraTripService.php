@@ -8,6 +8,10 @@ use app\models\GdTietHoc;
 use app\modules\thuexe\models\LichThue;
 use app\modules\thuexe\models\XeCameraLogs;
 use app\modules\thuexe\models\XeLuotRaVao;
+use app\modules\taisan\models\PhieuDeNghi;
+use app\modules\taisan\models\base\PhieuDeNghiBase;
+use app\modules\thuexe\models\LichDungXe;
+use app\modules\thuexe\models\base\LichDungXeBase;
 
 /**
  * Class XeCameraTripService
@@ -23,7 +27,12 @@ class XeCameraTripService
     const TOLERANCE_LATE_MINUTES = 5;
 
     /**
-     * Logic kiểm tra kế hoạch đi của xe tại Cổng Căn Tin (tìm xe nội bộ và lịch học trong gd_tiet_hoc)
+     * Logic kiểm tra kế hoạch đi của xe tại Cổng Căn Tin theo quy trình 4 tầng:
+     * - Tầng 1: Kiểm tra lịch dạy thực hành trong ngày tại bảng [gd_tiet_hoc].
+     * - Tầng 2: Kiểm tra vé thuê xe hợp lệ tại bảng [ptx_lich_thue] (áp dụng dung sai vào sớm/ra trễ).
+     * - Tầng 3: Kiểm tra phiếu đề nghị sửa xe / bảo dưỡng tại bảng [cp_phieu_de_nghi] (trang_thai là DA_DUYET hoặc HOAN_THANH, ngay_bat_dau <= timeStr <= ngay_hoan_thanh).
+     * - Tầng 4: Kiểm tra lịch dùng xe nội bộ tại bảng [ptx_xe_lich_dung_xe] (trang_thai = ACTIVE, thoi_gian_bat_dau <= timeStr <= thoi_gian_ket_thuc).
+     * Chỉ khi cả 4 tầng đều không thỏa mãn thì mới xác định là ĐI KHÔNG KẾ HOẠCH.
      *
      * @param string|null $bienSo
      * @param string|null $checkDate Định dạng 'Y-m-d' hoặc 'Y-m-d H:i:s' (mặc định là ngày hôm nay)
@@ -31,7 +40,12 @@ class XeCameraTripService
      *     'thuoc_danh_sach_xe' => bool,
      *     'co_ke_hoach' => bool,
      *     'di_khong_ke_hoach' => bool,
-     *     'xe' => PtxXe|null
+     *     'xe' => PtxXe|null,
+     *     'loai_ke_hoach' => string|null ('tiet_hoc', 'lich_thue', 'phieu_de_nghi', 'lich_dung_xe'),
+     *     'chi_tiet_ke_hoach' => mixed,
+     *     'lich_thue' => LichThue|null,
+     *     'phieu_de_nghi' => PhieuDeNghi|null,
+     *     'lich_dung_xe' => LichDungXe|null
      * ]
      */
     public static function kiemTraKeHoachXe($bienSo, $checkDate = null)
@@ -45,6 +59,11 @@ class XeCameraTripService
                 'co_ke_hoach' => false,
                 'di_khong_ke_hoach' => false,
                 'xe' => null,
+                'loai_ke_hoach' => null,
+                'chi_tiet_ke_hoach' => null,
+                'lich_thue' => null,
+                'phieu_de_nghi' => null,
+                'lich_dung_xe' => null,
             ];
         }
 
@@ -61,22 +80,100 @@ class XeCameraTripService
                 'co_ke_hoach' => false,
                 'di_khong_ke_hoach' => false,
                 'xe' => null,
+                'loai_ke_hoach' => null,
+                'chi_tiet_ke_hoach' => null,
+                'lich_thue' => null,
+                'phieu_de_nghi' => null,
+                'lich_dung_xe' => null,
             ];
         }
 
-        // Tìm trong bảng [gd_tiet_hoc] dựa vào id của xe (trường id_xe) và ngày chỉ định (hoặc hôm nay)
-        $today = !empty($checkDate) ? date('Y-m-d', strtotime($checkDate)) : date('Y-m-d');
-        $hasSchedule = GdTietHoc::find()
+        $timeStr = !empty($checkDate) ? date('Y-m-d H:i:s', strtotime($checkDate)) : date('Y-m-d H:i:s');
+        $today = date('Y-m-d', strtotime($timeStr));
+
+        $hasSchedule = false;
+        $loaiKeHoach = null;
+        $chiTietKeHoach = null;
+
+        // ---------------------------------------------------------------------
+        // 1. TẦNG 1: Kiểm tra lịch dạy thực hành trong bảng [gd_tiet_hoc]
+        // ---------------------------------------------------------------------
+        $hasTietHoc = GdTietHoc::find()
             ->where(['id_xe' => $xe->id])
             ->andWhere(['>=', 'thoi_gian_bd', $today . ' 00:00:00'])
             ->andWhere(['<=', 'thoi_gian_bd', $today . ' 23:59:59'])
             ->exists();
 
+        if ($hasTietHoc) {
+            $hasSchedule = true;
+            $loaiKeHoach = 'tiet_hoc';
+        }
+
+        // ---------------------------------------------------------------------
+        // 2. TẦNG 2: Nếu không có tiết dạy, kiểm tra tiếp Vé thuê xe [ptx_lich_thue]
+        // ---------------------------------------------------------------------
+        if (!$hasSchedule) {
+            $checkLichThue = self::kiemTraLichThueXe($bienSoClean, $timeStr);
+            if ($checkLichThue['co_ke_hoach']) {
+                $hasSchedule = true;
+                $loaiKeHoach = 'lich_thue';
+                $chiTietKeHoach = $checkLichThue['lich_thue'];
+            }
+        }
+
+        // ---------------------------------------------------------------------
+        // 3. TẦNG 3: Nếu vẫn chưa có, kiểm tra Phiếu đề nghị sửa xe [cp_phieu_de_nghi]
+        // Điều kiện: trang_thai IN ('DA_DUYET', 'HOAN_THANH') và ngay_bat_dau <= timeStr <= ngay_hoan_thanh
+        // ---------------------------------------------------------------------
+        if (!$hasSchedule) {
+            $phieuDeNghi = PhieuDeNghi::find()
+                ->where(['id_tham_chieu' => $xe->id, 'loai_tai_san' => PhieuDeNghiBase::LOAITAISAN_XE])
+                ->andWhere(['in', 'trang_thai', [PhieuDeNghiBase::TRANGTHAI_DADUYET, PhieuDeNghiBase::TRANGTHAI_HOANTHANH]])
+                ->andWhere(['<=', 'ngay_bat_dau', $timeStr])
+                ->andWhere(['>=', 'ngay_hoan_thanh', $timeStr])
+                ->orderBy(['id' => SORT_DESC])
+                ->one();
+
+            if ($phieuDeNghi) {
+                $hasSchedule = true;
+                $loaiKeHoach = 'phieu_de_nghi';
+                $chiTietKeHoach = $phieuDeNghi;
+            }
+        }
+
+        // ---------------------------------------------------------------------
+        // 4. TẦNG 4: Nếu vẫn chưa có, kiểm tra Lịch dùng xe nội bộ [ptx_xe_lich_dung_xe]
+        // Điều kiện: trang_thai = 'ACTIVE' và thoi_gian_bat_dau <= timeStr <= thoi_gian_ket_thuc
+        // ---------------------------------------------------------------------
+        if (!$hasSchedule) {
+            $lichDungXe = LichDungXe::find()
+                ->where(['id_xe' => $xe->id])
+                ->andWhere(['trang_thai' => LichDungXeBase::TT_ACTIVE])
+                ->andWhere(['<=', 'thoi_gian_bat_dau', $timeStr])
+                ->andWhere(['>=', 'thoi_gian_ket_thuc', $timeStr])
+                ->orderBy(['thoi_gian_bat_dau' => SORT_ASC])
+                ->one();
+
+            if ($lichDungXe) {
+                $hasSchedule = true;
+                $loaiKeHoach = 'lich_dung_xe';
+                $chiTietKeHoach = $lichDungXe;
+            }
+        }
+
+        // ---------------------------------------------------------------------
+        // KẾT LUẬN: Nếu cả 4 tầng đều không thỏa mãn -> Xác định đi không kế hoạch
+        // ---------------------------------------------------------------------
         return [
             'thuoc_danh_sach_xe' => true,
             'co_ke_hoach' => (bool)$hasSchedule,
             'di_khong_ke_hoach' => !(bool)$hasSchedule,
             'xe' => $xe,
+            'loai_ke_hoach' => $loaiKeHoach,
+            'chi_tiet_ke_hoach' => $chiTietKeHoach,
+            'lich_thue' => ($loaiKeHoach === 'lich_thue') ? $chiTietKeHoach : null,
+            'phieu_de_nghi' => ($loaiKeHoach === 'phieu_de_nghi') ? $chiTietKeHoach : null,
+            'lich_dung_xe' => ($loaiKeHoach === 'lich_dung_xe') ? $chiTietKeHoach : null,
         ];
     }
 
